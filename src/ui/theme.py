@@ -1385,8 +1385,8 @@ def inject_theme() -> None:
             display: flex;
             justify-content: space-between;
             gap: 24px;
-            margin: 18px 0 18px;
-            padding: 24px 26px;
+            margin: 16px 0 16px;
+            padding: 22px 24px;
         }
 
         .profile-kicker {
@@ -1409,8 +1409,9 @@ def inject_theme() -> None:
             color: #747b98;
             font-size: 0.9rem;
             font-weight: 750;
+            line-height: 1.45;
             margin-top: 8px;
-            max-width: 920px;
+            max-width: 980px;
         }
 
         .profile-badges {
@@ -1462,7 +1463,7 @@ def inject_theme() -> None:
             border-radius: 22px;
             box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
             margin: 0 0 18px;
-            padding: 18px 22px 17px;
+            padding: 18px 22px 14px;
         }
 
         div.st-key-player_selector_card label {
@@ -1478,11 +1479,110 @@ def inject_theme() -> None:
             min-height: 52px;
         }
 
+        div.st-key-player_selector_card [data-baseweb="select"] div {
+            align-items: center;
+        }
+
+        div.st-key-player_selector_card [data-baseweb="select"] [data-testid="stMarkdownContainer"],
+        div.st-key-player_selector_card [data-baseweb="select"] span {
+            line-height: 1.2;
+        }
+
         .profile-selector-help {
             color: #777e9c;
             font-size: 0.88rem;
             font-weight: 700;
-            margin-top: 8px;
+            margin-top: -4px;
+        }
+
+        .profile-kpi-card {
+            background:
+                linear-gradient(135deg, rgba(109, 77, 255, 0.045), rgba(255,255,255,0) 70%),
+                #ffffff;
+            border: 1px solid #e8eaf5;
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(23, 27, 77, 0.055);
+            min-height: 94px;
+            padding: 15px 16px;
+        }
+
+        .profile-kpi-label {
+            color: #727999;
+            font-size: 0.67rem;
+            font-weight: 900;
+            letter-spacing: 0.055em;
+            line-height: 1.25;
+            min-height: 24px;
+            text-transform: uppercase;
+        }
+
+        .profile-kpi-value {
+            color: var(--ink);
+            font-size: 1.48rem;
+            font-weight: 950;
+            line-height: 1.05;
+            margin-top: 6px;
+            white-space: nowrap;
+        }
+
+        div.st-key-profile_chart_runs,
+        div.st-key-profile_chart_wickets,
+        div.st-key-profile_chart_averages {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 18px;
+            box-shadow: 0 14px 34px rgba(23, 27, 77, 0.055);
+            margin-bottom: 18px;
+            overflow: hidden;
+            padding: 18px 20px 12px;
+        }
+
+        div.st-key-profile_chart_runs iframe,
+        div.st-key-profile_chart_wickets iframe,
+        div.st-key-profile_chart_averages iframe {
+            max-width: 100%;
+        }
+
+        .profile-chart-title {
+            color: var(--ink);
+            font-size: 1.02rem;
+            font-weight: 950;
+            margin: 0 0 12px;
+        }
+
+        .profile-insight {
+            color: #555d7b;
+            font-size: 0.95rem;
+            font-weight: 750;
+            margin-top: 12px;
+            max-width: 820px;
+        }
+
+        .block-container:has(.player-profile-page) .overview-section-title {
+            margin-top: 24px;
+            margin-bottom: 14px;
+        }
+
+        .block-container:has(.player-profile-page) .record-card {
+            min-height: 146px;
+            padding: 18px 19px;
+        }
+
+        .block-container:has(.player-profile-page) .milestone-watch-card {
+            min-height: 0;
+            padding: 18px 20px;
+        }
+
+        .block-container:has(.player-profile-page) .milestone-watch-row {
+            padding: 10px 0;
+        }
+
+        .block-container:has(.player-profile-page) .profile-breakdown-card {
+            padding: 18px 20px;
+        }
+
+        .block-container:has(.player-profile-page) .profile-breakdown-card div {
+            padding: 8px 0;
         }
 
         .profile-breakdown-card {
