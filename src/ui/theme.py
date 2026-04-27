@@ -430,7 +430,7 @@ def inject_theme() -> None:
         .club-label {
             color: #5B3DF5;
             font-size: clamp(1.5rem, 1.75vw, 1.75rem);
-            font-weight: 500;
+            font-weight: 800;
             letter-spacing: 0;
             line-height: 1.2;
             margin: 0 0 10px;
@@ -1615,7 +1615,7 @@ def inject_theme() -> None:
 
         .block-container:has(.player-profile-page) .club-label {
             color: #5B3DF5;
-            font-weight: 500;
+            font-weight: 800;
             margin: 0 0 10px;
         }
 
@@ -1727,9 +1727,9 @@ def inject_theme() -> None:
         .profile-insight {
             color: #555d7b;
             font-size: 0.95rem;
-            font-weight: 750;
+            font-weight: 500;
             line-height: 1.35;
-            margin-top: 10px;
+            margin-top: 6px;
             max-width: 820px;
         }
 
@@ -1890,14 +1890,14 @@ def inject_theme() -> None:
 
         .block-container:has(.near-milestones-page) .club-label {
             color: #5B3DF5;
-            font-weight: 500;
+            font-weight: 800;
             margin: 0 0 9px;
         }
 
         .block-container:has(.near-milestones-page) .page-subtitle {
             color: #7a809d;
             font-size: 0.95rem;
-            font-weight: 700;
+            font-weight: 400;
             margin: 0 0 44px;
         }
 

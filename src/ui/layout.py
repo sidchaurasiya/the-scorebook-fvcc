@@ -74,7 +74,7 @@ def render_page() -> None:
     elif selected_page == "Seasons":
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
-    elif selected_page == "Near Milestone":
+    elif selected_page == "Milestone":
         render_approaching_milestones_page()
     elif selected_page == "Player Profile":
         render_player_profile_page()
@@ -86,7 +86,7 @@ def render_sidebar() -> str:
     page_labels = [
         "♕ Hall of Fame",
         "⌂ Seasons",
-        "☆ Near Milestone",
+        "☆ Milestone",
         "♙ Player Profile",
     ]
     if "selected_page_label" not in st.session_state:
@@ -796,6 +796,7 @@ def build_all_time_player_table(
                 "bowlingEconomyRate",
                 "bowlingStrikeRate",
                 "bowlingBestInnings",
+                "bowlingBalls",
                 "bowlingMaidens",
                 "bowling5WIs",
                 "bowling10WMs",
@@ -851,9 +852,10 @@ def build_all_time_player_table(
             "bowlingEconomyRate": "Econ",
             "bowlingStrikeRate": "Bowl SR",
             "bowlingBestInnings": "BBI",
+            "bowlingBalls": "Balls Bowled",
             "bowlingMaidens": "Maidens",
             "bowling5WIs": "5WI",
-            "bowling10WMs": "10 Wicket Match",
+            "bowling10WMs": "10WM",
             "catches_display": "Catches",
             "stumpings_display": "Stumpings",
             "run_outs_display": "Run Outs",
@@ -1092,7 +1094,7 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
     bowling_records = top_best_bowling_innings(data["bowling_raw"], limit=10)
     if batting_records.empty and bowling_records.empty:
         return
-    render_section_heading("Match-Winning Performances")
+    render_section_heading("Iconic Performances 🌟")
     columns = st.columns(2)
     with columns[0]:
         render_performance_card("Highest Individual Scores", batting_records, "batting")
@@ -1247,6 +1249,7 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
             "100s": sum_column(group, "batting100s"),
             "4s": sum_column(group, "battingFours"),
             "6s": sum_column(group, "battingSixes"),
+            "0s": sum_column(group, "batting0s"),
         }
         if runs > 0:
             rows.append(row)
@@ -1284,6 +1287,7 @@ def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
             "strike_rate": divide_or_none(balls, wickets),
             "bbi": best_bowling_value(group),
             "5wi": sum_column(group, "bowling5WIs"),
+            "10wm": sum_column(group, "bowling10WMs"),
         }
         if wickets > 0:
             rows.append(row)
@@ -1297,7 +1301,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
         primary = f'{format_int(row["runs"])} runs'
         chips = [
             ("Matches", format_int(row["matches"])),
-            ("Inns", format_int(row["innings"])),
+            ("Runs", format_int(row["runs"])),
             ("Avg", format_decimal(row["average"])),
             ("SR", format_decimal(row["strike_rate"])),
             ("HS", str(row["hs"])),
@@ -1305,6 +1309,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
             ("100s", format_int(row["100s"])),
             ("4s", format_int(row["4s"])),
             ("6s", format_int(row["6s"])),
+            ("0s", format_int(row["0s"])),
         ]
     else:
         primary = f'{format_int(row["wickets"])} wickets'
@@ -1317,6 +1322,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
             ("SR", format_decimal(row["strike_rate"])),
             ("BBI", str(row["bbi"])),
             ("5WI", format_int(row["5wi"])),
+            ("10WM", format_int(row["10wm"])),
         ]
     chip_html = "".join(
         f'<span><b>{html.escape(label)}</b>{html.escape(value)}</span>'
@@ -1481,10 +1487,14 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
 
 
 def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
+    source = all_time.copy()
+    if "Balls Bowled" in source:
+        source["Overs"] = source["Balls Bowled"].map(format_balls_as_overs)
     columns = [
         "Player",
         "Seasons Played",
         "Matches",
+        "Overs",
         "Wickets",
         "Bowl Avg",
         "Econ",
@@ -1492,9 +1502,9 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "BBI",
         "Maidens",
         "5WI",
-        "10 Wicket Match",
+        "10WM",
     ]
-    table = select_display_columns(all_time, columns).copy()
+    table = select_display_columns(source, columns).copy()
     if "BBI" in table:
         table["BBI"] = ordered_bbi_values(table["BBI"])
     if "Wickets" in table:
@@ -1535,8 +1545,9 @@ def render_filterable_dataframe(
     hide_index: bool = True,
     height: int = 520,
     column_config: dict[str, object] | None = None,
+    show_filters: bool = True,
 ) -> None:
-    filtered = apply_dataframe_filters(table, key_prefix)
+    filtered = apply_dataframe_filters(table, key_prefix) if show_filters else table
     st.dataframe(
         filtered,
         use_container_width=use_container_width,
@@ -1632,7 +1643,7 @@ def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
         "Wickets",
         "Maidens",
         "5WI",
-        "10 Wicket Match",
+        "10WM",
         "Catches",
         "Stumpings",
         "Run Outs",
@@ -1670,7 +1681,7 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
         "Wickets",
         "Maidens",
         "5WI",
-        "10 Wicket Match",
+        "10WM",
         "Catches",
         "Stumpings",
         "Run Outs",
@@ -2266,8 +2277,8 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             '<div class="profile-kicker">Player Profile</div>'
             f'<div class="profile-name">{html.escape(str(career.get("Player", "-")))}</div>'
             '<div class="profile-summary-stack">'
-            f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             f'<div class="profile-insight">{html.escape(insight)}</div>'
+            f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             '</div>'
             '</div>'
             f'<div class="profile-badges">{badge_html}</div>'
@@ -2293,6 +2304,8 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     balls_bowled = numeric_value(career, "Balls Bowled")
     overs = balls_bowled / 6 if balls_bowled else 0
     matches_floor = matches >= 20
+    wickets_per_match = divide_or_none(wickets, matches) or 0
+    bowler_profile = matches_floor and wickets_per_match >= 0.80
     leader_counts = player_leader_counts(profile_view)
 
     badges = []
@@ -2301,13 +2314,14 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
         if condition and label not in badges:
             badges.append(label)
 
-    add_badge("All-round Contributor", matches_floor and ((runs > 500 and wickets > 50) or (bat_avg > 15 and wickets > 50)))
+    add_badge("Club Legend", matches > 200)
+    add_badge("All-round Contributor", matches_floor and bat_avg > 12 and wickets >= 50 and wickets_per_match >= 0.80)
     add_badge("Star Batter", matches_floor and bat_avg > 25)
     add_badge("Dependable Batter", matches_floor and bat_avg > 18 and "Star Batter" not in badges)
-    add_badge("Star Bowler", matches_floor and wickets >= 20 and 0 < numeric_value(career, "Bowl Avg") < 20)
-    add_badge("Wicket Taker", matches_floor and matches and wickets / matches > 1)
-    add_badge("Strike Bowler", overs > 150 and 0 < bowl_sr < 35)
-    add_badge("Economy Controller", overs > 150 and 0 < economy < 3)
+    add_badge("Star Bowler", bowler_profile and wickets >= 20 and 0 < numeric_value(career, "Bowl Avg") < 20)
+    add_badge("Wicket Taker", bowler_profile and wickets_per_match > 1)
+    add_badge("Strike Bowler", bowler_profile and overs > 150 and 0 < bowl_sr < 35)
+    add_badge("Economy Controller", bowler_profile and overs > 150 and 0 < economy < 3)
     add_badge("Big Hitter", matches_floor and matches and sixes / matches > 0.3)
     add_badge("Gap Finder", matches_floor and matches and fours / matches > 2)
     add_badge("Boundary Maker", matches_floor and matches and (fours + sixes) / matches > 2.5)
@@ -2324,23 +2338,26 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
 
 
 def player_profile_insight(career: pd.Series, badges: list[str]) -> str:
+    matches = numeric_value(career, "Matches")
+    if "Club Legend" in badges:
+        return "Long-serving club figure with a major footprint across the record book."
     if "All-round Contributor" in badges:
-        return "Balanced profile with meaningful batting and bowling contribution."
+        return "Contributes meaningfully with both bat and ball."
     if "Star Batter" in badges or "Dependable Batter" in badges:
-        return "Reliable batting contributor across the available club records."
-    if "Star Bowler" in badges or "Wicket Taker" in badges or "Strike Bowler" in badges:
-        return "Reliable wicket-taking profile with strong bowling impact."
+        return "Reliable run-maker with consistent batting impact across seasons."
+    if "Big Hitter" in badges:
+        return "Boundary-focused batter with a strong six-hitting profile."
+    if "Gap Finder" in badges or "Boundary Maker" in badges or "Quick Scorer" in badges:
+        return "Consistent boundary scorer who regularly finds gaps."
+    if "Star Bowler" in badges or "Strike Bowler" in badges or "Wicket Taker" in badges:
+        return "Regular wicket threat with strong bowling impact."
     if "Economy Controller" in badges:
-        return "Controls scoring rate well while contributing with the ball."
-    if "Big Hitter" in badges or "Boundary Maker" in badges or "Gap Finder" in badges or "Quick Scorer" in badges:
-        return "Boundary and tempo profile with useful scoring contribution."
+        return "Disciplined bowler who keeps scoring rates under control."
     if "Safe Hands" in badges or "Keeper Impact" in badges:
-        return "Fielding contribution stands out across club records."
-    if "Club Veteran" in badges:
-        return "Long-serving club contributor across multiple seasons."
-    if "Emerging Player" in badges:
+        return "Strong fielding contributor across the available records."
+    if "Emerging Player" in badges or matches < 20:
         return "Early career profile building across the available club records."
-    return "Steady club contributor across the available records."
+    return "Club contributor across the available records."
 
 
 def render_player_career_kpis(career: pd.Series) -> None:
@@ -2420,15 +2437,15 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
         if value > 0:
             cards.append({"title": title, "player": str(career["Player"]), "value": f"{int(value):,} {suffix}", "meta": ""})
     for title, key, suffix in [
-        ("Club Run Leader", "club_run_leader", "season"),
-        ("Grade Run Leader", "grade_run_leader", "grade season"),
-        ("Club Wicket Leader", "club_wicket_leader", "season"),
-        ("Grade Wicket Leader", "grade_wicket_leader", "grade season"),
+        ("Most Runs - Club", "club_run_leader", "season"),
+        ("Most Runs - Grade", "grade_run_leader", "grade season"),
+        ("Most Wickets - Club", "club_wicket_leader", "season"),
+        ("Most Wickets - Grade", "grade_wicket_leader", "grade season"),
     ]:
         value = int(leader_counts.get(key, 0))
         if value > 0:
             label = suffix if value == 1 else f"{suffix}s"
-            cards.append({"title": title, "player": str(career["Player"]), "value": f"{value:,} {label}", "meta": "Tied leaders included"})
+            cards.append({"title": title, "player": str(career["Player"]), "value": f"{value:,} {label}", "meta": ""})
     return cards[:10]
 
 
@@ -2627,6 +2644,8 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         st.caption("No data available for this view.")
         return
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
+    source_rows = season_table.loc[table.index].copy()
+    table = append_profile_total_row(table, source_rows, columns, "Season")
     display = format_profile_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -2636,6 +2655,7 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         hide_index=True,
         height=table_height,
         column_config=profile_table_column_config(display.columns.tolist(), "Season"),
+        show_filters=False,
     )
 
 
@@ -2681,6 +2701,8 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         st.caption("No data available for this view.")
         return
     table = table.sort_values(label_column)
+    source_rows = group_table.loc[table.index].copy()
+    table = append_profile_total_row(table, source_rows, columns, label_column)
     display = format_profile_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -2690,8 +2712,85 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         hide_index=True,
         height=table_height,
         column_config=profile_table_column_config(display.columns.tolist(), label_column),
+        show_filters=False,
     )
-    render_profile_table_totals(table, label_column)
+
+
+def append_profile_total_row(
+    table: pd.DataFrame,
+    source_rows: pd.DataFrame,
+    columns: list[str],
+    label_column: str,
+) -> pd.DataFrame:
+    total_row = build_profile_total_row(source_rows, columns, label_column)
+    if not total_row:
+        return table
+    return pd.concat([table, pd.DataFrame([total_row])], ignore_index=True)
+
+
+def build_profile_total_row(source_rows: pd.DataFrame, columns: list[str], label_column: str) -> dict[str, object]:
+    if source_rows.empty:
+        return {}
+    row: dict[str, object] = {column: pd.NA for column in columns}
+    row[label_column] = "Total"
+
+    for column in ["Matches", "Innings", "Runs", "BF", "50s", "100s", "0s", "4s", "6s", "Wickets", "Maidens", "5WI", "Catches", "Stumpings", "Run Outs", "Dismissals"]:
+        if column in columns and column in source_rows:
+            row[column] = sum_numeric_series(source_rows[column])
+
+    runs = sum_numeric_series(source_rows["Runs"]) if "Runs" in source_rows else 0
+    innings = sum_numeric_series(source_rows["Innings"]) if "Innings" in source_rows else 0
+    not_outs = sum_numeric_series(source_rows["NO"]) if "NO" in source_rows else 0
+    outs = sum_numeric_series(source_rows["Outs"]) if "Outs" in source_rows else max(innings - not_outs, 0)
+    balls_faced = sum_numeric_series(source_rows["BF"]) if "BF" in source_rows else 0
+    runs_against = sum_numeric_series(source_rows["Runs Against"]) if "Runs Against" in source_rows else 0
+    balls_bowled = sum_numeric_series(source_rows["Balls Bowled"]) if "Balls Bowled" in source_rows else 0
+    wickets = sum_numeric_series(source_rows["Wickets"]) if "Wickets" in source_rows else 0
+
+    if "Bat Avg" in columns:
+        row["Bat Avg"] = divide_or_none(runs, outs)
+    if "Bat SR" in columns:
+        reliable_rows = source_rows
+        if "Season" in reliable_rows:
+            reliable_rows = reliable_rows[reliable_rows["Season"].map(profile_season_sort_key) >= profile_season_sort_key("Summer 2024/25")]
+            sr_runs = sum_numeric_series(reliable_rows["Runs"]) if "Runs" in reliable_rows else 0
+            sr_balls = sum_numeric_series(reliable_rows["BF"]) if "BF" in reliable_rows else 0
+            row["Bat SR"] = divide_or_none(sr_runs * 100, sr_balls)
+        else:
+            row["Bat SR"] = divide_or_none(runs * 100, balls_faced)
+    if "HS" in columns and "HS" in source_rows:
+        row["HS"] = best_high_score_from_display_values(source_rows["HS"])
+    if "Overs" in columns:
+        row["Overs"] = format_balls_as_overs(balls_bowled) if balls_bowled else "—"
+    if "Bowl Avg" in columns:
+        row["Bowl Avg"] = divide_or_none(runs_against, wickets)
+    if "Econ" in columns:
+        row["Econ"] = divide_or_none(runs_against * 6, balls_bowled)
+    if "Bowl SR" in columns:
+        row["Bowl SR"] = divide_or_none(balls_bowled, wickets)
+    if "BBI" in columns and "BBI" in source_rows:
+        row["BBI"] = best_bbi_from_display_values(source_rows["BBI"])
+    return row
+
+
+def best_high_score_from_display_values(values: pd.Series) -> str:
+    candidates = []
+    for raw in values.dropna().astype(str):
+        match = re.search(r"(\d+)\s*(\*)?", raw)
+        if not match:
+            continue
+        candidates.append((int(match.group(1)), bool(match.group(2)), raw.strip()))
+    if not candidates:
+        return "—"
+    score, not_out, _raw = sorted(candidates, key=lambda item: (item[0], item[1]), reverse=True)[0]
+    return f"{score}{'*' if not_out else ''}"
+
+
+def best_bbi_from_display_values(values: pd.Series) -> str:
+    candidates = [value for value in values.dropna().astype(str) if re.search(r"\d+\s*[-/]\s*\d+", value)]
+    if not candidates:
+        return "—"
+    return max(candidates, key=bbi_sort_key)
 
 
 def render_player_breakdown(career: pd.Series) -> None:
@@ -4892,6 +4991,7 @@ def render_full_stats_table(
         hide_index=True,
         height=520,
         column_config=numeric_column_config(output.columns.tolist()),
+        show_filters=False,
     )
 
 
@@ -5039,7 +5139,7 @@ def select_display_columns(df: pd.DataFrame, desired_columns: list[str]) -> pd.D
 
 def coerce_display_numbers(df: pd.DataFrame) -> pd.DataFrame:
     output = df.copy()
-    text_columns = {"Player", "Team", "HS", "BBI"}
+    text_columns = {"Player", "Team", "HS", "BBI", "Overs"}
     for column in output.columns:
         if column not in text_columns:
             numeric_values = pd.to_numeric(output[column], errors="coerce")
