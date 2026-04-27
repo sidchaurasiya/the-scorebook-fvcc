@@ -1328,13 +1328,50 @@ def inject_theme() -> None:
 
         .empty-profile-state {
             background: #ffffff;
-            border: 1px dashed #d8ddec;
-            border-radius: 16px;
+            border: 1px solid #e7e9f4;
+            border-radius: 24px;
+            box-shadow: 0 18px 44px rgba(23, 27, 77, 0.07);
             color: #747b98;
             font-weight: 800;
             margin-top: 18px;
-            padding: 30px;
+            padding: 30px 28px;
             text-align: center;
+        }
+
+        .empty-profile-title {
+            color: var(--ink);
+            font-size: 1.35rem;
+            font-weight: 950;
+            letter-spacing: -0.01em;
+            line-height: 1.18;
+            margin: 0 0 10px;
+        }
+
+        .empty-profile-copy {
+            color: #747b98;
+            font-size: 0.96rem;
+            font-weight: 700;
+            line-height: 1.45;
+            margin: 0 auto 18px;
+            max-width: 760px;
+        }
+
+        .empty-profile-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .empty-profile-pill-row span {
+            background: linear-gradient(135deg, rgba(109, 77, 255, 0.10), rgba(59, 130, 246, 0.08));
+            border: 1px solid rgba(109, 77, 255, 0.16);
+            border-radius: 999px;
+            color: #45496a;
+            display: inline-flex;
+            font-size: 0.86rem;
+            font-weight: 850;
+            padding: 9px 13px;
         }
 
         .player-hero-card {
@@ -1393,6 +1430,59 @@ def inject_theme() -> None:
             font-weight: 900;
             padding: 8px 11px;
             white-space: nowrap;
+        }
+
+        .block-container:has(.player-profile-page) {
+            padding-top: 1.65rem;
+        }
+
+        .block-container:has(.player-profile-page) .page-title {
+            font-size: clamp(2.8rem, 3.6vw, 3.75rem);
+            margin: 0 0 9px;
+        }
+
+        .block-container:has(.player-profile-page) .club-label {
+            color: #5B3DF5;
+            margin: 0 0 12px;
+        }
+
+        .block-container:has(.player-profile-page) .page-subtitle {
+            color: #747b98;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 22px;
+            max-width: 920px;
+        }
+
+        div.st-key-player_selector_card {
+            background:
+                radial-gradient(circle at 100% 0%, rgba(109, 77, 255, 0.08), transparent 18rem),
+                #ffffff;
+            border: 1px solid #e7e9f4;
+            border-radius: 22px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin: 0 0 18px;
+            padding: 18px 22px 17px;
+        }
+
+        div.st-key-player_selector_card label {
+            color: var(--ink) !important;
+            font-size: 0.92rem !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em;
+        }
+
+        div.st-key-player_selector_card [data-baseweb="select"] > div {
+            border-color: #e2e6f3;
+            border-radius: 16px;
+            min-height: 52px;
+        }
+
+        .profile-selector-help {
+            color: #777e9c;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-top: 8px;
         }
 
         .profile-breakdown-card {

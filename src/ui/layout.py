@@ -1633,29 +1633,45 @@ def render_player_profile_page() -> None:
     index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
     st.markdown(
         """
-        <div class="page-kicker">Canonical player view</div>
+        <div class="player-profile-page"></div>
+        <h1 class="page-title">Player Spotlight 🏏</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
-        <h1 class="page-title">Player Profile</h1>
-        <div class="page-subtitle">Explore a player’s FVCC career across seasons, teams, and formats.</div>
+        <div class="page-subtitle">Search any player and explore their career story across seasons, teams, and formats.</div>
         """,
         unsafe_allow_html=True,
     )
-    render_identity_info_note()
 
     if index.empty:
         st.info("Historical player data is not available yet. Refresh local backup to build player profiles.")
         return
 
     options = [{"id": "", "name": "Select a player..."}] + index.to_dict("records")
-    selected = st.selectbox(
-        "Player",
-        options,
-        format_func=lambda player: player["name"],
-        key="player_profile_selector",
-    )
+    with st.container(key="player_selector_card"):
+        selected = st.selectbox(
+            "Search player",
+            options,
+            format_func=lambda player: player["name"],
+            key="player_profile_selector",
+        )
+        st.markdown(
+            '<div class="profile-selector-help">Start typing a name to find a player from FVCC records.</div>',
+            unsafe_allow_html=True,
+        )
     if not selected.get("id"):
         st.markdown(
-            '<div class="empty-profile-state">Select a player to view their career profile.</div>',
+            """
+            <div class="empty-profile-state">
+                <div class="empty-profile-title">Find a player to unlock their career profile 🔎</div>
+                <div class="empty-profile-copy">
+                    View their all-time runs, wickets, catches, season-by-season trends, team history, and standout performances.
+                </div>
+                <div class="empty-profile-pill-row">
+                    <span>📊 Career summary</span>
+                    <span>📅 Season trends</span>
+                    <span>🏆 Best performances</span>
+                </div>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
         return
