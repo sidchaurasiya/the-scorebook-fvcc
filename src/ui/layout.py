@@ -2423,7 +2423,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                             fontSize=12,
                             fontWeight=800,
                         ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
-                    ).properties(height=240)
+                    ).properties(height=240).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
                     st.altair_chart(chart, use_container_width=True)
     render_player_average_trends(chart_data)
 
@@ -2483,7 +2483,7 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
             base.mark_area(color=color, opacity=0.15, interpolate="monotone")
             + base.mark_line(color=color, strokeWidth=3, interpolate="monotone")
             + base.mark_point(color=color, filled=True, size=58)
-        ).properties(height=235)
+        ).properties(height=235).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
         st.altair_chart(chart, use_container_width=True)
 
 

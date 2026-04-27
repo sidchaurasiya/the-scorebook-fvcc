@@ -23,6 +23,7 @@ def inject_theme() -> None:
             --card-border: #E8EAF5;
             --card-shadow: 0 8px 24px rgba(20, 22, 60, 0.06);
             --card-shadow-hover: 0 16px 36px rgba(20, 22, 60, 0.10);
+            color-scheme: light;
         }
 
         .stApp {
@@ -2095,6 +2096,56 @@ def inject_theme() -> None:
 
             .page-title {
                 font-size: clamp(2.25rem, 13vw, 3.15rem);
+            }
+
+            .block-container:has(.near-milestones-page) .page-title {
+                font-size: clamp(1.85rem, 10.5vw, 2.65rem);
+            }
+
+            div[data-testid="stDataFrame"],
+            div[data-testid="stDataFrame"] > div,
+            div[data-testid="stDataFrame"] [class*="gdg"],
+            div[data-testid="stDataFrame"] [class*="glide"],
+            div[data-testid="stDataFrame"] [role="grid"],
+            div[data-testid="stDataFrame"] [role="row"],
+            div[data-testid="stDataFrame"] [role="gridcell"],
+            div[data-testid="stDataFrame"] [role="columnheader"] {
+                background: #ffffff !important;
+                color: #20243D !important;
+                color-scheme: light !important;
+            }
+
+            div[data-testid="stDataFrame"] {
+                border: 1px solid #E9ECF6 !important;
+                border-radius: 16px !important;
+                box-shadow: 0 12px 28px rgba(23, 27, 77, 0.055) !important;
+                overflow: hidden !important;
+            }
+
+            div[data-testid="stDataFrame"] [role="columnheader"] {
+                background: #F7F8FD !important;
+                border-bottom: 1px solid #E6E9F4 !important;
+                color: #5D6686 !important;
+            }
+
+            div[data-testid="stDataFrame"] [role="gridcell"] {
+                border-color: #EEF1F8 !important;
+            }
+
+            div.st-key-full_stats_card,
+            div.st-key-player_profile_season_table,
+            div.st-key-player_profile_grade_table,
+            div.st-key-profile_chart_runs,
+            div.st-key-profile_chart_wickets,
+            div.st-key-profile_chart_batting_average,
+            div.st-key-profile_chart_bowling_average,
+            div[data-testid="stVegaLiteChart"],
+            div[data-testid="stVegaLiteChart"] > div,
+            div[data-testid="stVegaLiteChart"] canvas,
+            div[data-testid="stVegaLiteChart"] svg,
+            div[data-testid="stVegaLiteChart"] iframe {
+                background: #ffffff !important;
+                color-scheme: light !important;
             }
 
             .mini-leader-grid {
