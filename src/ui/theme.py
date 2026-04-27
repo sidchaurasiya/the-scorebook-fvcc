@@ -1555,6 +1555,10 @@ def inject_theme() -> None:
             padding: 22px 24px;
         }
 
+        .profile-main-block {
+            min-width: 0;
+        }
+
         .profile-kicker {
             color: #6D4DFF;
             font-size: 0.74rem;
@@ -1575,7 +1579,7 @@ def inject_theme() -> None:
             color: #747b98;
             font-size: 0.9rem;
             font-weight: 750;
-            line-height: 1.45;
+            line-height: 1.32;
             margin-top: 8px;
             max-width: 980px;
         }
@@ -1585,7 +1589,8 @@ def inject_theme() -> None:
             flex-wrap: wrap;
             gap: 8px;
             justify-content: flex-end;
-            min-width: 190px;
+            max-width: 390px;
+            min-width: 220px;
         }
 
         .profile-badge {
@@ -1659,7 +1664,7 @@ def inject_theme() -> None:
             color: #777e9c;
             font-size: 0.88rem;
             font-weight: 700;
-            margin-top: -8px;
+            margin-top: -12px;
         }
 
         .profile-kpi-card {
@@ -1723,7 +1728,8 @@ def inject_theme() -> None:
             color: #555d7b;
             font-size: 0.95rem;
             font-weight: 750;
-            margin-top: 12px;
+            line-height: 1.35;
+            margin-top: 10px;
             max-width: 820px;
         }
 
@@ -2146,6 +2152,41 @@ def inject_theme() -> None:
             div[data-testid="stVegaLiteChart"] iframe {
                 background: #ffffff !important;
                 color-scheme: light !important;
+            }
+
+            .player-hero-card {
+                display: block;
+                margin: 14px 0 16px;
+                padding: 18px 18px 20px;
+            }
+
+            .profile-name {
+                font-size: clamp(2rem, 11vw, 2.7rem);
+                line-height: 1.04;
+            }
+
+            .profile-meta {
+                font-size: 0.86rem;
+                line-height: 1.28;
+                margin-top: 10px;
+            }
+
+            .profile-insight {
+                font-size: 0.86rem;
+                line-height: 1.34;
+                margin-top: 10px;
+            }
+
+            .profile-badges {
+                justify-content: flex-start;
+                margin-top: 14px;
+                max-width: none;
+                min-width: 0;
+            }
+
+            .profile-badge {
+                font-size: 0.7rem;
+                padding: 7px 10px;
             }
 
             .mini-leader-grid {
