@@ -124,7 +124,7 @@ def render_sidebar() -> str:
     st.sidebar.markdown(
         """
         <div class="side-footer">
-            <div>Created by</div>
+            <div>App by</div>
             <strong>Siddhanth Chaurasiya &amp; Preet Kaur</strong>
         </div>
         """,
@@ -780,6 +780,8 @@ def build_all_time_player_table(
                 "batting50s",
                 "batting100s",
                 "batting0s",
+                "battingFours",
+                "battingSixes",
             ],
         ),
         (
@@ -791,6 +793,7 @@ def build_all_time_player_table(
                 "bowlingEconomyRate",
                 "bowlingStrikeRate",
                 "bowlingBestInnings",
+                "bowlingMaidens",
                 "bowling5WIs",
             ],
         ),
@@ -816,6 +819,11 @@ def build_all_time_player_table(
 
     base = base.merge(build_best_match_counts([batting, bowling, fielding]), on="player_key", how="left")
     base["matches"] = pd.to_numeric(base["matches"], errors="coerce").fillna(0)
+    base = base.merge(build_reliable_batting_strike_rates(batting_raw), on="player_key", how="left")
+    # Balls-faced data before Summer 2024/25 is inconsistent in PlayCricket exports,
+    # so all-time Bat SR is intentionally recalculated from reliable recent seasons only.
+    if "reliableBattingStrikeRate" in base:
+        base["battingStrikeRate"] = base["reliableBattingStrikeRate"]
 
     return base.rename(
         columns={
@@ -832,11 +840,14 @@ def build_all_time_player_table(
             "batting50s": "50s",
             "batting100s": "100s",
             "batting0s": "0s",
+            "battingFours": "4s",
+            "battingSixes": "6s",
             "bowlingWickets": "Wickets",
             "bowlingAverage": "Bowl Avg",
             "bowlingEconomyRate": "Econ",
             "bowlingStrikeRate": "Bowl SR",
             "bowlingBestInnings": "BBI",
+            "bowlingMaidens": "Maidens",
             "bowling5WIs": "5WI",
             "catches_display": "Catches",
             "stumpings_display": "Stumpings",
@@ -976,6 +987,29 @@ def build_best_match_counts(frames: list[pd.DataFrame]) -> pd.DataFrame:
     return combined.groupby("player_key", as_index=False)["matches"].max()
 
 
+def build_reliable_batting_strike_rates(batting_raw: pd.DataFrame) -> pd.DataFrame:
+    if batting_raw.empty or "season" not in batting_raw:
+        return pd.DataFrame(columns=["player_key", "reliableBattingStrikeRate"])
+    output = batting_raw.copy()
+    output = output[output["season"].map(profile_season_sort_key) >= profile_season_sort_key("Summer 2024/25")]
+    if output.empty:
+        return pd.DataFrame(columns=["player_key", "reliableBattingStrikeRate"])
+    output["player_key"] = player_keys(output)
+    for column in ["battingAggregate", "battingBallsFaced"]:
+        if column not in output:
+            output[column] = 0
+        output[column] = pd.to_numeric(output[column], errors="coerce").fillna(0)
+    grouped = output.groupby("player_key", as_index=False).agg(
+        reliable_runs=("battingAggregate", "sum"),
+        reliable_balls=("battingBallsFaced", "sum"),
+    )
+    grouped["reliableBattingStrikeRate"] = grouped.apply(
+        lambda row: divide_or_none(float(row["reliable_runs"]) * 100, float(row["reliable_balls"])),
+        axis=1,
+    )
+    return grouped[["player_key", "reliableBattingStrikeRate"]]
+
+
 def estimate_historical_matches(*frames: pd.DataFrame) -> int:
     team_season_counts = {}
     for frame in frames:
@@ -1064,8 +1098,9 @@ def top_highest_scores(df: pd.DataFrame, limit: int = 10) -> pd.DataFrame:
         return pd.DataFrame()
     output = df.copy()
     output["score_sort"] = pd.to_numeric(output["battingHighScore"], errors="coerce")
+    output["not_out_sort"] = output.get("isBattingHSNotOut", False).map(as_bool) if "isBattingHSNotOut" in output else False
     output = output[output["score_sort"].notna() & (output["score_sort"] > 0)]
-    return output.sort_values("score_sort", ascending=False).head(limit)
+    return output.sort_values(["score_sort", "not_out_sort"], ascending=[False, False]).head(limit)
 
 
 def top_best_bowling_innings(df: pd.DataFrame, limit: int = 10) -> pd.DataFrame:
@@ -1138,6 +1173,9 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
         ("50s", "50s", "fifties"),
         ("5 Wicket Hauls", "5WI", "five-wicket hauls"),
         ("Ducks", "0s", "ducks"),
+        ("Maidens", "Maidens", "maidens"),
+        ("4s", "4s", "fours"),
+        ("6s", "6s", "sixes"),
     ]:
         if metric not in all_time:
             continue
@@ -1162,8 +1200,16 @@ def format_high_score_value(row: pd.Series) -> str:
     score = pd.to_numeric(row.get("battingHighScore"), errors="coerce")
     if pd.isna(score):
         return "-"
-    suffix = "*" if bool(row.get("isBattingHSNotOut")) else ""
+    suffix = "*" if as_bool(row.get("isBattingHSNotOut")) else ""
     return f"{int(score)}{suffix}"
+
+
+def as_bool(value: object) -> bool:
+    if pd.isna(value):
+        return False
+    if isinstance(value, str):
+        return value.strip().casefold() in {"true", "1", "yes", "y", "not out", "notout"}
+    return bool(value)
 
 
 def record_meta(row: pd.Series) -> str:
@@ -1275,7 +1321,6 @@ def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
 def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
-        "Teams/Grades",
         "Seasons Played",
         "First Season",
         "Latest Season",
@@ -1287,6 +1332,8 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "50s",
         "100s",
         "0s",
+        "4s",
+        "6s",
     ]
     table = select_display_columns(all_time, columns).copy()
     if "Runs" in table:
@@ -1297,7 +1344,6 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
 def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
-        "Teams/Grades",
         "Seasons Played",
         "First Season",
         "Latest Season",
@@ -1307,6 +1353,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Econ",
         "Bowl SR",
         "BBI",
+        "Maidens",
         "5WI",
     ]
     table = select_display_columns(all_time, columns).copy()
@@ -1320,7 +1367,6 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
 def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
-        "Teams/Grades",
         "Seasons Played",
         "First Season",
         "Latest Season",
@@ -1348,7 +1394,23 @@ def render_all_time_detail_table(table: pd.DataFrame) -> None:
 
 def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
-    integer_columns = {"Seasons Played", "Matches", "Runs", "50s", "100s", "Wickets", "5WI", "Catches", "Stumpings", "Run Outs", "Dismissals"}
+    integer_columns = {
+        "Seasons Played",
+        "Matches",
+        "Runs",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Wickets",
+        "Maidens",
+        "5WI",
+        "Catches",
+        "Stumpings",
+        "Run Outs",
+        "Dismissals",
+    }
     decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Econ", "Bowl SR"}
     for column in output.columns:
         if column in integer_columns:
@@ -1787,6 +1849,8 @@ def build_player_season_table(
         row = {
             "Season": season,
             "Teams/Grades": player_teams_grades([bat, bowl, field]),
+            "Teams": player_teams([bat, bowl, field]),
+            "Grades": player_grades([bat, bowl, field]),
             "Matches": player_match_total([bat, bowl, field]),
             "Innings": sum_column(bat, "battingInnings"),
             "Runs": sum_column(bat, "battingAggregate"),
@@ -1795,8 +1859,8 @@ def build_player_season_table(
             "50s": sum_column(bat, "batting50s"),
             "100s": sum_column(bat, "batting100s"),
             "0s": sum_column(bat, "batting0s"),
-            "4s": sum_column(bat, "batting4s"),
-            "6s": sum_column(bat, "batting6s"),
+            "4s": sum_column(bat, "battingFours"),
+            "6s": sum_column(bat, "battingSixes"),
             "Wickets": sum_column(bowl, "bowlingWickets"),
             "Runs Against": sum_column(bowl, "bowlingRuns"),
             "Balls Bowled": sum_column(bowl, "bowlingBalls"),
@@ -1852,8 +1916,8 @@ def build_player_grade_table(
             "50s": sum_column(bat, "batting50s"),
             "100s": sum_column(bat, "batting100s"),
             "0s": sum_column(bat, "batting0s"),
-            "4s": sum_column(bat, "batting4s"),
-            "6s": sum_column(bat, "batting6s"),
+            "4s": sum_column(bat, "battingFours"),
+            "6s": sum_column(bat, "battingSixes"),
             "Wickets": sum_column(bowl, "bowlingWickets"),
             "Runs Against": sum_column(bowl, "bowlingRuns"),
             "Balls Bowled": sum_column(bowl, "bowlingBalls"),
@@ -2117,23 +2181,35 @@ def render_player_average_trends(chart_data: pd.DataFrame) -> None:
         return
     average_data = pd.DataFrame(rows).sort_values("Season", key=lambda series: series.map(profile_season_sort_key))
     average_data["Rolling Average"] = average_data.groupby("Metric")["Average"].transform(lambda series: series.rolling(3, min_periods=1).mean())
-    with st.container(key="profile_chart_averages"):
-        st.markdown('<div class="profile-chart-title">Rolling Average Trends</div>', unsafe_allow_html=True)
-        chart = (
-            alt.Chart(average_data)
-            .mark_line(point=alt.OverlayMarkDef(size=60, filled=True), strokeWidth=3)
-            .encode(
-                x=alt.X("Season:N", sort=list(chart_data["Season"]), axis=alt.Axis(labelAngle=-35, labelColor="#737998", title=None)),
-                y=alt.Y("Rolling Average:Q", axis=alt.Axis(grid=True, gridColor="#EEF0F7", labelColor="#737998", title=None)),
-                color=alt.Color(
-                    "Metric:N",
-                    scale=alt.Scale(domain=["Batting average", "Bowling average"], range=["#6D4DFF", "#10B981"]),
-                    legend=alt.Legend(orient="top", title=None, labelColor="#555b78"),
-                ),
-                tooltip=[alt.Tooltip("Season:N"), alt.Tooltip("Metric:N"), alt.Tooltip("Rolling Average:Q", format=".2f"), alt.Tooltip("Average:Q", format=".2f")],
-            )
-            .properties(height=260)
+    columns = st.columns(2)
+    for column, metric, title, color, key in [
+        (columns[0], "Batting average", "Rolling Batting Average", "#6D4DFF", "profile_chart_batting_average"),
+        (columns[1], "Bowling average", "Rolling Bowling Average", "#10B981", "profile_chart_bowling_average"),
+    ]:
+        metric_data = average_data[average_data["Metric"] == metric].copy()
+        if metric_data.empty:
+            continue
+        with column:
+            render_filled_average_chart(metric_data, chart_data["Season"].tolist(), title, color, key)
+
+
+def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], title: str, color: str, key: str) -> None:
+    with st.container(key=key):
+        st.markdown(f'<div class="profile-chart-title">{html.escape(title)}</div>', unsafe_allow_html=True)
+        base = alt.Chart(data).encode(
+            x=alt.X("Season:N", sort=season_order, axis=alt.Axis(labelAngle=-35, labelColor="#737998", title=None)),
+            y=alt.Y("Rolling Average:Q", axis=alt.Axis(grid=True, gridColor="#EEF0F7", labelColor="#737998", title=None)),
+            tooltip=[
+                alt.Tooltip("Season:N"),
+                alt.Tooltip("Rolling Average:Q", title="Rolling avg.", format=".2f"),
+                alt.Tooltip("Average:Q", title="Season avg.", format=".2f"),
+            ],
         )
+        chart = (
+            base.mark_area(color=color, opacity=0.15, interpolate="monotone")
+            + base.mark_line(color=color, strokeWidth=3, interpolate="monotone")
+            + base.mark_point(color=color, filled=True, size=58)
+        ).properties(height=235)
         st.altair_chart(chart, use_container_width=True)
 
 
@@ -2319,16 +2395,22 @@ def player_teams_grades(frames: list[pd.DataFrame]) -> str:
 
 
 def player_profile_team_summary(season_table: pd.DataFrame, max_seasons: int = 5) -> str:
-    if season_table.empty or "Season" not in season_table or "Teams/Grades" not in season_table:
+    if season_table.empty or "Season" not in season_table:
         return "—"
     rows = season_table.copy()
     rows = rows.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
     parts = []
     for _, row in rows.head(max_seasons).iterrows():
         season = clean_profile_season_label(row.get("Season", ""))
-        teams = clean_profile_team_grade_text(row.get("Teams/Grades", ""))
-        if season and teams and teams != "—":
-            parts.append(f"{season}: {teams}")
+        teams = clean_profile_team_grade_text(row.get("Teams", ""))
+        grades = clean_profile_team_grade_text(row.get("Grades", ""))
+        detail_parts = []
+        if teams and teams != "—":
+            detail_parts.append(f"Teams: {teams}")
+        if grades and grades != "—":
+            detail_parts.append(f"Grades: {grades}")
+        if season and detail_parts:
+            parts.append(f"{season}: {' · '.join(detail_parts)}")
     remaining = max(0, rows["Season"].dropna().astype(str).nunique() - len(parts))
     if remaining:
         parts.append(f"+ {remaining} more season{'s' if remaining != 1 else ''}")
@@ -2342,12 +2424,8 @@ def clean_profile_season_label(value: object) -> str:
 def clean_profile_grade_from_row(row: pd.Series) -> str:
     team = clean_profile_team_label(row.get("team_name", ""))
     grade = clean_profile_grade_label(row.get("grade_name", ""))
-    if team and grade:
-        team_compare = team.casefold()
-        grade_compare = grade.casefold()
-        if grade_compare in team_compare or team_compare in grade_compare:
-            return team if len(team) >= len(grade) else grade
-        return f"{team} - {grade}"
+    if grade:
+        return grade
     return team or grade or "Unknown grade"
 
 
@@ -2399,8 +2477,24 @@ def player_teams(frames: list[pd.DataFrame]) -> str:
     labels = []
     for frame in frames:
         if not frame.empty and "team_name" in frame:
-            for value in frame["team_name"].dropna().astype(str):
-                label = compact_team_label(value)
+            for _, row in frame.dropna(subset=["team_name"]).iterrows():
+                label = clean_profile_team_label(row.get("team_name", ""))
+                grade = clean_profile_grade_label(row.get("grade_name", ""))
+                if grade and label and (
+                    label.casefold() in grade.casefold() or grade.casefold() in label.casefold()
+                ):
+                    continue
+                if label and label not in labels:
+                    labels.append(label)
+    return ", ".join(labels) if labels else "—"
+
+
+def player_grades(frames: list[pd.DataFrame]) -> str:
+    labels = []
+    for frame in frames:
+        if not frame.empty and "grade_name" in frame:
+            for value in frame["grade_name"].dropna().astype(str):
+                label = clean_profile_grade_label(value)
                 if label and label not in labels:
                     labels.append(label)
     return ", ".join(labels) if labels else "—"
@@ -2473,10 +2567,13 @@ def best_high_score(df: pd.DataFrame) -> str:
 def best_high_score_row(df: pd.DataFrame) -> pd.Series:
     if df.empty or "battingHighScore" not in df:
         return pd.Series(dtype="object")
-    scores = pd.to_numeric(df["battingHighScore"], errors="coerce")
-    if not scores.notna().any():
+    output = df.copy()
+    output["_score_sort"] = pd.to_numeric(output["battingHighScore"], errors="coerce")
+    if not output["_score_sort"].notna().any():
         return pd.Series(dtype="object")
-    return df.loc[scores.idxmax()]
+    output["_not_out_sort"] = output["isBattingHSNotOut"].map(as_bool) if "isBattingHSNotOut" in output else False
+    output = output.sort_values(["_score_sort", "_not_out_sort"], ascending=[False, False])
+    return df.loc[output.index[0]]
 
 
 def best_bowling_value(df: pd.DataFrame) -> str:

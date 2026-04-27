@@ -593,6 +593,7 @@ def inject_theme() -> None:
             overflow: visible;
             padding: 0;
             text-transform: uppercase;
+            transform: translateY(-2px);
             white-space: nowrap;
         }
 
@@ -605,8 +606,9 @@ def inject_theme() -> None:
             gap: 12px;
             justify-content: flex-start;
             line-height: 1.35;
-            margin: 12px 0 0;
+            margin: 8px 0 0;
             padding-left: 0;
+            transform: translateY(-2px);
         }
 
         .filter-context-line > span:first-child {
@@ -1533,7 +1535,8 @@ def inject_theme() -> None:
 
         div.st-key-profile_chart_runs,
         div.st-key-profile_chart_wickets,
-        div.st-key-profile_chart_averages {
+        div.st-key-profile_chart_batting_average,
+        div.st-key-profile_chart_bowling_average {
             background: #ffffff;
             border: 1px solid #e9ebf4;
             border-radius: 18px;
@@ -1545,7 +1548,8 @@ def inject_theme() -> None:
 
         div.st-key-profile_chart_runs iframe,
         div.st-key-profile_chart_wickets iframe,
-        div.st-key-profile_chart_averages iframe {
+        div.st-key-profile_chart_batting_average iframe,
+        div.st-key-profile_chart_bowling_average iframe {
             max-width: 100%;
         }
 
@@ -1644,7 +1648,7 @@ def inject_theme() -> None:
             font-size: 0.72rem;
             font-weight: 900;
             letter-spacing: 0.04em;
-            text-transform: uppercase;
+            text-transform: none;
         }
 
         .record-player {

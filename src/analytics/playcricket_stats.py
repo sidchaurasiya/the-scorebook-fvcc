@@ -12,8 +12,16 @@ def format_high_score(row: pd.Series) -> str:
     if pd.isna(score):
         return "-"
 
-    suffix = "*" if bool(row.get("isBattingHSNotOut")) else ""
+    suffix = "*" if _as_bool(row.get("isBattingHSNotOut")) else ""
     return f"{int(score)}{suffix}"
+
+
+def _as_bool(value: object) -> bool:
+    if pd.isna(value):
+        return False
+    if isinstance(value, str):
+        return value.strip().casefold() in {"true", "1", "yes", "y", "not out", "notout"}
+    return bool(value)
 
 
 def add_batting_display_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -159,10 +167,13 @@ def _best_batting_score(group: pd.DataFrame) -> dict[str, object]:
     if not scores.notna().any():
         return {}
 
-    best_index = scores.idxmax()
+    sort_frame = group.copy()
+    sort_frame["_score_sort"] = scores
+    sort_frame["_not_out_sort"] = group["isBattingHSNotOut"].map(_as_bool) if "isBattingHSNotOut" in group else False
+    best_index = sort_frame.sort_values(["_score_sort", "_not_out_sort"], ascending=[False, False]).index[0]
     is_not_out = False
     if "isBattingHSNotOut" in group:
-        is_not_out = bool(group.loc[best_index, "isBattingHSNotOut"])
+        is_not_out = _as_bool(group.loc[best_index, "isBattingHSNotOut"])
 
     return {
         "battingHighScore": scores.loc[best_index],
