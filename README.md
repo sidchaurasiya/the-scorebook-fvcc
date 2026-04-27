@@ -1,95 +1,16 @@
-# Cricket Club Analytics
+# FVCC Stats Hub
 
-A low-cost Streamlit analytics dashboard for local cricket clubs.
+A Streamlit cricket analytics dashboard for Fiji Victorian Cricket Club.
 
-## Step 1: Project setup + basic Streamlit app scaffold
+The MVP uses locally backed-up PlayCricket Australia public data to power:
 
-This step creates the initial runnable application shell:
+- Overview dashboard for the current season
+- Hall of Fame all-time club records
+- Near Milestone career watchlists
+- Player Profile career summaries
+- Canonical player identity mapping for duplicate PlayCricket profiles
 
-- Streamlit entry point
-- Modular UI folder
-- Sidebar filter placeholders
-- Dashboard tabs for leaderboards, milestones, records, and trends
-- PlayHQ API and public-page scraping starter modules
-- Dependency file for local setup and Streamlit Cloud
-
-## Data strategy
-
-The scalable path is:
-
-1. Use PlayCricket public stats endpoints for data already visible without login.
-2. Use PlayHQ public APIs when an official API key is available.
-3. Use public-page scraping only where an endpoint is not available.
-4. Store/cache cleaned results later so dashboards do not repeatedly hit PlayCricket pages.
-
-Do not scrape private pages, logged-in pages, or hidden participant data.
-
-## Current PlayCricket discovery
-
-The public team stats pages load JSON from Cricket Australia's public proxy:
-
-```text
-https://grassrootsapiproxy.cricket.com.au
-```
-
-The app currently supports these public stats categories:
-
-- `batting`
-- `bowling`
-- `fielding`
-- `championPlayer`
-
-## Local-first PlayCricket backup
-
-The app now keeps a durable local backup under `data/`:
-
-```text
-data/
-├── raw/          # timestamped raw PlayCricket responses
-├── processed/    # dashboard-ready CSV files
-├── cache/        # local response cache to avoid repeated API calls
-├── exports/      # reserved for generated exports
-└── metadata.json # refresh summary, source endpoints, counts, failures
-```
-
-Normal dashboard use reads `data/processed/` first and does not call PlayCricket
-when a local backup exists. Use the sidebar `Refresh PlayCricket Data` control
-sparingly; it adds polite delays, retries failures with backoff, saves raw
-responses, and updates `data/metadata.json`.
-
-Public aggregate stats are available for all discovered club seasons. Public
-match/result/scorecard endpoints were not available without API access during
-implementation, so stable empty processed tables are created for those future
-fields.
-
-Example source URL:
-
-```text
-https://play.cricket.com.au/grade/c0420577-837e-46d9-80ed-79a16e4e67cb?tab=stats&teamId=fa410898-8244-46e6-a9c6-d02e6dd1b8b5&category=batting
-```
-
-## Folder structure
-
-```text
-.
-├── app.py
-├── requirements.txt
-├── README.md
-├── .streamlit
-│   └── secrets.toml.example
-└── src
-    ├── __init__.py
-    ├── config.py
-    ├── data
-    │   ├── __init__.py
-    │   ├── playhq_api.py
-    │   └── public_scraper.py
-    └── ui
-        ├── __init__.py
-        └── layout.py
-```
-
-## Run locally
+## Run Locally
 
 Create and activate a virtual environment:
 
@@ -104,32 +25,67 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-If you have a PlayHQ public API key, copy the example secrets file:
-
-```bash
-cp .streamlit/secrets.toml.example .streamlit/secrets.toml
-```
-
-Then edit `.streamlit/secrets.toml` and add your key:
-
-```toml
-PLAYHQ_API_KEY = "your-key-here"
-PLAYHQ_TENANT = "ca"
-PLAYHQ_BASE_URL = "https://api.playhq.com"
-```
-
 Start the app:
 
 ```bash
 streamlit run app.py
 ```
 
-Then open the local URL Streamlit prints in your terminal, usually:
+Streamlit will print a local URL, usually:
 
 ```text
 http://localhost:8501
 ```
 
-## Next step
+## Deployment Notes
 
-Step 2 should use a real public club/team/grade URL to discover the IDs and response shapes we need.
+Main entry file:
+
+```text
+app.py
+```
+
+The app is designed for Streamlit Cloud. Push this repository to GitHub, then create a Streamlit Cloud app pointing at `app.py`.
+
+The MVP is local-data-first. It reads dashboard-ready files from:
+
+```text
+data/processed/
+```
+
+The committed `data/` folder includes the local backup needed for the beta dashboard to load without calling the live PlayCricket endpoints during normal app usage.
+
+Do not commit real secrets. Local secrets belong in:
+
+```text
+.streamlit/secrets.toml
+```
+
+That file is ignored by Git. A safe template is available at:
+
+```text
+.streamlit/secrets.toml.example
+```
+
+## Data Folders
+
+```text
+data/
+├── raw/          # backed-up public PlayCricket responses
+├── processed/    # dashboard-ready CSV files used by the app
+├── cache/        # local response cache, ignored by Git
+├── backups/      # alias/identity backup files
+└── metadata.json # refresh summary and source metadata
+```
+
+## Known MVP Limitations
+
+- The beta is FVCC-specific.
+- Normal app usage reads local processed files; live refresh should be used sparingly.
+- Public PlayCricket data can contain duplicate player profiles, so all-time views depend on the editable player alias mapping in `data/player_aliases.csv`.
+- Some historical fields are incomplete or inconsistent across older seasons.
+- Batting strike rate is treated as reliable only from Summer 2024/25 onwards.
+
+## Credits
+
+Created by Siddhanth Chaurasiya & Preet Kaur.

@@ -95,8 +95,8 @@ def render_sidebar() -> str:
     st.sidebar.markdown(
         """
         <div class="side-footer">
-            <div>Data provided by</div>
-            <strong>PlayCricket</strong>
+            <div>Created by</div>
+            <strong>Siddhanth Chaurasiya &amp; Preet Kaur</strong>
         </div>
         """,
         unsafe_allow_html=True,
@@ -3241,7 +3241,7 @@ def render_context_line(dashboard_data: dict[str, object]) -> None:
         f"""
         <div class="context-line">
             <span>{html.escape(str(dashboard_data["context_description"]))}</span>
-            <span class="source-note">Source: PlayCricket Australia</span>
+            <span class="source-note">Created by Siddhanth Chaurasiya &amp; Preet Kaur</span>
         </div>
         """,
         unsafe_allow_html=True,
