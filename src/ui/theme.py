@@ -461,13 +461,13 @@ def inject_theme() -> None:
 
         .block-container:has(.hall-of-fame-page) .page-title {
             font-size: clamp(2.8rem, 3.6vw, 3.75rem);
-            margin: 0 0 6px;
+            margin: 0 0 4px;
         }
 
         .block-container:has(.hall-of-fame-page) .club-label {
             color: #5B3DF5;
-            font-weight: 500;
-            margin: 0 0 10px;
+            font-weight: 800;
+            margin: 0 0 8px;
         }
 
         .block-container:has(.hall-of-fame-page) .page-subtitle {

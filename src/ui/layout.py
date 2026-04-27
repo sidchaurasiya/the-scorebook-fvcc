@@ -786,6 +786,7 @@ def build_all_time_player_table(
                 "bowlingBestInnings",
                 "bowlingMaidens",
                 "bowling5WIs",
+                "bowling10WMs",
             ],
         ),
         (
@@ -840,6 +841,7 @@ def build_all_time_player_table(
             "bowlingBestInnings": "BBI",
             "bowlingMaidens": "Maidens",
             "bowling5WIs": "5WI",
+            "bowling10WMs": "10 Wicket Match",
             "catches_display": "Catches",
             "stumpings_display": "Stumpings",
             "run_outs_display": "Run Outs",
@@ -1221,6 +1223,7 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
         row = {
             "player": player,
             "season": season,
+            "matches": sum_column(group, "matches"),
             "runs": runs,
             "innings": innings,
             "average": divide_or_none(runs, outs),
@@ -1258,6 +1261,7 @@ def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
         row = {
             "player": player,
             "season": season,
+            "matches": sum_column(group, "matches"),
             "wickets": wickets,
             "overs": format_balls_as_overs(balls) if balls else "—",
             "maidens": sum_column(group, "bowlingMaidens"),
@@ -1278,6 +1282,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
     if mode == "batting":
         primary = f'{format_int(row["runs"])} runs'
         chips = [
+            ("Matches", format_int(row["matches"])),
             ("Inns", format_int(row["innings"])),
             ("Avg", format_decimal(row["average"])),
             ("SR", format_decimal(row["strike_rate"])),
@@ -1290,6 +1295,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
     else:
         primary = f'{format_int(row["wickets"])} wickets'
         chips = [
+            ("Matches", format_int(row["matches"])),
             ("Overs", str(row["overs"])),
             ("Mdns", format_int(row["maidens"])),
             ("Avg", format_decimal(row["average"])),
@@ -1472,6 +1478,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "BBI",
         "Maidens",
         "5WI",
+        "10 Wicket Match",
     ]
     table = select_display_columns(all_time, columns).copy()
     if "BBI" in table:
@@ -1611,6 +1618,7 @@ def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
         "Wickets",
         "Maidens",
         "5WI",
+        "10 Wicket Match",
         "Catches",
         "Stumpings",
         "Run Outs",
@@ -1648,6 +1656,7 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
         "Wickets",
         "Maidens",
         "5WI",
+        "10 Wicket Match",
         "Catches",
         "Stumpings",
         "Run Outs",
