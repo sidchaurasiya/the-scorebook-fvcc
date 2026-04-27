@@ -1160,10 +1160,10 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
         ("Most 100s", "100s", "hundreds"),
         ("Most 50s", "50s", "fifties"),
         ("5 Wicket Hauls", "5WI", "five-wicket hauls"),
-        ("Ducks", "0s", "ducks"),
-        ("Most maidens", "Maidens", "maidens"),
         ("Most 4s", "4s", "fours"),
         ("Most 6s", "6s", "sixes"),
+        ("Most Maidens", "Maidens", "maidens"),
+        ("Ducks", "0s", "ducks"),
     ]:
         if metric not in all_time:
             continue
