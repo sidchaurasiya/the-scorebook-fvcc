@@ -1,0 +1,31 @@
+{
+  "teams": [
+    {
+      "id": "23d5187b-f9ca-48c1-945c-99bdd3ebe657",
+      "name": "North Division",
+      "grade": {
+        "id": "0be03d8c-563f-4dc0-b15c-c3875392fd77",
+        "name": "North Division",
+        "owningOrganisation": {
+          "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+          "name": "Mid Year Cricket Association",
+          "shortName": "MYCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "0be03d8c-563f-4dc0-b15c-c3875392fd77",
+          "name": "North Division",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+            "name": "Mid Year Cricket Association",
+            "shortName": "MYCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

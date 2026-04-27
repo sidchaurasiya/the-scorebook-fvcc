@@ -1,0 +1,31 @@
+{
+  "teams": [
+    {
+      "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+      "name": "Winter XI",
+      "grade": {
+        "id": "8660310e-7b12-4dce-b777-d533d35bd8ff",
+        "name": "North Division",
+        "owningOrganisation": {
+          "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+          "name": "Mid Year Cricket Association",
+          "shortName": "MYCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "8660310e-7b12-4dce-b777-d533d35bd8ff",
+          "name": "North Division",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+            "name": "Mid Year Cricket Association",
+            "shortName": "MYCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

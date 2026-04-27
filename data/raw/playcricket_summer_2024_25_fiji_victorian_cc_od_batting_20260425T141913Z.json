@@ -1,0 +1,961 @@
+[
+  {
+    "id": "fa1b6803-3b25-4211-b5aa-d1ea9168d018",
+    "name": "Datta, Aryan",
+    "shortName": "A Datta",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 9,
+      "battingInnings": 8,
+      "battingAggregate": 178,
+      "battingNotOuts": 2,
+      "battingBallsFaced": 47,
+      "batting50s": 2,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 53,
+      "isBattingHSNotOut": true,
+      "battingAverage": 29.67,
+      "battingStrikeRate": 378.72,
+      "battingFours": 10,
+      "battingSixes": 2,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "8cc72ac1-93ab-43ad-a24f-fdcbf14da6a2",
+    "name": "Tomy, Kiran",
+    "shortName": "K Tomy",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "battingInnings": 7,
+      "battingAggregate": 100,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 56,
+      "batting50s": 1,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 52,
+      "isBattingHSNotOut": true,
+      "battingAverage": 16.67,
+      "battingStrikeRate": 178.57,
+      "battingFours": 7,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "f6dd9552-fbc5-4490-ac27-b50ff948f8f5",
+    "name": "Tomar, Priyanshu",
+    "shortName": "P Tomar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 3,
+      "battingAggregate": 69,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 110,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 45,
+      "isBattingHSNotOut": false,
+      "battingAverage": 23.0,
+      "battingStrikeRate": 62.73,
+      "battingFours": 8,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "cefd9f7d-2787-4b4c-9a13-4e1d0d434ff8",
+    "name": "vadapalli, Siddhesh Jitendrabhai",
+    "shortName": "S vadapalli",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 3,
+      "battingAggregate": 68,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 54,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 34,
+      "isBattingHSNotOut": false,
+      "battingAverage": 22.67,
+      "battingStrikeRate": 125.93,
+      "battingFours": 6,
+      "battingSixes": 1,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+    "name": "Suravajjula, Rama",
+    "shortName": "R Suravajjula",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "battingInnings": 5,
+      "battingAggregate": 66,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 90,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 21,
+      "isBattingHSNotOut": false,
+      "battingAverage": 13.2,
+      "battingStrikeRate": 73.33,
+      "battingFours": 8,
+      "battingSixes": 1,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "8d77f192-0a63-4d5e-9ad4-7c4420a3a44e",
+    "name": "Nair, Yash",
+    "shortName": "Y Nair",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 3,
+      "battingAggregate": 61,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 41,
+      "isBattingHSNotOut": false,
+      "battingAverage": 20.33,
+      "battingFours": 8,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "7b92ef0e-f100-4c46-8f95-2dd4d29654d6",
+    "name": "Hassan, Feroz",
+    "shortName": "F Hassan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "battingInnings": 3,
+      "battingAggregate": 55,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 19,
+      "batting50s": 1,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 51,
+      "isBattingHSNotOut": true,
+      "battingAverage": 27.5,
+      "battingStrikeRate": 289.47,
+      "battingFours": 8,
+      "battingSixes": 1,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "7cccf3c2-52d5-4dfc-91c8-9664f27ac72b",
+    "name": "Bhan, Jai",
+    "shortName": "J Bhan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 53,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 1,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 53,
+      "isBattingHSNotOut": true,
+      "battingFours": 8,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "c3a31191-6c5e-438e-9288-354845031832",
+    "name": "Thomas, Abcin",
+    "shortName": "A Thomas",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 53,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 1,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 53,
+      "isBattingHSNotOut": true,
+      "battingFours": 4,
+      "battingSixes": 2,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "dcbfab3f-24d3-4add-be5d-6946adb5d18b",
+    "name": "Bhan, Kieran",
+    "shortName": "K Bhan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 48,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 48,
+      "isBattingHSNotOut": false,
+      "battingAverage": 48.0,
+      "battingFours": 2,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "162cce2f-a5bb-451f-ab68-d7a037f018ee",
+    "name": "Frew, Benjamin",
+    "shortName": "B Frew",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "battingInnings": 2,
+      "battingAggregate": 38,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 58,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 25,
+      "isBattingHSNotOut": false,
+      "battingAverage": 19.0,
+      "battingStrikeRate": 65.52,
+      "battingFours": 6,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "e5bc75aa-b94d-482e-b9f0-df9828edd3ff",
+    "name": "Patel, Ved",
+    "shortName": "V Patel",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 10,
+      "battingInnings": 9,
+      "battingAggregate": 33,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 22,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 2,
+      "battingHighScore": 9,
+      "isBattingHSNotOut": false,
+      "battingAverage": 3.67,
+      "battingStrikeRate": 150.0,
+      "battingFours": 2,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "1213eb90-9ab2-42db-b52a-865b0dfa7ea3",
+    "name": "Sharma, Ashish",
+    "shortName": "A Sharma",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 3,
+      "battingAggregate": 30,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 46,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 2,
+      "battingHighScore": 30,
+      "isBattingHSNotOut": false,
+      "battingAverage": 10.0,
+      "battingStrikeRate": 65.22,
+      "battingFours": 7,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "98be31d5-daf2-437b-8d94-e44170555a40",
+    "name": "Patil, Mayur",
+    "shortName": "M Patil",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 8,
+      "battingInnings": 6,
+      "battingAggregate": 28,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 17,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 10,
+      "isBattingHSNotOut": false,
+      "battingAverage": 4.67,
+      "battingStrikeRate": 164.71,
+      "battingFours": 3,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+    "name": "Chaurasiya, Siddhanth",
+    "shortName": "S Chaurasiya",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "battingInnings": 3,
+      "battingAggregate": 22,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 61,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 2,
+      "battingHighScore": 22,
+      "isBattingHSNotOut": false,
+      "battingAverage": 7.33,
+      "battingStrikeRate": 36.07,
+      "battingFours": 2,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "6b504af3-d693-4201-bc6b-9414a4b56a6b",
+    "name": "Sharma, Deepak",
+    "shortName": "D Sharma",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "battingInnings": 4,
+      "battingAggregate": 20,
+      "battingNotOuts": 2,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 9,
+      "isBattingHSNotOut": false,
+      "battingAverage": 10.0,
+      "battingFours": 3,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "a0711994-f960-4c71-bea5-c9dd9f3edd83",
+    "name": "Naik, Bikash",
+    "shortName": "B Naik",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 3,
+      "battingAggregate": 20,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 30,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 11,
+      "isBattingHSNotOut": false,
+      "battingAverage": 6.67,
+      "battingStrikeRate": 66.67,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "f8d8264c-82d2-45e3-b23b-345d1938b09d",
+    "name": "Villella, Luca",
+    "shortName": "L Villella",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 2,
+      "battingAggregate": 19,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 17,
+      "isBattingHSNotOut": true,
+      "battingAverage": 19.0,
+      "battingFours": 3,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "71ca36a8-b853-449e-b7fd-ac601222e885",
+    "name": "Nallepalli, Kartik",
+    "shortName": "K Nallepalli",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 17,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 11,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 17,
+      "isBattingHSNotOut": true,
+      "battingStrikeRate": 154.55,
+      "battingFours": 2,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "c32081a0-d09b-4da6-941d-0e89680da2a6",
+    "name": "Kumar, Aman",
+    "shortName": "A Kumar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 16,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 16,
+      "isBattingHSNotOut": true,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "17d58ef7-cae1-444e-adba-71c74067872b",
+    "name": "Rahate, Prasad",
+    "shortName": "P Rahate",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "battingInnings": 2,
+      "battingAggregate": 15,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 9,
+      "isBattingHSNotOut": false,
+      "battingAverage": 7.5,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "7cffb99e-40e6-4c91-846f-2e5b755ecd0a",
+    "name": "Mohan, Mayur",
+    "shortName": "M Mohan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "battingInnings": 2,
+      "battingAggregate": 15,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 33,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 11,
+      "isBattingHSNotOut": false,
+      "battingAverage": 7.5,
+      "battingStrikeRate": 45.45,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "d85e62da-da5e-4829-b59d-2c857218554f",
+    "name": "Singh, Ricky",
+    "shortName": "R Singh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "battingInnings": 5,
+      "battingAggregate": 15,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 23,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 6,
+      "isBattingHSNotOut": false,
+      "battingAverage": 3.0,
+      "battingStrikeRate": 65.22,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "8a856bda-2a2c-416f-948f-f80829c83646",
+    "name": "Srinivasan, Padmanabhan",
+    "shortName": "P Srinivasan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 11,
+      "battingInnings": 7,
+      "battingAggregate": 11,
+      "battingNotOuts": 2,
+      "battingBallsFaced": 26,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 3,
+      "battingHighScore": 5,
+      "isBattingHSNotOut": false,
+      "battingAverage": 2.2,
+      "battingStrikeRate": 42.31,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "0ae1d4fd-a68b-4131-9403-d1ecdd947553",
+    "name": "Naidu, Vinit",
+    "shortName": "V Naidu",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 10,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 10,
+      "isBattingHSNotOut": false,
+      "battingAverage": 10.0,
+      "battingFours": 2,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "540fd2e3-f2b3-4b62-b7d1-21f9ee3b338f",
+    "name": "Villella, Lou",
+    "shortName": "L Villella",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 8,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 8,
+      "isBattingHSNotOut": false,
+      "battingAverage": 8.0,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "20e2469f-0c92-40e6-b998-aac22a64a0ee",
+    "name": "Kolak, Joshua",
+    "shortName": "J Kolak",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "battingInnings": 2,
+      "battingAggregate": 7,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 7,
+      "isBattingHSNotOut": false,
+      "battingAverage": 7.0,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "3f862060-4795-4936-9f1d-dfacd2aa1639",
+    "name": "Ravi, chowdary",
+    "shortName": "c Ravi",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 4,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 4,
+      "isBattingHSNotOut": true,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "6247e610-2352-42dc-8154-5d7947cbefc4",
+    "name": "Sharma, Siddhant",
+    "shortName": "S Sharma",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "battingInnings": 2,
+      "battingAggregate": 4,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 4,
+      "isBattingHSNotOut": false,
+      "battingAverage": 2.0,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "ad51ee65-d0d9-465d-a097-6d5a9971d4fd",
+    "name": "Pusalkar, Rajan",
+    "shortName": "R Pusalkar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 4,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 6,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 4,
+      "isBattingHSNotOut": false,
+      "battingAverage": 4.0,
+      "battingStrikeRate": 66.67,
+      "battingFours": 1,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "29fa7ac2-20bd-41e8-a9d3-24a22bb639c7",
+    "name": "Kaluvakolanu, Dhruva",
+    "shortName": "D Kaluvakolanu",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "battingInnings": 1,
+      "battingAggregate": 1,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 1,
+      "isBattingHSNotOut": false,
+      "battingAverage": 1.0,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "ae261d51-9af8-4123-b965-4adda74aafc6",
+    "name": "Joseph, Jacob",
+    "shortName": "J Joseph",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 0,
+      "battingInnings": 0,
+      "battingAggregate": 0,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": false,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "661bdd19-e67a-4978-a255-36e16789ab1f",
+    "name": "Tanwar, Nitin",
+    "shortName": "N Tanwar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 0,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": false,
+      "battingAverage": 0.0,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "8817f6bc-348d-4f63-81c9-deefc3b714ff",
+    "name": "Syed, Wajhi",
+    "shortName": "W Syed",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 0,
+      "battingAggregate": 0,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": false,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "9d023e5e-b9b1-4173-92d8-09bb92861fb0",
+    "name": "Dominic, Jacob",
+    "shortName": "J Dominic",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "battingInnings": 1,
+      "battingAggregate": 0,
+      "battingNotOuts": 1,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": true,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "ab033f7b-82e2-4044-b0cb-9024cf56db51",
+    "name": "Sharan, Reuel",
+    "shortName": "R Sharan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 0,
+      "battingAggregate": 0,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 0,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": false,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "56937634-1d93-464c-8d86-5bc4b124d33d",
+    "name": "Kadam, Pankaj",
+    "shortName": "P Kadam",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 0,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 0,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": false,
+      "battingAverage": 0.0,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  },
+  {
+    "id": "f4eec6b0-c7ff-4771-b4f1-8ea5865e1186",
+    "name": "Bodele, Akshat",
+    "shortName": "A Bodele",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "battingInnings": 1,
+      "battingAggregate": 0,
+      "battingNotOuts": 0,
+      "battingBallsFaced": 2,
+      "batting50s": 0,
+      "batting100s": 0,
+      "batting0s": 1,
+      "battingHighScore": 0,
+      "isBattingHSNotOut": false,
+      "battingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "battingFours": 0,
+      "battingSixes": 0,
+      "battingMinutes": 0
+    }
+  }
+]

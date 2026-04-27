@@ -1,0 +1,595 @@
+[
+  {
+    "id": "bacb745b-1109-4ffc-b4ce-f53bf8c269ce",
+    "name": "Shabbir, Syed",
+    "shortName": "S Shabbir",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "bowlingWickets": 14,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 2,
+      "bowlingRuns": 117,
+      "bowlingBalls": 231,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "3-15",
+      "bowlingAverage": 8.36,
+      "bowlingStrikeRate": 16.5,
+      "bowlingEconomyRate": 3.04,
+      "bowlingWides": 8,
+      "bowlingNoBalls": 6
+    }
+  },
+  {
+    "id": "b0359b90-ca42-4a35-b0d1-46703899270f",
+    "name": "Buddaraju, Sai Krishna",
+    "shortName": "S Buddaraju",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "bowlingWickets": 11,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 5,
+      "bowlingRuns": 125,
+      "bowlingBalls": 228,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "3-16",
+      "bowlingAverage": 11.36,
+      "bowlingStrikeRate": 20.73,
+      "bowlingEconomyRate": 3.29,
+      "bowlingWides": 6,
+      "bowlingNoBalls": 7
+    }
+  },
+  {
+    "id": "556f25a2-15f6-4610-81e3-dadaab766856",
+    "name": "Sharma, Jimmy",
+    "shortName": "J Sharma",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "bowlingWickets": 9,
+      "bowlingWicketsUnassisted": 1,
+      "bowlingMaidens": 2,
+      "bowlingRuns": 147,
+      "bowlingBalls": 182,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "3-13",
+      "bowlingAverage": 16.33,
+      "bowlingStrikeRate": 20.22,
+      "bowlingEconomyRate": 4.85,
+      "bowlingWides": 11,
+      "bowlingNoBalls": 6
+    }
+  },
+  {
+    "id": "707aacb9-b718-4c33-b6cc-bb4a4944d195",
+    "name": "Mohammed, Ibad",
+    "shortName": "I Mohammed",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "bowlingWickets": 7,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 54,
+      "bowlingBalls": 84,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "4-20",
+      "bowlingAverage": 7.71,
+      "bowlingStrikeRate": 12.0,
+      "bowlingEconomyRate": 3.86,
+      "bowlingWides": 5,
+      "bowlingNoBalls": 2
+    }
+  },
+  {
+    "id": "6dafae49-e951-4b24-a74a-d5d1ab49db67",
+    "name": "Nauman, Muhammad",
+    "shortName": "M Nauman",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "bowlingWickets": 6,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 2,
+      "bowlingRuns": 111,
+      "bowlingBalls": 172,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "2-19",
+      "bowlingAverage": 18.5,
+      "bowlingStrikeRate": 28.67,
+      "bowlingEconomyRate": 3.87,
+      "bowlingWides": 13,
+      "bowlingNoBalls": 1
+    }
+  },
+  {
+    "id": "a71fb709-fed1-4051-a1e3-c93cb9f4884d",
+    "name": "Singh, Gagandip",
+    "shortName": "G Singh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "bowlingWickets": 5,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 43,
+      "bowlingBalls": 60,
+      "bowling5WIs": 1,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "5-37",
+      "bowlingAverage": 8.6,
+      "bowlingStrikeRate": 12.0,
+      "bowlingEconomyRate": 4.3,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 1
+    }
+  },
+  {
+    "id": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+    "name": "Suravajjula, Rama",
+    "shortName": "R Suravajjula",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "bowlingWickets": 3,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 2,
+      "bowlingRuns": 72,
+      "bowlingBalls": 90,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-2",
+      "bowlingAverage": 24.0,
+      "bowlingStrikeRate": 30.0,
+      "bowlingEconomyRate": 4.8,
+      "bowlingWides": 4,
+      "bowlingNoBalls": 3
+    }
+  },
+  {
+    "id": "de9355bb-27d0-4a45-a8b7-dc956d627dee",
+    "name": "gundapaneni, lakshman",
+    "shortName": "l gundapaneni",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 1,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 13,
+      "bowlingBalls": 12,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-13",
+      "bowlingAverage": 13.0,
+      "bowlingStrikeRate": 12.0,
+      "bowlingEconomyRate": 6.5,
+      "bowlingWides": 2,
+      "bowlingNoBalls": 1
+    }
+  },
+  {
+    "id": "e8ba8e6a-f654-4def-9abd-a37b607a6223",
+    "name": "Vadakkedath, Madhu",
+    "shortName": "M Vadakkedath",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 1,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 17,
+      "bowlingBalls": 12,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-17",
+      "bowlingAverage": 17.0,
+      "bowlingStrikeRate": 12.0,
+      "bowlingEconomyRate": 8.5,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "7aca23a5-1c8e-4b9a-8fca-4671ef8b67b0",
+    "name": "Kikani, Tanishq",
+    "shortName": "T Kikani",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "bowlingWickets": 1,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 2,
+      "bowlingRuns": 22,
+      "bowlingBalls": 54,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-11",
+      "bowlingAverage": 22.0,
+      "bowlingStrikeRate": 54.0,
+      "bowlingEconomyRate": 2.44,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 3
+    }
+  },
+  {
+    "id": "b3b52283-bba3-41bc-8dea-fe249e5487b3",
+    "name": "Parvathyraj, Arun",
+    "shortName": "A Parvathyraj",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "bowlingWickets": 1,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 32,
+      "bowlingBalls": 12,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-10",
+      "bowlingAverage": 32.0,
+      "bowlingStrikeRate": 12.0,
+      "bowlingEconomyRate": 16.0,
+      "bowlingWides": 4,
+      "bowlingNoBalls": 2
+    }
+  },
+  {
+    "id": "811c797d-f2dc-4eeb-bfd0-3c2cd719c5ab",
+    "name": "Subedi, Dinesh",
+    "shortName": "D Subedi",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "bowlingWickets": 1,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 42,
+      "bowlingBalls": 54,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-11",
+      "bowlingAverage": 42.0,
+      "bowlingStrikeRate": 54.0,
+      "bowlingEconomyRate": 4.67,
+      "bowlingWides": 4,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "9a2bd07c-c882-4bdc-8ff5-3146f05c1d1c",
+    "name": "reddy, sandeep",
+    "shortName": "s reddy",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "bowlingWickets": 1,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 53,
+      "bowlingBalls": 78,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "1-13",
+      "bowlingAverage": 53.0,
+      "bowlingStrikeRate": 78.0,
+      "bowlingEconomyRate": 4.08,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 2
+    }
+  },
+  {
+    "id": "661bdd19-e67a-4978-a255-36e16789ab1f",
+    "name": "Tanwar, Nitin",
+    "shortName": "N Tanwar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 5,
+      "bowlingBalls": 6,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-5",
+      "bowlingEconomyRate": 5.0,
+      "bowlingWides": 1,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "d36a9234-b2b2-44a0-9fa3-3e1527aa4b1c",
+    "name": "Kumar, Harish",
+    "shortName": "H Kumar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "dbf5720e-4932-4a9e-9fe2-ad3d3b2ce785",
+    "name": "Kapoor, Saurabh",
+    "shortName": "S Kapoor",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 11,
+      "bowlingBalls": 6,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingEconomyRate": 11.0,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "ad232d2b-5be6-4a32-8395-e7c46f5fa8f5",
+    "name": "De Silva, Shivanta",
+    "shortName": "S De Silva",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+    "name": "Sehra, Damandeep",
+    "shortName": "D Sehra",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "77325247-b12f-4379-9e84-a874b7a1e1c1",
+    "name": "kumar, lokesh",
+    "shortName": "l kumar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "a5f9b627-39ee-482d-9d0b-da17a0b19842",
+    "name": "raju, chaitanya",
+    "shortName": "c raju",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "5edab160-967a-44cd-86ca-2e728d312c9a",
+    "name": "Khan, Mohammed Faraz",
+    "shortName": "M Khan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "21fb394b-77a2-423d-8cee-7a8b2124e3e8",
+    "name": "Lama, Praveen",
+    "shortName": "P Lama",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 3,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 5,
+      "bowlingBalls": 6,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingEconomyRate": 5.0,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "ed2ec761-adc0-46b7-a4b3-d04c4d3974ae",
+    "name": "Khansili, Nitin",
+    "shortName": "N Khansili",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  },
+  {
+    "id": "0603b074-3c32-44d5-b65c-16ada78950c9",
+    "name": "Singh, Danny",
+    "shortName": "D Singh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 26,
+      "bowlingBalls": 42,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingEconomyRate": 3.71,
+      "bowlingWides": 0,
+      "bowlingNoBalls": 1
+    }
+  },
+  {
+    "id": "71ef9dbf-3692-4288-94d6-3030623bea83",
+    "name": "Mukhtar, Muhammad Anas",
+    "shortName": "M Mukhtar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "bowlingWickets": 0,
+      "bowlingWicketsUnassisted": 0,
+      "bowlingMaidens": 0,
+      "bowlingRuns": 0,
+      "bowlingBalls": 0,
+      "bowling5WIs": 0,
+      "bowling10WMs": 0,
+      "bowlingBestInnings": "0-0",
+      "bowlingWides": 0,
+      "bowlingNoBalls": 0
+    }
+  }
+]

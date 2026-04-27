@@ -1,0 +1,36 @@
+.venv/
+.venv-app/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Python caches and build output
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Streamlit/local runtime files
+.streamlit/cache/
+.streamlit/runtime/
+
+# Local app cache/temp output
+.cache/
+cache/
+data/cache/
+data/exports/
+tmp/
+temp/
+*.tmp
+*.log

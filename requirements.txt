@@ -1,0 +1,6 @@
+streamlit==1.44.1
+pandas==2.2.3
+altair==5.5.0
+requests==2.32.3
+beautifulsoup4==4.13.4
+lxml==5.3.2
