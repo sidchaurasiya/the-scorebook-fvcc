@@ -600,7 +600,7 @@ def render_hall_of_fame_page() -> None:
         <h1 class="page-title">Hall of Fame 🏆</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
         <div class="page-subtitle">The players who shaped the club’s history.</div>
-        <div class="page-note">Players with multiple PlayCricket profiles are merged into one club record.</div>
+        <div class="page-note">Players with multiple PlayCricket profiles are merged into one profile.</div>
         """,
         unsafe_allow_html=True,
     )
@@ -608,6 +608,7 @@ def render_hall_of_fame_page() -> None:
     render_hall_of_fame_leaders(historical_data["all_time"])
     render_match_winning_performances(historical_data)
     render_record_holders(historical_data)
+    render_best_ever_seasons(historical_data)
     render_detailed_all_time_records(historical_data["all_time"])
 
 
@@ -1156,13 +1157,13 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
     all_time = data["all_time"]
 
     for title, metric, suffix in [
-        ("100s", "100s", "hundreds"),
-        ("50s", "50s", "fifties"),
+        ("Most 100s", "100s", "hundreds"),
+        ("Most 50s", "50s", "fifties"),
         ("5 Wicket Hauls", "5WI", "five-wicket hauls"),
         ("Ducks", "0s", "ducks"),
-        ("Maidens", "Maidens", "maidens"),
-        ("4s", "4s", "fours"),
-        ("6s", "6s", "sixes"),
+        ("Most maidens", "Maidens", "maidens"),
+        ("Most 4s", "4s", "fours"),
+        ("Most 6s", "6s", "sixes"),
     ]:
         if metric not in all_time:
             continue
@@ -1181,6 +1182,136 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
             }
         )
     return cards
+
+
+def render_best_ever_seasons(data: dict[str, object]) -> None:
+    batting = best_batting_season(data["batting_raw"])
+    bowling = best_bowling_season(data["bowling_raw"])
+    if batting is None and bowling is None:
+        return
+
+    render_section_heading("Greatest Individual Seasons 🌟")
+    cards = []
+    if batting is not None:
+        cards.append(best_season_card_html("Best batting season", batting, "batting"))
+    if bowling is not None:
+        cards.append(best_season_card_html("Best bowling season", bowling, "bowling"))
+    st.markdown(f'<div class="best-season-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
+    if df.empty or "season" not in df:
+        return None
+    frame = df.copy()
+    player_source = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+    if player_source not in frame:
+        return None
+    frame["_player"] = frame[player_source].fillna("").astype(str).str.strip()
+    frame = frame[(frame["_player"] != "") & frame["season"].notna()]
+    if frame.empty:
+        return None
+
+    rows = []
+    for (player, season), group in frame.groupby(["_player", "season"], dropna=False):
+        runs = sum_column(group, "battingAggregate")
+        balls = sum_column(group, "battingBallsFaced")
+        innings = sum_column(group, "battingInnings")
+        not_outs = sum_column(group, "battingNotOuts")
+        outs = max(innings - not_outs, 0)
+        row = {
+            "player": player,
+            "season": season,
+            "runs": runs,
+            "innings": innings,
+            "average": divide_or_none(runs, outs),
+            "strike_rate": divide_or_none(runs * 100, balls) if profile_season_sort_key(season) >= profile_season_sort_key("Summer 2024/25") else None,
+            "hs": best_high_score(group),
+            "50s": sum_column(group, "batting50s"),
+            "100s": sum_column(group, "batting100s"),
+            "4s": sum_column(group, "battingFours"),
+            "6s": sum_column(group, "battingSixes"),
+        }
+        if runs > 0:
+            rows.append(row)
+    if not rows:
+        return None
+    return sorted(rows, key=lambda row: (-row["runs"], -(row["average"] or 0), str(row["player"]).casefold()))[0]
+
+
+def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
+    if df.empty or "season" not in df:
+        return None
+    frame = df.copy()
+    player_source = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+    if player_source not in frame:
+        return None
+    frame["_player"] = frame[player_source].fillna("").astype(str).str.strip()
+    frame = frame[(frame["_player"] != "") & frame["season"].notna()]
+    if frame.empty:
+        return None
+
+    rows = []
+    for (player, season), group in frame.groupby(["_player", "season"], dropna=False):
+        wickets = sum_column(group, "bowlingWickets")
+        balls = sum_column(group, "bowlingBalls")
+        runs = sum_column(group, "bowlingRuns")
+        row = {
+            "player": player,
+            "season": season,
+            "wickets": wickets,
+            "overs": format_balls_as_overs(balls) if balls else "—",
+            "maidens": sum_column(group, "bowlingMaidens"),
+            "average": divide_or_none(runs, wickets),
+            "economy": divide_or_none(runs * 6, balls),
+            "strike_rate": divide_or_none(balls, wickets),
+            "bbi": best_bowling_value(group),
+            "5wi": sum_column(group, "bowling5WIs"),
+        }
+        if wickets > 0:
+            rows.append(row)
+    if not rows:
+        return None
+    return sorted(rows, key=lambda row: (-row["wickets"], row["average"] or 999999, str(row["player"]).casefold()))[0]
+
+
+def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
+    if mode == "batting":
+        primary = f'{format_int(row["runs"])} runs'
+        chips = [
+            ("Inns", format_int(row["innings"])),
+            ("Avg", format_decimal(row["average"])),
+            ("SR", format_decimal(row["strike_rate"])),
+            ("HS", str(row["hs"])),
+            ("50s", format_int(row["50s"])),
+            ("100s", format_int(row["100s"])),
+            ("4s", format_int(row["4s"])),
+            ("6s", format_int(row["6s"])),
+        ]
+    else:
+        primary = f'{format_int(row["wickets"])} wickets'
+        chips = [
+            ("Overs", str(row["overs"])),
+            ("Mdns", format_int(row["maidens"])),
+            ("Avg", format_decimal(row["average"])),
+            ("Econ", format_decimal(row["economy"])),
+            ("SR", format_decimal(row["strike_rate"])),
+            ("BBI", str(row["bbi"])),
+            ("5WI", format_int(row["5wi"])),
+        ]
+    chip_html = "".join(
+        f'<span><b>{html.escape(label)}</b>{html.escape(value)}</span>'
+        for label, value in chips
+        if value and value != "—"
+    )
+    return (
+        '<div class="best-season-card">'
+        f'<div class="best-season-label">{html.escape(title)}</div>'
+        f'<div class="best-season-player">{html.escape(str(row["player"]))}</div>'
+        f'<div class="best-season-season">{html.escape(str(row["season"]))}</div>'
+        f'<div class="best-season-primary">{html.escape(primary)}</div>'
+        f'<div class="best-season-stats">{chip_html}</div>'
+        "</div>"
+    )
 
 
 def format_high_score_value(row: pd.Series) -> str:
@@ -1367,9 +1498,8 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
 
 
 def render_all_time_detail_table(table: pd.DataFrame, key_prefix: str) -> None:
-    render_filterable_dataframe(
+    st.dataframe(
         table,
-        key_prefix=key_prefix,
         use_container_width=True,
         hide_index=True,
         height=560,
@@ -1500,12 +1630,51 @@ def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
 
 
 def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
-    config = numeric_column_config(columns)
-    config["Player"] = st.column_config.TextColumn("Player", pinned=True, width="medium")
-    config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width="medium")
+    config = {}
+    config["Player"] = st.column_config.TextColumn("Player", pinned=True, width=150)
+    config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width=150)
+    for column in ["First Season", "Latest Season"]:
+        if column in columns:
+            config[column] = st.column_config.TextColumn(column, width=145)
+    integer_columns = {
+        "Seasons Played",
+        "Matches",
+        "Runs",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Wickets",
+        "Maidens",
+        "5WI",
+        "Catches",
+        "Stumpings",
+        "Run Outs",
+        "Dismissals",
+    }
+    decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Econ", "Bowl SR"}
+    width_overrides = {
+        "Seasons Played": 95,
+        "Matches": 78,
+        "Runs": 76,
+        "Wickets": 78,
+        "Catches": 78,
+        "Stumpings": 86,
+        "Run Outs": 82,
+        "Dismissals": 86,
+    }
+    for column, width in width_overrides.items():
+        if column in columns and column not in {"Player", "Teams/Grades"}:
+            config[column] = st.column_config.NumberColumn(column, width=width, format="%d")
     for column in columns:
         if column not in config:
-            config[column] = st.column_config.TextColumn(column, width="small")
+            if column in integer_columns:
+                config[column] = st.column_config.NumberColumn(column, width=72, format="%d")
+            elif column in decimal_columns:
+                config[column] = st.column_config.NumberColumn(column, width=72, format="%.2f")
+            else:
+                config[column] = st.column_config.TextColumn(column, width=72)
     return config
 
 

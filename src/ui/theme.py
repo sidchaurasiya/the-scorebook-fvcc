@@ -117,7 +117,7 @@ def inject_theme() -> None:
         }
 
         .block-container {
-            padding: 5.6rem 2.25rem 3rem;
+            padding: 4.1rem 2.25rem 3rem;
             max-width: 1720px;
         }
 
@@ -126,7 +126,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.near-milestones-page) {
-            padding-top: 1.65rem;
+            padding-top: 1.15rem;
         }
 
         h1, h2, h3 {
@@ -429,10 +429,10 @@ def inject_theme() -> None:
         .club-label {
             color: #5B3DF5;
             font-size: clamp(1.5rem, 1.75vw, 1.75rem);
-            font-weight: 750;
+            font-weight: 500;
             letter-spacing: 0;
             line-height: 1.2;
-            margin: 0 0 12px;
+            margin: 0 0 10px;
             padding-top: 0;
         }
 
@@ -456,17 +456,18 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.hall-of-fame-page) {
-            padding-top: 1.65rem;
+            padding-top: 1.15rem;
         }
 
         .block-container:has(.hall-of-fame-page) .page-title {
             font-size: clamp(2.8rem, 3.6vw, 3.75rem);
-            margin: 0 0 9px;
+            margin: 0 0 6px;
         }
 
         .block-container:has(.hall-of-fame-page) .club-label {
             color: #5B3DF5;
-            margin: 0 0 15px;
+            font-weight: 500;
+            margin: 0 0 10px;
         }
 
         .block-container:has(.hall-of-fame-page) .page-subtitle {
@@ -479,6 +480,7 @@ def inject_theme() -> None:
         .page-note {
             color: #858ba6;
             font-size: 0.86rem;
+            font-style: italic;
             font-weight: 500;
             line-height: 1.35;
             margin: 0 0 28px;
@@ -1387,6 +1389,79 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .best-season-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-bottom: 28px;
+        }
+
+        .best-season-card {
+            background:
+                radial-gradient(circle at 100% 0%, rgba(109, 77, 255, 0.09), transparent 16rem),
+                #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 16px;
+            box-shadow: 0 14px 34px rgba(23, 27, 77, 0.055);
+            min-height: 188px;
+            padding: 20px 22px;
+        }
+
+        .best-season-label {
+            color: #7a809d;
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .best-season-player {
+            color: var(--ink);
+            font-size: 1.25rem;
+            font-weight: 950;
+            line-height: 1.14;
+            margin-top: 14px;
+        }
+
+        .best-season-season {
+            color: #7a809d;
+            font-size: 0.82rem;
+            font-weight: 760;
+            margin-top: 4px;
+        }
+
+        .best-season-primary {
+            color: #4b37d8;
+            font-size: 1.58rem;
+            font-weight: 950;
+            margin-top: 16px;
+        }
+
+        .best-season-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .best-season-stats span {
+            align-items: center;
+            background: #f3f4fb;
+            border: 1px solid #e6e8f2;
+            border-radius: 999px;
+            color: #68708f;
+            display: inline-flex;
+            font-size: 0.78rem;
+            font-weight: 800;
+            gap: 6px;
+            padding: 7px 10px;
+        }
+
+        .best-season-stats b {
+            color: var(--ink);
+            font-weight: 950;
+        }
+
         .identity-note {
             background: rgba(109, 77, 255, 0.08);
             border: 1px solid rgba(109, 77, 255, 0.15);
@@ -1524,17 +1599,18 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.player-profile-page) {
-            padding-top: 1.65rem;
+            padding-top: 1.15rem;
         }
 
         .block-container:has(.player-profile-page) .page-title {
             font-size: clamp(2.8rem, 3.6vw, 3.75rem);
-            margin: 0 0 9px;
+            margin: 0 0 6px;
         }
 
         .block-container:has(.player-profile-page) .club-label {
             color: #5B3DF5;
-            margin: 0 0 12px;
+            font-weight: 500;
+            margin: 0 0 10px;
         }
 
         .block-container:has(.player-profile-page) .page-subtitle {
@@ -1802,11 +1878,12 @@ def inject_theme() -> None:
         .block-container:has(.near-milestones-page) .page-title {
             font-size: clamp(2.3rem, 3vw, 3.2rem);
             max-width: 1040px;
-            margin: 0 0 7px;
+            margin: 0 0 6px;
         }
 
         .block-container:has(.near-milestones-page) .club-label {
             color: #5B3DF5;
+            font-weight: 500;
             margin: 0 0 9px;
         }
 
@@ -1989,6 +2066,10 @@ def inject_theme() -> None:
             .record-card-grid {
                 gap: 12px;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .best-season-grid {
+                grid-template-columns: 1fr;
             }
 
             .record-card {
