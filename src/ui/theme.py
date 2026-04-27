@@ -33,7 +33,9 @@ def inject_theme() -> None:
         }
 
         div[data-testid="collapsedControl"] {
-            display: none;
+            display: flex !important;
+            visibility: visible !important;
+            z-index: 100001;
         }
 
         [data-testid="stToolbar"],
@@ -107,6 +109,10 @@ def inject_theme() -> None:
         }
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"] > div:first-child {
+            display: none;
+        }
+
+        div.st-key-mobile_nav_fallback {
             display: none;
         }
 
@@ -1860,8 +1866,28 @@ def inject_theme() -> None:
 
         @media (max-width: 760px) {
             .block-container {
-                padding-left: 0.85rem;
-                padding-right: 0.85rem;
+                padding: 1.1rem 0.85rem 2.25rem;
+            }
+
+            div.st-key-mobile_nav_fallback {
+                background: rgba(255, 255, 255, 0.96);
+                border: 1px solid #E6E9F5;
+                border-radius: 18px;
+                box-shadow: 0 12px 28px rgba(23, 27, 77, 0.08);
+                display: block;
+                margin: 0 0 18px;
+                padding: 12px 14px;
+                position: sticky;
+                top: 10px;
+                z-index: 9999;
+            }
+
+            div.st-key-mobile_nav_fallback label {
+                color: var(--ink) !important;
+                font-size: 0.78rem !important;
+                font-weight: 900 !important;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
             }
 
             .cv-hero {

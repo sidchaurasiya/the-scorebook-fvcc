@@ -52,6 +52,10 @@ APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 
 
+def sync_selected_page(source_key: str) -> None:
+    st.session_state["selected_page_label"] = st.session_state[source_key]
+
+
 def render_page() -> None:
     """Render the dashboard."""
     inject_theme()
@@ -68,6 +72,33 @@ def render_page() -> None:
 
 
 def render_sidebar() -> str:
+    page_labels = [
+        "⌂ Overview",
+        "♕ Hall of Fame",
+        "☆ Near Milestone",
+        "♙ Player Profile",
+    ]
+    if "selected_page_label" not in st.session_state:
+        st.session_state["selected_page_label"] = page_labels[0]
+
+    current_label = st.session_state.get("selected_page_label", page_labels[0])
+    if current_label not in page_labels:
+        current_label = page_labels[0]
+        st.session_state["selected_page_label"] = current_label
+    for widget_key in ["mobile_navigation", "main_navigation"]:
+        if st.session_state.get(widget_key) != current_label:
+            st.session_state[widget_key] = current_label
+
+    with st.container(key="mobile_nav_fallback"):
+        st.selectbox(
+            "Navigation",
+            page_labels,
+            index=page_labels.index(current_label),
+            key="mobile_navigation",
+            on_change=sync_selected_page,
+            args=("mobile_navigation",),
+        )
+
     st.sidebar.markdown(
         """
         <div class="side-brand">
@@ -80,18 +111,16 @@ def render_sidebar() -> str:
         """,
         unsafe_allow_html=True,
     )
-    page_labels = [
-        "⌂ Overview",
-        "♕ Hall of Fame",
-        "☆ Near Milestone",
-        "♙ Player Profile",
-    ]
     selected_label = st.sidebar.radio(
         "Navigation",
         page_labels,
+        index=page_labels.index(st.session_state.get("selected_page_label", page_labels[0])),
         label_visibility="collapsed",
         key="main_navigation",
+        on_change=sync_selected_page,
+        args=("main_navigation",),
     )
+    st.session_state["selected_page_label"] = selected_label
     st.sidebar.markdown(
         """
         <div class="side-footer">
