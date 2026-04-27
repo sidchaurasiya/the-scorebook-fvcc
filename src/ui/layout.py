@@ -1,5 +1,6 @@
 import base64
 import html
+import re
 from pathlib import Path
 
 import altair as alt
@@ -62,19 +63,21 @@ def render_page() -> None:
     selected_page = render_sidebar()
     if selected_page == "Hall of Fame":
         render_hall_of_fame_page()
+    elif selected_page == "Seasons":
+        dashboard_data = render_data_source_panel()
+        render_overview(dashboard_data)
     elif selected_page == "Near Milestone":
         render_approaching_milestones_page()
     elif selected_page == "Player Profile":
         render_player_profile_page()
     else:
-        dashboard_data = render_data_source_panel()
-        render_overview(dashboard_data)
+        render_hall_of_fame_page()
 
 
 def render_sidebar() -> str:
     page_labels = [
-        "⌂ Overview",
         "♕ Hall of Fame",
+        "⌂ Seasons",
         "☆ Near Milestone",
         "♙ Player Profile",
     ]
@@ -186,19 +189,16 @@ def render_data_source_panel() -> dict[str, object] | None:
         0,
     )
 
-    with st.container(key="sticky_controls"):
-        season_label_col, season_filter_col, team_label_col, team_filter_col = st.columns(
-            [0.74, 1.5, 1.02, 2.34],
-            gap="small",
-        )
-        with season_label_col:
-            st.markdown('<div class="filter-inline-label">SELECT SEASON:</div>', unsafe_allow_html=True)
-        with season_filter_col:
+    with st.container(key="season_controls"):
+        season_col, team_col = st.columns([0.9, 1.35], gap="large")
+        with season_col:
+            st.markdown('<div class="simple-filter-label">Select season</div>', unsafe_allow_html=True)
             selected_season = st.selectbox(
                 "Season",
                 seasons,
                 index=current_season_index,
                 format_func=lambda season: season["name"],
+                label_visibility="collapsed",
             )
 
         try:
@@ -230,13 +230,13 @@ def render_data_source_panel() -> dict[str, object] | None:
         }
         team_options = [all_teams_option, *teams]
 
-        with team_label_col:
-            st.markdown('<div class="filter-inline-label">SELECT TEAM/GRADE:</div>', unsafe_allow_html=True)
-        with team_filter_col:
+        with team_col:
+            st.markdown('<div class="simple-filter-label">Select team/grade</div>', unsafe_allow_html=True)
             selected_team = st.selectbox(
                 "Team",
                 team_options,
                 format_func=format_team_option,
+                label_visibility="collapsed",
             )
 
         is_all_teams = selected_team["id"] == "__all_teams__"
@@ -246,23 +246,14 @@ def render_data_source_panel() -> dict[str, object] | None:
             selected_team,
             is_all_teams,
         )
-        st.markdown(
-            f"""
-            <div class="filter-context-line">
-                <span>{html.escape(context_description)}</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    st.markdown('<div class="sticky-filter-spacer"></div>', unsafe_allow_html=True)
 
     with st.container(key="header_intro"):
         st.markdown(
-            """
+            f"""
             <div class="page-kicker">Welcome back! 👋</div>
             <h1 class="page-title">Club performance at a glance</h1>
             <div class="club-label">Fiji Victorian Cricket Club</div>
+            <div class="seasons-context-line">{html.escape(context_description)}</div>
             """,
             unsafe_allow_html=True,
         )
@@ -592,8 +583,6 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
         st.info("Load public PlayCricket stats to view the dashboard.")
         return
 
-    snapshot = build_dashboard_metrics(dashboard_data)
-    render_kpi_cards(snapshot)
     render_overall_section(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
@@ -611,6 +600,7 @@ def render_hall_of_fame_page() -> None:
         <h1 class="page-title">Hall of Fame 🏆</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
         <div class="page-subtitle">The players who shaped the club’s history.</div>
+        <div class="page-note">Players with multiple PlayCricket profiles are merged into one club record.</div>
         """,
         unsafe_allow_html=True,
     )
@@ -618,7 +608,6 @@ def render_hall_of_fame_page() -> None:
     render_hall_of_fame_leaders(historical_data["all_time"])
     render_match_winning_performances(historical_data)
     render_record_holders(historical_data)
-    render_milestone_club(historical_data["all_time"])
     render_detailed_all_time_records(historical_data["all_time"])
 
 
@@ -642,6 +631,7 @@ def render_approaching_milestones_page() -> None:
         unsafe_allow_html=True,
     )
     render_career_milestone_cards(watchlist)
+    render_milestone_club(historical_data["all_time"])
 
 
 def render_identity_info_note() -> None:
@@ -1155,11 +1145,8 @@ def render_record_holders(data: dict[str, object]) -> None:
     if not cards:
         return
     render_section_heading("Record Holders 📘")
-    for index in range(0, len(cards), 3):
-        columns = st.columns(3)
-        for column, card in zip(columns, cards[index : index + 3]):
-            with column:
-                render_record_card(card)
+    cards_html = "".join(record_card_html(card) for card in cards)
+    st.markdown(f'<div class="record-card-grid">{cards_html}</div>', unsafe_allow_html=True)
 
 
 def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
@@ -1231,17 +1218,18 @@ def compact_record_team_label(team_name: object) -> str:
 
 
 def render_record_card(card: dict[str, str]) -> None:
+    st.markdown(record_card_html(card), unsafe_allow_html=True)
+
+
+def record_card_html(card: dict[str, str]) -> str:
     meta = f'<div class="record-meta">{html.escape(card["meta"])}</div>' if card.get("meta") else ""
-    st.markdown(
-        (
-            '<div class="record-card">'
-            f'<div class="record-label">{html.escape(card["title"])}</div>'
-            f'<div class="record-player">{html.escape(card["player"])}</div>'
-            f'<div class="record-value">{html.escape(card["value"])}</div>'
-            f"{meta}"
-            "</div>"
-        ),
-        unsafe_allow_html=True,
+    return (
+        '<div class="record-card">'
+        f'<div class="record-label">{html.escape(card["title"])}</div>'
+        f'<div class="record-player">{html.escape(card["player"])}</div>'
+        f'<div class="record-value">{html.escape(card["value"])}</div>'
+        f"{meta}"
+        "</div>"
     )
 
 
@@ -1274,11 +1262,11 @@ def render_detailed_all_time_records(all_time: pd.DataFrame) -> None:
     with st.container(key="full_stats_card"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            render_all_time_detail_table(format_all_time_batting_table(all_time))
+            render_all_time_detail_table(format_all_time_batting_table(all_time), "hof_batting_detail")
         with bowling_tab:
-            render_all_time_detail_table(format_all_time_bowling_table(all_time))
+            render_all_time_detail_table(format_all_time_bowling_table(all_time), "hof_bowling_detail")
         with fielding_tab:
-            render_all_time_detail_table(format_all_time_fielding_table(all_time))
+            render_all_time_detail_table(format_all_time_fielding_table(all_time), "hof_fielding_detail")
 
 
 def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
@@ -1345,8 +1333,6 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
         "Seasons Played",
-        "First Season",
-        "Latest Season",
         "Matches",
         "Wickets",
         "Bowl Avg",
@@ -1368,8 +1354,6 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
         "Seasons Played",
-        "First Season",
-        "Latest Season",
         "Matches",
         "Catches",
         "Stumpings",
@@ -1382,14 +1366,105 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     return coerce_display_numbers(table)
 
 
-def render_all_time_detail_table(table: pd.DataFrame) -> None:
-    st.dataframe(
+def render_all_time_detail_table(table: pd.DataFrame, key_prefix: str) -> None:
+    render_filterable_dataframe(
         table,
+        key_prefix=key_prefix,
         use_container_width=True,
         hide_index=True,
         height=560,
         column_config=hall_of_fame_column_config(table.columns.tolist()),
     )
+
+
+def render_filterable_dataframe(
+    table: pd.DataFrame,
+    key_prefix: str,
+    use_container_width: bool = True,
+    hide_index: bool = True,
+    height: int = 520,
+    column_config: dict[str, object] | None = None,
+) -> None:
+    filtered = apply_dataframe_filters(table, key_prefix)
+    st.dataframe(
+        filtered,
+        use_container_width=use_container_width,
+        hide_index=hide_index,
+        height=height,
+        column_config=column_config,
+    )
+
+
+def apply_dataframe_filters(table: pd.DataFrame, key_prefix: str) -> pd.DataFrame:
+    if table.empty:
+        return table
+    output = table.copy()
+    with st.expander("Table filters", expanded=False):
+        for column in output.columns:
+            series = output[column]
+            numeric_series = display_numeric_series(series)
+            is_numeric = numeric_series.notna().sum() >= max(2, int(len(series.dropna()) * 0.65))
+            safe_key = make_widget_key(key_prefix, column)
+            if is_numeric:
+                available = numeric_series.dropna()
+                if available.empty:
+                    continue
+                min_value = float(available.min())
+                max_value = float(available.max())
+                if min_value == max_value:
+                    continue
+                min_col, max_col = st.columns(2)
+                with min_col:
+                    lower = st.number_input(
+                        f"{column} min",
+                        value=min_value,
+                        min_value=min_value,
+                        max_value=max_value,
+                        key=f"{safe_key}_min",
+                    )
+                with max_col:
+                    upper = st.number_input(
+                        f"{column} max",
+                        value=max_value,
+                        min_value=min_value,
+                        max_value=max_value,
+                        key=f"{safe_key}_max",
+                    )
+                output = output[numeric_series.between(lower, upper, inclusive="both") | numeric_series.isna()]
+            else:
+                values = sorted(
+                    value
+                    for value in series.dropna().astype(str).map(str.strip).unique().tolist()
+                    if value and value != "—"
+                )
+                if not values:
+                    continue
+                if len(values) <= 30:
+                    selected = st.multiselect(f"{column}", values, key=f"{safe_key}_values")
+                    if selected:
+                        output = output[output[column].astype(str).isin(selected)]
+                else:
+                    text = st.text_input(f"{column} contains", key=f"{safe_key}_text")
+                    if text:
+                        output = output[output[column].astype(str).str.contains(text, case=False, na=False)]
+    return output
+
+
+def display_numeric_series(series: pd.Series) -> pd.Series:
+    cleaned = (
+        series.astype(str)
+        .str.replace(",", "", regex=False)
+        .str.replace("%", "", regex=False)
+        .str.replace("—", "", regex=False)
+        .str.strip()
+    )
+    return pd.to_numeric(cleaned, errors="coerce")
+
+
+def make_widget_key(prefix: str, column: str) -> str:
+    safe_prefix = re.sub(r"[^a-zA-Z0-9_]+", "_", str(prefix)).strip("_")
+    safe_column = re.sub(r"[^a-zA-Z0-9_]+", "_", str(column).replace("%", "pct")).strip("_")
+    return f"{safe_prefix}_{safe_column}".lower()
 
 
 def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
@@ -1426,10 +1501,11 @@ def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
 
 def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
     config = numeric_column_config(columns)
-    config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width="large")
+    config["Player"] = st.column_config.TextColumn("Player", pinned=True, width="medium")
+    config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width="medium")
     for column in columns:
         if column not in config:
-            config[column] = st.column_config.TextColumn(column)
+            config[column] = st.column_config.TextColumn(column, width="small")
     return config
 
 
@@ -1746,7 +1822,7 @@ def render_player_profile_page() -> None:
             key="player_profile_selector",
         )
         st.markdown(
-            '<div class="profile-selector-help">Start typing a name to find a player from FVCC records.</div>',
+            '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
             unsafe_allow_html=True,
         )
     if not selected.get("id"):
@@ -1775,14 +1851,12 @@ def render_player_profile_page() -> None:
         return
 
     render_player_header_card(profile_view)
-    render_player_career_kpis(profile_view["career"].iloc[0])
+    render_player_breakdown(profile_view["career"].iloc[0])
     render_player_highlights(profile_view)
     render_player_trends(profile_view["season_table"])
     render_player_season_table(profile_view["season_table"])
     render_player_grade_table(profile_view["grade_table"])
-    render_player_breakdown(profile_view["career"].iloc[0])
     render_player_milestones(profile_view["career"].iloc[0])
-    render_player_alias_audit(profile_view["raw_profiles"])
 
 
 @st.cache_data
@@ -1999,7 +2073,6 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             '<div>'
             '<div class="profile-kicker">Player Profile</div>'
             f'<div class="profile-name">{html.escape(str(career.get("Player", "-")))}</div>'
-            f'<div class="profile-meta">{html.escape(str(career.get("Teams/Grades", "—") or "—"))}</div>'
             f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             f'<div class="profile-insight">{html.escape(insight)}</div>'
             '</div>'
@@ -2056,8 +2129,8 @@ def player_profile_insight(career: pd.Series, badges: list[str]) -> str:
     if "Six Hitter" in badges or "Gap Finder" in badges:
         return "Boundary-focused batting profile with strong scoring contribution."
     if "Safe Hands" in badges or "Keeper Impact" in badges:
-        return "Fielding contribution stands out across FVCC records."
-    return "Steady FVCC contributor across the available club records."
+        return "Fielding contribution stands out across club records."
+    return "Steady club contributor across the available records."
 
 
 def render_player_career_kpis(career: pd.Series) -> None:
@@ -2154,33 +2227,57 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     st.markdown(f'<div class="profile-chart-title">{html.escape(title)}</div>', unsafe_allow_html=True)
                     values = chart_data[["Season", metric]].copy()
                     values[metric] = pd.to_numeric(values[metric], errors="coerce").fillna(0)
-                    chart = (
+                    base = (
                         alt.Chart(values)
-                        .mark_bar(cornerRadiusTopLeft=6, cornerRadiusTopRight=6, color=color, size=20)
                         .encode(
                             x=alt.X("Season:N", sort=list(values["Season"]), axis=alt.Axis(labelAngle=-35, labelColor="#737998", title=None)),
                             y=alt.Y(f"{metric}:Q", axis=alt.Axis(grid=True, gridColor="#EEF0F7", labelColor="#737998", title=None)),
                             tooltip=[alt.Tooltip("Season:N"), alt.Tooltip(f"{metric}:Q", format=",.0f")],
                         )
-                        .properties(height=240)
                     )
+                    chart = (
+                        base.mark_bar(cornerRadiusTopLeft=6, cornerRadiusTopRight=6, color=color, size=20)
+                        + base.mark_text(
+                            align="center",
+                            baseline="top",
+                            color="#ffffff",
+                            dy=5,
+                            fontSize=12,
+                            fontWeight=800,
+                        ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
+                    ).properties(height=240)
                     st.altair_chart(chart, use_container_width=True)
     render_player_average_trends(chart_data)
 
 
 def render_player_average_trends(chart_data: pd.DataFrame) -> None:
     rows = []
-    for _, row in chart_data.iterrows():
-        bat_avg = pd.to_numeric(row.get("Bat Avg"), errors="coerce")
-        bowl_avg = pd.to_numeric(row.get("Bowl Avg"), errors="coerce")
-        if pd.notna(bat_avg) and numeric_value(row, "Outs") > 0:
-            rows.append({"Season": row["Season"], "Average": float(bat_avg), "Metric": "Batting average"})
-        if pd.notna(bowl_avg) and numeric_value(row, "Wickets") > 0:
-            rows.append({"Season": row["Season"], "Average": float(bowl_avg), "Metric": "Bowling average"})
+    batting_runs = batting_outs = 0.0
+    bowling_runs = bowling_wickets = 0.0
+    for _, row in chart_data.sort_values("Season", key=lambda series: series.map(profile_season_sort_key)).iterrows():
+        batting_runs += numeric_value(row, "Runs")
+        batting_outs += numeric_value(row, "Outs")
+        bowling_runs += numeric_value(row, "Runs Against")
+        bowling_wickets += numeric_value(row, "Wickets")
+        if batting_outs > 0:
+            rows.append(
+                {
+                    "Season": row["Season"],
+                    "Rolling Average": batting_runs / batting_outs,
+                    "Metric": "Batting average",
+                }
+            )
+        if bowling_wickets > 0:
+            rows.append(
+                {
+                    "Season": row["Season"],
+                    "Rolling Average": bowling_runs / bowling_wickets,
+                    "Metric": "Bowling average",
+                }
+            )
     if not rows:
         return
     average_data = pd.DataFrame(rows).sort_values("Season", key=lambda series: series.map(profile_season_sort_key))
-    average_data["Rolling Average"] = average_data.groupby("Metric")["Average"].transform(lambda series: series.rolling(3, min_periods=1).mean())
     columns = st.columns(2)
     for column, metric, title, color, key in [
         (columns[0], "Batting average", "Rolling Batting Average", "#6D4DFF", "profile_chart_batting_average"),
@@ -2202,7 +2299,6 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
             tooltip=[
                 alt.Tooltip("Season:N"),
                 alt.Tooltip("Rolling Average:Q", title="Rolling avg.", format=".2f"),
-                alt.Tooltip("Average:Q", title="Season avg.", format=".2f"),
             ],
         )
         chart = (
@@ -2223,7 +2319,7 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
         with bowling_tab:
             table = season_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
-            render_profile_season_stat_table(table.rename(columns={"BBI": "BBI"}), ["Season", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"], ["Wickets", "5WI"])
+            render_profile_season_stat_table(table.rename(columns={"BBI": "BBI"}), ["Season", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"], ["Balls Bowled", "Maidens", "Wickets", "5WI"])
         with fielding_tab:
             columns = ["Season", "Matches", "Catches", "Stumpings", "Run Outs", "Dismissals"]
             render_profile_season_stat_table(season_table, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"])
@@ -2242,7 +2338,7 @@ def render_player_grade_table(grade_table: pd.DataFrame) -> None:
             table = grade_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
             columns = ["Grade", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"]
-            render_profile_group_stat_table(table, columns, ["Wickets", "5WI"], "Grade")
+            render_profile_group_stat_table(table, columns, ["Balls Bowled", "Maidens", "Wickets", "5WI"], "Grade")
         with fielding_tab:
             columns = ["Grade", "Matches", "Catches", "Stumpings", "Run Outs", "Dismissals"]
             render_profile_group_stat_table(grade_table, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"], "Grade")
@@ -2263,7 +2359,25 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         return
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
     display = format_profile_table(table)
-    st.dataframe(display, use_container_width=True, hide_index=True, height=390)
+    render_filterable_dataframe(
+        display,
+        key_prefix=f"profile_season_{'_'.join(columns)}",
+        use_container_width=True,
+        hide_index=True,
+        height=390,
+    )
+def render_profile_table_totals(table: pd.DataFrame, label_column: str) -> None:
+    totals = []
+    for column in ["Matches", "Innings", "Runs", "4s", "6s", "Maidens", "Wickets", "Catches", "Stumpings", "Run Outs", "Dismissals"]:
+        if column in table:
+            value = pd.to_numeric(table[column], errors="coerce").fillna(0).sum()
+            if value:
+                totals.append(f"{column}: {int(value):,}")
+    if totals:
+        st.markdown(
+            f'<div class="table-total-line">Total across {html.escape(label_column.lower())}: {" · ".join(totals)}</div>',
+            unsafe_allow_html=True,
+        )
 
 
 def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str], activity_columns: list[str], label_column: str) -> None:
@@ -2281,7 +2395,14 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         return
     table = table.sort_values(label_column)
     display = format_profile_table(table)
-    st.dataframe(display, use_container_width=True, hide_index=True, height=390)
+    render_filterable_dataframe(
+        display,
+        key_prefix=f"profile_grade_{'_'.join(columns)}",
+        use_container_width=True,
+        hide_index=True,
+        height=390,
+    )
+    render_profile_table_totals(table, label_column)
 
 
 def render_player_breakdown(career: pd.Series) -> None:
@@ -3367,7 +3488,7 @@ def render_context_line(dashboard_data: dict[str, object]) -> None:
         f"""
         <div class="context-line">
             <span>{html.escape(str(dashboard_data["context_description"]))}</span>
-            <span class="source-note">Created by Siddhanth Chaurasiya &amp; Preet Kaur</span>
+            <span class="source-note">App by Siddhanth Chaurasiya &amp; Preet Kaur</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -3949,19 +4070,19 @@ def render_full_stats_section(dashboard_data: dict[str, object]) -> None:
             render_full_stats_table(
                 sort_batting_leaders(dashboard_data["batting"]),
                 "batting",
-                show_team=bool(dashboard_data.get("is_all_teams")),
+                show_team=False,
             )
         with bowling_tab:
             render_full_stats_table(
                 sort_bowling_leaders(dashboard_data["bowling"]),
                 "bowling",
-                show_team=bool(dashboard_data.get("is_all_teams")),
+                show_team=False,
             )
         with fielding_tab:
             render_full_stats_table(
                 sort_fielding_rows(dashboard_data["fielding"]),
                 "fielding",
-                show_team=bool(dashboard_data.get("is_all_teams")),
+                show_team=False,
             )
 
 
@@ -4506,8 +4627,9 @@ def render_full_stats_table(
     show_team: bool = False,
 ) -> None:
     output = build_full_stats_frame(df, category, show_team)
-    st.dataframe(
+    render_filterable_dataframe(
         output,
+        key_prefix=f"full_stats_{category}_{'team' if show_team else 'no_team'}",
         use_container_width=True,
         hide_index=True,
         height=520,
@@ -4531,6 +4653,8 @@ def build_full_stats_frame(
 
     if "Team" in output:
         output["Team"] = output["Team"].map(compact_team_label)
+        if not show_team:
+            output = output.drop(columns=["Team"])
     output = coerce_display_numbers(output)
     if "BBI" in output:
         output["BBI"] = ordered_bbi_values(output["BBI"])

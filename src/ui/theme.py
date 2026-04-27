@@ -328,7 +328,11 @@ def inject_theme() -> None:
         div[data-testid="stDataFrame"] [role="gridcell"] {
             color: #20243D;
             border-color: #EEF1F8 !important;
+            line-height: 1.22 !important;
             min-height: 42px !important;
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: anywhere !important;
         }
 
         div[data-testid="stDataFrame"] [role="row"]:nth-child(even) [role="gridcell"] {
@@ -469,7 +473,22 @@ def inject_theme() -> None:
             color: #747b98;
             font-size: 1rem;
             font-weight: 700;
-            margin: 0 0 30px;
+            margin: 0 0 6px;
+        }
+
+        .page-note {
+            color: #858ba6;
+            font-size: 0.86rem;
+            font-weight: 500;
+            line-height: 1.35;
+            margin: 0 0 28px;
+        }
+
+        .seasons-context-line {
+            color: #747b98;
+            font-size: 0.9rem;
+            font-weight: 750;
+            margin: -4px 0 18px;
         }
 
         div.st-key-header_intro {
@@ -614,6 +633,62 @@ def inject_theme() -> None:
         .filter-context-line > span:first-child {
             color: #535a78;
             font-weight: 750;
+        }
+
+        div.st-key-season_controls {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(226, 230, 244, 0.96);
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(20, 22, 60, 0.06);
+            margin: 0 0 26px;
+            padding: 16px 18px 14px;
+        }
+
+        div.st-key-season_controls div[data-testid="stHorizontalBlock"] {
+            align-items: flex-end;
+        }
+
+        div.st-key-season_controls div[data-baseweb="select"] > div {
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #E4E8F4;
+            border-radius: 14px;
+            box-shadow: 0 5px 12px rgba(20, 23, 67, 0.03);
+            display: flex;
+            min-height: 48px;
+            text-align: left;
+        }
+
+        div.st-key-season_controls div[data-baseweb="select"] div {
+            text-align: left;
+        }
+
+        div.st-key-season_controls div[data-baseweb="select"] [role="button"],
+        div.st-key-season_controls div[data-baseweb="select"] [aria-selected],
+        div.st-key-season_controls div[data-baseweb="select"] [class*="singleValue"] {
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 48px;
+            text-align: left;
+        }
+
+        .simple-filter-label {
+            color: #525a78;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.055em;
+            line-height: 1;
+            margin: 0 0 7px;
+            text-transform: uppercase;
+            transform: translateY(-2px);
+        }
+
+        .simple-filter-context {
+            color: #535a78;
+            font-size: 0.9rem;
+            font-weight: 750;
+            line-height: 1.35;
+            margin: 12px 0 0;
         }
 
         .context-line {
@@ -1264,6 +1339,13 @@ def inject_theme() -> None:
             min-height: 0;
         }
 
+        .record-card-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 26px;
+        }
+
         .performance-row {
             align-items: center;
             border-bottom: 1px solid #eef0f6;
@@ -1500,7 +1582,7 @@ def inject_theme() -> None:
             color: #777e9c;
             font-size: 0.88rem;
             font-weight: 700;
-            margin-top: -4px;
+            margin-top: -8px;
         }
 
         .profile-kpi-card {
@@ -1640,7 +1722,7 @@ def inject_theme() -> None:
         }
 
         .record-card {
-            min-height: 172px;
+            min-height: 146px;
         }
 
         .record-label {
@@ -1664,6 +1746,13 @@ def inject_theme() -> None:
             font-size: 1.38rem;
             font-weight: 950;
             margin-top: 8px;
+        }
+
+        .table-total-line {
+            color: #747b98;
+            font-size: 0.84rem;
+            font-weight: 800;
+            margin: 10px 0 2px;
         }
 
         .record-meta {
@@ -1869,8 +1958,84 @@ def inject_theme() -> None:
         }
 
         @media (max-width: 760px) {
+            section[data-testid="stSidebar"] {
+                display: none !important;
+                width: 0 !important;
+            }
+
             .block-container {
                 padding: 1.1rem 0.85rem 2.25rem;
+            }
+
+            div.st-key-season_controls {
+                border-radius: 18px;
+                margin-bottom: 20px;
+                padding: 14px;
+            }
+
+            div.st-key-season_controls div[data-testid="stHorizontalBlock"] {
+                gap: 12px;
+            }
+
+            .simple-filter-context {
+                font-size: 0.82rem;
+                margin-top: 10px;
+            }
+
+            .block-container:has(.hall-of-fame-page) div[data-testid="stHorizontalBlock"]:has(.kpi-card) {
+                display: none !important;
+            }
+
+            .record-card-grid {
+                gap: 12px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .record-card {
+                border-radius: 16px;
+                min-height: 118px;
+                padding: 14px 15px;
+            }
+
+            .record-player {
+                font-size: 0.92rem;
+                line-height: 1.16;
+                margin-top: 12px;
+            }
+
+            .record-value {
+                font-size: 1.04rem;
+                line-height: 1.16;
+            }
+
+            div.st-key-header_intro .club-label {
+                margin-top: -2px;
+            }
+
+            .page-title {
+                font-size: clamp(2.25rem, 13vw, 3.15rem);
+            }
+
+            .mini-leader-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .mini-leader + .mini-leader {
+                border-left: 0;
+                border-top: 1px solid #EEF1F8;
+                padding-left: 0;
+                padding-top: 16px;
+            }
+
+            .mini-value-row {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .mini-stat-block {
+                text-align: left;
             }
 
             div.st-key-mobile_nav_fallback {
