@@ -47,6 +47,14 @@ from src.utils.player_identity import (
     player_aliases_mtime,
     rebuild_canonical_processed_tables,
 )
+from src.utils.team_grade import (
+    apply_team_grade_display_columns,
+    build_team_grade_display,
+    canonical_grade_label,
+    clean_grade_name,
+    clean_team_name,
+    export_team_grade_display_audit,
+)
 
 
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -664,6 +672,10 @@ def load_hall_of_fame_data(_local_version: float, _identity_version: float | Non
     batting_raw = apply_player_identity_mapping(batting_raw, aliases)
     bowling_raw = apply_player_identity_mapping(bowling_raw, aliases)
     fielding_raw = apply_player_identity_mapping(fielding_raw, aliases)
+    batting_raw = apply_team_grade_display_columns(batting_raw)
+    bowling_raw = apply_team_grade_display_columns(bowling_raw)
+    fielding_raw = apply_team_grade_display_columns(fielding_raw)
+    export_team_grade_display_audit([batting_raw, bowling_raw, fielding_raw])
 
     identity_source = pd.concat(
         [
@@ -860,10 +872,12 @@ def build_player_identity_frame(frames: list[pd.DataFrame]) -> pd.DataFrame:
         for key, group in output.groupby("player_key", dropna=False, sort=False):
             name_column = "canonical_player_name" if "canonical_player_name" in group else "player_name"
             player_names = group[name_column].dropna().astype(str)
-            teams = team_label_set(group)
-            grades = label_set(group, "grade_name", compact_grade_label)
+            teams_grades = label_set(group, "team_grade_display", str)
+            if not teams_grades:
+                teams = team_label_set(group)
+                grades = label_set(group, "canonical_grade_label", str) or label_set(group, "grade_name", compact_grade_label)
+                teams_grades = [*teams[:8], *grades[:8]]
             seasons = label_set(group, "season", str)
-            teams_grades = [*teams[:8], *grades[:8]]
             records.append(
                 {
                     "player_key": key,
@@ -1338,12 +1352,12 @@ def as_bool(value: object) -> bool:
 
 def record_meta(row: pd.Series) -> str:
     parts = []
-    for column, formatter in [("season", str), ("team_name", compact_record_team_label), ("grade_name", compact_grade_label)]:
-        value = row.get(column)
-        if pd.notna(value):
-            label = formatter(value).strip()
-            if label and label not in parts:
-                parts.append(label)
+    season = row.get("season")
+    if pd.notna(season):
+        parts.append(str(season))
+    display = row.get("team_grade_display") or build_team_grade_display(row.get("team_name", ""), row.get("grade_name", ""))
+    if display and display != "—":
+        parts.append(str(display))
     return " · ".join(parts)
 
 
@@ -2062,9 +2076,9 @@ def load_player_profile_index(_local_version: float, _identity_version: float) -
 
 
 def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFrame]:
-    batting = add_batting_display_columns(profile.get("batting", pd.DataFrame()))
-    bowling = profile.get("bowling", pd.DataFrame())
-    fielding = add_display_stat_aliases(profile.get("fielding", pd.DataFrame()))
+    batting = add_batting_display_columns(apply_team_grade_display_columns(profile.get("batting", pd.DataFrame())))
+    bowling = apply_team_grade_display_columns(profile.get("bowling", pd.DataFrame()))
+    fielding = add_display_stat_aliases(apply_team_grade_display_columns(profile.get("fielding", pd.DataFrame())))
     season_table = build_player_season_table(batting, bowling, fielding)
     grade_table = build_player_grade_table(batting, bowling, fielding)
     career = build_player_career_totals(season_table, batting, bowling, fielding, profile)
@@ -2782,9 +2796,7 @@ def player_teams_grades(frames: list[pd.DataFrame]) -> str:
         if frame.empty:
             continue
         for _, row in frame.iterrows():
-            team = compact_team_label(row.get("team_name", ""))
-            grade = compact_grade_label(row.get("grade_name", ""))
-            label = f"{team} ({grade})" if team and grade else team or grade
+            label = row.get("team_grade_display") or build_team_grade_display(row.get("team_name", ""), row.get("grade_name", ""))
             if label and label not in labels:
                 labels.append(label)
     return ", ".join(labels) if labels else "—"
@@ -2818,11 +2830,9 @@ def clean_profile_season_label(value: object) -> str:
 
 
 def clean_profile_grade_from_row(row: pd.Series) -> str:
-    team = clean_profile_team_label(row.get("team_name", ""))
-    grade = clean_profile_grade_label(row.get("grade_name", ""))
-    if grade:
-        return grade
-    return team or grade or "Unknown grade"
+    grade = row.get("canonical_grade_label") or canonical_grade_label(row.get("team_name", ""), row.get("grade_name", ""))
+    team = row.get("canonical_team_label") or clean_team_name(row.get("team_name", ""))
+    return grade or team or "Unknown grade"
 
 
 def clean_profile_team_grade_text(value: object) -> str:
@@ -2855,31 +2865,19 @@ def clean_profile_team_grade_text(value: object) -> str:
 
 
 def clean_profile_team_label(value: object) -> str:
-    label = compact_team_label(value)
-    label = label.replace("NMCA -", "").replace("Fiji Vics", "").strip()
-    label = label.replace('"', "").replace("'", "")
-    return " ".join(label.split())
+    return clean_team_name(value).replace("Fiji Vics", "").strip()
 
 
 def clean_profile_grade_label(value: object) -> str:
-    label = compact_grade_label(value)
-    label = label.replace("NMCA -", "").strip()
-    label = label.replace("Designated One Day Comp.", "DODC")
-    label = label.replace('"', "").replace("'", "")
-    return " ".join(label.split())
+    return clean_grade_name(value).replace("Designated One Day Comp.", "DODC")
 
 
 def player_teams(frames: list[pd.DataFrame]) -> str:
     labels = []
     for frame in frames:
-        if not frame.empty and "team_name" in frame:
-            for _, row in frame.dropna(subset=["team_name"]).iterrows():
-                label = clean_profile_team_label(row.get("team_name", ""))
-                grade = clean_profile_grade_label(row.get("grade_name", ""))
-                if grade and label and (
-                    label.casefold() in grade.casefold() or grade.casefold() in label.casefold()
-                ):
-                    continue
+        if not frame.empty:
+            for _, row in frame.iterrows():
+                label = row.get("canonical_team_label") or clean_profile_team_label(row.get("team_name", ""))
                 if label and label not in labels:
                     labels.append(label)
     return ", ".join(labels) if labels else "—"
@@ -2888,9 +2886,9 @@ def player_teams(frames: list[pd.DataFrame]) -> str:
 def player_grades(frames: list[pd.DataFrame]) -> str:
     labels = []
     for frame in frames:
-        if not frame.empty and "grade_name" in frame:
-            for value in frame["grade_name"].dropna().astype(str):
-                label = clean_profile_grade_label(value)
+        if not frame.empty:
+            for _, row in frame.iterrows():
+                label = row.get("canonical_grade_label") or clean_profile_grade_from_row(row)
                 if label and label not in labels:
                     labels.append(label)
     return ", ".join(labels) if labels else "—"
@@ -2994,12 +2992,12 @@ def profile_record_meta(row: pd.Series) -> str:
     if row.empty:
         return ""
     parts = []
-    for column, formatter in [("season", str), ("team_name", compact_team_label), ("grade_name", compact_grade_label)]:
-        value = row.get(column)
-        if pd.notna(value):
-            label = formatter(value)
-            if label and label not in parts:
-                parts.append(label)
+    season = row.get("season")
+    if pd.notna(season):
+        parts.append(str(season))
+    display = row.get("team_grade_display") or build_team_grade_display(row.get("team_name", ""), row.get("grade_name", ""))
+    if display and display != "—":
+        parts.append(str(display))
     return " · ".join(parts)
 
 
@@ -4510,28 +4508,13 @@ def make_chart_label(row: pd.Series) -> str:
 
 
 def compact_team_label(team_name: object) -> str:
-    labels = []
-    for raw_label in str(team_name).split(","):
-        label = raw_label.strip()
-        label = label.replace("Fiji Victorian CC", "").replace("XI", "").strip()
-        label = label.replace("1st", "1s")
-        label = label.replace("2nd", "2s")
-        label = label.replace("3rd", "3s")
-        label = label.replace("4th", "4s")
-        label = label.replace("5th", "5s")
-        if label:
-            labels.append(label)
-
+    labels = [clean_team_name(raw_label) for raw_label in str(team_name).split(",")]
+    labels = [label for label in labels if label]
     return ", ".join(labels) if labels else str(team_name)
 
 
 def compact_grade_label(grade_name: object) -> str:
-    label = str(grade_name or "").strip()
-    if not label:
-        return ""
-    if " - " in label:
-        label = label.split(" - ", 1)[1].strip()
-    return label
+    return clean_grade_name(grade_name)
 
 
 def add_display_stat_aliases(df: pd.DataFrame) -> pd.DataFrame:
