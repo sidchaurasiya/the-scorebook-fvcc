@@ -117,6 +117,41 @@ def inject_theme() -> None:
             display: none;
         }
 
+        @media (min-width: 761px) {
+            section[data-testid="stSidebar"],
+            section[data-testid="stSidebar"][aria-expanded="false"],
+            section[data-testid="stSidebar"][aria-expanded="true"] {
+                display: block !important;
+                left: 0 !important;
+                margin-left: 0 !important;
+                max-width: 232px !important;
+                min-width: 232px !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: translateX(0) !important;
+                visibility: visible !important;
+                width: 232px !important;
+                z-index: 100000 !important;
+            }
+
+            section[data-testid="stSidebar"] > div,
+            section[data-testid="stSidebar"][aria-expanded="false"] > div,
+            section[data-testid="stSidebar"][aria-expanded="true"] > div {
+                display: block !important;
+                max-width: 232px !important;
+                min-width: 232px !important;
+                opacity: 1 !important;
+                transform: translateX(0) !important;
+                visibility: visible !important;
+                width: 232px !important;
+            }
+
+            div[data-testid="collapsedControl"] {
+                display: none !important;
+                visibility: hidden !important;
+            }
+        }
+
         .block-container {
             padding: 4.1rem 2.25rem 3rem;
             max-width: 1720px;
