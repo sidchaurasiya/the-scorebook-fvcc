@@ -490,7 +490,7 @@ def inject_theme() -> None:
         .seasons-context-line {
             color: #747b98;
             font-size: 0.9rem;
-            font-weight: 750;
+            font-weight: 400;
             margin: -4px 0 18px;
         }
 

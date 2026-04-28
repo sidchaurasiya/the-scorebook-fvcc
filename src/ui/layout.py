@@ -259,7 +259,7 @@ def render_data_source_panel() -> dict[str, object] | None:
         st.markdown(
             f"""
             <div class="page-kicker">Welcome back! 👋</div>
-            <h1 class="page-title">Club performance at a glance</h1>
+            <h1 class="page-title">Season Overview</h1>
             <div class="club-label">Fiji Victorian Cricket Club</div>
             <div class="seasons-context-line">{html.escape(context_description)}</div>
             """,
@@ -5067,11 +5067,9 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "player_name",
             "team_name",
             "matches",
-            "bowlingInnings",
             "overs_bowled_display",
-            "bowlingMaidens",
-            "bowlingRuns",
             "bowlingWickets",
+            "bowlingMaidens",
             "bowlingAverage",
             "bowlingEconomyRate",
             "bowlingStrikeRate",
@@ -5083,11 +5081,9 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Player",
             "Team",
             "M",
-            "Inns",
             "Overs",
+            "Wickets",
             "Mdns",
-            "Runs",
-            "Wkts",
             "Bowl Avg",
             "Economy",
             "Bowl SR",
@@ -5192,7 +5188,7 @@ def pretty_column_name_map() -> dict[str, str]:
         "battingStrikeRate": "Bat SR",
         "high_score": "HS",
         "battingHighScore": "Raw HS",
-        "bowlingWickets": "Wkts",
+        "bowlingWickets": "Wickets",
         "overs_bowled_display": "Overs",
         "oversBowled": "Overs",
         "bowlingOvers": "Overs",
