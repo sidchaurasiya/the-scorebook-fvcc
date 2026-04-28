@@ -71,7 +71,7 @@ def render_page() -> None:
     selected_page = render_sidebar()
     if selected_page == "Hall of Fame":
         render_hall_of_fame_page()
-    elif selected_page == "Seasons":
+    elif selected_page == "Season Overview":
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
     elif selected_page == "Milestone":
@@ -85,7 +85,7 @@ def render_page() -> None:
 def render_sidebar() -> str:
     page_labels = [
         "♕ Hall of Fame",
-        "⌂ Seasons",
+        "⌂ Season Overview",
         "☆ Milestone",
         "♙ Player Profile",
     ]
@@ -258,10 +258,11 @@ def render_data_source_panel() -> dict[str, object] | None:
     with st.container(key="header_intro"):
         st.markdown(
             f"""
-            <div class="page-kicker">Welcome back! 👋</div>
-            <h1 class="page-title">Season Overview</h1>
+            <div class="seasons-page"></div>
+            <h1 class="page-title">Season Overview 📊</h1>
             <div class="club-label">Fiji Victorian Cricket Club</div>
-            <div class="seasons-context-line">{html.escape(context_description)}</div>
+            <div class="page-subtitle">Track team performance, player leaders, and season-by-season club trends.</div>
+            <div class="page-note">{html.escape(context_description)}</div>
             """,
             unsafe_allow_html=True,
         )

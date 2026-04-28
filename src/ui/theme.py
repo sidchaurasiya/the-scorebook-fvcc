@@ -487,6 +487,28 @@ def inject_theme() -> None:
             margin: 0 0 28px;
         }
 
+        .block-container:has(.seasons-page) {
+            padding-top: 1.15rem;
+        }
+
+        .block-container:has(.seasons-page) .page-title {
+            font-size: clamp(2.8rem, 3.6vw, 3.75rem);
+            margin: 0 0 4px;
+        }
+
+        .block-container:has(.seasons-page) .club-label {
+            color: #5B3DF5;
+            font-weight: 800;
+            margin: 0 0 8px;
+        }
+
+        .block-container:has(.seasons-page) .page-subtitle {
+            color: #747b98;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0 0 6px;
+        }
+
         .seasons-context-line {
             color: #747b98;
             font-size: 0.9rem;
