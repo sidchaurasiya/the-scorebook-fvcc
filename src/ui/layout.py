@@ -109,11 +109,30 @@ def render_sidebar() -> str:
             st.session_state[widget_key] = current_label
 
     with st.container(key="mobile_nav_fallback"):
+        st.markdown(
+            """
+            <details class="mobile-nav-help">
+                <summary>
+                    <span class="mobile-nav-label">Choose a page</span>
+                    <span class="mobile-info-icon">ⓘ</span>
+                </summary>
+                <div class="mobile-nav-help-panel">
+                    <p><strong>Hall of Fame 🏆</strong><br>All-time club records, leaders, and iconic performances.</p>
+                    <p><strong>Season Overview 📊</strong><br>Season stats, team leaders, and detailed batting/bowling/fielding tables.</p>
+                    <p><strong>Milestone 💪</strong><br>Active players closing in on major club milestones.</p>
+                    <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
+                </div>
+            </details>
+            <div class="mobile-nav-helper">Switch between Hall of Fame, Season Overview, Milestone, and Player Profile.</div>
+            """,
+            unsafe_allow_html=True,
+        )
         st.selectbox(
-            "Navigation",
+            "Choose a page",
             page_labels,
             index=page_labels.index(current_label),
             key="mobile_navigation",
+            label_visibility="collapsed",
             on_change=sync_selected_page,
             args=("mobile_navigation",),
         )

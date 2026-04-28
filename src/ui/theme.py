@@ -2275,10 +2275,78 @@ def inject_theme() -> None:
                 box-shadow: 0 12px 28px rgba(23, 27, 77, 0.08);
                 display: block;
                 margin: 0 0 18px;
-                padding: 12px 14px;
+                padding: 12px 14px 14px;
                 position: sticky;
                 top: 10px;
                 z-index: 9999;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-label {
+                color: var(--ink) !important;
+                font-size: 0.98rem !important;
+                font-weight: 850 !important;
+                line-height: 1.1;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-helper {
+                color: #6D728E !important;
+                font-size: 0.78rem !important;
+                font-weight: 550 !important;
+                line-height: 1.28;
+                margin: 0 0 12px;
+            }
+
+            div.st-key-mobile_nav_fallback div[data-testid="stSelectbox"] {
+                margin-top: 4px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-help {
+                margin: 0 0 4px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-help summary {
+                align-items: center;
+                cursor: pointer;
+                display: inline-flex;
+                gap: 8px;
+                list-style: none;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-help summary::-webkit-details-marker {
+                display: none;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-info-icon {
+                align-items: center;
+                background: #F4F1FF !important;
+                border: 1px solid #DDD7FF !important;
+                border-radius: 999px !important;
+                color: var(--pitch) !important;
+                display: inline-flex;
+                font-size: 0.9rem !important;
+                font-weight: 850 !important;
+                height: 22px;
+                justify-content: center;
+                width: 22px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-help-panel {
+                background: #F8F7FF;
+                border: 1px solid #E7E2FF;
+                border-radius: 14px;
+                color: #4F5875;
+                font-size: 0.76rem;
+                line-height: 1.32;
+                margin: 9px 0 8px;
+                padding: 10px 11px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-help-panel p {
+                margin: 0 0 8px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-help-panel p:last-child {
+                margin-bottom: 0;
             }
 
             div.st-key-mobile_nav_fallback label {
