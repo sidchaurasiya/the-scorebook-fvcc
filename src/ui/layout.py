@@ -2551,53 +2551,69 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
         value = numeric_value(career, metric)
         if value > 0:
             cards.append({"title": title, "player": str(career["Player"]), "value": f"{int(value):,} {suffix}", "meta": ""})
+    leader_details = player_leader_details(profile_view)
     for title, key, suffix in [
-        ("Most Runs - Club", "club_run_leader", "season"),
-        ("Most Runs - Grade", "grade_run_leader", "grade season"),
-        ("Most Wickets - Club", "club_wicket_leader", "season"),
-        ("Most Wickets - Grade", "grade_wicket_leader", "grade season"),
+        ("Highest Run Maker at Club", "club_run_leader", "season"),
+        ("Highest Run Maker in Grade", "grade_run_leader", "grade season"),
+        ("Highest Wicket Taker at Club", "club_wicket_leader", "season"),
+        ("Highest Wicket Taker in Grade", "grade_wicket_leader", "grade season"),
     ]:
         value = int(leader_counts.get(key, 0))
         if value > 0:
             label = suffix if value == 1 else f"{suffix}s"
-            cards.append({"title": title, "player": str(career["Player"]), "value": f"{value:,} {label}", "meta": ""})
+            cards.append(
+                {
+                    "title": title,
+                    "player": str(career["Player"]),
+                    "value": f"{value:,} {label}",
+                    "meta": compact_leader_detail_meta(leader_details.get(key, [])),
+                }
+            )
     return cards[:10]
 
 
 def player_leader_counts(profile_view: dict[str, pd.DataFrame]) -> dict[str, int]:
+    return {key: len(values) for key, values in player_leader_details(profile_view).items()}
+
+
+def player_leader_details(profile_view: dict[str, pd.DataFrame]) -> dict[str, list[str]]:
     career = profile_view["career"]
     if career.empty:
         return {}
     player_id = str(career.iloc[0].get("canonical_player_id", "")).strip()
     if not player_id:
         return {}
-    return cached_player_leader_counts(player_id, metadata_mtime(), player_aliases_mtime())
+    return cached_player_leader_details(player_id, metadata_mtime(), player_aliases_mtime())
 
 
 @st.cache_data
-def cached_player_leader_counts(player_id: str, _local_version: float, _identity_version: float) -> dict[str, int]:
+def cached_player_leader_details(player_id: str, _local_version: float, _identity_version: float) -> dict[str, list[str]]:
     historical_data = load_hall_of_fame_data(_local_version, _identity_version)
     if historical_data is None:
         return {}
     batting = historical_data.get("batting_raw", pd.DataFrame())
     bowling = historical_data.get("bowling_raw", pd.DataFrame())
     return {
-        "club_run_leader": count_player_season_leaders(batting, player_id, "battingAggregate", by_grade=False),
-        "grade_run_leader": count_player_season_leaders(batting, player_id, "battingAggregate", by_grade=True),
-        "club_wicket_leader": count_player_season_leaders(bowling, player_id, "bowlingWickets", by_grade=False),
-        "grade_wicket_leader": count_player_season_leaders(bowling, player_id, "bowlingWickets", by_grade=True),
+        "club_run_leader": player_season_leader_details(batting, player_id, "battingAggregate", by_grade=False),
+        "grade_run_leader": player_season_leader_details(batting, player_id, "battingAggregate", by_grade=True),
+        "club_wicket_leader": player_season_leader_details(bowling, player_id, "bowlingWickets", by_grade=False),
+        "grade_wicket_leader": player_season_leader_details(bowling, player_id, "bowlingWickets", by_grade=True),
     }
 
 
 def count_player_season_leaders(df: pd.DataFrame, player_id: str, value_column: str, by_grade: bool) -> int:
+    return len(player_season_leader_details(df, player_id, value_column, by_grade))
+
+
+def player_season_leader_details(df: pd.DataFrame, player_id: str, value_column: str, by_grade: bool) -> list[str]:
     required = {"season", "canonical_player_id", value_column}
     if df.empty or not required.issubset(df.columns):
-        return 0
+        return []
     output = df.copy()
     output[value_column] = pd.to_numeric(output[value_column], errors="coerce").fillna(0)
     output = output[output[value_column] > 0]
     if output.empty:
-        return 0
+        return []
     scope_columns = ["season"]
     if by_grade:
         output["Grade"] = output.apply(clean_profile_grade_from_row, axis=1)
@@ -2613,7 +2629,28 @@ def count_player_season_leaders(df: pd.DataFrame, player_id: str, value_column: 
         & (grouped[value_column] == grouped["_scope_max"])
         & (grouped[value_column] > 0)
     ]
-    return int(leaders[scope_columns].drop_duplicates().shape[0])
+    if leaders.empty:
+        return []
+    details = []
+    for _, row in leaders[scope_columns].drop_duplicates().sort_values(scope_columns).iterrows():
+        season = str(row.get("season", "")).strip()
+        if by_grade:
+            grade = str(row.get("Grade", "")).strip()
+            label = f"{season} · {grade}" if grade else season
+        else:
+            label = season
+        if label and label not in details:
+            details.append(label)
+    return details
+
+
+def compact_leader_detail_meta(details: list[str], limit: int = 3) -> str:
+    if not details:
+        return ""
+    visible = details[:limit]
+    remaining = len(details) - len(visible)
+    suffix = f", +{remaining} more" if remaining > 0 else ""
+    return ", ".join(visible) + suffix
 
 
 def render_player_trends(season_table: pd.DataFrame) -> None:
@@ -2759,8 +2796,6 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         st.caption("No data available for this view.")
         return
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
-    source_rows = season_table.loc[table.index].copy()
-    table = append_profile_total_row(table, source_rows, columns, "Season")
     display = format_profile_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -2816,8 +2851,6 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         st.caption("No data available for this view.")
         return
     table = table.sort_values(label_column)
-    source_rows = group_table.loc[table.index].copy()
-    table = append_profile_total_row(table, source_rows, columns, label_column)
     display = format_profile_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -3106,6 +3139,25 @@ def player_grades(frames: list[pd.DataFrame]) -> str:
                 if label and label not in labels:
                     labels.append(label)
     return ", ".join(labels) if labels else "—"
+
+
+def player_unique_grades(frames: list[pd.DataFrame], limit: int = 5) -> str:
+    labels = []
+    for frame in frames:
+        if frame.empty:
+            continue
+        for _, row in frame.iterrows():
+            label = clean_profile_grade_from_row(row)
+            label = clean_profile_grade_label(label)
+            if label and label != "Unknown grade" and label not in labels:
+                labels.append(label)
+    if not labels:
+        return "—"
+    visible = labels[:limit]
+    remaining = len(labels) - len(visible)
+    if remaining > 0:
+        visible.append(f"+ {remaining} more")
+    return " · ".join(visible)
 
 
 def player_seasons(frames: list[pd.DataFrame]) -> str:
