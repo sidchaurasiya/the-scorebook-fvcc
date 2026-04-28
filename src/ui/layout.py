@@ -123,7 +123,6 @@ def render_sidebar() -> str:
                     <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
                 </div>
             </details>
-            <div class="mobile-nav-helper">Switch between Hall of Fame, Season Overview, Milestone, and Player Profile.</div>
             """,
             unsafe_allow_html=True,
         )
@@ -2410,8 +2409,8 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             '<div class="profile-kicker">Player Profile</div>'
             f'<div class="profile-name">{html.escape(str(career.get("Player", "-")))}</div>'
             '<div class="profile-summary-stack">'
-            f'<div class="profile-insight">{html.escape(insight)}</div>'
             f'<div class="profile-meta">Grades played: {html.escape(str(career.get("Grades Played", "—") or "—"))}</div>'
+            f'<div class="profile-insight">{html.escape(insight)}</div>'
             f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             '</div>'
             '</div>'
@@ -2688,22 +2687,25 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     st.markdown(f'<div class="profile-chart-title">{html.escape(title)}</div>', unsafe_allow_html=True)
                     values = chart_data[["Season", metric]].copy()
                     values[metric] = pd.to_numeric(values[metric], errors="coerce").fillna(0)
+                    season_count = values["Season"].nunique()
+                    bar_size = 10 if season_count >= 12 else 14 if season_count >= 8 else 20
+                    label_size = 9 if season_count >= 8 else 10
                     base = (
                         alt.Chart(values)
                         .encode(
                             x=alt.X("Season:N", sort=list(values["Season"]), axis=alt.Axis(labelAngle=-35, labelColor="#737998", title=None)),
-                            y=alt.Y(f"{metric}:Q", axis=alt.Axis(grid=True, gridColor="#EEF0F7", labelColor="#737998", title=None)),
+                            y=alt.Y(f"{metric}:Q", axis=alt.Axis(grid=False, labelColor="#737998", title=None)),
                             tooltip=[alt.Tooltip("Season:N"), alt.Tooltip(f"{metric}:Q", format=",.0f")],
                         )
                     )
                     chart = (
-                        base.mark_bar(cornerRadiusTopLeft=6, cornerRadiusTopRight=6, color=color, size=20)
+                        base.mark_bar(cornerRadiusTopLeft=6, cornerRadiusTopRight=6, color=color, size=bar_size)
                         + base.mark_text(
                             align="center",
                             baseline="top",
                             color="#ffffff",
                             dy=5,
-                            fontSize=12,
+                            fontSize=label_size,
                             fontWeight=800,
                         ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
                     ).properties(height=240).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
@@ -2752,7 +2754,7 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
         st.markdown(f'<div class="profile-chart-title">{html.escape(title)}</div>', unsafe_allow_html=True)
         base = alt.Chart(data).encode(
             x=alt.X("Season:N", sort=season_order, axis=alt.Axis(labelAngle=-35, labelColor="#737998", title=None)),
-            y=alt.Y("Season Average:Q", axis=alt.Axis(grid=True, gridColor="#EEF0F7", labelColor="#737998", title=None)),
+            y=alt.Y("Season Average:Q", axis=alt.Axis(grid=False, labelColor="#737998", title=None)),
             tooltip=[
                 alt.Tooltip("Season:N"),
                 alt.Tooltip("Season Average:Q", title="Season avg.", format=".2f"),
