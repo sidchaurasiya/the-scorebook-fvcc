@@ -1713,6 +1713,7 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
     return config
 
 
+@st.cache_data(show_spinner=False)
 def build_approaching_milestone_watchlist(all_time: pd.DataFrame) -> pd.DataFrame:
     specs = [
         ("Matches", "Matches", 100, 10, "matches", "Career Milestones"),
@@ -2048,7 +2049,7 @@ def render_player_profile_page() -> None:
         )
         return
 
-    profile = get_player_profile_data(selected["id"])
+    profile = get_player_profile_data(selected["id"], metadata_mtime(), player_aliases_mtime())
     profile_view = build_player_profile_view(profile)
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
@@ -2087,6 +2088,7 @@ def load_player_profile_index(_local_version: float, _identity_version: float) -
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
 
 
+@st.cache_data(show_spinner=False)
 def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFrame]:
     batting = add_batting_display_columns(apply_team_grade_display_columns(profile.get("batting", pd.DataFrame())))
     bowling = apply_team_grade_display_columns(profile.get("bowling", pd.DataFrame()))

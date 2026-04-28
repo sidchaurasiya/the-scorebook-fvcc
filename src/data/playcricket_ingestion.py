@@ -11,6 +11,7 @@ from typing import Any
 
 import pandas as pd
 import requests
+import streamlit as st
 
 from src.data.playcricket_public import (
     PLAYCRICKET_PUBLIC_BASE_URL,
@@ -252,6 +253,11 @@ def metadata_mtime() -> float:
 
 
 def read_metadata() -> dict[str, Any]:
+    return _read_metadata_cached(metadata_mtime())
+
+
+@st.cache_data(show_spinner=False)
+def _read_metadata_cached(_metadata_version: float) -> dict[str, Any]:
     if not METADATA_PATH.exists():
         return {}
     try:
@@ -264,7 +270,18 @@ def read_processed_table(name: str) -> pd.DataFrame:
     path = PROCESSED_DIR / f"{name}.csv"
     if not path.exists():
         return pd.DataFrame()
-    return pd.read_csv(path)
+    return _read_processed_table_cached(name, path.stat().st_mtime)
+
+
+@st.cache_data(show_spinner=False)
+def _read_processed_table_cached(name: str, _file_version: float) -> pd.DataFrame:
+    path = PROCESSED_DIR / f"{name}.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path)
+    except (MemoryError, OSError, pd.errors.ParserError):
+        return pd.DataFrame()
 
 
 def refresh_playcricket_backup(
@@ -533,4 +550,3 @@ def file_timestamp() -> str:
 
 def now_iso() -> str:
     return datetime.now(UTC).isoformat()
-

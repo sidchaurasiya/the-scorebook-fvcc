@@ -7,6 +7,9 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+import streamlit as st
+
+from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
 EXPORTS_DIR = Path("exports")
@@ -651,19 +654,28 @@ def rebuild_canonical_processed_tables(
     return row_counts
 
 
-def get_player_profile_data(canonical_player_id: str) -> dict[str, pd.DataFrame | dict[str, str]]:
+@st.cache_data(show_spinner=False)
+def get_player_profile_data(
+    canonical_player_id: str,
+    _local_version: float | None = None,
+    _identity_version: float | None = None,
+) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
 
     Returns canonical identity, raw aliases, career source rows, season-by-season
     rows, and team/grade breakdown for one canonical player. The caller can use
     these raw totals to recalculate profile metrics without averaging averages.
     """
+    _local_version = metadata_mtime() if _local_version is None else _local_version
+    _identity_version = player_aliases_mtime() if _identity_version is None else _identity_version
     aliases = load_player_aliases()
     frames = {}
     for category in ["batting", "bowling", "fielding"]:
-        path = PROCESSED_DIR / f"all_seasons_{category}.csv"
-        frame = pd.read_csv(path) if path.exists() else pd.DataFrame()
-        frames[category] = apply_player_identity_mapping(frame, aliases) if not frame.empty else frame
+        try:
+            frame = read_processed_table(f"all_seasons_{category}")
+            frames[category] = apply_player_identity_mapping(frame, aliases) if not frame.empty else frame
+        except MemoryError:
+            frames[category] = pd.DataFrame()
 
     canonical_player_id = str(canonical_player_id).strip()
     scoped = {}
