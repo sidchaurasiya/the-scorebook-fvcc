@@ -646,7 +646,7 @@ def render_approaching_milestones_page() -> None:
         <div class="near-milestones-page"></div>
         <h1 class="page-title">Players closing in on major club milestones 🎯</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
-        <div class="page-subtitle">Showing active players only — players who have appeared for FVCC in the last 3 seasons 🏏</div>
+        <div class="page-subtitle">Showing active players only — players who have appeared for FVCC in the last 3 seasons.</div>
         """,
         unsafe_allow_html=True,
     )
@@ -914,7 +914,7 @@ def build_all_time_player_table(
             "player_name": "Player",
             "teams_grades": "Teams/Grades",
             "seasons_played": "Seasons Played",
-            "first_season": "First Season",
+            "first_season": "Debut Season",
             "latest_season": "Latest Season",
             "matches": "Matches",
             "battingAggregate": "Runs",
@@ -1125,7 +1125,7 @@ def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
 
 
 def render_hall_of_fame_leaders(all_time: pd.DataFrame) -> None:
-    render_section_heading("All-Time Leaders 🌟")
+    render_section_heading("All-Time Leaders 👑")
     leader_specs = [
         ("Most Matches", "Matches", "matches", "fielding"),
         ("Most Runs", "Runs", "runs", "batting"),
@@ -1298,7 +1298,7 @@ def render_best_ever_seasons(data: dict[str, object]) -> None:
     if batting is None and bowling is None:
         return
 
-    render_section_heading("Greatest Individual Seasons 🌟")
+    render_section_heading("Greatest Individual Seasons 🎖️")
     cards = []
     if batting is not None:
         cards.append(best_season_card_html("Best batting season", batting, "batting"))
@@ -1502,7 +1502,7 @@ def render_milestone_club(all_time: pd.DataFrame) -> None:
             rendered.append(f'<div class="milestone-group"><h4>{int(band):,}+ {html.escape(metric)}</h4><div>{chips}</div></div>')
     if not rendered:
         return
-    render_section_heading("Milestone Club 🎯")
+    render_section_heading("Exclusive Club 💪")
     st.markdown(f'<div class="milestone-card">{"".join(rendered)}</div>', unsafe_allow_html=True)
 
 
@@ -1574,7 +1574,7 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
         "Seasons Played",
-        "First Season",
+        "Debut Season",
         "Latest Season",
         "Matches",
         "Runs",
@@ -1777,7 +1777,7 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
     config = {}
     config["Player"] = st.column_config.TextColumn("Player", pinned=True, width=150)
     config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width=150)
-    for column in ["First Season", "Latest Season"]:
+    for column in ["Debut Season", "Latest Season"]:
         if column in columns:
             config[column] = st.column_config.TextColumn(column, width=145)
     integer_columns = {
@@ -2343,6 +2343,7 @@ def build_player_career_totals(
         "Player": profile.get("player_info", {}).get("canonical_player_name", ""),
         "canonical_player_id": profile.get("player_info", {}).get("canonical_player_id", ""),
         "Teams/Grades": player_profile_team_summary(season_table),
+        "Grades Played": player_unique_grades([batting, bowling, fielding]),
         "Seasons": ", ".join(sorted(season_table["Season"].dropna().astype(str), key=profile_season_sort_key)),
         "Career Span": career_span_label(season_table["Season"].dropna().astype(str).tolist()),
         "Merged Profiles": int(profile.get("raw_aliases", pd.DataFrame()).shape[0]),
@@ -2391,6 +2392,7 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             f'<div class="profile-name">{html.escape(str(career.get("Player", "-")))}</div>'
             '<div class="profile-summary-stack">'
             f'<div class="profile-insight">{html.escape(insight)}</div>'
+            f'<div class="profile-meta">Grades played: {html.escape(str(career.get("Grades Played", "—") or "—"))}</div>'
             f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             '</div>'
             '</div>'
@@ -2433,7 +2435,7 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     add_badge("Dependable Batter", matches_floor and bat_avg > 18 and "Star Batter" not in badges)
     add_badge("Star Bowler", bowler_profile and wickets >= 20 and 0 < numeric_value(career, "Bowl Avg") < 20)
     add_badge("Wicket Taker", bowler_profile and wickets_per_match > 1)
-    add_badge("Strike Bowler", bowler_profile and overs > 150 and 0 < bowl_sr < 35)
+    add_badge("Partnership Breaker", bowler_profile and overs > 150 and 0 < bowl_sr < 35)
     add_badge("Economy Controller", bowler_profile and overs > 150 and 0 < economy < 3)
     add_badge("Big Hitter", matches_floor and matches and sixes / matches > 0.3)
     add_badge("Gap Finder", matches_floor and matches and fours / matches > 2)
@@ -2462,7 +2464,7 @@ def player_profile_insight(career: pd.Series, badges: list[str]) -> str:
         return "Boundary-focused batter with a strong six-hitting profile."
     if "Gap Finder" in badges or "Boundary Maker" in badges or "Quick Scorer" in badges:
         return "Consistent boundary scorer who regularly finds gaps."
-    if "Star Bowler" in badges or "Strike Bowler" in badges or "Wicket Taker" in badges:
+    if "Star Bowler" in badges or "Partnership Breaker" in badges or "Wicket Taker" in badges:
         return "Regular wicket threat with strong bowling impact."
     if "Economy Controller" in badges:
         return "Disciplined bowler who keeps scoring rates under control."
