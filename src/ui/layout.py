@@ -2804,7 +2804,7 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
 
 
 def render_player_season_table(season_table: pd.DataFrame) -> None:
-    render_section_heading("Season-by-Season Performance")
+    render_section_heading("Season History")
     with st.container(key="player_profile_season_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
@@ -2822,7 +2822,7 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
 def render_player_grade_table(grade_table: pd.DataFrame) -> None:
     if grade_table.empty:
         return
-    render_section_heading("Grade-wise Performance")
+    render_section_heading("Grade Breakdown")
     with st.container(key="player_profile_grade_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
@@ -4260,7 +4260,7 @@ def render_section_subtext(text: str) -> None:
 def render_biggest_improvers(dashboard_data: dict[str, object]) -> None:
     cards = build_biggest_improvers(dashboard_data)
     render_section_heading("Biggest Improvers 📈")
-    render_section_subtext("Players with the strongest improvement compared with the previous season.")
+    render_section_subtext("Players with the strongest improvement compared to previous season.")
     if not cards:
         st.markdown(
             '<div class="improver-empty">Not enough qualifying players for this comparison.</div>',
@@ -4274,15 +4274,20 @@ def render_biggest_improvers(dashboard_data: dict[str, object]) -> None:
 def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str, object]]:
     current_season = dashboard_data.get("season", {})
     previous = previous_season_for(current_season)
+    selected_type = season_type_label(current_season.get("name"))
+    comparison_type = improver_comparison_type(selected_type)
     if not previous:
         export_biggest_improvers_debug(
             pd.DataFrame(
                 [
                     {
                         "selected_season": current_season.get("name", ""),
+                        "selected_season_type": selected_type,
                         "previous_season": "",
+                        "previous_same_type_season": "",
+                        "comparison_type": comparison_type,
                         "selected_scope": dashboard_data.get("context_label", ""),
-                        "reason_if_excluded": "No comparable previous summer season found",
+                        "reason_if_excluded": f"No comparable previous {selected_type.lower()} season found",
                     }
                 ]
             )
@@ -4312,7 +4317,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
     export_biggest_improvers_debug(debug_frame)
     cards: list[dict[str, object]] = []
     runs_card = biggest_improver_for_metric(
-        "Biggest Runs Improver",
+        "Biggest Run Improvement",
         "batting",
         "battingAggregate",
         "runs",
@@ -4325,7 +4330,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         identity_version,
     )
     wickets_card = biggest_improver_for_metric(
-        "Biggest Wickets Improver",
+        "Biggest Wickets Improvement",
         "bowling",
         "bowlingWickets",
         "wickets",
@@ -4348,8 +4353,9 @@ def previous_season_for(current_season: dict[str, object]) -> dict[str, object] 
     if not seasons:
         return None
     current_id = str(current_season.get("id", ""))
+    current_type = season_type_label(current_season.get("name"))
     ordered = sorted(
-        [season for season in seasons if not is_winter_season(season.get("name"))],
+        [season for season in seasons if season_type_label(season.get("name")) == current_type],
         key=lambda season: season_sort_from_record(season),
     )
     for index, season in enumerate(ordered):
@@ -4358,8 +4364,13 @@ def previous_season_for(current_season: dict[str, object]) -> dict[str, object] 
     return None
 
 
-def is_winter_season(season_name: object) -> bool:
-    return "winter" in str(season_name or "").casefold()
+def season_type_label(season_name: object) -> str:
+    return "Winter" if "winter" in str(season_name or "").casefold() else "Summer"
+
+
+def improver_comparison_type(season_type: str) -> str:
+    normalized = season_type.casefold()
+    return f"{normalized}_to_previous_{normalized}"
 
 
 def season_sort_from_record(season: dict[str, object]) -> int:
@@ -4517,6 +4528,9 @@ def build_biggest_improvers_debug_frame(
     local_version: float,
     identity_version: float | None,
 ) -> pd.DataFrame:
+    selected_type = season_type_label(current_season.get("name"))
+    previous_same_type = previous_season.get("name", "")
+    comparison_type = improver_comparison_type(selected_type)
     current_runs = season_metric_totals("batting", current_season_id, scope, "battingAggregate", local_version, identity_version)
     previous_runs = season_metric_totals("batting", previous_season_id, scope, "battingAggregate", local_version, identity_version)
     current_wickets = season_metric_totals("bowling", current_season_id, scope, "bowlingWickets", local_version, identity_version)
@@ -4535,7 +4549,10 @@ def build_biggest_improvers_debug_frame(
             [
                 {
                     "selected_season": current_season.get("name", ""),
+                    "selected_season_type": selected_type,
                     "previous_season": previous_season.get("name", ""),
+                    "previous_same_type_season": previous_same_type,
+                    "comparison_type": comparison_type,
                     "selected_scope": scope.get("label", ""),
                     "reason_if_excluded": "No player rows found in current or previous scope",
                 }
@@ -4595,12 +4612,18 @@ def build_biggest_improvers_debug_frame(
     )
     debug["reason_if_excluded"] = debug.apply(improver_exclusion_reason, axis=1)
     debug.insert(0, "selected_season", current_season.get("name", ""))
-    debug.insert(1, "previous_season", previous_season.get("name", ""))
-    debug.insert(2, "selected_scope", scope.get("label", ""))
+    debug.insert(1, "selected_season_type", selected_type)
+    debug.insert(2, "previous_season", previous_season.get("name", ""))
+    debug.insert(3, "previous_same_type_season", previous_same_type)
+    debug.insert(4, "comparison_type", comparison_type)
+    debug.insert(5, "selected_scope", scope.get("label", ""))
     debug = debug.rename(columns={"player_key": "canonical_player_id"})
     columns = [
         "selected_season",
+        "selected_season_type",
         "previous_season",
+        "previous_same_type_season",
+        "comparison_type",
         "selected_scope",
         "canonical_player_id",
         "canonical_player_name",
@@ -4637,7 +4660,10 @@ def improver_exclusion_reason(row: pd.Series) -> str:
 def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
     columns = [
         "selected_season",
+        "selected_season_type",
         "previous_season",
+        "previous_same_type_season",
+        "comparison_type",
         "selected_scope",
         "canonical_player_id",
         "canonical_player_name",
@@ -4666,12 +4692,13 @@ def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
 def biggest_improver_card_html(card: dict[str, object]) -> str:
     percentage = card.get("percentage")
     pct_text = "new entry" if percentage is None else f"▲ {percentage:.0f}%"
+    unit = html.escape(str(card["unit"]))
     return (
         '<div class="improver-card">'
         f'<div class="improver-label">{html.escape(str(card["title"]))}</div>'
         f'<div class="improver-player">{html.escape(str(card["player"]))}</div>'
-        f'<div class="improver-gain">+{int(card["improvement"]):,} {html.escape(str(card["unit"]))} <span>{html.escape(pct_text)}</span></div>'
-        f'<div class="improver-meta">Current {int(card["current"]):,} · Previous {int(card["previous"]):,}</div>'
+        f'<div class="improver-gain">+{int(card["improvement"]):,} {unit} <span>{html.escape(pct_text)}</span></div>'
+        f'<div class="improver-meta">Current {int(card["current"]):,} {unit} · Previous {int(card["previous"]):,} {unit}</div>'
         '</div>'
     )
 
