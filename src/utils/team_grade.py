@@ -30,6 +30,17 @@ TEAM_ALIASES = {
 
 REAL_TEAM_LABELS = {"1s", "2s", "3s", "4s", "5s", "od", "winter", "veterans", "vets"}
 GRADE_WORDS = ("shield", "grade", "division", "association", "nmca", "competition", "comp.")
+GRADE_ORDER = [
+    "jika shield",
+    "jack quick shield",
+    "jack kelly shield",
+    "b grade",
+    "c grade",
+    "d grade",
+    "e grade",
+    "f grade",
+    "g grade",
+]
 
 
 def clean_team_name(value: object) -> str:
@@ -63,6 +74,7 @@ def clean_grade_name(value: object) -> str:
     label = clean_label(value)
     label = strip_leading_association(label)
     label = re.sub(r"^\d+\s*[-–]\s*", "", label).strip()
+    label = label.replace("Designated One Day Comp.", "DODC")
     return normalize_spaces(label)
 
 
@@ -155,6 +167,27 @@ def build_team_grade_display(team_name: object, grade_name: object) -> str:
     if grade_label:
         return grade_label
     return clean_team or clean_grade or "—"
+
+
+def grade_sort_key(value: object) -> tuple[int, str]:
+    label = clean_grade_name(extract_grade_for_sort(value))
+    normalized = normalized_name(label)
+    for index, grade in enumerate(GRADE_ORDER):
+        if normalized == grade or grade in normalized:
+            return (index, label.casefold())
+    return (len(GRADE_ORDER), label.casefold())
+
+
+def extract_grade_for_sort(value: object) -> str:
+    label = str(value or "").strip()
+    if not label:
+        return ""
+    bracket_match = re.search(r"\(([^)]*)\)", label)
+    if bracket_match:
+        return bracket_match.group(1)
+    if re.fullmatch(r"[1-9]s", label.casefold()) or label.casefold() in REAL_TEAM_LABELS:
+        return label
+    return label
 
 
 def apply_team_grade_display_columns(df: pd.DataFrame) -> pd.DataFrame:

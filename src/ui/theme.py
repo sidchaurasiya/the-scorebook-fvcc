@@ -994,6 +994,19 @@ def inject_theme() -> None:
         div.st-key-top_scorers_card,
         div.st-key-top_wickets_card {
             padding: 22px 26px;
+            position: relative;
+        }
+
+        div.st-key-top_scorers_card::before,
+        div.st-key-top_wickets_card::before {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.85), rgba(245, 213, 115, 0.38), transparent);
+            border-radius: 22px 22px 0 0;
+            content: "";
+            height: 3px;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
         }
 
         div.st-key-top_scorers_card h4,
@@ -1016,6 +1029,13 @@ def inject_theme() -> None:
         div.st-key-top_wickets_card .progress-rank {
             height: 24px;
             width: 24px;
+        }
+
+        div.st-key-top_scorers_card .progress-row:first-child .progress-rank,
+        div.st-key-top_wickets_card .progress-row:first-child .progress-rank {
+            background: rgba(212, 175, 55, 0.16);
+            border: 1px solid rgba(212, 175, 55, 0.42);
+            color: #8A6A12;
         }
 
         div.st-key-top_scorers_card .progress-average,
@@ -1376,6 +1396,18 @@ def inject_theme() -> None:
         .block-container:has(.hall-of-fame-page) .hof-card {
             margin-bottom: 18px;
             padding: 17px 19px;
+            position: relative;
+        }
+
+        .block-container:has(.hall-of-fame-page) .hof-card::before {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.80), rgba(245, 213, 115, 0.32), transparent);
+            border-radius: 16px 16px 0 0;
+            content: "";
+            height: 3px;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
         }
 
         .block-container:has(.hall-of-fame-page) .hof-progress-row {
@@ -1389,6 +1421,13 @@ def inject_theme() -> None:
         .block-container:has(.hall-of-fame-page) .progress-rank {
             height: 24px;
             width: 24px;
+        }
+
+        .block-container:has(.hall-of-fame-page) .hof-progress-row:first-of-type .progress-rank,
+        .block-container:has(.hall-of-fame-page) .performance-row:first-of-type .progress-rank {
+            background: rgba(212, 175, 55, 0.16);
+            border: 1px solid rgba(212, 175, 55, 0.42);
+            color: #8A6A12;
         }
 
         .block-container:has(.hall-of-fame-page) .progress-track {

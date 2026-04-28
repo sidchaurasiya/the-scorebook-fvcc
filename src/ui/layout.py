@@ -56,6 +56,7 @@ from src.utils.team_grade import (
     clean_grade_name,
     clean_team_name,
     export_team_grade_display_audit,
+    grade_sort_key,
 )
 
 
@@ -262,6 +263,7 @@ def render_data_source_panel() -> dict[str, object] | None:
             "name": "All teams",
             "grade": {"id": "__all_grades__", "name": "Whole club"},
         }
+        teams = sort_teams_by_grade_display(teams)
         team_options = [all_teams_option, *teams]
 
         with team_col:
@@ -337,7 +339,7 @@ def render_data_source_panel() -> dict[str, object] | None:
         "context_label": (
             f"{len(teams)} teams across {selected_season['name']}"
             if is_all_teams
-            else f"{compact_team_label(selected_team['name'])} - {grade.get('name', 'Unknown grade')}"
+            else format_team_option(selected_team)
         ),
         **dashboard_frames,
     }
@@ -421,6 +423,16 @@ def load_local_playcricket_teams(season_id: str, _local_version: float) -> list[
     return teams
 
 
+def sort_teams_by_grade_display(teams: list[dict]) -> list[dict]:
+    return sorted(
+        teams,
+        key=lambda team: (
+            grade_sort_key(team_card_title(team)),
+            str(team_card_title(team)).casefold(),
+        ),
+    )
+
+
 @st.cache_data
 def load_local_category_frame(
     category: str,
@@ -436,7 +448,7 @@ def load_local_category_frame(
         frame = frame[frame["season_id"].astype(str) == str(season_id)]
     if team_id and "team_id" in frame:
         frame = frame[frame["team_id"].astype(str) == str(team_id)]
-    return apply_player_identity_mapping(frame.copy(), load_player_aliases())
+    return apply_team_grade_display_columns(apply_player_identity_mapping(frame.copy(), load_player_aliases()))
 
 
 def load_local_single_team_frames(
@@ -513,7 +525,7 @@ def backup_timestamp_label() -> str:
 def format_team_option(team: dict) -> str:
     if team["id"] == "__all_teams__":
         return "All teams - Whole club"
-    return f"{compact_team_label(team['name'])} - {team.get('grade', {}).get('name', 'No grade')}"
+    return team_card_title(team)
 
 
 def build_context_description(
@@ -524,10 +536,7 @@ def build_context_description(
     if is_all_teams:
         scope = "All teams • Whole club"
     else:
-        scope = (
-            f"{compact_team_label(team.get('name', '-'))} • "
-            f"{team.get('grade', {}).get('name', 'Unknown grade')}"
-        )
+        scope = team_card_title(team)
     return f"Showing data for {season.get('name', '-')} • {scope}"
 
 
@@ -1131,9 +1140,9 @@ def estimate_historical_matches(*frames: pd.DataFrame) -> int:
 
 def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
     cards = [
-        ("Seasons Analysed", f"{int(data['total_seasons']):,}", "", "seasons", "▦", "purple"),
+        ("Seasons Analysed", f"{int(data['total_seasons']):,}", "", "team", "XI", "purple"),
         ("Matches Recorded", f"{int(data['total_matches']):,}", "", "matches", "▣", "blue"),
-        ("Players Scanned", f"{int(data['total_players']):,}", "", "players", "♙", "green"),
+        ("Players Scanned", f"{int(data['total_players']):,}", "", "runs", "🏏", "green"),
     ]
     columns = st.columns(3)
     for column, card in zip(columns, cards):
@@ -2308,7 +2317,7 @@ def build_player_grade_table(
     if not frames:
         return pd.DataFrame()
 
-    grades = sorted(pd.concat(frames, ignore_index=True)["Grade"].dropna().unique())
+    grades = sorted(pd.concat(frames, ignore_index=True)["Grade"].dropna().unique(), key=grade_sort_key)
     rows = []
     for grade in grades:
         bat = batting[batting.apply(clean_profile_grade_from_row, axis=1) == grade] if not batting.empty else batting.head(0)
@@ -2345,7 +2354,11 @@ def build_player_grade_table(
         row["BBI"] = best_bowling_value(bowl)
         row["Dismissals"] = row["Catches"] + row["Stumpings"] + row["Run Outs"]
         rows.append(row)
-    return pd.DataFrame(rows).sort_values("Grade").reset_index(drop=True)
+    if not rows:
+        return pd.DataFrame()
+    output = pd.DataFrame(rows)
+    output["_grade_sort"] = output["Grade"].map(grade_sort_key)
+    return output.sort_values("_grade_sort").drop(columns="_grade_sort").reset_index(drop=True)
 
 
 def build_player_career_totals(
@@ -2871,7 +2884,11 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
     if table.empty:
         st.caption("No data available for this view.")
         return
-    table = table.sort_values(label_column)
+    if label_column == "Grade":
+        table["_sort_key"] = table[label_column].map(grade_sort_key)
+        table = table.sort_values("_sort_key").drop(columns="_sort_key")
+    else:
+        table = table.sort_values(label_column)
     display = format_profile_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -3067,6 +3084,7 @@ def player_teams_grades(frames: list[pd.DataFrame]) -> str:
             label = row.get("team_grade_display") or build_team_grade_display(row.get("team_name", ""), row.get("grade_name", ""))
             if label and label not in labels:
                 labels.append(label)
+    labels = sorted(labels, key=grade_sort_key)
     return ", ".join(labels) if labels else "—"
 
 
@@ -3159,6 +3177,7 @@ def player_grades(frames: list[pd.DataFrame]) -> str:
                 label = row.get("canonical_grade_label") or clean_profile_grade_from_row(row)
                 if label and label not in labels:
                     labels.append(label)
+    labels = sorted(labels, key=grade_sort_key)
     return ", ".join(labels) if labels else "—"
 
 
@@ -3172,6 +3191,7 @@ def player_unique_grades(frames: list[pd.DataFrame], limit: int = 5) -> str:
             label = clean_profile_grade_label(label)
             if label and label != "Unknown grade" and label not in labels:
                 labels.append(label)
+    labels = sorted(labels, key=grade_sort_key)
     if not labels:
         return "—"
     visible = labels[:limit]
@@ -4361,11 +4381,9 @@ def render_team_leader_card(
 
 
 def team_card_title(team: dict) -> str:
-    team_label = compact_team_label(team.get("name", "-"))
-    grade_label = compact_grade_label(team.get("grade", {}).get("name"))
-    if grade_label:
-        return f"{team_label} ({grade_label})"
-    return team_label
+    if team.get("id") == "__all_teams__":
+        return "All teams - Whole club"
+    return build_team_grade_display(team.get("name", ""), team.get("grade", {}).get("name", ""))
 
 
 def filter_team_frame(frame: pd.DataFrame, team_id: str) -> pd.DataFrame:
