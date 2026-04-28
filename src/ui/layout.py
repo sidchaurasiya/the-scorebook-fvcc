@@ -62,6 +62,7 @@ from src.utils.team_grade import (
 
 APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
+DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 
 
@@ -89,6 +90,7 @@ def render_page() -> None:
         render_player_profile_page()
     else:
         render_hall_of_fame_page()
+    render_mobile_page_footer()
 
 
 def render_sidebar() -> str:
@@ -136,18 +138,6 @@ def render_sidebar() -> str:
             on_change=sync_selected_page,
             args=("mobile_navigation",),
         )
-        st.markdown(
-            """
-            <div class="mobile-footer-credit">
-                <div class="mobile-footer-label">App created by</div>
-                <div class="mobile-footer-names">Siddhanth Chaurasiya | Preet Kaur</div>
-                <div class="mobile-footer-contact">Feedback / bugs:
-                    <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
 
     st.sidebar.markdown(
         """
@@ -175,9 +165,9 @@ def render_sidebar() -> str:
         """
         <div class="side-footer">
             <div class="side-footer-label">App created by</div>
-            <div class="side-footer-names">Siddhanth Chaurasiya | Preet Kaur</div>
+            <div class="side-footer-names">Siddhanth Chaurasiya |<br>Preet Kaur</div>
             <div class="side-footer-contact">
-                <div>For feedback, enquiries or bugs:</div>
+                <div>For feedback/enquiries:</div>
                 <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
             </div>
         </div>
@@ -185,6 +175,22 @@ def render_sidebar() -> str:
         unsafe_allow_html=True,
     )
     return selected_label.split(" ", 1)[1]
+
+
+def render_mobile_page_footer() -> None:
+    st.markdown(
+        """
+        <div class="mobile-page-footer">
+            <div class="mobile-footer-label">App created by</div>
+            <div class="mobile-footer-names">Siddhanth Chaurasiya |<br>Preet Kaur</div>
+            <div class="mobile-footer-contact">
+                <div>For feedback/enquiries:</div>
+                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_data_refresh_control() -> None:
@@ -2048,7 +2054,7 @@ def milestone_unique_players(watchlist: pd.DataFrame, categories: list[str]) -> 
 
 
 def render_career_milestone_cards(watchlist: pd.DataFrame) -> None:
-    render_section_heading("Career Milestones 🏆")
+    render_section_heading("Milestone Watchlist 🎯")
     column_groups = [["Matches", "Wickets"], ["Runs", "Catches"]]
     if not any(
         not milestone_category_rows(watchlist, category).empty
@@ -4269,8 +4275,19 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
     current_season = dashboard_data.get("season", {})
     previous = previous_season_for(current_season)
     if not previous:
+        export_biggest_improvers_debug(
+            pd.DataFrame(
+                [
+                    {
+                        "selected_season": current_season.get("name", ""),
+                        "previous_season": "",
+                        "selected_scope": dashboard_data.get("context_label", ""),
+                        "reason_if_excluded": "No comparable previous summer season found",
+                    }
+                ]
+            )
+        )
         return []
-    team_ids = {str(team.get("id")) for team in dashboard_data.get("teams", []) if team.get("id") != "__all_teams__"}
     local_version = metadata_mtime()
     identity_version = player_aliases_mtime()
     current_id = str(current_season.get("id", ""))
@@ -4278,8 +4295,21 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
     if not current_id or not previous_id:
         return []
 
-    current_matches = season_player_match_counts(current_id, team_ids, local_version, identity_version)
-    previous_matches = season_player_match_counts(previous_id, team_ids, local_version, identity_version)
+    scope = selected_improver_scope(dashboard_data)
+    current_matches = season_player_match_counts(current_id, scope, local_version, identity_version)
+    previous_matches = season_player_match_counts(previous_id, scope, local_version, identity_version)
+    debug_frame = build_biggest_improvers_debug_frame(
+        current_season,
+        previous,
+        scope,
+        current_id,
+        previous_id,
+        current_matches,
+        previous_matches,
+        local_version,
+        identity_version,
+    )
+    export_biggest_improvers_debug(debug_frame)
     cards: list[dict[str, object]] = []
     runs_card = biggest_improver_for_metric(
         "Biggest Runs Improver",
@@ -4288,7 +4318,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         "runs",
         current_id,
         previous_id,
-        team_ids,
+        scope,
         current_matches,
         previous_matches,
         local_version,
@@ -4301,7 +4331,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         "wickets",
         current_id,
         previous_id,
-        team_ids,
+        scope,
         current_matches,
         previous_matches,
         local_version,
@@ -4318,11 +4348,18 @@ def previous_season_for(current_season: dict[str, object]) -> dict[str, object] 
     if not seasons:
         return None
     current_id = str(current_season.get("id", ""))
-    ordered = sorted(seasons, key=lambda season: season_sort_from_record(season))
+    ordered = sorted(
+        [season for season in seasons if not is_winter_season(season.get("name"))],
+        key=lambda season: season_sort_from_record(season),
+    )
     for index, season in enumerate(ordered):
         if str(season.get("id", "")) == current_id:
             return ordered[index - 1] if index > 0 else None
     return None
+
+
+def is_winter_season(season_name: object) -> bool:
+    return "winter" in str(season_name or "").casefold()
 
 
 def season_sort_from_record(season: dict[str, object]) -> int:
@@ -4332,17 +4369,58 @@ def season_sort_from_record(season: dict[str, object]) -> int:
     return season_sort_value(season.get("name"))
 
 
+def selected_improver_scope(dashboard_data: dict[str, object]) -> dict[str, object]:
+    selected_team = dashboard_data.get("team", {}) or {}
+    is_all = bool(dashboard_data.get("is_all_teams"))
+    if is_all or selected_team.get("id") == "__all_teams__":
+        return {
+            "is_all": True,
+            "label": "All teams - Whole club",
+            "display": "",
+            "team": "",
+            "grade": "",
+        }
+    grade_name = selected_team.get("grade", {}).get("name", "")
+    team_name = selected_team.get("name", "")
+    return {
+        "is_all": False,
+        "label": team_card_title(selected_team),
+        "display": team_card_title(selected_team),
+        "team": clean_team_name(team_name),
+        "grade": canonical_grade_label(team_name, grade_name),
+    }
+
+
+def filter_frame_to_improver_scope(frame: pd.DataFrame, scope: dict[str, object]) -> pd.DataFrame:
+    if frame.empty or scope.get("is_all"):
+        return frame.copy()
+    scoped = apply_team_grade_display_columns(frame.copy())
+    display = str(scope.get("display") or "")
+    grade = str(scope.get("grade") or "")
+    team = str(scope.get("team") or "")
+    mask = pd.Series(False, index=scoped.index)
+    if display and "team_grade_display" in scoped:
+        mask = mask | (scoped["team_grade_display"].fillna("").astype(str) == display)
+    if grade and "canonical_grade_label" in scoped:
+        grade_match = scoped["canonical_grade_label"].fillna("").astype(str) == grade
+        if team and "canonical_team_label" in scoped:
+            team_match = scoped["canonical_team_label"].fillna("").astype(str).isin([team, ""])
+            mask = mask | (grade_match & team_match)
+        else:
+            mask = mask | grade_match
+    return scoped[mask].copy()
+
+
 def season_player_match_counts(
     season_id: str,
-    team_ids: set[str],
+    scope: dict[str, object],
     local_version: float,
     identity_version: float | None,
 ) -> pd.DataFrame:
     frames = []
     for category in ["batting", "bowling", "fielding"]:
         frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
-        if team_ids and not frame.empty and "team_id" in frame:
-            frame = frame[frame["team_id"].astype(str).isin(team_ids)].copy()
+        frame = filter_frame_to_improver_scope(frame, scope)
         if frame.empty or "matches" not in frame:
             continue
         frame["player_key"] = player_keys(frame)
@@ -4364,14 +4442,13 @@ def season_player_match_counts(
 def season_metric_totals(
     category: str,
     season_id: str,
-    team_ids: set[str],
+    scope: dict[str, object],
     value_column: str,
     local_version: float,
     identity_version: float | None,
 ) -> pd.DataFrame:
     frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
-    if team_ids and not frame.empty and "team_id" in frame:
-        frame = frame[frame["team_id"].astype(str).isin(team_ids)].copy()
+    frame = filter_frame_to_improver_scope(frame, scope)
     if frame.empty or value_column not in frame:
         return pd.DataFrame(columns=["player_key", "player_name", value_column])
     frame = frame.copy()
@@ -4392,14 +4469,14 @@ def biggest_improver_for_metric(
     unit: str,
     current_season_id: str,
     previous_season_id: str,
-    team_ids: set[str],
+    scope: dict[str, object],
     current_matches: pd.DataFrame,
     previous_matches: pd.DataFrame,
     local_version: float,
     identity_version: float | None,
 ) -> dict[str, object] | None:
-    current = season_metric_totals(category, current_season_id, team_ids, value_column, local_version, identity_version)
-    previous = season_metric_totals(category, previous_season_id, team_ids, value_column, local_version, identity_version)
+    current = season_metric_totals(category, current_season_id, scope, value_column, local_version, identity_version)
+    previous = season_metric_totals(category, previous_season_id, scope, value_column, local_version, identity_version)
     if current.empty or previous.empty:
         return None
     merged = current.merge(previous[["player_key", value_column]], on="player_key", how="inner", suffixes=("_current", "_previous"))
@@ -4407,7 +4484,7 @@ def biggest_improver_for_metric(
     merged = merged.merge(previous_matches.rename(columns={"matches": "previous_matches"}), on="player_key", how="left")
     merged["current_matches"] = pd.to_numeric(merged["current_matches"], errors="coerce").fillna(0)
     merged["previous_matches"] = pd.to_numeric(merged["previous_matches"], errors="coerce").fillna(0)
-    merged = merged[(merged["current_matches"] >= 10) & (merged["previous_matches"] >= 10)].copy()
+    merged = merged[(merged["current_matches"] >= 8) & (merged["previous_matches"] >= 8)].copy()
     if merged.empty:
         return None
     merged["improvement"] = merged[f"{value_column}_current"] - merged[f"{value_column}_previous"]
@@ -4427,6 +4504,163 @@ def biggest_improver_for_metric(
         "percentage": percentage,
         "unit": unit,
     }
+
+
+def build_biggest_improvers_debug_frame(
+    current_season: dict[str, object],
+    previous_season: dict[str, object],
+    scope: dict[str, object],
+    current_season_id: str,
+    previous_season_id: str,
+    current_matches: pd.DataFrame,
+    previous_matches: pd.DataFrame,
+    local_version: float,
+    identity_version: float | None,
+) -> pd.DataFrame:
+    current_runs = season_metric_totals("batting", current_season_id, scope, "battingAggregate", local_version, identity_version)
+    previous_runs = season_metric_totals("batting", previous_season_id, scope, "battingAggregate", local_version, identity_version)
+    current_wickets = season_metric_totals("bowling", current_season_id, scope, "bowlingWickets", local_version, identity_version)
+    previous_wickets = season_metric_totals("bowling", previous_season_id, scope, "bowlingWickets", local_version, identity_version)
+
+    debug = pd.DataFrame({"player_key": sorted(set().union(
+        set(current_matches.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(previous_matches.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(current_runs.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(previous_runs.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(current_wickets.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(previous_wickets.get("player_key", pd.Series(dtype=str)).astype(str)),
+    ))})
+    if debug.empty:
+        return pd.DataFrame(
+            [
+                {
+                    "selected_season": current_season.get("name", ""),
+                    "previous_season": previous_season.get("name", ""),
+                    "selected_scope": scope.get("label", ""),
+                    "reason_if_excluded": "No player rows found in current or previous scope",
+                }
+            ]
+        )
+
+    debug = debug.merge(current_matches.rename(columns={"matches": "current_matches"}), on="player_key", how="left")
+    debug = debug.merge(previous_matches.rename(columns={"matches": "previous_matches"}), on="player_key", how="left")
+    debug = debug.merge(
+        current_runs.rename(columns={"player_name": "canonical_player_name", "battingAggregate": "current_runs"}),
+        on="player_key",
+        how="left",
+    )
+    debug = debug.merge(
+        previous_runs.rename(columns={"player_name": "previous_player_name", "battingAggregate": "previous_runs"}),
+        on="player_key",
+        how="left",
+    )
+    debug = debug.merge(
+        current_wickets.rename(columns={"player_name": "wicket_player_name", "bowlingWickets": "current_wickets"}),
+        on="player_key",
+        how="left",
+    )
+    debug = debug.merge(
+        previous_wickets.rename(columns={"player_name": "previous_wicket_player_name", "bowlingWickets": "previous_wickets"}),
+        on="player_key",
+        how="left",
+    )
+    for column in ["current_matches", "previous_matches", "current_runs", "previous_runs", "current_wickets", "previous_wickets"]:
+        debug[column] = pd.to_numeric(debug.get(column), errors="coerce").fillna(0)
+    debug["canonical_player_name"] = (
+        debug.get("canonical_player_name", pd.Series(index=debug.index, dtype=object))
+        .fillna(debug.get("previous_player_name", pd.Series(index=debug.index, dtype=object)))
+        .fillna(debug.get("wicket_player_name", pd.Series(index=debug.index, dtype=object)))
+        .fillna(debug.get("previous_wicket_player_name", pd.Series(index=debug.index, dtype=object)))
+        .fillna(debug["player_key"])
+    )
+    debug["runs_improvement"] = debug["current_runs"] - debug["previous_runs"]
+    debug["wickets_improvement"] = debug["current_wickets"] - debug["previous_wickets"]
+    debug["runs_improvement_pct"] = debug.apply(
+        lambda row: None if row["previous_runs"] <= 0 else row["runs_improvement"] / row["previous_runs"] * 100,
+        axis=1,
+    )
+    debug["wickets_improvement_pct"] = debug.apply(
+        lambda row: None if row["previous_wickets"] <= 0 else row["wickets_improvement"] / row["previous_wickets"] * 100,
+        axis=1,
+    )
+    debug["qualifies_runs"] = (
+        (debug["current_matches"] >= 8)
+        & (debug["previous_matches"] >= 8)
+        & (debug["runs_improvement"] > 0)
+    )
+    debug["qualifies_wickets"] = (
+        (debug["current_matches"] >= 8)
+        & (debug["previous_matches"] >= 8)
+        & (debug["wickets_improvement"] > 0)
+    )
+    debug["reason_if_excluded"] = debug.apply(improver_exclusion_reason, axis=1)
+    debug.insert(0, "selected_season", current_season.get("name", ""))
+    debug.insert(1, "previous_season", previous_season.get("name", ""))
+    debug.insert(2, "selected_scope", scope.get("label", ""))
+    debug = debug.rename(columns={"player_key": "canonical_player_id"})
+    columns = [
+        "selected_season",
+        "previous_season",
+        "selected_scope",
+        "canonical_player_id",
+        "canonical_player_name",
+        "current_matches",
+        "previous_matches",
+        "current_runs",
+        "previous_runs",
+        "runs_improvement",
+        "runs_improvement_pct",
+        "current_wickets",
+        "previous_wickets",
+        "wickets_improvement",
+        "wickets_improvement_pct",
+        "qualifies_runs",
+        "qualifies_wickets",
+        "reason_if_excluded",
+    ]
+    return debug[columns].sort_values(["qualifies_runs", "qualifies_wickets", "runs_improvement", "wickets_improvement"], ascending=[False, False, False, False])
+
+
+def improver_exclusion_reason(row: pd.Series) -> str:
+    reasons = []
+    if row["current_matches"] < 8:
+        reasons.append("current matches below 8")
+    if row["previous_matches"] < 8:
+        reasons.append("previous matches below 8")
+    if row["runs_improvement"] <= 0 and row["wickets_improvement"] <= 0:
+        reasons.append("no positive runs or wickets improvement")
+    if not reasons:
+        return "qualifies"
+    return "; ".join(reasons)
+
+
+def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
+    columns = [
+        "selected_season",
+        "previous_season",
+        "selected_scope",
+        "canonical_player_id",
+        "canonical_player_name",
+        "current_matches",
+        "previous_matches",
+        "current_runs",
+        "previous_runs",
+        "runs_improvement",
+        "runs_improvement_pct",
+        "current_wickets",
+        "previous_wickets",
+        "wickets_improvement",
+        "wickets_improvement_pct",
+        "qualifies_runs",
+        "qualifies_wickets",
+        "reason_if_excluded",
+    ]
+    debug_frame = debug_frame.copy()
+    for column in columns:
+        if column not in debug_frame:
+            debug_frame[column] = ""
+    DEBUG_BIGGEST_IMPROVERS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    debug_frame[columns].to_csv(DEBUG_BIGGEST_IMPROVERS_PATH, index=False)
 
 
 def biggest_improver_card_html(card: dict[str, object]) -> str:

@@ -116,6 +116,10 @@ def inject_theme() -> None:
             display: none;
         }
 
+        .mobile-page-footer {
+            display: none;
+        }
+
         @media (min-width: 761px) {
             section[data-testid="stSidebar"],
             section[data-testid="stSidebar"][aria-expanded="false"],
@@ -444,7 +448,7 @@ def inject_theme() -> None:
         .side-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.14);
             color: rgba(255, 255, 255, 0.78);
-            font-size: 0.82rem;
+            font-size: 0.74rem;
             margin-top: 52px;
             padding: 20px 2px 0;
             width: 100%;
@@ -452,8 +456,8 @@ def inject_theme() -> None:
 
         .side-footer-label {
             color: rgba(255, 255, 255, 0.72);
-            font-size: 0.75rem;
-            font-weight: 750;
+            font-size: 0.68rem;
+            font-weight: 700;
             letter-spacing: 0.06em;
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -461,15 +465,15 @@ def inject_theme() -> None:
 
         .side-footer-names {
             color: #ffffff;
-            font-size: 0.9rem;
-            font-weight: 850;
+            font-size: 0.8rem;
+            font-weight: 500;
             line-height: 1.35;
             margin-bottom: 12px;
         }
 
         .side-footer-contact {
             color: rgba(255, 255, 255, 0.66);
-            font-size: 0.74rem;
+            font-size: 0.66rem;
             line-height: 1.35;
         }
 
@@ -2469,36 +2473,38 @@ def inject_theme() -> None:
                 margin-bottom: 0;
             }
 
-            div.st-key-mobile_nav_fallback .mobile-footer-credit {
+            .mobile-page-footer {
                 border-top: 1px solid #ECEEFA;
-                margin-top: 12px;
-                padding-top: 11px;
+                color: #7d839d;
+                display: block;
+                margin: 36px 28px 24px;
+                padding-top: 14px;
             }
 
-            div.st-key-mobile_nav_fallback .mobile-footer-label {
+            .mobile-page-footer .mobile-footer-label {
                 color: #737998;
-                font-size: 0.66rem;
-                font-weight: 800;
+                font-size: 0.62rem;
+                font-weight: 700;
                 letter-spacing: 0.06em;
                 text-transform: uppercase;
             }
 
-            div.st-key-mobile_nav_fallback .mobile-footer-names {
+            .mobile-page-footer .mobile-footer-names {
                 color: var(--ink);
-                font-size: 0.78rem;
-                font-weight: 850;
+                font-size: 0.74rem;
+                font-weight: 500;
                 line-height: 1.32;
                 margin-top: 4px;
             }
 
-            div.st-key-mobile_nav_fallback .mobile-footer-contact {
+            .mobile-page-footer .mobile-footer-contact {
                 color: #7d839d;
-                font-size: 0.68rem;
+                font-size: 0.64rem;
                 line-height: 1.3;
                 margin-top: 5px;
             }
 
-            div.st-key-mobile_nav_fallback .mobile-footer-contact a {
+            .mobile-page-footer .mobile-footer-contact a {
                 color: #5B3DF5;
                 text-decoration: none;
                 word-break: break-word;
