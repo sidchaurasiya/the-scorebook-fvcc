@@ -13,7 +13,6 @@ def inject_theme() -> None:
             --pitch: #5B4BEB;
             --pitch-2: #7C5CFF;
             --grass: #22c7dc;
-            --gold: #ffcc4d;
             --ink: #080B3F;
             --muted: #6D728E;
             --line: #E7EAF5;
@@ -444,15 +443,40 @@ def inject_theme() -> None:
 
         .side-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.14);
-            color: rgba(255, 255, 255, 0.66);
-            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.82rem;
             margin-top: 52px;
             padding: 20px 2px 0;
             width: 100%;
         }
 
-        .side-footer div {
-            margin-bottom: 6px;
+        .side-footer-label {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.75rem;
+            font-weight: 750;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .side-footer-names {
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 850;
+            line-height: 1.35;
+            margin-bottom: 12px;
+        }
+
+        .side-footer-contact {
+            color: rgba(255, 255, 255, 0.66);
+            font-size: 0.74rem;
+            line-height: 1.35;
+        }
+
+        .side-footer-contact a {
+            color: rgba(255, 255, 255, 0.84);
+            text-decoration: none;
+            word-break: break-word;
         }
 
         .page-kicker {
@@ -925,6 +949,79 @@ def inject_theme() -> None:
             margin: 44px 0 22px;
         }
 
+        .section-subtext {
+            color: #747b99;
+            font-size: 0.96rem;
+            font-weight: 500;
+            line-height: 1.45;
+            margin: -14px 0 20px;
+        }
+
+        .improver-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-bottom: 10px;
+        }
+
+        .improver-card,
+        .improver-empty {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 22px 24px;
+        }
+
+        .improver-empty {
+            color: #747b99;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .improver-label {
+            color: #727999;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .improver-player {
+            color: var(--ink);
+            font-size: 1.14rem;
+            font-weight: 900;
+            line-height: 1.25;
+            margin-top: 12px;
+        }
+
+        .improver-gain {
+            color: #109768;
+            font-size: 1.4rem;
+            font-weight: 950;
+            line-height: 1.1;
+            margin-top: 12px;
+        }
+
+        .improver-gain span {
+            background: rgba(16, 151, 104, 0.10);
+            border-radius: 999px;
+            color: #0f8f63;
+            display: inline-flex;
+            font-size: 0.76rem;
+            font-weight: 850;
+            margin-left: 8px;
+            padding: 5px 8px;
+            vertical-align: middle;
+        }
+
+        .improver-meta {
+            color: #7e849e;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
         .quick-strip {
             display: flex;
             gap: 18px;
@@ -997,18 +1094,6 @@ def inject_theme() -> None:
             position: relative;
         }
 
-        div.st-key-top_scorers_card::before,
-        div.st-key-top_wickets_card::before {
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.85), rgba(245, 213, 115, 0.38), transparent);
-            border-radius: 22px 22px 0 0;
-            content: "";
-            height: 3px;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-
         div.st-key-top_scorers_card h4,
         div.st-key-top_wickets_card h4 {
             margin-bottom: 14px;
@@ -1029,13 +1114,6 @@ def inject_theme() -> None:
         div.st-key-top_wickets_card .progress-rank {
             height: 24px;
             width: 24px;
-        }
-
-        div.st-key-top_scorers_card .progress-row:first-child .progress-rank,
-        div.st-key-top_wickets_card .progress-row:first-child .progress-rank {
-            background: rgba(212, 175, 55, 0.16);
-            border: 1px solid rgba(212, 175, 55, 0.42);
-            color: #8A6A12;
         }
 
         div.st-key-top_scorers_card .progress-average,
@@ -1399,17 +1477,6 @@ def inject_theme() -> None:
             position: relative;
         }
 
-        .block-container:has(.hall-of-fame-page) .hof-card::before {
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.80), rgba(245, 213, 115, 0.32), transparent);
-            border-radius: 16px 16px 0 0;
-            content: "";
-            height: 3px;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-
         .block-container:has(.hall-of-fame-page) .hof-progress-row {
             margin: 9px 0;
         }
@@ -1421,13 +1488,6 @@ def inject_theme() -> None:
         .block-container:has(.hall-of-fame-page) .progress-rank {
             height: 24px;
             width: 24px;
-        }
-
-        .block-container:has(.hall-of-fame-page) .hof-progress-row:first-of-type .progress-rank,
-        .block-container:has(.hall-of-fame-page) .performance-row:first-of-type .progress-rank {
-            background: rgba(212, 175, 55, 0.16);
-            border: 1px solid rgba(212, 175, 55, 0.42);
-            color: #8A6A12;
         }
 
         .block-container:has(.hall-of-fame-page) .progress-track {
@@ -2157,6 +2217,15 @@ def inject_theme() -> None:
                 gap: 12px;
             }
 
+            .section-subtext {
+                font-size: 0.9rem;
+                margin: -10px 0 16px;
+            }
+
+            .improver-grid {
+                grid-template-columns: 1fr;
+            }
+
             .simple-filter-context {
                 font-size: 0.82rem;
                 margin-top: 10px;
@@ -2398,6 +2467,41 @@ def inject_theme() -> None:
 
             div.st-key-mobile_nav_fallback .mobile-nav-help-panel p:last-child {
                 margin-bottom: 0;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-footer-credit {
+                border-top: 1px solid #ECEEFA;
+                margin-top: 12px;
+                padding-top: 11px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-footer-label {
+                color: #737998;
+                font-size: 0.66rem;
+                font-weight: 800;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-footer-names {
+                color: var(--ink);
+                font-size: 0.78rem;
+                font-weight: 850;
+                line-height: 1.32;
+                margin-top: 4px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-footer-contact {
+                color: #7d839d;
+                font-size: 0.68rem;
+                line-height: 1.3;
+                margin-top: 5px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-footer-contact a {
+                color: #5B3DF5;
+                text-decoration: none;
+                word-break: break-word;
             }
 
             div.st-key-mobile_nav_fallback label {

@@ -136,6 +136,18 @@ def render_sidebar() -> str:
             on_change=sync_selected_page,
             args=("mobile_navigation",),
         )
+        st.markdown(
+            """
+            <div class="mobile-footer-credit">
+                <div class="mobile-footer-label">App created by</div>
+                <div class="mobile-footer-names">Siddhanth Chaurasiya | Preet Kaur</div>
+                <div class="mobile-footer-contact">Feedback / bugs:
+                    <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     st.sidebar.markdown(
         """
@@ -162,8 +174,12 @@ def render_sidebar() -> str:
     st.sidebar.markdown(
         """
         <div class="side-footer">
-            <div>App by</div>
-            <strong>Siddhanth Chaurasiya &amp; Preet Kaur</strong>
+            <div class="side-footer-label">App created by</div>
+            <div class="side-footer-names">Siddhanth Chaurasiya | Preet Kaur</div>
+            <div class="side-footer-contact">
+                <div>For feedback, enquiries or bugs:</div>
+                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -2422,8 +2438,8 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             '<div class="profile-kicker">Player Profile</div>'
             f'<div class="profile-name">{html.escape(str(career.get("Player", "-")))}</div>'
             '<div class="profile-summary-stack">'
-            f'<div class="profile-meta">Grades played: {html.escape(str(career.get("Grades Played", "—") or "—"))}</div>'
             f'<div class="profile-insight">{html.escape(insight)}</div>'
+            f'<div class="profile-meta">Grades played: {html.escape(str(career.get("Grades Played", "—") or "—"))}</div>'
             f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             '</div>'
             '</div>'
@@ -4068,7 +4084,7 @@ def render_context_line(dashboard_data: dict[str, object]) -> None:
         f"""
         <div class="context-line">
             <span>{html.escape(str(dashboard_data["context_description"]))}</span>
-            <span class="source-note">App by Siddhanth Chaurasiya &amp; Preet Kaur</span>
+            <span class="source-note">App created by Siddhanth Chaurasiya | Preet Kaur</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -4198,7 +4214,8 @@ def kpi_icon_html(icon_name: str, fallback: str) -> str:
 def render_overall_section(dashboard_data: dict[str, object]) -> None:
     batting_df = dashboard_data["batting"]
     bowling_df = dashboard_data["bowling"]
-    render_section_heading("Club Leaders")
+    render_section_heading("Season Standouts ✨")
+    render_section_subtext("Top performers across the club.")
     scorers_col, wickets_col = st.columns(2)
 
     with scorers_col:
@@ -4223,9 +4240,206 @@ def render_overall_section(dashboard_data: dict[str, object]) -> None:
                 "Bowling avg.",
             )
 
+    render_biggest_improvers(dashboard_data)
+
 
 def render_section_heading(title: str) -> None:
     st.markdown(f"<h2 class='overview-section-title'>{html.escape(title)}</h2>", unsafe_allow_html=True)
+
+
+def render_section_subtext(text: str) -> None:
+    st.markdown(f"<div class='section-subtext'>{html.escape(text)}</div>", unsafe_allow_html=True)
+
+
+def render_biggest_improvers(dashboard_data: dict[str, object]) -> None:
+    cards = build_biggest_improvers(dashboard_data)
+    render_section_heading("Biggest Improvers 📈")
+    render_section_subtext("Players with the strongest improvement compared with the previous season.")
+    if not cards:
+        st.markdown(
+            '<div class="improver-empty">Not enough qualifying players for this comparison.</div>',
+            unsafe_allow_html=True,
+        )
+        return
+    card_html = "".join(biggest_improver_card_html(card) for card in cards)
+    st.markdown(f'<div class="improver-grid">{card_html}</div>', unsafe_allow_html=True)
+
+
+def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str, object]]:
+    current_season = dashboard_data.get("season", {})
+    previous = previous_season_for(current_season)
+    if not previous:
+        return []
+    team_ids = {str(team.get("id")) for team in dashboard_data.get("teams", []) if team.get("id") != "__all_teams__"}
+    local_version = metadata_mtime()
+    identity_version = player_aliases_mtime()
+    current_id = str(current_season.get("id", ""))
+    previous_id = str(previous.get("id", ""))
+    if not current_id or not previous_id:
+        return []
+
+    current_matches = season_player_match_counts(current_id, team_ids, local_version, identity_version)
+    previous_matches = season_player_match_counts(previous_id, team_ids, local_version, identity_version)
+    cards: list[dict[str, object]] = []
+    runs_card = biggest_improver_for_metric(
+        "Biggest Runs Improver",
+        "batting",
+        "battingAggregate",
+        "runs",
+        current_id,
+        previous_id,
+        team_ids,
+        current_matches,
+        previous_matches,
+        local_version,
+        identity_version,
+    )
+    wickets_card = biggest_improver_for_metric(
+        "Biggest Wickets Improver",
+        "bowling",
+        "bowlingWickets",
+        "wickets",
+        current_id,
+        previous_id,
+        team_ids,
+        current_matches,
+        previous_matches,
+        local_version,
+        identity_version,
+    )
+    for card in [runs_card, wickets_card]:
+        if card:
+            cards.append(card)
+    return cards
+
+
+def previous_season_for(current_season: dict[str, object]) -> dict[str, object] | None:
+    seasons = load_local_playcricket_seasons(metadata_mtime())
+    if not seasons:
+        return None
+    current_id = str(current_season.get("id", ""))
+    ordered = sorted(seasons, key=lambda season: season_sort_from_record(season))
+    for index, season in enumerate(ordered):
+        if str(season.get("id", "")) == current_id:
+            return ordered[index - 1] if index > 0 else None
+    return None
+
+
+def season_sort_from_record(season: dict[str, object]) -> int:
+    start = pd.to_datetime(season.get("startDate"), errors="coerce", utc=True)
+    if pd.notna(start):
+        return int(start.timestamp())
+    return season_sort_value(season.get("name"))
+
+
+def season_player_match_counts(
+    season_id: str,
+    team_ids: set[str],
+    local_version: float,
+    identity_version: float | None,
+) -> pd.DataFrame:
+    frames = []
+    for category in ["batting", "bowling", "fielding"]:
+        frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
+        if team_ids and not frame.empty and "team_id" in frame:
+            frame = frame[frame["team_id"].astype(str).isin(team_ids)].copy()
+        if frame.empty or "matches" not in frame:
+            continue
+        frame["player_key"] = player_keys(frame)
+        group_cols = ["player_key"]
+        if "team_id" in frame:
+            group_cols.append("team_id")
+        frame["matches"] = pd.to_numeric(frame["matches"], errors="coerce").fillna(0)
+        frames.append(frame.groupby(group_cols, dropna=False, as_index=False)["matches"].max())
+    if not frames:
+        return pd.DataFrame(columns=["player_key", "matches"])
+    combined = pd.concat(frames, ignore_index=True)
+    group_cols = ["player_key"]
+    if "team_id" in combined:
+        group_cols.append("team_id")
+    team_counts = combined.groupby(group_cols, dropna=False, as_index=False)["matches"].max()
+    return team_counts.groupby("player_key", as_index=False)["matches"].sum()
+
+
+def season_metric_totals(
+    category: str,
+    season_id: str,
+    team_ids: set[str],
+    value_column: str,
+    local_version: float,
+    identity_version: float | None,
+) -> pd.DataFrame:
+    frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
+    if team_ids and not frame.empty and "team_id" in frame:
+        frame = frame[frame["team_id"].astype(str).isin(team_ids)].copy()
+    if frame.empty or value_column not in frame:
+        return pd.DataFrame(columns=["player_key", "player_name", value_column])
+    frame = frame.copy()
+    frame["player_key"] = player_keys(frame)
+    name_column = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+    frame[value_column] = pd.to_numeric(frame[value_column], errors="coerce").fillna(0)
+    totals = (
+        frame.groupby("player_key", as_index=False)
+        .agg(player_name=(name_column, "first"), **{value_column: (value_column, "sum")})
+    )
+    return totals
+
+
+def biggest_improver_for_metric(
+    title: str,
+    category: str,
+    value_column: str,
+    unit: str,
+    current_season_id: str,
+    previous_season_id: str,
+    team_ids: set[str],
+    current_matches: pd.DataFrame,
+    previous_matches: pd.DataFrame,
+    local_version: float,
+    identity_version: float | None,
+) -> dict[str, object] | None:
+    current = season_metric_totals(category, current_season_id, team_ids, value_column, local_version, identity_version)
+    previous = season_metric_totals(category, previous_season_id, team_ids, value_column, local_version, identity_version)
+    if current.empty or previous.empty:
+        return None
+    merged = current.merge(previous[["player_key", value_column]], on="player_key", how="inner", suffixes=("_current", "_previous"))
+    merged = merged.merge(current_matches.rename(columns={"matches": "current_matches"}), on="player_key", how="left")
+    merged = merged.merge(previous_matches.rename(columns={"matches": "previous_matches"}), on="player_key", how="left")
+    merged["current_matches"] = pd.to_numeric(merged["current_matches"], errors="coerce").fillna(0)
+    merged["previous_matches"] = pd.to_numeric(merged["previous_matches"], errors="coerce").fillna(0)
+    merged = merged[(merged["current_matches"] >= 10) & (merged["previous_matches"] >= 10)].copy()
+    if merged.empty:
+        return None
+    merged["improvement"] = merged[f"{value_column}_current"] - merged[f"{value_column}_previous"]
+    merged = merged[merged["improvement"] > 0].copy()
+    if merged.empty:
+        return None
+    merged = merged.sort_values(["improvement", f"{value_column}_current", "player_name"], ascending=[False, False, True])
+    row = merged.iloc[0]
+    previous_value = float(row[f"{value_column}_previous"])
+    percentage = None if previous_value <= 0 else (float(row["improvement"]) / previous_value * 100)
+    return {
+        "title": title,
+        "player": str(row["player_name"]),
+        "current": int(row[f"{value_column}_current"]),
+        "previous": int(row[f"{value_column}_previous"]),
+        "improvement": int(row["improvement"]),
+        "percentage": percentage,
+        "unit": unit,
+    }
+
+
+def biggest_improver_card_html(card: dict[str, object]) -> str:
+    percentage = card.get("percentage")
+    pct_text = "new entry" if percentage is None else f"▲ {percentage:.0f}%"
+    return (
+        '<div class="improver-card">'
+        f'<div class="improver-label">{html.escape(str(card["title"]))}</div>'
+        f'<div class="improver-player">{html.escape(str(card["player"]))}</div>'
+        f'<div class="improver-gain">+{int(card["improvement"]):,} {html.escape(str(card["unit"]))} <span>{html.escape(pct_text)}</span></div>'
+        f'<div class="improver-meta">Current {int(card["current"]):,} · Previous {int(card["previous"]):,}</div>'
+        '</div>'
+    )
 
 
 def numeric_sort_series(df: pd.DataFrame, column: str, default: float = 0.0) -> pd.Series:
@@ -4327,7 +4541,8 @@ def render_team_specific_leaders(dashboard_data: dict[str, object]) -> None:
     team_bowling = dashboard_data.get("team_bowling", dashboard_data["bowling"])
     teams = dashboard_data.get("teams", [])
 
-    render_section_heading("Leaders by Team/Grade")
+    render_section_heading("Leaders by Team/Grade 👥")
+    render_section_subtext("Top performers by team/grade.")
     if not teams:
         st.caption("No teams available for this selection.")
         return
