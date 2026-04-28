@@ -1177,9 +1177,9 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
     for title, metric, suffix in [
         ("Most 100s", "100s", "hundreds"),
         ("Most 50s", "50s", "fifties"),
-        ("5 Wicket Hauls", "5WI", "five-wicket hauls"),
         ("Most 4s", "4s", "fours"),
         ("Most 6s", "6s", "sixes"),
+        ("5 Wicket Hauls", "5WI", "five-wicket hauls"),
         ("Most Maidens", "Maidens", "maidens"),
         ("Ducks", "0s", "ducks"),
     ]:
@@ -1496,11 +1496,11 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Matches",
         "Overs",
         "Wickets",
+        "Maidens",
         "Bowl Avg",
         "Econ",
         "Bowl SR",
         "BBI",
-        "Maidens",
         "5WI",
         "10WM",
     ]

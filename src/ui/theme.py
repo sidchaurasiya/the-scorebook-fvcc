@@ -1345,7 +1345,7 @@ def inject_theme() -> None:
         .record-card-grid {
             display: grid;
             gap: 18px;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             margin-bottom: 26px;
         }
 
