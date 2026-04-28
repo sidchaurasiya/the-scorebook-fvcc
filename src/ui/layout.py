@@ -1,6 +1,8 @@
 import base64
 import html
+import os
 import re
+import time
 from pathlib import Path
 
 import altair as alt
@@ -59,6 +61,12 @@ from src.utils.team_grade import (
 
 APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
+DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
+
+
+def log_hof_timing(label: str, started_at: float) -> None:
+    if DEBUG_HOF_TIMINGS:
+        print(f"[hall-of-fame] {label}: {(time.perf_counter() - started_at) * 1000:.1f} ms")
 
 
 def sync_selected_page(source_key: str) -> None:
@@ -598,8 +606,10 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
 
 
 def render_hall_of_fame_page() -> None:
-    historical_data = load_hall_of_fame_data(metadata_mtime(), player_aliases_mtime())
-    if historical_data is None:
+    started_at = time.perf_counter()
+    hall_of_fame_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime())
+    log_hof_timing("load prepared Hall of Fame data", started_at)
+    if hall_of_fame_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the Hall of Fame.")
         return
 
@@ -613,12 +623,12 @@ def render_hall_of_fame_page() -> None:
         """,
         unsafe_allow_html=True,
     )
-    render_hall_of_fame_kpis(historical_data)
-    render_hall_of_fame_leaders(historical_data["all_time"])
-    render_match_winning_performances(historical_data)
-    render_record_holders(historical_data)
-    render_best_ever_seasons(historical_data)
-    render_detailed_all_time_records(historical_data["all_time"])
+    render_hall_of_fame_kpis(hall_of_fame_data["kpis"])
+    render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
+    render_match_winning_performances(hall_of_fame_data)
+    render_record_holders(hall_of_fame_data)
+    render_best_ever_seasons(hall_of_fame_data)
+    render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
 
 
 def render_approaching_milestones_page() -> None:
@@ -655,17 +665,20 @@ def render_identity_info_note() -> None:
     )
 
 
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def load_hall_of_fame_data(_local_version: float, _identity_version: float | None = None) -> dict[str, object] | None:
+    started_at = time.perf_counter()
     batting_raw = read_processed_table("all_seasons_batting")
     bowling_raw = read_processed_table("all_seasons_bowling")
     fielding_raw = read_processed_table("all_seasons_fielding")
     seasons = read_processed_table("seasons")
     players = read_processed_table("players")
+    log_hof_timing("load historical local data", started_at)
 
     if batting_raw.empty and bowling_raw.empty and fielding_raw.empty:
         return None
 
+    started_at = time.perf_counter()
     batting_raw = normalise_player_names(batting_raw)
     bowling_raw = normalise_player_names(bowling_raw)
     fielding_raw = normalise_player_names(fielding_raw)
@@ -677,7 +690,9 @@ def load_hall_of_fame_data(_local_version: float, _identity_version: float | Non
     bowling_raw = apply_team_grade_display_columns(bowling_raw)
     fielding_raw = apply_team_grade_display_columns(fielding_raw)
     export_team_grade_display_audit([batting_raw, bowling_raw, fielding_raw])
+    log_hof_timing("apply canonical player and team-grade mapping", started_at)
 
+    started_at = time.perf_counter()
     identity_source = pd.concat(
         [
             identity_export_frame(batting_raw, "batting"),
@@ -708,7 +723,11 @@ def load_hall_of_fame_data(_local_version: float, _identity_version: float | Non
     batting = add_batting_display_columns(combine_player_rows(batting_raw, "batting"))
     bowling = combine_player_rows(bowling_raw, "bowling")
     fielding = add_display_stat_aliases(combine_player_rows(add_display_stat_aliases(fielding_raw), "fielding"))
+    log_hof_timing("build canonical category summaries", started_at)
+
+    started_at = time.perf_counter()
     all_time = build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
+    log_hof_timing("build all-time player summary", started_at)
 
     return {
         "batting_raw": add_batting_display_columns(batting_raw),
@@ -724,6 +743,65 @@ def load_hall_of_fame_data(_local_version: float, _identity_version: float | Non
         "total_runs": int(pd.to_numeric(batting.get("battingAggregate"), errors="coerce").sum()) if not batting.empty else 0,
         "total_wickets": int(pd.to_numeric(bowling.get("bowlingWickets"), errors="coerce").sum()) if not bowling.empty else 0,
         "identity_exports": identity_exports,
+    }
+
+
+@st.cache_data(show_spinner=False)
+def get_hall_of_fame_data(_local_version: float, _identity_version: float | None = None) -> dict[str, object] | None:
+    started_at = time.perf_counter()
+    historical_data = load_hall_of_fame_data(_local_version, _identity_version)
+    log_hof_timing("load historical data", started_at)
+    if historical_data is None:
+        return None
+
+    started_at = time.perf_counter()
+    all_time = historical_data["all_time"].copy()
+    log_hof_timing("copy all-time summary", started_at)
+
+    started_at = time.perf_counter()
+    record_holder_cards = build_record_holder_cards(
+        {
+            "batting_raw": historical_data["batting_raw"].copy(),
+            "bowling_raw": historical_data["bowling_raw"].copy(),
+            "all_time": all_time.copy(),
+        }
+    )
+    log_hof_timing("build Hall of Fame record holders", started_at)
+
+    started_at = time.perf_counter()
+    iconic_batting = top_highest_scores(historical_data["batting_raw"], limit=10)
+    iconic_bowling = top_best_bowling_innings(historical_data["bowling_raw"], limit=10)
+    log_hof_timing("build iconic performances", started_at)
+
+    started_at = time.perf_counter()
+    best_batting = best_batting_season(historical_data["batting_raw"])
+    best_bowling = best_bowling_season(historical_data["bowling_raw"])
+    log_hof_timing("build Greatest Individual Seasons", started_at)
+
+    started_at = time.perf_counter()
+    detailed_tables = {
+        "batting": format_all_time_batting_table(all_time),
+        "bowling": format_all_time_bowling_table(all_time),
+        "fielding": format_all_time_fielding_table(all_time),
+    }
+    log_hof_timing("build Detailed All-Time Records Batting/Bowling/Fielding", started_at)
+
+    return {
+        "kpis": {
+            "total_seasons": historical_data["total_seasons"],
+            "total_players": historical_data["total_players"],
+            "total_matches": historical_data["total_matches"],
+        },
+        "all_time": all_time,
+        "batting_raw": historical_data["batting_raw"].copy(),
+        "bowling_raw": historical_data["bowling_raw"].copy(),
+        "fielding_raw": historical_data["fielding_raw"].copy(),
+        "record_holder_cards": record_holder_cards,
+        "iconic_batting": iconic_batting.copy(),
+        "iconic_bowling": iconic_bowling.copy(),
+        "best_batting_season": best_batting,
+        "best_bowling_season": best_bowling,
+        "detailed_tables": {key: value.copy() for key, value in detailed_tables.items()},
     }
 
 
@@ -1091,8 +1169,12 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
 
 
 def render_match_winning_performances(data: dict[str, object]) -> None:
-    batting_records = top_highest_scores(data["batting_raw"], limit=10)
-    bowling_records = top_best_bowling_innings(data["bowling_raw"], limit=10)
+    batting_records = data.get("iconic_batting")
+    bowling_records = data.get("iconic_bowling")
+    if batting_records is None:
+        batting_records = top_highest_scores(data["batting_raw"], limit=10)
+    if bowling_records is None:
+        bowling_records = top_best_bowling_innings(data["bowling_raw"], limit=10)
     if batting_records.empty and bowling_records.empty:
         return
     render_section_heading("Iconic Performances 🌟")
@@ -1103,6 +1185,7 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
         render_performance_card("Best Bowling Innings", bowling_records, "bowling")
 
 
+@st.cache_data(show_spinner=False)
 def top_highest_scores(df: pd.DataFrame, limit: int = 10) -> pd.DataFrame:
     if df.empty or "battingHighScore" not in df:
         return pd.DataFrame()
@@ -1113,6 +1196,7 @@ def top_highest_scores(df: pd.DataFrame, limit: int = 10) -> pd.DataFrame:
     return output.sort_values(["score_sort", "not_out_sort"], ascending=[False, False]).head(limit)
 
 
+@st.cache_data(show_spinner=False)
 def top_best_bowling_innings(df: pd.DataFrame, limit: int = 10) -> pd.DataFrame:
     if df.empty or "bowlingBestInnings" not in df:
         return pd.DataFrame()
@@ -1161,7 +1245,7 @@ def sort_hof_leaders(df: pd.DataFrame, metric: str, mode: str) -> pd.DataFrame:
 
 
 def render_record_holders(data: dict[str, object]) -> None:
-    cards = build_record_holder_cards(data)
+    cards = data.get("record_holder_cards") or build_record_holder_cards(data)
     if not cards:
         return
     render_section_heading("Record Holders 📘")
@@ -1169,6 +1253,7 @@ def render_record_holders(data: dict[str, object]) -> None:
     st.markdown(f'<div class="record-card-grid">{cards_html}</div>', unsafe_allow_html=True)
 
 
+@st.cache_data(show_spinner=False)
 def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
     cards = []
     batting_raw = data["batting_raw"]
@@ -1204,8 +1289,12 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
 
 
 def render_best_ever_seasons(data: dict[str, object]) -> None:
-    batting = best_batting_season(data["batting_raw"])
-    bowling = best_bowling_season(data["bowling_raw"])
+    batting = data.get("best_batting_season")
+    bowling = data.get("best_bowling_season")
+    if "best_batting_season" not in data:
+        batting = best_batting_season(data["batting_raw"])
+    if "best_bowling_season" not in data:
+        bowling = best_bowling_season(data["bowling_raw"])
     if batting is None and bowling is None:
         return
 
@@ -1218,6 +1307,7 @@ def render_best_ever_seasons(data: dict[str, object]) -> None:
     st.markdown(f'<div class="best-season-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
 
 
+@st.cache_data(show_spinner=False)
 def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
     if df.empty or "season" not in df:
         return None
@@ -1259,6 +1349,7 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
     return sorted(rows, key=lambda row: (-row["runs"], -(row["average"] or 0), str(row["player"]).casefold()))[0]
 
 
+@st.cache_data(show_spinner=False)
 def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
     if df.empty or "season" not in df:
         return None
@@ -1415,18 +1506,32 @@ def render_milestone_club(all_time: pd.DataFrame) -> None:
     st.markdown(f'<div class="milestone-card">{"".join(rendered)}</div>', unsafe_allow_html=True)
 
 
-def render_detailed_all_time_records(all_time: pd.DataFrame) -> None:
+def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed All-Time Records 📊")
+    if isinstance(all_time_or_tables, dict):
+        tables = {
+            "batting": all_time_or_tables["batting"].copy(),
+            "bowling": all_time_or_tables["bowling"].copy(),
+            "fielding": all_time_or_tables["fielding"].copy(),
+        }
+    else:
+        all_time = all_time_or_tables
+        tables = {
+            "batting": format_all_time_batting_table(all_time),
+            "bowling": format_all_time_bowling_table(all_time),
+            "fielding": format_all_time_fielding_table(all_time),
+        }
     with st.container(key="full_stats_card"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            render_all_time_detail_table(format_all_time_batting_table(all_time), "hof_batting_detail")
+            render_all_time_detail_table(tables["batting"], "hof_batting_detail")
         with bowling_tab:
-            render_all_time_detail_table(format_all_time_bowling_table(all_time), "hof_bowling_detail")
+            render_all_time_detail_table(tables["bowling"], "hof_bowling_detail")
         with fielding_tab:
-            render_all_time_detail_table(format_all_time_fielding_table(all_time), "hof_fielding_detail")
+            render_all_time_detail_table(tables["fielding"], "hof_fielding_detail")
 
 
+@st.cache_data(show_spinner=False)
 def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
@@ -1464,6 +1569,7 @@ def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
     return format_table_missing_values(table)
 
 
+@st.cache_data(show_spinner=False)
 def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
@@ -1487,6 +1593,7 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     return coerce_display_numbers(table)
 
 
+@st.cache_data(show_spinner=False)
 def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
     source = all_time.copy()
     if "Balls Bowled" in source:
@@ -1513,6 +1620,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
     return coerce_display_numbers(table)
 
 
+@st.cache_data(show_spinner=False)
 def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
         "Player",
@@ -1530,6 +1638,7 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
 
 
 def render_all_time_detail_table(table: pd.DataFrame, key_prefix: str) -> None:
+    started_at = time.perf_counter()
     st.dataframe(
         table,
         use_container_width=True,
@@ -1537,6 +1646,7 @@ def render_all_time_detail_table(table: pd.DataFrame, key_prefix: str) -> None:
         height=560,
         column_config=hall_of_fame_column_config(table.columns.tolist()),
     )
+    log_hof_timing(f"render table {key_prefix}", started_at)
 
 
 def render_filterable_dataframe(
