@@ -2275,10 +2275,14 @@ def inject_theme() -> None:
                 box-shadow: 0 12px 28px rgba(23, 27, 77, 0.08);
                 display: block;
                 margin: 0 0 18px;
-                padding: 12px 14px 14px;
+                padding: 20px 24px;
                 position: sticky;
                 top: 10px;
                 z-index: 9999;
+            }
+
+            div.st-key-mobile_nav_fallback div[data-testid="stMarkdownContainer"] {
+                display: block;
             }
 
             div.st-key-mobile_nav_fallback .mobile-nav-label {
@@ -2297,19 +2301,27 @@ def inject_theme() -> None:
             }
 
             div.st-key-mobile_nav_fallback div[data-testid="stSelectbox"] {
-                margin-top: 4px;
+                clear: both;
+                display: block;
+                margin-top: 14px;
+                position: relative;
+                width: 100%;
             }
 
             div.st-key-mobile_nav_fallback .mobile-nav-help {
-                margin: 0 0 4px;
+                display: block;
+                margin: 0;
+                min-height: 26px;
+                position: relative;
             }
 
             div.st-key-mobile_nav_fallback .mobile-nav-help summary {
                 align-items: center;
                 cursor: pointer;
-                display: inline-flex;
+                display: flex;
                 gap: 8px;
                 list-style: none;
+                min-height: 24px;
             }
 
             div.st-key-mobile_nav_fallback .mobile-nav-help summary::-webkit-details-marker {
