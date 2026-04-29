@@ -4,20 +4,12 @@ This audit documents the current Player Profile classification/tag and summary s
 
 ## Tags / Badges
 
-Badge candidates are evaluated by priority, grouped by type, and then selected for a varied display. The app shows up to 5 badges, with limits designed to avoid a wall of legacy-only labels:
-
-- Legacy: max 1
-- Role: max 1
-- Batting: max 2
-- Bowling: max 1
-- Style: max 1
-- Fielding: max 1
-- Achievement: max 1
+Badge candidates are evaluated by priority and every applicable badge is displayed. There is no hard display cap; badges wrap inside the player profile card so heavily qualified players can show their full cricket profile while stronger tags still appear first.
 
 | Tag | Logic | Thresholds | Metrics Used | Priority | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Club Legend | Shows if the player reaches any major legend threshold. | Matches >= 200 OR Runs >= 4000 OR Wickets >= 250. | Matches, Runs, Wickets. | 1 | Highest priority. Club Veteran is not added when this applies. |
-| Genuine All-rounder | Shows for a strong two-skill contributor. | Matches >= 50; Runs >= 1000; Wickets >= 75; Bat Avg >= 18. | Matches, Runs, Wickets, Bat Avg. | 2 | Role badge. Higher priority than All-round Contributor. |
+| Genuine All-rounder | Shows for a strong two-skill contributor. | Runs >= 1000; Wickets >= 100. | Runs, Wickets. | 2 | Role badge. Higher priority than All-round Contributor. No matches or batting-average threshold. |
 | All-round Contributor | Shows for meaningful contribution with bat and ball. | Matches >= 30; Bat Avg > 12; Runs >= 300; Wickets >= 30. | Matches, Bat Avg, Runs, Wickets. | 3 | Not shown when Genuine All-rounder applies. |
 | Upcoming Star | Shows for early-career players with strong returns. | Matches >= 20 and < 50; plus Bat Avg > 20 OR 0 < Bowl Avg < 20 and Wickets >= 15. | Matches, Bat Avg, Bowl Avg, Wickets. | 4 | Role badge for under-50-match players. |
 | Star Batter | Shows for high batting average over a meaningful sample. | Matches >= 30; Bat Avg > 25. | Matches, Bat Avg. | 5 | High batting priority. |
@@ -97,7 +89,7 @@ Only one summary sentence is displayed. The summary logic first checks blended C
 
 ## Concerns / Follow-Up Ideas
 
-- The app now allows up to 5 badges, while earlier validation wording still referenced 4 badges. The current implementation follows the updated max-5 display rule.
+- There is no badge display cap; very highly qualified players can now show all applicable tags.
 - Star Bowler remains the display label for the high-priority bowling-average badge. Partnership Breaker remains the strike-rate style badge.
 - Keeper Impact can still apply with fewer than 20 matches because the current rule is stumpings > 0.
 - Boundary Maker is retained only as a fallback style badge when Big Hitter and Gap Finder are not already present.

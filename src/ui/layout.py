@@ -2494,7 +2494,7 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
             candidates.append({"label": label, "group": group, "priority": priority})
 
     club_legend = matches >= 200 or runs >= 4000 or wickets >= 250
-    genuine_all_rounder = matches >= 50 and runs >= 1000 and wickets >= 75 and bat_avg >= 18
+    genuine_all_rounder = runs >= 1000 and wickets >= 100
     all_round_contributor = matches_30 and bat_avg > 12 and runs >= 300 and wickets >= 30
     upcoming_star = matches_20 and matches < 50 and (
         bat_avg > 20 or (0 < bowl_avg < 20 and wickets >= 15)
@@ -2601,29 +2601,14 @@ def base_badge_label(label: str) -> str:
     return re.sub(r"\s+x\s+\d+$", "", str(label)).strip()
 
 
-def select_profile_badges(candidates: list[dict[str, object]], max_badges: int = 5) -> list[str]:
+def select_profile_badges(candidates: list[dict[str, object]]) -> list[str]:
     ordered = sorted(candidates, key=lambda candidate: int(candidate["priority"]))
-    group_limits = {
-        "legacy": 1,
-        "role": 1,
-        "batting": 2,
-        "bowling": 1,
-        "style": 1,
-        "fielding": 1,
-        "achievement": 1,
-    }
-    selected: list[dict[str, object]] = []
-    counts: dict[str, int] = {}
+    selected: list[str] = []
     for candidate in ordered:
-        group = str(candidate["group"])
-        if counts.get(group, 0) >= group_limits.get(group, 1):
-            continue
-        selected.append(candidate)
-        counts[group] = counts.get(group, 0) + 1
-        if len(selected) >= max_badges:
-            break
-
-    return [str(candidate["label"]) for candidate in selected[:max_badges]]
+        label = str(candidate["label"])
+        if label not in selected:
+            selected.append(label)
+    return selected
 
 
 def reliable_batting_components(batting: pd.DataFrame) -> dict[str, float]:
@@ -2684,7 +2669,7 @@ def render_player_highlights(profile_view: dict[str, pd.DataFrame]) -> None:
     cards = player_highlight_cards(profile_view)
     if not cards:
         return
-    render_section_heading("Career Highlights")
+    render_section_heading("Career Highlights 🌟")
     for index in range(0, len(cards), 4):
         columns = st.columns(4)
         for column, card in zip(columns, cards[index : index + 4]):
@@ -2825,7 +2810,7 @@ def compact_leader_detail_meta(details: list[str], limit: int = 3) -> str:
 def render_player_trends(season_table: pd.DataFrame) -> None:
     if season_table.empty:
         return
-    render_section_heading("Season Trends")
+    render_section_heading("Season Trends 📈")
     chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key))
     specs = [("Runs by Season", "Runs", "#6D4DFF"), ("Wickets by Season", "Wickets", "#10B981")]
     for index in range(0, len(specs), 2):
@@ -2920,7 +2905,7 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
 
 
 def render_player_season_table(season_table: pd.DataFrame) -> None:
-    render_section_heading("Season History")
+    render_section_heading("Season History 📅")
     with st.container(key="player_profile_season_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
@@ -2938,7 +2923,7 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
 def render_player_grade_table(grade_table: pd.DataFrame) -> None:
     if grade_table.empty:
         return
-    render_section_heading("Grade Breakdown")
+    render_section_heading("Grade Breakdown 🧭")
     with st.container(key="player_profile_grade_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
@@ -3118,9 +3103,9 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 
 
 def render_player_breakdown(career: pd.Series) -> None:
-    render_section_heading("Career Breakdown")
+    render_section_heading("Career Breakdown 🧩")
     cards = [
-        ("Batting", [("Innings", format_int(career.get("Innings"))), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("4s", format_int(career.get("4s"))), ("6s", format_int(career.get("6s"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
+        ("Batting", [("Matches", format_int(career.get("Matches"))), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("4s", format_int(career.get("4s"))), ("6s", format_int(career.get("6s"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
         ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", str(career.get("Overs", "—"))), ("Maidens", format_int(career.get("Maidens"))), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", str(career.get("BBI", "—")))]),
         ("Fielding", [("Catches", format_int(career.get("Catches"))), ("Stumpings", format_int(career.get("Stumpings"))), ("Run Outs", format_int(career.get("Run Outs"))), ("Dismissals", format_int(career.get("Dismissals")))]),
     ]
@@ -3135,7 +3120,7 @@ def render_player_milestones(career: pd.Series) -> None:
     milestones = player_milestone_rows(career)
     if not milestones:
         return
-    render_section_heading("Milestone Watch")
+    render_section_heading("Milestone Watch 🎯")
     rows = []
     for milestone in milestones:
         rows.append(
