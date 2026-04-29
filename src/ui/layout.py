@@ -2861,6 +2861,13 @@ def get_player_peer_comparison(
                 ("Boundaries", "boundaries", False, "number"),
                 ("0s", "ducks", True, "number"),
             ],
+            average_overrides={
+                "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
+                "bat_sr": divide_or_none(
+                    sum_numeric(batting_rows, "reliable_runs") * 100,
+                    sum_numeric(batting_rows, "reliable_balls"),
+                ),
+            },
         ),
         "bowling": build_peer_metric_rows(
             bowling_rows,
@@ -2872,6 +2879,11 @@ def get_player_peer_comparison(
                 ("Economy Rate", "economy", True, "decimal"),
                 ("Maidens", "maidens", False, "number"),
             ],
+            average_overrides={
+                "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
+                "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
+                "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
+            },
         ),
     }
 
@@ -2900,6 +2912,9 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
                 "canonical_player_id": player_id,
                 "runs": runs,
                 "balls_faced": balls,
+                "outs": outs,
+                "reliable_runs": reliable_runs,
+                "reliable_balls": reliable_balls,
                 "bat_avg": divide_or_none(runs, outs),
                 "bat_sr": divide_or_none(reliable_runs * 100, reliable_balls),
                 "boundaries": sum_column(group, "battingFours") + sum_column(group, "battingSixes"),
@@ -2927,6 +2942,8 @@ def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> p
             {
                 "canonical_player_id": player_id,
                 "wickets": wickets,
+                "runs_against": runs_against,
+                "balls": balls,
                 "bowl_avg": divide_or_none(runs_against, wickets),
                 "bowl_sr": divide_or_none(balls, wickets),
                 "economy": divide_or_none(runs_against * 6, balls),
@@ -2940,9 +2957,11 @@ def build_peer_metric_rows(
     data: pd.DataFrame,
     player_id: str,
     metrics: list[tuple[str, str, bool, str]],
+    average_overrides: dict[str, float | None] | None = None,
 ) -> list[dict[str, object]]:
     if data.empty or "canonical_player_id" not in data:
         return []
+    average_overrides = average_overrides or {}
     rows = []
     for label, column, lower_is_better, value_format in metrics:
         if column not in data:
@@ -2958,7 +2977,11 @@ def build_peer_metric_rows(
             continue
         minimum = float(valid_values.min())
         maximum = float(valid_values.max())
-        average = float(valid_values.mean())
+        if column in average_overrides:
+            override_average = average_overrides[column]
+            average = float(override_average) if override_average is not None else None
+        else:
+            average = float(valid_values.mean())
         rows.append(
             {
                 "label": label,
@@ -2972,6 +2995,12 @@ def build_peer_metric_rows(
             }
         )
     return rows
+
+
+def sum_numeric(data: pd.DataFrame, column: str) -> float:
+    if data.empty or column not in data:
+        return 0.0
+    return float(pd.to_numeric(data[column], errors="coerce").fillna(0).sum())
 
 
 def empty_peer_metric_row(label: str, lower_is_better: bool, value_format: str) -> dict[str, object]:
