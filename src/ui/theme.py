@@ -1960,6 +1960,107 @@ def inject_theme() -> None:
             font-weight: 950;
         }
 
+        .peer-card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 18px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin-bottom: 18px;
+            padding: 20px 22px 18px;
+        }
+
+        .peer-card h4 {
+            align-items: center;
+            color: var(--ink);
+            display: flex;
+            font-size: 1.05rem;
+            font-weight: 950;
+            gap: 9px;
+            margin: 0 0 14px;
+        }
+
+        .peer-card h4::before {
+            background: var(--peer-accent, #6d4dff);
+            border-radius: 999px;
+            content: "";
+            display: inline-block;
+            height: 9px;
+            width: 9px;
+        }
+
+        .peer-row {
+            border-top: 1px solid #eef0f6;
+            padding: 11px 0 10px;
+        }
+
+        .peer-row:first-of-type {
+            border-top: 0;
+            padding-top: 0;
+        }
+
+        .peer-row-top,
+        .peer-row-meta {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .peer-metric {
+            color: #747b98;
+            font-size: 0.82rem;
+            font-weight: 850;
+        }
+
+        .peer-value {
+            color: var(--ink);
+            font-size: 0.95rem;
+            font-weight: 950;
+        }
+
+        .peer-row-meta {
+            color: #8a90aa;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-top: 3px;
+        }
+
+        .peer-row-meta strong {
+            color: #4f5875;
+            font-weight: 900;
+        }
+
+        .peer-range {
+            background: #eef1f7;
+            border-radius: 999px;
+            height: 7px;
+            margin-top: 9px;
+            position: relative;
+            width: 100%;
+        }
+
+        .peer-marker {
+            border-radius: 999px;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .player-marker {
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.95), 0 5px 12px rgba(23, 27, 77, 0.16);
+            height: 13px;
+            width: 13px;
+            z-index: 2;
+        }
+
+        .avg-marker {
+            background: #a7aec5;
+            height: 15px;
+            opacity: 0.85;
+            width: 3px;
+            z-index: 1;
+        }
+
         .hof-progress-row {
             margin: 13px 0;
         }

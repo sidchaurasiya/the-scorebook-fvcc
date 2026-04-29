@@ -2217,6 +2217,7 @@ def render_player_profile_page() -> None:
     render_player_header_card(profile_view)
     render_player_breakdown(profile_view["career"].iloc[0])
     render_player_highlights(profile_view)
+    render_player_peer_comparison(profile_view)
     render_player_trends(profile_view["season_table"])
     render_player_season_table(profile_view["season_table"])
     render_player_grade_table(profile_view["grade_table"])
@@ -2805,6 +2806,278 @@ def compact_leader_detail_meta(details: list[str], limit: int = 3) -> str:
     remaining = len(details) - len(visible)
     suffix = f", +{remaining} more" if remaining > 0 else ""
     return ", ".join(visible) + suffix
+
+
+def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None:
+    career = profile_view["career"].iloc[0]
+    season_table = profile_view.get("season_table", pd.DataFrame())
+    if season_table.empty or "Season" not in season_table:
+        return
+    seasons = tuple(
+        sorted(
+            season_table["Season"].dropna().astype(str).unique(),
+            key=profile_season_sort_key,
+        )
+    )
+    player_id = str(career.get("canonical_player_id", "")).strip()
+    if not player_id or not seasons:
+        return
+
+    comparison = get_player_peer_comparison(player_id, seasons, metadata_mtime(), player_aliases_mtime())
+    if not comparison.get("batting") and not comparison.get("bowling"):
+        return
+
+    render_section_heading("Player vs Peers 📊")
+    render_section_subtext("Compared against all players from the same seasons.")
+    columns = st.columns(2)
+    with columns[0]:
+        render_peer_comparison_card("Batting", comparison.get("batting", []), "#6D4DFF")
+    with columns[1]:
+        render_peer_comparison_card("Bowling", comparison.get("bowling", []), "#10B981")
+
+
+@st.cache_data(show_spinner=False)
+def get_player_peer_comparison(
+    player_id: str,
+    seasons: tuple[str, ...],
+    local_version: float,
+    identity_version: float,
+) -> dict[str, list[dict[str, object]]]:
+    _ = (local_version, identity_version)
+    aliases = load_player_aliases()
+    batting = apply_player_identity_mapping(read_processed_table("all_seasons_batting"), aliases)
+    bowling = apply_player_identity_mapping(read_processed_table("all_seasons_bowling"), aliases)
+    batting_rows = aggregate_peer_batting(batting, seasons)
+    bowling_rows = aggregate_peer_bowling(bowling, seasons)
+    return {
+        "batting": build_peer_metric_rows(
+            batting_rows,
+            player_id,
+            [
+                ("Runs", "runs", False, "number"),
+                ("Balls Faced", "balls_faced", False, "number"),
+                ("Batting Avg", "bat_avg", False, "decimal"),
+                ("Strike Rate", "bat_sr", False, "decimal"),
+                ("Boundaries", "boundaries", False, "number"),
+                ("0s", "ducks", True, "number"),
+            ],
+        ),
+        "bowling": build_peer_metric_rows(
+            bowling_rows,
+            player_id,
+            [
+                ("Wickets", "wickets", False, "number"),
+                ("Bowling Avg", "bowl_avg", True, "decimal"),
+                ("Bowling Strike Rate", "bowl_sr", True, "decimal"),
+                ("Economy Rate", "economy", True, "decimal"),
+                ("Maidens", "maidens", False, "number"),
+            ],
+        ),
+    }
+
+
+def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> pd.DataFrame:
+    if batting.empty or "season" not in batting or "canonical_player_id" not in batting:
+        return pd.DataFrame()
+    output = batting[batting["season"].astype(str).isin(seasons)].copy()
+    if output.empty:
+        return pd.DataFrame()
+    rows = []
+    for player_id, group in output.groupby("canonical_player_id", dropna=False):
+        player_id = str(player_id).strip()
+        if not player_id:
+            continue
+        runs = sum_column(group, "battingAggregate")
+        innings = sum_column(group, "battingInnings")
+        not_outs = sum_column(group, "battingNotOuts")
+        outs = max(0.0, innings - not_outs)
+        balls = sum_column(group, "battingBallsFaced")
+        reliable = group[group["season"].map(profile_season_sort_key) >= profile_season_sort_key("Summer 2024/25")].copy()
+        reliable_runs = sum_column(reliable, "battingAggregate")
+        reliable_balls = sum_column(reliable, "battingBallsFaced")
+        rows.append(
+            {
+                "canonical_player_id": player_id,
+                "runs": runs,
+                "balls_faced": balls,
+                "bat_avg": divide_or_none(runs, outs),
+                "bat_sr": divide_or_none(reliable_runs * 100, reliable_balls),
+                "boundaries": sum_column(group, "battingFours") + sum_column(group, "battingSixes"),
+                "ducks": sum_column(group, "batting0s"),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> pd.DataFrame:
+    if bowling.empty or "season" not in bowling or "canonical_player_id" not in bowling:
+        return pd.DataFrame()
+    output = bowling[bowling["season"].astype(str).isin(seasons)].copy()
+    if output.empty:
+        return pd.DataFrame()
+    rows = []
+    for player_id, group in output.groupby("canonical_player_id", dropna=False):
+        player_id = str(player_id).strip()
+        if not player_id:
+            continue
+        wickets = sum_column(group, "bowlingWickets")
+        runs_against = sum_column(group, "bowlingRuns")
+        balls = sum_column(group, "bowlingBalls")
+        rows.append(
+            {
+                "canonical_player_id": player_id,
+                "wickets": wickets,
+                "bowl_avg": divide_or_none(runs_against, wickets),
+                "bowl_sr": divide_or_none(balls, wickets),
+                "economy": divide_or_none(runs_against * 6, balls),
+                "maidens": sum_column(group, "bowlingMaidens"),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def build_peer_metric_rows(
+    data: pd.DataFrame,
+    player_id: str,
+    metrics: list[tuple[str, str, bool, str]],
+) -> list[dict[str, object]]:
+    if data.empty or "canonical_player_id" not in data:
+        return []
+    rows = []
+    for label, column, lower_is_better, value_format in metrics:
+        if column not in data:
+            rows.append(empty_peer_metric_row(label, lower_is_better, value_format))
+            continue
+        values = pd.to_numeric(data[column], errors="coerce")
+        valid_values = values.dropna()
+        player_values = data.loc[data["canonical_player_id"].astype(str) == player_id, column]
+        player_value = pd.to_numeric(player_values, errors="coerce").dropna()
+        value = float(player_value.iloc[0]) if not player_value.empty else None
+        if valid_values.empty:
+            rows.append(empty_peer_metric_row(label, lower_is_better, value_format))
+            continue
+        minimum = float(valid_values.min())
+        maximum = float(valid_values.max())
+        average = float(valid_values.mean())
+        rows.append(
+            {
+                "label": label,
+                "value": value,
+                "average": average,
+                "minimum": minimum,
+                "maximum": maximum,
+                "lower_is_better": lower_is_better,
+                "format": value_format,
+                "status": peer_metric_status(value, average, minimum, maximum, lower_is_better),
+            }
+        )
+    return rows
+
+
+def empty_peer_metric_row(label: str, lower_is_better: bool, value_format: str) -> dict[str, object]:
+    return {
+        "label": label,
+        "value": None,
+        "average": None,
+        "minimum": None,
+        "maximum": None,
+        "lower_is_better": lower_is_better,
+        "format": value_format,
+        "status": "—",
+    }
+
+
+def peer_metric_status(
+    value: float | None,
+    average: float | None,
+    minimum: float | None,
+    maximum: float | None,
+    lower_is_better: bool,
+) -> str:
+    if value is None or average is None or minimum is None or maximum is None:
+        return "—"
+    spread = maximum - minimum
+    if spread <= 0:
+        return "Around avg"
+    if lower_is_better:
+        if value <= minimum + spread * 0.15:
+            return "Top range"
+        if value < average * 0.9:
+            return "Better than avg"
+        if value <= average * 1.1:
+            return "Around avg"
+        return "Below avg"
+    if value >= maximum - spread * 0.15:
+        return "Top range"
+    if value > average * 1.1:
+        return "Above avg"
+    if value >= average * 0.9:
+        return "Around avg"
+    return "Below avg"
+
+
+def peer_marker_position(value: float | None, minimum: float | None, maximum: float | None) -> float | None:
+    if value is None or minimum is None or maximum is None:
+        return None
+    if maximum <= minimum:
+        return 50.0
+    return max(0.0, min(100.0, ((value - minimum) / (maximum - minimum)) * 100))
+
+
+def format_peer_metric_value(value: object, value_format: str) -> str:
+    if value is None or pd.isna(value):
+        return "—"
+    numeric = float(value)
+    if value_format == "number":
+        return f"{int(round(numeric)):,}"
+    return f"{numeric:.2f}"
+
+
+def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accent: str) -> None:
+    if not rows:
+        rows = [empty_peer_metric_row("No data", False, "number")]
+    row_html = []
+    for row in rows:
+        value = row.get("value")
+        average = row.get("average")
+        minimum = row.get("minimum")
+        maximum = row.get("maximum")
+        player_position = peer_marker_position(value, minimum, maximum)
+        average_position = peer_marker_position(average, minimum, maximum)
+        player_marker = (
+            f'<span class="peer-marker player-marker" style="left:{player_position:.1f}%; background:{accent};"></span>'
+            if player_position is not None
+            else ""
+        )
+        average_marker = (
+            f'<span class="peer-marker avg-marker" style="left:{average_position:.1f}%;"></span>'
+            if average_position is not None
+            else ""
+        )
+        row_html.append(
+            '<div class="peer-row">'
+            '<div class="peer-row-top">'
+            f'<span class="peer-metric">{html.escape(str(row["label"]))}</span>'
+            f'<span class="peer-value">{html.escape(format_peer_metric_value(value, str(row["format"])))}</span>'
+            "</div>"
+            '<div class="peer-row-meta">'
+            f'<span>Peer avg. {html.escape(format_peer_metric_value(average, str(row["format"])))}</span>'
+            f'<strong>{html.escape(str(row["status"]))}</strong>'
+            "</div>"
+            '<div class="peer-range">'
+            f"{average_marker}{player_marker}"
+            "</div>"
+            "</div>"
+        )
+    st.markdown(
+        (
+            '<div class="peer-card">'
+            f'<h4 style="--peer-accent:{html.escape(accent)}">{html.escape(title)}</h4>'
+            f'{"".join(row_html)}'
+            "</div>"
+        ),
+        unsafe_allow_html=True,
+    )
 
 
 def render_player_trends(season_table: pd.DataFrame) -> None:
