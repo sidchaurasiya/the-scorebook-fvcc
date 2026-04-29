@@ -3046,16 +3046,15 @@ def peer_metric_status(
 ) -> str:
     if value is None or average is None or minimum is None or maximum is None:
         return "—"
-    spread = maximum - minimum
-    if spread <= 0:
+    if average == 0:
         return "Around avg"
     if lower_is_better:
-        if value < average * 0.9:
+        if value < average:
             return "Better than avg"
         if value <= average * 1.1:
             return "Around avg"
         return "Worse than avg"
-    if value > average * 1.1:
+    if value > average:
         return "Better than avg"
     if value >= average * 0.9:
         return "Around avg"
