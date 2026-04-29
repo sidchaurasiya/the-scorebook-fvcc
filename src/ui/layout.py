@@ -2828,7 +2828,7 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
         return
 
     render_section_heading("Player vs Peers 📊")
-    render_section_subtext("Compared against all players from the same seasons.")
+    render_section_subtext("Compared against players from the same seasons.")
     st.markdown(
         """
         <div class="peer-explainer">
@@ -2836,7 +2836,7 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
                 <span><i class="legend-dot player-dot"></i> Player</span>
                 <span><i class="legend-marker avg-dot"></i> Peer avg.</span>
             </div>
-            <div class="peer-note">Line shows range from lowest to highest peer value.</div>
+            <div class="peer-note">Line shows range from lowest to highest peer value. Strike rate uses data from Winter 2025 onward.</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -2866,12 +2866,10 @@ def get_player_peer_comparison(
             batting_rows,
             player_id,
             [
-                ("Runs", "runs", False, "number"),
-                ("Balls Faced", "balls_faced", False, "number"),
                 ("Batting Avg", "bat_avg", False, "decimal"),
                 ("Strike Rate", "bat_sr", False, "decimal"),
-                ("Boundaries", "boundaries", False, "number"),
-                ("Ducks", "ducks", True, "number"),
+                ("Boundary Rate", "boundary_rate", False, "decimal"),
+                ("Innings per Duck", "innings_per_duck", False, "decimal"),
             ],
             average_overrides={
                 "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
@@ -2879,22 +2877,24 @@ def get_player_peer_comparison(
                     sum_numeric(batting_rows, "reliable_runs") * 100,
                     sum_numeric(batting_rows, "reliable_balls"),
                 ),
+                "boundary_rate": divide_or_none(sum_numeric(batting_rows, "boundaries"), sum_numeric(batting_rows, "innings")),
+                "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
             },
         ),
         "bowling": build_peer_metric_rows(
             bowling_rows,
             player_id,
             [
-                ("Wickets", "wickets", False, "number"),
                 ("Bowling Avg", "bowl_avg", True, "decimal"),
-                ("Bowling Strike Rate", "bowl_sr", True, "decimal"),
+                ("Bowling SR", "bowl_sr", True, "decimal"),
                 ("Economy Rate", "economy", True, "decimal"),
-                ("Maidens", "maidens", False, "number"),
+                ("Overs per Maiden", "overs_per_maiden", True, "decimal"),
             ],
             average_overrides={
                 "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
                 "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
                 "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
+                "overs_per_maiden": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "maidens")),
             },
         ),
     }
@@ -2916,21 +2916,26 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
         not_outs = sum_column(group, "battingNotOuts")
         outs = max(0.0, innings - not_outs)
         balls = sum_column(group, "battingBallsFaced")
-        reliable = group[group["season"].map(profile_season_sort_key) >= profile_season_sort_key("Summer 2024/25")].copy()
+        reliable = group[group["season"].map(profile_season_sort_key) >= profile_season_sort_key("Winter 2025")].copy()
         reliable_runs = sum_column(reliable, "battingAggregate")
         reliable_balls = sum_column(reliable, "battingBallsFaced")
+        boundaries = sum_column(group, "battingFours") + sum_column(group, "battingSixes")
+        ducks = sum_column(group, "batting0s")
         rows.append(
             {
                 "canonical_player_id": player_id,
                 "runs": runs,
                 "balls_faced": balls,
+                "innings": innings,
                 "outs": outs,
                 "reliable_runs": reliable_runs,
                 "reliable_balls": reliable_balls,
                 "bat_avg": divide_or_none(runs, outs),
                 "bat_sr": divide_or_none(reliable_runs * 100, reliable_balls),
-                "boundaries": sum_column(group, "battingFours") + sum_column(group, "battingSixes"),
-                "ducks": sum_column(group, "batting0s"),
+                "boundaries": boundaries,
+                "boundary_rate": divide_or_none(boundaries, innings),
+                "ducks": ducks,
+                "innings_per_duck": divide_or_none(innings, ducks),
             }
         )
     return pd.DataFrame(rows)
@@ -2950,16 +2955,20 @@ def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> p
         wickets = sum_column(group, "bowlingWickets")
         runs_against = sum_column(group, "bowlingRuns")
         balls = sum_column(group, "bowlingBalls")
+        maidens = sum_column(group, "bowlingMaidens")
+        overs = balls / 6 if balls else 0.0
         rows.append(
             {
                 "canonical_player_id": player_id,
                 "wickets": wickets,
                 "runs_against": runs_against,
                 "balls": balls,
+                "overs": overs,
                 "bowl_avg": divide_or_none(runs_against, wickets),
                 "bowl_sr": divide_or_none(balls, wickets),
                 "economy": divide_or_none(runs_against * 6, balls),
-                "maidens": sum_column(group, "bowlingMaidens"),
+                "maidens": maidens,
+                "overs_per_maiden": divide_or_none(overs, maidens),
             }
         )
     return pd.DataFrame(rows)
@@ -3046,13 +3055,11 @@ def peer_metric_status(
         if value <= average * 1.1:
             return "Around avg"
         return "Worse than avg"
-    if value >= maximum - spread * 0.15:
-        return "Top range"
     if value > average * 1.1:
-        return "Above avg"
+        return "Better than avg"
     if value >= average * 0.9:
         return "Around avg"
-    return "Below avg"
+    return "Worse than avg"
 
 
 def peer_marker_position(value: float | None, minimum: float | None, maximum: float | None) -> float | None:
@@ -3074,11 +3081,21 @@ def format_peer_metric_value(value: object, value_format: str) -> str:
 
 def peer_status_class(status: object) -> str:
     normalized = str(status).strip().lower()
-    if normalized in {"above avg", "better than avg", "top range"}:
+    if normalized == "better than avg":
         return "positive"
-    if normalized in {"below avg", "worse than avg"}:
+    if normalized == "worse than avg":
         return "negative"
     return "neutral"
+
+
+def peer_metric_note(label: object) -> str:
+    notes = {
+        "Strike Rate": "From Winter 2025 onward",
+        "Boundary Rate": "4s + 6s per innings",
+        "Innings per Duck": "Higher means fewer ducks",
+        "Overs per Maiden": "Lower means maidens are more frequent",
+    }
+    return notes.get(str(label), "")
 
 
 def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accent: str) -> None:
@@ -3103,8 +3120,9 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
             else ""
         )
         metric_label = html.escape(str(row["label"]))
-        if str(row["label"]) == "Strike Rate":
-            metric_label = f'{metric_label}<span class="peer-metric-note">From Summer 2024/25 onwards</span>'
+        metric_note = peer_metric_note(row["label"])
+        if metric_note:
+            metric_label = f'{metric_label}<span class="peer-metric-note">{html.escape(metric_note)}</span>'
         status = str(row["status"])
         row_html.append(
             '<div class="peer-row">'
