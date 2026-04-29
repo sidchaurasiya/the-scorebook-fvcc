@@ -3044,10 +3044,18 @@ def peer_metric_status(
     maximum: float | None,
     lower_is_better: bool,
 ) -> str:
-    if value is None or average is None or minimum is None or maximum is None:
+    if (
+        value is None
+        or average is None
+        or minimum is None
+        or maximum is None
+        or pd.isna(value)
+        or pd.isna(average)
+        or pd.isna(minimum)
+        or pd.isna(maximum)
+        or average == 0
+    ):
         return "—"
-    if average == 0:
-        return "Around avg"
     if lower_is_better:
         if value < average:
             return "Better than avg"
@@ -3122,7 +3130,13 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
         metric_note = peer_metric_note(row["label"])
         if metric_note:
             metric_label = f'{metric_label}<span class="peer-metric-note">{html.escape(metric_note)}</span>'
-        status = str(row["status"])
+        status = peer_metric_status(
+            value,
+            average,
+            minimum,
+            maximum,
+            bool(row.get("lower_is_better")),
+        )
         row_html.append(
             '<div class="peer-row">'
             '<div class="peer-row-top">'
