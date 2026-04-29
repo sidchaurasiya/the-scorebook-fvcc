@@ -2462,70 +2462,186 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     wickets = numeric_value(career, "Wickets")
     bat_avg = numeric_value(career, "Bat Avg")
     bat_sr = numeric_value(career, "Bat SR")
+    bowl_avg = numeric_value(career, "Bowl Avg")
     bowl_sr = numeric_value(career, "Bowl SR")
     economy = numeric_value(career, "Econ")
     fours = numeric_value(career, "4s")
     sixes = numeric_value(career, "6s")
-    catches = numeric_value(career, "Catches")
     stumpings = numeric_value(career, "Stumpings")
     dismissals = numeric_value(career, "Dismissals")
+    balls_faced = numeric_value(career, "BF")
+    outs = numeric_value(career, "Outs")
     balls_bowled = numeric_value(career, "Balls Bowled")
     overs = balls_bowled / 6 if balls_bowled else 0
-    matches_floor = matches >= 20
+    matches_20 = matches >= 20
+    matches_30 = matches >= 30
     wickets_per_match = divide_or_none(wickets, matches) or 0
-    bowler_profile = matches_floor and wickets_per_match >= 0.80
+    runs_per_match = divide_or_none(runs, matches) or 0
+    balls_per_dismissal = divide_or_none(balls_faced, outs) or 0
     leader_counts = player_leader_counts(profile_view)
+    reliable = reliable_batting_components(profile_view.get("batting", pd.DataFrame()))
+    reliable_bat_sr = divide_or_none(reliable["runs"] * 100, reliable["balls"]) or 0
+    season_table = profile_view.get("season_table", pd.DataFrame())
+    standout_count = sum(int(value) for value in leader_counts.values())
+    star_batter = matches_30 and bat_avg > 25
+    big_hitter = matches_30 and matches and sixes / matches > 0.3
+    gap_finder = matches_30 and matches and fours / matches > 2
 
-    badges = []
+    candidates: list[dict[str, object]] = []
 
-    def add_badge(label: str, condition: bool) -> None:
-        if condition and label not in badges:
-            badges.append(label)
+    def add_candidate(label: str, group: str, priority: int, condition: bool) -> None:
+        if condition:
+            candidates.append({"label": label, "group": group, "priority": priority})
 
-    add_badge("Club Legend", matches > 200)
-    add_badge("All-round Contributor", matches_floor and bat_avg > 12 and wickets >= 50 and wickets_per_match >= 0.80)
-    add_badge("Star Batter", matches_floor and bat_avg > 25)
-    add_badge("Dependable Batter", matches_floor and bat_avg > 18 and "Star Batter" not in badges)
-    add_badge("Star Bowler", bowler_profile and wickets >= 20 and 0 < numeric_value(career, "Bowl Avg") < 20)
-    add_badge("Wicket Taker", bowler_profile and wickets_per_match > 1)
-    add_badge("Partnership Breaker", bowler_profile and overs > 150 and 0 < bowl_sr < 35)
-    add_badge("Economy Controller", bowler_profile and overs > 150 and 0 < economy < 3)
-    add_badge("Big Hitter", matches_floor and matches and sixes / matches > 0.3)
-    add_badge("Gap Finder", matches_floor and matches and fours / matches > 2)
-    add_badge("Boundary Maker", matches_floor and matches and (fours + sixes) / matches > 2.5)
-    add_badge("Quick Scorer", matches_floor and runs >= 250 and bat_sr >= 85)
-    add_badge("Keeper Impact", stumpings > 0)
-    add_badge("Safe Hands", stumpings <= 0 and matches_floor and matches and dismissals / matches > 0.4)
-    add_badge("Club Veteran", matches >= 100)
-    add_badge("Milestone Maker", runs >= 1000 or wickets >= 100 or matches >= 100)
-    add_badge("Season Standout", any(value > 0 for value in leader_counts.values()))
+    club_legend = matches >= 200 or runs >= 4000 or wickets >= 250
+    genuine_all_rounder = matches >= 50 and runs >= 1000 and wickets >= 75 and bat_avg >= 18
+    all_round_contributor = matches_30 and bat_avg > 12 and runs >= 300 and wickets >= 30
+    upcoming_star = matches_20 and matches < 50 and (
+        bat_avg > 20 or (0 < bowl_avg < 20 and wickets >= 15)
+    )
+    mr_consistent = player_has_consistent_seasons(season_table)
 
-    if not badges:
-        return ["Club Contributor"] if matches_floor else ["Emerging Player"]
-    return badges[:4]
+    add_candidate("Club Legend", "legacy", 1, club_legend)
+    add_candidate("Genuine All-rounder", "role", 2, genuine_all_rounder)
+    add_candidate("All-round Contributor", "role", 3, all_round_contributor and not genuine_all_rounder)
+    add_candidate("Upcoming Star", "role", 4, upcoming_star)
+    add_candidate("Star Batter", "batting", 5, star_batter)
+    add_candidate("Star Bowler", "bowling", 6, matches_30 and wickets >= 30 and 0 < bowl_avg < 20)
+    add_candidate("Run Machine", "batting", 7, runs >= 2000 or (runs_per_match >= 25 and matches >= 50))
+    add_candidate("Dependable Batter", "batting", 7, matches_30 and bat_avg > 18 and not star_batter)
+    add_candidate("Wicket Taker", "bowling", 8, matches_20 and wickets_per_match > 1)
+    add_candidate("Golden Arm", "bowling", 9, matches_30 and wickets_per_match < 0.60 and wickets >= 15 and 0 < bowl_avg < 25)
+    add_candidate("Partnership Breaker", "bowling", 10, overs > 150 and wickets >= 30 and 0 < bowl_sr < 35)
+    add_candidate("Economy Controller", "bowling", 11, overs > 150 and 0 < economy < 3.5 and (wickets >= 30 or matches >= 30))
+    add_candidate("Big Hitter", "style", 12, big_hitter)
+    add_candidate("Values His Wicket", "style", 13, matches_20 and balls_per_dismissal >= 30)
+    add_candidate("Gap Finder", "style", 14, gap_finder)
+    add_candidate("Quick Scorer", "style", 15, matches_20 and reliable_bat_sr >= 90 and reliable["balls"] >= 125 and reliable["runs"] >= 125)
+    add_candidate("Boundary Maker", "style", 15, matches_20 and matches and (fours + sixes) / matches > 2.5 and not big_hitter and not gap_finder)
+    add_candidate("Workhorse", "bowling", 16, overs >= 250 and matches >= 30)
+    add_candidate("Safe Hands", "fielding", 17, stumpings <= 0 and matches_20 and matches and dismissals / matches > 0.4)
+    add_candidate("Keeper Impact", "fielding", 18, stumpings > 0)
+    add_candidate(season_standout_label(standout_count), "achievement", 19, standout_count > 0)
+    add_candidate("Milestone Maker", "legacy", 20, (runs >= 1000 or wickets >= 100 or matches >= 100) and not club_legend)
+    add_candidate("Club Veteran", "legacy", 21, matches >= 100 and not club_legend)
+    add_candidate("Mr Consistent", "achievement", 22, mr_consistent)
+
+    if not candidates:
+        return ["Club Contributor"] if matches_20 else ["Emerging Player"]
+    return select_profile_badges(candidates)
 
 
 def player_profile_insight(career: pd.Series, badges: list[str]) -> str:
     matches = numeric_value(career, "Matches")
-    if "Club Legend" in badges:
+    badge_set = {base_badge_label(badge) for badge in badges}
+    if "Club Legend" in badge_set and ("Genuine All-rounder" in badge_set or "All-round Contributor" in badge_set):
+        return "Long-serving club figure with major contributions across bat and ball."
+    if "Club Legend" in badge_set and any(badge in badge_set for badge in ["Star Batter", "Run Machine", "Dependable Batter", "Big Hitter", "Gap Finder"]):
+        return "Long-serving club figure with a major batting footprint across the record book."
+    if "Club Legend" in badge_set and any(badge in badge_set for badge in ["Star Bowler", "Partnership Breaker", "Wicket Taker", "Economy Controller", "Workhorse"]):
+        return "Long-serving club figure with sustained bowling impact across seasons."
+    if "Club Legend" in badge_set and ("Safe Hands" in badge_set or "Keeper Impact" in badge_set):
+        return "Long-serving club figure with strong fielding impact across the available records."
+    if "Club Legend" in badge_set:
         return "Long-serving club figure with a major footprint across the record book."
-    if "All-round Contributor" in badges:
+    if "Genuine All-rounder" in badge_set:
+        return "Strong two-skill contributor across bat and ball."
+    if "All-round Contributor" in badge_set:
         return "Contributes meaningfully with both bat and ball."
-    if "Star Batter" in badges or "Dependable Batter" in badges:
-        return "Reliable run-maker with consistent batting impact across seasons."
-    if "Big Hitter" in badges:
+    if "Upcoming Star" in badge_set:
+        return "Early-career player already showing strong signs of future impact."
+    if "Star Batter" in badge_set:
+        return "High-impact run-maker with strong batting returns across seasons."
+    if "Run Machine" in badge_set:
+        return "Consistent run scorer with a strong footprint across seasons."
+    if "Dependable Batter" in badge_set:
+        return "Reliable batting contributor with consistent returns across the record book."
+    if "Big Hitter" in badge_set:
         return "Boundary-focused batter with a strong six-hitting profile."
-    if "Gap Finder" in badges or "Boundary Maker" in badges or "Quick Scorer" in badges:
-        return "Consistent boundary scorer who regularly finds gaps."
-    if "Star Bowler" in badges or "Partnership Breaker" in badges or "Wicket Taker" in badges:
-        return "Regular wicket threat with strong bowling impact."
-    if "Economy Controller" in badges:
+    if "Gap Finder" in badge_set or "Boundary Maker" in badge_set:
+        return "Finds the boundary regularly through consistent four-hitting."
+    if "Values His Wicket" in badge_set:
+        return "Patient batter who spends time at the crease and values his wicket."
+    if "Quick Scorer" in badge_set:
+        return "Tempo-setting batter with strong recent scoring rate."
+    if "Star Bowler" in badge_set:
+        return "High-impact bowler with strong wicket-taking and average profile."
+    if "Partnership Breaker" in badge_set:
+        return "Regular wicket threat who can break games open with the ball."
+    if "Wicket Taker" in badge_set:
+        return "Consistently finds wickets across the available club records."
+    if "Golden Arm" in badge_set:
+        return "Makes an impact with the ball despite limited bowling volume."
+    if "Economy Controller" in badge_set:
         return "Disciplined bowler who keeps scoring rates under control."
-    if "Safe Hands" in badges or "Keeper Impact" in badges:
-        return "Strong fielding contributor across the available records."
-    if "Emerging Player" in badges or matches < 20:
+    if "Workhorse" in badge_set:
+        return "Trusted to carry a heavy bowling workload across seasons."
+    if "Mr Consistent" in badge_set:
+        return "Delivers across seasons, not just in one standout year."
+    if "Safe Hands" in badge_set:
+        return "Reliable fielding contributor across the available records."
+    if "Keeper Impact" in badge_set:
+        return "Wicketkeeping contributor with impact behind the stumps."
+    if "Season Standout" in badge_set:
+        return "Has produced standout season-level performances in the club record book."
+    if "Milestone Maker" in badge_set:
+        return "Has crossed major club milestones across the available records."
+    if "Club Veteran" in badge_set:
+        return "Experienced club contributor with a long record across seasons."
+    if "Emerging Player" in badge_set or matches < 20:
         return "Early career profile building across the available club records."
     return "Club contributor across the available records."
+
+
+def season_standout_label(count: int) -> str:
+    return "Season Standout" if count <= 1 else f"Season Standout x {count}"
+
+
+def base_badge_label(label: str) -> str:
+    return re.sub(r"\s+x\s+\d+$", "", str(label)).strip()
+
+
+def select_profile_badges(candidates: list[dict[str, object]], max_badges: int = 5) -> list[str]:
+    ordered = sorted(candidates, key=lambda candidate: int(candidate["priority"]))
+    group_limits = {
+        "legacy": 1,
+        "role": 1,
+        "batting": 2,
+        "bowling": 1,
+        "style": 1,
+        "fielding": 1,
+        "achievement": 1,
+    }
+    selected: list[dict[str, object]] = []
+    counts: dict[str, int] = {}
+    for candidate in ordered:
+        group = str(candidate["group"])
+        if counts.get(group, 0) >= group_limits.get(group, 1):
+            continue
+        selected.append(candidate)
+        counts[group] = counts.get(group, 0) + 1
+        if len(selected) >= max_badges:
+            break
+
+    return [str(candidate["label"]) for candidate in selected[:max_badges]]
+
+
+def reliable_batting_components(batting: pd.DataFrame) -> dict[str, float]:
+    if batting.empty or "season" not in batting:
+        return {"runs": 0.0, "balls": 0.0}
+    reliable = batting[batting["season"].map(profile_season_sort_key) >= profile_season_sort_key("Summer 2024/25")].copy()
+    return {
+        "runs": sum_column(reliable, "battingAggregate"),
+        "balls": sum_column(reliable, "battingBallsFaced"),
+    }
+
+
+def player_has_consistent_seasons(season_table: pd.DataFrame) -> bool:
+    if season_table.empty:
+        return False
+    runs = pd.to_numeric(season_table.get("Runs", pd.Series(dtype=float)), errors="coerce").fillna(0)
+    wickets = pd.to_numeric(season_table.get("Wickets", pd.Series(dtype=float)), errors="coerce").fillna(0)
+    return int((runs >= 200).sum()) >= 3 or int((wickets >= 15).sum()) >= 3
 
 
 def render_player_career_kpis(career: pd.Series) -> None:
