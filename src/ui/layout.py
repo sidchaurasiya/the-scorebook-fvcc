@@ -2829,6 +2829,18 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
 
     render_section_heading("Player vs Peers 📊")
     render_section_subtext("Compared against all players from the same seasons.")
+    st.markdown(
+        """
+        <div class="peer-explainer">
+            <div class="peer-legend">
+                <span><i class="legend-dot player-dot"></i> Player</span>
+                <span><i class="legend-marker avg-dot"></i> Peer avg.</span>
+            </div>
+            <div class="peer-note">Line shows range from lowest to highest peer value.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     columns = st.columns(2)
     with columns[0]:
         render_peer_comparison_card("Batting", comparison.get("batting", []), "#6D4DFF")
@@ -2859,7 +2871,7 @@ def get_player_peer_comparison(
                 ("Batting Avg", "bat_avg", False, "decimal"),
                 ("Strike Rate", "bat_sr", False, "decimal"),
                 ("Boundaries", "boundaries", False, "number"),
-                ("0s", "ducks", True, "number"),
+                ("Ducks", "ducks", True, "number"),
             ],
             average_overrides={
                 "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
@@ -3029,13 +3041,11 @@ def peer_metric_status(
     if spread <= 0:
         return "Around avg"
     if lower_is_better:
-        if value <= minimum + spread * 0.15:
-            return "Top range"
         if value < average * 0.9:
             return "Better than avg"
         if value <= average * 1.1:
             return "Around avg"
-        return "Below avg"
+        return "Worse than avg"
     if value >= maximum - spread * 0.15:
         return "Top range"
     if value > average * 1.1:
@@ -3062,6 +3072,15 @@ def format_peer_metric_value(value: object, value_format: str) -> str:
     return f"{numeric:.2f}"
 
 
+def peer_status_class(status: object) -> str:
+    normalized = str(status).strip().lower()
+    if normalized in {"above avg", "better than avg", "top range"}:
+        return "positive"
+    if normalized in {"below avg", "worse than avg"}:
+        return "negative"
+    return "neutral"
+
+
 def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accent: str) -> None:
     if not rows:
         rows = [empty_peer_metric_row("No data", False, "number")]
@@ -3074,7 +3093,7 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
         player_position = peer_marker_position(value, minimum, maximum)
         average_position = peer_marker_position(average, minimum, maximum)
         player_marker = (
-            f'<span class="peer-marker player-marker" style="left:{player_position:.1f}%; background:{accent};"></span>'
+            f'<span class="peer-marker player-marker" style="left:{player_position:.1f}%;"></span>'
             if player_position is not None
             else ""
         )
@@ -3083,15 +3102,19 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
             if average_position is not None
             else ""
         )
+        metric_label = html.escape(str(row["label"]))
+        if str(row["label"]) == "Strike Rate":
+            metric_label = f'{metric_label}<span class="peer-metric-note">From Summer 2024/25 onwards</span>'
+        status = str(row["status"])
         row_html.append(
             '<div class="peer-row">'
             '<div class="peer-row-top">'
-            f'<span class="peer-metric">{html.escape(str(row["label"]))}</span>'
+            f'<span class="peer-metric">{metric_label}</span>'
             f'<span class="peer-value">{html.escape(format_peer_metric_value(value, str(row["format"])))}</span>'
             "</div>"
             '<div class="peer-row-meta">'
             f'<span>Peer avg. {html.escape(format_peer_metric_value(average, str(row["format"])))}</span>'
-            f'<strong>{html.escape(str(row["status"]))}</strong>'
+            f'<strong class="peer-status {peer_status_class(status)}">{html.escape(status)}</strong>'
             "</div>"
             '<div class="peer-range">'
             f"{average_marker}{player_marker}"
