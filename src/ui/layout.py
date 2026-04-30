@@ -2884,7 +2884,6 @@ def get_player_peer_comparison(
         "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
         "overs_per_maiden": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "maidens")),
         "overs_per_extra": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "extras")),
-        "unassisted_wicket_pct": divide_or_none(sum_numeric(bowling_rows, "unassisted_wickets") * 100, sum_numeric(bowling_rows, "wickets")),
     }
     batting_metrics = build_peer_metric_rows(
         batting_rows,
@@ -2908,7 +2907,6 @@ def get_player_peer_comparison(
             ("Economy Rate", "economy", True, "decimal"),
             ("Overs per Maiden", "overs_per_maiden", True, "decimal"),
             ("Overs per Extra", "overs_per_extra", False, "decimal"),
-            ("Unassisted Wicket %", "unassisted_wicket_pct", False, "percent"),
         ],
         average_overrides=bowling_average_overrides,
     )
@@ -3211,7 +3209,6 @@ def peer_metric_note(label: object) -> str:
         "Innings per Duck": "Higher means fewer ducks",
         "Overs per Maiden": "Lower means maidens are more frequent",
         "Overs per Extra": "Higher means fewer wides/no-balls",
-        "Unassisted Wicket %": "Share of wickets credited as unassisted",
     }
     return notes.get(str(label), "")
 
