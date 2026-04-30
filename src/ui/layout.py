@@ -3297,7 +3297,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                             "color": "#4f5875",
                             "dy": -5,
                             "fontSize": label_size,
-                            "fontWeight": 850,
+                            "fontWeight": 800,
                         }
                         if season_count >= 10
                         else {

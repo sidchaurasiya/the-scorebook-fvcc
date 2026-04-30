@@ -30,6 +30,7 @@ dist/
 cache/
 data/cache/
 data/exports/
+data/debug_player_vs_peers.csv
 tmp/
 temp/
 *.tmp
