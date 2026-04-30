@@ -63,7 +63,9 @@ from src.utils.team_grade import (
 APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
+DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
+PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
@@ -2819,16 +2821,17 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
             key=profile_season_sort_key,
         )
     )
+    peer_scope = player_peer_grade_scope(profile_view)
     player_id = str(career.get("canonical_player_id", "")).strip()
     if not player_id or not seasons:
         return
 
-    comparison = get_player_peer_comparison(player_id, seasons, metadata_mtime(), player_aliases_mtime())
+    comparison = get_player_peer_comparison(player_id, seasons, peer_scope, metadata_mtime(), player_aliases_mtime())
     if not comparison.get("batting") and not comparison.get("bowling"):
         return
 
     render_section_heading("Player vs Peers 📊")
-    render_section_subtext("Compared against players from the same seasons.")
+    render_section_subtext("Compared against players from the same seasons and grades.")
     st.markdown(
         """
         <div class="peer-explainer">
@@ -2852,52 +2855,112 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
 def get_player_peer_comparison(
     player_id: str,
     seasons: tuple[str, ...],
+    peer_scope: tuple[str, ...],
     local_version: float,
     identity_version: float,
 ) -> dict[str, list[dict[str, object]]]:
     _ = (local_version, identity_version)
     aliases = load_player_aliases()
-    batting = apply_player_identity_mapping(read_processed_table("all_seasons_batting"), aliases)
-    bowling = apply_player_identity_mapping(read_processed_table("all_seasons_bowling"), aliases)
-    batting_rows = aggregate_peer_batting(batting, seasons)
-    bowling_rows = aggregate_peer_bowling(bowling, seasons)
-    return {
-        "batting": build_peer_metric_rows(
-            batting_rows,
-            player_id,
-            [
-                ("Batting Avg", "bat_avg", False, "decimal"),
-                ("Strike Rate", "bat_sr", False, "decimal"),
-                ("Boundary Rate", "boundary_rate", False, "decimal"),
-                ("Innings per Duck", "innings_per_duck", False, "decimal"),
-            ],
-            average_overrides={
-                "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
-                "bat_sr": divide_or_none(
-                    sum_numeric(batting_rows, "reliable_runs") * 100,
-                    sum_numeric(batting_rows, "reliable_balls"),
-                ),
-                "boundary_rate": divide_or_none(sum_numeric(batting_rows, "boundaries"), sum_numeric(batting_rows, "innings")),
-                "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
-            },
+    batting = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_batting"), aliases))
+    bowling = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_bowling"), aliases))
+    batting_scope = filter_peer_scope(batting, seasons, peer_scope)
+    bowling_scope = filter_peer_scope(bowling, seasons, peer_scope)
+    batting_rows = aggregate_peer_batting(batting_scope, seasons)
+    bowling_rows = aggregate_peer_bowling(bowling_scope, seasons)
+    batting_average_overrides = {
+        "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
+        "bat_sr": divide_or_none(
+            sum_numeric(batting_rows, "reliable_runs") * 100,
+            sum_numeric(batting_rows, "reliable_balls"),
         ),
-        "bowling": build_peer_metric_rows(
-            bowling_rows,
-            player_id,
-            [
-                ("Bowling Avg", "bowl_avg", True, "decimal"),
-                ("Bowling SR", "bowl_sr", True, "decimal"),
-                ("Economy Rate", "economy", True, "decimal"),
-                ("Overs per Maiden", "overs_per_maiden", True, "decimal"),
-            ],
-            average_overrides={
-                "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
-                "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
-                "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
-                "overs_per_maiden": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "maidens")),
-            },
-        ),
+        "balls_per_dismissal": divide_or_none(sum_numeric(batting_rows, "reliable_balls"), sum_numeric(batting_rows, "reliable_outs")),
+        "minutes_per_dismissal": divide_or_none(sum_numeric(batting_rows, "reliable_minutes"), sum_numeric(batting_rows, "reliable_outs")),
+        "boundary_rate": divide_or_none(sum_numeric(batting_rows, "boundaries"), sum_numeric(batting_rows, "innings")),
+        "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
     }
+    bowling_average_overrides = {
+        "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
+        "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
+        "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
+        "overs_per_maiden": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "maidens")),
+        "overs_per_extra": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "extras")),
+        "unassisted_wicket_pct": divide_or_none(sum_numeric(bowling_rows, "unassisted_wickets") * 100, sum_numeric(bowling_rows, "wickets")),
+    }
+    batting_metrics = build_peer_metric_rows(
+        batting_rows,
+        player_id,
+        [
+            ("Batting Avg", "bat_avg", False, "decimal"),
+            ("Strike Rate", "bat_sr", False, "decimal"),
+            ("Balls per Dismissal", "balls_per_dismissal", False, "decimal"),
+            ("Minutes per Dismissal", "minutes_per_dismissal", False, "decimal"),
+            ("Boundary Rate", "boundary_rate", False, "decimal"),
+            ("Innings per Duck", "innings_per_duck", False, "decimal"),
+        ],
+        average_overrides=batting_average_overrides,
+    )
+    bowling_metrics = build_peer_metric_rows(
+        bowling_rows,
+        player_id,
+        [
+            ("Bowling Avg", "bowl_avg", True, "decimal"),
+            ("Bowling SR", "bowl_sr", True, "decimal"),
+            ("Economy Rate", "economy", True, "decimal"),
+            ("Overs per Maiden", "overs_per_maiden", True, "decimal"),
+            ("Overs per Extra", "overs_per_extra", False, "decimal"),
+            ("Unassisted Wicket %", "unassisted_wicket_pct", False, "percent"),
+        ],
+        average_overrides=bowling_average_overrides,
+    )
+    export_player_vs_peers_debug(player_id, peer_scope, batting_metrics, bowling_metrics)
+    return {
+        "batting": batting_metrics,
+        "bowling": bowling_metrics,
+    }
+
+
+def player_peer_grade_scope(profile_view: dict[str, pd.DataFrame]) -> tuple[str, ...]:
+    scope = set()
+    for key in ["batting", "bowling", "fielding"]:
+        frame = profile_view.get(key, pd.DataFrame())
+        if frame.empty or "season" not in frame:
+            continue
+        frame = apply_team_grade_display_columns(frame)
+        for _, row in frame.iterrows():
+            season = str(row.get("season", "")).strip()
+            grade = peer_scope_grade_label(row)
+            if season and grade:
+                scope.add(peer_scope_key(season, grade))
+    return tuple(sorted(scope))
+
+
+def peer_scope_grade_label(row: pd.Series) -> str:
+    grade = str(row.get("canonical_grade_label") or "").strip()
+    if grade:
+        return grade
+    display = str(row.get("team_grade_display") or "").strip()
+    if display and display != "—":
+        return display
+    team = str(row.get("canonical_team_label") or row.get("clean_team_name") or "").strip()
+    return team or "Unknown grade"
+
+
+def peer_scope_key(season: object, grade: object) -> str:
+    return f"{str(season).strip()}||{str(grade).strip()}"
+
+
+def filter_peer_scope(frame: pd.DataFrame, seasons: tuple[str, ...], peer_scope: tuple[str, ...]) -> pd.DataFrame:
+    if frame.empty or "season" not in frame:
+        return pd.DataFrame()
+    scoped = frame[frame["season"].astype(str).isin(seasons)].copy()
+    if scoped.empty or not peer_scope:
+        return scoped
+    scoped = apply_team_grade_display_columns(scoped)
+    scoped["_peer_scope_key"] = scoped.apply(lambda row: peer_scope_key(row.get("season", ""), peer_scope_grade_label(row)), axis=1)
+    matched = scoped[scoped["_peer_scope_key"].isin(peer_scope)].drop(columns=["_peer_scope_key"], errors="ignore")
+    # Some older rows can have incomplete grade metadata. In that case we fall back to same-season peers
+    # instead of hiding the section entirely.
+    return matched if not matched.empty else scoped.drop(columns=["_peer_scope_key"], errors="ignore")
 
 
 def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> pd.DataFrame:
@@ -2919,6 +2982,10 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
         reliable = group[group["season"].map(profile_season_sort_key) >= profile_season_sort_key("Winter 2025")].copy()
         reliable_runs = sum_column(reliable, "battingAggregate")
         reliable_balls = sum_column(reliable, "battingBallsFaced")
+        reliable_innings = sum_column(reliable, "battingInnings")
+        reliable_not_outs = sum_column(reliable, "battingNotOuts")
+        reliable_outs = max(0.0, reliable_innings - reliable_not_outs)
+        reliable_minutes = sum_column(reliable, "battingMinutes")
         boundaries = sum_column(group, "battingFours") + sum_column(group, "battingSixes")
         ducks = sum_column(group, "batting0s")
         rows.append(
@@ -2930,8 +2997,12 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
                 "outs": outs,
                 "reliable_runs": reliable_runs,
                 "reliable_balls": reliable_balls,
+                "reliable_outs": reliable_outs,
+                "reliable_minutes": reliable_minutes,
                 "bat_avg": divide_or_none(runs, outs),
                 "bat_sr": divide_or_none(reliable_runs * 100, reliable_balls),
+                "balls_per_dismissal": divide_or_none(reliable_balls, reliable_outs),
+                "minutes_per_dismissal": divide_or_none(reliable_minutes, reliable_outs) if reliable_minutes > 0 else None,
                 "boundaries": boundaries,
                 "boundary_rate": divide_or_none(boundaries, innings),
                 "ducks": ducks,
@@ -2956,6 +3027,8 @@ def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> p
         runs_against = sum_column(group, "bowlingRuns")
         balls = sum_column(group, "bowlingBalls")
         maidens = sum_column(group, "bowlingMaidens")
+        extras = sum_column(group, "bowlingWides") + sum_column(group, "bowlingNoBalls")
+        unassisted_wickets = sum_column(group, "bowlingWicketsUnassisted")
         overs = balls / 6 if balls else 0.0
         rows.append(
             {
@@ -2964,11 +3037,15 @@ def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> p
                 "runs_against": runs_against,
                 "balls": balls,
                 "overs": overs,
+                "extras": extras,
+                "unassisted_wickets": unassisted_wickets,
                 "bowl_avg": divide_or_none(runs_against, wickets),
                 "bowl_sr": divide_or_none(balls, wickets),
                 "economy": divide_or_none(runs_against * 6, balls),
                 "maidens": maidens,
                 "overs_per_maiden": divide_or_none(overs, maidens),
+                "overs_per_extra": divide_or_none(overs, extras),
+                "unassisted_wicket_pct": divide_or_none(unassisted_wickets * 100, wickets),
             }
         )
     return pd.DataFrame(rows)
@@ -2994,7 +3071,6 @@ def build_peer_metric_rows(
         player_value = pd.to_numeric(player_values, errors="coerce").dropna()
         value = float(player_value.iloc[0]) if not player_value.empty else None
         if valid_values.empty:
-            rows.append(empty_peer_metric_row(label, lower_is_better, value_format))
             continue
         minimum = float(valid_values.min())
         maximum = float(valid_values.max())
@@ -3012,6 +3088,7 @@ def build_peer_metric_rows(
                 "maximum": maximum,
                 "lower_is_better": lower_is_better,
                 "format": value_format,
+                "peer_count": int(valid_values.shape[0]),
                 "status": peer_metric_status(value, average, minimum, maximum, lower_is_better),
             }
         )
@@ -3022,6 +3099,36 @@ def sum_numeric(data: pd.DataFrame, column: str) -> float:
     if data.empty or column not in data:
         return 0.0
     return float(pd.to_numeric(data[column], errors="coerce").fillna(0).sum())
+
+
+def export_player_vs_peers_debug(
+    player_id: str,
+    peer_scope: tuple[str, ...],
+    batting_metrics: list[dict[str, object]],
+    bowling_metrics: list[dict[str, object]],
+) -> None:
+    rows = []
+    for category, metrics in [("Batting", batting_metrics), ("Bowling", bowling_metrics)]:
+        for metric in metrics:
+            rows.append(
+                {
+                    "canonical_player_id": player_id,
+                    "peer_grade_scope": " | ".join(peer_scope),
+                    "peer_count": metric.get("peer_count"),
+                    "category": category,
+                    "metric": metric.get("label"),
+                    "player_value": metric.get("value"),
+                    "peer_avg": metric.get("average"),
+                    "peer_min": metric.get("minimum"),
+                    "peer_max": metric.get("maximum"),
+                    "better_direction": "lower" if metric.get("lower_is_better") else "higher",
+                    "comparison_label": metric.get("status"),
+                }
+            )
+    if not rows:
+        return
+    DEBUG_PLAYER_VS_PEERS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(rows).to_csv(DEBUG_PLAYER_VS_PEERS_PATH, index=False)
 
 
 def empty_peer_metric_row(label: str, lower_is_better: bool, value_format: str) -> dict[str, object]:
@@ -3081,6 +3188,8 @@ def format_peer_metric_value(value: object, value_format: str) -> str:
     if value is None or pd.isna(value):
         return "—"
     numeric = float(value)
+    if value_format == "percent":
+        return f"{numeric:.1f}%"
     if value_format == "number":
         return f"{int(round(numeric)):,}"
     return f"{numeric:.2f}"
@@ -3101,6 +3210,8 @@ def peer_metric_note(label: object) -> str:
         "Boundary Rate": "4s + 6s per innings",
         "Innings per Duck": "Higher means fewer ducks",
         "Overs per Maiden": "Lower means maidens are more frequent",
+        "Overs per Extra": "Higher means fewer wides/no-balls",
+        "Unassisted Wicket %": "Share of wickets credited as unassisted",
     }
     return notes.get(str(label), "")
 
@@ -3180,8 +3291,27 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     values = chart_data[["Season", metric]].copy()
                     values[metric] = pd.to_numeric(values[metric], errors="coerce").fillna(0)
                     season_count = values["Season"].nunique()
-                    bar_size = 10 if season_count >= 12 else 14 if season_count >= 8 else 20
-                    label_size = 9 if season_count >= 8 else 10
+                    bar_size = 8 if season_count >= 14 else 10 if season_count >= 10 else 14 if season_count >= 8 else 20
+                    label_size = 8 if season_count >= 14 else 9 if season_count >= 8 else 10
+                    label_kwargs = (
+                        {
+                            "align": "center",
+                            "baseline": "bottom",
+                            "color": "#4f5875",
+                            "dy": -5,
+                            "fontSize": label_size,
+                            "fontWeight": 850,
+                        }
+                        if season_count >= 10
+                        else {
+                            "align": "center",
+                            "baseline": "top",
+                            "color": "#ffffff",
+                            "dy": 5,
+                            "fontSize": label_size,
+                            "fontWeight": 800,
+                        }
+                    )
                     base = (
                         alt.Chart(values)
                         .encode(
@@ -3192,14 +3322,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     )
                     chart = (
                         base.mark_bar(cornerRadiusTopLeft=6, cornerRadiusTopRight=6, color=color, size=bar_size)
-                        + base.mark_text(
-                            align="center",
-                            baseline="top",
-                            color="#ffffff",
-                            dy=5,
-                            fontSize=label_size,
-                            fontWeight=800,
-                        ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
+                        + base.mark_text(**label_kwargs).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
                     ).properties(height=240).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
                     st.altair_chart(chart, use_container_width=True)
     render_player_average_trends(chart_data)
