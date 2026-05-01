@@ -2307,6 +2307,8 @@ def build_player_season_table(
             "Runs Against": sum_column(bowl, "bowlingRuns"),
             "Balls Bowled": sum_column(bowl, "bowlingBalls"),
             "Maidens": sum_column(bowl, "bowlingMaidens"),
+            "Wides": sum_column(bowl, "bowlingWides"),
+            "No Balls": sum_column(bowl, "bowlingNoBalls"),
             "5WI": sum_column(bowl, "bowling5WIs"),
             "Catches": sum_column(field, "fieldingTotalCatches"),
             "Stumpings": sum_column(field, "fieldingStumpings"),
@@ -2364,6 +2366,8 @@ def build_player_grade_table(
             "Runs Against": sum_column(bowl, "bowlingRuns"),
             "Balls Bowled": sum_column(bowl, "bowlingBalls"),
             "Maidens": sum_column(bowl, "bowlingMaidens"),
+            "Wides": sum_column(bowl, "bowlingWides"),
+            "No Balls": sum_column(bowl, "bowlingNoBalls"),
             "5WI": sum_column(bowl, "bowling5WIs"),
             "Catches": sum_column(field, "fieldingTotalCatches"),
             "Stumpings": sum_column(field, "fieldingStumpings"),
@@ -2412,6 +2416,8 @@ def build_player_career_totals(
         "Wickets": sum_numeric_series(season_table["Wickets"]),
         "Runs Against": sum_numeric_series(season_table["Runs Against"]),
         "Balls Bowled": sum_numeric_series(season_table["Balls Bowled"]),
+        "Wides": sum_numeric_series(season_table["Wides"]) if "Wides" in season_table else 0,
+        "No Balls": sum_numeric_series(season_table["No Balls"]) if "No Balls" in season_table else 0,
         "Catches": sum_numeric_series(season_table["Catches"]),
         "Stumpings": sum_numeric_series(season_table["Stumpings"]),
         "Run Outs": sum_numeric_series(season_table["Run Outs"]),
@@ -3390,7 +3396,11 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
         with bowling_tab:
             table = season_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
-            render_profile_season_stat_table(table.rename(columns={"BBI": "BBI"}), ["Season", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"], ["Balls Bowled", "Maidens", "Wickets", "5WI"])
+            render_profile_season_stat_table(
+                table.rename(columns={"BBI": "BBI"}),
+                ["Season", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"],
+                ["Balls Bowled", "Runs Against", "Maidens", "Wickets", "Wides", "No Balls", "5WI"],
+            )
         with fielding_tab:
             columns = ["Season", "Matches", "Catches", "Stumpings", "Run Outs", "Dismissals"]
             render_profile_season_stat_table(season_table, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"])
@@ -3409,7 +3419,12 @@ def render_player_grade_table(grade_table: pd.DataFrame) -> None:
             table = grade_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
             columns = ["Grade", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"]
-            render_profile_group_stat_table(table, columns, ["Balls Bowled", "Maidens", "Wickets", "5WI"], "Grade")
+            render_profile_group_stat_table(
+                table,
+                columns,
+                ["Balls Bowled", "Runs Against", "Maidens", "Wickets", "Wides", "No Balls", "5WI"],
+                "Grade",
+            )
         with fielding_tab:
             columns = ["Grade", "Matches", "Catches", "Stumpings", "Run Outs", "Dismissals"]
             render_profile_group_stat_table(grade_table, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"], "Grade")
@@ -3420,11 +3435,11 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
     if table.empty:
         st.caption("No data available for this view.")
         return
-    activity = pd.Series(False, index=table.index)
+    activity = pd.Series(False, index=season_table.index)
     for column in activity_columns:
-        if column in table:
-            activity = activity | (pd.to_numeric(table[column], errors="coerce").fillna(0) > 0)
-    table = table[activity].copy()
+        if column in season_table:
+            activity = activity | (pd.to_numeric(season_table[column], errors="coerce").fillna(0) > 0)
+    table = table.loc[activity.reindex(table.index, fill_value=False)].copy()
     if table.empty:
         st.caption("No data available for this view.")
         return
@@ -3475,11 +3490,11 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
     if table.empty:
         st.caption("No data available for this view.")
         return
-    activity = pd.Series(False, index=table.index)
+    activity = pd.Series(False, index=group_table.index)
     for column in activity_columns:
-        if column in table:
-            activity = activity | (pd.to_numeric(table[column], errors="coerce").fillna(0) > 0)
-    table = table[activity].copy()
+        if column in group_table:
+            activity = activity | (pd.to_numeric(group_table[column], errors="coerce").fillna(0) > 0)
+    table = table.loc[activity.reindex(table.index, fill_value=False)].copy()
     if table.empty:
         st.caption("No data available for this view.")
         return
@@ -4918,6 +4933,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        previous_min_overs=15,
     )
     for card in [runs_card, wickets_card]:
         if card:
@@ -5050,6 +5066,21 @@ def season_metric_totals(
     return totals
 
 
+def season_bowling_overs_totals(
+    season_id: str,
+    scope: dict[str, object],
+    local_version: float,
+    identity_version: float | None,
+    column_name: str = "overs",
+) -> pd.DataFrame:
+    totals = season_metric_totals("bowling", season_id, scope, "bowlingBalls", local_version, identity_version)
+    if totals.empty:
+        return pd.DataFrame(columns=["player_key", column_name])
+    output = totals[["player_key", "bowlingBalls"]].copy()
+    output[column_name] = pd.to_numeric(output["bowlingBalls"], errors="coerce").fillna(0) / 6
+    return output[["player_key", column_name]]
+
+
 def biggest_improver_for_metric(
     title: str,
     category: str,
@@ -5062,6 +5093,7 @@ def biggest_improver_for_metric(
     previous_matches: pd.DataFrame,
     local_version: float,
     identity_version: float | None,
+    previous_min_overs: float | None = None,
 ) -> dict[str, object] | None:
     current = season_metric_totals(category, current_season_id, scope, value_column, local_version, identity_version)
     previous = season_metric_totals(category, previous_season_id, scope, value_column, local_version, identity_version)
@@ -5073,6 +5105,11 @@ def biggest_improver_for_metric(
     merged["current_matches"] = pd.to_numeric(merged["current_matches"], errors="coerce").fillna(0)
     merged["previous_matches"] = pd.to_numeric(merged["previous_matches"], errors="coerce").fillna(0)
     merged = merged[(merged["current_matches"] >= 8) & (merged["previous_matches"] >= 8)].copy()
+    if previous_min_overs is not None:
+        previous_overs = season_bowling_overs_totals(previous_season_id, scope, local_version, identity_version, "previous_overs")
+        merged = merged.merge(previous_overs, on="player_key", how="left")
+        merged["previous_overs"] = pd.to_numeric(merged["previous_overs"], errors="coerce").fillna(0)
+        merged = merged[merged["previous_overs"] >= previous_min_overs].copy()
     if merged.empty:
         return None
     merged["improvement"] = merged[f"{value_column}_current"] - merged[f"{value_column}_previous"]
@@ -5112,6 +5149,8 @@ def build_biggest_improvers_debug_frame(
     previous_runs = season_metric_totals("batting", previous_season_id, scope, "battingAggregate", local_version, identity_version)
     current_wickets = season_metric_totals("bowling", current_season_id, scope, "bowlingWickets", local_version, identity_version)
     previous_wickets = season_metric_totals("bowling", previous_season_id, scope, "bowlingWickets", local_version, identity_version)
+    current_overs = season_bowling_overs_totals(current_season_id, scope, local_version, identity_version, "current_overs")
+    previous_overs = season_bowling_overs_totals(previous_season_id, scope, local_version, identity_version, "previous_overs")
 
     debug = pd.DataFrame({"player_key": sorted(set().union(
         set(current_matches.get("player_key", pd.Series(dtype=str)).astype(str)),
@@ -5120,6 +5159,8 @@ def build_biggest_improvers_debug_frame(
         set(previous_runs.get("player_key", pd.Series(dtype=str)).astype(str)),
         set(current_wickets.get("player_key", pd.Series(dtype=str)).astype(str)),
         set(previous_wickets.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(current_overs.get("player_key", pd.Series(dtype=str)).astype(str)),
+        set(previous_overs.get("player_key", pd.Series(dtype=str)).astype(str)),
     ))})
     if debug.empty:
         return pd.DataFrame(
@@ -5158,7 +5199,18 @@ def build_biggest_improvers_debug_frame(
         on="player_key",
         how="left",
     )
-    for column in ["current_matches", "previous_matches", "current_runs", "previous_runs", "current_wickets", "previous_wickets"]:
+    debug = debug.merge(current_overs, on="player_key", how="left")
+    debug = debug.merge(previous_overs, on="player_key", how="left")
+    for column in [
+        "current_matches",
+        "previous_matches",
+        "current_runs",
+        "previous_runs",
+        "current_wickets",
+        "previous_wickets",
+        "current_overs",
+        "previous_overs",
+    ]:
         debug[column] = pd.to_numeric(debug.get(column), errors="coerce").fillna(0)
     debug["canonical_player_name"] = (
         debug.get("canonical_player_name", pd.Series(index=debug.index, dtype=object))
@@ -5185,8 +5237,10 @@ def build_biggest_improvers_debug_frame(
     debug["qualifies_wickets"] = (
         (debug["current_matches"] >= 8)
         & (debug["previous_matches"] >= 8)
+        & (debug["previous_overs"] >= 15)
         & (debug["wickets_improvement"] > 0)
     )
+    debug["qualifies_wickets_overs_rule"] = debug["previous_overs"] >= 15
     debug["reason_if_excluded"] = debug.apply(improver_exclusion_reason, axis=1)
     debug.insert(0, "selected_season", current_season.get("name", ""))
     debug.insert(1, "selected_season_type", selected_type)
@@ -5212,10 +5266,13 @@ def build_biggest_improvers_debug_frame(
         "runs_improvement_pct",
         "current_wickets",
         "previous_wickets",
+        "current_overs",
+        "previous_overs",
         "wickets_improvement",
         "wickets_improvement_pct",
         "qualifies_runs",
         "qualifies_wickets",
+        "qualifies_wickets_overs_rule",
         "reason_if_excluded",
     ]
     return debug[columns].sort_values(["qualifies_runs", "qualifies_wickets", "runs_improvement", "wickets_improvement"], ascending=[False, False, False, False])
@@ -5227,6 +5284,8 @@ def improver_exclusion_reason(row: pd.Series) -> str:
         reasons.append("current matches below 8")
     if row["previous_matches"] < 8:
         reasons.append("previous matches below 8")
+    if row.get("previous_overs", 0) < 15 and row.get("wickets_improvement", 0) > 0:
+        reasons.append("wickets excluded: previous season overs below 15")
     if row["runs_improvement"] <= 0 and row["wickets_improvement"] <= 0:
         reasons.append("no positive runs or wickets improvement")
     if not reasons:
@@ -5252,10 +5311,13 @@ def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
         "runs_improvement_pct",
         "current_wickets",
         "previous_wickets",
+        "current_overs",
+        "previous_overs",
         "wickets_improvement",
         "wickets_improvement_pct",
         "qualifies_runs",
         "qualifies_wickets",
+        "qualifies_wickets_overs_rule",
         "reason_if_excluded",
     ]
     debug_frame = debug_frame.copy()
