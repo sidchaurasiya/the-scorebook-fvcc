@@ -34,12 +34,21 @@ GRADE_ORDER = [
     "jika shield",
     "jack quick shield",
     "jack kelly shield",
-    "b grade",
-    "c grade",
-    "d grade",
-    "e grade",
-    "f grade",
+    "b grade john adams shield",
+    "c grade les horne shield",
+    "d grade bob herman shield",
+    "e grade les kemp shield",
+    "f grade syd sault shield",
+    "f grade north dave manion shield",
+    "f grade south harry torrens shield",
+    "f grade central",
     "g grade",
+    "casey radcliffe shield",
+    "dodc casey radcliffe shield",
+    "dodc robert young shield",
+    "north division winter",
+    "north division bhatia shield winter",
+    "north division sunday winter",
 ]
 
 
@@ -75,7 +84,34 @@ def clean_grade_name(value: object) -> str:
     label = strip_leading_association(label)
     label = re.sub(r"^\d+\s*[-–]\s*", "", label).strip()
     label = label.replace("Designated One Day Comp.", "DODC")
-    return normalize_spaces(label)
+    return canonicalize_grade_label(normalize_spaces(label))
+
+
+def canonicalize_grade_label(label: str) -> str:
+    normalized = normalized_name_without_canonical(label)
+    grade_aliases = {
+        "b grade": "B Grade - John Adams Shield",
+        "john adams shield b grade": "B Grade - John Adams Shield",
+        "c grade": "C Grade - Les Horne Shield",
+        "les horne shield c grade": "C Grade - Les Horne Shield",
+        "d grade": "D Grade - Bob Herman Shield",
+        "bob herman shield d grade": "D Grade - Bob Herman Shield",
+        "e grade": "E Grade - Les Kemp Shield",
+        "les kemp shield e grade": "E Grade - Les Kemp Shield",
+        "f grade": "F Grade Central",
+        "syd sault shield f grade": "F Grade - Syd Sault Shield",
+        "f grade north manion shield": "F Grade North - Dave Manion Shield",
+        "f grade south torrens shield": "F Grade South - Harry Torrens Shield",
+        "robert young dodc": "DODC - Robert Young Shield",
+        "robert young designated one day comp": "DODC - Robert Young Shield",
+        "north division": "North Division (Winter)",
+        "north division winter": "North Division (Winter)",
+        "north division bhatia shield": "North Division - Bhatia Shield (Winter)",
+        "north division bhatia shield winter": "North Division - Bhatia Shield (Winter)",
+        "north division sunday": "North Division - SUNDAY (Winter)",
+        "north division sunday winter": "North Division - SUNDAY (Winter)",
+    }
+    return grade_aliases.get(normalized, label)
 
 
 def clean_label(value: object) -> str:
@@ -98,7 +134,7 @@ def remove_duplicate_tail(label: str) -> str:
     parts = [part.strip() for part in label.split(" - ") if part.strip()]
     if len(parts) >= 4:
         half = len(parts) // 2
-        if normalized_name(" - ".join(parts[-half:])) in normalized_name(" - ".join(parts[:-half])):
+        if comparison_key(" - ".join(parts[-half:])) in comparison_key(" - ".join(parts[:-half])):
             return " - ".join(parts[:-half])
     return label
 
@@ -173,7 +209,10 @@ def grade_sort_key(value: object) -> tuple[int, str]:
     label = clean_grade_name(extract_grade_for_sort(value))
     normalized = normalized_name(label)
     for index, grade in enumerate(GRADE_ORDER):
-        if normalized == grade or grade in normalized:
+        if normalized == grade:
+            return (index, label.casefold())
+    for index, grade in enumerate(GRADE_ORDER):
+        if grade in normalized:
             return (index, label.casefold())
     return (len(GRADE_ORDER), label.casefold())
 
@@ -183,7 +222,7 @@ def extract_grade_for_sort(value: object) -> str:
     if not label:
         return ""
     bracket_match = re.search(r"\(([^)]*)\)", label)
-    if bracket_match:
+    if bracket_match and bracket_match.group(1).strip().casefold() != "winter":
         return bracket_match.group(1)
     if re.fullmatch(r"[1-9]s", label.casefold()) or label.casefold() in REAL_TEAM_LABELS:
         return label
@@ -250,7 +289,19 @@ def export_team_grade_display_audit(frames: list[pd.DataFrame], path: Path = AUD
 def normalized_name(value: object) -> str:
     label = clean_label(value)
     label = strip_leading_association(label)
+    label = canonicalize_grade_label(label)
     label = re.sub(r"[^a-z0-9]+", " ", label.casefold())
+    return normalize_spaces(label)
+
+
+def normalized_name_without_canonical(value: object) -> str:
+    label = clean_label(value)
+    label = strip_leading_association(label)
+    return comparison_key(label)
+
+
+def comparison_key(value: object) -> str:
+    label = re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold())
     return normalize_spaces(label)
 
 

@@ -1504,10 +1504,10 @@ def record_meta(row: pd.Series) -> str:
     season = row.get("season")
     if pd.notna(season):
         parts.append(str(season))
-    display = row.get("team_grade_display") or build_team_grade_display(row.get("team_name", ""), row.get("grade_name", ""))
-    if display and display != "—":
-        parts.append(str(display))
-    return " · ".join(parts)
+    grade = row.get("canonical_grade_label") or canonical_grade_label(row.get("team_name", ""), row.get("grade_name", ""))
+    if grade and grade != "—":
+        parts.append(str(grade))
+    return " - ".join(parts)
 
 
 def compact_record_team_label(team_name: object) -> str:
@@ -3901,10 +3901,10 @@ def profile_record_meta(row: pd.Series) -> str:
     season = row.get("season")
     if pd.notna(season):
         parts.append(str(season))
-    display = row.get("team_grade_display") or build_team_grade_display(row.get("team_name", ""), row.get("grade_name", ""))
-    if display and display != "—":
-        parts.append(str(display))
-    return " · ".join(parts)
+    grade = row.get("canonical_grade_label") or canonical_grade_label(row.get("team_name", ""), row.get("grade_name", ""))
+    if grade and grade != "—":
+        parts.append(str(grade))
+    return " - ".join(parts)
 
 
 def career_span_label(seasons: list[str]) -> str:
