@@ -1,9 +1,0 @@
-{
-  "request": {
-    "name": "match_officials",
-    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/48adba9d-7c1b-427d-a16c-fffe2de5f51a/officials?jsconfig=eccn%3Atrue",
-    "status_code": 200,
-    "fetched_at": "2026-05-02T13:17:45.274214+00:00"
-  },
-  "payload": {}
-}
