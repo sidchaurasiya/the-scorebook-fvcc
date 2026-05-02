@@ -2873,6 +2873,12 @@ def get_player_peer_comparison(
     bowling_scope = filter_peer_scope(bowling, seasons, peer_scope)
     batting_rows = aggregate_peer_batting(batting_scope, seasons)
     bowling_rows = aggregate_peer_bowling(bowling_scope, seasons)
+    player_batting_row = batting_rows[batting_rows["canonical_player_id"].astype(str) == player_id] if not batting_rows.empty else pd.DataFrame()
+    player_innings = float(player_batting_row["innings"].iloc[0]) if not player_batting_row.empty and "innings" in player_batting_row else 0.0
+    player_ducks = float(player_batting_row["ducks"].iloc[0]) if not player_batting_row.empty and "ducks" in player_batting_row else 0.0
+    batting_status_overrides: dict[str, str] = {}
+    if player_ducks == 0:
+        batting_status_overrides["innings_per_duck"] = "Better than avg" if player_innings >= 10 else ""
     batting_average_overrides = {
         "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
         "bat_sr": divide_or_none(
@@ -2903,6 +2909,7 @@ def get_player_peer_comparison(
             ("Innings per Duck", "innings_per_duck", False, "decimal"),
         ],
         average_overrides=batting_average_overrides,
+        status_overrides=batting_status_overrides,
     )
     bowling_metrics = build_peer_metric_rows(
         bowling_rows,
@@ -3060,10 +3067,12 @@ def build_peer_metric_rows(
     player_id: str,
     metrics: list[tuple[str, str, bool, str]],
     average_overrides: dict[str, float | None] | None = None,
+    status_overrides: dict[str, str] | None = None,
 ) -> list[dict[str, object]]:
     if data.empty or "canonical_player_id" not in data:
         return []
     average_overrides = average_overrides or {}
+    status_overrides = status_overrides or {}
     rows = []
     for label, column, lower_is_better, value_format in metrics:
         if column not in data:
@@ -3083,6 +3092,9 @@ def build_peer_metric_rows(
             average = float(override_average) if override_average is not None else None
         else:
             average = float(valid_values.mean())
+        status = status_overrides.get(column)
+        if status is None:
+            status = peer_metric_status(value, average, minimum, maximum, lower_is_better)
         rows.append(
             {
                 "label": label,
@@ -3093,7 +3105,7 @@ def build_peer_metric_rows(
                 "lower_is_better": lower_is_better,
                 "format": value_format,
                 "peer_count": int(valid_values.shape[0]),
-                "status": peer_metric_status(value, average, minimum, maximum, lower_is_better),
+                "status": status,
             }
         )
     return rows
@@ -3244,12 +3256,17 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
         metric_note = peer_metric_note(row["label"])
         if metric_note:
             metric_label = f'{metric_label}<span class="peer-metric-note">{html.escape(metric_note)}</span>'
-        status = peer_metric_status(
+        status = str(row.get("status") if row.get("status") is not None else peer_metric_status(
             value,
             average,
             minimum,
             maximum,
             bool(row.get("lower_is_better")),
+        ))
+        status_html = (
+            f'<strong class="peer-status {peer_status_class(status)}">{html.escape(status)}</strong>'
+            if status
+            else ""
         )
         row_html.append(
             '<div class="peer-row">'
@@ -3259,7 +3276,7 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
             "</div>"
             '<div class="peer-row-meta">'
             f'<span>Peer avg. {html.escape(format_peer_metric_value(average, str(row["format"])))}</span>'
-            f'<strong class="peer-status {peer_status_class(status)}">{html.escape(status)}</strong>'
+            f"{status_html}"
             "</div>"
             '<div class="peer-range">'
             f"{average_marker}{player_marker}"
@@ -4868,6 +4885,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
     previous = previous_season_for(current_season)
     selected_type = season_type_label(current_season.get("name"))
     comparison_type = improver_comparison_type(selected_type)
+    min_matches_required = improver_min_matches_required(selected_type)
     if not previous:
         export_biggest_improvers_debug(
             pd.DataFrame(
@@ -4905,6 +4923,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        min_matches_required,
     )
     export_biggest_improvers_debug(debug_frame)
     cards: list[dict[str, object]] = []
@@ -4920,6 +4939,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        min_matches_required,
     )
     wickets_card = biggest_improver_for_metric(
         "Biggest Wickets Improvement",
@@ -4933,6 +4953,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        min_matches_required,
         previous_min_overs=15,
     )
     for card in [runs_card, wickets_card]:
@@ -4964,6 +4985,10 @@ def season_type_label(season_name: object) -> str:
 def improver_comparison_type(season_type: str) -> str:
     normalized = season_type.casefold()
     return f"{normalized}_to_previous_{normalized}"
+
+
+def improver_min_matches_required(season_type: object) -> int:
+    return 5 if str(season_type or "").casefold() == "winter" else 8
 
 
 def season_sort_from_record(season: dict[str, object]) -> int:
@@ -5093,6 +5118,7 @@ def biggest_improver_for_metric(
     previous_matches: pd.DataFrame,
     local_version: float,
     identity_version: float | None,
+    min_matches_required: int,
     previous_min_overs: float | None = None,
 ) -> dict[str, object] | None:
     current = season_metric_totals(category, current_season_id, scope, value_column, local_version, identity_version)
@@ -5104,7 +5130,10 @@ def biggest_improver_for_metric(
     merged = merged.merge(previous_matches.rename(columns={"matches": "previous_matches"}), on="player_key", how="left")
     merged["current_matches"] = pd.to_numeric(merged["current_matches"], errors="coerce").fillna(0)
     merged["previous_matches"] = pd.to_numeric(merged["previous_matches"], errors="coerce").fillna(0)
-    merged = merged[(merged["current_matches"] >= 8) & (merged["previous_matches"] >= 8)].copy()
+    merged = merged[
+        (merged["current_matches"] >= min_matches_required)
+        & (merged["previous_matches"] >= min_matches_required)
+    ].copy()
     if previous_min_overs is not None:
         previous_overs = season_bowling_overs_totals(previous_season_id, scope, local_version, identity_version, "previous_overs")
         merged = merged.merge(previous_overs, on="player_key", how="left")
@@ -5141,6 +5170,7 @@ def build_biggest_improvers_debug_frame(
     previous_matches: pd.DataFrame,
     local_version: float,
     identity_version: float | None,
+    min_matches_required: int,
 ) -> pd.DataFrame:
     selected_type = season_type_label(current_season.get("name"))
     previous_same_type = previous_season.get("name", "")
@@ -5172,6 +5202,7 @@ def build_biggest_improvers_debug_frame(
                     "previous_same_type_season": previous_same_type,
                     "comparison_type": comparison_type,
                     "selected_scope": scope.get("label", ""),
+                    "min_matches_required": min_matches_required,
                     "reason_if_excluded": "No player rows found in current or previous scope",
                 }
             ]
@@ -5229,14 +5260,17 @@ def build_biggest_improvers_debug_frame(
         lambda row: None if row["previous_wickets"] <= 0 else row["wickets_improvement"] / row["previous_wickets"] * 100,
         axis=1,
     )
+    debug["min_matches_required"] = min_matches_required
+    debug["qualifies_matches_rule"] = (
+        (debug["current_matches"] >= min_matches_required)
+        & (debug["previous_matches"] >= min_matches_required)
+    )
     debug["qualifies_runs"] = (
-        (debug["current_matches"] >= 8)
-        & (debug["previous_matches"] >= 8)
+        debug["qualifies_matches_rule"]
         & (debug["runs_improvement"] > 0)
     )
     debug["qualifies_wickets"] = (
-        (debug["current_matches"] >= 8)
-        & (debug["previous_matches"] >= 8)
+        debug["qualifies_matches_rule"]
         & (debug["previous_overs"] >= 15)
         & (debug["wickets_improvement"] > 0)
     )
@@ -5258,6 +5292,7 @@ def build_biggest_improvers_debug_frame(
         "selected_scope",
         "canonical_player_id",
         "canonical_player_name",
+        "min_matches_required",
         "current_matches",
         "previous_matches",
         "current_runs",
@@ -5270,6 +5305,7 @@ def build_biggest_improvers_debug_frame(
         "previous_overs",
         "wickets_improvement",
         "wickets_improvement_pct",
+        "qualifies_matches_rule",
         "qualifies_runs",
         "qualifies_wickets",
         "qualifies_wickets_overs_rule",
@@ -5280,10 +5316,11 @@ def build_biggest_improvers_debug_frame(
 
 def improver_exclusion_reason(row: pd.Series) -> str:
     reasons = []
-    if row["current_matches"] < 8:
-        reasons.append("current matches below 8")
-    if row["previous_matches"] < 8:
-        reasons.append("previous matches below 8")
+    min_matches = int(row.get("min_matches_required", 8) or 8)
+    if row["current_matches"] < min_matches:
+        reasons.append(f"current matches below {min_matches}")
+    if row["previous_matches"] < min_matches:
+        reasons.append(f"previous matches below {min_matches}")
     if row.get("previous_overs", 0) < 15 and row.get("wickets_improvement", 0) > 0:
         reasons.append("wickets excluded: previous season overs below 15")
     if row["runs_improvement"] <= 0 and row["wickets_improvement"] <= 0:
@@ -5303,6 +5340,7 @@ def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
         "selected_scope",
         "canonical_player_id",
         "canonical_player_name",
+        "min_matches_required",
         "current_matches",
         "previous_matches",
         "current_runs",
@@ -5315,6 +5353,7 @@ def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
         "previous_overs",
         "wickets_improvement",
         "wickets_improvement_pct",
+        "qualifies_matches_rule",
         "qualifies_runs",
         "qualifies_wickets",
         "qualifies_wickets_overs_rule",
