@@ -263,6 +263,67 @@ For the three innings that have ball events, validation passed for:
 
 Recommendation: a one-team pilot backfill is safe as the next discovery step, provided it stays narrow and resumable. The pilot should first collect team match lists and scorecards, request `/balls` only when `isBallByBall` is true, preserve source innings IDs, and write validation warnings instead of failing or inventing missing ball rows.
 
+## Match Centre Data Strategy
+
+The match-centre layer should be scorecard-first. Scorecard data should be collected for every completed public FVCC match because it is the base record for match metadata, teams, innings, batting, bowling, fielding, extras, result, grade, round, venue, and officials. Ball-by-ball should be treated as an optional enrichment layer and requested only when the scorecard indicates `isBallByBall` is true.
+
+The offline match-centre sample parser writes isolated pilot outputs to `data/processed/match_centre_sample/` and does not affect the Streamlit app or the current aggregate refresh pipeline.
+
+Recommended processed table structure:
+
+| Table | Grain | Source |
+| --- | --- | --- |
+| `all_matches.csv` | One row per match | Scorecard metadata and manifest. |
+| `all_match_innings.csv` | One row per scorecard innings | Scorecard innings. |
+| `all_scorecard_batting.csv` | One row per batter innings | Scorecard batting, optionally enriched from matching wicket ball events. |
+| `all_scorecard_bowling.csv` | One row per bowler innings | Scorecard bowling. |
+| `all_scorecard_fielding.csv` | One row per fielder innings/stat | Scorecard fielding. |
+| `all_fall_of_wickets.csv` | One row per fall of wicket | Scorecard fall-of-wickets when populated. |
+| `all_match_officials.csv` | One row per official | Officials endpoint. |
+| `all_ball_by_ball.csv` | One row per ball/score event | Ball endpoint only where available. |
+| `all_overs.csv` | One row per over | Derived from ball events only. |
+| `all_partnerships.csv` | One row per partnership | Prefer ball events; fall back to fall-of-wickets when ball events are unavailable. |
+| `validation_report.csv` | One row per validation check | Derived parser checks. |
+
+Scorecard-only analytics unlocked:
+
+- Match results, venue/grade/round history, opponent history, team scorecards, innings totals, batting scorecards, bowling figures, fielding dismissals, officials, and scorecard-derived partnerships where fall-of-wickets is present.
+
+Ball-by-ball-only analytics unlocked:
+
+- Over-by-over run rates, worm and Manhattan charts, legal/dot ball tracking, boundary/wicket timelines, bowler spell shapes, batter strike rotation, pressure phases, and ball-event partnerships.
+
+Validation approach:
+
+- Keep validation warning-based, not failure-based.
+- Compare scorecard innings runs against batting plus extras.
+- Compare scorecard wickets against dismissed batting rows.
+- Compare scorecard bowling wickets against bowler-credited dismissals where possible.
+- Compare scorecard innings totals against final ball-event progress totals where ball data exists.
+- Flag scorecard innings missing from ball data and ball innings missing from scorecard data.
+- Flag missing player/source IDs, missing dismissal fields, and missing venue/team/grade metadata.
+
+Sample match-centre parser findings:
+
+- `all_matches.csv`: 1 row
+- `all_match_innings.csv`: 4 rows
+- `all_scorecard_batting.csv`: 33 rows
+- `all_scorecard_bowling.csv`: 25 rows
+- `all_scorecard_fielding.csv`: 10 rows
+- `all_fall_of_wickets.csv`: 0 rows in this sample
+- `all_match_officials.csv`: 1 row
+- `all_ball_by_ball.csv`: 979 rows
+- `all_overs.csv`: 160 rows
+- `all_partnerships.csv`: 26 rows
+- `validation_report.csv`: 26 rows, with 24 passes and 2 warnings
+
+The two warnings are useful raw-data signals rather than blockers:
+
+- One Preston Baseballers innings has scorecard total 194 but batting plus extras total 184 in the raw scorecard fields.
+- The scorecard includes a fourth zero-run innings for Preston Baseballers that has no ball-event innings.
+
+Recommendation for the next controlled pilot: backfill one recent FVCC team and season only. Pull match lists first, collect scorecards for completed matches, collect officials, and request ball events only for scorecards where `isBallByBall` is true. Keep outputs isolated from the aggregate app pipeline until validation rates and storage size are reviewed.
+
 ## Recommended Raw File Structure
 
 Use one folder per sample/bulk refresh scope so match-level files stay reviewable and replayable:

@@ -1,0 +1,27 @@
+check_name,match_id,innings_id,entity_id,status,severity,expected_value,actual_value,detail
+missing_venue_fields,53f979f1-6039-42bc-82dd-0ff36d0d7169,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,53f979f1-6039-42bc-82dd-0ff36d0d7169,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,53f979f1-6039-42bc-82dd-0ff36d0d7169,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,53f979f1-6039-42bc-82dd-0ff36d0d7169,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,53f979f1-6039-42bc-82dd-0ff36d0d7169,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,,pass,info,192,192,Values match.
+scorecard_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,,pass,info,10,10,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,,pass,info,9,9,Values match.
+scorecard_innings_total_vs_ball_progress_runs,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,,pass,info,192,192,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,,warning,warning,194,184,Values differ or are missing; inspect raw source.
+scorecard_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,,pass,info,5,5,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,,pass,info,4,4,Values match.
+scorecard_innings_total_vs_ball_progress_runs,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,,pass,info,194,194,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,,pass,info,223,223,Values match.
+scorecard_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,,pass,info,9,9,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,,pass,info,223,223,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,53f979f1-6039-42bc-82dd-0ff36d0d7169,d9fb0db1-a76b-4399-aec2-16591b942575,,pass,info,0,0,Values match.
+scorecard_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,d9fb0db1-a76b-4399-aec2-16591b942575,,pass,info,0,0,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,53f979f1-6039-42bc-82dd-0ff36d0d7169,d9fb0db1-a76b-4399-aec2-16591b942575,,pass,info,0,0,Values match.
+scorecard_innings_missing_from_ball_by_ball,53f979f1-6039-42bc-82dd-0ff36d0d7169,d9fb0db1-a76b-4399-aec2-16591b942575,,warning,warning,present,missing,Scorecard innings has no ball-event innings. Keep scorecard data and do not invent balls.
+missing_player_or_source_ids_scorecard_batting,53f979f1-6039-42bc-82dd-0ff36d0d7169,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,53f979f1-6039-42bc-82dd-0ff36d0d7169,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,53f979f1-6039-42bc-82dd-0ff36d0d7169,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,53f979f1-6039-42bc-82dd-0ff36d0d7169,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,53f979f1-6039-42bc-82dd-0ff36d0d7169,,dismissal_text,pass,info,0,0,Values match.
