@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:00:10.026878+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Tausif Ahmed",
+        "shortName": "T Ahmed",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

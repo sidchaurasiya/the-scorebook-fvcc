@@ -1,0 +1,2 @@
+season_id,team_id,total_matches_found,completed_matches,scorecards_fetched,matches_with_ball_by_ball,matches_without_ball_by_ball,total_batting_rows,total_bowling_rows,total_fielding_rows,total_ball_events,validation_pass_count,validation_warning_count,validation_error_count,raw_data_size_mb
+6169f605-4b96-4f21-87c5-0862f914624f,b0d2ee4c-be8f-4a75-b138-0740a52970c6,9,9,9,9,0,209,133,54,3616,154,8,0,4.172

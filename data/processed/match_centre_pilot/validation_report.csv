@@ -1,0 +1,163 @@
+check_name,match_id,innings_id,entity_id,status,severity,expected_value,actual_value,detail
+missing_venue_fields,05665f84-65b6-4604-a11e-759276140c32,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,05665f84-65b6-4604-a11e-759276140c32,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,05665f84-65b6-4604-a11e-759276140c32,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,05665f84-65b6-4604-a11e-759276140c32,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,05665f84-65b6-4604-a11e-759276140c32,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,05665f84-65b6-4604-a11e-759276140c32,a4b57661-6c81-4285-ba6b-3743db36f54a,,pass,info,96,96,match_id=05665f84-65b6-4604-a11e-759276140c32; innings_id=a4b57661-6c81-4285-ba6b-3743db36f54a; innings_name=1st Innings - LTUCC  Eagles; scorecard_runs_scored=96; sum_batter_runs=88; scorecard_total_extras=8; sum_batter_runs_plus_extras=96; difference=0
+scorecard_wickets_vs_batting_dismissals,05665f84-65b6-4604-a11e-759276140c32,a4b57661-6c81-4285-ba6b-3743db36f54a,,pass,info,6,6,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,05665f84-65b6-4604-a11e-759276140c32,a4b57661-6c81-4285-ba6b-3743db36f54a,,pass,info,6,6,Values match.
+scorecard_innings_total_vs_ball_progress_runs,05665f84-65b6-4604-a11e-759276140c32,a4b57661-6c81-4285-ba6b-3743db36f54a,,pass,info,96,96,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,05665f84-65b6-4604-a11e-759276140c32,1a82d3c4-ffa7-4aeb-aba6-7b103a7187aa,,pass,info,97,97,match_id=05665f84-65b6-4604-a11e-759276140c32; innings_id=1a82d3c4-ffa7-4aeb-aba6-7b103a7187aa; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=97; sum_batter_runs=87; scorecard_total_extras=10; sum_batter_runs_plus_extras=97; difference=0
+scorecard_wickets_vs_batting_dismissals,05665f84-65b6-4604-a11e-759276140c32,1a82d3c4-ffa7-4aeb-aba6-7b103a7187aa,,pass,info,6,6,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,05665f84-65b6-4604-a11e-759276140c32,1a82d3c4-ffa7-4aeb-aba6-7b103a7187aa,,pass,info,6,6,Values match.
+scorecard_innings_total_vs_ball_progress_runs,05665f84-65b6-4604-a11e-759276140c32,1a82d3c4-ffa7-4aeb-aba6-7b103a7187aa,,pass,info,97,97,Values match.
+missing_player_or_source_ids_scorecard_batting,05665f84-65b6-4604-a11e-759276140c32,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,05665f84-65b6-4604-a11e-759276140c32,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,05665f84-65b6-4604-a11e-759276140c32,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,05665f84-65b6-4604-a11e-759276140c32,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,05665f84-65b6-4604-a11e-759276140c32,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,2c40c9b2-40eb-4b37-becf-5c817751a1d6,3ddafb8e-d933-47e2-87f3-eaacf66ef6db,,pass,info,221,221,match_id=2c40c9b2-40eb-4b37-becf-5c817751a1d6; innings_id=3ddafb8e-d933-47e2-87f3-eaacf66ef6db; innings_name=1st Innings - Darebin Chargers Red; scorecard_runs_scored=221; sum_batter_runs=208; scorecard_total_extras=13; sum_batter_runs_plus_extras=221; difference=0
+scorecard_wickets_vs_batting_dismissals,2c40c9b2-40eb-4b37-becf-5c817751a1d6,3ddafb8e-d933-47e2-87f3-eaacf66ef6db,,pass,info,8,8,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,2c40c9b2-40eb-4b37-becf-5c817751a1d6,3ddafb8e-d933-47e2-87f3-eaacf66ef6db,,pass,info,4,4,Values match.
+scorecard_innings_total_vs_ball_progress_runs,2c40c9b2-40eb-4b37-becf-5c817751a1d6,3ddafb8e-d933-47e2-87f3-eaacf66ef6db,,pass,info,221,221,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,2c40c9b2-40eb-4b37-becf-5c817751a1d6,1d8a7aee-77d7-422d-8a73-4897780b5d8f,,pass,info,192,192,match_id=2c40c9b2-40eb-4b37-becf-5c817751a1d6; innings_id=1d8a7aee-77d7-422d-8a73-4897780b5d8f; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=192; sum_batter_runs=179; scorecard_total_extras=13; sum_batter_runs_plus_extras=192; difference=0
+scorecard_wickets_vs_batting_dismissals,2c40c9b2-40eb-4b37-becf-5c817751a1d6,1d8a7aee-77d7-422d-8a73-4897780b5d8f,,warning,warning,8,9,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,2c40c9b2-40eb-4b37-becf-5c817751a1d6,1d8a7aee-77d7-422d-8a73-4897780b5d8f,,pass,info,4,4,Values match.
+scorecard_innings_total_vs_ball_progress_runs,2c40c9b2-40eb-4b37-becf-5c817751a1d6,1d8a7aee-77d7-422d-8a73-4897780b5d8f,,pass,info,192,192,Values match.
+missing_player_or_source_ids_scorecard_batting,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,2c40c9b2-40eb-4b37-becf-5c817751a1d6,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,4db01962-99f7-4b10-a382-6f8f3623144b,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,4db01962-99f7-4b10-a382-6f8f3623144b,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,4db01962-99f7-4b10-a382-6f8f3623144b,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,4db01962-99f7-4b10-a382-6f8f3623144b,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,4db01962-99f7-4b10-a382-6f8f3623144b,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,4db01962-99f7-4b10-a382-6f8f3623144b,48a93c0e-26d3-4306-8718-1def7b60b80c,,pass,info,232,232,match_id=4db01962-99f7-4b10-a382-6f8f3623144b; innings_id=48a93c0e-26d3-4306-8718-1def7b60b80c; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=232; sum_batter_runs=184; scorecard_total_extras=48; sum_batter_runs_plus_extras=232; difference=0
+scorecard_wickets_vs_batting_dismissals,4db01962-99f7-4b10-a382-6f8f3623144b,48a93c0e-26d3-4306-8718-1def7b60b80c,,warning,warning,8,9,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,4db01962-99f7-4b10-a382-6f8f3623144b,48a93c0e-26d3-4306-8718-1def7b60b80c,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,4db01962-99f7-4b10-a382-6f8f3623144b,48a93c0e-26d3-4306-8718-1def7b60b80c,,pass,info,232,232,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,4db01962-99f7-4b10-a382-6f8f3623144b,2964b5eb-7871-479c-89fb-1d707f4b0eb5,,pass,info,124,124,match_id=4db01962-99f7-4b10-a382-6f8f3623144b; innings_id=2964b5eb-7871-479c-89fb-1d707f4b0eb5; innings_name=1st Innings - Jafari SC; scorecard_runs_scored=124; sum_batter_runs=118; scorecard_total_extras=6; sum_batter_runs_plus_extras=124; difference=0
+scorecard_wickets_vs_batting_dismissals,4db01962-99f7-4b10-a382-6f8f3623144b,2964b5eb-7871-479c-89fb-1d707f4b0eb5,,pass,info,10,10,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,4db01962-99f7-4b10-a382-6f8f3623144b,2964b5eb-7871-479c-89fb-1d707f4b0eb5,,pass,info,10,10,Values match.
+scorecard_innings_total_vs_ball_progress_runs,4db01962-99f7-4b10-a382-6f8f3623144b,2964b5eb-7871-479c-89fb-1d707f4b0eb5,,pass,info,124,124,Values match.
+missing_player_or_source_ids_scorecard_batting,4db01962-99f7-4b10-a382-6f8f3623144b,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,4db01962-99f7-4b10-a382-6f8f3623144b,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,4db01962-99f7-4b10-a382-6f8f3623144b,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,4db01962-99f7-4b10-a382-6f8f3623144b,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,4db01962-99f7-4b10-a382-6f8f3623144b,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,4e5fbe6d-325e-4a21-9982-f080f8605615,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,4e5fbe6d-325e-4a21-9982-f080f8605615,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,4e5fbe6d-325e-4a21-9982-f080f8605615,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,4e5fbe6d-325e-4a21-9982-f080f8605615,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,4e5fbe6d-325e-4a21-9982-f080f8605615,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,4e5fbe6d-325e-4a21-9982-f080f8605615,d51bc980-b18b-4ef9-9be4-0546a6b24c4b,,pass,info,205,205,match_id=4e5fbe6d-325e-4a21-9982-f080f8605615; innings_id=d51bc980-b18b-4ef9-9be4-0546a6b24c4b; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=205; sum_batter_runs=178; scorecard_total_extras=27; sum_batter_runs_plus_extras=205; difference=0
+scorecard_wickets_vs_batting_dismissals,4e5fbe6d-325e-4a21-9982-f080f8605615,d51bc980-b18b-4ef9-9be4-0546a6b24c4b,,pass,info,8,8,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,4e5fbe6d-325e-4a21-9982-f080f8605615,d51bc980-b18b-4ef9-9be4-0546a6b24c4b,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,4e5fbe6d-325e-4a21-9982-f080f8605615,d51bc980-b18b-4ef9-9be4-0546a6b24c4b,,pass,info,205,205,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,4e5fbe6d-325e-4a21-9982-f080f8605615,4210509d-61eb-4b04-ab9f-88e9f8c7713a,,pass,info,130,130,match_id=4e5fbe6d-325e-4a21-9982-f080f8605615; innings_id=4210509d-61eb-4b04-ab9f-88e9f8c7713a; innings_name=1st Innings - Reservoir Cobras; scorecard_runs_scored=130; sum_batter_runs=106; scorecard_total_extras=24; sum_batter_runs_plus_extras=130; difference=0
+scorecard_wickets_vs_batting_dismissals,4e5fbe6d-325e-4a21-9982-f080f8605615,4210509d-61eb-4b04-ab9f-88e9f8c7713a,,pass,info,10,10,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,4e5fbe6d-325e-4a21-9982-f080f8605615,4210509d-61eb-4b04-ab9f-88e9f8c7713a,,pass,info,10,10,Values match.
+scorecard_innings_total_vs_ball_progress_runs,4e5fbe6d-325e-4a21-9982-f080f8605615,4210509d-61eb-4b04-ab9f-88e9f8c7713a,,pass,info,130,130,Values match.
+missing_player_or_source_ids_scorecard_batting,4e5fbe6d-325e-4a21-9982-f080f8605615,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,4e5fbe6d-325e-4a21-9982-f080f8605615,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,4e5fbe6d-325e-4a21-9982-f080f8605615,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,4e5fbe6d-325e-4a21-9982-f080f8605615,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,4e5fbe6d-325e-4a21-9982-f080f8605615,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,6835479c-f9e6-4975-aded-a3ee099f5f96,,pass,info,243,243,match_id=5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c; innings_id=6835479c-f9e6-4975-aded-a3ee099f5f96; innings_name=1st Innings - Wollert Warriors Senior Men A; scorecard_runs_scored=243; sum_batter_runs=232; scorecard_total_extras=11; sum_batter_runs_plus_extras=243; difference=0
+scorecard_wickets_vs_batting_dismissals,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,6835479c-f9e6-4975-aded-a3ee099f5f96,,pass,info,8,8,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,6835479c-f9e6-4975-aded-a3ee099f5f96,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,6835479c-f9e6-4975-aded-a3ee099f5f96,,pass,info,243,243,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,ef4823cf-6018-4a8c-b870-429ffea3e9c3,,pass,info,183,183,match_id=5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c; innings_id=ef4823cf-6018-4a8c-b870-429ffea3e9c3; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=183; sum_batter_runs=171; scorecard_total_extras=12; sum_batter_runs_plus_extras=183; difference=0
+scorecard_wickets_vs_batting_dismissals,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,ef4823cf-6018-4a8c-b870-429ffea3e9c3,,pass,info,9,9,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,ef4823cf-6018-4a8c-b870-429ffea3e9c3,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,ef4823cf-6018-4a8c-b870-429ffea3e9c3,,pass,info,183,183,Values match.
+missing_player_or_source_ids_scorecard_batting,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,6905f946-64a0-4f33-85e0-0d720095fac6,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,6905f946-64a0-4f33-85e0-0d720095fac6,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,6905f946-64a0-4f33-85e0-0d720095fac6,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,6905f946-64a0-4f33-85e0-0d720095fac6,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,6905f946-64a0-4f33-85e0-0d720095fac6,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,6905f946-64a0-4f33-85e0-0d720095fac6,8ceac9bf-6603-4850-a247-e8380b40be39,,pass,info,267,267,match_id=6905f946-64a0-4f33-85e0-0d720095fac6; innings_id=8ceac9bf-6603-4850-a247-e8380b40be39; innings_name=1st Innings - Brunswick; scorecard_runs_scored=267; sum_batter_runs=246; scorecard_total_extras=21; sum_batter_runs_plus_extras=267; difference=0
+scorecard_wickets_vs_batting_dismissals,6905f946-64a0-4f33-85e0-0d720095fac6,8ceac9bf-6603-4850-a247-e8380b40be39,,warning,warning,8,9,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,6905f946-64a0-4f33-85e0-0d720095fac6,8ceac9bf-6603-4850-a247-e8380b40be39,,pass,info,6,6,Values match.
+scorecard_innings_total_vs_ball_progress_runs,6905f946-64a0-4f33-85e0-0d720095fac6,8ceac9bf-6603-4850-a247-e8380b40be39,,pass,info,267,267,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,6905f946-64a0-4f33-85e0-0d720095fac6,6bec5629-7268-4f33-8cea-e4755c5623f5,,pass,info,239,239,match_id=6905f946-64a0-4f33-85e0-0d720095fac6; innings_id=6bec5629-7268-4f33-8cea-e4755c5623f5; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=239; sum_batter_runs=213; scorecard_total_extras=26; sum_batter_runs_plus_extras=239; difference=0
+scorecard_wickets_vs_batting_dismissals,6905f946-64a0-4f33-85e0-0d720095fac6,6bec5629-7268-4f33-8cea-e4755c5623f5,,warning,warning,5,8,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,6905f946-64a0-4f33-85e0-0d720095fac6,6bec5629-7268-4f33-8cea-e4755c5623f5,,pass,info,5,5,Values match.
+scorecard_innings_total_vs_ball_progress_runs,6905f946-64a0-4f33-85e0-0d720095fac6,6bec5629-7268-4f33-8cea-e4755c5623f5,,pass,info,239,239,Values match.
+missing_player_or_source_ids_scorecard_batting,6905f946-64a0-4f33-85e0-0d720095fac6,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,6905f946-64a0-4f33-85e0-0d720095fac6,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,6905f946-64a0-4f33-85e0-0d720095fac6,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,6905f946-64a0-4f33-85e0-0d720095fac6,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,6905f946-64a0-4f33-85e0-0d720095fac6,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,8918a26c-cd36-4671-93a6-6aeac6a57e98,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,8918a26c-cd36-4671-93a6-6aeac6a57e98,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,8918a26c-cd36-4671-93a6-6aeac6a57e98,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,8918a26c-cd36-4671-93a6-6aeac6a57e98,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,8918a26c-cd36-4671-93a6-6aeac6a57e98,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,8918a26c-cd36-4671-93a6-6aeac6a57e98,412ab85a-c603-4648-8a31-6d1ec7fdaaed,,pass,info,191,191,match_id=8918a26c-cd36-4671-93a6-6aeac6a57e98; innings_id=412ab85a-c603-4648-8a31-6d1ec7fdaaed; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=191; sum_batter_runs=179; scorecard_total_extras=12; sum_batter_runs_plus_extras=191; difference=0
+scorecard_wickets_vs_batting_dismissals,8918a26c-cd36-4671-93a6-6aeac6a57e98,412ab85a-c603-4648-8a31-6d1ec7fdaaed,,warning,warning,9,10,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,8918a26c-cd36-4671-93a6-6aeac6a57e98,412ab85a-c603-4648-8a31-6d1ec7fdaaed,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,8918a26c-cd36-4671-93a6-6aeac6a57e98,412ab85a-c603-4648-8a31-6d1ec7fdaaed,,pass,info,191,191,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,8918a26c-cd36-4671-93a6-6aeac6a57e98,f4a84464-aee0-4222-b8c8-4d020a583487,,pass,info,194,194,match_id=8918a26c-cd36-4671-93a6-6aeac6a57e98; innings_id=f4a84464-aee0-4222-b8c8-4d020a583487; innings_name=1st Innings - Reservoir Cobras; scorecard_runs_scored=194; sum_batter_runs=165; scorecard_total_extras=29; sum_batter_runs_plus_extras=194; difference=0
+scorecard_wickets_vs_batting_dismissals,8918a26c-cd36-4671-93a6-6aeac6a57e98,f4a84464-aee0-4222-b8c8-4d020a583487,,warning,warning,6,7,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,8918a26c-cd36-4671-93a6-6aeac6a57e98,f4a84464-aee0-4222-b8c8-4d020a583487,,pass,info,5,5,Values match.
+scorecard_innings_total_vs_ball_progress_runs,8918a26c-cd36-4671-93a6-6aeac6a57e98,f4a84464-aee0-4222-b8c8-4d020a583487,,pass,info,194,194,Values match.
+missing_player_or_source_ids_scorecard_batting,8918a26c-cd36-4671-93a6-6aeac6a57e98,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,8918a26c-cd36-4671-93a6-6aeac6a57e98,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,8918a26c-cd36-4671-93a6-6aeac6a57e98,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,8918a26c-cd36-4671-93a6-6aeac6a57e98,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,8918a26c-cd36-4671-93a6-6aeac6a57e98,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,f8533234-6cba-4fd6-88c1-46eb86d908c4,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,f8533234-6cba-4fd6-88c1-46eb86d908c4,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,f8533234-6cba-4fd6-88c1-46eb86d908c4,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,f8533234-6cba-4fd6-88c1-46eb86d908c4,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,f8533234-6cba-4fd6-88c1-46eb86d908c4,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,f8533234-6cba-4fd6-88c1-46eb86d908c4,0750d87b-13aa-43ce-b499-1dc87f78a480,,pass,info,193,193,match_id=f8533234-6cba-4fd6-88c1-46eb86d908c4; innings_id=0750d87b-13aa-43ce-b499-1dc87f78a480; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=193; sum_batter_runs=166; scorecard_total_extras=27; sum_batter_runs_plus_extras=193; difference=0
+scorecard_wickets_vs_batting_dismissals,f8533234-6cba-4fd6-88c1-46eb86d908c4,0750d87b-13aa-43ce-b499-1dc87f78a480,,warning,warning,8,9,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,f8533234-6cba-4fd6-88c1-46eb86d908c4,0750d87b-13aa-43ce-b499-1dc87f78a480,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,f8533234-6cba-4fd6-88c1-46eb86d908c4,0750d87b-13aa-43ce-b499-1dc87f78a480,,pass,info,193,193,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,f8533234-6cba-4fd6-88c1-46eb86d908c4,2bdb0b9e-7951-411d-9098-1579ee16f47e,,pass,info,195,195,match_id=f8533234-6cba-4fd6-88c1-46eb86d908c4; innings_id=2bdb0b9e-7951-411d-9098-1579ee16f47e; innings_name=1st Innings - Mavericks Senior Men; scorecard_runs_scored=195; sum_batter_runs=181; scorecard_total_extras=14; sum_batter_runs_plus_extras=195; difference=0
+scorecard_wickets_vs_batting_dismissals,f8533234-6cba-4fd6-88c1-46eb86d908c4,2bdb0b9e-7951-411d-9098-1579ee16f47e,,warning,warning,7,8,Values differ or are missing; inspect raw source.
+scorecard_bowling_wickets_vs_batting_dismissals,f8533234-6cba-4fd6-88c1-46eb86d908c4,2bdb0b9e-7951-411d-9098-1579ee16f47e,,pass,info,7,7,Values match.
+scorecard_innings_total_vs_ball_progress_runs,f8533234-6cba-4fd6-88c1-46eb86d908c4,2bdb0b9e-7951-411d-9098-1579ee16f47e,,pass,info,195,195,Values match.
+missing_player_or_source_ids_scorecard_batting,f8533234-6cba-4fd6-88c1-46eb86d908c4,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,f8533234-6cba-4fd6-88c1-46eb86d908c4,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,f8533234-6cba-4fd6-88c1-46eb86d908c4,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,f8533234-6cba-4fd6-88c1-46eb86d908c4,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,f8533234-6cba-4fd6-88c1-46eb86d908c4,,dismissal_text,pass,info,0,0,Values match.
+missing_venue_fields,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,venue_id,pass,info,present,present,Values match.
+missing_venue_fields,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,venue_name,pass,info,present,present,Values match.
+missing_grade_fields,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,grade_id,pass,info,present,present,Values match.
+missing_grade_fields,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,grade_name,pass,info,present,present,Values match.
+missing_team_fields,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,teams,pass,info,present,present,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,dea3e651-2a71-4c86-aa6d-ef1b71dba643,,pass,info,208,208,match_id=fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7; innings_id=dea3e651-2a71-4c86-aa6d-ef1b71dba643; innings_name=1st Innings - Jafari SC; scorecard_runs_scored=208; sum_batter_runs=190; scorecard_total_extras=18; sum_batter_runs_plus_extras=208; difference=0
+scorecard_wickets_vs_batting_dismissals,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,dea3e651-2a71-4c86-aa6d-ef1b71dba643,,pass,info,10,10,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,dea3e651-2a71-4c86-aa6d-ef1b71dba643,,pass,info,10,10,Values match.
+scorecard_innings_total_vs_ball_progress_runs,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,dea3e651-2a71-4c86-aa6d-ef1b71dba643,,pass,info,208,208,Values match.
+scorecard_innings_runs_vs_batting_plus_extras,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,cab4578f-edba-4a50-a24f-945e61822468,,pass,info,166,166,match_id=fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7; innings_id=cab4578f-edba-4a50-a24f-945e61822468; innings_name=1st Innings - Fiji Victorian CC Winter XI; scorecard_runs_scored=166; sum_batter_runs=150; scorecard_total_extras=16; sum_batter_runs_plus_extras=166; difference=0
+scorecard_wickets_vs_batting_dismissals,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,cab4578f-edba-4a50-a24f-945e61822468,,pass,info,10,10,Values match.
+scorecard_bowling_wickets_vs_batting_dismissals,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,cab4578f-edba-4a50-a24f-945e61822468,,pass,info,10,10,Values match.
+scorecard_innings_total_vs_ball_progress_runs,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,cab4578f-edba-4a50-a24f-945e61822468,,pass,info,166,166,Values match.
+missing_player_or_source_ids_scorecard_batting,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_bowling,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_scorecard_fielding,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,participant_id,pass,info,0,0,Values match.
+missing_player_or_source_ids_ball_by_ball,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,ball_event_id,pass,info,0,0,Values match.
+missing_dismissal_fields,fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7,,dismissal_text,pass,info,0,0,Values match.

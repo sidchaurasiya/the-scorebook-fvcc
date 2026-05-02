@@ -1,0 +1,597 @@
+{
+  "request": {
+    "name": "team_match_list",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/b0d2ee4c-be8f-4a75-b138-0740a52970c6/matches?seasonId=6169f605-4b96-4f21-87c5-0862f914624f&jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T12:59:37.865155+00:00"
+  },
+  "payload": {
+    "matches": [
+      {
+        "id": "6905f946-64a0-4f33-85e0-0d720095fac6",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Brunswick won by 28 runs",
+        "round": {
+          "id": "d5132fa8-0c2e-4c6f-9442-fb0b82363f46",
+          "name": "Round 6",
+          "shortName": "R6"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-06-21T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "Parker Reserve",
+          "line1": "Keady Street",
+          "suburb": "COBURG NORTH",
+          "postCode": "3058",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval 1 (East)",
+            "latitude": -37.7228378363712,
+            "longitude": 144.967700242996
+          }
+        },
+        "teams": [
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": false,
+            "scoreText": "5-239",
+            "oversBowled": 35,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "7b46ae5e-158e-4ec2-a963-cb1fb6a2106c",
+            "displayName": "Brunswick",
+            "isHome": true,
+            "scoreText": "8-267",
+            "oversBowled": 35,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "f90541c4-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Brunswick Cricket Club",
+              "shortName": "BCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/fe7dec97-225f-444d-88dd-c60fe0a00f14/1685193585089/logo.png"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Jafari SC won by 42 runs",
+        "round": {
+          "id": "34c909db-39da-485f-98a9-fc7c1f2b8bc2",
+          "name": "Round 2",
+          "shortName": "R2"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-05-10T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "Thomastown East Reserve",
+          "line1": "Leslie Street",
+          "suburb": "THOMASTOWN",
+          "postCode": "3074",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #1 North",
+            "latitude": -37.6820881914347,
+            "longitude": 145.040388107299
+          }
+        },
+        "teams": [
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": false,
+            "scoreText": "166",
+            "oversBowled": 30.2,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "1977fa7e-f689-4fee-b28e-a9aa92a3a15c",
+            "displayName": "Jafari SC",
+            "isHome": true,
+            "scoreText": "208",
+            "oversBowled": 30.1,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "fdc3b465-d665-4c9d-895a-f0753b86c82f",
+              "name": "Jafari Sports Club Hoppers Crossing",
+              "shortName": "JSCHC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/66f2214e-cd49-489c-8eda-9f01d3b81da1/1696302916763/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "f8533234-6cba-4fd6-88c1-46eb86d908c4",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Mavericks Senior Men won by 3 wickets",
+        "round": {
+          "id": "4a9928eb-d670-44fc-ac7e-0450cae2bd90",
+          "name": "Round 4",
+          "shortName": "R4"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-05-31T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "T.W Blake Park",
+          "line1": "75 Gower Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #3 North East",
+            "latitude": -37.74130594728,
+            "longitude": 145.025593042373
+          }
+        },
+        "teams": [
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": true,
+            "scoreText": "8-193",
+            "oversBowled": 35,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "50bf1c40-962b-4026-a5a8-74da34bacbff",
+            "displayName": "Mavericks Senior Men",
+            "isHome": false,
+            "scoreText": "7-195",
+            "oversBowled": 29.2,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "25a809ea-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Mavericks Cricket Club",
+              "shortName": "MCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/0aa485b8-02ed-404b-a5d2-989cecabf73a/1681431322681/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "2c40c9b2-40eb-4b37-becf-5c817751a1d6",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Darebin Chargers Red won by 29 runs",
+        "round": {
+          "id": "d0b84f6b-8369-4ba7-afb9-20556f515fb7",
+          "name": "Round 3",
+          "shortName": "R3"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-05-24T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "T.W Blake Park",
+          "line1": "75 Gower Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #3 North East",
+            "latitude": -37.74130594728,
+            "longitude": 145.025593042373
+          }
+        },
+        "teams": [
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": true,
+            "scoreText": "8-192",
+            "oversBowled": 35,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "f121f9ce-13ef-4518-b214-4b2066595145",
+            "displayName": "Darebin Chargers Red",
+            "isHome": false,
+            "scoreText": "8-221",
+            "oversBowled": 35,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "26e9ec99-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Darebin Chargers Cricket Club",
+              "shortName": "DCCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/d240f4c8-3645-4f8f-b2c6-15a17fb38aba/1680515544542/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "8918a26c-cd36-4671-93a6-6aeac6a57e98",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Reservoir Cobras won by 4 wickets",
+        "round": {
+          "id": "090c63bb-735b-4607-82fc-80e4d87a23b7",
+          "name": "Round 1",
+          "shortName": "R1"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-05-03T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "T.W Blake Park",
+          "line1": "75 Gower Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #3 North East",
+            "latitude": -37.74130594728,
+            "longitude": 145.025593042373
+          }
+        },
+        "teams": [
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": true,
+            "scoreText": "9-191",
+            "oversBowled": 35,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "8b65ef27-5bb8-46ca-8193-be128c5af1b0",
+            "displayName": "Reservoir Cobras",
+            "isHome": false,
+            "scoreText": "6-194",
+            "oversBowled": 28.3,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "2c0641c4-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Reservoir Cobras Cricket Club",
+              "shortName": "RCCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/2eae46e5-5d2f-4785-97cc-87032ea37f70/1679293794577/logo.png"
+            }
+          }
+        ]
+      },
+      {
+        "id": "4db01962-99f7-4b10-a382-6f8f3623144b",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC Winter XI won by 108 runs",
+        "round": {
+          "id": "f71cd240-3aab-4e15-9d98-40761fb21db9",
+          "name": "Round 9",
+          "shortName": "R9"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-07-26T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "T.W Blake Park",
+          "line1": "75 Gower Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #3 North East",
+            "latitude": -37.74130594728,
+            "longitude": 145.025593042373
+          }
+        },
+        "teams": [
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": true,
+            "scoreText": "8-232",
+            "oversBowled": 35,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "1977fa7e-f689-4fee-b28e-a9aa92a3a15c",
+            "displayName": "Jafari SC",
+            "isHome": false,
+            "scoreText": "124",
+            "oversBowled": 26.1,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "fdc3b465-d665-4c9d-895a-f0753b86c82f",
+              "name": "Jafari Sports Club Hoppers Crossing",
+              "shortName": "JSCHC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/66f2214e-cd49-489c-8eda-9f01d3b81da1/1696302916763/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "05665f84-65b6-4604-a11e-759276140c32",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC Winter XI won by 4 wickets",
+        "round": {
+          "id": "829ef88d-c201-4954-8011-0f7080be3705",
+          "name": "Round 5",
+          "shortName": "R5"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-06-14T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "Fairlea Ovals",
+          "line1": "Fairlea Road",
+          "suburb": "FAIRFIELD",
+          "postCode": "3078",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Fairlea West",
+            "latitude": -37.7908030324239,
+            "longitude": 145.011903047561
+          }
+        },
+        "teams": [
+          {
+            "id": "2455adf0-f6ca-4803-839d-f58c1cf154dd",
+            "displayName": "LTUCC  Eagles",
+            "isHome": true,
+            "scoreText": "6-96",
+            "oversBowled": 31.2,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "0e307002-88d8-eb11-a7ad-2818780da0cc",
+              "name": "La Trobe University Cricket Club",
+              "shortName": "LTUCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/29893bf7-147e-45d9-b1bd-f29369784966/1738833692819/logo.png"
+            }
+          },
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": false,
+            "scoreText": "6-97",
+            "oversBowled": 19.4,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "5ee79fc1-2d4e-41d8-964b-e0c0fa6e412c",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Wollert Warriors Senior Men A won by 60 runs",
+        "round": {
+          "id": "4d90956a-7c55-4011-81a5-6c115a6014cc",
+          "name": "Round 7",
+          "shortName": "R7"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-07-05T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "T.W Blake Park",
+          "line1": "75 Gower Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #3 North East",
+            "latitude": -37.74130594728,
+            "longitude": 145.025593042373
+          }
+        },
+        "teams": [
+          {
+            "id": "64ca7387-df24-4f3b-8090-7bcb2359d4e2",
+            "displayName": "Wollert Warriors Senior Men A",
+            "isHome": false,
+            "scoreText": "8-243",
+            "oversBowled": 35,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "3d32d634-98f1-4338-810c-35186ecfbc38",
+              "name": "Wollert Warriors Cricket Club",
+              "shortName": "WWCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/e641fe7c-6226-4715-933e-2db44ed3c600/1710749547736/logo.jpg"
+            }
+          },
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": true,
+            "scoreText": "9-183",
+            "oversBowled": 34,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "4e5fbe6d-325e-4a21-9982-f080f8605615",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC Winter XI won by 75 runs",
+        "round": {
+          "id": "c0148bc4-102f-4ad2-a732-c9b1cb113a15",
+          "name": "Round 8",
+          "shortName": "R8"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-07-12T12:00:00.0000000+10:00"
+          }
+        ],
+        "venue": {
+          "name": "T.W Blake Park",
+          "line1": "75 Gower Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval # 1 South West",
+            "latitude": -37.7421798121876,
+            "longitude": 145.024423599243
+          }
+        },
+        "teams": [
+          {
+            "id": "8b65ef27-5bb8-46ca-8193-be128c5af1b0",
+            "displayName": "Reservoir Cobras",
+            "isHome": true,
+            "scoreText": "130",
+            "oversBowled": 26.3,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "2c0641c4-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Reservoir Cobras Cricket Club",
+              "shortName": "RCCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/2eae46e5-5d2f-4785-97cc-87032ea37f70/1679293794577/logo.png"
+            }
+          },
+          {
+            "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+            "displayName": "Fiji Victorian CC Winter XI",
+            "isHome": false,
+            "scoreText": "8-205",
+            "oversBowled": 35,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

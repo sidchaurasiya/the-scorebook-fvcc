@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/05665f84-65b6-4604-a11e-759276140c32/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:00:05.813908+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Robert Watts",
+        "shortName": "R Watts",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

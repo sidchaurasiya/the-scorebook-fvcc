@@ -1,0 +1,1074 @@
+{
+  "request": {
+    "name": "match_scorecard",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/8918a26c-cd36-4671-93a6-6aeac6a57e98?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T12:59:55.388076+00:00"
+  },
+  "payload": {
+    "id": "8918a26c-cd36-4671-93a6-6aeac6a57e98",
+    "status": "COMPLETED",
+    "statusId": 3,
+    "matchType": "One Day",
+    "matchTypeId": 2,
+    "isBallByBall": true,
+    "matchSummary": {
+      "resultText": "Reservoir Cobras won by 4 wickets",
+      "teams": [
+        {
+          "resultTypeId": 14,
+          "resultType": "LOST",
+          "wonToss": false,
+          "battedFirst": true,
+          "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+          "displayName": "Fiji Victorian CC Winter XI",
+          "isHome": true,
+          "scoreText": "9-191",
+          "isWinner": false,
+          "isBatting": false
+        },
+        {
+          "resultTypeId": 13,
+          "resultType": "WON",
+          "wonToss": true,
+          "battedFirst": false,
+          "id": "8b65ef27-5bb8-46ca-8193-be128c5af1b0",
+          "displayName": "Reservoir Cobras",
+          "isHome": false,
+          "scoreText": "6-194",
+          "isWinner": true,
+          "isBatting": false
+        }
+      ]
+    },
+    "matchStreams": [],
+    "round": {
+      "id": "090c63bb-735b-4607-82fc-80e4d87a23b7",
+      "name": "Round 1",
+      "shortName": "R1"
+    },
+    "grade": {
+      "id": "8660310e-7b12-4dce-b777-d533d35bd8ff",
+      "name": "North Division"
+    },
+    "matchSchedule": [
+      {
+        "matchDay": 1,
+        "startDateTime": "2025-05-03T12:00:00.0000000+10:00"
+      }
+    ],
+    "venue": {
+      "id": "8bb90ccd-6bbb-4211-9b84-09939c7cd7fd",
+      "name": "T.W Blake Park",
+      "line1": "75 Gower Street",
+      "suburb": "PRESTON",
+      "postCode": "3072",
+      "stateName": "Victoria",
+      "country": "Australia",
+      "playingSurface": {
+        "id": "75082492-acfb-4810-8f00-55c8b7e4b001",
+        "name": "Oval #3 North East",
+        "latitude": -37.74130594728,
+        "longitude": 145.025593042373
+      }
+    },
+    "teams": [
+      {
+        "players": [
+          {
+            "participantId": "284746be-31ae-4e0e-82f8-d234412e08c4",
+            "name": "Kieran Bhan",
+            "shortName": "K Bhan",
+            "roles": []
+          },
+          {
+            "participantId": "8cc72ac1-93ab-43ad-a24f-fdcbf14da6a2",
+            "name": "Kiran Tomy",
+            "shortName": "K Tomy",
+            "roles": []
+          },
+          {
+            "participantId": "d1ed36b2-499d-4b65-95a3-6f3f51177415",
+            "name": "Armaan Datta",
+            "shortName": "A Datta",
+            "roles": []
+          },
+          {
+            "participantId": "cefd9f7d-2787-4b4c-9a13-4e1d0d434ff8",
+            "name": "Siddhesh Jitendrabhai vadapalli",
+            "shortName": "S vadapalli",
+            "roles": []
+          },
+          {
+            "participantId": "f6dd9552-fbc5-4490-ac27-b50ff948f8f5",
+            "name": "Priyanshu Tomar",
+            "shortName": "P Tomar",
+            "roles": []
+          },
+          {
+            "participantId": "7cccf3c2-52d5-4dfc-91c8-9664f27ac72b",
+            "name": "Jai Bhan",
+            "shortName": "J Bhan",
+            "roles": [
+              "Captain"
+            ]
+          },
+          {
+            "participantId": "7512873c-b6b6-49fe-80ff-3733b5abd044",
+            "name": "Mohaneesh Pitre",
+            "shortName": "M Pitre",
+            "roles": []
+          },
+          {
+            "participantId": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+            "name": "Rama Suravajjula",
+            "shortName": "R Suravajjula",
+            "roles": [
+              "Wicket Keeper"
+            ]
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "name": "Damandeep Sehra",
+            "shortName": "D Sehra",
+            "roles": []
+          },
+          {
+            "participantId": "7cffb99e-40e6-4c91-846f-2e5b755ecd0a",
+            "name": "Mayur Mohan",
+            "shortName": "M Mohan",
+            "roles": []
+          },
+          {
+            "participantId": "1213eb90-9ab2-42db-b52a-865b0dfa7ea3",
+            "name": "Ashish Sharma",
+            "shortName": "A Sharma",
+            "roles": []
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "name": "Siddhanth Chaurasiya",
+            "shortName": "S Chaurasiya",
+            "roles": []
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+        "displayName": "Fiji Victorian CC Winter XI",
+        "name": "Winter XI",
+        "owningOrganisation": {
+          "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+          "name": "Fiji Victorian Cricket Club",
+          "shortName": "FVCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+        }
+      },
+      {
+        "players": [
+          {
+            "participantId": "27d0c8ef-90da-4f7b-a7e4-c8a3f0f969dd",
+            "name": "Nikhil Taneja",
+            "shortName": "N Taneja",
+            "roles": []
+          },
+          {
+            "participantId": "e71607f0-9b41-48c5-9042-e4b59b619dc2",
+            "name": "Sundar Baskar",
+            "shortName": "S Baskar",
+            "roles": [
+              "Wicket Keeper"
+            ]
+          },
+          {
+            "participantId": "e650f60f-8e5b-4d2d-a7ad-205a7882b8d2",
+            "name": "Ashish Samayar",
+            "shortName": "A Samayar",
+            "roles": []
+          },
+          {
+            "participantId": "970eda27-f434-41b9-9db4-56e8b9c221c7",
+            "name": "Abdul Rafique Shaikh",
+            "shortName": "A Shaikh",
+            "roles": []
+          },
+          {
+            "participantId": "457d2d89-be0b-4913-8a29-14ea368264c1",
+            "name": "********",
+            "shortName": "********",
+            "roles": []
+          },
+          {
+            "participantId": "a1601e10-d3aa-43e0-af12-9682993e6144",
+            "name": "Mannu DEVGAN",
+            "shortName": "M DEVGAN",
+            "roles": []
+          },
+          {
+            "participantId": "e4f15cc3-86b1-4450-843c-23776a4218f3",
+            "name": "Karan Sharma",
+            "shortName": "K Sharma",
+            "roles": [
+              "Captain"
+            ]
+          },
+          {
+            "participantId": "ed4e5575-2e17-4b73-a67d-84cd7bf862a2",
+            "name": "Abdul Aziz",
+            "shortName": "A Aziz",
+            "roles": []
+          },
+          {
+            "participantId": "82a1eaaa-aa0b-4fad-8527-49e84d257a9c",
+            "name": "Rajesh Kumar Chopra",
+            "shortName": "R Chopra",
+            "roles": []
+          },
+          {
+            "participantId": "eac66547-1d76-4661-8e2f-e538197ba47a",
+            "name": "RAJAN SHARMA",
+            "shortName": "R SHARMA",
+            "roles": []
+          },
+          {
+            "participantId": "f81c7258-4477-46f5-b288-27551ed48ae2",
+            "name": "jagmeet Singh",
+            "shortName": "j Singh",
+            "roles": []
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "8b65ef27-5bb8-46ca-8193-be128c5af1b0",
+        "displayName": "Reservoir Cobras",
+        "name": "Reservoir Cobras",
+        "owningOrganisation": {
+          "id": "2c0641c4-87d8-eb11-a7ad-2818780da0cc",
+          "name": "Reservoir Cobras Cricket Club",
+          "shortName": "RCCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/2eae46e5-5d2f-4785-97cc-87032ea37f70/1679293794577/logo.png"
+        }
+      }
+    ],
+    "innings": [
+      {
+        "id": "412ab85a-c603-4648-8a31-6d1ec7fdaaed",
+        "name": "1st Innings - Fiji Victorian CC Winter XI",
+        "inningsCloseType": "Compulsory Close",
+        "inningsNumber": 1,
+        "inningsOrder": 1,
+        "battingTeamId": "b0d2ee4c-be8f-4a75-b138-0740a52970c6",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 6,
+        "legByesRuns": 2,
+        "noBalls": 0,
+        "wideBalls": 4,
+        "penalties": 0,
+        "totalExtras": 12,
+        "oversBowled": 35,
+        "runsScored": 191,
+        "numberOfWicketsFallen": 9,
+        "batting": [
+          {
+            "participantId": "284746be-31ae-4e0e-82f8-d234412e08c4",
+            "playerShortName": "K Bhan",
+            "batOrder": 1,
+            "batInstance": 1,
+            "ballsFaced": 19,
+            "foursScored": 3,
+            "sixesScored": 0,
+            "runsScored": 19,
+            "battingMinutes": 0,
+            "strikeRate": "100.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: S Baskar b: M DEVGAN",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "f6dd9552-fbc5-4490-ac27-b50ff948f8f5",
+            "playerShortName": "P Tomar",
+            "batOrder": 2,
+            "batInstance": 1,
+            "ballsFaced": 11,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 3,
+            "battingMinutes": 0,
+            "strikeRate": "27.27",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: R SHARMA",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "d1ed36b2-499d-4b65-95a3-6f3f51177415",
+            "playerShortName": "A Datta",
+            "batOrder": 3,
+            "batInstance": 1,
+            "ballsFaced": 36,
+            "foursScored": 9,
+            "sixesScored": 0,
+            "runsScored": 53,
+            "battingMinutes": 0,
+            "strikeRate": "147.22",
+            "dismissalTypeId": 14,
+            "dismissalType": "Retired Not Out",
+            "dismissalText": "retired not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "playerShortName": "D Sehra",
+            "batOrder": 4,
+            "batInstance": 1,
+            "ballsFaced": 63,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 32,
+            "battingMinutes": 0,
+            "strikeRate": "50.79",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c&b: j Singh",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "7512873c-b6b6-49fe-80ff-3733b5abd044",
+            "playerShortName": "M Pitre",
+            "batOrder": 5,
+            "batInstance": 1,
+            "ballsFaced": 24,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 19,
+            "battingMinutes": 0,
+            "strikeRate": "79.16",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: j Singh",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "7cccf3c2-52d5-4dfc-91c8-9664f27ac72b",
+            "playerShortName": "J Bhan",
+            "batOrder": 6,
+            "batInstance": 1,
+            "ballsFaced": 31,
+            "foursScored": 2,
+            "sixesScored": 0,
+            "runsScored": 32,
+            "battingMinutes": 0,
+            "strikeRate": "103.22",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: A Aziz b: A Shaikh",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "cefd9f7d-2787-4b4c-9a13-4e1d0d434ff8",
+            "playerShortName": "S vadapalli",
+            "batOrder": 7,
+            "batInstance": 1,
+            "ballsFaced": 14,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 14,
+            "battingMinutes": 0,
+            "strikeRate": "100.00",
+            "dismissalTypeId": 6,
+            "dismissalType": "Run Out",
+            "dismissalText": "run out ()",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "1213eb90-9ab2-42db-b52a-865b0dfa7ea3",
+            "playerShortName": "A Sharma",
+            "batOrder": 8,
+            "batInstance": 1,
+            "ballsFaced": 4,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 2,
+            "battingMinutes": 0,
+            "strikeRate": "50.00",
+            "dismissalTypeId": 3,
+            "dismissalType": "LBW",
+            "dismissalText": "lbw: R SHARMA",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+            "playerShortName": "R Suravajjula",
+            "batOrder": 9,
+            "batInstance": 1,
+            "ballsFaced": 6,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 5,
+            "battingMinutes": 0,
+            "strikeRate": "83.33",
+            "dismissalTypeId": 6,
+            "dismissalType": "Run Out",
+            "dismissalText": "run out ()",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "playerShortName": "S Chaurasiya",
+            "batOrder": 10,
+            "batInstance": 1,
+            "ballsFaced": 0,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 1,
+            "dismissalType": "Not Out",
+            "dismissalText": "not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "7cffb99e-40e6-4c91-846f-2e5b755ecd0a",
+            "playerShortName": "M Mohan",
+            "batOrder": 11,
+            "batInstance": 1,
+            "ballsFaced": 2,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c:  b: R SHARMA",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "8cc72ac1-93ab-43ad-a24f-fdcbf14da6a2",
+            "playerShortName": "K Tomy",
+            "batOrder": 12,
+            "batInstance": 1,
+            "ballsFaced": 0,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 0,
+            "dismissalType": "Did Not Bat",
+            "dismissalText": "did not bat",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          }
+        ],
+        "bowling": [
+          {
+            "participantId": "457d2d89-be0b-4913-8a29-14ea368264c1",
+            "playerShortName": "********",
+            "bowlOrder": 1,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 39,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "5.57",
+            "isBowling": false
+          },
+          {
+            "participantId": "eac66547-1d76-4661-8e2f-e538197ba47a",
+            "playerShortName": "R SHARMA",
+            "bowlOrder": 2,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 36,
+            "wicketsTaken": 3,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "5.14",
+            "isBowling": false
+          },
+          {
+            "participantId": "a1601e10-d3aa-43e0-af12-9682993e6144",
+            "playerShortName": "M DEVGAN",
+            "bowlOrder": 3,
+            "oversBowled": 5,
+            "maidensBowled": 0,
+            "runsConceded": 24,
+            "wicketsTaken": 1,
+            "wideBalls": 2,
+            "noBalls": 0,
+            "economy": "4.80",
+            "isBowling": false
+          },
+          {
+            "participantId": "f81c7258-4477-46f5-b288-27551ed48ae2",
+            "playerShortName": "j Singh",
+            "bowlOrder": 4,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 41,
+            "wicketsTaken": 2,
+            "wideBalls": 1,
+            "noBalls": 0,
+            "economy": "5.85",
+            "isBowling": false
+          },
+          {
+            "participantId": "970eda27-f434-41b9-9db4-56e8b9c221c7",
+            "playerShortName": "A Shaikh",
+            "bowlOrder": 5,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 32,
+            "wicketsTaken": 1,
+            "wideBalls": 1,
+            "noBalls": 0,
+            "economy": "4.57",
+            "isBowling": false
+          },
+          {
+            "participantId": "82a1eaaa-aa0b-4fad-8527-49e84d257a9c",
+            "playerShortName": "R Chopra",
+            "bowlOrder": 6,
+            "oversBowled": 2,
+            "maidensBowled": 0,
+            "runsConceded": 11,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "5.50",
+            "isBowling": false
+          }
+        ],
+        "fielding": [
+          {
+            "participantId": "ed4e5575-2e17-4b73-a67d-84cd7bf862a2",
+            "playerShortName": "A Aziz",
+            "catches": 1,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          },
+          {
+            "participantId": "f81c7258-4477-46f5-b288-27551ed48ae2",
+            "playerShortName": "j Singh",
+            "catches": 1,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          },
+          {
+            "participantId": "e71607f0-9b41-48c5-9042-e4b59b619dc2",
+            "playerShortName": "S Baskar",
+            "catches": 0,
+            "wicketKeeperCatches": 1,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          }
+        ],
+        "fallOfWickets": [
+          {
+            "participantId": "f6dd9552-fbc5-4490-ac27-b50ff948f8f5",
+            "playerShortName": "P Tomar",
+            "order": 1,
+            "runs": 14
+          },
+          {
+            "participantId": "284746be-31ae-4e0e-82f8-d234412e08c4",
+            "playerShortName": "K Bhan",
+            "order": 2,
+            "runs": 46
+          },
+          {
+            "participantId": "7512873c-b6b6-49fe-80ff-3733b5abd044",
+            "playerShortName": "M Pitre",
+            "order": 3,
+            "runs": 120
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "playerShortName": "D Sehra",
+            "order": 4,
+            "runs": 142
+          },
+          {
+            "participantId": "cefd9f7d-2787-4b4c-9a13-4e1d0d434ff8",
+            "playerShortName": "S vadapalli",
+            "order": 5,
+            "runs": 178
+          },
+          {
+            "participantId": "7cccf3c2-52d5-4dfc-91c8-9664f27ac72b",
+            "playerShortName": "J Bhan",
+            "order": 6,
+            "runs": 183
+          },
+          {
+            "participantId": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+            "playerShortName": "R Suravajjula",
+            "order": 7,
+            "runs": 188
+          },
+          {
+            "participantId": "1213eb90-9ab2-42db-b52a-865b0dfa7ea3",
+            "playerShortName": "A Sharma",
+            "order": 8,
+            "runs": 188
+          },
+          {
+            "participantId": "7cffb99e-40e6-4c91-846f-2e5b755ecd0a",
+            "playerShortName": "M Mohan",
+            "order": 9,
+            "runs": 191
+          }
+        ]
+      },
+      {
+        "id": "f4a84464-aee0-4222-b8c8-4d020a583487",
+        "name": "1st Innings - Reservoir Cobras",
+        "inningsCloseType": "End of Match",
+        "inningsNumber": 1,
+        "inningsOrder": 2,
+        "battingTeamId": "8b65ef27-5bb8-46ca-8193-be128c5af1b0",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 5,
+        "legByesRuns": 2,
+        "noBalls": 3,
+        "wideBalls": 19,
+        "penalties": 0,
+        "totalExtras": 29,
+        "oversBowled": 28.3,
+        "runsScored": 194,
+        "numberOfWicketsFallen": 6,
+        "batting": [
+          {
+            "participantId": "e71607f0-9b41-48c5-9042-e4b59b619dc2",
+            "playerShortName": "S Baskar",
+            "batOrder": 1,
+            "batInstance": 1,
+            "ballsFaced": 25,
+            "foursScored": 4,
+            "sixesScored": 0,
+            "runsScored": 22,
+            "battingMinutes": 0,
+            "strikeRate": "88.00",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: M Mohan",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "e4f15cc3-86b1-4450-843c-23776a4218f3",
+            "playerShortName": "K Sharma",
+            "batOrder": 2,
+            "batInstance": 1,
+            "ballsFaced": 14,
+            "foursScored": 2,
+            "sixesScored": 0,
+            "runsScored": 14,
+            "battingMinutes": 0,
+            "strikeRate": "100.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: J Bhan b: S Chaurasiya",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "970eda27-f434-41b9-9db4-56e8b9c221c7",
+            "playerShortName": "A Shaikh",
+            "batOrder": 3,
+            "batInstance": 1,
+            "ballsFaced": 24,
+            "foursScored": 2,
+            "sixesScored": 0,
+            "runsScored": 18,
+            "battingMinutes": 0,
+            "strikeRate": "75.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: S Chaurasiya b: M Mohan",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "ed4e5575-2e17-4b73-a67d-84cd7bf862a2",
+            "playerShortName": "A Aziz",
+            "batOrder": 4,
+            "batInstance": 1,
+            "ballsFaced": 65,
+            "foursScored": 4,
+            "sixesScored": 0,
+            "runsScored": 49,
+            "battingMinutes": 0,
+            "strikeRate": "75.38",
+            "dismissalTypeId": 1,
+            "dismissalType": "Not Out",
+            "dismissalText": "not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "457d2d89-be0b-4913-8a29-14ea368264c1",
+            "playerShortName": "********",
+            "batOrder": 5,
+            "batInstance": 1,
+            "ballsFaced": 26,
+            "foursScored": 4,
+            "sixesScored": 4,
+            "runsScored": 52,
+            "battingMinutes": 0,
+            "strikeRate": "200.00",
+            "dismissalTypeId": 14,
+            "dismissalType": "Retired Not Out",
+            "dismissalText": "retired not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "27d0c8ef-90da-4f7b-a7e4-c8a3f0f969dd",
+            "playerShortName": "N Taneja",
+            "batOrder": 6,
+            "batInstance": 1,
+            "ballsFaced": 8,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 2,
+            "battingMinutes": 0,
+            "strikeRate": "25.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: S Chaurasiya b: A Datta",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "82a1eaaa-aa0b-4fad-8527-49e84d257a9c",
+            "playerShortName": "R Chopra",
+            "batOrder": 7,
+            "batInstance": 1,
+            "ballsFaced": 9,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 4,
+            "battingMinutes": 0,
+            "strikeRate": "44.44",
+            "dismissalTypeId": 6,
+            "dismissalType": "Run Out",
+            "dismissalText": "run out (P Tomar, R Suravajjula)",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "f81c7258-4477-46f5-b288-27551ed48ae2",
+            "playerShortName": "j Singh",
+            "batOrder": 8,
+            "batInstance": 1,
+            "ballsFaced": 2,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 4,
+            "battingMinutes": 0,
+            "strikeRate": "200.00",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: A Datta",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "a1601e10-d3aa-43e0-af12-9682993e6144",
+            "playerShortName": "M DEVGAN",
+            "batOrder": 9,
+            "batInstance": 1,
+            "ballsFaced": 1,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 1,
+            "dismissalType": "Not Out",
+            "dismissalText": "not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "e650f60f-8e5b-4d2d-a7ad-205a7882b8d2",
+            "playerShortName": "A Samayar",
+            "batOrder": 10,
+            "batInstance": 1,
+            "ballsFaced": 0,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 0,
+            "dismissalType": "Did Not Bat",
+            "dismissalText": "did not bat",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "eac66547-1d76-4661-8e2f-e538197ba47a",
+            "playerShortName": "R SHARMA",
+            "batOrder": 11,
+            "batInstance": 1,
+            "ballsFaced": 0,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 0,
+            "dismissalType": "Did Not Bat",
+            "dismissalText": "did not bat",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          }
+        ],
+        "bowling": [
+          {
+            "participantId": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+            "playerShortName": "R Suravajjula",
+            "bowlOrder": 1,
+            "oversBowled": 0,
+            "maidensBowled": 0,
+            "runsConceded": 0,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "0.00",
+            "isBowling": false
+          },
+          {
+            "participantId": "7cffb99e-40e6-4c91-846f-2e5b755ecd0a",
+            "playerShortName": "M Mohan",
+            "bowlOrder": 2,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 31,
+            "wicketsTaken": 2,
+            "wideBalls": 4,
+            "noBalls": 1,
+            "economy": "4.42",
+            "isBowling": false
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "playerShortName": "S Chaurasiya",
+            "bowlOrder": 3,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 40,
+            "wicketsTaken": 1,
+            "wideBalls": 1,
+            "noBalls": 0,
+            "economy": "5.71",
+            "isBowling": false
+          },
+          {
+            "participantId": "8cc72ac1-93ab-43ad-a24f-fdcbf14da6a2",
+            "playerShortName": "K Tomy",
+            "bowlOrder": 4,
+            "oversBowled": 2,
+            "maidensBowled": 0,
+            "runsConceded": 26,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 2,
+            "economy": "13.00",
+            "isBowling": false
+          },
+          {
+            "participantId": "1213eb90-9ab2-42db-b52a-865b0dfa7ea3",
+            "playerShortName": "A Sharma",
+            "bowlOrder": 5,
+            "oversBowled": 1,
+            "maidensBowled": 0,
+            "runsConceded": 13,
+            "wicketsTaken": 0,
+            "wideBalls": 5,
+            "noBalls": 0,
+            "economy": "13.00",
+            "isBowling": false
+          },
+          {
+            "participantId": "cefd9f7d-2787-4b4c-9a13-4e1d0d434ff8",
+            "playerShortName": "S vadapalli",
+            "bowlOrder": 6,
+            "oversBowled": 3,
+            "maidensBowled": 0,
+            "runsConceded": 19,
+            "wicketsTaken": 0,
+            "wideBalls": 3,
+            "noBalls": 0,
+            "economy": "6.33",
+            "isBowling": false
+          },
+          {
+            "participantId": "284746be-31ae-4e0e-82f8-d234412e08c4",
+            "playerShortName": "K Bhan",
+            "bowlOrder": 7,
+            "oversBowled": 2,
+            "maidensBowled": 0,
+            "runsConceded": 25,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "12.50",
+            "isBowling": false
+          },
+          {
+            "participantId": "7cccf3c2-52d5-4dfc-91c8-9664f27ac72b",
+            "playerShortName": "J Bhan",
+            "bowlOrder": 8,
+            "oversBowled": 2,
+            "maidensBowled": 0,
+            "runsConceded": 14,
+            "wicketsTaken": 0,
+            "wideBalls": 5,
+            "noBalls": 0,
+            "economy": "7.00",
+            "isBowling": false
+          },
+          {
+            "participantId": "d1ed36b2-499d-4b65-95a3-6f3f51177415",
+            "playerShortName": "A Datta",
+            "bowlOrder": 9,
+            "oversBowled": 3,
+            "maidensBowled": 1,
+            "runsConceded": 11,
+            "wicketsTaken": 2,
+            "wideBalls": 1,
+            "noBalls": 0,
+            "economy": "3.66",
+            "isBowling": false
+          },
+          {
+            "participantId": "7512873c-b6b6-49fe-80ff-3733b5abd044",
+            "playerShortName": "M Pitre",
+            "bowlOrder": 10,
+            "oversBowled": 1.3,
+            "maidensBowled": 0,
+            "runsConceded": 8,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "5.33",
+            "isBowling": false
+          }
+        ],
+        "fielding": [
+          {
+            "participantId": "cefd9f7d-2787-4b4c-9a13-4e1d0d434ff8",
+            "playerShortName": "S vadapalli",
+            "catches": 0,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 0,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 1,
+            "runOuts": 1,
+            "stumpings": 0
+          },
+          {
+            "participantId": "7cccf3c2-52d5-4dfc-91c8-9664f27ac72b",
+            "playerShortName": "J Bhan",
+            "catches": 1,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          },
+          {
+            "participantId": "100b60f9-15ab-4d35-9626-be4212a5d0e2",
+            "playerShortName": "R Suravajjula",
+            "catches": 0,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 0,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 1,
+            "runOuts": 1,
+            "stumpings": 0
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "playerShortName": "S Chaurasiya",
+            "catches": 2,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 2,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          }
+        ],
+        "fallOfWickets": [
+          {
+            "participantId": "e4f15cc3-86b1-4450-843c-23776a4218f3",
+            "playerShortName": "K Sharma",
+            "order": 1,
+            "runs": 39
+          },
+          {
+            "participantId": "e71607f0-9b41-48c5-9042-e4b59b619dc2",
+            "playerShortName": "S Baskar",
+            "order": 2,
+            "runs": 41
+          },
+          {
+            "participantId": "970eda27-f434-41b9-9db4-56e8b9c221c7",
+            "playerShortName": "A Shaikh",
+            "order": 3,
+            "runs": 71
+          },
+          {
+            "participantId": "27d0c8ef-90da-4f7b-a7e4-c8a3f0f969dd",
+            "playerShortName": "N Taneja",
+            "order": 4,
+            "runs": 176
+          },
+          {
+            "participantId": "82a1eaaa-aa0b-4fad-8527-49e84d257a9c",
+            "playerShortName": "R Chopra",
+            "order": 5,
+            "runs": 186
+          },
+          {
+            "participantId": "f81c7258-4477-46f5-b288-27551ed48ae2",
+            "playerShortName": "j Singh",
+            "order": 6,
+            "runs": 190
+          }
+        ]
+      }
+    ]
+  }
+}

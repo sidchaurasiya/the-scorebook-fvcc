@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/f8533234-6cba-4fd6-88c1-46eb86d908c4/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T12:59:48.873362+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Md Shohel  Parvez",
+        "shortName": "M Shohel",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

@@ -324,6 +324,67 @@ The two warnings are useful raw-data signals rather than blockers:
 
 Recommendation for the next controlled pilot: backfill one recent FVCC team and season only. Pull match lists first, collect scorecards for completed matches, collect officials, and request ball events only for scorecards where `isBallByBall` is true. Keep outputs isolated from the aggregate app pipeline until validation rates and storage size are reviewed.
 
+## One-Team One-Season Pilot Results
+
+Pilot scope:
+
+- Season: Winter 2025
+- Season ID: `6169f605-4b96-4f21-87c5-0862f914624f`
+- Team: FVCC Winter XI
+- Team ID: `b0d2ee4c-be8f-4a75-b138-0740a52970c6`
+- Raw cache: `data/raw/match_centre_pilot/season=6169f605-4b96-4f21-87c5-0862f914624f__team=b0d2ee4c-be8f-4a75-b138-0740a52970c6/`
+- Processed outputs: `data/processed/match_centre_pilot/`
+
+Endpoint counts:
+
+| Endpoint type | Requests | Status |
+| --- | ---: | --- |
+| Team match list | 1 | 200 |
+| Match scorecard | 9 | 200 |
+| Match officials | 9 | 200 |
+| Match balls | 9 | 200 |
+| Total | 28 | All successful |
+
+Coverage:
+
+- Total matches found: 9
+- Completed matches: 9
+- Scorecards fetched: 9 of 9 completed matches
+- Matches with ball-by-ball: 9
+- Matches without ball-by-ball: 0
+
+Processed row counts:
+
+| Output | Rows |
+| --- | ---: |
+| `all_matches.csv` | 9 |
+| `all_match_innings.csv` | 18 |
+| `all_scorecard_batting.csv` | 209 |
+| `all_scorecard_bowling.csv` | 133 |
+| `all_scorecard_fielding.csv` | 54 |
+| `all_fall_of_wickets.csv` | 144 |
+| `all_match_officials.csv` | 9 |
+| `all_ball_by_ball.csv` | 3,616 |
+| `all_overs.csv` | 576 |
+| `all_partnerships.csv` | 156 |
+| `validation_report.csv` | 162 |
+
+Validation summary:
+
+- Pass: 154
+- Warning: 8
+- Error: 0
+
+The warnings were scorecard wicket-vs-dismissal consistency checks in the raw source. There were no request failures and no validation errors. Scorecard coverage was complete for the pilot scope, and ball-by-ball coverage was complete for all completed Winter XI matches in Winter 2025.
+
+Data size:
+
+- Raw cached JSON files: 29 files
+- Raw cache size: 4.172 MB
+- This is roughly 0.46 MB per completed match for this Winter 2025 team-season pilot.
+
+Recommendation: a broader backfill appears safe if it remains staged. The next step should be another controlled pilot for one summer team/season or one additional recent season, using the same cache/manifest approach. A full-club historical backfill should wait until two or three scoped pilots confirm request volume, scorecard coverage, validation-warning patterns, and repository/data-size impact.
+
 ## Recommended Raw File Structure
 
 Use one folder per sample/bulk refresh scope so match-level files stay reviewable and replayable:

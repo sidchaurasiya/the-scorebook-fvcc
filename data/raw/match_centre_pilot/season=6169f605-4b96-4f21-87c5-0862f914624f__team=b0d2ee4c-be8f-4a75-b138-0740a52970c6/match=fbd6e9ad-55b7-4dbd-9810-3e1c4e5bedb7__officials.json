@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/fbd6e9ad-55b7-4dbd-9810-3e1c4e5bedb7/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T12:59:44.741924+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Fahim Shahrear",
+        "shortName": "F Shahrear",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

@@ -230,6 +230,31 @@ class MatchCentrePayloads:
 
 def parse_sample_directory(sample_dir: Path) -> dict[str, pd.DataFrame]:
     payloads = load_sample_payloads(sample_dir)
+    return parse_payloads([payloads])
+
+
+def parse_payloads(payloads_list: list[MatchCentrePayloads]) -> dict[str, pd.DataFrame]:
+    parsed = [parse_match_payloads(payloads) for payloads in payloads_list if payloads.scorecard]
+    frame_names = [
+        "all_matches",
+        "all_match_innings",
+        "all_scorecard_batting",
+        "all_scorecard_bowling",
+        "all_scorecard_fielding",
+        "all_fall_of_wickets",
+        "all_match_officials",
+        "all_ball_by_ball",
+        "all_overs",
+        "all_partnerships",
+        "validation_report",
+    ]
+    return {
+        name: concat_frames([frames[name] for frames in parsed], columns_for_table(name))
+        for name in frame_names
+    }
+
+
+def parse_match_payloads(payloads: MatchCentrePayloads) -> dict[str, pd.DataFrame]:
     scorecard = payloads.scorecard
     match_id = str(scorecard.get("id", ""))
     team_ids = [str(team.get("id")) for team in scorecard.get("teams", []) if team.get("id")]
@@ -269,6 +294,29 @@ def parse_sample_directory(sample_dir: Path) -> dict[str, pd.DataFrame]:
         all_ball_by_ball=all_ball_by_ball,
     )
     return frames
+
+
+def concat_frames(frames: list[pd.DataFrame], columns: list[str]) -> pd.DataFrame:
+    clean = [frame for frame in frames if not frame.empty]
+    if not clean:
+        return pd.DataFrame(columns=columns)
+    return pd.concat(clean, ignore_index=True)
+
+
+def columns_for_table(name: str) -> list[str]:
+    return {
+        "all_matches": ALL_MATCHES_COLUMNS,
+        "all_match_innings": ALL_MATCH_INNINGS_COLUMNS,
+        "all_scorecard_batting": ALL_SCORECARD_BATTING_COLUMNS,
+        "all_scorecard_bowling": ALL_SCORECARD_BOWLING_COLUMNS,
+        "all_scorecard_fielding": ALL_SCORECARD_FIELDING_COLUMNS,
+        "all_fall_of_wickets": ALL_FALL_OF_WICKETS_COLUMNS,
+        "all_match_officials": ALL_MATCH_OFFICIALS_COLUMNS,
+        "all_ball_by_ball": ALL_BALL_BY_BALL_COLUMNS,
+        "all_overs": ALL_OVERS_COLUMNS,
+        "all_partnerships": ALL_PARTNERSHIPS_COLUMNS,
+        "validation_report": VALIDATION_REPORT_COLUMNS,
+    }[name]
 
 
 def load_sample_payloads(sample_dir: Path) -> MatchCentrePayloads:
@@ -772,7 +820,23 @@ def build_validation_report(
         extras = to_int(innings.get("total_extras"))
         batting_runs = int(pd.to_numeric(batting["runs_scored"], errors="coerce").fillna(0).sum()) if not batting.empty else 0
         expected_total = batting_runs + extras
-        rows.append(report_row("scorecard_innings_runs_vs_batting_plus_extras", match_id, innings_id, None, innings.get("runs_scored"), expected_total))
+        runs_difference = to_int(innings.get("runs_scored")) - expected_total
+        rows.append(
+            report_row(
+                "scorecard_innings_runs_vs_batting_plus_extras",
+                match_id,
+                innings_id,
+                None,
+                innings.get("runs_scored"),
+                expected_total,
+                detail=(
+                    f"match_id={match_id}; innings_id={innings_id}; innings_name={innings.get('innings_name')}; "
+                    f"scorecard_runs_scored={innings.get('runs_scored')}; sum_batter_runs={batting_runs}; "
+                    f"scorecard_total_extras={extras}; sum_batter_runs_plus_extras={expected_total}; "
+                    f"difference={runs_difference}"
+                ),
+            )
+        )
 
         dismissed = dismissed_batter_mask(batting)
         dismissal_count = int(dismissed.sum()) if not batting.empty else 0
@@ -805,7 +869,11 @@ def build_validation_report(
                     "present",
                     "missing",
                     "warning",
-                    "Scorecard innings has no ball-event innings. Keep scorecard data and do not invent balls.",
+                    (
+                        f"match_id={match_id}; innings_id={innings_id}; innings_name={innings.get('innings_name')}; "
+                        f"scorecard_runs_scored={innings.get('runs_scored')}; wickets_fallen={innings.get('wickets_fallen')}; "
+                        f"is_ball_by_ball={scorecard.get('isBallByBall')}. Keep scorecard data and do not invent balls."
+                    ),
                 )
             )
 

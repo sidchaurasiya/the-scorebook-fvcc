@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/4e5fbe6d-325e-4a21-9982-f080f8605615/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:00:14.042733+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Gary Said",
+        "shortName": "G Said",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

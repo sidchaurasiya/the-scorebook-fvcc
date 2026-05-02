@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/4db01962-99f7-4b10-a382-6f8f3623144b/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:00:01.493687+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Sam Vidanapathirana",
+        "shortName": "S Vidanapathirana",
+        "role": "Umpire"
+      }
+    ]
+  }
+}
