@@ -76,6 +76,9 @@ ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
 MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
+HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
+)
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 
@@ -2380,7 +2383,7 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
 
 def render_fastest_batting_milestone_records() -> None:
     render_section_heading("Fastest Batting Milestones ⚡")
-    st.caption("Fastest milestone records are calculated only from matches with ball-by-ball data.")
+    st.caption("Fastest milestone records are based on available verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
     if milestones.empty:
@@ -2416,12 +2419,24 @@ def load_batting_milestone_records(_path: str | None = None, _mtime: float | Non
     if path is None:
         return pd.DataFrame()
     try:
-        return pd.read_csv(path)
+        records = pd.read_csv(path)
     except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return pd.DataFrame()
+    if "final_score_display" not in records:
+        records["final_score_display"] = ""
+    if "final_runs" in records:
+        missing_display = records["final_score_display"].fillna("").astype(str).str.strip().isin(["", "nan", "None"])
+        not_out = records.get("is_not_out", pd.Series(False, index=records.index)).map(parse_record_bool)
+        final_runs = pd.to_numeric(records["final_runs"], errors="coerce")
+        records.loc[missing_display & final_runs.notna(), "final_score_display"] = final_runs[missing_display & final_runs.notna()].astype(int).astype(str)
+        star_rows = missing_display & final_runs.notna() & not_out
+        records.loc[star_rows, "final_score_display"] = records.loc[star_rows, "final_score_display"].astype(str) + "*"
+    return records
 
 
 def batting_milestones_path() -> Path | None:
+    if HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH.exists():
+        return HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH
     all_available = MATCH_CENTRE_PROCESSED_ROOT / "all_available" / "all_batting_milestones.csv"
     root_fallback = MATCH_CENTRE_PROCESSED_ROOT / "all_batting_milestones.csv"
     if all_available.exists():
@@ -2441,6 +2456,12 @@ def match_centre_milestones_mtime() -> float | None:
     if path is None:
         return None
     return path.stat().st_mtime
+
+
+def parse_record_bool(value: object) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().casefold() in {"true", "1", "yes"}
 
 
 def render_ranked_record_card(
