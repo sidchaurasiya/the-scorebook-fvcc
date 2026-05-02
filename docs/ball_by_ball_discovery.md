@@ -653,3 +653,17 @@ Run a controlled pilot for one recent FVCC season and one team only:
 4. Request `/scores/matches/{match_id}/officials` for match metadata.
 5. Parse into the proposed processed tables without wiring any UI.
 6. Compare parsed scorecard totals back to the current aggregate `all_seasons_batting/bowling/fielding` tables before any app integration.
+
+## Final Recommendation
+
+Discovery is complete. The sampled match, Winter pilot, and representative Summer pilot show that match-centre data can be handled as a production refresh pipeline before any Streamlit UI integration.
+
+Recommended next phase:
+
+1. Use `scripts/refresh_match_centre_data.py` for reviewed, named scopes only.
+2. Review `refresh_summary.csv`, `validation_warnings_detail.csv`, and `player_identity_audit.csv` after each refresh.
+3. Treat scorecard tables as the reliable base layer for every completed match.
+4. Treat ball-by-ball as an optional enrichment layer fetched only when `isBallByBall` is true.
+5. Design UI integration only after the processed outputs and player identity audit have been reviewed.
+
+Do not run a full historical FVCC backfill until staged scopes have been reviewed for validation quality, player identity coverage, endpoint behaviour, and data size.

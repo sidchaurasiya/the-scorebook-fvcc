@@ -138,10 +138,11 @@ class PoliteMatchCentreFetcher:
         *,
         name: str,
         match_id: str | None = None,
+        force_refresh: bool = False,
     ) -> tuple[dict[str, Any], RequestRecord]:
         url = f"{self.base_url}{path}"
         prepared = requests.Request("GET", url, params=params).prepare()
-        if output_path.exists():
+        if output_path.exists() and not force_refresh:
             cached = json.loads(output_path.read_text(encoding="utf-8"))
             payload = cached.get("payload", {})
             return payload, RequestRecord(
@@ -240,4 +241,3 @@ def count_events(payload: Any) -> int | None:
 
 def now_iso() -> str:
     return datetime.now(UTC).isoformat()
-

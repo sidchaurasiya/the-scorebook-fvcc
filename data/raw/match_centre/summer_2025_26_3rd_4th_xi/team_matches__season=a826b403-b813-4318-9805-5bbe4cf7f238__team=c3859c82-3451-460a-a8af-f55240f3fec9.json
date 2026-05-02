@@ -1,0 +1,816 @@
+{
+  "request": {
+    "name": "team_match_list",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/c3859c82-3451-460a-a8af-f55240f3fec9/matches?seasonId=a826b403-b813-4318-9805-5bbe4cf7f238&jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:17:08.571569+00:00"
+  },
+  "payload": {
+    "matches": [
+      {
+        "id": "94404ef9-4358-4358-9922-0c46ee81e436",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by forfeit",
+        "round": {
+          "id": "476610fc-c78c-480a-802c-844b3cad6983",
+          "name": "Round 8",
+          "shortName": "R8"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2026-01-31T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.T. Barling Reserve",
+          "line1": "880 Plenty Road",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "North Oval",
+            "latitude": -37.7223244139425,
+            "longitude": 145.033221244812
+          }
+        },
+        "teams": [
+          {
+            "id": "b8e1f46f-6a93-4d7e-b133-e2de1485d7cc",
+            "displayName": "West Preston CC 3rd XI",
+            "isHome": true,
+            "scoreText": "0-0",
+            "oversBowled": 0,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "00f14ff6-87d8-eb11-a7ad-2818780da0cc",
+              "name": "West Preston Cricket Club",
+              "shortName": "WPCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/4141f21b-d428-446e-ba34-e4fd4d050961/1681447663793/logo.jpg?_a=BAMAMifg0"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": false,
+            "scoreText": "0-0",
+            "oversBowled": 0,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fd329e2f-fa84-4b6b-907c-186a4e35ea57",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "Two Day",
+        "matchTypeId": 1,
+        "isLiveStreaming": false,
+        "resultText": "Wollert Rhinos CC 1st XI won by 3 wickets",
+        "round": {
+          "id": "3abc3591-eab4-4e99-8489-0acbc545bcc7",
+          "name": "Grand Final",
+          "shortName": "GF"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2026-03-14T12:30:00.0000000+11:00"
+          },
+          {
+            "matchDay": 2,
+            "startDateTime": "2026-03-15T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "Epping Recreation Reserve",
+          "line1": "Corner High Street and Park Street",
+          "suburb": "EPPING",
+          "postCode": "3076",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.6384828046885,
+            "longitude": 145.022685527801
+          }
+        },
+        "teams": [
+          {
+            "id": "f91444c9-6e74-41cf-a6a2-5f52975b79d3",
+            "displayName": "Wollert Rhinos CC 1st XI",
+            "isHome": true,
+            "scoreText": "7-176",
+            "oversBowled": 51.3,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "3b8deb93-cadd-4575-a389-674a43f26719",
+              "name": "North Metro Cricket Club",
+              "shortName": "NMCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b8b2dc14-a7a1-40be-9b85-ad5bd6a20dff/1741241184714/logo.png"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": false,
+            "scoreText": "172",
+            "oversBowled": 64.2,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "d576cdea-0c86-452a-a163-28f84717b161",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "Two Day",
+        "matchTypeId": 1,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 50 runs",
+        "round": {
+          "id": "be16e11e-ae3b-4a9f-9727-9a69a2abf7b0",
+          "name": "Semi Finals",
+          "shortName": "SF"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2026-03-07T12:30:00.0000000+11:00"
+          },
+          {
+            "matchDay": 2,
+            "startDateTime": "2026-03-08T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.H Sullivan Memorial Park",
+          "line1": "Davis Street",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.7311412073542,
+            "longitude": 145.035399198532
+          }
+        },
+        "teams": [
+          {
+            "id": "692e6f5f-2531-4d30-9dd8-737ba949ee96",
+            "displayName": "Northern Socials CC 2s XI",
+            "isHome": false,
+            "scoreText": "173",
+            "oversBowled": 46.4,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "d6cfa9a1-86d8-eb11-a7ad-2818780da0cc",
+              "name": "Northern Socials Cricket Club",
+              "shortName": "NSCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/940157ad-9b5f-4fc1-834d-cdb2e4b4f0c8/1685523363223/logo.png"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": true,
+            "scoreText": "223",
+            "oversBowled": 64.5,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "8303d0da-656d-4b42-a39b-5b3115f69cf2",
+        "status": "CANCELLED",
+        "statusId": 6,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Cancelled",
+        "round": {
+          "id": "80f3d73f-d0dd-499a-ba21-4fd1e0c66c46",
+          "name": "Round 3",
+          "shortName": "R3"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-11-08T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.H Sullivan Memorial Park",
+          "line1": "Davis Street",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.7311412073542,
+            "longitude": 145.035399198532
+          }
+        },
+        "teams": [
+          {
+            "id": "f91444c9-6e74-41cf-a6a2-5f52975b79d3",
+            "displayName": "Wollert Rhinos CC 1st XI",
+            "isHome": false,
+            "scoreText": "0-0",
+            "oversBowled": 0,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "3b8deb93-cadd-4575-a389-674a43f26719",
+              "name": "North Metro Cricket Club",
+              "shortName": "NMCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b8b2dc14-a7a1-40be-9b85-ad5bd6a20dff/1741241184714/logo.png"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": true,
+            "scoreText": "0-0",
+            "oversBowled": 0,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "f93992b8-4770-477b-b610-5eb34420f01b",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": true,
+        "resultText": "Fiji Victorian CC 3rd XI won by 14 runs",
+        "round": {
+          "id": "14c2f1c4-52cb-4535-97d2-907b49d2ed11",
+          "name": "Round 7",
+          "shortName": "R7"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2026-01-17T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "Fairfield Park",
+          "line1": "Yarra Bend Road",
+          "suburb": "FAIRFIELD",
+          "postCode": "3078",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Fairfield Park",
+            "latitude": -37.7860252437772,
+            "longitude": 145.010138154029
+          }
+        },
+        "teams": [
+          {
+            "id": "15afc07c-f087-455e-b9a1-e366e750413a",
+            "displayName": "Fairfield CC 2nd XI",
+            "isHome": true,
+            "scoreText": "9-185",
+            "oversBowled": 35,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "23e3c14d-8ad8-eb11-a7ad-2818780da0cc",
+              "name": "Fairfield Cricket Club",
+              "shortName": "FCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/40db7765-ec16-4856-b7c0-92dfc732d3f7/1680249899447/logo.jpg?_a=BAMAMifg0"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": false,
+            "scoreText": "6-199",
+            "oversBowled": 35,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "b3641479-5281-43db-9bd3-8d0e9697b2a4",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "Two Day",
+        "matchTypeId": 1,
+        "isLiveStreaming": false,
+        "resultText": "Wollert Rhinos CC 1st XI won by 4 wickets",
+        "round": {
+          "id": "ab8ce946-1c8c-4eda-908a-82aaf3064e3f",
+          "name": "Round 9",
+          "shortName": "R9"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2026-02-07T12:30:00.0000000+11:00"
+          },
+          {
+            "matchDay": 2,
+            "startDateTime": "2026-02-14T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "Epping Recreation Reserve",
+          "line1": "Corner High Street and Park Street",
+          "suburb": "EPPING",
+          "postCode": "3076",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.6384828046885,
+            "longitude": 145.022685527801
+          }
+        },
+        "teams": [
+          {
+            "id": "f91444c9-6e74-41cf-a6a2-5f52975b79d3",
+            "displayName": "Wollert Rhinos CC 1st XI",
+            "isHome": true,
+            "scoreText": "6-208",
+            "oversBowled": 69,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "3b8deb93-cadd-4575-a389-674a43f26719",
+              "name": "North Metro Cricket Club",
+              "shortName": "NMCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b8b2dc14-a7a1-40be-9b85-ad5bd6a20dff/1741241184714/logo.png"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": false,
+            "scoreText": "128",
+            "oversBowled": 40.5,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "62b1157c-fd98-4bdf-821a-adb2f3622f43",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 1 wickets",
+        "round": {
+          "id": "f0e9c10f-4a65-4061-bc12-79b234c17cde",
+          "name": "Round 6",
+          "shortName": "R6"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-12-13T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "Olympic Park (West Heidelberg)",
+          "line1": "Liberty Parade",
+          "suburb": "WEST HEIDELBERG",
+          "postCode": "3081",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #1 South",
+            "latitude": -37.7377170540893,
+            "longitude": 145.033907890319
+          }
+        },
+        "teams": [
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": false,
+            "scoreText": "9-159",
+            "oversBowled": 32,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "cfc49d2c-a367-40e3-8b51-ba9dd4ba5958",
+            "displayName": "Bellfield Bulls CC 2nd XI",
+            "isHome": true,
+            "scoreText": "158",
+            "oversBowled": 33.3,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "f184de69-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Bellfield Cricket Club",
+              "shortName": "BCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/0aa7d421-5af3-4256-a2eb-934b77339aac/1681786389142/logo.png"
+            }
+          }
+        ]
+      },
+      {
+        "id": "175ea5e8-b9a2-402e-84f9-afb141e16999",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "Two Day",
+        "matchTypeId": 1,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 49 runs",
+        "round": {
+          "id": "4bc5ba92-d6f1-47fc-b403-f4bd55afdfad",
+          "name": "Round 2",
+          "shortName": "R2"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-10-18T12:30:00.0000000+11:00"
+          },
+          {
+            "matchDay": 2,
+            "startDateTime": "2025-10-25T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.H Sullivan Memorial Park",
+          "line1": "Davis Street",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.7311412073542,
+            "longitude": 145.035399198532
+          }
+        },
+        "teams": [
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": true,
+            "scoreText": "180",
+            "oversBowled": 41,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "b8e1f46f-6a93-4d7e-b133-e2de1485d7cc",
+            "displayName": "West Preston CC 3rd XI",
+            "isHome": false,
+            "scoreText": "131",
+            "oversBowled": 49.3,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "00f14ff6-87d8-eb11-a7ad-2818780da0cc",
+              "name": "West Preston Cricket Club",
+              "shortName": "WPCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/4141f21b-d428-446e-ba34-e4fd4d050961/1681447663793/logo.jpg?_a=BAMAMifg0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fd93f0ad-793c-49dd-9963-da069a4462ad",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 9 wickets",
+        "round": {
+          "id": "4b6c521e-0173-4002-ab09-231b0df04892",
+          "name": "Round 5",
+          "shortName": "R5"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-12-06T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.H Sullivan Memorial Park",
+          "line1": "Davis Street",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.7311412073542,
+            "longitude": 145.035399198532
+          }
+        },
+        "teams": [
+          {
+            "id": "15afc07c-f087-455e-b9a1-e366e750413a",
+            "displayName": "Fairfield CC 2nd XI",
+            "isHome": false,
+            "scoreText": "8-82",
+            "oversBowled": 25,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "23e3c14d-8ad8-eb11-a7ad-2818780da0cc",
+              "name": "Fairfield Cricket Club",
+              "shortName": "FCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/40db7765-ec16-4856-b7c0-92dfc732d3f7/1680249899447/logo.jpg?_a=BAMAMifg0"
+            }
+          },
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": true,
+            "scoreText": "1-90",
+            "oversBowled": 19,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "b2cc8f38-8964-4a3c-a16c-de616b09301f",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "Two Day",
+        "matchTypeId": 1,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 86 runs",
+        "round": {
+          "id": "b4f25202-728a-4f4f-9eec-36aac3e60083",
+          "name": "Round 10",
+          "shortName": "R10"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2026-02-21T12:30:00.0000000+11:00"
+          },
+          {
+            "matchDay": 2,
+            "startDateTime": "2026-02-28T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.H Sullivan Memorial Park",
+          "line1": "Davis Street",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.7311412073542,
+            "longitude": 145.035399198532
+          }
+        },
+        "teams": [
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": true,
+            "scoreText": "170",
+            "oversBowled": 61.3,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "cfc49d2c-a367-40e3-8b51-ba9dd4ba5958",
+            "displayName": "Bellfield Bulls CC 2nd XI",
+            "isHome": false,
+            "scoreText": "84",
+            "oversBowled": 41.1,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "f184de69-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Bellfield Cricket Club",
+              "shortName": "BCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/0aa7d421-5af3-4256-a2eb-934b77339aac/1681786389142/logo.png"
+            }
+          }
+        ]
+      },
+      {
+        "id": "1c40f81b-c4d1-4f37-b443-f3826ac22a3f",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "One Day",
+        "matchTypeId": 2,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 9 wickets",
+        "round": {
+          "id": "c0035275-0124-44d0-908d-a203b8758d50",
+          "name": "Round 1",
+          "shortName": "R1"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-10-11T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "C.H Sullivan Memorial Park",
+          "line1": "Davis Street",
+          "suburb": "RESERVOIR",
+          "postCode": "3073",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "Oval #2 West",
+            "latitude": -37.7311412073542,
+            "longitude": 145.035399198532
+          }
+        },
+        "teams": [
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": true,
+            "scoreText": "1-82",
+            "oversBowled": 14,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "692e6f5f-2531-4d30-9dd8-737ba949ee96",
+            "displayName": "Northern Socials CC 2s XI",
+            "isHome": false,
+            "scoreText": "10-76",
+            "oversBowled": 23,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "d6cfa9a1-86d8-eb11-a7ad-2818780da0cc",
+              "name": "Northern Socials Cricket Club",
+              "shortName": "NSCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/940157ad-9b5f-4fc1-834d-cdb2e4b4f0c8/1685523363223/logo.png"
+            }
+          }
+        ]
+      },
+      {
+        "id": "48adba9d-7c1b-427d-a16c-fffe2de5f51a",
+        "status": "COMPLETED",
+        "statusId": 3,
+        "matchType": "Two Day",
+        "matchTypeId": 1,
+        "isLiveStreaming": false,
+        "resultText": "Fiji Victorian CC 3rd XI won by 2 wickets",
+        "round": {
+          "id": "2004a1ad-3cf2-4886-8175-c51151cf503f",
+          "name": "Round 4",
+          "shortName": "R4"
+        },
+        "matchSchedule": [
+          {
+            "matchDay": 1,
+            "startDateTime": "2025-11-15T12:30:00.0000000+11:00"
+          },
+          {
+            "matchDay": 2,
+            "startDateTime": "2025-11-22T12:30:00.0000000+11:00"
+          }
+        ],
+        "venue": {
+          "name": "W Ruthven VC Reserve",
+          "line1": "Donald Street",
+          "suburb": "PRESTON",
+          "postCode": "3072",
+          "stateName": "Victoria",
+          "country": "Australia",
+          "playingSurface": {
+            "name": "W Ruthven VC Reserve",
+            "latitude": -37.7337885862078,
+            "longitude": 145.023447275161
+          }
+        },
+        "teams": [
+          {
+            "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+            "displayName": "Fiji Victorian CC 3rd XI",
+            "isHome": false,
+            "scoreText": "8-206d & 0-0",
+            "oversBowled": 42,
+            "isWinner": true,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+              "name": "Fiji Victorian Cricket Club",
+              "shortName": "FVCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+            }
+          },
+          {
+            "id": "692e6f5f-2531-4d30-9dd8-737ba949ee96",
+            "displayName": "Northern Socials CC 2s XI",
+            "isHome": true,
+            "scoreText": "90 & 3-148",
+            "oversBowled": 45,
+            "isWinner": false,
+            "isBatting": false,
+            "owningOrganisation": {
+              "id": "d6cfa9a1-86d8-eb11-a7ad-2818780da0cc",
+              "name": "Northern Socials Cricket Club",
+              "shortName": "NSCC",
+              "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/940157ad-9b5f-4fc1-834d-cdb2e4b4f0c8/1685523363223/logo.png"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

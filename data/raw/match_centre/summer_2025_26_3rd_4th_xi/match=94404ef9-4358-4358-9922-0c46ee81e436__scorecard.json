@@ -1,0 +1,278 @@
+{
+  "request": {
+    "name": "match_scorecard",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/94404ef9-4358-4358-9922-0c46ee81e436?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:17:10.890305+00:00"
+  },
+  "payload": {
+    "id": "94404ef9-4358-4358-9922-0c46ee81e436",
+    "status": "COMPLETED",
+    "statusId": 3,
+    "matchType": "One Day",
+    "matchTypeId": 2,
+    "isBallByBall": false,
+    "matchSummary": {
+      "resultText": "Fiji Victorian CC 3rd XI won by forfeit",
+      "teams": [
+        {
+          "resultTypeId": 10,
+          "resultType": "LOST_BY_FORFEIT",
+          "wonToss": false,
+          "battedFirst": false,
+          "id": "b8e1f46f-6a93-4d7e-b133-e2de1485d7cc",
+          "displayName": "West Preston CC 3rd XI",
+          "isHome": true,
+          "scoreText": "0-0",
+          "isWinner": false,
+          "isBatting": false
+        },
+        {
+          "resultTypeId": 9,
+          "resultType": "WON_BY_FORFEIT",
+          "wonToss": false,
+          "battedFirst": false,
+          "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+          "displayName": "Fiji Victorian CC 3rd XI",
+          "isHome": false,
+          "scoreText": "0-0",
+          "isWinner": true,
+          "isBatting": false
+        }
+      ]
+    },
+    "matchStreams": [],
+    "round": {
+      "id": "476610fc-c78c-480a-802c-844b3cad6983",
+      "name": "Round 8",
+      "shortName": "R8"
+    },
+    "grade": {
+      "id": "a269e7f1-2dd7-41e1-aeaa-158faa6dfccd",
+      "name": "04 - \"B\" Grade"
+    },
+    "matchSchedule": [
+      {
+        "matchDay": 1,
+        "startDateTime": "2026-01-31T12:30:00.0000000+11:00"
+      }
+    ],
+    "venue": {
+      "id": "77fc4785-633c-42dc-b4fb-ba1d7ffc668a",
+      "name": "C.T. Barling Reserve",
+      "line1": "880 Plenty Road",
+      "suburb": "RESERVOIR",
+      "postCode": "3073",
+      "stateName": "Victoria",
+      "country": "Australia",
+      "playingSurface": {
+        "id": "c6fec443-0ba7-4a45-b2a9-4a310dc69b46",
+        "name": "North Oval",
+        "latitude": -37.7223244139425,
+        "longitude": 145.033221244812
+      }
+    },
+    "teams": [
+      {
+        "players": [
+          {
+            "participantId": "5e2c0b65-ed24-4c44-88ed-2b48edcfcabd",
+            "name": "Asad Aslam",
+            "shortName": "A Aslam",
+            "roles": []
+          },
+          {
+            "participantId": "4caa757a-8208-4e86-a136-34b10545fe49",
+            "name": "Kerry Kotanidis",
+            "shortName": "K Kotanidis",
+            "roles": []
+          },
+          {
+            "participantId": "ec6680f6-03b5-4a08-a9e0-19f71c62c6c8",
+            "name": "Yash Sachar",
+            "shortName": "Y Sachar",
+            "roles": []
+          },
+          {
+            "participantId": "a3034213-690f-44d2-b2cc-5d367a573ed9",
+            "name": "Bilal Khan",
+            "shortName": "B Khan",
+            "roles": []
+          },
+          {
+            "participantId": "af320ad8-579b-494e-b6d5-c43c440dc31e",
+            "name": "Mathur Nitish",
+            "shortName": "M Nitish",
+            "roles": []
+          },
+          {
+            "participantId": "9ac9099a-29ac-4ba9-8e74-f8ecf71c67b5",
+            "name": "Gaurang Sachar",
+            "shortName": "G Sachar",
+            "roles": []
+          },
+          {
+            "participantId": "f0f183d4-4ab3-4ec5-8225-9790f7faec09",
+            "name": "Syed Wamiq Abbas Abidi",
+            "shortName": "S Abidi",
+            "roles": []
+          },
+          {
+            "participantId": "f4183253-828d-4682-a854-02808f95f00c",
+            "name": "Naveed Iqbal",
+            "shortName": "N Iqbal",
+            "roles": []
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "b8e1f46f-6a93-4d7e-b133-e2de1485d7cc",
+        "displayName": "West Preston CC 3rd XI",
+        "name": "West Preston CC 3rd XI",
+        "owningOrganisation": {
+          "id": "00f14ff6-87d8-eb11-a7ad-2818780da0cc",
+          "name": "West Preston Cricket Club",
+          "shortName": "WPCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/4141f21b-d428-446e-ba34-e4fd4d050961/1681447663793/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      {
+        "players": [
+          {
+            "participantId": "e5bc75aa-b94d-482e-b9f0-df9828edd3ff",
+            "name": "Ved Patel",
+            "shortName": "V Patel",
+            "roles": []
+          },
+          {
+            "participantId": "661bdd19-e67a-4978-a255-36e16789ab1f",
+            "name": "Nitin Tanwar",
+            "shortName": "N Tanwar",
+            "roles": []
+          },
+          {
+            "participantId": "ae0adade-1143-4818-9c6c-ae2879ff4489",
+            "name": "Faraz Khan",
+            "shortName": "F Khan",
+            "roles": []
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "name": "Damandeep Sehra",
+            "shortName": "D Sehra",
+            "roles": [
+              "Captain"
+            ]
+          },
+          {
+            "participantId": "232cc042-1e4c-423a-9190-e3432698c99d",
+            "name": "Reuben Sharan",
+            "shortName": "R Sharan",
+            "roles": [
+              "Wicket Keeper"
+            ]
+          },
+          {
+            "participantId": "478c050c-6e97-4198-ba77-24f46dd329d7",
+            "name": "SHRIKANT SHARMA",
+            "shortName": "S SHARMA",
+            "roles": []
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "name": "Siddhanth Chaurasiya",
+            "shortName": "S Chaurasiya",
+            "roles": []
+          },
+          {
+            "participantId": "4aa29dae-1627-4649-addf-f4a12cdbb9db",
+            "name": "Vishnu Para",
+            "shortName": "V Para",
+            "roles": []
+          },
+          {
+            "participantId": "242a967d-4a20-4cc8-9a32-bf2121ad6d26",
+            "name": "kunwardeep bedi",
+            "shortName": "k bedi",
+            "roles": []
+          },
+          {
+            "participantId": "ef15fcc4-a2d8-47af-af3f-9c4391db7c4a",
+            "name": "Sandeep Gill",
+            "shortName": "S Gill",
+            "roles": []
+          },
+          {
+            "participantId": "17d58ef7-cae1-444e-adba-71c74067872b",
+            "name": "Prasad Rahate",
+            "shortName": "P Rahate",
+            "roles": []
+          },
+          {
+            "participantId": "71ca36a8-b853-449e-b7fd-ac601222e885",
+            "name": "Kartik Nallepalli",
+            "shortName": "K Nallepalli",
+            "roles": []
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+        "displayName": "Fiji Victorian CC 3rd XI",
+        "name": "Fiji Victorian CC 3rd XI",
+        "owningOrganisation": {
+          "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+          "name": "Fiji Victorian Cricket Club",
+          "shortName": "FVCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+        }
+      }
+    ],
+    "innings": [
+      {
+        "id": "70214f4b-6487-41ce-9def-d76d8ff68a5d",
+        "name": "1st Innings - West Preston CC 3rd XI",
+        "inningsCloseType": "Compulsory Close",
+        "inningsNumber": 1,
+        "inningsOrder": 1,
+        "battingTeamId": "b8e1f46f-6a93-4d7e-b133-e2de1485d7cc",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 0,
+        "legByesRuns": 0,
+        "noBalls": 0,
+        "wideBalls": 0,
+        "penalties": 0,
+        "totalExtras": 0,
+        "oversBowled": 0,
+        "runsScored": 0,
+        "numberOfWicketsFallen": 0,
+        "batting": [],
+        "bowling": [],
+        "fielding": [],
+        "fallOfWickets": []
+      },
+      {
+        "id": "cfd4c8a8-d07c-4579-9a3f-b9cb16d27719",
+        "name": "1st Innings - Fiji Victorian CC 3rd XI",
+        "inningsCloseType": "End of Match",
+        "inningsNumber": 1,
+        "inningsOrder": 2,
+        "battingTeamId": "c3859c82-3451-460a-a8af-f55240f3fec9",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 0,
+        "legByesRuns": 0,
+        "noBalls": 0,
+        "wideBalls": 0,
+        "penalties": 0,
+        "totalExtras": 0,
+        "oversBowled": 0,
+        "runsScored": 0,
+        "numberOfWicketsFallen": 0,
+        "batting": [],
+        "bowling": [],
+        "fielding": [],
+        "fallOfWickets": []
+      }
+    ]
+  }
+}

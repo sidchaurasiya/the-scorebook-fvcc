@@ -1,0 +1,22 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/fd329e2f-fa84-4b6b-907c-186a4e35ea57/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:17:14.340046+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Robert Young",
+        "shortName": "R Young",
+        "role": "Umpire"
+      },
+      {
+        "name": "Steven Achison",
+        "shortName": "S Achison",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

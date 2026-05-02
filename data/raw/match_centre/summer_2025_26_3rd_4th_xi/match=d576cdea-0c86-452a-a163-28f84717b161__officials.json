@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/d576cdea-0c86-452a-a163-28f84717b161/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:17:17.912651+00:00"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Joseph Darmenia",
+        "shortName": "J Darmenia",
+        "role": "Umpire"
+      }
+    ]
+  }
+}
