@@ -14,6 +14,17 @@ from src.analytics.playcricket_stats import (
     combine_player_rows,
     top_rows,
 )
+from src.analytics.match_centre_advanced import (
+    bowling_phase_splits,
+    calculate_batting_splits,
+    calculate_best_hidden_performances,
+    calculate_bowling_splits,
+    calculate_fastest_milestones,
+    player_options,
+    player_summary,
+    prepare_match_centre_frames,
+    selected_player_rows,
+)
 from src.data.playcricket_public import (
     PlayCricketPublicClient,
     PlayCricketPublicError,
@@ -93,6 +104,8 @@ def render_page() -> None:
         render_player_profile_page()
     elif selected_page == "Match Insights":
         render_match_centre_page()
+    elif selected_page == "Advanced Analytics":
+        render_advanced_analytics_page()
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
@@ -105,6 +118,7 @@ def render_sidebar() -> str:
         "☆ Milestone",
         "♙ Player Profile",
         "▦ Match Insights",
+        "◈ Advanced Analytics",
     ]
     if "selected_page_label" not in st.session_state:
         st.session_state["selected_page_label"] = page_labels[0]
@@ -131,6 +145,7 @@ def render_sidebar() -> str:
                     <p><strong>Milestone 💪</strong><br>Active players closing in on major club milestones.</p>
                     <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
                     <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
+                    <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
                 </div>
             </details>
             """,
@@ -735,6 +750,184 @@ def render_match_centre_page() -> None:
     )
     selected_match = filtered_matches[filtered_matches["match_selector_label"] == selected_label].iloc[0]
     render_match_centre_detail(selected_match, data)
+
+
+def render_advanced_analytics_page() -> None:
+    st.markdown(
+        """
+        <h1 class="page-title">Advanced Analytics</h1>
+        <div class="club-label">Fiji Victorian Cricket Club</div>
+        <div class="page-subtitle">Player-level splits that go beyond the standard PlayCricket scorecard.</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    scopes = available_match_centre_scopes()
+    if not MATCH_CENTRE_PROCESSED_ROOT.exists():
+        st.info(
+            "No match-centre data folder was found. Run `scripts/refresh_match_centre_data.py` "
+            "for a reviewed season/team scope to create advanced analytics data."
+        )
+        return
+    if not scopes:
+        st.info(
+            "No processed match-centre CSVs were found yet. Run `scripts/refresh_match_centre_data.py` "
+            "and then reload this page."
+        )
+        return
+
+    selected_scope = scopes[0]
+    data = load_match_centre_archive(selected_scope.name, match_centre_scope_signature(selected_scope))
+    frames = prepare_match_centre_frames(data)
+    players = player_options(frames)
+    if players.empty:
+        st.info("No FVCC player rows were found in the available match-centre scope.")
+        return
+
+    st.caption(f"Using latest local match-centre scope: {selected_scope.name}")
+    selected_label = st.selectbox("Player", players["label"].tolist())
+    participant_id = str(players.loc[players["label"] == selected_label, "participant_id"].iloc[0])
+    rows = selected_player_rows(frames, participant_id)
+
+    render_advanced_player_summary(rows)
+    selected_section = st.radio("View", ["Batting", "Bowling"], horizontal=True, label_visibility="collapsed")
+    if selected_section == "Batting":
+        render_advanced_batting_section(rows, frames, participant_id)
+    else:
+        render_advanced_bowling_section(rows, frames, participant_id)
+    render_fastest_milestones_section(rows, frames, participant_id)
+    render_hidden_performances_section(rows, frames, participant_id)
+
+
+def render_advanced_player_summary(rows: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Player Impact")
+    summary = player_summary(rows)
+    cards = [
+        ("Total runs", format_advanced_value(summary["Total runs"], "int")),
+        ("Batting innings", format_advanced_value(summary["Batting innings"], "int")),
+        ("Batting average", format_advanced_value(summary["Batting average"], "decimal")),
+        ("Strike rate", format_advanced_value(summary["Strike rate"], "decimal")),
+        ("Highest score", format_advanced_value(summary["Highest score"], "int")),
+        ("Total wickets", format_advanced_value(summary["Total wickets"], "int")),
+        ("Bowling innings", format_advanced_value(summary["Bowling innings"], "int")),
+        ("Bowling average", format_advanced_value(summary["Bowling average"], "decimal")),
+        ("Economy", format_advanced_value(summary["Economy"], "decimal")),
+        ("Best bowling", str(summary["Best bowling"]),
+        ),
+        ("Bat contribution", format_advanced_value(summary["Batting team-run contribution %"], "percent")),
+        ("Wicket contribution", format_advanced_value(summary["Bowling wicket contribution %"], "percent")),
+    ]
+    for start in range(0, len(cards), 4):
+        columns = st.columns(4)
+        for column, (label, value) in zip(columns, cards[start : start + 4]):
+            column.metric(label, value)
+
+
+def render_advanced_batting_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    batting = rows["batting"]
+    if batting.empty:
+        st.info("This player has no batting rows in the selected match-centre scope.")
+        return
+    ball_by_ball = frames["ball_by_ball"]
+    available_innings = ball_by_ball[
+        ball_by_ball.get("striker_participant_id", pd.Series(dtype="object")).astype(str) == participant_id
+    ]["innings_id"].nunique() if not ball_by_ball.empty and "innings_id" in ball_by_ball else 0
+    if available_innings:
+        st.caption(f"Dot and boundary rates use ball-by-ball events for {available_innings} batting innings where available.")
+    else:
+        st.caption("Dot and boundary rates need ball-by-ball data. Scorecard splits are still available.")
+
+    tables = [
+        ("Batting by position", calculate_batting_splits(batting.assign(bat_order=batting.get("bat_order").fillna("Unknown")), ball_by_ball, "bat_order", "Position")),
+        ("Batting by home/away", calculate_batting_splits(batting, ball_by_ball, "home_away", "Home/Away")),
+        ("Batting by ground", calculate_batting_splits(batting, ball_by_ball, "venue_name", "Ground")),
+        ("Batting by opposition team", calculate_batting_splits(batting, ball_by_ball, "opponent_name", "Opposition")),
+        ("Batting by match format", calculate_batting_splits(batting, ball_by_ball, "format", "Format")),
+    ]
+    for title, table in tables:
+        render_advanced_table(title, table)
+
+
+def render_advanced_bowling_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    bowling = rows["bowling"]
+    player_balls = frames["ball_by_ball"][
+        frames["ball_by_ball"].get("bowler_participant_id", pd.Series(dtype="object")).astype(str) == participant_id
+    ].copy() if not frames["ball_by_ball"].empty else pd.DataFrame()
+    render_section_heading("Bowling Phase Analytics")
+    if player_balls.empty:
+        st.info("Bowling phase analytics need ball-by-ball data. Scorecard-based bowling splits are still available below.")
+    else:
+        render_advanced_table("Bowling by game phase", bowling_phase_splits(frames["ball_by_ball"], frames["matches"], participant_id))
+
+    if bowling.empty:
+        st.info("This player has no bowling rows in the selected match-centre scope.")
+        return
+    tables = [
+        ("Bowling by home/away", calculate_bowling_splits(bowling, "home_away", "Home/Away")),
+        ("Bowling by ground", calculate_bowling_splits(bowling, "venue_name", "Ground")),
+        ("Bowling by opposition team", calculate_bowling_splits(bowling, "opponent_name", "Opposition")),
+        ("Bowling by match format", calculate_bowling_splits(bowling, "format", "Format")),
+    ]
+    for title, table in tables:
+        render_advanced_table(title, table)
+
+
+def render_fastest_milestones_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    render_section_heading("Fastest 50s And 100s")
+    milestones = calculate_fastest_milestones(rows["batting"], frames["ball_by_ball"], participant_id)
+    if milestones.empty:
+        st.info("No 50 or 100 milestones could be calculated from the available ball-by-ball data for this player.")
+        return
+    render_advanced_table("Milestones from ball-by-ball", milestones)
+
+
+def render_hidden_performances_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    render_section_heading("Best Hidden Performances")
+    hidden = calculate_best_hidden_performances(rows["batting"], rows["bowling"], frames["ball_by_ball"], participant_id)
+    render_advanced_table("Notable innings and spells", hidden)
+
+
+def render_advanced_table(title: str, table: pd.DataFrame) -> None:
+    st.markdown(f"### {html.escape(title)}")
+    if table.empty:
+        st.info("No data available for this split yet.")
+        return
+    display = format_advanced_table(table)
+    st.dataframe(
+        display,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(display, max_rows=9),
+    )
+
+
+def format_advanced_table(table: pd.DataFrame) -> pd.DataFrame:
+    output = table.copy()
+    for column in output.columns:
+        if column.endswith("%") or "contribution" in column.casefold() or "Dot %" in column or "Boundary" in column:
+            output[column] = output[column].map(lambda value: format_advanced_value(value, "percent"))
+        elif column in {"Average", "Strike rate", "Economy"}:
+            output[column] = output[column].map(lambda value: format_advanced_value(value, "decimal"))
+        elif column in {"Runs", "Outs", "Innings", "Highest score", "Balls faced", "4s", "6s", "Wickets", "Runs conceded", "Balls", "Extras", "Final score", "Final balls faced", "Balls to 50", "Balls to 100"}:
+            output[column] = output[column].map(lambda value: format_advanced_value(value, "int"))
+        else:
+            output[column] = output[column].fillna("N/A").replace("", "N/A")
+    return output
+
+
+def format_advanced_value(value: object, kind: str) -> str:
+    if value is None or pd.isna(value):
+        return "N/A"
+    numeric = pd.to_numeric(value, errors="coerce")
+    if pd.isna(numeric):
+        return str(value) if str(value).strip() else "N/A"
+    if kind == "int":
+        return f"{int(round(float(numeric))):,}"
+    if kind == "percent":
+        return f"{float(numeric):.1f}%"
+    if kind == "decimal":
+        return f"{float(numeric):.2f}"
+    return str(value)
 
 
 def available_match_centre_scopes() -> list[Path]:
