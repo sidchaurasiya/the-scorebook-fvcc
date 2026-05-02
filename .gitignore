@@ -32,6 +32,15 @@ data/cache/
 data/backups/data_snapshot_*/
 data/exports/
 data/debug_player_vs_peers.csv
+data/raw/match_centre/
+data/processed/match_centre/
+data/raw/ball_by_ball_sample/
+data/raw/match_centre_pilot/
+data/raw/match_centre_summer_pilot/
+data/processed/ball_by_ball_sample/
+data/processed/match_centre_sample/
+data/processed/match_centre_pilot/
+data/processed/match_centre_summer_pilot/
 tmp/
 temp/
 *.tmp

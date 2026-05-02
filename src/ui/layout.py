@@ -14,6 +14,17 @@ from src.analytics.playcricket_stats import (
     combine_player_rows,
     top_rows,
 )
+from src.analytics.match_centre_advanced import (
+    bowling_phase_splits,
+    calculate_batting_splits,
+    calculate_best_hidden_performances,
+    calculate_bowling_splits,
+    calculate_fastest_milestones,
+    player_options,
+    player_summary,
+    prepare_match_centre_frames,
+    selected_player_rows,
+)
 from src.data.playcricket_public import (
     PlayCricketPublicClient,
     PlayCricketPublicError,
@@ -64,6 +75,10 @@ APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
+MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
+HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
+)
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 
@@ -90,6 +105,10 @@ def render_page() -> None:
         render_approaching_milestones_page()
     elif selected_page == "Player Profile":
         render_player_profile_page()
+    elif selected_page == "Match Insights":
+        render_match_centre_page()
+    elif selected_page == "Advanced Analytics":
+        render_advanced_analytics_page()
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
@@ -101,6 +120,8 @@ def render_sidebar() -> str:
         "⌂ Season Overview",
         "☆ Milestone",
         "♙ Player Profile",
+        "▦ Match Insights",
+        "◈ Advanced Analytics",
     ]
     if "selected_page_label" not in st.session_state:
         st.session_state["selected_page_label"] = page_labels[0]
@@ -126,6 +147,8 @@ def render_sidebar() -> str:
                     <p><strong>Season Overview 📊</strong><br>Season stats, team leaders, and detailed batting/bowling/fielding tables.</p>
                     <p><strong>Milestone 💪</strong><br>Active players closing in on major club milestones.</p>
                     <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
+                    <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
+                    <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
                 </div>
             </details>
             """,
@@ -656,6 +679,1127 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
     render_full_stats_section(dashboard_data)
 
 
+def render_match_centre_page() -> None:
+    st.markdown(
+        """
+        <h1 class="page-title">Match Insights</h1>
+        <div class="club-label">Fiji Victorian Cricket Club</div>
+        <div class="page-subtitle">Scorebook-only match stories, player trends, and records from match-centre data.</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    scopes = available_match_centre_scopes()
+    if not MATCH_CENTRE_PROCESSED_ROOT.exists():
+        st.info(
+            "No match-centre data folder was found. Run `scripts/refresh_match_centre_data.py` "
+            "for a reviewed season/team scope to create the archive data."
+        )
+        return
+    if not scopes:
+        st.info(
+            "No processed match-centre CSVs were found yet. Run `scripts/refresh_match_centre_data.py` "
+            "and then reload this page."
+        )
+        return
+
+    scope_options = [scope.name for scope in scopes]
+    selected_scope_name = st.selectbox(
+        "Match-centre data scope",
+        scope_options,
+        index=0,
+        help="Latest local processed scope is selected by default. Change this to review another generated scope.",
+    )
+    selected_scope = MATCH_CENTRE_PROCESSED_ROOT / selected_scope_name
+    data = load_match_centre_archive(selected_scope_name, match_centre_scope_signature(selected_scope))
+    if data["matches"].empty:
+        st.info("This match-centre scope does not contain any match rows yet.")
+        return
+
+    matches = build_match_archive_frame(data["matches"])
+    filtered_matches = render_match_centre_filters(matches)
+    if filtered_matches.empty:
+        st.info("No matches match the selected filters.")
+        return
+
+    render_section_heading("Choose A Match")
+    match_list = filtered_matches[
+        [
+            "match_date_display",
+            "fvcc_team_name",
+            "opponent_name",
+            "grade_name",
+            "venue_name",
+            "result_text",
+            "ball_by_ball_badge",
+        ]
+    ].rename(
+        columns={
+            "match_date_display": "Date",
+            "fvcc_team_name": "FVCC Team",
+            "opponent_name": "Opponent",
+            "grade_name": "Grade",
+            "venue_name": "Venue",
+            "result_text": "Result",
+            "ball_by_ball_badge": "Ball-by-ball",
+        }
+    )
+    st.dataframe(match_list, use_container_width=True, hide_index=True, height=table_height(match_list, max_rows=12))
+
+    selected_label = st.selectbox(
+        "Match to analyse",
+        filtered_matches["match_selector_label"].tolist(),
+        index=0,
+    )
+    selected_match = filtered_matches[filtered_matches["match_selector_label"] == selected_label].iloc[0]
+    render_match_centre_detail(selected_match, data)
+
+
+def render_advanced_analytics_page() -> None:
+    st.markdown(
+        """
+        <h1 class="page-title">Advanced Analytics</h1>
+        <div class="club-label">Fiji Victorian Cricket Club</div>
+        <div class="page-subtitle">Player-level splits that go beyond the standard PlayCricket scorecard.</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    scopes = available_match_centre_scopes()
+    if not MATCH_CENTRE_PROCESSED_ROOT.exists():
+        st.info(
+            "No match-centre data folder was found. Run `scripts/refresh_match_centre_data.py` "
+            "for a reviewed season/team scope to create advanced analytics data."
+        )
+        return
+    if not scopes:
+        st.info(
+            "No processed match-centre CSVs were found yet. Run `scripts/refresh_match_centre_data.py` "
+            "and then reload this page."
+        )
+        return
+
+    selected_scope = scopes[0]
+    data = load_match_centre_archive(selected_scope.name, match_centre_scope_signature(selected_scope))
+    frames = prepare_match_centre_frames(data)
+    players = player_options(frames)
+    if players.empty:
+        st.info("No FVCC player rows were found in the available match-centre scope.")
+        return
+
+    st.caption(f"Using latest local match-centre scope: {selected_scope.name}")
+    selected_label = st.selectbox("Player", players["label"].tolist())
+    participant_id = str(players.loc[players["label"] == selected_label, "participant_id"].iloc[0])
+    rows = selected_player_rows(frames, participant_id)
+
+    render_advanced_player_summary(rows)
+    selected_section = st.radio("View", ["Batting", "Bowling"], horizontal=True, label_visibility="collapsed")
+    if selected_section == "Batting":
+        render_advanced_batting_section(rows, frames, participant_id)
+    else:
+        render_advanced_bowling_section(rows, frames, participant_id)
+    render_fastest_milestones_section(rows, frames, participant_id)
+    render_hidden_performances_section(rows, frames, participant_id)
+
+
+def render_advanced_player_summary(rows: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Player Impact")
+    summary = player_summary(rows)
+    cards = [
+        ("Total runs", format_advanced_value(summary["Total runs"], "int")),
+        ("Batting innings", format_advanced_value(summary["Batting innings"], "int")),
+        ("Batting average", format_advanced_value(summary["Batting average"], "decimal")),
+        ("Strike rate", format_advanced_value(summary["Strike rate"], "decimal")),
+        ("Highest score", format_advanced_value(summary["Highest score"], "int")),
+        ("Total wickets", format_advanced_value(summary["Total wickets"], "int")),
+        ("Bowling innings", format_advanced_value(summary["Bowling innings"], "int")),
+        ("Bowling average", format_advanced_value(summary["Bowling average"], "decimal")),
+        ("Economy", format_advanced_value(summary["Economy"], "decimal")),
+        ("Best bowling", str(summary["Best bowling"]),
+        ),
+        ("Bat contribution", format_advanced_value(summary["Batting team-run contribution %"], "percent")),
+        ("Wicket contribution", format_advanced_value(summary["Bowling wicket contribution %"], "percent")),
+    ]
+    for start in range(0, len(cards), 4):
+        columns = st.columns(4)
+        for column, (label, value) in zip(columns, cards[start : start + 4]):
+            column.metric(label, value)
+
+
+def render_advanced_batting_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    batting = rows["batting"]
+    if batting.empty:
+        st.info("This player has no batting rows in the selected match-centre scope.")
+        return
+    ball_by_ball = frames["ball_by_ball"]
+    available_innings = ball_by_ball[
+        ball_by_ball.get("striker_participant_id", pd.Series(dtype="object")).astype(str) == participant_id
+    ]["innings_id"].nunique() if not ball_by_ball.empty and "innings_id" in ball_by_ball else 0
+    if available_innings:
+        st.caption(f"Dot and boundary rates use ball-by-ball events for {available_innings} batting innings where available.")
+    else:
+        st.caption("Dot and boundary rates need ball-by-ball data. Scorecard splits are still available.")
+
+    tables = [
+        ("Batting by position", calculate_batting_splits(batting.assign(bat_order=batting.get("bat_order").fillna("Unknown")), ball_by_ball, "bat_order", "Position")),
+        ("Batting by home/away", calculate_batting_splits(batting, ball_by_ball, "home_away", "Home/Away")),
+        ("Batting by ground", calculate_batting_splits(batting, ball_by_ball, "venue_name", "Ground")),
+        ("Batting by opposition team", calculate_batting_splits(batting, ball_by_ball, "opponent_name", "Opposition")),
+        ("Batting by match format", calculate_batting_splits(batting, ball_by_ball, "format", "Format")),
+    ]
+    for title, table in tables:
+        render_advanced_table(title, table)
+
+
+def render_advanced_bowling_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    bowling = rows["bowling"]
+    player_balls = frames["ball_by_ball"][
+        frames["ball_by_ball"].get("bowler_participant_id", pd.Series(dtype="object")).astype(str) == participant_id
+    ].copy() if not frames["ball_by_ball"].empty else pd.DataFrame()
+    render_section_heading("Bowling Phase Analytics")
+    if player_balls.empty:
+        st.info("Bowling phase analytics need ball-by-ball data. Scorecard-based bowling splits are still available below.")
+    else:
+        render_advanced_table("Bowling by game phase", bowling_phase_splits(frames["ball_by_ball"], frames["matches"], participant_id))
+
+    if bowling.empty:
+        st.info("This player has no bowling rows in the selected match-centre scope.")
+        return
+    tables = [
+        ("Bowling by home/away", calculate_bowling_splits(bowling, "home_away", "Home/Away")),
+        ("Bowling by ground", calculate_bowling_splits(bowling, "venue_name", "Ground")),
+        ("Bowling by opposition team", calculate_bowling_splits(bowling, "opponent_name", "Opposition")),
+        ("Bowling by match format", calculate_bowling_splits(bowling, "format", "Format")),
+    ]
+    for title, table in tables:
+        render_advanced_table(title, table)
+
+
+def render_fastest_milestones_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    render_section_heading("Fastest 50s And 100s")
+    milestones = calculate_fastest_milestones(rows["batting"], frames["ball_by_ball"], participant_id)
+    if milestones.empty:
+        st.info("No 50 or 100 milestones could be calculated from the available ball-by-ball data for this player.")
+        return
+    render_advanced_table("Milestones from ball-by-ball", milestones)
+
+
+def render_hidden_performances_section(rows: dict[str, pd.DataFrame], frames: dict[str, pd.DataFrame], participant_id: str) -> None:
+    render_section_heading("Best Hidden Performances")
+    hidden = calculate_best_hidden_performances(rows["batting"], rows["bowling"], frames["ball_by_ball"], participant_id)
+    render_advanced_table("Notable innings and spells", hidden)
+
+
+def render_advanced_table(title: str, table: pd.DataFrame) -> None:
+    st.markdown(f"### {html.escape(title)}")
+    if table.empty:
+        st.info("No data available for this split yet.")
+        return
+    display = format_advanced_table(table)
+    st.dataframe(
+        display,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(display, max_rows=9),
+    )
+
+
+def format_advanced_table(table: pd.DataFrame) -> pd.DataFrame:
+    output = table.copy()
+    for column in output.columns:
+        if column.endswith("%") or "contribution" in column.casefold() or "Dot %" in column or "Boundary" in column:
+            output[column] = output[column].map(lambda value: format_advanced_value(value, "percent"))
+        elif column in {"Average", "Strike rate", "Economy"}:
+            output[column] = output[column].map(lambda value: format_advanced_value(value, "decimal"))
+        elif column in {"Runs", "Outs", "Innings", "Highest score", "Balls faced", "4s", "6s", "Wickets", "Runs conceded", "Balls", "Extras", "Final score", "Final balls faced", "Balls to 50", "Balls to 100"}:
+            output[column] = output[column].map(lambda value: format_advanced_value(value, "int"))
+        else:
+            output[column] = output[column].fillna("N/A").replace("", "N/A")
+    return output
+
+
+def format_advanced_value(value: object, kind: str) -> str:
+    if value is None or pd.isna(value):
+        return "N/A"
+    numeric = pd.to_numeric(value, errors="coerce")
+    if pd.isna(numeric):
+        return str(value) if str(value).strip() else "N/A"
+    if kind == "int":
+        return f"{int(round(float(numeric))):,}"
+    if kind == "percent":
+        return f"{float(numeric):.1f}%"
+    if kind == "decimal":
+        return f"{float(numeric):.2f}"
+    return str(value)
+
+
+def available_match_centre_scopes() -> list[Path]:
+    if not MATCH_CENTRE_PROCESSED_ROOT.exists():
+        return []
+    scopes = [
+        path
+        for path in MATCH_CENTRE_PROCESSED_ROOT.iterdir()
+        if path.is_dir() and (path / "all_matches.csv").exists()
+    ]
+    return sorted(scopes, key=lambda path: path.stat().st_mtime, reverse=True)
+
+
+def match_centre_scope_signature(scope_path: Path) -> tuple[tuple[str, float], ...]:
+    if not scope_path.exists():
+        return tuple()
+    return tuple(
+        sorted(
+            (path.name, path.stat().st_mtime)
+            for path in scope_path.glob("*.csv")
+            if path.is_file()
+        )
+    )
+
+
+@st.cache_data(show_spinner=False)
+def load_match_centre_archive(scope_name: str, _signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+    scope_path = MATCH_CENTRE_PROCESSED_ROOT / scope_name
+    table_names = [
+        "all_matches",
+        "all_match_innings",
+        "all_scorecard_batting",
+        "all_scorecard_bowling",
+        "all_match_officials",
+        "all_ball_by_ball",
+        "all_overs",
+        "all_partnerships",
+    ]
+    return {name.removeprefix("all_"): read_match_centre_csv(scope_path / f"{name}.csv") for name in table_names}
+
+
+def read_match_centre_csv(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path)
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+        return pd.DataFrame()
+
+
+def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
+    output = matches.copy()
+    for column in [
+        "home_team_name",
+        "away_team_name",
+        "home_team_id",
+        "away_team_id",
+        "grade_name",
+        "venue_name",
+        "result_text",
+        "round_name",
+        "first_match_day",
+        "is_ball_by_ball",
+    ]:
+        if column not in output:
+            output[column] = pd.NA
+
+    output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce")
+    output["match_date_display"] = output["match_date"].dt.strftime("%d %b %Y").fillna("Date TBC")
+    fvcc_is_home = output["home_team_name"].map(is_fvcc_team_name)
+    output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
+    output["fvcc_team_name"] = output["home_team_name"].where(fvcc_is_home, output["away_team_name"]).fillna("FVCC")
+    output["opponent_team_id"] = output["away_team_id"].where(fvcc_is_home, output["home_team_id"])
+    output["opponent_name"] = output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).fillna("Unknown opponent")
+    output["is_ball_by_ball_bool"] = output["is_ball_by_ball"].map(parse_bool)
+    output["ball_by_ball_badge"] = output["is_ball_by_ball_bool"].map(lambda value: "Yes" if value else "No")
+    output["match_title"] = output["fvcc_team_name"].fillna("FVCC") + " vs " + output["opponent_name"].fillna("Unknown opponent")
+    output["match_selector_label"] = (
+        output["match_date_display"].astype(str)
+        + " - "
+        + output["fvcc_team_name"].astype(str)
+        + " vs "
+        + output["opponent_name"].astype(str)
+        + " - "
+        + output["result_text"].fillna("Result unavailable").astype(str)
+    )
+    output = output.sort_values(["match_date", "grade_name", "fvcc_team_name"], ascending=[False, True, True])
+    return output.reset_index(drop=True)
+
+
+def render_match_centre_filters(matches: pd.DataFrame) -> pd.DataFrame:
+    with st.container(key="match_centre_filters"):
+        filter_cols = st.columns([1.1, 1.0, 1.2, 1.2, 0.9], gap="small")
+        team = filter_cols[0].selectbox("Team", ["All"] + sorted_options(matches["fvcc_team_name"]))
+        grade = filter_cols[1].selectbox("Grade", ["All"] + sorted_options(matches["grade_name"]))
+        opponent = filter_cols[2].selectbox("Opponent", ["All"] + sorted_options(matches["opponent_name"]))
+        venue = filter_cols[3].selectbox("Venue", ["All"] + sorted_options(matches["venue_name"]))
+        ball_by_ball = filter_cols[4].selectbox("Ball-by-ball available", ["All", "Yes", "No"])
+
+    filtered = matches.copy()
+    if team != "All":
+        filtered = filtered[filtered["fvcc_team_name"] == team]
+    if grade != "All":
+        filtered = filtered[filtered["grade_name"] == grade]
+    if opponent != "All":
+        filtered = filtered[filtered["opponent_name"] == opponent]
+    if venue != "All":
+        filtered = filtered[filtered["venue_name"] == venue]
+    if ball_by_ball != "All":
+        filtered = filtered[filtered["ball_by_ball_badge"] == ball_by_ball]
+    return filtered
+
+
+def render_match_centre_detail(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    match_id = str(match.get("match_id", ""))
+    st.markdown("---")
+    badge = "Ball-by-ball available" if bool(match.get("is_ball_by_ball_bool")) else "Scorecard only"
+    st.markdown(f"## {html.escape(str(match.get('match_title', 'Selected match')))}")
+    detail_cols = st.columns(4)
+    detail_cols[0].metric("Date", safe_display(match.get("match_date_display")))
+    detail_cols[1].metric("Grade", safe_display(match.get("grade_name")))
+    detail_cols[2].metric("Round", safe_display(match.get("round_name")))
+    detail_cols[3].metric("Mode", badge)
+    st.caption(
+        " | ".join(
+            part
+            for part in [
+                f"Venue: {safe_display(match.get('venue_name'))}",
+                f"Result: {safe_display(match.get('result_text'))}",
+            ]
+            if part
+        )
+    )
+    render_match_officials(match_id, data["match_officials"])
+    match_context = build_selected_match_context(match, data)
+    render_match_story(match, match_context)
+    render_player_insights(match, data)
+    render_records_lab(data)
+    with st.expander("View raw scorecard", expanded=False):
+        render_match_scorecards(match, data)
+
+
+def build_selected_match_context(match: pd.Series, data: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
+    match_id = str(match.get("match_id", ""))
+    fvcc_team_id = str(match.get("fvcc_team_id", ""))
+    innings = match_rows(data["match_innings"], match_id)
+    batting = add_innings_context(match_rows(data["scorecard_batting"], match_id), innings)
+    bowling = add_innings_context(match_rows(data["scorecard_bowling"], match_id), innings)
+    batting = calculate_batting_contribution_percentage(batting, innings)
+    bowling = calculate_bowling_impact_score(bowling)
+    ball_by_ball = match_rows(data["ball_by_ball"], match_id)
+    overs = match_rows(data["overs"], match_id)
+    partnerships = match_rows(data["partnerships"], match_id)
+    return {
+        "innings": innings,
+        "batting": batting,
+        "bowling": bowling,
+        "fvcc_batting": team_rows(batting, fvcc_team_id),
+        "fvcc_bowling": team_rows(bowling, fvcc_team_id),
+        "ball_by_ball": ball_by_ball,
+        "overs": overs,
+        "partnerships": partnerships,
+    }
+
+
+def render_match_story(match: pd.Series, context: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Match Story")
+    fvcc_batting = context["fvcc_batting"]
+    fvcc_bowling = context["fvcc_bowling"]
+    partnerships = context["partnerships"]
+    ball_by_ball = context["ball_by_ball"]
+    overs = context["overs"]
+    fvcc_team_id = str(match.get("fvcc_team_id", ""))
+
+    top_batter = top_row(fvcc_batting, "contribution_pct")
+    top_bowler = top_row(fvcc_bowling, "bowling_impact_score")
+    support = biggest_batting_support(fvcc_batting, partnerships, fvcc_team_id)
+    all_rounder = top_row(calculate_all_round_impact(fvcc_batting, fvcc_bowling), "all_round_impact")
+
+    cards = [
+        (
+            "Top batting contribution",
+            insight_player_label(top_batter),
+            batting_contribution_label(top_batter),
+        ),
+        (
+            "Top bowling impact",
+            insight_player_label(top_bowler),
+            bowling_impact_label(top_bowler),
+        ),
+        (
+            "Biggest batting support",
+            support.get("label", "-"),
+            support.get("detail", "No support innings found."),
+        ),
+        (
+            "Best all-round contributor",
+            insight_player_label(all_rounder),
+            all_round_label(all_rounder),
+        ),
+        (
+            "Ball-by-ball",
+            "Available" if bool(match.get("is_ball_by_ball_bool")) else "Not available",
+            "Optional enrichment layer" if bool(match.get("is_ball_by_ball_bool")) else "Scorecard insights still available",
+        ),
+    ]
+    render_insight_cards(cards)
+
+    if not bool(match.get("is_ball_by_ball_bool")) or ball_by_ball.empty:
+        st.info("Advanced ball-by-ball insights are not available for this match, but scorecard-based insights are available.")
+        return
+
+    milestones = detect_quickest_milestones(ball_by_ball, fvcc_team_id)
+    biggest_over = biggest_fvcc_over(overs, fvcc_team_id)
+    burst = detect_wicket_burst(ball_by_ball, fvcc_team_id)
+    dot_pct = calculate_dot_ball_percentage(ball_by_ball, fvcc_team_id)
+    boundary_pct = calculate_boundary_percentage(ball_by_ball, fvcc_team_id)
+    advanced_cards = [
+        ("Quickest milestone", milestone_label(milestones), milestone_detail(milestones)),
+        ("Biggest FVCC over", biggest_over.get("label", "-"), biggest_over.get("detail", "No over data found.")),
+        ("Wicket burst", burst.get("label", "-"), burst.get("detail", "No 2-wicket burst found.")),
+        ("FVCC bowling dots", format_percent(dot_pct), "Legal deliveries with no runs scored"),
+        ("FVCC batting boundaries", format_percent(boundary_pct), "Legal balls that went for 4 or 6"),
+    ]
+    render_insight_cards(advanced_cards)
+
+
+def render_insight_cards(cards: list[tuple[str, str, str]]) -> None:
+    columns = st.columns(len(cards))
+    for column, (title, value, detail) in zip(columns, cards):
+        with column:
+            st.metric(title, value)
+            st.caption(detail)
+
+
+def render_player_insights(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Player Insights")
+    matches = build_match_archive_frame(data["matches"])
+    batting = calculate_batting_contribution_percentage(
+        add_match_context(data["scorecard_batting"], matches),
+        data["match_innings"],
+    )
+    bowling = calculate_bowling_impact_score(add_match_context(data["scorecard_bowling"], matches))
+    fvcc_team_ids = set(matches["fvcc_team_id"].dropna().astype(str).tolist()) if not matches.empty else set()
+    fvcc_batting = batting[batting["team_id"].astype(str).isin(fvcc_team_ids)].copy() if "team_id" in batting else pd.DataFrame()
+    fvcc_bowling = bowling[bowling["team_id"].astype(str).isin(fvcc_team_ids)].copy() if "team_id" in bowling else pd.DataFrame()
+
+    tab1, tab2, tab3, tab4 = st.tabs(["Runs", "Wickets", "Best Innings", "Dismissals"])
+    with tab1:
+        left, right = st.columns(2)
+        with left:
+            render_compact_insight_table(calculate_player_vs_opponent(fvcc_batting, "runs_scored"), "Runs by opponent")
+        with right:
+            render_compact_insight_table(calculate_player_vs_venue(fvcc_batting, "runs_scored"), "Runs by venue")
+    with tab2:
+        left, right = st.columns(2)
+        with left:
+            render_compact_insight_table(calculate_player_vs_opponent(fvcc_bowling, "wickets_taken"), "Wickets by opponent")
+        with right:
+            render_compact_insight_table(calculate_player_vs_venue(fvcc_bowling, "wickets_taken"), "Wickets by venue")
+    with tab3:
+        best_batting = fvcc_batting.sort_values(["contribution_pct", "runs_scored"], ascending=[False, False])
+        render_compact_insight_table(
+            display_table(
+                best_batting.head(10),
+                ["player_name", "opponent_name", "venue_name", "runs_scored", "team_total", "contribution_pct"],
+                {
+                    "player_name": "Player",
+                    "opponent_name": "Opponent",
+                    "venue_name": "Venue",
+                    "runs_scored": "Runs",
+                    "team_total": "Team Runs",
+                    "contribution_pct": "Contribution %",
+                },
+            ),
+            "Best batting innings by contribution",
+        )
+        best_bowling = fvcc_bowling.sort_values(["wickets_taken", "runs_conceded"], ascending=[False, True])
+        render_compact_insight_table(
+            display_table(
+                best_bowling.head(10),
+                ["player_name", "opponent_name", "wickets_taken", "runs_conceded", "overs_bowled", "economy"],
+                {
+                    "player_name": "Player",
+                    "opponent_name": "Opponent",
+                    "wickets_taken": "Wickets",
+                    "runs_conceded": "Runs",
+                    "overs_bowled": "Overs",
+                    "economy": "Economy",
+                },
+            ),
+            "Best bowling figures by opponent",
+        )
+    with tab4:
+        dismissals = dismissal_type_breakdown(fvcc_batting)
+        render_compact_insight_table(dismissals, "Dismissal type breakdown")
+
+
+def render_records_lab(data: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Records Lab")
+    matches = build_match_archive_frame(data["matches"])
+    batting = calculate_batting_contribution_percentage(
+        add_match_context(data["scorecard_batting"], matches),
+        data["match_innings"],
+    )
+    bowling = calculate_bowling_impact_score(add_match_context(data["scorecard_bowling"], matches))
+    fvcc_team_ids = set(matches["fvcc_team_id"].dropna().astype(str).tolist()) if not matches.empty else set()
+    fvcc_batting = batting[batting["team_id"].astype(str).isin(fvcc_team_ids)].copy() if "team_id" in batting else pd.DataFrame()
+    fvcc_bowling = bowling[bowling["team_id"].astype(str).isin(fvcc_team_ids)].copy() if "team_id" in bowling else pd.DataFrame()
+
+    tabs = st.tabs(["Batting", "Bowling", "All-round", "Ball-by-ball"])
+    with tabs[0]:
+        left, right = st.columns(2)
+        with left:
+            render_compact_insight_table(record_batting_contribution(fvcc_batting), "Highest FVCC contribution percentage")
+            render_compact_insight_table(record_batting_by_dimension(fvcc_batting, "venue_name", "Venue"), "Best FVCC innings by venue")
+        with right:
+            render_compact_insight_table(record_batting_by_dimension(fvcc_batting, "opponent_name", "Opponent"), "Best FVCC innings by opponent")
+    with tabs[1]:
+        left, right = st.columns(2)
+        with left:
+            render_compact_insight_table(record_bowling_by_dimension(fvcc_bowling, "venue_name", "Venue"), "Best FVCC bowling figures by venue")
+        with right:
+            render_compact_insight_table(record_bowling_by_dimension(fvcc_bowling, "opponent_name", "Opponent"), "Best FVCC bowling figures by opponent")
+    with tabs[2]:
+        render_compact_insight_table(record_all_round_matches(fvcc_batting, fvcc_bowling), "Best all-round match performance")
+    with tabs[3]:
+        if data["ball_by_ball"].empty:
+            st.info("Fastest milestones and bowling phase records need ball-by-ball data.")
+            return
+        milestones = all_fastest_milestones(data["ball_by_ball"], fvcc_team_ids)
+        phase = best_opening_spell(data["overs"], fvcc_team_ids)
+        left, right = st.columns(2)
+        with left:
+            render_compact_insight_table(milestones[milestones["Milestone"].isin(["50", "100"])], "Fastest 50s and 100s")
+        with right:
+            render_compact_insight_table(phase, "Best opening spell / phase")
+
+
+def render_compact_insight_table(table: pd.DataFrame, title: str) -> None:
+    st.markdown(f"#### {html.escape(title)}")
+    if table.empty:
+        st.info("No data available for this insight yet.")
+        return
+    st.dataframe(
+        coerce_display_numbers(table),
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(table, max_rows=8),
+        column_config=numeric_column_config(table.columns.tolist()),
+    )
+
+
+def render_match_officials(match_id: str, officials: pd.DataFrame) -> None:
+    if officials.empty or "match_id" not in officials:
+        st.caption("Officials: not available.")
+        return
+    rows = officials[officials["match_id"].astype(str) == match_id].copy()
+    if rows.empty:
+        st.caption("Officials: not available.")
+        return
+    labels = []
+    for _, row in rows.iterrows():
+        role = safe_display(row.get("role"), "Official")
+        name = safe_display(row.get("official_name"), safe_display(row.get("official_short_name"), "Unknown"))
+        labels.append(f"{role}: {name}")
+    st.caption("Officials: " + " | ".join(labels))
+
+
+def render_match_scorecards(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Scorecards")
+    fvcc_team_id = str(match.get("fvcc_team_id", ""))
+    opponent_team_id = str(match.get("opponent_team_id", ""))
+    match_id = str(match.get("match_id", ""))
+    innings = match_rows(data["match_innings"], match_id)
+    batting = add_innings_context(match_rows(data["scorecard_batting"], match_id), innings)
+    bowling = add_innings_context(match_rows(data["scorecard_bowling"], match_id), innings)
+
+    tabs = st.tabs(["FVCC Batting", "FVCC Bowling", "Opposition Batting", "Opposition Bowling"])
+    with tabs[0]:
+        render_scorecard_batting_table(team_rows(batting, fvcc_team_id), "No FVCC batting data is available for this match.")
+    with tabs[1]:
+        render_scorecard_bowling_table(team_rows(bowling, fvcc_team_id), "No FVCC bowling data is available for this match.")
+    with tabs[2]:
+        render_scorecard_batting_table(team_rows(batting, opponent_team_id), "No opposition batting data is available for this match.")
+    with tabs[3]:
+        render_scorecard_bowling_table(team_rows(bowling, opponent_team_id), "No opposition bowling data is available for this match.")
+
+
+def render_scorecard_batting_table(rows: pd.DataFrame, empty_message: str) -> None:
+    if rows.empty:
+        st.info(empty_message)
+        return
+    display = rows.sort_values(["innings_order", "bat_order"]).copy()
+    columns = ["player_name", "runs_scored", "balls_faced", "fours_scored", "sixes_scored", "strike_rate", "dismissal_text"]
+    rename_map = {
+        "player_name": "Player",
+        "runs_scored": "Runs",
+        "balls_faced": "Balls",
+        "fours_scored": "4s",
+        "sixes_scored": "6s",
+        "strike_rate": "SR",
+        "dismissal_text": "Dismissal",
+    }
+    if display["innings_name"].nunique(dropna=True) > 1:
+        columns.insert(0, "innings_name")
+        rename_map["innings_name"] = "Innings"
+    table = display_table(display, columns, rename_map)
+    st.dataframe(
+        table,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(table, max_rows=12),
+        column_config=numeric_column_config(table.columns.tolist()),
+    )
+
+
+def render_scorecard_bowling_table(rows: pd.DataFrame, empty_message: str) -> None:
+    if rows.empty:
+        st.info(empty_message)
+        return
+    display = rows.sort_values(["innings_order", "bowl_order"]).copy()
+    columns = ["player_name", "overs_bowled", "maidens_bowled", "runs_conceded", "wickets_taken", "economy", "wides", "no_balls"]
+    rename_map = {
+        "player_name": "Player",
+        "overs_bowled": "Overs",
+        "maidens_bowled": "Maidens",
+        "runs_conceded": "Runs",
+        "wickets_taken": "Wickets",
+        "economy": "Economy",
+        "wides": "Wides",
+        "no_balls": "No-balls",
+    }
+    if display["innings_name"].nunique(dropna=True) > 1:
+        columns.insert(0, "innings_name")
+        rename_map["innings_name"] = "Innings"
+    table = display_table(display, columns, rename_map)
+    st.dataframe(
+        table,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(table, max_rows=12),
+        column_config=numeric_column_config(table.columns.tolist()),
+    )
+
+
+def render_ball_by_ball_summary(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Ball-by-ball Summary")
+    if not bool(match.get("is_ball_by_ball_bool")):
+        st.info("Ball-by-ball data is not available for this match, but scorecard analytics are still available.")
+        return
+    match_id = str(match.get("match_id", ""))
+    ball_events = len(match_rows(data["ball_by_ball"], match_id))
+    overs = len(match_rows(data["overs"], match_id))
+    partnerships = len(match_rows(data["partnerships"], match_id))
+    cols = st.columns(3)
+    cols[0].metric("Ball events", f"{ball_events:,}")
+    cols[1].metric("Overs rows", f"{overs:,}")
+    cols[2].metric("Partnership rows", f"{partnerships:,}")
+
+
+def calculate_team_total(innings: pd.DataFrame, innings_id: object, fallback_runs: object = 0) -> float:
+    if innings.empty or "innings_id" not in innings or "runs_scored" not in innings:
+        return float(pd.to_numeric(pd.Series([fallback_runs]), errors="coerce").fillna(0).iloc[0])
+    rows = innings[innings["innings_id"].astype(str) == str(innings_id)]
+    if rows.empty:
+        return float(pd.to_numeric(pd.Series([fallback_runs]), errors="coerce").fillna(0).iloc[0])
+    return float(pd.to_numeric(rows["runs_scored"], errors="coerce").fillna(0).max())
+
+
+def calculate_batting_contribution_percentage(batting: pd.DataFrame, innings: pd.DataFrame) -> pd.DataFrame:
+    if batting.empty:
+        return batting
+    output = batting.copy()
+    output["runs_scored"] = pd.to_numeric(output.get("runs_scored"), errors="coerce").fillna(0)
+    team_totals = []
+    for _, row in output.iterrows():
+        team_total = calculate_team_total(innings, row.get("innings_id"), output.loc[output["innings_id"] == row.get("innings_id"), "runs_scored"].sum())
+        team_totals.append(team_total)
+    output["team_total"] = team_totals
+    output["contribution_pct"] = output.apply(
+        lambda row: (float(row["runs_scored"]) / float(row["team_total"]) * 100) if float(row["team_total"] or 0) > 0 else 0,
+        axis=1,
+    )
+    return output
+
+
+def calculate_bowling_impact_score(bowling: pd.DataFrame) -> pd.DataFrame:
+    if bowling.empty:
+        return bowling
+    output = bowling.copy()
+    output["wickets_taken"] = pd.to_numeric(output.get("wickets_taken"), errors="coerce").fillna(0)
+    output["economy"] = pd.to_numeric(output.get("economy"), errors="coerce").fillna(0)
+    output["maidens_bowled"] = pd.to_numeric(output.get("maidens_bowled"), errors="coerce").fillna(0)
+    output["overs_bowled"] = pd.to_numeric(output.get("overs_bowled"), errors="coerce").fillna(0)
+    output["bowling_impact_score"] = (
+        output["wickets_taken"] * 25
+        + output["maidens_bowled"] * 4
+        + output["overs_bowled"].clip(upper=8)
+        - output["economy"] * 2
+    )
+    return output
+
+
+def calculate_all_round_impact(batting: pd.DataFrame, bowling: pd.DataFrame) -> pd.DataFrame:
+    bat = pd.DataFrame(columns=["participant_id", "player_name", "runs_scored", "contribution_pct"])
+    bowl = pd.DataFrame(columns=["participant_id", "player_name", "wickets_taken", "bowling_impact_score"])
+    if not batting.empty:
+        bat = batting.copy()
+        bat["runs_scored"] = pd.to_numeric(bat.get("runs_scored"), errors="coerce").fillna(0)
+        bat["contribution_pct"] = pd.to_numeric(bat.get("contribution_pct"), errors="coerce").fillna(0)
+        bat = bat.groupby(["participant_id", "player_name"], dropna=False, as_index=False).agg({"runs_scored": "sum", "contribution_pct": "max"})
+    if not bowling.empty:
+        bowl = bowling.copy()
+        bowl["wickets_taken"] = pd.to_numeric(bowl.get("wickets_taken"), errors="coerce").fillna(0)
+        bowl["bowling_impact_score"] = pd.to_numeric(bowl.get("bowling_impact_score"), errors="coerce").fillna(0)
+        bowl = bowl.groupby(["participant_id", "player_name"], dropna=False, as_index=False).agg({"wickets_taken": "sum", "bowling_impact_score": "max"})
+    combined = bat.merge(bowl, on=["participant_id", "player_name"], how="outer").fillna(0)
+    if combined.empty:
+        return combined
+    combined = combined[(combined["runs_scored"] > 0) & ((combined["wickets_taken"] > 0) | (combined["bowling_impact_score"] > 0))].copy()
+    combined["all_round_impact"] = combined["runs_scored"] + combined["contribution_pct"] * 0.4 + combined["wickets_taken"] * 25 + combined["bowling_impact_score"]
+    return combined
+
+
+def detect_quickest_milestones(ball_by_ball: pd.DataFrame, fvcc_team_id: str) -> pd.DataFrame:
+    if ball_by_ball.empty:
+        return pd.DataFrame(columns=["Milestone", "Player", "Balls", "Runs"])
+    balls = ball_by_ball[ball_by_ball["batting_team_id"].astype(str) == str(fvcc_team_id)].copy()
+    if balls.empty:
+        return pd.DataFrame(columns=["Milestone", "Player", "Balls", "Runs"])
+    for column in ["runs_bat", "is_legal_delivery"]:
+        if column not in balls:
+            balls[column] = 0
+    balls["runs_bat"] = pd.to_numeric(balls["runs_bat"], errors="coerce").fillna(0)
+    balls["legal_ball"] = balls["is_legal_delivery"].map(parse_bool).astype(int)
+    rows = []
+    for _, group in balls.groupby("striker_participant_id", dropna=False):
+        group = group.sort_values(["innings_order", "over_number", "ball_number"])
+        group["batter_runs"] = group["runs_bat"].cumsum()
+        group["balls_faced"] = group["legal_ball"].cumsum()
+        player = safe_display(group["striker_short_name"].dropna().iloc[0] if not group["striker_short_name"].dropna().empty else "")
+        for milestone in [25, 50, 100]:
+            reached = group[group["batter_runs"] >= milestone]
+            if reached.empty:
+                continue
+            row = reached.iloc[0]
+            rows.append({"Milestone": str(milestone), "Player": player, "Balls": int(row["balls_faced"]), "Runs": int(row["batter_runs"])})
+    if not rows:
+        return pd.DataFrame(columns=["Milestone", "Player", "Balls", "Runs"])
+    return pd.DataFrame(rows).sort_values(["Milestone", "Balls", "Runs"], ascending=[True, True, False]).drop_duplicates("Milestone")
+
+
+def calculate_dot_ball_percentage(ball_by_ball: pd.DataFrame, fvcc_team_id: str) -> float | None:
+    balls = legal_ball_rows(ball_by_ball, "bowling_team_id", fvcc_team_id)
+    if balls.empty:
+        return None
+    totals = pd.to_numeric(balls.get("total_runs"), errors="coerce").fillna(0)
+    return float((totals == 0).mean() * 100)
+
+
+def calculate_boundary_percentage(ball_by_ball: pd.DataFrame, fvcc_team_id: str) -> float | None:
+    balls = legal_ball_rows(ball_by_ball, "batting_team_id", fvcc_team_id)
+    if balls.empty:
+        return None
+    bat_runs = pd.to_numeric(balls.get("runs_bat"), errors="coerce").fillna(0)
+    return float(bat_runs.isin([4, 6]).mean() * 100)
+
+
+def calculate_player_vs_opponent(frame: pd.DataFrame, value_column: str) -> pd.DataFrame:
+    return calculate_player_dimension(frame, "opponent_name", "Opponent", value_column)
+
+
+def calculate_player_vs_venue(frame: pd.DataFrame, value_column: str) -> pd.DataFrame:
+    return calculate_player_dimension(frame, "venue_name", "Venue", value_column)
+
+
+def calculate_player_dimension(frame: pd.DataFrame, dimension: str, dimension_label: str, value_column: str) -> pd.DataFrame:
+    if frame.empty or value_column not in frame:
+        return pd.DataFrame()
+    output = frame.copy()
+    output[value_column] = pd.to_numeric(output[value_column], errors="coerce").fillna(0)
+    grouped = (
+        output.groupby(["player_name", dimension], dropna=False, as_index=False)
+        .agg({value_column: "sum", "match_id": "nunique"})
+        .rename(columns={"player_name": "Player", dimension: dimension_label, value_column: "Value", "match_id": "Matches"})
+        .sort_values("Value", ascending=False)
+        .head(10)
+    )
+    metric_name = "Runs" if value_column == "runs_scored" else "Wickets"
+    return grouped.rename(columns={"Value": metric_name})
+
+
+def legal_ball_rows(ball_by_ball: pd.DataFrame, team_column: str, team_id: str) -> pd.DataFrame:
+    if ball_by_ball.empty or team_column not in ball_by_ball:
+        return pd.DataFrame()
+    balls = ball_by_ball[ball_by_ball[team_column].astype(str) == str(team_id)].copy()
+    if "is_legal_delivery" not in balls:
+        return pd.DataFrame()
+    return balls[balls["is_legal_delivery"].map(parse_bool)].copy()
+
+
+def top_row(frame: pd.DataFrame, column: str) -> pd.Series:
+    if frame.empty or column not in frame:
+        return pd.Series(dtype="object")
+    ranked = frame.copy()
+    ranked[column] = pd.to_numeric(ranked[column], errors="coerce").fillna(0)
+    ranked = ranked.sort_values(column, ascending=False)
+    return ranked.iloc[0] if not ranked.empty else pd.Series(dtype="object")
+
+
+def insight_player_label(row: pd.Series) -> str:
+    return safe_display(row.get("player_name") if not row.empty else None)
+
+
+def batting_contribution_label(row: pd.Series) -> str:
+    if row.empty:
+        return "No batting scorecard data"
+    return f"{int(float(row.get('runs_scored', 0))):,} runs, {float(row.get('contribution_pct', 0)):.1f}% of team runs"
+
+
+def bowling_impact_label(row: pd.Series) -> str:
+    if row.empty:
+        return "No bowling scorecard data"
+    return f"{int(float(row.get('wickets_taken', 0)))} wickets, econ {float(row.get('economy', 0)):.2f}"
+
+
+def all_round_label(row: pd.Series) -> str:
+    if row.empty:
+        return "No all-round scorecard impact found"
+    return f"{int(float(row.get('runs_scored', 0)))} runs and {int(float(row.get('wickets_taken', 0)))} wickets"
+
+
+def biggest_batting_support(batting: pd.DataFrame, partnerships: pd.DataFrame, fvcc_team_id: str) -> dict[str, str]:
+    if not partnerships.empty and "batting_team_id" in partnerships:
+        rows = partnerships[partnerships["batting_team_id"].astype(str) == str(fvcc_team_id)].copy()
+        if not rows.empty:
+            rows["runs"] = pd.to_numeric(rows.get("runs"), errors="coerce").fillna(0)
+            best = rows.sort_values("runs", ascending=False).iloc[0]
+            names = " & ".join([safe_display(best.get("batter_1_name")), safe_display(best.get("batter_2_name"))]).replace(" -", "")
+            return {"label": names, "detail": f"{int(best['runs'])} run partnership"}
+    if batting.empty:
+        return {"label": "-", "detail": "No batting support data."}
+    rows = batting.copy()
+    rows["runs_scored"] = pd.to_numeric(rows.get("runs_scored"), errors="coerce").fillna(0)
+    rows = rows.sort_values("runs_scored", ascending=False)
+    if len(rows) < 2:
+        return {"label": "-", "detail": "No second scorer found."}
+    second = rows.iloc[1]
+    return {"label": safe_display(second.get("player_name")), "detail": f"{int(second['runs_scored'])} runs"}
+
+
+def milestone_label(milestones: pd.DataFrame) -> str:
+    if milestones.empty:
+        return "-"
+    row = milestones.iloc[0]
+    return f"{row['Player']} to {row['Milestone']}"
+
+
+def milestone_detail(milestones: pd.DataFrame) -> str:
+    if milestones.empty:
+        return "No 25/50/100 milestone found."
+    row = milestones.iloc[0]
+    return f"Reached in {int(row['Balls'])} balls"
+
+
+def biggest_fvcc_over(overs: pd.DataFrame, fvcc_team_id: str) -> dict[str, str]:
+    if overs.empty or "batting_team_id" not in overs:
+        return {"label": "-", "detail": "No over data found."}
+    rows = overs[overs["batting_team_id"].astype(str) == str(fvcc_team_id)].copy()
+    if rows.empty:
+        return {"label": "-", "detail": "No FVCC batting over data found."}
+    rows["runs"] = pd.to_numeric(rows.get("runs"), errors="coerce").fillna(0)
+    best = rows.sort_values("runs", ascending=False).iloc[0]
+    return {"label": f"{int(best['runs'])} runs", "detail": f"Over {int(float(best.get('over_number', 0))) + 1}"}
+
+
+def detect_wicket_burst(ball_by_ball: pd.DataFrame, fvcc_team_id: str, window: int = 12) -> dict[str, str]:
+    balls = legal_ball_rows(ball_by_ball, "bowling_team_id", fvcc_team_id)
+    if balls.empty or "is_wicket" not in balls:
+        return {"label": "-", "detail": "No wicket burst found."}
+    balls = balls.sort_values(["innings_order", "over_number", "ball_number"]).reset_index(drop=True)
+    balls["wicket_flag"] = balls["is_wicket"].map(parse_bool).astype(int)
+    for start in range(0, max(len(balls) - 1, 0)):
+        window_rows = balls.iloc[start : start + window]
+        wickets = int(window_rows["wicket_flag"].sum())
+        if wickets >= 2:
+            bowler = safe_display(window_rows[window_rows["wicket_flag"] == 1].iloc[0].get("bowler_short_name"))
+            return {"label": f"{wickets} wickets", "detail": f"Within {len(window_rows)} legal balls, led by {bowler}"}
+    return {"label": "-", "detail": "No 2-wicket burst found."}
+
+
+def format_percent(value: float | None) -> str:
+    if value is None or pd.isna(value):
+        return "-"
+    return f"{float(value):.1f}%"
+
+
+def add_match_context(frame: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
+    if frame.empty or matches.empty or "match_id" not in frame:
+        return frame.copy()
+    columns = [
+        "match_id",
+        "match_date_display",
+        "fvcc_team_id",
+        "opponent_name",
+        "venue_name",
+        "grade_name",
+        "result_text",
+    ]
+    context = matches[[column for column in columns if column in matches]].drop_duplicates("match_id")
+    return frame.merge(context, on="match_id", how="left")
+
+
+def dismissal_type_breakdown(batting: pd.DataFrame) -> pd.DataFrame:
+    if batting.empty or "dismissal_type" not in batting:
+        return pd.DataFrame()
+    rows = batting.copy()
+    rows["dismissal_type"] = rows["dismissal_type"].fillna("Not out / unknown").replace("", "Not out / unknown")
+    return (
+        rows.groupby("dismissal_type", as_index=False)
+        .size()
+        .rename(columns={"dismissal_type": "Dismissal", "size": "Count"})
+        .sort_values("Count", ascending=False)
+    )
+
+
+def record_batting_contribution(batting: pd.DataFrame) -> pd.DataFrame:
+    if batting.empty:
+        return pd.DataFrame()
+    return display_table(
+        batting.sort_values(["contribution_pct", "runs_scored"], ascending=[False, False]).head(10),
+        ["player_name", "opponent_name", "venue_name", "runs_scored", "team_total", "contribution_pct"],
+        {
+            "player_name": "Player",
+            "opponent_name": "Opponent",
+            "venue_name": "Venue",
+            "runs_scored": "Runs",
+            "team_total": "Team Runs",
+            "contribution_pct": "Contribution %",
+        },
+    )
+
+
+def record_batting_by_dimension(batting: pd.DataFrame, dimension: str, label: str) -> pd.DataFrame:
+    if batting.empty or dimension not in batting:
+        return pd.DataFrame()
+    rows = batting.sort_values(["runs_scored", "contribution_pct"], ascending=[False, False]).drop_duplicates(dimension).head(10)
+    return display_table(
+        rows,
+        [dimension, "player_name", "runs_scored", "contribution_pct"],
+        {dimension: label, "player_name": "Player", "runs_scored": "Runs", "contribution_pct": "Contribution %"},
+    )
+
+
+def record_bowling_by_dimension(bowling: pd.DataFrame, dimension: str, label: str) -> pd.DataFrame:
+    if bowling.empty or dimension not in bowling:
+        return pd.DataFrame()
+    rows = bowling.sort_values(["wickets_taken", "runs_conceded"], ascending=[False, True]).drop_duplicates(dimension).head(10)
+    return display_table(
+        rows,
+        [dimension, "player_name", "wickets_taken", "runs_conceded", "overs_bowled", "economy"],
+        {
+            dimension: label,
+            "player_name": "Player",
+            "wickets_taken": "Wickets",
+            "runs_conceded": "Runs",
+            "overs_bowled": "Overs",
+            "economy": "Economy",
+        },
+    )
+
+
+def record_all_round_matches(batting: pd.DataFrame, bowling: pd.DataFrame) -> pd.DataFrame:
+    if batting.empty and bowling.empty:
+        return pd.DataFrame()
+    batting_summary = batting.groupby(["match_id", "player_name"], as_index=False).agg({"runs_scored": "sum", "contribution_pct": "max"})
+    bowling_summary = bowling.groupby(["match_id", "player_name"], as_index=False).agg({"wickets_taken": "sum", "bowling_impact_score": "max"})
+    combined = batting_summary.merge(bowling_summary, on=["match_id", "player_name"], how="outer").fillna(0)
+    combined = combined[(combined["runs_scored"] > 0) & (combined["wickets_taken"] > 0)].copy()
+    if combined.empty:
+        return pd.DataFrame()
+    combined["all_round_impact"] = combined["runs_scored"] + combined["contribution_pct"] * 0.4 + combined["wickets_taken"] * 25 + combined["bowling_impact_score"]
+    return display_table(
+        combined.sort_values("all_round_impact", ascending=False).head(10),
+        ["player_name", "runs_scored", "wickets_taken", "all_round_impact"],
+        {"player_name": "Player", "runs_scored": "Runs", "wickets_taken": "Wickets", "all_round_impact": "Impact"},
+    )
+
+
+def all_fastest_milestones(ball_by_ball: pd.DataFrame, fvcc_team_ids: set[str]) -> pd.DataFrame:
+    frames = [detect_quickest_milestones(ball_by_ball, team_id) for team_id in fvcc_team_ids]
+    frames = [frame for frame in frames if not frame.empty]
+    if not frames:
+        return pd.DataFrame(columns=["Milestone", "Player", "Balls", "Runs"])
+    return pd.concat(frames, ignore_index=True).sort_values(["Milestone", "Balls", "Runs"], ascending=[True, True, False]).head(20)
+
+
+def best_opening_spell(overs: pd.DataFrame, fvcc_team_ids: set[str]) -> pd.DataFrame:
+    if overs.empty or "bowling_team_id" not in overs:
+        return pd.DataFrame()
+    rows = overs[overs["bowling_team_id"].astype(str).isin(fvcc_team_ids)].copy()
+    rows["over_number"] = pd.to_numeric(rows.get("over_number"), errors="coerce").fillna(999)
+    rows = rows[rows["over_number"] < 6]
+    if rows.empty:
+        return pd.DataFrame()
+    for column in ["runs", "wickets", "legal_balls"]:
+        rows[column] = pd.to_numeric(rows.get(column), errors="coerce").fillna(0)
+    grouped = rows.groupby(["match_id", "bowler_short_name"], as_index=False).agg({"runs": "sum", "wickets": "sum", "legal_balls": "sum"})
+    grouped["Economy"] = grouped.apply(lambda row: (row["runs"] / (row["legal_balls"] / 6)) if row["legal_balls"] else 0, axis=1)
+    grouped = grouped.rename(columns={"bowler_short_name": "Bowler", "runs": "Runs", "wickets": "Wickets", "legal_balls": "Balls"})
+    return grouped.sort_values(["Wickets", "Economy"], ascending=[False, True]).head(10)
+
+
+def add_innings_context(rows: pd.DataFrame, innings: pd.DataFrame) -> pd.DataFrame:
+    if rows.empty:
+        return rows
+    output = rows.copy()
+    if "innings_id" not in output:
+        output["innings_id"] = pd.NA
+    if innings.empty or "innings_id" not in innings:
+        output["innings_name"] = ""
+        output["innings_order"] = 0
+        return output
+    context_columns = ["innings_id", "innings_name", "innings_order"]
+    context = innings[[column for column in context_columns if column in innings]].drop_duplicates("innings_id")
+    output = output.merge(context, on="innings_id", how="left", suffixes=("", "_context"))
+    output["innings_name"] = output.get("innings_name", pd.Series(index=output.index, dtype="object")).fillna("")
+    output["innings_order"] = pd.to_numeric(output.get("innings_order"), errors="coerce").fillna(0)
+    return output
+
+
+def match_rows(frame: pd.DataFrame, match_id: str) -> pd.DataFrame:
+    if frame.empty or "match_id" not in frame:
+        return pd.DataFrame()
+    return frame[frame["match_id"].astype(str) == match_id].copy()
+
+
+def team_rows(frame: pd.DataFrame, team_id: str) -> pd.DataFrame:
+    if frame.empty or "team_id" not in frame:
+        return pd.DataFrame()
+    return frame[frame["team_id"].astype(str) == team_id].copy()
+
+
+def display_table(frame: pd.DataFrame, columns: list[str], rename_map: dict[str, str]) -> pd.DataFrame:
+    output = frame.copy()
+    for column in columns:
+        if column not in output:
+            output[column] = pd.NA
+    output = output[columns].rename(columns=rename_map)
+    return coerce_display_numbers(output)
+
+
+def sorted_options(values: pd.Series) -> list[str]:
+    cleaned = values.dropna().astype(str)
+    cleaned = cleaned[cleaned.str.strip() != ""]
+    return sorted(cleaned.unique().tolist())
+
+
+def is_fvcc_team_name(value: object) -> bool:
+    return "fiji victorian" in str(value).casefold()
+
+
+def safe_display(value: object, fallback: str = "-") -> str:
+    if pd.isna(value) or str(value).strip() == "":
+        return fallback
+    return str(value)
+
+
 def render_hall_of_fame_page() -> None:
     started_at = time.perf_counter()
     hall_of_fame_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime())
@@ -677,6 +1821,7 @@ def render_hall_of_fame_page() -> None:
     render_hall_of_fame_kpis(hall_of_fame_data["kpis"])
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
     render_match_winning_performances(hall_of_fame_data)
+    render_fastest_batting_milestone_records()
     render_record_holders(hall_of_fame_data)
     render_best_ever_seasons(hall_of_fame_data)
     render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
@@ -1234,6 +2379,214 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
         render_performance_card("Highest Individual Scores", batting_records, "batting")
     with columns[1]:
         render_performance_card("Best Bowling Innings", bowling_records, "bowling")
+
+
+def render_fastest_batting_milestone_records() -> None:
+    render_section_heading("Fastest Batting Milestones ⚡")
+    st.caption("Fastest milestone records are based on available verified ball-by-ball data.")
+    milestone_path = batting_milestones_path()
+    milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
+    if milestones.empty:
+        render_empty_milestone_card(
+            "Fastest Batting Milestones",
+            "No ball-by-ball milestone data available yet.",
+            "Run the match-centre milestone builder after refreshing match-centre data.",
+        )
+        return
+
+    columns = st.columns(2)
+    with columns[0]:
+        render_ranked_record_card(
+            "Fastest 50s",
+            milestones,
+            "balls_to_50",
+            "balls",
+            "No verified 50s from available ball-by-ball data yet.",
+        )
+    with columns[1]:
+        render_ranked_record_card(
+            "Fastest 100s",
+            milestones,
+            "balls_to_100",
+            "balls",
+            "No verified 100s from available ball-by-ball data yet.",
+        )
+
+
+@st.cache_data(show_spinner=False)
+def load_batting_milestone_records(_path: str | None = None, _mtime: float | None = None) -> pd.DataFrame:
+    path = batting_milestones_path()
+    if path is None:
+        return pd.DataFrame()
+    try:
+        records = pd.read_csv(path)
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+        return pd.DataFrame()
+    if "final_score_display" not in records:
+        records["final_score_display"] = ""
+    if "final_runs" in records:
+        missing_display = records["final_score_display"].fillna("").astype(str).str.strip().isin(["", "nan", "None"])
+        not_out = records.get("is_not_out", pd.Series(False, index=records.index)).map(parse_record_bool)
+        final_runs = pd.to_numeric(records["final_runs"], errors="coerce")
+        records.loc[missing_display & final_runs.notna(), "final_score_display"] = final_runs[missing_display & final_runs.notna()].astype(int).astype(str)
+        star_rows = missing_display & final_runs.notna() & not_out
+        records.loc[star_rows, "final_score_display"] = records.loc[star_rows, "final_score_display"].astype(str) + "*"
+    return records
+
+
+def batting_milestones_path() -> Path | None:
+    if HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH.exists():
+        return HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH
+    all_available = MATCH_CENTRE_PROCESSED_ROOT / "all_available" / "all_batting_milestones.csv"
+    root_fallback = MATCH_CENTRE_PROCESSED_ROOT / "all_batting_milestones.csv"
+    if all_available.exists():
+        return all_available
+    if root_fallback.exists():
+        return root_fallback
+    scopes = available_match_centre_scopes()
+    for scope in scopes:
+        candidate = scope / "all_batting_milestones.csv"
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def match_centre_milestones_mtime() -> float | None:
+    path = batting_milestones_path()
+    if path is None:
+        return None
+    return path.stat().st_mtime
+
+
+def parse_record_bool(value: object) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().casefold() in {"true", "1", "yes"}
+
+
+def render_ranked_record_card(
+    title: str,
+    records: pd.DataFrame,
+    value_col: str,
+    value_suffix: str,
+    empty_message: str,
+) -> None:
+    if value_col not in records:
+        render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
+        return
+    rows = records[records[value_col].notna()].copy()
+    if rows.empty:
+        render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
+        return
+    rows["match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
+    rows = rows.sort_values(
+        [value_col, "final_runs", "match_date_sort"],
+        ascending=[True, False, False],
+    ).head(10)
+    row_html = "".join(
+        milestone_record_row_html(rank, row, value_col, value_suffix)
+        for rank, (_, row) in enumerate(rows.iterrows(), start=1)
+    )
+    st.markdown(
+        f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
+    player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
+    final_score = safe_record_text(row.get("final_score_display"))
+    if not final_score:
+        final_runs = safe_record_int(row.get("final_runs"))
+        final_score = str(final_runs) if final_runs else ""
+    opponent = clean_opponent_label(row.get("opposition_team"), "")
+    if final_score and opponent:
+        final_line = f"Final score: {final_score} vs {opponent}"
+    elif final_score:
+        final_line = f"Final score: {final_score}"
+    elif opponent:
+        final_line = f"vs {opponent}"
+    else:
+        final_line = ""
+    meta = milestone_meta(row)
+    meta_html = f'<span>{html.escape(meta)}</span>' if meta else ""
+    value = safe_record_int(row.get(value_col))
+    value_text = f"{value} {value_suffix}" if value else f"N/A {value_suffix}"
+    return (
+        '<div class="performance-row">'
+        f'<span class="progress-rank">{rank_badge(rank)}</span>'
+        '<div class="performance-player">'
+        f'<strong>{html.escape(player)}</strong>'
+        f'<span>{html.escape(final_line)}</span>'
+        f'{meta_html}'
+        '</div>'
+        f'<div class="performance-value">{html.escape(value_text)}</div>'
+        '</div>'
+    )
+
+
+def render_empty_milestone_card(title: str, message: str, note: str) -> None:
+    st.markdown(
+        (
+            '<div class="hof-card performance-card">'
+            f'<div class="card-title">{html.escape(title)}</div>'
+            '<div class="performance-row">'
+            '<span class="progress-rank">–</span>'
+            '<div class="performance-player">'
+            f'<strong>{html.escape(message)}</strong>'
+            f'<span>{html.escape(note)}</span>'
+            '</div>'
+            '<div class="performance-value">N/A</div>'
+            '</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def milestone_meta(row: pd.Series) -> str:
+    parts = [
+        safe_record_text(row.get("season")),
+        clean_grade_label_for_record(row.get("grade_name")),
+    ]
+    return " • ".join(part for part in parts if part)
+
+
+def clean_grade_label_for_record(value: object) -> str:
+    text = safe_record_text(value)
+    text = re.sub(r'^\d+\s*-\s*', "", text).strip()
+    text = text.replace('"', "")
+    return text
+
+
+def clean_opponent_label(value: object, fallback: str = "Unknown opposition") -> str:
+    text = safe_record_text(value, fallback)
+    text = re.sub(r"\s+\d+(st|nd|rd|th)?\s+XI$", "", text).strip()
+    text = re.sub(r"\s+XI$", "", text).strip()
+    return text
+
+
+def format_record_date(value: object) -> str:
+    date = pd.to_datetime(value, errors="coerce")
+    if pd.isna(date):
+        return ""
+    return date.strftime("%d %b %Y")
+
+
+def safe_record_text(value: object, fallback: str = "") -> str:
+    if value is None or pd.isna(value):
+        return fallback
+    text = str(value).strip()
+    if not text or text.casefold() in {"nan", "none", "nat"}:
+        return fallback
+    return text
+
+
+def safe_record_int(value: object) -> int | None:
+    numeric = pd.to_numeric(value, errors="coerce")
+    if pd.isna(numeric):
+        return None
+    return int(round(float(numeric)))
 
 
 @st.cache_data(show_spinner=False)
@@ -2873,6 +4226,12 @@ def get_player_peer_comparison(
     bowling_scope = filter_peer_scope(bowling, seasons, peer_scope)
     batting_rows = aggregate_peer_batting(batting_scope, seasons)
     bowling_rows = aggregate_peer_bowling(bowling_scope, seasons)
+    player_batting_row = batting_rows[batting_rows["canonical_player_id"].astype(str) == player_id] if not batting_rows.empty else pd.DataFrame()
+    player_innings = float(player_batting_row["innings"].iloc[0]) if not player_batting_row.empty and "innings" in player_batting_row else 0.0
+    player_ducks = float(player_batting_row["ducks"].iloc[0]) if not player_batting_row.empty and "ducks" in player_batting_row else 0.0
+    batting_status_overrides: dict[str, str] = {}
+    if player_ducks == 0:
+        batting_status_overrides["innings_per_duck"] = "Better than avg" if player_innings >= 10 else ""
     batting_average_overrides = {
         "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
         "bat_sr": divide_or_none(
@@ -2903,6 +4262,7 @@ def get_player_peer_comparison(
             ("Innings per Duck", "innings_per_duck", False, "decimal"),
         ],
         average_overrides=batting_average_overrides,
+        status_overrides=batting_status_overrides,
     )
     bowling_metrics = build_peer_metric_rows(
         bowling_rows,
@@ -3060,10 +4420,12 @@ def build_peer_metric_rows(
     player_id: str,
     metrics: list[tuple[str, str, bool, str]],
     average_overrides: dict[str, float | None] | None = None,
+    status_overrides: dict[str, str] | None = None,
 ) -> list[dict[str, object]]:
     if data.empty or "canonical_player_id" not in data:
         return []
     average_overrides = average_overrides or {}
+    status_overrides = status_overrides or {}
     rows = []
     for label, column, lower_is_better, value_format in metrics:
         if column not in data:
@@ -3083,6 +4445,9 @@ def build_peer_metric_rows(
             average = float(override_average) if override_average is not None else None
         else:
             average = float(valid_values.mean())
+        status = status_overrides.get(column)
+        if status is None:
+            status = peer_metric_status(value, average, minimum, maximum, lower_is_better)
         rows.append(
             {
                 "label": label,
@@ -3093,7 +4458,7 @@ def build_peer_metric_rows(
                 "lower_is_better": lower_is_better,
                 "format": value_format,
                 "peer_count": int(valid_values.shape[0]),
-                "status": peer_metric_status(value, average, minimum, maximum, lower_is_better),
+                "status": status,
             }
         )
     return rows
@@ -3244,12 +4609,17 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
         metric_note = peer_metric_note(row["label"])
         if metric_note:
             metric_label = f'{metric_label}<span class="peer-metric-note">{html.escape(metric_note)}</span>'
-        status = peer_metric_status(
+        status = str(row.get("status") if row.get("status") is not None else peer_metric_status(
             value,
             average,
             minimum,
             maximum,
             bool(row.get("lower_is_better")),
+        ))
+        status_html = (
+            f'<strong class="peer-status {peer_status_class(status)}">{html.escape(status)}</strong>'
+            if status
+            else ""
         )
         row_html.append(
             '<div class="peer-row">'
@@ -3259,7 +4629,7 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
             "</div>"
             '<div class="peer-row-meta">'
             f'<span>Peer avg. {html.escape(format_peer_metric_value(average, str(row["format"])))}</span>'
-            f'<strong class="peer-status {peer_status_class(status)}">{html.escape(status)}</strong>'
+            f"{status_html}"
             "</div>"
             '<div class="peer-range">'
             f"{average_marker}{player_marker}"
@@ -4868,6 +6238,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
     previous = previous_season_for(current_season)
     selected_type = season_type_label(current_season.get("name"))
     comparison_type = improver_comparison_type(selected_type)
+    min_matches_required = improver_min_matches_required(selected_type)
     if not previous:
         export_biggest_improvers_debug(
             pd.DataFrame(
@@ -4905,6 +6276,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        min_matches_required,
     )
     export_biggest_improvers_debug(debug_frame)
     cards: list[dict[str, object]] = []
@@ -4920,6 +6292,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        min_matches_required,
     )
     wickets_card = biggest_improver_for_metric(
         "Biggest Wickets Improvement",
@@ -4933,6 +6306,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
         previous_matches,
         local_version,
         identity_version,
+        min_matches_required,
         previous_min_overs=15,
     )
     for card in [runs_card, wickets_card]:
@@ -4964,6 +6338,10 @@ def season_type_label(season_name: object) -> str:
 def improver_comparison_type(season_type: str) -> str:
     normalized = season_type.casefold()
     return f"{normalized}_to_previous_{normalized}"
+
+
+def improver_min_matches_required(season_type: object) -> int:
+    return 5 if str(season_type or "").casefold() == "winter" else 8
 
 
 def season_sort_from_record(season: dict[str, object]) -> int:
@@ -5093,6 +6471,7 @@ def biggest_improver_for_metric(
     previous_matches: pd.DataFrame,
     local_version: float,
     identity_version: float | None,
+    min_matches_required: int,
     previous_min_overs: float | None = None,
 ) -> dict[str, object] | None:
     current = season_metric_totals(category, current_season_id, scope, value_column, local_version, identity_version)
@@ -5104,7 +6483,10 @@ def biggest_improver_for_metric(
     merged = merged.merge(previous_matches.rename(columns={"matches": "previous_matches"}), on="player_key", how="left")
     merged["current_matches"] = pd.to_numeric(merged["current_matches"], errors="coerce").fillna(0)
     merged["previous_matches"] = pd.to_numeric(merged["previous_matches"], errors="coerce").fillna(0)
-    merged = merged[(merged["current_matches"] >= 8) & (merged["previous_matches"] >= 8)].copy()
+    merged = merged[
+        (merged["current_matches"] >= min_matches_required)
+        & (merged["previous_matches"] >= min_matches_required)
+    ].copy()
     if previous_min_overs is not None:
         previous_overs = season_bowling_overs_totals(previous_season_id, scope, local_version, identity_version, "previous_overs")
         merged = merged.merge(previous_overs, on="player_key", how="left")
@@ -5141,6 +6523,7 @@ def build_biggest_improvers_debug_frame(
     previous_matches: pd.DataFrame,
     local_version: float,
     identity_version: float | None,
+    min_matches_required: int,
 ) -> pd.DataFrame:
     selected_type = season_type_label(current_season.get("name"))
     previous_same_type = previous_season.get("name", "")
@@ -5172,6 +6555,7 @@ def build_biggest_improvers_debug_frame(
                     "previous_same_type_season": previous_same_type,
                     "comparison_type": comparison_type,
                     "selected_scope": scope.get("label", ""),
+                    "min_matches_required": min_matches_required,
                     "reason_if_excluded": "No player rows found in current or previous scope",
                 }
             ]
@@ -5229,14 +6613,17 @@ def build_biggest_improvers_debug_frame(
         lambda row: None if row["previous_wickets"] <= 0 else row["wickets_improvement"] / row["previous_wickets"] * 100,
         axis=1,
     )
+    debug["min_matches_required"] = min_matches_required
+    debug["qualifies_matches_rule"] = (
+        (debug["current_matches"] >= min_matches_required)
+        & (debug["previous_matches"] >= min_matches_required)
+    )
     debug["qualifies_runs"] = (
-        (debug["current_matches"] >= 8)
-        & (debug["previous_matches"] >= 8)
+        debug["qualifies_matches_rule"]
         & (debug["runs_improvement"] > 0)
     )
     debug["qualifies_wickets"] = (
-        (debug["current_matches"] >= 8)
-        & (debug["previous_matches"] >= 8)
+        debug["qualifies_matches_rule"]
         & (debug["previous_overs"] >= 15)
         & (debug["wickets_improvement"] > 0)
     )
@@ -5258,6 +6645,7 @@ def build_biggest_improvers_debug_frame(
         "selected_scope",
         "canonical_player_id",
         "canonical_player_name",
+        "min_matches_required",
         "current_matches",
         "previous_matches",
         "current_runs",
@@ -5270,6 +6658,7 @@ def build_biggest_improvers_debug_frame(
         "previous_overs",
         "wickets_improvement",
         "wickets_improvement_pct",
+        "qualifies_matches_rule",
         "qualifies_runs",
         "qualifies_wickets",
         "qualifies_wickets_overs_rule",
@@ -5280,10 +6669,11 @@ def build_biggest_improvers_debug_frame(
 
 def improver_exclusion_reason(row: pd.Series) -> str:
     reasons = []
-    if row["current_matches"] < 8:
-        reasons.append("current matches below 8")
-    if row["previous_matches"] < 8:
-        reasons.append("previous matches below 8")
+    min_matches = int(row.get("min_matches_required", 8) or 8)
+    if row["current_matches"] < min_matches:
+        reasons.append(f"current matches below {min_matches}")
+    if row["previous_matches"] < min_matches:
+        reasons.append(f"previous matches below {min_matches}")
     if row.get("previous_overs", 0) < 15 and row.get("wickets_improvement", 0) > 0:
         reasons.append("wickets excluded: previous season overs below 15")
     if row["runs_improvement"] <= 0 and row["wickets_improvement"] <= 0:
@@ -5303,6 +6693,7 @@ def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
         "selected_scope",
         "canonical_player_id",
         "canonical_player_name",
+        "min_matches_required",
         "current_matches",
         "previous_matches",
         "current_runs",
@@ -5315,6 +6706,7 @@ def export_biggest_improvers_debug(debug_frame: pd.DataFrame) -> None:
         "previous_overs",
         "wickets_improvement",
         "wickets_improvement_pct",
+        "qualifies_matches_rule",
         "qualifies_runs",
         "qualifies_wickets",
         "qualifies_wickets_overs_rule",
