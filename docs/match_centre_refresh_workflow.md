@@ -109,6 +109,23 @@ Important columns:
 
 Common no-match reasons include opposition players, masked placeholder participants, and FVCC players not yet present in the existing aggregate player data.
 
+## Milestone Records
+
+Fastest 50s and fastest 100s require ball-by-ball data. Scorecard-only matches can confirm that a player reached 50 or 100, but they cannot verify how many balls it took, so they must not be used for fastest milestone records.
+
+After refreshing reviewed match-centre scopes, build the milestone table with:
+
+```bash
+python scripts/build_match_centre_milestones.py
+```
+
+This writes:
+
+- `data/processed/match_centre/all_batting_milestones.csv`
+- `data/processed/match_centre/batting_milestones_validation.csv`
+
+To make Hall of Fame fastest milestone records complete, match-centre refresh needs to be run for all available teams and seasons, then the milestone builder needs to be rerun. Missing ball-by-ball does not mean the record did not happen; it only means the record cannot be verified from the currently available data.
+
 ## Review Steps
 
 Before wiring outputs into the app:
@@ -122,4 +139,3 @@ Before wiring outputs into the app:
 7. Only then plan UI integration.
 
 Do not run a full historical backfill until staged recent-season scopes have been reviewed and approved.
-

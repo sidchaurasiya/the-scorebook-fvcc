@@ -76,6 +76,7 @@ ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
 MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
+MATCH_CENTRE_BATTING_MILESTONES_PATH = MATCH_CENTRE_PROCESSED_ROOT / "all_batting_milestones.csv"
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 
@@ -1818,6 +1819,7 @@ def render_hall_of_fame_page() -> None:
     render_hall_of_fame_kpis(hall_of_fame_data["kpis"])
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
     render_match_winning_performances(hall_of_fame_data)
+    render_fastest_batting_milestone_records()
     render_record_holders(hall_of_fame_data)
     render_best_ever_seasons(hall_of_fame_data)
     render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
@@ -2375,6 +2377,99 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
         render_performance_card("Highest Individual Scores", batting_records, "batting")
     with columns[1]:
         render_performance_card("Best Bowling Innings", bowling_records, "bowling")
+
+
+def render_fastest_batting_milestone_records() -> None:
+    render_section_heading("Fastest Batting Milestones ⚡")
+    st.caption("Fastest milestone records are calculated only from matches with ball-by-ball data.")
+    milestones = load_batting_milestone_records(match_centre_milestones_mtime())
+    if milestones.empty:
+        st.info("No ball-by-ball milestone data available yet. Run the match-centre milestone builder after refreshing match-centre data.")
+        return
+
+    columns = st.columns(2)
+    with columns[0]:
+        render_fastest_milestone_table(milestones, "balls_to_50", "Fastest 50s", "Balls to 50")
+    with columns[1]:
+        render_fastest_milestone_table(milestones, "balls_to_100", "Fastest 100s", "Balls to 100")
+
+
+@st.cache_data(show_spinner=False)
+def load_batting_milestone_records(_mtime: float | None = None) -> pd.DataFrame:
+    if not MATCH_CENTRE_BATTING_MILESTONES_PATH.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(MATCH_CENTRE_BATTING_MILESTONES_PATH)
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+        return pd.DataFrame()
+
+
+def match_centre_milestones_mtime() -> float | None:
+    if not MATCH_CENTRE_BATTING_MILESTONES_PATH.exists():
+        return None
+    return MATCH_CENTRE_BATTING_MILESTONES_PATH.stat().st_mtime
+
+
+def render_fastest_milestone_table(milestones: pd.DataFrame, milestone_column: str, title: str, milestone_label: str) -> None:
+    st.markdown(f"### {html.escape(title)}")
+    if milestone_column not in milestones:
+        st.info("No ball-by-ball milestone data available yet.")
+        return
+    rows = milestones[milestones[milestone_column].notna()].copy()
+    if rows.empty:
+        st.info("No ball-by-ball milestone data available yet.")
+        return
+    rows["strike_rate_sort"] = rows.apply(lambda row: safe_numeric_div(row.get("final_runs", 0) * 100, row.get("final_balls", 0)), axis=1)
+    rows["match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
+    rows = rows.sort_values(
+        [milestone_column, "final_runs", "strike_rate_sort", "match_date_sort"],
+        ascending=[True, False, False, False],
+    ).head(10)
+    rows.insert(0, "Rank", range(1, len(rows) + 1))
+    display = rows[
+        [
+            "Rank",
+            "canonical_player_name",
+            milestone_column,
+            "final_runs",
+            "opposition_team",
+            "venue_name",
+            "season",
+            "match_date",
+            "team_run_contribution_pct",
+        ]
+    ].rename(
+        columns={
+            "canonical_player_name": "Player",
+            milestone_column: milestone_label,
+            "final_runs": "Final score",
+            "opposition_team": "Opposition",
+            "venue_name": "Venue",
+            "season": "Season",
+            "match_date": "Match date",
+            "team_run_contribution_pct": "Team contribution %",
+        }
+    )
+    display["Team contribution %"] = display["Team contribution %"].map(lambda value: format_advanced_value(value, "percent"))
+    st.dataframe(
+        display,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(display, max_rows=10),
+        column_config={
+            "Rank": st.column_config.NumberColumn("Rank", width="small", format="%d"),
+            milestone_label: st.column_config.NumberColumn(milestone_label, format="%d"),
+            "Final score": st.column_config.NumberColumn("Final score", format="%d"),
+        },
+    )
+
+
+def safe_numeric_div(numerator: object, denominator: object) -> float:
+    numerator_value = pd.to_numeric(numerator, errors="coerce")
+    denominator_value = pd.to_numeric(denominator, errors="coerce")
+    if pd.isna(numerator_value) or pd.isna(denominator_value) or denominator_value == 0:
+        return 0.0
+    return float(numerator_value) / float(denominator_value)
 
 
 @st.cache_data(show_spinner=False)
