@@ -1,0 +1,17 @@
+{
+  "request": {
+    "name": "match_officials",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/53f979f1-6039-42bc-82dd-0ff36d0d7169/officials?jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "content_type": "application/json; charset=utf-8"
+  },
+  "payload": {
+    "officials": [
+      {
+        "name": "Arthur Ellis",
+        "shortName": "A Ellis",
+        "role": "Umpire"
+      }
+    ]
+  }
+}

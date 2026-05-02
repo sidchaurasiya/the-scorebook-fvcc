@@ -1,0 +1,25 @@
+{
+  "fetched_at": "2026-05-02T12:20:59.228544+00:00",
+  "match_id": "53f979f1-6039-42bc-82dd-0ff36d0d7169",
+  "source": "PlayCricket public match centre endpoints",
+  "requests": [
+    {
+      "name": "match_scorecard",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/53f979f1-6039-42bc-82dd-0ff36d0d7169?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "status_code": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "name": "match_balls",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/53f979f1-6039-42bc-82dd-0ff36d0d7169/balls?jsconfig=eccn%3Atrue",
+      "status_code": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "name": "match_officials",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/53f979f1-6039-42bc-82dd-0ff36d0d7169/officials?jsconfig=eccn%3Atrue",
+      "status_code": 200,
+      "content_type": "application/json; charset=utf-8"
+    }
+  ]
+}
