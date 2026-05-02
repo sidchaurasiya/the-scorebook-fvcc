@@ -76,7 +76,6 @@ ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
 MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
-MATCH_CENTRE_BATTING_MILESTONES_PATH = MATCH_CENTRE_PROCESSED_ROOT / "all_batting_milestones.csv"
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 
@@ -2382,7 +2381,8 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
 def render_fastest_batting_milestone_records() -> None:
     render_section_heading("Fastest Batting Milestones ⚡")
     st.caption("Fastest milestone records are calculated only from matches with ball-by-ball data.")
-    milestones = load_batting_milestone_records(match_centre_milestones_mtime())
+    milestone_path = batting_milestones_path()
+    milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
     if milestones.empty:
         render_empty_milestone_card(
             "Fastest Batting Milestones",
@@ -2411,19 +2411,36 @@ def render_fastest_batting_milestone_records() -> None:
 
 
 @st.cache_data(show_spinner=False)
-def load_batting_milestone_records(_mtime: float | None = None) -> pd.DataFrame:
-    if not MATCH_CENTRE_BATTING_MILESTONES_PATH.exists():
+def load_batting_milestone_records(_path: str | None = None, _mtime: float | None = None) -> pd.DataFrame:
+    path = batting_milestones_path()
+    if path is None:
         return pd.DataFrame()
     try:
-        return pd.read_csv(MATCH_CENTRE_BATTING_MILESTONES_PATH)
+        return pd.read_csv(path)
     except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return pd.DataFrame()
 
 
+def batting_milestones_path() -> Path | None:
+    all_available = MATCH_CENTRE_PROCESSED_ROOT / "all_available" / "all_batting_milestones.csv"
+    root_fallback = MATCH_CENTRE_PROCESSED_ROOT / "all_batting_milestones.csv"
+    if all_available.exists():
+        return all_available
+    if root_fallback.exists():
+        return root_fallback
+    scopes = available_match_centre_scopes()
+    for scope in scopes:
+        candidate = scope / "all_batting_milestones.csv"
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def match_centre_milestones_mtime() -> float | None:
-    if not MATCH_CENTRE_BATTING_MILESTONES_PATH.exists():
+    path = batting_milestones_path()
+    if path is None:
         return None
-    return MATCH_CENTRE_BATTING_MILESTONES_PATH.stat().st_mtime
+    return path.stat().st_mtime
 
 
 def render_ranked_record_card(

@@ -139,3 +139,20 @@ Before wiring outputs into the app:
 7. Only then plan UI integration.
 
 Do not run a full historical backfill until staged recent-season scopes have been reviewed and approved.
+
+## Available-Scope Backfill
+
+After recent scoped pilots have been reviewed, the controlled all-available runner can refresh every locally known FVCC season/team combination from `data/processed/teams.csv`:
+
+```bash
+python scripts/backfill_match_centre_available.py --dry-run
+python scripts/backfill_match_centre_available.py --max-seasons 1 --max-teams 1 --max-matches 3
+python scripts/backfill_match_centre_available.py
+```
+
+The runner writes one ignored combined scope:
+
+- `data/raw/match_centre/all_available/`
+- `data/processed/match_centre/all_available/`
+
+It reuses cached files, sleeps between uncached public requests, deduplicates matches across team lists, fetches ball-by-ball only when `isBallByBall` is true, and regenerates batting milestone records for the `all_available` scope.

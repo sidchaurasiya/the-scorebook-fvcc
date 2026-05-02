@@ -21,8 +21,9 @@ def build_batting_milestones(
     processed_root: Path,
     players_path: Path | None = None,
     aliases_path: Path | None = None,
+    scope_names: list[str] | None = None,
 ) -> MilestoneBuildResult:
-    scopes = available_scope_dirs(processed_root)
+    scopes = available_scope_dirs(processed_root, scope_names=scope_names)
     frames = [load_scope(scope) for scope in scopes]
     frames = [frame for frame in frames if not frame["matches"].empty]
     if not frames:
@@ -42,14 +43,16 @@ def build_batting_milestones(
     return MilestoneBuildResult(milestones.sort_values(["match_date", "player_name"], ascending=[False, True]), validation, scope_names)
 
 
-def available_scope_dirs(processed_root: Path) -> list[Path]:
+def available_scope_dirs(processed_root: Path, scope_names: list[str] | None = None) -> list[Path]:
     if not processed_root.exists():
         return []
+    allowed = set(scope_names or [])
     return sorted(
         [
             path
             for path in processed_root.iterdir()
             if path.is_dir()
+            and (not allowed or path.name in allowed)
             and (path / "all_matches.csv").exists()
             and (path / "all_scorecard_batting.csv").exists()
             and (path / "all_ball_by_ball.csv").exists()
@@ -92,18 +95,22 @@ def add_match_context(matches: pd.DataFrame, frames: list[dict[str, Any]]) -> pd
     for column in ["home_team_id", "away_team_id", "home_team_name", "away_team_name", "first_match_day", "grade_name", "venue_name", "match_type", "result_text"]:
         if column not in output:
             output[column] = pd.NA
-    output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce").dt.date.astype("string")
+    match_dates = pd.to_datetime(output["first_match_day"], errors="coerce", utc=True)
+    output["match_date"] = match_dates.dt.date.astype("string")
     fvcc_home = output["home_team_name"].map(is_fvcc_team_name)
     output["fvcc_team_id"] = output["home_team_id"].where(fvcc_home, output["away_team_id"])
     output["team_name"] = output["home_team_name"].where(fvcc_home, output["away_team_name"])
     output["opposition_team"] = output["away_team_name"].where(fvcc_home, output["home_team_name"])
-    season_by_match: dict[str, str] = {}
-    for frame in frames:
-        summary = frame.get("summary", pd.DataFrame())
-        season = first_value(summary, "season_name") or infer_season(frame["scope_name"])
-        for match_id in frame["matches"].get("match_id", pd.Series(dtype="object")).dropna().astype(str).tolist():
-            season_by_match[match_id] = season
-    output["season"] = output["match_id"].astype(str).map(season_by_match).fillna("")
+    if "season" not in output or output["season"].fillna("").astype(str).str.strip().eq("").all():
+        season_by_match: dict[str, str] = {}
+        for frame in frames:
+            summary = frame.get("summary", pd.DataFrame())
+            season = first_value(summary, "season_name") or infer_season(frame["scope_name"])
+            for match_id in frame["matches"].get("match_id", pd.Series(dtype="object")).dropna().astype(str).tolist():
+                season_by_match[match_id] = season
+        output["season"] = output["match_id"].astype(str).map(season_by_match).fillna("")
+    else:
+        output["season"] = output["season"].fillna("")
     return output
 
 
