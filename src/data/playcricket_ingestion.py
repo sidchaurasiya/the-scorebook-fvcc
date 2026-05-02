@@ -289,6 +289,8 @@ def refresh_playcricket_backup(
     *,
     force: bool = False,
     season_limit: int | None = None,
+    force_seasons: bool = False,
+    force_season_ids: set[str] | None = None,
 ) -> RefreshSummary:
     ensure_data_dirs()
     summary = RefreshSummary(club_id=club_id, started_at=now_iso())
@@ -296,12 +298,14 @@ def refresh_playcricket_backup(
     timestamp = file_timestamp()
     source_endpoints: list[str] = []
 
+    force_season_ids = {str(season_id) for season_id in (force_season_ids or set()) if str(season_id).strip()}
+
     try:
         seasons_payload = fetcher.get_json(
             f"/fixturesladders/organisations/{club_id}/seasons",
             {"jsconfig": "eccn:true"},
             cache_name=cache_key("seasons", club_id),
-            force=force,
+            force=force or force_seasons,
         )
         write_raw_json(f"playcricket_seasons_{timestamp}.json", seasons_payload)
         source_endpoints.append("/fixturesladders/organisations/{club_id}/seasons")
@@ -323,12 +327,13 @@ def refresh_playcricket_backup(
             continue
 
         season_name = season.get("name", season_id)
+        force_this_season = force or str(season_id) in force_season_ids
         try:
             teams_payload = fetcher.get_json(
                 f"/fixturesladders/organisations/{club_id}/teams",
                 {"seasonId": season_id, "jsconfig": "eccn:true"},
                 cache_name=cache_key("teams", club_id, season_id),
-                force=force,
+                force=force_this_season,
             )
             write_raw_json(
                 f"playcricket_{safe_name(season_name)}_teams_{timestamp}.json",
@@ -352,7 +357,7 @@ def refresh_playcricket_backup(
 
             for category in STAT_CATEGORIES:
                 try:
-                    stats = fetch_stats(fetcher, grade_id, team_id, category, force=force)
+                    stats = fetch_stats(fetcher, grade_id, team_id, category, force=force_this_season)
                     write_raw_json(
                         f"playcricket_{safe_name(season_name)}_{safe_name(team.get('name', team_id))}_{category}_{timestamp}.json",
                         stats,

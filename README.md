@@ -55,6 +55,30 @@ data/processed/
 
 The committed `data/` folder includes the local backup needed for the beta dashboard to load without calling the live PlayCricket endpoints during normal app usage.
 
+## Weekly Data Refresh
+
+Run this after FVCC has played and PlayCricket live scoring has been published. The refresh keeps historical raw backups, refreshes the current PlayCricket season, rebuilds processed app data, reapplies player identity mapping, and refreshes team/grade audit outputs.
+
+```bash
+cd "/Users/preetkaur/Documents/Codex/2026-04-24/you-are-an-expert-full-stack"
+
+./.venv-app/bin/python scripts/refresh_data.py
+
+./.venv-app/bin/streamlit run app.py --server.port 8502
+```
+
+To preview what the script would check without changing app data:
+
+```bash
+./.venv-app/bin/python scripts/refresh_data.py --dry-run
+```
+
+Weekly refreshes only force-refresh the latest/current season and use the local cache for older seasons. If you ever need to rebuild every historical season from PlayCricket, use this sparingly:
+
+```bash
+./.venv-app/bin/python scripts/refresh_data.py --force-all
+```
+
 Do not commit real secrets. Local secrets belong in:
 
 ```text
