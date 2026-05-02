@@ -79,6 +79,8 @@ Weekly refreshes only force-refresh the latest/current season and use the local 
 ./.venv-app/bin/python scripts/refresh_data.py --force-all
 ```
 
+The refresh rebuilds the shared processed data layer used across all app pages, not page-specific outputs. See `docs/data_refresh_workflow.md` for the full source-to-visual data flow and notes on what future visuals would require extending the PlayCricket pull.
+
 Do not commit real secrets. Local secrets belong in:
 
 ```text
