@@ -219,6 +219,50 @@ Ball events:
 - `shortDescription`, `description`
 - Wicket fields when applicable: `dismissalTypeId`, `dismissalType`, `dismissedParticipantId`, `fielderParticipantId`, `fielderAssistParticipantId`
 
+## Sample Parser Findings
+
+A sample-only parser was added for the single saved FVCC match. It reads only `data/raw/ball_by_ball_sample/`, makes no external requests, and writes pilot outputs under `data/processed/ball_by_ball_sample/`.
+
+Parsed outputs:
+
+| Output | Rows |
+| --- | ---: |
+| `all_match_scorecards.csv` | 1 |
+| `all_ball_by_ball.csv` | 979 |
+| `all_overs.csv` | 160 |
+| `all_partnerships.csv` | 26 |
+| `all_match_officials.csv` | 1 |
+| `validation_report.csv` | 10 |
+
+Parsed innings:
+
+- Scorecard innings: 4
+- Ball-event innings: 3
+- Ball/event rows: 979
+
+Validation summary:
+
+- Pass: 9
+- Warning: 1
+- Fail/hard stop: 0
+
+The one warning is the known scorecard/ball-event innings mismatch:
+
+```text
+2nd Innings - Preston Baseballers CC 1st XI
+scorecard: present
+ball events: missing
+scorecard total: 0-0 from 0 overs
+```
+
+For the three innings that have ball events, validation passed for:
+
+- total runs from ball events vs scorecard innings runs
+- wickets from ball events vs scorecard wickets
+- legal balls from ball events vs scorecard overs
+
+Recommendation: a one-team pilot backfill is safe as the next discovery step, provided it stays narrow and resumable. The pilot should first collect team match lists and scorecards, request `/balls` only when `isBallByBall` is true, preserve source innings IDs, and write validation warnings instead of failing or inventing missing ball rows.
+
 ## Recommended Raw File Structure
 
 Use one folder per sample/bulk refresh scope so match-level files stay reviewable and replayable:

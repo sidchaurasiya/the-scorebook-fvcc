@@ -1,0 +1,11 @@
+check_name,match_id,innings_id,innings_name,scorecard_value,ball_events_value,status,detail
+scorecard_innings_missing_from_ball_events,53f979f1-6039-42bc-82dd-0ff36d0d7169,d9fb0db1-a76b-4399-aec2-16591b942575,2nd Innings - Preston Baseballers CC 1st XI,present,missing,warning,Scorecard innings has no ball-event innings. Preserve the scorecard row and do not invent balls.
+innings_runs_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,2nd Innings - Fiji Victorian CC 1st XI,223,223,pass,Values match.
+innings_wickets_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,2nd Innings - Fiji Victorian CC 1st XI,9,9,pass,Values match.
+innings_legal_balls_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,016b7628-337e-4f60-87ac-29e8ccc127d8,2nd Innings - Fiji Victorian CC 1st XI,402,402,pass,Values match.
+innings_runs_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,1st Innings - Fiji Victorian CC 1st XI,192,192,pass,Values match.
+innings_wickets_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,1st Innings - Fiji Victorian CC 1st XI,10,10,pass,Values match.
+innings_legal_balls_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,239c2835-a385-4e1b-bcae-4df662a1c4d8,1st Innings - Fiji Victorian CC 1st XI,304,304,pass,Values match.
+innings_runs_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,1st Innings - Preston Baseballers CC 1st XI,194,194,pass,Values match.
+innings_wickets_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,1st Innings - Preston Baseballers CC 1st XI,5,5,pass,Values match.
+innings_legal_balls_match,53f979f1-6039-42bc-82dd-0ff36d0d7169,8064c457-29cd-4432-a1f3-72579b3e2ad0,1st Innings - Preston Baseballers CC 1st XI,252,252,pass,Values match.
