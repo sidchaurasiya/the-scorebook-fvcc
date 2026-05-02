@@ -1,0 +1,58 @@
+{
+  "teams": [
+    {
+      "id": "be9ba78e-0a01-45dd-a56a-bfc941c783ab",
+      "name": "NMCA - \"F\" Grade North - Manion Shield",
+      "grade": {
+        "id": "469bfc37-d738-4f9b-8c7b-3b31f5678bbf",
+        "name": "NMCA - \"F\" Grade North - Manion Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "469bfc37-d738-4f9b-8c7b-3b31f5678bbf",
+          "name": "NMCA - \"F\" Grade North - Manion Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cd985bea-9066-4280-854d-0bf9f3496e31",
+      "name": "NMCA - Les Horne Shield - \"C\" Grade",
+      "grade": {
+        "id": "ecca25e7-9362-4463-91af-3fdcc2c01deb",
+        "name": "NMCA - Les Horne Shield - \"C\" Grade",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "ecca25e7-9362-4463-91af-3fdcc2c01deb",
+          "name": "NMCA - Les Horne Shield - \"C\" Grade",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

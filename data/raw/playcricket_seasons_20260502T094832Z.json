@@ -1,0 +1,364 @@
+{
+  "seasons": [
+    {
+      "id": "6ee98e4e-eb86-4b50-8709-b1d163f4b312",
+      "name": "Winter 2026",
+      "startDate": "2026-01-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": true
+    },
+    {
+      "id": "a826b403-b813-4318-9805-5bbe4cf7f238",
+      "name": "Summer 2025/26",
+      "startDate": "2025-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "6169f605-4b96-4f21-87c5-0862f914624f",
+      "name": "Winter 2025",
+      "startDate": "2025-01-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "fc1465b6-3c80-4b82-9759-680a784168c2",
+      "name": "Summer 2024/25",
+      "startDate": "2024-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "f8ebef3a-ba2d-48c4-95f8-0b13d067e817",
+      "name": "Summer 2023/24",
+      "startDate": "2023-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "3e3a72f9-34fa-49f5-a42e-35d86629a3af",
+      "name": "Summer 2022/23",
+      "startDate": "2022-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "b1454afb-68a7-46c3-b05c-4b3fe68077cb",
+      "name": "Winter 2022",
+      "startDate": "2022-01-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "aad2a6fe-7bbd-4680-a386-01319b828522",
+      "name": "Summer 2021/22",
+      "startDate": "2021-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "3750296e-c0ac-4f67-ada4-9a47266c1f8a",
+      "name": "Winter 2021",
+      "startDate": "2021-01-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "a387270b-f2fd-4e48-9334-b7f9b59589a5",
+      "name": "Summer 2020/21",
+      "startDate": "2020-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "95aa262f-30aa-4e11-8296-3a374a9fa3aa",
+      "name": "Summer 2019/20",
+      "startDate": "2019-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "d5fcf197-b63b-4b8c-92a6-6925538ba1ac",
+      "name": "Winter 2019",
+      "startDate": "2019-01-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "fec2e604-1806-4e0f-861e-b7ee37643f96",
+      "name": "Summer 2018/19",
+      "startDate": "2018-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "a9c25381-9a31-4bde-b3ff-4074ebed8044",
+      "name": "Summer 2017/18",
+      "startDate": "2017-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "7ec61036-ef0f-434b-9cfb-d287d9f6ec26",
+      "name": "Summer 2016/17",
+      "startDate": "2016-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "c097ba1c-ea65-4a1e-8945-ffe9f22c576a",
+      "name": "Summer 2015/16",
+      "startDate": "2015-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "f7567eab-6090-4cf2-b14f-2874ae98667f",
+      "name": "Summer 2014/15",
+      "startDate": "2014-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "a07158e7-b32f-4511-9f9b-5f75c5f7d6ae",
+      "name": "Summer 2013/14",
+      "startDate": "2013-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "aaf17d1d-d108-45ab-9c9f-7dcbe99d33f1",
+      "name": "Summer 2012/13",
+      "startDate": "2012-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "eec02606-f589-43b3-9d5a-40c3db29b323",
+      "name": "Summer 2011/12",
+      "startDate": "2011-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "b41aad11-0719-4499-ae34-fa95731e582b",
+      "name": "Summer 2010/11",
+      "startDate": "2010-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "d1b386aa-ac78-4fb4-a434-94b03b69808a",
+      "name": "Summer 2009/10",
+      "startDate": "2009-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "2bea42bd-9a74-48c1-9950-f7c3a3906c31",
+      "name": "Summer 2008/09",
+      "startDate": "2008-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "3a5d3c8d-38f5-4c33-b1eb-01aeced3cfd3",
+      "name": "Summer 2007/08",
+      "startDate": "2007-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "e9b37153-9187-4dad-b04d-cf5fa01ccb8e",
+      "name": "Summer 2006/07",
+      "startDate": "2006-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "54f45899-c1b5-4d0a-ae20-dc26e463e143",
+      "name": "Summer 2005/06",
+      "startDate": "2005-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "94913459-339b-4070-9581-c6c1dfad328b",
+      "name": "Summer 2004/05",
+      "startDate": "2004-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "4e850a88-1187-4f43-a5d9-7e988a6e218f",
+      "name": "Summer 2003/04",
+      "startDate": "2003-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "3bf412ae-5efe-4a2b-9d0f-7174ce7d0a71",
+      "name": "Summer 2002/03",
+      "startDate": "2002-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    },
+    {
+      "id": "5347386c-ad71-47fe-bd25-a914b2ddf946",
+      "name": "Summer 2001/02",
+      "startDate": "2001-07-01T00:00:00.0000000+00:00",
+      "classification": [
+        {
+          "id": 1,
+          "name": "Participating"
+        }
+      ],
+      "isCurrentSeason": false
+    }
+  ]
+}

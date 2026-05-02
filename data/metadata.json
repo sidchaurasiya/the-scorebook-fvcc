@@ -3,10 +3,17 @@
   "club_url": "https://play.cricket.com.au/club/fiji-victorian-cricket-club/7b78f08d-87d8-eb11-a7ad-2818780da0cc?tab=info",
   "seasons_fetched": [
     {
+      "id": "6ee98e4e-eb86-4b50-8709-b1d163f4b312",
+      "name": "Winter 2026",
+      "startDate": "2026-01-01T00:00:00.0000000+00:00",
+      "isCurrentSeason": true,
+      "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
+    },
+    {
       "id": "a826b403-b813-4318-9805-5bbe4cf7f238",
       "name": "Summer 2025/26",
       "startDate": "2025-07-01T00:00:00.0000000+00:00",
-      "isCurrentSeason": true,
+      "isCurrentSeason": false,
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     },
     {
@@ -206,8 +213,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-04-25T14:26:01.087597+00:00",
-  "last_successful_refresh_time": "2026-04-25T14:26:01.087597+00:00",
+  "fetch_date_time": "2026-05-02T09:48:41.847773+00:00",
+  "last_successful_refresh_time": "2026-05-02T09:48:41.847773+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -217,14 +224,14 @@
   ],
   "matches_fetched": 0,
   "players_fetched": 331,
-  "teams_fetched": 73,
+  "teams_fetched": 74,
   "stat_rows": {
-    "batting": 1896,
-    "bowling": 1896,
-    "fielding": 1896
+    "batting": 1908,
+    "bowling": 1908,
+    "fielding": 1908
   },
-  "live_requests": 235,
-  "cache_hits": 14,
+  "live_requests": 4,
+  "cache_hits": 249,
   "failed_requests": [],
   "notes": [
     "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",

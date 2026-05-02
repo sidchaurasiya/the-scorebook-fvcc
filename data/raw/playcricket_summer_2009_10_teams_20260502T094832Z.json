@@ -1,0 +1,85 @@
+{
+  "teams": [
+    {
+      "id": "4ce532a0-40c7-445e-85a2-cee1808aa5c3",
+      "name": "NMCA - \"F\" Grade South - Torrens Shield",
+      "grade": {
+        "id": "2131636b-397a-445e-8da7-984ba4133a5b",
+        "name": "NMCA - \"F\" Grade South - Torrens Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "2131636b-397a-445e-8da7-984ba4133a5b",
+          "name": "NMCA - \"F\" Grade South - Torrens Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f111aa0f-2d12-4496-9c44-75a984908231",
+      "name": "NMCA - Bob Herman Shield - \"D\" Grade",
+      "grade": {
+        "id": "7827168b-228e-469a-904d-731a9f25c744",
+        "name": "NMCA - Bob Herman Shield - \"D\" Grade",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "7827168b-228e-469a-904d-731a9f25c744",
+          "name": "NMCA - Bob Herman Shield - \"D\" Grade",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "03354497-78de-472f-96e3-5b5418311630",
+      "name": "NMCA - Jack Kelly Shield",
+      "grade": {
+        "id": "c7ccb0ed-20cf-47b6-820d-5375e699e288",
+        "name": "NMCA - Jack Kelly Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "c7ccb0ed-20cf-47b6-820d-5375e699e288",
+          "name": "NMCA - Jack Kelly Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

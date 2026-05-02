@@ -1,0 +1,112 @@
+{
+  "teams": [
+    {
+      "id": "a353d50f-7178-4a50-80f0-0d190b35fe30",
+      "name": "Dave Manion Shield",
+      "grade": {
+        "id": "68a31bc0-cce6-4168-8eb4-4c47c274c5c6",
+        "name": "Dave Manion Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "68a31bc0-cce6-4168-8eb4-4c47c274c5c6",
+          "name": "Dave Manion Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "43dadb61-4f18-4ba1-be02-2262d627b12a",
+      "name": "Les Horne Memorial Shield",
+      "grade": {
+        "id": "8f7b029c-cd54-4ecc-a02f-404bb0156423",
+        "name": "Les Horne Memorial Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "8f7b029c-cd54-4ecc-a02f-404bb0156423",
+          "name": "Les Horne Memorial Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10282de-c888-4d66-8b91-1aba5a505598",
+      "name": "NMCA - \"F\" Grade North - Manion Shield",
+      "grade": {
+        "id": "fceb50db-7556-45fb-b41c-ced06967afc5",
+        "name": "NMCA - \"F\" Grade North - Manion Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "fceb50db-7556-45fb-b41c-ced06967afc5",
+          "name": "NMCA - \"F\" Grade North - Manion Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "27c330a8-3123-48fb-9e6d-c9765756d1e2",
+      "name": "NMCA - Les Horne Shield - \"C\" Grade",
+      "grade": {
+        "id": "017f6040-8f42-47e7-b3d6-9dbd42617abc",
+        "name": "NMCA - Les Horne Shield - \"C\" Grade",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "017f6040-8f42-47e7-b3d6-9dbd42617abc",
+          "name": "NMCA - Les Horne Shield - \"C\" Grade",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

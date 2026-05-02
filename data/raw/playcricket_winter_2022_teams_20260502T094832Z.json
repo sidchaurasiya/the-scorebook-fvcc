@@ -1,0 +1,58 @@
+{
+  "teams": [
+    {
+      "id": "0f6faac6-137a-432c-9790-8ac47d1393b3",
+      "name": "North Division - Bhatia Shield",
+      "grade": {
+        "id": "65c25b0b-16f0-4b59-a1a2-f0df99f80000",
+        "name": "North Division - Bhatia Shield",
+        "owningOrganisation": {
+          "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+          "name": "Mid Year Cricket Association",
+          "shortName": "MYCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "65c25b0b-16f0-4b59-a1a2-f0df99f80000",
+          "name": "North Division - Bhatia Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+            "name": "Mid Year Cricket Association",
+            "shortName": "MYCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "daf208a1-3cc1-4a9a-896a-cd7d9b0c82c4",
+      "name": "North Division - SUNDAY",
+      "grade": {
+        "id": "3485fe76-f200-4a2c-aa3e-dd0e039d849b",
+        "name": "North Division - SUNDAY",
+        "owningOrganisation": {
+          "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+          "name": "Mid Year Cricket Association",
+          "shortName": "MYCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "3485fe76-f200-4a2c-aa3e-dd0e039d849b",
+          "name": "North Division - SUNDAY",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "9a5c8895-6732-ec11-981f-501ac52e1666",
+            "name": "Mid Year Cricket Association",
+            "shortName": "MYCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/b97d8a78-1201-430d-b7c0-59adc3ebc649/1677648685678/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "teams": [
+    {
+      "id": "0b5a071a-2606-48b0-ba8c-40b13e9f4f1f",
+      "name": "Fiji Victorian CC 1st XI",
+      "grade": {
+        "id": "79ed54b2-a85f-4335-adec-993f2e69c45d",
+        "name": "02 - Jack Quick Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "79ed54b2-a85f-4335-adec-993f2e69c45d",
+          "name": "02 - Jack Quick Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "780a8939-3979-44a8-a31b-b675e2dc33c5",
+      "name": "Fiji Victorian CC 2nd XI",
+      "grade": {
+        "id": "4e2e525d-4ba4-4a35-9e22-3fbca5132593",
+        "name": "04 - \"B\" Grade",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "4e2e525d-4ba4-4a35-9e22-3fbca5132593",
+          "name": "04 - \"B\" Grade",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "793ed24c-47cf-40c0-9010-eceaa3f401df",
+      "name": "Fiji Victorian CC 3rd XI",
+      "grade": {
+        "id": "808f246f-0a0d-4f81-bdd8-67babf98339f",
+        "name": "05 - \"C\" Grade",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "808f246f-0a0d-4f81-bdd8-67babf98339f",
+          "name": "05 - \"C\" Grade",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "87ba489f-620c-4dad-9a0e-f9d8d7d3a449",
+      "name": "Fiji Victorian CC OD",
+      "grade": {
+        "id": "12ac33af-31f2-4231-a075-c7e1e2d779fe",
+        "name": "08 - Robert Young DODC",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "12ac33af-31f2-4231-a075-c7e1e2d779fe",
+          "name": "08 - Robert Young DODC",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

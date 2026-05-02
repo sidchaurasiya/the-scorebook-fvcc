@@ -1,0 +1,85 @@
+{
+  "teams": [
+    {
+      "id": "5d90b22b-d622-4193-af99-b9ad3ae8e1e2",
+      "name": "NMCA - Jack Quick Shield",
+      "grade": {
+        "id": "606a6aaa-378e-448c-8e69-a4538742d960",
+        "name": "NMCA - Jack Quick Shield",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "606a6aaa-378e-448c-8e69-a4538742d960",
+          "name": "NMCA - Jack Quick Shield",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "b089fc84-1192-4e79-8800-67fc90bcafca",
+      "name": "NMCA - Les Horne Shield - \"C\" Grade",
+      "grade": {
+        "id": "3cb1b0dd-cc3b-408a-82ec-1a6591c6f882",
+        "name": "NMCA - Les Horne Shield - \"C\" Grade",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "3cb1b0dd-cc3b-408a-82ec-1a6591c6f882",
+          "name": "NMCA - Les Horne Shield - \"C\" Grade",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "1b9583ee-7b07-4fa2-9ee8-07ce8ba4ed2a",
+      "name": "NMCA - Robert Young - Designated One Day Comp.",
+      "grade": {
+        "id": "2aa24bfc-4ea3-4190-87cd-e6a4cade5e41",
+        "name": "NMCA - Robert Young - Designated One Day Comp.",
+        "owningOrganisation": {
+          "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+          "name": "North Metro Cricket Association",
+          "shortName": "NMCA",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+        }
+      },
+      "grades": [
+        {
+          "id": "2aa24bfc-4ea3-4190-87cd-e6a4cade5e41",
+          "name": "NMCA - Robert Young - Designated One Day Comp.",
+          "isCurrent": true,
+          "owningOrganisation": {
+            "id": "46d8494c-5c32-ec11-981f-501ac52e1666",
+            "name": "North Metro Cricket Association",
+            "shortName": "NMCA",
+            "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/db1ca200-005b-4b5e-9cdf-3e09bb48ab64/1678402583908/logo.jpg?_a=BAMAMifg0"
+          }
+        }
+      ]
+    }
+  ]
+}

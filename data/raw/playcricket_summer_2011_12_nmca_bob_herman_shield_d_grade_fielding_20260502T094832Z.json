@@ -1,0 +1,591 @@
+[
+  {
+    "id": "3960fcb9-313a-4dca-8b8d-565676fdb3db",
+    "name": "Sharma, Vinay",
+    "shortName": "V Sharma",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 14,
+      "fieldingCatchesNonWK": 17,
+      "fieldingCatchesWK": 2,
+      "fieldingTotalCatches": 19,
+      "fieldingStumpings": 2,
+      "fieldingAssistedRunOuts": 1,
+      "fieldingUnassistedRunOuts": 1,
+      "fieldingRunOuts": 2
+    }
+  },
+  {
+    "id": "7a9a4623-d31d-4b8b-a4f1-3fe2b3d4e06c",
+    "name": "Didaskalou, Jim",
+    "shortName": "J Didaskalou",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 9,
+      "fieldingCatchesNonWK": 6,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 6,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "661bdd19-e67a-4978-a255-36e16789ab1f",
+    "name": "Tanwar, Nitin",
+    "shortName": "N Tanwar",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "fieldingCatchesNonWK": 4,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 4,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 1,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 1
+    }
+  },
+  {
+    "id": "9fd2a404-b670-4f95-a13c-401b88a6c37e",
+    "name": "Chand, Vikash",
+    "shortName": "V Chand",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "fieldingCatchesNonWK": 4,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 4,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "739874f6-ede8-4437-993f-2d5c930de3cf",
+    "name": "Patel, Kalpeshkumar",
+    "shortName": "K Patel",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "fieldingCatchesNonWK": 4,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 4,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "ab033f7b-82e2-4044-b0cb-9024cf56db51",
+    "name": "Sharan, Reuel",
+    "shortName": "R Sharan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "fieldingCatchesNonWK": 3,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 3,
+      "fieldingStumpings": 1,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "b0261f54-4054-4b6c-be19-e15f291a2209",
+    "name": "Patel, Jigar",
+    "shortName": "J Patel",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "fieldingCatchesNonWK": 3,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 3,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "30e25208-28b9-4dea-a695-50773b975f58",
+    "name": "Singh, Ricky",
+    "shortName": "R Singh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "fieldingCatchesNonWK": 3,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 3,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+    "name": "Sehra, Damandeep",
+    "shortName": "D Sehra",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "fieldingCatchesNonWK": 3,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 3,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "392b03a9-0678-4e50-921f-ff31152ccd28",
+    "name": "Sharma, Deepak",
+    "shortName": "D Sharma",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 5,
+      "fieldingCatchesNonWK": 3,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 3,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "232cc042-1e4c-423a-9190-e3432698c99d",
+    "name": "Sharan, Reuben",
+    "shortName": "R Sharan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 8,
+      "fieldingCatchesNonWK": 2,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 2,
+      "fieldingStumpings": 1,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "0702405a-c36b-4bed-aa31-e2deb2af62b8",
+    "name": "Pereira, Princey",
+    "shortName": "P Pereira",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "fieldingCatchesNonWK": 2,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 2,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "4df23ec6-b95a-4683-9e5a-58a272a1cb17",
+    "name": "Nand, Shalen",
+    "shortName": "S Nand",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 6,
+      "fieldingCatchesNonWK": 2,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 2,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 1,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 1
+    }
+  },
+  {
+    "id": "cdd6ad40-6a0f-403e-aa42-5577322a8e5a",
+    "name": "Birlangi, Venu",
+    "shortName": "V Birlangi",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 12,
+      "fieldingCatchesNonWK": 2,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 2,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "fabe3087-4118-4ebf-ae00-523358904311",
+    "name": "Moderana, Alex",
+    "shortName": "A Moderana",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 12,
+      "fieldingCatchesNonWK": 2,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 2,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 1,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 1
+    }
+  },
+  {
+    "id": "162cce2f-a5bb-451f-ab68-d7a037f018ee",
+    "name": "Frew, Benjamin",
+    "shortName": "B Frew",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "fieldingCatchesNonWK": 2,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 2,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "6f08a796-12f5-40ca-b2dd-a2416dcd927d",
+    "name": "Hurdoyal, Arnaud",
+    "shortName": "A Hurdoyal",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "fieldingCatchesNonWK": 1,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 1,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "f03e80c4-abf2-4463-8403-38611ffdb56a",
+    "name": "Espiritu, Elvin",
+    "shortName": "E Espiritu",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "fieldingCatchesNonWK": 1,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 1,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "7f47871d-71d2-4c20-941e-b9b9b5164c8a",
+    "name": "Shah, Pratik",
+    "shortName": "P Shah",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 8,
+      "fieldingCatchesNonWK": 1,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 1,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "360868ba-5d2a-4f9f-9f3a-fff5756f3f85",
+    "name": "Bhan, Shandil",
+    "shortName": "S Bhan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "91c05e56-a891-4811-bdc5-2ef55d8f0d4c",
+    "name": "Lalji, Rahul",
+    "shortName": "R Lalji",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "67fee031-4f69-495f-8c96-7e7410350b17",
+    "name": "Chauhan, Gaurav",
+    "shortName": "G Chauhan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "9257a6d7-7887-43bf-a607-df0d79ee3da7",
+    "name": "Singh, John",
+    "shortName": "J Singh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "f8a8f7e5-bac4-4049-9b66-c8d6be892040",
+    "name": "Malli, Bobby",
+    "shortName": "B Malli",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 7,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "68d6645f-a925-4d0c-a11d-efc6ff7f2b4d",
+    "name": "Bhan, Amresh",
+    "shortName": "A Bhan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 2,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "e6a98753-41b1-4aeb-b725-2f895b22754b",
+    "name": "Parekh, Raja",
+    "shortName": "R Parekh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "37976f0c-ac20-4501-a129-855f84be20bb",
+    "name": "Machado, Wesley",
+    "shortName": "W Machado",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 4,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "02d91c00-a449-48ec-a770-37b96a0948f8",
+    "name": "Nand, Pramen",
+    "shortName": "P Nand",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "eeb98dff-7419-4bb2-8e82-5ed510efc87e",
+    "name": "Hassan, Feroz",
+    "shortName": "F Hassan",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "0603b074-3c32-44d5-b65c-16ada78950c9",
+    "name": "Singh, Danny",
+    "shortName": "D Singh",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  },
+  {
+    "id": "13fe243d-49a0-4d92-b3e0-84ac18ed66eb",
+    "name": "Newcastle, Jason",
+    "shortName": "J Newcastle",
+    "organisation": {
+      "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+      "name": "Fiji Victorian Cricket Club"
+    },
+    "statistics": {
+      "matches": 1,
+      "fieldingCatchesNonWK": 0,
+      "fieldingCatchesWK": 0,
+      "fieldingTotalCatches": 0,
+      "fieldingStumpings": 0,
+      "fieldingAssistedRunOuts": 0,
+      "fieldingUnassistedRunOuts": 0,
+      "fieldingRunOuts": 0
+    }
+  }
+]
