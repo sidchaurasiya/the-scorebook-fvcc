@@ -2474,12 +2474,15 @@ def render_ranked_record_card(
 
 def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
     player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
-    final_runs = safe_record_int(row.get("final_runs"))
+    final_score = safe_record_text(row.get("final_score_display"))
+    if not final_score:
+        final_runs = safe_record_int(row.get("final_runs"))
+        final_score = str(final_runs) if final_runs else ""
     opponent = clean_opponent_label(row.get("opposition_team"), "")
-    if final_runs and opponent:
-        final_line = f"Final score: {final_runs} vs {opponent}"
-    elif final_runs:
-        final_line = f"Final score: {final_runs}"
+    if final_score and opponent:
+        final_line = f"Final score: {final_score} vs {opponent}"
+    elif final_score:
+        final_line = f"Final score: {final_score}"
     elif opponent:
         final_line = f"vs {opponent}"
     else:
