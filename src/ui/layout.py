@@ -64,6 +64,7 @@ APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
+MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 
@@ -90,6 +91,8 @@ def render_page() -> None:
         render_approaching_milestones_page()
     elif selected_page == "Player Profile":
         render_player_profile_page()
+    elif selected_page == "Match Centre":
+        render_match_centre_page()
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
@@ -101,6 +104,7 @@ def render_sidebar() -> str:
         "⌂ Season Overview",
         "☆ Milestone",
         "♙ Player Profile",
+        "▦ Match Centre",
     ]
     if "selected_page_label" not in st.session_state:
         st.session_state["selected_page_label"] = page_labels[0]
@@ -126,6 +130,7 @@ def render_sidebar() -> str:
                     <p><strong>Season Overview 📊</strong><br>Season stats, team leaders, and detailed batting/bowling/fielding tables.</p>
                     <p><strong>Milestone 💪</strong><br>Active players closing in on major club milestones.</p>
                     <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
+                    <p><strong>Match Centre</strong><br>Browse match scorecards from reviewed match-centre refresh outputs.</p>
                 </div>
             </details>
             """,
@@ -654,6 +659,381 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
     render_overall_section(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
+
+
+def render_match_centre_page() -> None:
+    st.markdown(
+        """
+        <h1 class="page-title">Match Centre</h1>
+        <div class="club-label">Fiji Victorian Cricket Club</div>
+        <div class="page-subtitle">Scorecard archive from reviewed match-centre refresh outputs.</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    scopes = available_match_centre_scopes()
+    if not MATCH_CENTRE_PROCESSED_ROOT.exists():
+        st.info(
+            "No match-centre data folder was found. Run `scripts/refresh_match_centre_data.py` "
+            "for a reviewed season/team scope to create the archive data."
+        )
+        return
+    if not scopes:
+        st.info(
+            "No processed match-centre CSVs were found yet. Run `scripts/refresh_match_centre_data.py` "
+            "and then reload this page."
+        )
+        return
+
+    scope_options = [scope.name for scope in scopes]
+    selected_scope_name = st.selectbox(
+        "Match-centre data scope",
+        scope_options,
+        index=0,
+        help="Latest local processed scope is selected by default. Change this to review another generated scope.",
+    )
+    selected_scope = MATCH_CENTRE_PROCESSED_ROOT / selected_scope_name
+    data = load_match_centre_archive(selected_scope_name, match_centre_scope_signature(selected_scope))
+    if data["matches"].empty:
+        st.info("This match-centre scope does not contain any match rows yet.")
+        return
+
+    matches = build_match_archive_frame(data["matches"])
+    filtered_matches = render_match_centre_filters(matches)
+    if filtered_matches.empty:
+        st.info("No matches match the selected filters.")
+        return
+
+    render_section_heading("Match List")
+    match_list = filtered_matches[
+        [
+            "match_date_display",
+            "fvcc_team_name",
+            "opponent_name",
+            "grade_name",
+            "venue_name",
+            "result_text",
+            "ball_by_ball_badge",
+        ]
+    ].rename(
+        columns={
+            "match_date_display": "Date",
+            "fvcc_team_name": "FVCC Team",
+            "opponent_name": "Opponent",
+            "grade_name": "Grade",
+            "venue_name": "Venue",
+            "result_text": "Result",
+            "ball_by_ball_badge": "Ball-by-ball",
+        }
+    )
+    st.dataframe(match_list, use_container_width=True, hide_index=True, height=table_height(match_list, max_rows=12))
+
+    selected_label = st.selectbox(
+        "Selected match",
+        filtered_matches["match_selector_label"].tolist(),
+        index=0,
+    )
+    selected_match = filtered_matches[filtered_matches["match_selector_label"] == selected_label].iloc[0]
+    render_match_centre_detail(selected_match, data)
+
+
+def available_match_centre_scopes() -> list[Path]:
+    if not MATCH_CENTRE_PROCESSED_ROOT.exists():
+        return []
+    scopes = [
+        path
+        for path in MATCH_CENTRE_PROCESSED_ROOT.iterdir()
+        if path.is_dir() and (path / "all_matches.csv").exists()
+    ]
+    return sorted(scopes, key=lambda path: path.stat().st_mtime, reverse=True)
+
+
+def match_centre_scope_signature(scope_path: Path) -> tuple[tuple[str, float], ...]:
+    if not scope_path.exists():
+        return tuple()
+    return tuple(
+        sorted(
+            (path.name, path.stat().st_mtime)
+            for path in scope_path.glob("*.csv")
+            if path.is_file()
+        )
+    )
+
+
+@st.cache_data(show_spinner=False)
+def load_match_centre_archive(scope_name: str, _signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+    scope_path = MATCH_CENTRE_PROCESSED_ROOT / scope_name
+    table_names = [
+        "all_matches",
+        "all_match_innings",
+        "all_scorecard_batting",
+        "all_scorecard_bowling",
+        "all_match_officials",
+        "all_ball_by_ball",
+        "all_overs",
+        "all_partnerships",
+    ]
+    return {name.removeprefix("all_"): read_match_centre_csv(scope_path / f"{name}.csv") for name in table_names}
+
+
+def read_match_centre_csv(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path)
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+        return pd.DataFrame()
+
+
+def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
+    output = matches.copy()
+    for column in [
+        "home_team_name",
+        "away_team_name",
+        "home_team_id",
+        "away_team_id",
+        "grade_name",
+        "venue_name",
+        "result_text",
+        "round_name",
+        "first_match_day",
+        "is_ball_by_ball",
+    ]:
+        if column not in output:
+            output[column] = pd.NA
+
+    output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce")
+    output["match_date_display"] = output["match_date"].dt.strftime("%d %b %Y").fillna("Date TBC")
+    fvcc_is_home = output["home_team_name"].map(is_fvcc_team_name)
+    output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
+    output["fvcc_team_name"] = output["home_team_name"].where(fvcc_is_home, output["away_team_name"]).fillna("FVCC")
+    output["opponent_team_id"] = output["away_team_id"].where(fvcc_is_home, output["home_team_id"])
+    output["opponent_name"] = output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).fillna("Unknown opponent")
+    output["is_ball_by_ball_bool"] = output["is_ball_by_ball"].map(parse_bool)
+    output["ball_by_ball_badge"] = output["is_ball_by_ball_bool"].map(lambda value: "Yes" if value else "No")
+    output["match_title"] = output["fvcc_team_name"].fillna("FVCC") + " vs " + output["opponent_name"].fillna("Unknown opponent")
+    output["match_selector_label"] = (
+        output["match_date_display"].astype(str)
+        + " - "
+        + output["fvcc_team_name"].astype(str)
+        + " vs "
+        + output["opponent_name"].astype(str)
+        + " - "
+        + output["result_text"].fillna("Result unavailable").astype(str)
+    )
+    output = output.sort_values(["match_date", "grade_name", "fvcc_team_name"], ascending=[False, True, True])
+    return output.reset_index(drop=True)
+
+
+def render_match_centre_filters(matches: pd.DataFrame) -> pd.DataFrame:
+    with st.container(key="match_centre_filters"):
+        filter_cols = st.columns([1.1, 1.0, 1.2, 1.2, 0.9], gap="small")
+        team = filter_cols[0].selectbox("Team", ["All"] + sorted_options(matches["fvcc_team_name"]))
+        grade = filter_cols[1].selectbox("Grade", ["All"] + sorted_options(matches["grade_name"]))
+        opponent = filter_cols[2].selectbox("Opponent", ["All"] + sorted_options(matches["opponent_name"]))
+        venue = filter_cols[3].selectbox("Venue", ["All"] + sorted_options(matches["venue_name"]))
+        ball_by_ball = filter_cols[4].selectbox("Ball-by-ball available", ["All", "Yes", "No"])
+
+    filtered = matches.copy()
+    if team != "All":
+        filtered = filtered[filtered["fvcc_team_name"] == team]
+    if grade != "All":
+        filtered = filtered[filtered["grade_name"] == grade]
+    if opponent != "All":
+        filtered = filtered[filtered["opponent_name"] == opponent]
+    if venue != "All":
+        filtered = filtered[filtered["venue_name"] == venue]
+    if ball_by_ball != "All":
+        filtered = filtered[filtered["ball_by_ball_badge"] == ball_by_ball]
+    return filtered
+
+
+def render_match_centre_detail(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    match_id = str(match.get("match_id", ""))
+    st.markdown("---")
+    badge = "Ball-by-ball available" if bool(match.get("is_ball_by_ball_bool")) else "Scorecard only"
+    st.markdown(f"## {html.escape(str(match.get('match_title', 'Selected match')))}")
+    detail_cols = st.columns(4)
+    detail_cols[0].metric("Date", safe_display(match.get("match_date_display")))
+    detail_cols[1].metric("Grade", safe_display(match.get("grade_name")))
+    detail_cols[2].metric("Round", safe_display(match.get("round_name")))
+    detail_cols[3].metric("Mode", badge)
+    st.caption(
+        " | ".join(
+            part
+            for part in [
+                f"Venue: {safe_display(match.get('venue_name'))}",
+                f"Result: {safe_display(match.get('result_text'))}",
+            ]
+            if part
+        )
+    )
+    render_match_officials(match_id, data["match_officials"])
+    render_match_scorecards(match, data)
+    render_ball_by_ball_summary(match, data)
+
+
+def render_match_officials(match_id: str, officials: pd.DataFrame) -> None:
+    if officials.empty or "match_id" not in officials:
+        st.caption("Officials: not available.")
+        return
+    rows = officials[officials["match_id"].astype(str) == match_id].copy()
+    if rows.empty:
+        st.caption("Officials: not available.")
+        return
+    labels = []
+    for _, row in rows.iterrows():
+        role = safe_display(row.get("role"), "Official")
+        name = safe_display(row.get("official_name"), safe_display(row.get("official_short_name"), "Unknown"))
+        labels.append(f"{role}: {name}")
+    st.caption("Officials: " + " | ".join(labels))
+
+
+def render_match_scorecards(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Scorecards")
+    fvcc_team_id = str(match.get("fvcc_team_id", ""))
+    opponent_team_id = str(match.get("opponent_team_id", ""))
+    match_id = str(match.get("match_id", ""))
+    innings = match_rows(data["match_innings"], match_id)
+    batting = add_innings_context(match_rows(data["scorecard_batting"], match_id), innings)
+    bowling = add_innings_context(match_rows(data["scorecard_bowling"], match_id), innings)
+
+    tabs = st.tabs(["FVCC Batting", "FVCC Bowling", "Opposition Batting", "Opposition Bowling"])
+    with tabs[0]:
+        render_scorecard_batting_table(team_rows(batting, fvcc_team_id), "No FVCC batting data is available for this match.")
+    with tabs[1]:
+        render_scorecard_bowling_table(team_rows(bowling, fvcc_team_id), "No FVCC bowling data is available for this match.")
+    with tabs[2]:
+        render_scorecard_batting_table(team_rows(batting, opponent_team_id), "No opposition batting data is available for this match.")
+    with tabs[3]:
+        render_scorecard_bowling_table(team_rows(bowling, opponent_team_id), "No opposition bowling data is available for this match.")
+
+
+def render_scorecard_batting_table(rows: pd.DataFrame, empty_message: str) -> None:
+    if rows.empty:
+        st.info(empty_message)
+        return
+    display = rows.sort_values(["innings_order", "bat_order"]).copy()
+    columns = ["player_name", "runs_scored", "balls_faced", "fours_scored", "sixes_scored", "strike_rate", "dismissal_text"]
+    rename_map = {
+        "player_name": "Player",
+        "runs_scored": "Runs",
+        "balls_faced": "Balls",
+        "fours_scored": "4s",
+        "sixes_scored": "6s",
+        "strike_rate": "SR",
+        "dismissal_text": "Dismissal",
+    }
+    if display["innings_name"].nunique(dropna=True) > 1:
+        columns.insert(0, "innings_name")
+        rename_map["innings_name"] = "Innings"
+    table = display_table(display, columns, rename_map)
+    st.dataframe(
+        table,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(table, max_rows=12),
+        column_config=numeric_column_config(table.columns.tolist()),
+    )
+
+
+def render_scorecard_bowling_table(rows: pd.DataFrame, empty_message: str) -> None:
+    if rows.empty:
+        st.info(empty_message)
+        return
+    display = rows.sort_values(["innings_order", "bowl_order"]).copy()
+    columns = ["player_name", "overs_bowled", "maidens_bowled", "runs_conceded", "wickets_taken", "economy", "wides", "no_balls"]
+    rename_map = {
+        "player_name": "Player",
+        "overs_bowled": "Overs",
+        "maidens_bowled": "Maidens",
+        "runs_conceded": "Runs",
+        "wickets_taken": "Wickets",
+        "economy": "Economy",
+        "wides": "Wides",
+        "no_balls": "No-balls",
+    }
+    if display["innings_name"].nunique(dropna=True) > 1:
+        columns.insert(0, "innings_name")
+        rename_map["innings_name"] = "Innings"
+    table = display_table(display, columns, rename_map)
+    st.dataframe(
+        table,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(table, max_rows=12),
+        column_config=numeric_column_config(table.columns.tolist()),
+    )
+
+
+def render_ball_by_ball_summary(match: pd.Series, data: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Ball-by-ball Summary")
+    if not bool(match.get("is_ball_by_ball_bool")):
+        st.info("Ball-by-ball data is not available for this match, but scorecard analytics are still available.")
+        return
+    match_id = str(match.get("match_id", ""))
+    ball_events = len(match_rows(data["ball_by_ball"], match_id))
+    overs = len(match_rows(data["overs"], match_id))
+    partnerships = len(match_rows(data["partnerships"], match_id))
+    cols = st.columns(3)
+    cols[0].metric("Ball events", f"{ball_events:,}")
+    cols[1].metric("Overs rows", f"{overs:,}")
+    cols[2].metric("Partnership rows", f"{partnerships:,}")
+
+
+def add_innings_context(rows: pd.DataFrame, innings: pd.DataFrame) -> pd.DataFrame:
+    if rows.empty:
+        return rows
+    output = rows.copy()
+    if "innings_id" not in output:
+        output["innings_id"] = pd.NA
+    if innings.empty or "innings_id" not in innings:
+        output["innings_name"] = ""
+        output["innings_order"] = 0
+        return output
+    context_columns = ["innings_id", "innings_name", "innings_order"]
+    context = innings[[column for column in context_columns if column in innings]].drop_duplicates("innings_id")
+    output = output.merge(context, on="innings_id", how="left", suffixes=("", "_context"))
+    output["innings_name"] = output.get("innings_name", pd.Series(index=output.index, dtype="object")).fillna("")
+    output["innings_order"] = pd.to_numeric(output.get("innings_order"), errors="coerce").fillna(0)
+    return output
+
+
+def match_rows(frame: pd.DataFrame, match_id: str) -> pd.DataFrame:
+    if frame.empty or "match_id" not in frame:
+        return pd.DataFrame()
+    return frame[frame["match_id"].astype(str) == match_id].copy()
+
+
+def team_rows(frame: pd.DataFrame, team_id: str) -> pd.DataFrame:
+    if frame.empty or "team_id" not in frame:
+        return pd.DataFrame()
+    return frame[frame["team_id"].astype(str) == team_id].copy()
+
+
+def display_table(frame: pd.DataFrame, columns: list[str], rename_map: dict[str, str]) -> pd.DataFrame:
+    output = frame.copy()
+    for column in columns:
+        if column not in output:
+            output[column] = pd.NA
+    output = output[columns].rename(columns=rename_map)
+    return coerce_display_numbers(output)
+
+
+def sorted_options(values: pd.Series) -> list[str]:
+    cleaned = values.dropna().astype(str)
+    cleaned = cleaned[cleaned.str.strip() != ""]
+    return sorted(cleaned.unique().tolist())
+
+
+def is_fvcc_team_name(value: object) -> bool:
+    return "fiji victorian" in str(value).casefold()
+
+
+def safe_display(value: object, fallback: str = "-") -> str:
+    if pd.isna(value) or str(value).strip() == "":
+        return fallback
+    return str(value)
 
 
 def render_hall_of_fame_page() -> None:
