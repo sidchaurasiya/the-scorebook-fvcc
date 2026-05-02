@@ -297,10 +297,10 @@ def parse_match_payloads(payloads: MatchCentrePayloads) -> dict[str, pd.DataFram
 
 
 def concat_frames(frames: list[pd.DataFrame], columns: list[str]) -> pd.DataFrame:
-    clean = [frame for frame in frames if not frame.empty]
+    clean = [frame.reindex(columns=columns).astype(object) for frame in frames if not frame.empty]
     if not clean:
         return pd.DataFrame(columns=columns)
-    return pd.concat(clean, ignore_index=True)
+    return pd.concat(clean, ignore_index=True).reindex(columns=columns)
 
 
 def columns_for_table(name: str) -> list[str]:

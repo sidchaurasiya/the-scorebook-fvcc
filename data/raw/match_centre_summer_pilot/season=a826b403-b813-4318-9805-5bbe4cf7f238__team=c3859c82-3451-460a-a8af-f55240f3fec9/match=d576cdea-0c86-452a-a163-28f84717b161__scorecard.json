@@ -1,0 +1,1052 @@
+{
+  "request": {
+    "name": "match_scorecard",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/d576cdea-0c86-452a-a163-28f84717b161?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:06:51.591788+00:00"
+  },
+  "payload": {
+    "id": "d576cdea-0c86-452a-a163-28f84717b161",
+    "status": "COMPLETED",
+    "statusId": 3,
+    "matchType": "Two Day",
+    "matchTypeId": 1,
+    "isBallByBall": true,
+    "matchSummary": {
+      "resultText": "Fiji Victorian CC 3rd XI won by 50 runs",
+      "teams": [
+        {
+          "resultTypeId": 8,
+          "resultType": "LOST_ON_FIRST_INNINGS",
+          "wonToss": false,
+          "battedFirst": false,
+          "id": "692e6f5f-2531-4d30-9dd8-737ba949ee96",
+          "displayName": "Northern Socials CC 2s XI",
+          "isHome": false,
+          "scoreText": "173",
+          "isWinner": false,
+          "isBatting": false
+        },
+        {
+          "resultTypeId": 7,
+          "resultType": "WON_ON_FIRST_INNINGS",
+          "wonToss": true,
+          "battedFirst": true,
+          "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+          "displayName": "Fiji Victorian CC 3rd XI",
+          "isHome": true,
+          "scoreText": "223",
+          "isWinner": true,
+          "isBatting": false
+        }
+      ]
+    },
+    "matchStreams": [],
+    "round": {
+      "id": "be16e11e-ae3b-4a9f-9727-9a69a2abf7b0",
+      "name": "Semi Finals",
+      "shortName": "SF"
+    },
+    "grade": {
+      "id": "a269e7f1-2dd7-41e1-aeaa-158faa6dfccd",
+      "name": "04 - \"B\" Grade"
+    },
+    "matchSchedule": [
+      {
+        "matchDay": 1,
+        "startDateTime": "2026-03-07T12:30:00.0000000+11:00"
+      },
+      {
+        "matchDay": 2,
+        "startDateTime": "2026-03-08T12:30:00.0000000+11:00"
+      }
+    ],
+    "venue": {
+      "id": "9bc6ac81-9e88-4a8f-97ad-0c8577c1768b",
+      "name": "C.H Sullivan Memorial Park",
+      "line1": "Davis Street",
+      "suburb": "RESERVOIR",
+      "postCode": "3073",
+      "stateName": "Victoria",
+      "country": "Australia",
+      "playingSurface": {
+        "id": "973e6464-f819-47fc-9635-f50abf9516e6",
+        "name": "Oval #2 West",
+        "latitude": -37.7311412073542,
+        "longitude": 145.035399198532
+      }
+    },
+    "teams": [
+      {
+        "players": [
+          {
+            "participantId": "424396cb-8b70-4e81-987b-fc4bfa59dea3",
+            "name": "Nabeel Nasir",
+            "shortName": "N Nasir",
+            "roles": []
+          },
+          {
+            "participantId": "4c2d73c7-d533-4ae5-adac-4246e9c23d7a",
+            "name": "Jason Ferreira",
+            "shortName": "J Ferreira",
+            "roles": []
+          },
+          {
+            "participantId": "c0238d77-1bdc-4d26-a2c5-4e912fc6cc96",
+            "name": "********",
+            "shortName": "********",
+            "roles": []
+          },
+          {
+            "participantId": "02fb2e31-f568-44f7-a8cb-b3608a133907",
+            "name": "Peter Firebrace",
+            "shortName": "P Firebrace",
+            "roles": []
+          },
+          {
+            "participantId": "b80f4014-e5ac-4bdf-81a0-d8080aae767f",
+            "name": "Jalil Nasir",
+            "shortName": "J Nasir",
+            "roles": []
+          },
+          {
+            "participantId": "c854a950-19c0-43de-a701-48c149afb2e4",
+            "name": "Dustin Barker",
+            "shortName": "D Barker",
+            "roles": []
+          },
+          {
+            "participantId": "7313352d-ee94-47c4-8236-19bf9acc3498",
+            "name": "Wayne Duson",
+            "shortName": "W Duson",
+            "roles": []
+          },
+          {
+            "participantId": "ec3a37ae-65cf-441a-a1b8-89bae221edfb",
+            "name": "Zarah York",
+            "shortName": "Z York",
+            "roles": []
+          },
+          {
+            "participantId": "a1e3087e-1a34-4d5f-a207-2a20ba88b039",
+            "name": "Dilan Abeyaratne",
+            "shortName": "D Abeyaratne",
+            "roles": []
+          },
+          {
+            "participantId": "89eb38c4-5e0a-444a-85ac-53f394f27f58",
+            "name": "David Newman",
+            "shortName": "D Newman",
+            "roles": []
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "692e6f5f-2531-4d30-9dd8-737ba949ee96",
+        "displayName": "Northern Socials CC 2s XI",
+        "name": "Northern Socials CC 2s XI",
+        "owningOrganisation": {
+          "id": "d6cfa9a1-86d8-eb11-a7ad-2818780da0cc",
+          "name": "Northern Socials Cricket Club",
+          "shortName": "NSCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/940157ad-9b5f-4fc1-834d-cdb2e4b4f0c8/1685523363223/logo.png"
+        }
+      },
+      {
+        "players": [
+          {
+            "participantId": "e5bc75aa-b94d-482e-b9f0-df9828edd3ff",
+            "name": "Ved Patel",
+            "shortName": "V Patel",
+            "roles": []
+          },
+          {
+            "participantId": "4aa29dae-1627-4649-addf-f4a12cdbb9db",
+            "name": "Vishnu Para",
+            "shortName": "V Para",
+            "roles": []
+          },
+          {
+            "participantId": "8817f6bc-348d-4f63-81c9-deefc3b714ff",
+            "name": "Wajhi Syed",
+            "shortName": "W Syed",
+            "roles": []
+          },
+          {
+            "participantId": "ef15fcc4-a2d8-47af-af3f-9c4391db7c4a",
+            "name": "Sandeep Gill",
+            "shortName": "S Gill",
+            "roles": []
+          },
+          {
+            "participantId": "232cc042-1e4c-423a-9190-e3432698c99d",
+            "name": "Reuben Sharan",
+            "shortName": "R Sharan",
+            "roles": []
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "name": "Siddhanth Chaurasiya",
+            "shortName": "S Chaurasiya",
+            "roles": []
+          },
+          {
+            "participantId": "478c050c-6e97-4198-ba77-24f46dd329d7",
+            "name": "SHRIKANT SHARMA",
+            "shortName": "S SHARMA",
+            "roles": []
+          },
+          {
+            "participantId": "71ca36a8-b853-449e-b7fd-ac601222e885",
+            "name": "Kartik Nallepalli",
+            "shortName": "K Nallepalli",
+            "roles": []
+          },
+          {
+            "participantId": "661bdd19-e67a-4978-a255-36e16789ab1f",
+            "name": "Nitin Tanwar",
+            "shortName": "N Tanwar",
+            "roles": []
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "name": "Damandeep Sehra",
+            "shortName": "D Sehra",
+            "roles": [
+              "Captain"
+            ]
+          },
+          {
+            "participantId": "242a967d-4a20-4cc8-9a32-bf2121ad6d26",
+            "name": "kunwardeep bedi",
+            "shortName": "k bedi",
+            "roles": []
+          },
+          {
+            "participantId": "17d58ef7-cae1-444e-adba-71c74067872b",
+            "name": "Prasad Rahate",
+            "shortName": "P Rahate",
+            "roles": []
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "c3859c82-3451-460a-a8af-f55240f3fec9",
+        "displayName": "Fiji Victorian CC 3rd XI",
+        "name": "Fiji Victorian CC 3rd XI",
+        "owningOrganisation": {
+          "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+          "name": "Fiji Victorian Cricket Club",
+          "shortName": "FVCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+        }
+      }
+    ],
+    "innings": [
+      {
+        "id": "9532e4ba-82d5-4e41-b01c-9c4e68e942cd",
+        "name": "1st Innings - Fiji Victorian CC 3rd XI",
+        "inningsCloseType": "All Out",
+        "inningsNumber": 1,
+        "inningsOrder": 1,
+        "battingTeamId": "c3859c82-3451-460a-a8af-f55240f3fec9",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 4,
+        "legByesRuns": 2,
+        "noBalls": 2,
+        "wideBalls": 18,
+        "penalties": 0,
+        "totalExtras": 26,
+        "oversBowled": 64.5,
+        "runsScored": 223,
+        "numberOfWicketsFallen": 9,
+        "batting": [
+          {
+            "participantId": "661bdd19-e67a-4978-a255-36e16789ab1f",
+            "playerShortName": "N Tanwar",
+            "batOrder": 1,
+            "batInstance": 1,
+            "ballsFaced": 26,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 18,
+            "battingMinutes": 0,
+            "strikeRate": "69.23",
+            "dismissalTypeId": 14,
+            "dismissalType": "Retired Not Out",
+            "dismissalText": "retired not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "playerShortName": "D Sehra",
+            "batOrder": 2,
+            "batInstance": 1,
+            "ballsFaced": 66,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 24,
+            "battingMinutes": 0,
+            "strikeRate": "36.36",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: D Abeyaratne",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "e5bc75aa-b94d-482e-b9f0-df9828edd3ff",
+            "playerShortName": "V Patel",
+            "batOrder": 3,
+            "batInstance": 1,
+            "ballsFaced": 34,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 3,
+            "battingMinutes": 0,
+            "strikeRate": "8.82",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: D Newman b: D Abeyaratne",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "8817f6bc-348d-4f63-81c9-deefc3b714ff",
+            "playerShortName": "W Syed",
+            "batOrder": 4,
+            "batInstance": 1,
+            "ballsFaced": 24,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 6,
+            "battingMinutes": 0,
+            "strikeRate": "25.00",
+            "dismissalTypeId": 3,
+            "dismissalType": "LBW",
+            "dismissalText": "lbw: Z York",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "232cc042-1e4c-423a-9190-e3432698c99d",
+            "playerShortName": "R Sharan",
+            "batOrder": 5,
+            "batInstance": 1,
+            "ballsFaced": 95,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 31,
+            "battingMinutes": 0,
+            "strikeRate": "32.63",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c&b: J Nasir",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "478c050c-6e97-4198-ba77-24f46dd329d7",
+            "playerShortName": "S SHARMA",
+            "batOrder": 6,
+            "batInstance": 1,
+            "ballsFaced": 32,
+            "foursScored": 4,
+            "sixesScored": 0,
+            "runsScored": 27,
+            "battingMinutes": 0,
+            "strikeRate": "84.37",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: W Duson",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "242a967d-4a20-4cc8-9a32-bf2121ad6d26",
+            "playerShortName": "k bedi",
+            "batOrder": 7,
+            "batInstance": 1,
+            "ballsFaced": 63,
+            "foursScored": 2,
+            "sixesScored": 0,
+            "runsScored": 44,
+            "battingMinutes": 0,
+            "strikeRate": "69.84",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: J Nasir b: J Ferreira",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "4aa29dae-1627-4649-addf-f4a12cdbb9db",
+            "playerShortName": "V Para",
+            "batOrder": 8,
+            "batInstance": 1,
+            "ballsFaced": 37,
+            "foursScored": 3,
+            "sixesScored": 0,
+            "runsScored": 33,
+            "battingMinutes": 0,
+            "strikeRate": "89.18",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c:  b: J Ferreira",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "ef15fcc4-a2d8-47af-af3f-9c4391db7c4a",
+            "playerShortName": "S Gill",
+            "batOrder": 9,
+            "batInstance": 1,
+            "ballsFaced": 6,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 4,
+            "battingMinutes": 0,
+            "strikeRate": "66.66",
+            "dismissalTypeId": 1,
+            "dismissalType": "Not Out",
+            "dismissalText": "not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "playerShortName": "S Chaurasiya",
+            "batOrder": 10,
+            "batInstance": 1,
+            "ballsFaced": 3,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 1,
+            "battingMinutes": 0,
+            "strikeRate": "33.33",
+            "dismissalTypeId": 6,
+            "dismissalType": "Run Out",
+            "dismissalText": "run out (P Firebrace)",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "17d58ef7-cae1-444e-adba-71c74067872b",
+            "playerShortName": "P Rahate",
+            "batOrder": 11,
+            "batInstance": 1,
+            "ballsFaced": 5,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 6,
+            "battingMinutes": 0,
+            "strikeRate": "120.00",
+            "dismissalTypeId": 6,
+            "dismissalType": "Run Out",
+            "dismissalText": "run out (D Barker)",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "71ca36a8-b853-449e-b7fd-ac601222e885",
+            "playerShortName": "K Nallepalli",
+            "batOrder": 12,
+            "batInstance": 1,
+            "ballsFaced": 0,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 0,
+            "dismissalType": "Did Not Bat",
+            "dismissalText": "did not bat",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          }
+        ],
+        "bowling": [
+          {
+            "participantId": "7313352d-ee94-47c4-8236-19bf9acc3498",
+            "playerShortName": "W Duson",
+            "bowlOrder": 1,
+            "oversBowled": 18.5,
+            "maidensBowled": 2,
+            "runsConceded": 60,
+            "wicketsTaken": 1,
+            "wideBalls": 9,
+            "noBalls": 0,
+            "economy": "3.18",
+            "isBowling": false
+          },
+          {
+            "participantId": "c854a950-19c0-43de-a701-48c149afb2e4",
+            "playerShortName": "D Barker",
+            "bowlOrder": 2,
+            "oversBowled": 12,
+            "maidensBowled": 1,
+            "runsConceded": 44,
+            "wicketsTaken": 0,
+            "wideBalls": 6,
+            "noBalls": 0,
+            "economy": "3.66",
+            "isBowling": false
+          },
+          {
+            "participantId": "a1e3087e-1a34-4d5f-a207-2a20ba88b039",
+            "playerShortName": "D Abeyaratne",
+            "bowlOrder": 3,
+            "oversBowled": 9,
+            "maidensBowled": 2,
+            "runsConceded": 24,
+            "wicketsTaken": 2,
+            "wideBalls": 0,
+            "noBalls": 1,
+            "economy": "2.66",
+            "isBowling": false
+          },
+          {
+            "participantId": "b80f4014-e5ac-4bdf-81a0-d8080aae767f",
+            "playerShortName": "J Nasir",
+            "bowlOrder": 4,
+            "oversBowled": 12,
+            "maidensBowled": 3,
+            "runsConceded": 31,
+            "wicketsTaken": 1,
+            "wideBalls": 0,
+            "noBalls": 1,
+            "economy": "2.58",
+            "isBowling": false
+          },
+          {
+            "participantId": "424396cb-8b70-4e81-987b-fc4bfa59dea3",
+            "playerShortName": "N Nasir",
+            "bowlOrder": 5,
+            "oversBowled": 2,
+            "maidensBowled": 0,
+            "runsConceded": 3,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "1.50",
+            "isBowling": false
+          },
+          {
+            "participantId": "ec3a37ae-65cf-441a-a1b8-89bae221edfb",
+            "playerShortName": "Z York",
+            "bowlOrder": 6,
+            "oversBowled": 3,
+            "maidensBowled": 1,
+            "runsConceded": 18,
+            "wicketsTaken": 1,
+            "wideBalls": 1,
+            "noBalls": 0,
+            "economy": "6.00",
+            "isBowling": false
+          },
+          {
+            "participantId": "c0238d77-1bdc-4d26-a2c5-4e912fc6cc96",
+            "playerShortName": "********",
+            "bowlOrder": 7,
+            "oversBowled": 4,
+            "maidensBowled": 0,
+            "runsConceded": 16,
+            "wicketsTaken": 0,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "4.00",
+            "isBowling": false
+          },
+          {
+            "participantId": "4c2d73c7-d533-4ae5-adac-4246e9c23d7a",
+            "playerShortName": "J Ferreira",
+            "bowlOrder": 8,
+            "oversBowled": 4,
+            "maidensBowled": 0,
+            "runsConceded": 21,
+            "wicketsTaken": 2,
+            "wideBalls": 2,
+            "noBalls": 0,
+            "economy": "5.25",
+            "isBowling": false
+          }
+        ],
+        "fielding": [
+          {
+            "participantId": "02fb2e31-f568-44f7-a8cb-b3608a133907",
+            "playerShortName": "P Firebrace",
+            "catches": 0,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 0,
+            "unassistedRunOuts": 1,
+            "assistedRunOuts": 0,
+            "runOuts": 1,
+            "stumpings": 0
+          },
+          {
+            "participantId": "b80f4014-e5ac-4bdf-81a0-d8080aae767f",
+            "playerShortName": "J Nasir",
+            "catches": 2,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 2,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          },
+          {
+            "participantId": "c854a950-19c0-43de-a701-48c149afb2e4",
+            "playerShortName": "D Barker",
+            "catches": 0,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 0,
+            "unassistedRunOuts": 1,
+            "assistedRunOuts": 0,
+            "runOuts": 1,
+            "stumpings": 0
+          },
+          {
+            "participantId": "89eb38c4-5e0a-444a-85ac-53f394f27f58",
+            "playerShortName": "D Newman",
+            "catches": 1,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          }
+        ],
+        "fallOfWickets": [
+          {
+            "participantId": "e5bc75aa-b94d-482e-b9f0-df9828edd3ff",
+            "playerShortName": "V Patel",
+            "order": 1,
+            "runs": 49
+          },
+          {
+            "participantId": "6b74d336-b105-407c-b4ef-f68e2fba7862",
+            "playerShortName": "D Sehra",
+            "order": 2,
+            "runs": 55
+          },
+          {
+            "participantId": "8817f6bc-348d-4f63-81c9-deefc3b714ff",
+            "playerShortName": "W Syed",
+            "order": 3,
+            "runs": 64
+          },
+          {
+            "participantId": "478c050c-6e97-4198-ba77-24f46dd329d7",
+            "playerShortName": "S SHARMA",
+            "order": 4,
+            "runs": 107
+          },
+          {
+            "participantId": "232cc042-1e4c-423a-9190-e3432698c99d",
+            "playerShortName": "R Sharan",
+            "order": 5,
+            "runs": 158
+          },
+          {
+            "participantId": "4aa29dae-1627-4649-addf-f4a12cdbb9db",
+            "playerShortName": "V Para",
+            "order": 6,
+            "runs": 203
+          },
+          {
+            "participantId": "242a967d-4a20-4cc8-9a32-bf2121ad6d26",
+            "playerShortName": "k bedi",
+            "order": 7,
+            "runs": 216
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "playerShortName": "S Chaurasiya",
+            "order": 8,
+            "runs": 218
+          },
+          {
+            "participantId": "17d58ef7-cae1-444e-adba-71c74067872b",
+            "playerShortName": "P Rahate",
+            "order": 9,
+            "runs": 225
+          }
+        ]
+      },
+      {
+        "id": "b901a4fb-d6cd-4964-b7c6-ca38ab67e7a0",
+        "name": "1st Innings - Northern Socials CC 2s XI",
+        "inningsCloseType": "All Out",
+        "inningsNumber": 1,
+        "inningsOrder": 2,
+        "battingTeamId": "692e6f5f-2531-4d30-9dd8-737ba949ee96",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 1,
+        "legByesRuns": 2,
+        "noBalls": 1,
+        "wideBalls": 27,
+        "penalties": 0,
+        "totalExtras": 31,
+        "oversBowled": 46.4,
+        "runsScored": 173,
+        "numberOfWicketsFallen": 9,
+        "batting": [
+          {
+            "participantId": "02fb2e31-f568-44f7-a8cb-b3608a133907",
+            "playerShortName": "P Firebrace",
+            "batOrder": 1,
+            "batInstance": 1,
+            "ballsFaced": 13,
+            "foursScored": 3,
+            "sixesScored": 0,
+            "runsScored": 13,
+            "battingMinutes": 0,
+            "strikeRate": "100.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: R Sharan b: S Gill",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "b80f4014-e5ac-4bdf-81a0-d8080aae767f",
+            "playerShortName": "J Nasir",
+            "batOrder": 2,
+            "batInstance": 1,
+            "ballsFaced": 25,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 3,
+            "battingMinutes": 0,
+            "strikeRate": "12.00",
+            "dismissalTypeId": 6,
+            "dismissalType": "Run Out",
+            "dismissalText": "run out (S Gill)",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "7313352d-ee94-47c4-8236-19bf9acc3498",
+            "playerShortName": "W Duson",
+            "batOrder": 3,
+            "batInstance": 1,
+            "ballsFaced": 120,
+            "foursScored": 12,
+            "sixesScored": 1,
+            "runsScored": 105,
+            "battingMinutes": 0,
+            "strikeRate": "87.50",
+            "dismissalTypeId": 1,
+            "dismissalType": "Not Out",
+            "dismissalText": "not out",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "4c2d73c7-d533-4ae5-adac-4246e9c23d7a",
+            "playerShortName": "J Ferreira",
+            "batOrder": 4,
+            "batInstance": 1,
+            "ballsFaced": 8,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 1,
+            "battingMinutes": 0,
+            "strikeRate": "12.50",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: K Nallepalli",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "a1e3087e-1a34-4d5f-a207-2a20ba88b039",
+            "playerShortName": "D Abeyaratne",
+            "batOrder": 5,
+            "batInstance": 1,
+            "ballsFaced": 30,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 6,
+            "battingMinutes": 0,
+            "strikeRate": "20.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c&b: W Syed",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "c0238d77-1bdc-4d26-a2c5-4e912fc6cc96",
+            "playerShortName": "********",
+            "batOrder": 6,
+            "batInstance": 1,
+            "ballsFaced": 13,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 5,
+            "battingMinutes": 0,
+            "strikeRate": "38.46",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: V Patel b: P Rahate",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "c854a950-19c0-43de-a701-48c149afb2e4",
+            "playerShortName": "D Barker",
+            "batOrder": 7,
+            "batInstance": 1,
+            "ballsFaced": 16,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 3,
+            "battingMinutes": 0,
+            "strikeRate": "18.75",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: V Para",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "424396cb-8b70-4e81-987b-fc4bfa59dea3",
+            "playerShortName": "N Nasir",
+            "batOrder": 8,
+            "batInstance": 1,
+            "ballsFaced": 29,
+            "foursScored": 1,
+            "sixesScored": 0,
+            "runsScored": 6,
+            "battingMinutes": 0,
+            "strikeRate": "20.68",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: W Syed",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "ec3a37ae-65cf-441a-a1b8-89bae221edfb",
+            "playerShortName": "Z York",
+            "batOrder": 9,
+            "batInstance": 1,
+            "ballsFaced": 2,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 2,
+            "dismissalType": "Caught",
+            "dismissalText": "c: R Sharan b: S Chaurasiya",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          },
+          {
+            "participantId": "89eb38c4-5e0a-444a-85ac-53f394f27f58",
+            "playerShortName": "D Newman",
+            "batOrder": 10,
+            "batInstance": 1,
+            "ballsFaced": 25,
+            "foursScored": 0,
+            "sixesScored": 0,
+            "runsScored": 0,
+            "battingMinutes": 0,
+            "strikeRate": "0.00",
+            "dismissalTypeId": 4,
+            "dismissalType": "Bowled",
+            "dismissalText": "b: S Chaurasiya",
+            "isOnStrike": false,
+            "isOnNonStrike": false
+          }
+        ],
+        "bowling": [
+          {
+            "participantId": "ef15fcc4-a2d8-47af-af3f-9c4391db7c4a",
+            "playerShortName": "S Gill",
+            "bowlOrder": 1,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 30,
+            "wicketsTaken": 1,
+            "wideBalls": 9,
+            "noBalls": 0,
+            "economy": "4.28",
+            "isBowling": false
+          },
+          {
+            "participantId": "71ca36a8-b853-449e-b7fd-ac601222e885",
+            "playerShortName": "K Nallepalli",
+            "bowlOrder": 2,
+            "oversBowled": 11,
+            "maidensBowled": 3,
+            "runsConceded": 40,
+            "wicketsTaken": 1,
+            "wideBalls": 7,
+            "noBalls": 0,
+            "economy": "3.63",
+            "isBowling": false
+          },
+          {
+            "participantId": "17d58ef7-cae1-444e-adba-71c74067872b",
+            "playerShortName": "P Rahate",
+            "bowlOrder": 3,
+            "oversBowled": 7,
+            "maidensBowled": 0,
+            "runsConceded": 36,
+            "wicketsTaken": 1,
+            "wideBalls": 0,
+            "noBalls": 0,
+            "economy": "5.14",
+            "isBowling": false
+          },
+          {
+            "participantId": "8817f6bc-348d-4f63-81c9-deefc3b714ff",
+            "playerShortName": "W Syed",
+            "bowlOrder": 4,
+            "oversBowled": 12,
+            "maidensBowled": 4,
+            "runsConceded": 33,
+            "wicketsTaken": 2,
+            "wideBalls": 1,
+            "noBalls": 1,
+            "economy": "2.75",
+            "isBowling": false
+          },
+          {
+            "participantId": "4aa29dae-1627-4649-addf-f4a12cdbb9db",
+            "playerShortName": "V Para",
+            "bowlOrder": 5,
+            "oversBowled": 2,
+            "maidensBowled": 0,
+            "runsConceded": 11,
+            "wicketsTaken": 1,
+            "wideBalls": 5,
+            "noBalls": 0,
+            "economy": "5.50",
+            "isBowling": false
+          },
+          {
+            "participantId": "400e4752-f236-4ca7-93e9-fd8ebee6735e",
+            "playerShortName": "S Chaurasiya",
+            "bowlOrder": 6,
+            "oversBowled": 7.4,
+            "maidensBowled": 0,
+            "runsConceded": 20,
+            "wicketsTaken": 2,
+            "wideBalls": 5,
+            "noBalls": 0,
+            "economy": "2.60",
+            "isBowling": false
+          }
+        ],
+        "fielding": [
+          {
+            "participantId": "ef15fcc4-a2d8-47af-af3f-9c4391db7c4a",
+            "playerShortName": "S Gill",
+            "catches": 0,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 0,
+            "unassistedRunOuts": 1,
+            "assistedRunOuts": 0,
+            "runOuts": 1,
+            "stumpings": 0
+          },
+          {
+            "participantId": "232cc042-1e4c-423a-9190-e3432698c99d",
+            "playerShortName": "R Sharan",
+            "catches": 0,
+            "wicketKeeperCatches": 2,
+            "totalCatches": 2,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          },
+          {
+            "participantId": "e5bc75aa-b94d-482e-b9f0-df9828edd3ff",
+            "playerShortName": "V Patel",
+            "catches": 1,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          },
+          {
+            "participantId": "8817f6bc-348d-4f63-81c9-deefc3b714ff",
+            "playerShortName": "W Syed",
+            "catches": 1,
+            "wicketKeeperCatches": 0,
+            "totalCatches": 1,
+            "unassistedRunOuts": 0,
+            "assistedRunOuts": 0,
+            "runOuts": 0,
+            "stumpings": 0
+          }
+        ],
+        "fallOfWickets": [
+          {
+            "participantId": "02fb2e31-f568-44f7-a8cb-b3608a133907",
+            "playerShortName": "P Firebrace",
+            "order": 1,
+            "runs": 18
+          },
+          {
+            "participantId": "b80f4014-e5ac-4bdf-81a0-d8080aae767f",
+            "playerShortName": "J Nasir",
+            "order": 2,
+            "runs": 40
+          },
+          {
+            "participantId": "4c2d73c7-d533-4ae5-adac-4246e9c23d7a",
+            "playerShortName": "J Ferreira",
+            "order": 3,
+            "runs": 43
+          },
+          {
+            "participantId": "a1e3087e-1a34-4d5f-a207-2a20ba88b039",
+            "playerShortName": "D Abeyaratne",
+            "order": 4,
+            "runs": 67
+          },
+          {
+            "participantId": "c0238d77-1bdc-4d26-a2c5-4e912fc6cc96",
+            "playerShortName": "********",
+            "order": 5,
+            "runs": 96
+          },
+          {
+            "participantId": "c854a950-19c0-43de-a701-48c149afb2e4",
+            "playerShortName": "D Barker",
+            "order": 6,
+            "runs": 129
+          },
+          {
+            "participantId": "424396cb-8b70-4e81-987b-fc4bfa59dea3",
+            "playerShortName": "N Nasir",
+            "order": 7,
+            "runs": 155
+          },
+          {
+            "participantId": "ec3a37ae-65cf-441a-a1b8-89bae221edfb",
+            "playerShortName": "Z York",
+            "order": 8,
+            "runs": 156
+          },
+          {
+            "participantId": "89eb38c4-5e0a-444a-85ac-53f394f27f58",
+            "playerShortName": "D Newman",
+            "order": 9,
+            "runs": 173
+          }
+        ]
+      }
+    ]
+  }
+}

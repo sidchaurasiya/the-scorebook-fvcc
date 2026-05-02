@@ -385,6 +385,83 @@ Data size:
 
 Recommendation: a broader backfill appears safe if it remains staged. The next step should be another controlled pilot for one summer team/season or one additional recent season, using the same cache/manifest approach. A full-club historical backfill should wait until two or three scoped pilots confirm request volume, scorecard coverage, validation-warning patterns, and repository/data-size impact.
 
+## Representative Summer Pilot Results
+
+Pilot scope:
+
+- Season: Summer 2025/26
+- Season ID: `a826b403-b813-4318-9805-5bbe4cf7f238`
+- Teams:
+  - Fiji Victorian CC 3rd XI, `04 - "B" Grade`, team ID `c3859c82-3451-460a-a8af-f55240f3fec9`
+  - Fiji Victorian CC 4th XI, `05 - "C" Grade`, team ID `279aa49f-e6a9-4085-9db7-098edac9c90e`
+- Raw cache: `data/raw/match_centre_summer_pilot/`
+- Processed outputs: `data/processed/match_centre_summer_pilot/`
+
+Request counts:
+
+| Endpoint type | 3rd XI | 4th XI | Total |
+| --- | ---: | ---: | ---: |
+| Team match list | 1 | 1 | 2 |
+| Match scorecard | 11 | 8 | 19 |
+| Match officials | 11 | 8 | 19 |
+| Match balls | 9 | 5 | 14 |
+| Total | 32 | 22 | 54 |
+
+All requested endpoints returned `200`. The script was rerun after the first fetch and skipped cached files, confirming the cache path is resumable.
+
+Coverage:
+
+| Team | Matches found | Completed | Scorecards fetched | With ball-by-ball | Without ball-by-ball | Officials rows |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Fiji Victorian CC 3rd XI | 12 | 11 | 11 | 9 | 2 | 3 |
+| Fiji Victorian CC 4th XI | 10 | 8 | 8 | 5 | 3 | 0 |
+| Total | 22 | 19 | 19 | 14 | 5 | 3 |
+
+Processed row counts:
+
+| Output | Rows |
+| --- | ---: |
+| `all_matches.csv` | 19 |
+| `all_match_innings.csv` | 42 |
+| `all_scorecard_batting.csv` | 371 |
+| `all_scorecard_bowling.csv` | 237 |
+| `all_scorecard_fielding.csv` | 97 |
+| `all_fall_of_wickets.csv` | 151 |
+| `all_match_officials.csv` | 3 |
+| `all_ball_by_ball.csv` | 7,131 |
+| `all_overs.csv` | 1,126 |
+| `all_partnerships.csv` | 226 |
+| `validation_report.csv` | 331 |
+| `validation_warnings_detail.csv` | 24 |
+| `player_identity_audit.csv` | 195 |
+
+Validation summary:
+
+- Pass: 307
+- Warning: 24
+- Error: 0
+
+The summer pilot is more representative than the Winter pilot. It includes completed scorecards without ball-by-ball, missing officials for lower-grade matches, and raw scorecard consistency warnings. The parser handled these as warnings and kept scorecard data as the base layer.
+
+Player identity audit summary:
+
+- Audit rows: 195 participant/team combinations
+- Exact matches to existing player IDs or alias mappings: 51
+- Likely name matches: 1
+- No match: 143
+- FVCC-only rows: 55, with 51 exact matches and 4 no matches
+
+The high no-match count is expected because the pilot includes opposition players and masked placeholder participant records. This confirms the match-centre participant IDs should be audited before any canonical-player merge rule changes.
+
+Data size:
+
+- Raw cached JSON files: 56 files
+- Raw cache size: 8.177 MB
+- 3rd XI raw cache: 5.606 MB
+- 4th XI raw cache: 2.571 MB
+
+Recommendation: production backfill is technically feasible but should not go straight to all seasons. The safe next step is a staged recent-season backfill across current senior teams only, still using cached scorecard-first collection and ball-by-ball only when `isBallByBall` is true. Remaining risks are repository size, inconsistent official coverage, scorecard rows with raw total mismatches, masked/placeholder participant IDs, and identity reconciliation for opposition or duplicate FVCC player profiles.
+
 ## Recommended Raw File Structure
 
 Use one folder per sample/bulk refresh scope so match-level files stay reviewable and replayable:

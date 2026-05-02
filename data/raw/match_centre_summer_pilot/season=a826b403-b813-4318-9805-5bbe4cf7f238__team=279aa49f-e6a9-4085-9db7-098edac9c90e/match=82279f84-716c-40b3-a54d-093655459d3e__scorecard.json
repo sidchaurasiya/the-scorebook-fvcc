@@ -1,0 +1,228 @@
+{
+  "request": {
+    "name": "match_scorecard",
+    "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/82279f84-716c-40b3-a54d-093655459d3e?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+    "status_code": 200,
+    "fetched_at": "2026-05-02T13:07:31.653696+00:00"
+  },
+  "payload": {
+    "id": "82279f84-716c-40b3-a54d-093655459d3e",
+    "status": "COMPLETED",
+    "statusId": 3,
+    "matchType": "One Day",
+    "matchTypeId": 2,
+    "isBallByBall": false,
+    "matchSummary": {
+      "resultText": "Camrea Stingrays CC 2nd XI won by forfeit",
+      "teams": [
+        {
+          "resultTypeId": 10,
+          "resultType": "LOST_BY_FORFEIT",
+          "wonToss": false,
+          "battedFirst": false,
+          "id": "279aa49f-e6a9-4085-9db7-098edac9c90e",
+          "displayName": "Fiji Victorian CC 4th XI",
+          "isHome": false,
+          "scoreText": "0-0",
+          "isWinner": false,
+          "isBatting": false
+        },
+        {
+          "resultTypeId": 9,
+          "resultType": "WON_BY_FORFEIT",
+          "wonToss": false,
+          "battedFirst": false,
+          "id": "4beaffc4-2813-40f7-b1fb-606be66b8222",
+          "displayName": "Camrea Stingrays CC 2nd XI",
+          "isHome": true,
+          "scoreText": "0-0",
+          "isWinner": true,
+          "isBatting": false
+        }
+      ]
+    },
+    "matchStreams": [],
+    "round": {
+      "id": "9345bd09-3765-4972-9856-33db38deded3",
+      "name": "Round 1",
+      "shortName": "R1"
+    },
+    "grade": {
+      "id": "33a387a3-4ddd-4a66-9041-9d95772e9358",
+      "name": "05 - \"C\" Grade"
+    },
+    "matchSchedule": [
+      {
+        "matchDay": 1,
+        "startDateTime": "2025-10-11T12:30:00.0000000+11:00"
+      }
+    ],
+    "venue": {
+      "id": "0ff443e3-8f93-4cf5-b86e-bfb10e910b7e",
+      "name": "John Hall Reserve",
+      "line1": "Dunne Street",
+      "suburb": "KINGSBURY",
+      "postCode": "3083",
+      "stateName": "Victoria",
+      "country": "Australia",
+      "playingSurface": {
+        "id": "fc1b8cf2-ae72-44a5-87f5-a266162db551",
+        "name": "John Hall Reserve",
+        "latitude": -37.7126832923878,
+        "longitude": 145.026386976242
+      }
+    },
+    "teams": [
+      {
+        "players": [],
+        "nonPlayingMembers": [],
+        "id": "279aa49f-e6a9-4085-9db7-098edac9c90e",
+        "displayName": "Fiji Victorian CC 4th XI",
+        "name": "Fiji Victorian CC 4th XI",
+        "owningOrganisation": {
+          "id": "7b78f08d-87d8-eb11-a7ad-2818780da0cc",
+          "name": "Fiji Victorian Cricket Club",
+          "shortName": "FVCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/70da4e5c-a749-48d4-ae6b-33967ddfd523/1688367855492/logo.jpg"
+        }
+      },
+      {
+        "players": [
+          {
+            "participantId": "864b85d5-37e7-4d19-a4e4-2890c6a56e19",
+            "name": "Muhammed Habieb",
+            "shortName": "M Habieb",
+            "roles": []
+          },
+          {
+            "participantId": "25d24bc8-3898-4961-9ffd-c2b4044759a0",
+            "name": "Enis Mustafa",
+            "shortName": "E Mustafa",
+            "roles": []
+          },
+          {
+            "participantId": "f4fcc2f1-faf7-4fa5-b497-2f2b2cdd154a",
+            "name": "Edis Mustafa",
+            "shortName": "E Mustafa",
+            "roles": []
+          },
+          {
+            "participantId": "dca75d07-3b97-4318-bd50-4ecde81c1ba7",
+            "name": "Rob La Mendola",
+            "shortName": "R La Mendola",
+            "roles": []
+          },
+          {
+            "participantId": "76553e23-ea6f-4729-9f6d-43f46207b1d5",
+            "name": "Neil Kommu",
+            "shortName": "N Kommu",
+            "roles": []
+          },
+          {
+            "participantId": "9ee7e755-b932-4500-a281-ff2954a99043",
+            "name": "Tiger Ah-Lit",
+            "shortName": "T Ah-Lit",
+            "roles": []
+          },
+          {
+            "participantId": "f2370c18-1457-4a66-949d-c4beb25524c6",
+            "name": "Brian Ah-Lit",
+            "shortName": "B Ah-Lit",
+            "roles": []
+          },
+          {
+            "participantId": "e5c297c3-95ee-418c-a884-2c93f069f4d6",
+            "name": "David Bollard",
+            "shortName": "D Bollard",
+            "roles": []
+          },
+          {
+            "participantId": "bdef5256-72fa-439d-8154-84e9518efa66",
+            "name": "Nicholas Kastanas",
+            "shortName": "N Kastanas",
+            "roles": []
+          },
+          {
+            "participantId": "8e64238e-527f-480d-b455-252fb24879d1",
+            "name": "Kian Mustafa",
+            "shortName": "K Mustafa",
+            "roles": []
+          },
+          {
+            "participantId": "4acb2a8d-1479-4dd0-be89-4b6031de1a24",
+            "name": "Jacob Ivory",
+            "shortName": "J Ivory",
+            "roles": []
+          },
+          {
+            "participantId": "9c02246f-18a4-4230-8b79-2eb30416553b",
+            "name": "John Valiotis",
+            "shortName": "J Valiotis",
+            "roles": [
+              "Captain",
+              "Wicket Keeper"
+            ]
+          }
+        ],
+        "nonPlayingMembers": [],
+        "id": "4beaffc4-2813-40f7-b1fb-606be66b8222",
+        "displayName": "Camrea Stingrays CC 2nd XI",
+        "name": "Camrea Stingrays CC 2nd XI",
+        "owningOrganisation": {
+          "id": "34bceba5-87d8-eb11-a7ad-2818780da0cc",
+          "name": "Camrea Cricket Club",
+          "shortName": "CCC",
+          "logoUrl": "https://res.cloudinary.com/playhq/image/upload/h_256,w_256/v1/production/ca/3f508db7-d3dd-461c-892f-dcf1f3d6ba7a/1693968914303/logo.jpg"
+        }
+      }
+    ],
+    "innings": [
+      {
+        "id": "b4d5e754-dba1-4696-b2df-652dd01026d3",
+        "name": "1st Innings - Camrea Stingrays CC 2nd XI",
+        "inningsCloseType": "Compulsory Close",
+        "inningsNumber": 1,
+        "inningsOrder": 1,
+        "battingTeamId": "4beaffc4-2813-40f7-b1fb-606be66b8222",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 0,
+        "legByesRuns": 0,
+        "noBalls": 0,
+        "wideBalls": 0,
+        "penalties": 0,
+        "totalExtras": 0,
+        "oversBowled": 0,
+        "runsScored": 0,
+        "numberOfWicketsFallen": 0,
+        "batting": [],
+        "bowling": [],
+        "fielding": [],
+        "fallOfWickets": []
+      },
+      {
+        "id": "a9b45df8-c58c-4622-a420-640d49cb15d5",
+        "name": "1st Innings - Fiji Victorian CC 4th XI",
+        "inningsCloseType": "End of Match",
+        "inningsNumber": 1,
+        "inningsOrder": 2,
+        "battingTeamId": "279aa49f-e6a9-4085-9db7-098edac9c90e",
+        "isDeclared": false,
+        "isFollowOn": false,
+        "byesRuns": 0,
+        "legByesRuns": 0,
+        "noBalls": 0,
+        "wideBalls": 0,
+        "penalties": 0,
+        "totalExtras": 0,
+        "oversBowled": 0,
+        "runsScored": 0,
+        "numberOfWicketsFallen": 0,
+        "batting": [],
+        "bowling": [],
+        "fielding": [],
+        "fallOfWickets": []
+      }
+    ]
+  }
+}
