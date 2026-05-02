@@ -81,6 +81,7 @@ HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
 )
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
+SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
@@ -105,9 +106,9 @@ def render_page() -> None:
         render_approaching_milestones_page()
     elif selected_page == "Player Profile":
         render_player_profile_page()
-    elif selected_page == "Match Insights":
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Match Insights":
         render_match_centre_page()
-    elif selected_page == "Advanced Analytics":
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Advanced Analytics":
         render_advanced_analytics_page()
     else:
         render_hall_of_fame_page()
@@ -120,9 +121,14 @@ def render_sidebar() -> str:
         "⌂ Season Overview",
         "☆ Milestone",
         "♙ Player Profile",
-        "▦ Match Insights",
-        "◈ Advanced Analytics",
     ]
+    if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
+        page_labels.extend(
+            [
+                "▦ Match Insights",
+                "◈ Advanced Analytics",
+            ]
+        )
     if "selected_page_label" not in st.session_state:
         st.session_state["selected_page_label"] = page_labels[0]
 
@@ -135,8 +141,14 @@ def render_sidebar() -> str:
             st.session_state[widget_key] = current_label
 
     with st.container(key="mobile_nav_fallback"):
-        st.markdown(
+        experimental_help = ""
+        if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
+            experimental_help = """
+                    <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
+                    <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
             """
+        st.markdown(
+            f"""
             <details class="mobile-nav-help">
                 <summary>
                     <span class="mobile-nav-label">Choose a page</span>
@@ -147,8 +159,7 @@ def render_sidebar() -> str:
                     <p><strong>Season Overview 📊</strong><br>Season stats, team leaders, and detailed batting/bowling/fielding tables.</p>
                     <p><strong>Milestone 💪</strong><br>Active players closing in on major club milestones.</p>
                     <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
-                    <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
-                    <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
+                    {experimental_help}
                 </div>
             </details>
             """,
