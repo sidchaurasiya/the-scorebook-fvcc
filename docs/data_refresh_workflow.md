@@ -2,6 +2,134 @@
 
 The weekly refresh is designed to rebuild the shared app data layer, not page-specific hardcoded outputs. Any current or future visual that reads from the shared processed CSVs should automatically reflect refreshed PlayCricket data after `scripts/refresh_data.py` runs and the Streamlit app is restarted.
 
+## Weekly Refresh Checklist
+
+Use this checklist after FVCC has played and the scorecard/live scoring has been published on PlayCricket.
+
+1. Confirm the latest match is visible on PlayCricket.
+
+   - Open the FVCC PlayCricket page.
+   - Check the latest season/team has updated stats.
+   - If the match is not visible yet, wait before refreshing the app.
+
+2. Open the project folder.
+
+```bash
+cd "/Users/preetkaur/Documents/Codex/2026-04-24/you-are-an-expert-full-stack"
+```
+
+3. Pull latest GitHub changes if needed.
+
+   This keeps your local folder aligned before creating new refreshed data.
+
+```bash
+git pull
+```
+
+4. Check current local changes before refreshing.
+
+```bash
+git status
+```
+
+   If there are unrelated uncommitted changes, commit or stash them before continuing.
+
+5. Run the dry-run first.
+
+```bash
+./.venv-app/bin/python scripts/refresh_data.py --dry-run
+```
+
+   Confirm the dry-run shows:
+
+   - the expected latest season
+   - no unexpected errors
+   - no data files changed
+
+6. Run the real refresh.
+
+```bash
+./.venv-app/bin/python scripts/refresh_data.py
+```
+
+   The refresh should:
+
+   - create a timestamped rollback snapshot
+   - write new timestamped raw PlayCricket backups
+   - rebuild shared processed CSVs
+   - reapply canonical player mapping
+   - reapply team/grade cleaning
+   - print a refresh summary
+
+7. Restart the local app.
+
+```bash
+./.venv-app/bin/streamlit run app.py --server.port 8502
+```
+
+8. Review the app locally.
+
+```text
+http://localhost:8502/
+```
+
+9. Check the key pages.
+
+- Hall of Fame
+- Season Overview
+- Milestone
+- Player Profile
+
+10. Confirm the latest season/match appears where expected.
+
+   Useful checks:
+
+   - Season Overview season dropdown includes the latest season.
+   - Player Profile shows new season rows for players who played.
+   - Hall of Fame totals update where relevant.
+   - Milestone totals update where relevant.
+   - Biggest Improvers uses the correct previous same-type season.
+
+11. Check changed files.
+
+```bash
+git status
+```
+
+   Expected changes usually include:
+
+   - `data/raw/playcricket_*_<timestamp>.json`
+   - `data/processed/*.csv`
+   - `data/metadata.json`
+   - audit/debug CSVs such as `data/team_grade_display_audit.csv` or `data/debug_biggest_improvers.csv`
+
+12. Commit the refreshed data after local review.
+
+```bash
+git add data README.md docs src scripts
+git commit -m "Refresh PlayCricket data"
+```
+
+   Adjust the commit message if refreshing for a specific season, for example:
+
+```bash
+git commit -m "Refresh data for Winter 2026"
+```
+
+13. Push only when ready.
+
+```bash
+git push origin main
+```
+
+14. After pushing, check Streamlit Cloud.
+
+   If the deployed app does not update after a few minutes:
+
+   - open Streamlit Cloud
+   - use Manage app -> Reboot app
+   - refresh the browser after reboot
+
 ## Refresh Command
 
 ```bash
