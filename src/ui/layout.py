@@ -82,6 +82,7 @@ HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
+FASTEST_MILESTONE_RECORD_LIMIT = 6
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
@@ -2493,7 +2494,7 @@ def render_ranked_record_card(
     rows = rows.sort_values(
         [value_col, "final_runs", "match_date_sort"],
         ascending=[True, False, False],
-    ).head(10)
+    ).head(FASTEST_MILESTONE_RECORD_LIMIT)
     row_html = "".join(
         milestone_record_row_html(rank, row, value_col, value_suffix)
         for rank, (_, row) in enumerate(rows.iterrows(), start=1)
