@@ -2458,8 +2458,15 @@ def render_ranked_record_card(
 def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
     player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
     final_runs = safe_record_int(row.get("final_runs"))
-    opponent = clean_opponent_label(row.get("opposition_team"))
-    final_line = f"{final_runs} vs {opponent}" if final_runs else f"vs {opponent}"
+    opponent = clean_opponent_label(row.get("opposition_team"), "")
+    if final_runs and opponent:
+        final_line = f"Final score: {final_runs} vs {opponent}"
+    elif final_runs:
+        final_line = f"Final score: {final_runs}"
+    elif opponent:
+        final_line = f"vs {opponent}"
+    else:
+        final_line = ""
     meta = milestone_meta(row)
     meta_html = f'<span>{html.escape(meta)}</span>' if meta else ""
     value = safe_record_int(row.get(value_col))
@@ -2500,7 +2507,6 @@ def milestone_meta(row: pd.Series) -> str:
     parts = [
         safe_record_text(row.get("season")),
         clean_grade_label_for_record(row.get("grade_name")),
-        format_record_date(row.get("match_date")),
     ]
     return " • ".join(part for part in parts if part)
 
@@ -2512,8 +2518,8 @@ def clean_grade_label_for_record(value: object) -> str:
     return text
 
 
-def clean_opponent_label(value: object) -> str:
-    text = safe_record_text(value, "Unknown opposition")
+def clean_opponent_label(value: object, fallback: str = "Unknown opposition") -> str:
+    text = safe_record_text(value, fallback)
     text = re.sub(r"\s+\d+(st|nd|rd|th)?\s+XI$", "", text).strip()
     text = re.sub(r"\s+XI$", "", text).strip()
     return text
