@@ -2384,14 +2384,30 @@ def render_fastest_batting_milestone_records() -> None:
     st.caption("Fastest milestone records are calculated only from matches with ball-by-ball data.")
     milestones = load_batting_milestone_records(match_centre_milestones_mtime())
     if milestones.empty:
-        st.info("No ball-by-ball milestone data available yet. Run the match-centre milestone builder after refreshing match-centre data.")
+        render_empty_milestone_card(
+            "Fastest Batting Milestones",
+            "No ball-by-ball milestone data available yet.",
+            "Run the match-centre milestone builder after refreshing match-centre data.",
+        )
         return
 
     columns = st.columns(2)
     with columns[0]:
-        render_fastest_milestone_table(milestones, "balls_to_50", "Fastest 50s", "Balls to 50")
+        render_ranked_record_card(
+            "Fastest 50s",
+            milestones,
+            "balls_to_50",
+            "balls",
+            "No verified 50s from available ball-by-ball data yet.",
+        )
     with columns[1]:
-        render_fastest_milestone_table(milestones, "balls_to_100", "Fastest 100s", "Balls to 100")
+        render_ranked_record_card(
+            "Fastest 100s",
+            milestones,
+            "balls_to_100",
+            "balls",
+            "No verified 100s from available ball-by-ball data yet.",
+        )
 
 
 @st.cache_data(show_spinner=False)
@@ -2410,66 +2426,120 @@ def match_centre_milestones_mtime() -> float | None:
     return MATCH_CENTRE_BATTING_MILESTONES_PATH.stat().st_mtime
 
 
-def render_fastest_milestone_table(milestones: pd.DataFrame, milestone_column: str, title: str, milestone_label: str) -> None:
-    st.markdown(f"### {html.escape(title)}")
-    if milestone_column not in milestones:
-        st.info("No ball-by-ball milestone data available yet.")
+def render_ranked_record_card(
+    title: str,
+    records: pd.DataFrame,
+    value_col: str,
+    value_suffix: str,
+    empty_message: str,
+) -> None:
+    if value_col not in records:
+        render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
         return
-    rows = milestones[milestones[milestone_column].notna()].copy()
+    rows = records[records[value_col].notna()].copy()
     if rows.empty:
-        st.info("No ball-by-ball milestone data available yet.")
+        render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
         return
-    rows["strike_rate_sort"] = rows.apply(lambda row: safe_numeric_div(row.get("final_runs", 0) * 100, row.get("final_balls", 0)), axis=1)
     rows["match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
     rows = rows.sort_values(
-        [milestone_column, "final_runs", "strike_rate_sort", "match_date_sort"],
-        ascending=[True, False, False, False],
+        [value_col, "final_runs", "match_date_sort"],
+        ascending=[True, False, False],
     ).head(10)
-    rows.insert(0, "Rank", range(1, len(rows) + 1))
-    display = rows[
-        [
-            "Rank",
-            "canonical_player_name",
-            milestone_column,
-            "final_runs",
-            "opposition_team",
-            "venue_name",
-            "season",
-            "match_date",
-            "team_run_contribution_pct",
-        ]
-    ].rename(
-        columns={
-            "canonical_player_name": "Player",
-            milestone_column: milestone_label,
-            "final_runs": "Final score",
-            "opposition_team": "Opposition",
-            "venue_name": "Venue",
-            "season": "Season",
-            "match_date": "Match date",
-            "team_run_contribution_pct": "Team contribution %",
-        }
+    row_html = "".join(
+        milestone_record_row_html(rank, row, value_col, value_suffix)
+        for rank, (_, row) in enumerate(rows.iterrows(), start=1)
     )
-    display["Team contribution %"] = display["Team contribution %"].map(lambda value: format_advanced_value(value, "percent"))
-    st.dataframe(
-        display,
-        use_container_width=True,
-        hide_index=True,
-        height=table_height(display, max_rows=10),
-        column_config={
-            "Rank": st.column_config.NumberColumn("Rank", width="small", format="%d"),
-            milestone_label: st.column_config.NumberColumn(milestone_label, format="%d"),
-            "Final score": st.column_config.NumberColumn("Final score", format="%d"),
-        },
+    st.markdown(
+        f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
+        unsafe_allow_html=True,
     )
 
 
-def safe_numeric_div(numerator: object, denominator: object) -> float:
-    numerator_value = pd.to_numeric(numerator, errors="coerce")
-    denominator_value = pd.to_numeric(denominator, errors="coerce")
-    if pd.isna(numerator_value) or pd.isna(denominator_value) or denominator_value == 0:
-        return 0.0
-    return float(numerator_value) / float(denominator_value)
+def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
+    player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
+    final_runs = safe_record_int(row.get("final_runs"))
+    opponent = clean_opponent_label(row.get("opposition_team"))
+    final_line = f"{final_runs} vs {opponent}" if final_runs else f"vs {opponent}"
+    meta = milestone_meta(row)
+    meta_html = f'<span>{html.escape(meta)}</span>' if meta else ""
+    value = safe_record_int(row.get(value_col))
+    value_text = f"{value} {value_suffix}" if value else f"N/A {value_suffix}"
+    return (
+        '<div class="performance-row">'
+        f'<span class="progress-rank">{rank_badge(rank)}</span>'
+        '<div class="performance-player">'
+        f'<strong>{html.escape(player)}</strong>'
+        f'<span>{html.escape(final_line)}</span>'
+        f'{meta_html}'
+        '</div>'
+        f'<div class="performance-value">{html.escape(value_text)}</div>'
+        '</div>'
+    )
+
+
+def render_empty_milestone_card(title: str, message: str, note: str) -> None:
+    st.markdown(
+        (
+            '<div class="hof-card performance-card">'
+            f'<div class="card-title">{html.escape(title)}</div>'
+            '<div class="performance-row">'
+            '<span class="progress-rank">–</span>'
+            '<div class="performance-player">'
+            f'<strong>{html.escape(message)}</strong>'
+            f'<span>{html.escape(note)}</span>'
+            '</div>'
+            '<div class="performance-value">N/A</div>'
+            '</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def milestone_meta(row: pd.Series) -> str:
+    parts = [
+        safe_record_text(row.get("season")),
+        clean_grade_label_for_record(row.get("grade_name")),
+        format_record_date(row.get("match_date")),
+    ]
+    return " • ".join(part for part in parts if part)
+
+
+def clean_grade_label_for_record(value: object) -> str:
+    text = safe_record_text(value)
+    text = re.sub(r'^\d+\s*-\s*', "", text).strip()
+    text = text.replace('"', "")
+    return text
+
+
+def clean_opponent_label(value: object) -> str:
+    text = safe_record_text(value, "Unknown opposition")
+    text = re.sub(r"\s+\d+(st|nd|rd|th)?\s+XI$", "", text).strip()
+    text = re.sub(r"\s+XI$", "", text).strip()
+    return text
+
+
+def format_record_date(value: object) -> str:
+    date = pd.to_datetime(value, errors="coerce")
+    if pd.isna(date):
+        return ""
+    return date.strftime("%d %b %Y")
+
+
+def safe_record_text(value: object, fallback: str = "") -> str:
+    if value is None or pd.isna(value):
+        return fallback
+    text = str(value).strip()
+    if not text or text.casefold() in {"nan", "none", "nat"}:
+        return fallback
+    return text
+
+
+def safe_record_int(value: object) -> int | None:
+    numeric = pd.to_numeric(value, errors="coerce")
+    if pd.isna(numeric):
+        return None
+    return int(round(float(numeric)))
 
 
 @st.cache_data(show_spinner=False)
