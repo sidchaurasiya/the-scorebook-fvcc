@@ -999,6 +999,37 @@ def inject_theme() -> None:
             margin-top: 12px;
         }
 
+        a.player-profile-link,
+        a.player-profile-link:visited,
+        a[href*="page=player-profile"][href*="player="],
+        a[href*="page=player-profile"][href*="player="]:visited,
+        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
+        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:visited {
+            color: inherit !important;
+            cursor: pointer;
+            font: inherit;
+            font-weight: inherit;
+            text-decoration: none !important;
+        }
+
+        a.player-profile-link:hover,
+        a.player-profile-link:focus-visible,
+        a[href*="page=player-profile"][href*="player="]:hover,
+        a[href*="page=player-profile"][href*="player="]:focus-visible,
+        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:hover,
+        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:focus-visible {
+            color: #4b37d8 !important;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+        }
+
+        a.player-profile-link:focus-visible,
+        a[href*="page=player-profile"][href*="player="]:focus-visible {
+            border-radius: 4px;
+            outline: 2px solid rgba(75, 55, 216, 0.35);
+            outline-offset: 2px;
+        }
+
         .improver-gain {
             color: #109768;
             font-size: 1.4rem;

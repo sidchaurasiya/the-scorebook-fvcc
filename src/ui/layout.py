@@ -3,6 +3,7 @@ import html
 import os
 import re
 import time
+from urllib.parse import quote, unquote
 from pathlib import Path
 
 import altair as alt
@@ -83,6 +84,8 @@ DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 FASTEST_MILESTONE_RECORD_LIMIT = 6
+PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
+PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
@@ -92,6 +95,72 @@ def log_hof_timing(label: str, started_at: float) -> None:
 
 def sync_selected_page(source_key: str) -> None:
     st.session_state["selected_page_label"] = st.session_state[source_key]
+
+
+def query_param_value(name: str) -> str:
+    value = st.query_params.get(name, "")
+    if isinstance(value, list):
+        value = value[0] if value else ""
+    return str(value).strip()
+
+
+def apply_player_profile_query_params(page_labels: list[str]) -> None:
+    requested_page = query_param_value("page").casefold()
+    requested_player = query_param_value("player")
+    if requested_page == PLAYER_PROFILE_QUERY_PAGE or requested_player:
+        if PLAYER_PROFILE_PAGE_LABEL in page_labels:
+            st.session_state["selected_page_label"] = PLAYER_PROFILE_PAGE_LABEL
+            st.session_state["mobile_navigation"] = PLAYER_PROFILE_PAGE_LABEL
+            st.session_state["main_navigation"] = PLAYER_PROFILE_PAGE_LABEL
+        if requested_player:
+            st.session_state["pending_player_profile_id"] = unquote(requested_player)
+
+
+def player_profile_url(player_id: object, player_name: object | None = None) -> str:
+    player_id_text = str(player_id or "").strip()
+    if not player_id_text:
+        return ""
+    url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player={quote(player_id_text)}"
+    player_name_text = str(player_name or "").strip()
+    if player_name_text:
+        url = f"{url}#{player_name_text}"
+    return url
+
+
+def player_profile_link_html(player_id: object, player_name: object, class_name: str = "player-profile-link") -> str:
+    player_name_text = str(player_name or "-")
+    url = player_profile_url(player_id, player_name_text)
+    if not url:
+        return html.escape(player_name_text)
+    return (
+        f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
+        f'title="Open Player Profile for {html.escape(player_name_text, quote=True)}">'
+        f"{html.escape(player_name_text)}</a>"
+    )
+
+
+def player_id_from_row(row: pd.Series | dict[str, object]) -> str:
+    for column in ["canonical_player_id", "player_key", "player_id"]:
+        value = row.get(column, "") if hasattr(row, "get") else ""
+        value = str(value or "").strip()
+        if value:
+            return value
+    return ""
+
+
+def profile_link_display_pattern() -> str:
+    return r"#(.+)$"
+
+
+def link_player_column(table: pd.DataFrame, id_column: str = "canonical_player_id") -> pd.DataFrame:
+    if table.empty or "Player" not in table or id_column not in table:
+        return table
+    output = table.copy()
+    output["Player"] = [
+        player_profile_url(player_id, player)
+        for player_id, player in zip(output[id_column], output["Player"])
+    ]
+    return output.drop(columns=[id_column], errors="ignore")
 
 
 def render_page() -> None:
@@ -130,6 +199,7 @@ def render_sidebar() -> str:
                 "◈ Advanced Analytics",
             ]
         )
+    apply_player_profile_query_params(page_labels)
     if "selected_page_label" not in st.session_state:
         st.session_state["selected_page_label"] = page_labels[0]
 
@@ -2170,6 +2240,7 @@ def build_player_identity_frame(frames: list[pd.DataFrame]) -> pd.DataFrame:
             records.append(
                 {
                     "player_key": key,
+                    "canonical_player_id": key,
                     "player_name": player_names.iloc[0] if not player_names.empty else "-",
                     "teams_grades": ", ".join(unique_labels(teams_grades)),
                     "seasons_played": len(seasons),
@@ -2186,6 +2257,7 @@ def build_player_identity_frame(frames: list[pd.DataFrame]) -> pd.DataFrame:
         identity.groupby("player_key", as_index=False)
         .agg(
             {
+                "canonical_player_id": "first",
                 "player_name": "first",
                 "teams_grades": join_unique_csv,
                 "seasons_played": "max",
@@ -2365,7 +2437,7 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
         rows.append(
             '<div class="progress-row hof-progress-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
-            f'<span class="progress-name">{html.escape(str(row["Player"]))}</span>'
+            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}</span>'
             f'<span class="progress-value"><strong>{int(value):,} {html.escape(suffix)}</strong></span>'
             f'<div class="progress-track"><div style="width:{width:.0f}%"></div></div>'
             "</div>"
@@ -2507,6 +2579,7 @@ def render_ranked_record_card(
 
 def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
     player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
+    player_id = player_id_from_row(row)
     final_score = safe_record_text(row.get("final_score_display"))
     if not final_score:
         final_runs = safe_record_int(row.get("final_runs"))
@@ -2528,7 +2601,7 @@ def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_s
         '<div class="performance-row">'
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
-        f'<strong>{html.escape(player)}</strong>'
+        f'<strong>{player_profile_link_html(player_id, player)}</strong>'
         f'<span>{html.escape(final_line)}</span>'
         f'{meta_html}'
         '</div>'
@@ -2631,10 +2704,11 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         meta = record_meta(row)
         meta_html = f'<span>{html.escape(meta)}</span>' if meta else ""
         name = row.get("canonical_player_name") or row.get("player_name") or "-"
+        player_id = player_id_from_row(row)
         rows.append(
             '<div class="performance-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
-            f'<div class="performance-player"><strong>{html.escape(str(name))}</strong>{meta_html}</div>'
+            f'<div class="performance-player"><strong>{player_profile_link_html(player_id, name)}</strong>{meta_html}</div>'
             f'<div class="performance-value">{html.escape(str(value))}</div>'
             "</div>"
         )
@@ -2697,6 +2771,7 @@ def build_record_holder_cards(data: dict[str, object]) -> list[dict[str, str]]:
             {
                 "title": title,
                 "player": str(row.get("Player", "-")),
+                "player_id": player_id_from_row(row),
                 "value": f"{int(row[metric]):,} {suffix}",
                 "meta": "",
             }
@@ -2729,15 +2804,17 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
         return None
     frame = df.copy()
     player_source = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+    player_id_source = "canonical_player_id" if "canonical_player_id" in frame else "player_id"
     if player_source not in frame:
         return None
     frame["_player"] = frame[player_source].fillna("").astype(str).str.strip()
+    frame["_player_id"] = frame[player_id_source].fillna("").astype(str).str.strip() if player_id_source in frame else ""
     frame = frame[(frame["_player"] != "") & frame["season"].notna()]
     if frame.empty:
         return None
 
     rows = []
-    for (player, season), group in frame.groupby(["_player", "season"], dropna=False):
+    for (player_id, player, season), group in frame.groupby(["_player_id", "_player", "season"], dropna=False):
         runs = sum_column(group, "battingAggregate")
         balls = sum_column(group, "battingBallsFaced")
         innings = sum_column(group, "battingInnings")
@@ -2745,6 +2822,7 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
         outs = max(innings - not_outs, 0)
         row = {
             "player": player,
+            "player_id": player_id,
             "season": season,
             "matches": sum_column(group, "matches"),
             "runs": runs,
@@ -2771,20 +2849,23 @@ def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
         return None
     frame = df.copy()
     player_source = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+    player_id_source = "canonical_player_id" if "canonical_player_id" in frame else "player_id"
     if player_source not in frame:
         return None
     frame["_player"] = frame[player_source].fillna("").astype(str).str.strip()
+    frame["_player_id"] = frame[player_id_source].fillna("").astype(str).str.strip() if player_id_source in frame else ""
     frame = frame[(frame["_player"] != "") & frame["season"].notna()]
     if frame.empty:
         return None
 
     rows = []
-    for (player, season), group in frame.groupby(["_player", "season"], dropna=False):
+    for (player_id, player, season), group in frame.groupby(["_player_id", "_player", "season"], dropna=False):
         wickets = sum_column(group, "bowlingWickets")
         balls = sum_column(group, "bowlingBalls")
         runs = sum_column(group, "bowlingRuns")
         row = {
             "player": player,
+            "player_id": player_id,
             "season": season,
             "matches": sum_column(group, "matches"),
             "wickets": wickets,
@@ -2840,7 +2921,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
     return (
         '<div class="best-season-card">'
         f'<div class="best-season-label">{html.escape(title)}</div>'
-        f'<div class="best-season-player">{html.escape(str(row["player"]))}</div>'
+        f'<div class="best-season-player">{player_profile_link_html(row.get("player_id"), row["player"])}</div>'
         f'<div class="best-season-season">{html.escape(str(row["season"]))}</div>'
         f'<div class="best-season-primary">{html.escape(primary)}</div>'
         f'<div class="best-season-stats">{chip_html}</div>'
@@ -2891,7 +2972,7 @@ def record_card_html(card: dict[str, str]) -> str:
     return (
         '<div class="record-card">'
         f'<div class="record-label">{html.escape(card["title"])}</div>'
-        f'<div class="record-player">{html.escape(card["player"])}</div>'
+        f'<div class="record-player">{player_profile_link_html(card.get("player_id"), card["player"])}</div>'
         f'<div class="record-value">{html.escape(card["value"])}</div>'
         f"{meta}"
         "</div>"
@@ -2912,7 +2993,7 @@ def render_milestone_club(all_time: pd.DataFrame) -> None:
         for band in sorted(players["milestone_band"].dropna().unique(), reverse=True):
             band_players = players[players["milestone_band"] == band].sort_values(metric, ascending=False)
             chips = "".join(
-                f'<span class="milestone-chip">{html.escape(str(row["Player"]))} · {int(row[metric]):,} {html.escape(suffix)}</span>'
+                f'<span class="milestone-chip">{player_profile_link_html(player_id_from_row(row), row["Player"])} · {int(row[metric]):,} {html.escape(suffix)}</span>'
                 for _, row in band_players.head(18).iterrows()
             )
             rendered.append(f'<div class="milestone-group"><h4>{int(band):,}+ {html.escape(metric)}</h4><div>{chips}</div></div>')
@@ -2950,6 +3031,7 @@ def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str
 @st.cache_data(show_spinner=False)
 def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
+        "canonical_player_id",
         "Player",
         "Teams/Grades",
         "Seasons Played",
@@ -2976,6 +3058,7 @@ def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
         if column not in table:
             table[column] = 0
     table = table.sort_values(["Runs", "Wickets", "Matches"], ascending=False, na_position="last")
+    table = link_player_column(table)
     for column in ["Seasons Played", "Matches", "Runs", "50s", "100s", "Wickets", "5WI", "Catches", "Stumpings", "Run Outs", "Dismissals"]:
         if column in table:
             table[column] = pd.to_numeric(table[column], errors="coerce")
@@ -2988,6 +3071,7 @@ def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
 @st.cache_data(show_spinner=False)
 def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
+        "canonical_player_id",
         "Player",
         "Seasons Played",
         "Debut Season",
@@ -3006,6 +3090,7 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     table = select_display_columns(all_time, columns).copy()
     if "Runs" in table:
         table = table.sort_values(["Runs", "Bat Avg", "Player"], ascending=[False, False, True], na_position="last")
+    table = link_player_column(table)
     return coerce_display_numbers(table)
 
 
@@ -3015,6 +3100,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
     if "Balls Bowled" in source:
         source["Overs"] = source["Balls Bowled"].map(format_balls_as_overs)
     columns = [
+        "canonical_player_id",
         "Player",
         "Seasons Played",
         "Matches",
@@ -3033,12 +3119,14 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         table["BBI"] = ordered_bbi_values(table["BBI"])
     if "Wickets" in table:
         table = table.sort_values(["Wickets", "Bowl Avg", "Player"], ascending=[False, True, True], na_position="last")
+    table = link_player_column(table)
     return coerce_display_numbers(table)
 
 
 @st.cache_data(show_spinner=False)
 def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     columns = [
+        "canonical_player_id",
         "Player",
         "Seasons Played",
         "Matches",
@@ -3050,6 +3138,7 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     table = select_display_columns(all_time, columns).copy()
     if "Catches" in table:
         table = table.sort_values(["Catches", "Matches", "Player"], ascending=[False, True, True], na_position="last")
+    table = link_player_column(table)
     return coerce_display_numbers(table)
 
 
@@ -3191,7 +3280,7 @@ def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
 
 def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
     config = {}
-    config["Player"] = st.column_config.TextColumn("Player", pinned=True, width=150)
+    config["Player"] = st.column_config.LinkColumn("Player", pinned=True, width=150, display_text=profile_link_display_pattern())
     config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width=150)
     for column in ["Debut Season", "Latest Season"]:
         if column in columns:
@@ -3342,6 +3431,7 @@ def season_sort_value(season: object) -> int:
 def milestone_watchlist_columns() -> list[str]:
     return [
         "Player",
+        "canonical_player_id",
         "Category",
         "Current Total",
         "Target Milestone",
@@ -3364,7 +3454,11 @@ def build_milestone_watchlist(
     if df.empty or value_col not in df or "Player" not in df:
         return pd.DataFrame(columns=milestone_watchlist_columns())
 
-    values = df[["Player", value_col]].copy()
+    id_column = "canonical_player_id" if "canonical_player_id" in df else "player_key"
+    selected_columns = ["Player", value_col]
+    if id_column in df:
+        selected_columns.append(id_column)
+    values = df[selected_columns].copy()
     values[value_col] = pd.to_numeric(values[value_col], errors="coerce")
     values = values[values[value_col].notna() & (values[value_col] > 0)]
     if values.empty:
@@ -3372,7 +3466,10 @@ def build_milestone_watchlist(
 
     # Hall of Fame data is already one row per player, but group defensively in
     # case future processed data introduces split player rows.
-    grouped = values.groupby("Player", as_index=False)[value_col].sum()
+    group_columns = ["Player"]
+    if id_column in values:
+        group_columns.append(id_column)
+    grouped = values.groupby(group_columns, as_index=False)[value_col].sum()
     grouped["Current Total"] = grouped[value_col].astype(float)
     grouped["Target Milestone"] = grouped["Current Total"].map(lambda value: next_milestone_target(value, step))
     grouped["Remaining"] = grouped["Target Milestone"] - grouped["Current Total"]
@@ -3384,6 +3481,8 @@ def build_milestone_watchlist(
     grouped["Category"] = category
     grouped["Unit"] = unit
     grouped["Group"] = group
+    if "canonical_player_id" not in grouped:
+        grouped["canonical_player_id"] = grouped[id_column] if id_column in grouped else ""
     return grouped[milestone_watchlist_columns()]
 
 
@@ -3464,7 +3563,7 @@ def render_milestone_category_card(watchlist: pd.DataFrame, category: str) -> No
         html_rows.append(
             '<div class="milestone-watch-row">'
             '<div class="milestone-watch-top">'
-            f'<div><strong>{html.escape(str(row["Player"]))}</strong>'
+            f'<div><strong>{player_profile_link_html(player_id_from_row(row), row["Player"])}</strong>'
             f'<span>{current:,} / {target:,} {html.escape(unit)}</span></div>'
             f'<div class="milestone-away">{remaining:,} {html.escape(unit)} away</div>'
             "</div>"
@@ -3506,7 +3605,9 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
         st.info("No players are currently within milestone range for this category.")
         return
 
-    table = filtered[["Player", "Category", "Current Total", "Target Milestone", "Remaining", "Progress %"]].copy()
+    table_columns = ["Player", "canonical_player_id", "Category", "Current Total", "Target Milestone", "Remaining", "Progress %"]
+    table = filtered[[column for column in table_columns if column in filtered]].copy()
+    table = link_player_column(table)
     table["Current Total"] = table["Current Total"].map(lambda value: f"{int(value):,}")
     table["Target Milestone"] = table["Target Milestone"].map(lambda value: f"{int(value):,}")
     table["Remaining"] = table["Remaining"].map(lambda value: f"{int(value):,}")
@@ -3518,7 +3619,7 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
             hide_index=True,
             height=520,
             column_config={
-                "Player": st.column_config.TextColumn("Player", pinned=True, width="medium"),
+                "Player": st.column_config.LinkColumn("Player", pinned=True, width="medium", display_text=profile_link_display_pattern()),
                 "Category": st.column_config.TextColumn("Category", width="medium"),
                 "Current Total": st.column_config.TextColumn("Current Total"),
                 "Target Milestone": st.column_config.TextColumn("Target Milestone"),
@@ -3544,19 +3645,25 @@ def render_player_profile_page() -> None:
         st.info("Historical player data is not available yet. Refresh local backup to build player profiles.")
         return
 
-    options = [{"id": "", "name": "Select a player..."}] + index.to_dict("records")
+    player_names_by_id = {"": "Select a player..."}
+    player_names_by_id.update(dict(zip(index["id"].astype(str), index["name"].astype(str))))
+    option_ids = list(player_names_by_id.keys())
+    pending_player_id = str(st.session_state.get("pending_player_profile_id", "") or "").strip()
+    if pending_player_id in player_names_by_id:
+        st.session_state["player_profile_selector_id"] = pending_player_id
+        st.session_state.pop("pending_player_profile_id", None)
     with st.container(key="player_selector_card"):
-        selected = st.selectbox(
+        selected_id = st.selectbox(
             "Search player",
-            options,
-            format_func=lambda player: player["name"],
-            key="player_profile_selector",
+            option_ids,
+            format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
+            key="player_profile_selector_id",
         )
         st.markdown(
             '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
             unsafe_allow_html=True,
         )
-    if not selected.get("id"):
+    if not selected_id:
         st.markdown(
             """
             <div class="empty-profile-state">
@@ -3575,7 +3682,7 @@ def render_player_profile_page() -> None:
         )
         return
 
-    profile = get_player_profile_data(selected["id"], metadata_mtime(), player_aliases_mtime())
+    profile = get_player_profile_data(selected_id, metadata_mtime(), player_aliases_mtime())
     profile_view = build_player_profile_view(profile)
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
@@ -6517,6 +6624,7 @@ def biggest_improver_for_metric(
     return {
         "title": title,
         "player": str(row["player_name"]),
+        "player_id": str(row["player_key"]),
         "current": int(row[f"{value_column}_current"]),
         "previous": int(row[f"{value_column}_previous"]),
         "improvement": int(row["improvement"]),
@@ -6739,7 +6847,7 @@ def biggest_improver_card_html(card: dict[str, object]) -> str:
     return (
         '<div class="improver-card">'
         f'<div class="improver-label">{html.escape(str(card["title"]))}</div>'
-        f'<div class="improver-player">{html.escape(str(card["player"]))}</div>'
+        f'<div class="improver-player">{player_profile_link_html(card.get("player_id"), card["player"])}</div>'
         f'<div class="improver-gain">+{int(card["improvement"]):,} {unit} <span>{html.escape(pct_text)}</span></div>'
         f'<div class="improver-meta">Current {int(card["current"]):,} {unit} · Previous {int(card["previous"]):,} {unit}</div>'
         '</div>'
@@ -6827,7 +6935,7 @@ def render_progress_list(
             f"""
             <div class="progress-row">
                 <span class="progress-rank">{rank}</span>
-                <span class="progress-name">{html.escape(str(row["player_name"]))}</span>
+                <span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["player_name"])}</span>
                 <span class="progress-value">
                     <strong>{int(value):,} {html.escape(suffix)}</strong>
                     {average_line_html(row, average_column, average_label, "progress-average")}
@@ -6962,6 +7070,7 @@ def mini_leader_html(
     average_label: str,
 ) -> str:
     player_name = str(row.get("player_name", "-")) if not row.empty else "-"
+    player_id = player_id_from_row(row)
     average_html = average_stat_html(average, average_label)
     return (
         "<div class=\"mini-leader\">"
@@ -6970,7 +7079,7 @@ def mini_leader_html(
         f"<span class=\"mini-label\">{html.escape(label)}</span>"
         "</div>"
         "<div class=\"mini-value-row\">"
-        f"<div class=\"mini-player\">{html.escape(player_name)}</div>"
+        f"<div class=\"mini-player\">{player_profile_link_html(player_id, player_name)}</div>"
         "<div class=\"mini-stat-block\">"
         f"<div class=\"mini-stat\">{int(value):,} {html.escape(suffix)}</div>"
         f"{average_html}"
@@ -7000,7 +7109,7 @@ def render_form_guide(batting_df: pd.DataFrame) -> None:
         rows.append(
             "<div class=\"form-row\">"
             "<div>"
-            f"<strong>{html.escape(str(row['player_name']))}</strong>"
+            f"<strong>{player_profile_link_html(player_id_from_row(row), row['player_name'])}</strong>"
             f"<span>Avg. {avg:.1f}</span>"
             "</div>"
             f"<div class=\"pill-row\">{chips}</div>"
@@ -7398,11 +7507,21 @@ def prepare_table_frame(
     rename_map: dict[str, str],
 ) -> pd.DataFrame:
     output = add_display_stat_aliases(df)
+    player_profile_ids = (
+        output["canonical_player_id"].copy()
+        if "canonical_player_id" in output and "player_name" in columns
+        else pd.Series([""] * len(output), index=output.index)
+    )
     for column in columns:
         if column not in output:
             output[column] = pd.NA
 
     output = output[columns].rename(columns=rename_map)
+    if "Player" in output:
+        output["Player"] = [
+            player_profile_url(player_id, player)
+            for player_id, player in zip(player_profile_ids, output["Player"])
+        ]
     if "Team" in output:
         output["Team"] = output["Team"].map(compact_team_label)
 
@@ -7411,7 +7530,7 @@ def prepare_table_frame(
 
 def standard_column_config() -> dict[str, object]:
     return {
-        "Player": st.column_config.TextColumn("Player", pinned=True, width="medium"),
+        "Player": st.column_config.LinkColumn("Player", pinned=True, width="medium", display_text=profile_link_display_pattern()),
         "Team": st.column_config.TextColumn("Team", width="small"),
     }
 
@@ -7849,9 +7968,20 @@ def prepare_curated_display_frame(
     display_columns: list[str],
 ) -> pd.DataFrame:
     output = add_display_stat_aliases(df)
+    player_profile_ids = (
+        output["canonical_player_id"].copy()
+        if "canonical_player_id" in output and "player_name" in columns
+        else pd.Series([""] * len(output), index=output.index)
+    )
     available_columns = [column for column in columns if column in output.columns]
     output = output[available_columns].rename(columns=pretty_column_name_map())
-    return select_display_columns(output, display_columns)
+    output = select_display_columns(output, display_columns)
+    if "Player" in output:
+        output["Player"] = [
+            player_profile_url(player_id, player)
+            for player_id, player in zip(player_profile_ids, output["Player"])
+        ]
+    return output
 
 
 def select_display_columns(df: pd.DataFrame, desired_columns: list[str]) -> pd.DataFrame:
