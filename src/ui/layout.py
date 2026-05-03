@@ -43,6 +43,7 @@ from src.data.playcricket_ingestion import (
     read_processed_table,
     refresh_playcricket_backup,
 )
+from src.data import player_dna_analytics as player_dna
 from src.ui.theme import inject_theme
 from src.utils.player_identity import (
     DUPLICATE_AUDIT_PATH,
@@ -82,7 +83,7 @@ HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
 )
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
-SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
+SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = os.getenv("FVCC_SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 6
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
@@ -243,6 +244,8 @@ def render_page() -> None:
         render_match_centre_page()
     elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Advanced Analytics":
         render_advanced_analytics_page()
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Player DNA":
+        render_player_dna_page()
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
@@ -260,6 +263,7 @@ def render_sidebar() -> str:
             [
                 "▦ Match Insights",
                 "◈ Advanced Analytics",
+                "◇ Player DNA",
             ]
         )
     apply_navigation_query_params(page_labels)
@@ -280,6 +284,7 @@ def render_sidebar() -> str:
             experimental_help = """
                     <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
                     <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
+                    <p><strong>Player DNA</strong><br>Experimental player identity cards, traits, and hidden impact patterns.</p>
             """
         st.markdown(
             f"""
@@ -1045,6 +1050,378 @@ def render_hidden_performances_section(rows: dict[str, pd.DataFrame], frames: di
     render_section_heading("Best Hidden Performances")
     hidden = calculate_best_hidden_performances(rows["batting"], rows["bowling"], frames["ball_by_ball"], participant_id)
     render_advanced_table("Notable innings and spells", hidden)
+
+
+def render_player_dna_page() -> None:
+    st.markdown(
+        """
+        <div class="player-dna-page"></div>
+        <h1 class="page-title">Player DNA</h1>
+        <div class="club-label">Fiji Victorian Cricket Club</div>
+        <div class="page-subtitle">A hidden experimental lens on player identity, strengths, and match-centre patterns.</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    data = load_player_dna_cached(metadata_mtime(), player_aliases_mtime(), player_dna_data_signature())
+    options = player_dna.player_dna_options(data)
+    if options.empty:
+        render_empty_insight_card(
+            "Player DNA is still building",
+            "No player records were found in the processed Scorebook data.",
+            "Refresh the existing app data first, then reload this hidden page.",
+        )
+        return
+
+    selected_label = st.selectbox("Player", options["label"].tolist())
+    selected_key = str(options.loc[options["label"] == selected_label, "player_key"].iloc[0])
+    profile = player_dna.build_player_dna_profile(data, selected_key)
+
+    if not profile["has_match_centre"]:
+        st.caption("Scorebook aggregate data is available. Match-centre insights will appear when local processed match-centre data is present.")
+    elif data.get("match_centre_scope"):
+        st.caption(f"Using local match-centre scope: {data['match_centre_scope']}")
+
+    render_player_dna_hero_card(profile["hero"])
+    render_trait_bars(profile["traits"])
+
+    columns = st.columns([1.05, 0.95])
+    with columns[0]:
+        render_position_ladder(profile["position_splits"])
+    with columns[1]:
+        render_dismissal_fingerprint(profile["dismissal_fingerprint"])
+
+    columns = st.columns(2)
+    with columns[0]:
+        render_ground_hunter_card(profile["ground_splits"])
+    with columns[1]:
+        render_opponent_hunter_card(profile["opponent_splits"])
+
+    render_hidden_best_cards(profile["hidden_performances"])
+    render_ball_by_ball_bonus(profile["ball_bonus"], profile["has_ball_by_ball"])
+
+
+@st.cache_data(show_spinner=False)
+def load_player_dna_cached(
+    _local_version: float,
+    _identity_version: float | None,
+    _signature: tuple[tuple[str, float], ...],
+) -> dict[str, object]:
+    return player_dna.load_player_dna_data(APP_ROOT)
+
+
+def player_dna_data_signature() -> tuple[tuple[str, float], ...]:
+    paths: list[Path] = []
+    if HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH.exists():
+        paths.append(HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH)
+    scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
+    if not (scope / "all_matches.csv").exists():
+        scopes = available_match_centre_scopes()
+        scope = scopes[0] if scopes else scope
+    if scope.exists():
+        paths.extend(sorted(path for path in scope.glob("*.csv") if path.is_file()))
+    return tuple((str(path.relative_to(APP_ROOT)), path.stat().st_mtime) for path in paths)
+
+
+def render_player_dna_hero_card(hero: dict[str, object]) -> None:
+    player_name = dna_text(hero.get("player_name"), "Unknown player")
+    role = dna_text(hero.get("role_badge"), "Profile building as more data becomes available")
+    signature = dna_text(hero.get("signature_stat"), "Profile building")
+    tiles = [
+        ("Signature stat", signature),
+        ("Best batting position", dna_text(hero.get("best_position"), "Not enough innings yet")),
+        ("Best ground", dna_text(hero.get("best_ground"), "Not enough match-centre data yet")),
+        ("Best opponent", dna_text(hero.get("best_opponent"), "Not enough match-centre data yet")),
+        ("Hidden performance", dna_text(hero.get("best_hidden"), "Profile building")),
+    ]
+    tile_html = "".join(
+        f"""
+        <div class="dna-hero-tile">
+            <span>{html.escape(label)}</span>
+            <strong>{html.escape(value)}</strong>
+        </div>
+        """
+        for label, value in tiles
+    )
+    st.markdown(
+        f"""
+        <div class="dna-hero-card">
+            <div class="dna-hero-main">
+                <div class="dna-kicker">Player identity profile</div>
+                <div class="dna-player-name">{html.escape(player_name)}</div>
+                <div class="dna-role-badge">{html.escape(role)}</div>
+            </div>
+            <div class="dna-hero-grid">{tile_html}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_trait_bars(traits: list[dict[str, object]]) -> None:
+    render_section_heading("Trait Map")
+    if not traits:
+        render_empty_insight_card(
+            "Traits need more data",
+            "There is not enough scorecard or ball-by-ball data to build a trait profile yet.",
+            "This will sharpen as match-centre coverage improves.",
+        )
+        return
+    batting = [trait for trait in traits if trait.get("category") == "Batting"]
+    bowling = [trait for trait in traits if trait.get("category") == "Bowling"]
+    columns = st.columns(2)
+    with columns[0]:
+        render_trait_group("Batting DNA", batting, "No batting traits available yet.")
+    with columns[1]:
+        render_trait_group("Bowling DNA", bowling, "No bowling traits available yet.")
+
+
+def render_trait_group(title: str, traits: list[dict[str, object]], empty_message: str) -> None:
+    if not traits:
+        render_empty_insight_card(title, empty_message, "Scorecard-based traits will appear once this player has matching rows.")
+        return
+    rows = "".join(render_trait_bar(trait) for trait in traits)
+    st.markdown(
+        f'<div class="dna-card"><div class="dna-card-title">{html.escape(title)}</div>{rows}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def render_trait_bar(trait: dict[str, object]) -> str:
+    score = dna_float(trait.get("score"))
+    width = max(0, min(score, 100))
+    label = dna_text(trait.get("label"), "Trait")
+    level = dna_text(trait.get("level"), "Building")
+    description = dna_text(trait.get("description"))
+    return f"""
+    <div class="dna-trait-row">
+        <div class="dna-trait-head">
+            <strong>{html.escape(label)}</strong>
+            <span>{html.escape(level)} · {width:.0f}/100</span>
+        </div>
+        <div class="dna-trait-track"><div style="width:{width:.0f}%"></div></div>
+        <div class="dna-trait-copy">{html.escape(description)}</div>
+    </div>
+    """
+
+
+def render_position_ladder(positions: pd.DataFrame) -> None:
+    render_section_heading("Best Position")
+    if positions.empty:
+        render_empty_insight_card(
+            "Batting position ladder",
+            "No match-centre batting position data is available for this player yet.",
+            "Scorecard batting-order rows are needed to build this view.",
+        )
+        return
+    max_score = max(float(positions["impact_score"].max()), 1)
+    rows = []
+    for index, row in positions.head(6).iterrows():
+        width = max(10, min(float(row.get("impact_score", 0)) / max_score * 100, 100))
+        position = int(row["bat_order"])
+        meta = (
+            f"{int(row['innings'])} inns | {int(row['runs'])} runs | "
+            f"{dna_decimal(row.get('average'))} avg | {dna_pct(row.get('avg_contribution_pct'))} contribution"
+        )
+        best_badge = '<span class="dna-mini-badge">Best fit</span>' if index == 0 else ""
+        rows.append(
+            f"""
+            <div class="dna-ladder-row">
+                <div class="dna-ladder-top">
+                    <strong>No. {position}</strong>
+                    <span>{html.escape(meta)} {best_badge}</span>
+                </div>
+                <div class="dna-contribution-track"><div style="width:{width:.0f}%"></div></div>
+            </div>
+            """
+        )
+    st.markdown(
+        f'<div class="dna-card"><div class="dna-card-title">Batting-position ladder</div>{"".join(rows)}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def render_ground_hunter_card(grounds: list[dict[str, object]]) -> None:
+    render_hunter_card(
+        "Ground Hunter",
+        "This is the ground where this player has had the biggest impact.",
+        grounds,
+        "ground",
+        "No ground split is available yet.",
+    )
+
+
+def render_opponent_hunter_card(opponents: list[dict[str, object]]) -> None:
+    render_hunter_card(
+        "Opponent Hunter",
+        "This opponent brings out their best cricket.",
+        opponents,
+        "opponent",
+        "No opponent split is available yet.",
+    )
+
+
+def render_hunter_card(title: str, insight: str, rows: list[dict[str, object]], label_key: str, empty_message: str) -> None:
+    render_section_heading(title)
+    if not rows:
+        render_empty_insight_card(title, empty_message, "More match-centre scorecards will fill this out.")
+        return
+    row_html = []
+    for rank, row in enumerate(rows[:4], start=1):
+        label = dna_text(row.get(label_key), "Unknown")
+        primary = dna_text(row.get("primary"), "0")
+        primary_label = dna_text(row.get("primary_label"))
+        secondary = dna_text(row.get("secondary"))
+        detail = dna_text(row.get("detail"))
+        mode = dna_text(row.get("mode"))
+        row_html.append(
+            f"""
+            <div class="dna-rank-row">
+                <span class="progress-rank">{rank_badge(rank)}</span>
+                <div class="dna-rank-main">
+                    <strong>{html.escape(label)}</strong>
+                    <span>{html.escape(mode)} | {html.escape(secondary)} | {html.escape(detail)}</span>
+                </div>
+                <div class="dna-rank-value">{html.escape(primary)}<span>{html.escape(primary_label)}</span></div>
+            </div>
+            """
+        )
+    st.markdown(
+        f"""
+        <div class="dna-card">
+            <div class="dna-card-title">{html.escape(title)}</div>
+            <div class="dna-insight-line">{html.escape(insight)}</div>
+            {"".join(row_html)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_hidden_best_cards(records: list[dict[str, object]]) -> None:
+    render_section_heading("Hidden Best Performances")
+    if not records:
+        render_empty_insight_card(
+            "Hidden performances",
+            "No hidden performance cards can be built for this player yet.",
+            "Contribution, bowling share, and milestone cards need match-centre scorecards or ball-by-ball data.",
+        )
+        return
+    cards = "".join(render_ranked_insight_card(rank, record) for rank, record in enumerate(records[:6], start=1))
+    st.markdown(f'<div class="dna-performance-grid">{cards}</div>', unsafe_allow_html=True)
+
+
+def render_ranked_insight_card(rank: int, record: dict[str, object]) -> str:
+    return f"""
+    <div class="dna-performance-card">
+        <div class="dna-performance-rank">{rank_badge(rank)}</div>
+        <div class="dna-performance-body">
+            <strong>{html.escape(dna_text(record.get("title"), "Performance"))}</strong>
+            <span>{html.escape(dna_text(record.get("subtitle")))}</span>
+            <em>{html.escape(dna_text(record.get("context")))}</em>
+            <small>{html.escape(dna_text(record.get("explanation")))}</small>
+        </div>
+        <div class="dna-performance-value">{html.escape(dna_text(record.get("value")))}</div>
+    </div>
+    """
+
+
+def render_dismissal_fingerprint(fingerprint: pd.DataFrame) -> None:
+    render_section_heading("Dismissal Fingerprint")
+    if fingerprint.empty:
+        render_empty_insight_card(
+            "Dismissal fingerprint",
+            "No dismissal pattern is available yet.",
+            "This needs match-centre batting dismissal fields.",
+        )
+        return
+    rows = []
+    for _, row in fingerprint.iterrows():
+        pct = dna_float(row.get("pct"))
+        rows.append(
+            f"""
+            <div class="dna-fingerprint-row">
+                <div class="dna-fingerprint-label">
+                    <strong>{html.escape(dna_text(row.get("label")))}</strong>
+                    <span>{int(row.get("count", 0))} dismissals</span>
+                </div>
+                <div class="dna-fingerprint-track"><div style="width:{max(4, min(pct, 100)):.0f}%"></div></div>
+                <div class="dna-fingerprint-pct">{pct:.1f}%</div>
+            </div>
+            """
+        )
+    top = fingerprint.sort_values("pct", ascending=False).iloc[0]
+    insight = f"Most dismissals are {dna_text(top.get('label')).casefold()}, suggesting a pattern worth reviewing."
+    st.markdown(
+        f"""
+        <div class="dna-card">
+            <div class="dna-card-title">Dismissal fingerprint</div>
+            {"".join(rows)}
+            <div class="dna-insight-line">{html.escape(insight)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_ball_by_ball_bonus(cards: list[dict[str, object]], has_ball_by_ball: bool) -> None:
+    render_section_heading("Ball-By-Ball Bonus")
+    if not cards:
+        message = (
+            "Ball-by-ball profile will grow as more scored matches become available."
+            if not has_ball_by_ball
+            else "No player-specific ball-by-ball traits were found yet."
+        )
+        render_empty_insight_card("Ball-by-ball profile", message, "Scorecard-based Player DNA remains available above.")
+        return
+    card_html = "".join(
+        f"""
+        <div class="dna-bonus-card">
+            <span>{html.escape(dna_text(card.get("label")))}</span>
+            <strong>{html.escape(dna_text(card.get("value")))}</strong>
+            <em>{html.escape(dna_text(card.get("detail")))}</em>
+        </div>
+        """
+        for card in cards
+    )
+    st.markdown(f'<div class="dna-bonus-grid">{card_html}</div>', unsafe_allow_html=True)
+
+
+def render_empty_insight_card(title: str, message: str, detail: str = "") -> None:
+    st.markdown(
+        f"""
+        <div class="dna-card dna-empty-card">
+            <div class="dna-card-title">{html.escape(title)}</div>
+            <div class="dna-empty-message">{html.escape(message)}</div>
+            <div class="dna-empty-detail">{html.escape(detail)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def dna_text(value: object, fallback: str = "") -> str:
+    if value is None or pd.isna(value):
+        return fallback
+    text = str(value).strip()
+    if not text or text.casefold() in {"nan", "none", "nat"}:
+        return fallback
+    return " ".join(text.split())
+
+
+def dna_float(value: object) -> float:
+    numeric = pd.to_numeric(value, errors="coerce")
+    return 0.0 if pd.isna(numeric) else float(numeric)
+
+
+def dna_decimal(value: object) -> str:
+    numeric = pd.to_numeric(value, errors="coerce")
+    return "N/A" if pd.isna(numeric) else f"{float(numeric):.2f}"
+
+
+def dna_pct(value: object) -> str:
+    numeric = pd.to_numeric(value, errors="coerce")
+    return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
 
 
 def render_advanced_table(title: str, table: pd.DataFrame) -> None:

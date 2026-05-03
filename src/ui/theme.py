@@ -1547,6 +1547,348 @@ def inject_theme() -> None:
             min-height: 0;
         }
 
+        .block-container:has(.player-dna-page) {
+            max-width: 1440px;
+        }
+
+        .dna-hero-card {
+            background:
+                radial-gradient(circle at 88% 8%, rgba(122, 23, 53, 0.16), transparent 15rem),
+                linear-gradient(135deg, #ffffff 0%, #fbfbff 100%);
+            border: 1px solid #e7e9f4;
+            border-radius: 22px;
+            box-shadow: 0 18px 42px rgba(23, 27, 77, 0.08);
+            display: grid;
+            gap: 24px;
+            grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.4fr);
+            margin: 10px 0 28px;
+            overflow: hidden;
+            padding: 28px 30px;
+            position: relative;
+        }
+
+        .dna-hero-card::before {
+            background: linear-gradient(180deg, #7A1735, #4b37d8);
+            content: "";
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 6px;
+        }
+
+        .dna-kicker {
+            color: #7a809d;
+            font-size: 0.78rem;
+            font-weight: 950;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .dna-player-name {
+            color: var(--ink);
+            font-size: clamp(2.1rem, 4vw, 4.2rem);
+            font-weight: 950;
+            letter-spacing: 0;
+            line-height: 0.98;
+            margin-top: 10px;
+        }
+
+        .dna-role-badge,
+        .dna-mini-badge {
+            background: rgba(122, 23, 53, 0.09);
+            border: 1px solid rgba(122, 23, 53, 0.18);
+            border-radius: 999px;
+            color: #7A1735;
+            display: inline-flex;
+            font-size: 0.78rem;
+            font-weight: 900;
+            margin-top: 18px;
+            padding: 7px 11px;
+        }
+
+        .dna-hero-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dna-hero-tile {
+            border-bottom: 1px solid #eceef7;
+            padding: 4px 0 13px;
+        }
+
+        .dna-hero-tile span,
+        .dna-bonus-card span,
+        .dna-empty-detail {
+            color: #858ba6;
+            display: block;
+            font-size: 0.76rem;
+            font-weight: 850;
+        }
+
+        .dna-hero-tile strong {
+            color: var(--ink);
+            display: block;
+            font-size: 1.03rem;
+            font-weight: 950;
+            line-height: 1.15;
+            margin-top: 5px;
+        }
+
+        .dna-card,
+        .dna-bonus-card,
+        .dna-performance-card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 16px;
+            box-shadow: 0 14px 34px rgba(23, 27, 77, 0.055);
+            margin-bottom: 18px;
+            padding: 18px 20px;
+        }
+
+        .dna-card-title {
+            color: var(--ink);
+            font-size: 1.02rem;
+            font-weight: 950;
+            margin-bottom: 13px;
+        }
+
+        .dna-trait-row {
+            border-bottom: 1px solid #eef0f6;
+            padding: 12px 0;
+        }
+
+        .dna-trait-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .dna-trait-head,
+        .dna-ladder-top,
+        .dna-fingerprint-label {
+            align-items: center;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .dna-trait-head strong,
+        .dna-ladder-top strong,
+        .dna-fingerprint-label strong,
+        .dna-rank-main strong {
+            color: var(--ink);
+            font-size: 0.93rem;
+            font-weight: 950;
+        }
+
+        .dna-trait-head span,
+        .dna-ladder-top span,
+        .dna-fingerprint-label span,
+        .dna-rank-main span {
+            color: #7a809d;
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-align: right;
+        }
+
+        .dna-trait-track,
+        .dna-contribution-track,
+        .dna-fingerprint-track {
+            background: #EEF0F8;
+            border-radius: 999px;
+            height: 9px;
+            margin-top: 9px;
+            overflow: hidden;
+        }
+
+        .dna-trait-track div,
+        .dna-contribution-track div,
+        .dna-fingerprint-track div {
+            background: linear-gradient(90deg, #7A1735, #4b37d8);
+            border-radius: 999px;
+            height: 100%;
+        }
+
+        .dna-trait-copy,
+        .dna-insight-line,
+        .dna-empty-message,
+        .dna-performance-body small {
+            color: #7d839e;
+            font-size: 0.8rem;
+            font-weight: 750;
+            line-height: 1.38;
+            margin-top: 8px;
+        }
+
+        .dna-ladder-row,
+        .dna-fingerprint-row {
+            border-bottom: 1px solid #eef0f6;
+            padding: 11px 0;
+        }
+
+        .dna-ladder-row:last-child,
+        .dna-fingerprint-row:last-child {
+            border-bottom: 0;
+        }
+
+        .dna-rank-row {
+            align-items: center;
+            border-bottom: 1px solid #eef0f6;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 28px minmax(0, 1fr) auto;
+            padding: 11px 0;
+        }
+
+        .dna-rank-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .dna-rank-main span {
+            display: block;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .dna-rank-value {
+            color: #4b37d8;
+            font-size: 1.05rem;
+            font-weight: 950;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .dna-rank-value span {
+            color: #858ba6;
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 850;
+        }
+
+        .dna-performance-grid,
+        .dna-bonus-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 22px;
+        }
+
+        .dna-performance-card {
+            align-items: center;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 28px minmax(0, 1fr) auto;
+            margin-bottom: 0;
+            min-height: 118px;
+        }
+
+        .dna-performance-rank {
+            align-self: start;
+        }
+
+        .dna-performance-body strong {
+            color: var(--ink);
+            display: block;
+            font-size: 0.94rem;
+            font-weight: 950;
+            line-height: 1.18;
+        }
+
+        .dna-performance-body span,
+        .dna-performance-body em {
+            color: #7a809d;
+            display: block;
+            font-size: 0.78rem;
+            font-style: normal;
+            font-weight: 800;
+            margin-top: 4px;
+        }
+
+        .dna-performance-value {
+            color: #4b37d8;
+            font-size: 1.05rem;
+            font-weight: 950;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .dna-fingerprint-row {
+            align-items: center;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: minmax(110px, 0.65fr) minmax(0, 1fr) 54px;
+        }
+
+        .dna-fingerprint-track {
+            margin-top: 0;
+        }
+
+        .dna-fingerprint-pct {
+            color: #4b37d8;
+            font-size: 0.86rem;
+            font-weight: 950;
+            text-align: right;
+        }
+
+        .dna-bonus-card {
+            margin-bottom: 0;
+            min-height: 116px;
+        }
+
+        .dna-bonus-card strong {
+            color: var(--ink);
+            display: block;
+            font-size: 1.35rem;
+            font-weight: 950;
+            margin-top: 10px;
+        }
+
+        .dna-bonus-card em {
+            color: #7a809d;
+            display: block;
+            font-size: 0.78rem;
+            font-style: normal;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .dna-empty-card {
+            min-height: 120px;
+        }
+
+        @media (max-width: 980px) {
+            .dna-hero-card {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+
+            .dna-hero-grid,
+            .dna-performance-grid,
+            .dna-bonus-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dna-performance-card {
+                grid-template-columns: 28px minmax(0, 1fr);
+            }
+
+            .dna-performance-value {
+                grid-column: 2;
+                text-align: left;
+            }
+
+            .dna-fingerprint-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .dna-fingerprint-pct {
+                text-align: left;
+            }
+        }
+
         .record-card-grid {
             display: grid;
             gap: 18px;
