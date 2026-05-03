@@ -45,6 +45,7 @@ from src.data.playcricket_ingestion import (
     refresh_playcricket_backup,
 )
 from src.data import player_dna_analytics as player_dna
+from src.data import scorebook_lab_analytics as scorebook_lab
 from src.ui.theme import inject_theme
 from src.utils.player_identity import (
     DUPLICATE_AUDIT_PATH,
@@ -247,6 +248,8 @@ def render_page() -> None:
         render_advanced_analytics_page()
     elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Player DNA":
         render_player_dna_page()
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Scorebook Lab":
+        render_scorebook_lab_page()
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
@@ -265,6 +268,7 @@ def render_sidebar() -> str:
                 "▦ Match Insights",
                 "◈ Advanced Analytics",
                 "◇ Player DNA",
+                "▣ Scorebook Lab",
             ]
         )
     apply_navigation_query_params(page_labels)
@@ -286,6 +290,7 @@ def render_sidebar() -> str:
                     <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
                     <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
                     <p><strong>Player DNA</strong><br>Experimental player identity cards, traits, and hidden impact patterns.</p>
+                    <p><strong>Scorebook Lab</strong><br>Experimental hidden records, matchup stories, MVP cards, and partnership insights.</p>
             """
         st.markdown(
             f"""
@@ -1429,6 +1434,367 @@ def dna_decimal(value: object) -> str:
 def dna_pct(value: object) -> str:
     numeric = pd.to_numeric(value, errors="coerce")
     return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+
+
+def render_scorebook_lab_page() -> None:
+    render_player_dna_html(
+        """
+        <div class="scorebook-lab-page"></div>
+        <h1 class="page-title">Scorebook Lab</h1>
+        <div class="club-label">Fiji Victorian Cricket Club</div>
+        <div class="page-subtitle">Experimental hidden records, matchup stories, MVP cards, and scorecard intelligence.</div>
+        """
+    )
+
+    data = load_scorebook_lab_cached(metadata_mtime(), player_aliases_mtime(), player_dna_data_signature())
+    lab = data.get("lab", {})
+    if lab_missing(lab):
+        render_empty_insight_card(
+            "Scorebook Lab is waiting for match-centre data",
+            "Run the reviewed match-centre refresh locally to unlock hidden records and match stories.",
+            "The stable app pages continue to use the existing aggregate pipeline.",
+        )
+        return
+
+    if data.get("match_centre_scope"):
+        st.caption(f"Using local match-centre scope: {data['match_centre_scope']}")
+
+    section = st.radio(
+        "Lab section",
+        ["Hidden Records", "Ground Hunter", "Opponent Hunter", "Position Intelligence", "Match Story", "Partnership Chemistry"],
+        horizontal=True,
+    )
+    if section == "Hidden Records":
+        render_scorebook_lab_hidden_records(lab)
+    elif section == "Ground Hunter":
+        render_scorebook_lab_ground_hunter(lab)
+    elif section == "Opponent Hunter":
+        render_scorebook_lab_opponent_hunter(lab)
+    elif section == "Position Intelligence":
+        render_scorebook_lab_position_intelligence(lab)
+    elif section == "Match Story":
+        render_scorebook_lab_match_story(lab)
+    else:
+        render_scorebook_lab_partnerships(lab)
+
+
+@st.cache_data(show_spinner=False)
+def load_scorebook_lab_cached(
+    _local_version: float,
+    _identity_version: float | None,
+    _signature: tuple[tuple[str, float], ...],
+) -> dict[str, object]:
+    return scorebook_lab.load_scorebook_lab_data(APP_ROOT)
+
+
+def lab_missing(lab: dict[str, pd.DataFrame]) -> bool:
+    return not lab or all(lab.get(name, pd.DataFrame()).empty for name in ["batting", "bowling", "fielding", "matches"])
+
+
+def render_scorebook_lab_hidden_records(lab: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Hidden Records")
+    render_insight_sentence_card(
+        "These are the performances that normal scorecards tend to flatten.",
+        "Contribution share, wicket share, fielding involvement, and simple all-round impact are all scorecard-first metrics.",
+    )
+    rows = [
+        ("Biggest Carry Jobs", scorebook_lab.calculate_carry_jobs(lab["batting"]), "This was not just a score. It was the spine of the innings."),
+        ("Highest Team-Run Contribution", scorebook_lab.calculate_team_run_contribution_records(lab["batting"]), "A pure look at who owned the largest share of an FVCC total."),
+        ("Wicket Share Dominance", scorebook_lab.calculate_wicket_share_dominance(lab["bowling"]), "He took a serious chunk of every wicket FVCC claimed."),
+        ("Best All-Round Match Impact", scorebook_lab.calculate_all_round_match_impact(lab["batting"], lab["bowling"], lab["fielding"]), "A simple blend of batting contribution, wicket share, and fielding involvement."),
+        ("Best Fielding Impact", scorebook_lab.calculate_fielding_impact(lab["fielding"]), "Fielding moments that changed the scorecard without becoming headline batting or bowling figures."),
+    ]
+    for start in range(0, len(rows), 2):
+        columns = st.columns(2)
+        for column, (title, records, insight) in zip(columns, rows[start : start + 2]):
+            with column:
+                render_lab_ranked_card(title, records[:5], insight)
+
+
+def render_scorebook_lab_ground_hunter(lab: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Ground Hunter")
+    grounds = scorebook_lab.selector_options(lab["matches"], "venue_name")
+    if not grounds:
+        render_empty_insight_card("Ground Hunter", "No venue data is available yet.", "Match-centre scorecards need venue names to power this view.")
+        return
+    selected = st.selectbox("Ground", grounds)
+    profile = scorebook_lab.calculate_ground_hunter(lab["matches"], lab["innings"], lab["batting"], lab["bowling"], lab["fielding"], selected)
+    render_lab_profile_hero(profile, "Ground profile", profile.get("insight", "This ground has a distinct profile in the current archive."))
+    render_lab_feature_cards([profile.get("top_batter"), profile.get("top_bowler"), profile.get("best_innings"), profile.get("best_bowling"), profile.get("best_fielding")])
+    render_lab_heatmap_list("Player impact at this ground", profile.get("heatmap", []))
+
+
+def render_scorebook_lab_opponent_hunter(lab: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Opponent Hunter")
+    opponents = scorebook_lab.selector_options(lab["matches"], "opponent_name")
+    if not opponents:
+        render_empty_insight_card("Opponent Hunter", "No opponent data is available yet.", "Match-centre scorecards need opponent names to power this view.")
+        return
+    selected = st.selectbox("Opponent", opponents)
+    profile = scorebook_lab.calculate_opponent_hunter(lab["matches"], lab["innings"], lab["batting"], lab["bowling"], lab["fielding"], selected)
+    subtitle = f"FVCC avg: {profile.get('average_score', 'N/A')} | Opp avg: {profile.get('opponent_average_score', 'N/A')}"
+    render_lab_profile_hero(profile, subtitle, profile.get("insight", "This opponent brings out their best cricket."))
+    render_lab_feature_cards([profile.get("top_batter"), profile.get("top_bowler"), profile.get("best_innings"), profile.get("best_bowling"), profile.get("best_fielding"), profile.get("dismissal")])
+    render_lab_heatmap_list("Player impact against this opponent", profile.get("heatmap", []))
+
+
+def render_scorebook_lab_position_intelligence(lab: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Position Intelligence")
+    players = scorebook_lab.position_player_options(lab["batting"])
+    if players.empty:
+        render_empty_insight_card("Position Intelligence", "No batting-order rows are available yet.", "Scorecard batting order is required for this view.")
+        return
+    selected = st.selectbox("Player", players["label"].tolist())
+    player_key = str(players.loc[players["label"] == selected, "player_key"].iloc[0])
+    profile = scorebook_lab.calculate_position_intelligence(lab["batting"], player_key)
+    render_insight_sentence_card("Batting order is a role, not just a number.", profile.get("insight", "Position profile is building."))
+    render_lab_position_ladder(profile.get("player_positions", pd.DataFrame()))
+    render_lab_ranked_card("Team-Level Best By Position", profile.get("team_positions", [])[:8], "A quick read on who has owned each batting role in the archive.")
+
+
+def render_scorebook_lab_match_story(lab: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Match Story")
+    options = scorebook_lab.match_options(lab["matches"])
+    if options.empty:
+        render_empty_insight_card("Match Story", "No match list is available yet.", "Match-centre match rows are required for match stories.")
+        return
+    selected = st.selectbox("Match", options["label"].tolist())
+    match_id = str(options.loc[options["label"] == selected, "match_id"].iloc[0])
+    match = lab["matches"][lab["matches"]["match_id"].astype(str) == match_id].iloc[0]
+    mvp = scorebook_lab.calculate_hidden_match_mvp(match, lab["batting"], lab["bowling"], lab["fielding"])
+    story = scorebook_lab.calculate_match_story(match, lab["innings"], lab["batting"], lab["bowling"], lab["fielding"], lab["partnerships"])
+    render_hidden_mvp_card(mvp)
+    render_match_story_cards(mvp)
+    render_story_timeline(story)
+
+
+def render_scorebook_lab_partnerships(lab: dict[str, pd.DataFrame]) -> None:
+    render_section_heading("Partnership Chemistry")
+    profile = scorebook_lab.calculate_partnership_chemistry(lab["partnerships"])
+    render_insight_sentence_card("Partnerships are treated as a confidence-ranked experiment.", profile.get("insight", "Partnership rows are still building."))
+    if profile.get("quality") != "usable":
+        render_empty_insight_card("Partnership Chemistry", profile.get("insight", "No partnership rows are available yet."), "This section stays cautious until batter-pair names and runs are reliable.")
+        return
+    render_lab_ranked_card("Best Batting Pairs", profile.get("pairs", [])[:8], "These two score together better than the archive baseline.")
+
+
+def render_insight_sentence_card(title: str, sentence: str) -> None:
+    render_player_dna_html(
+        f"""
+        <div class="dna-card lab-sentence-card">
+            <div class="dna-card-title">{html.escape(title)}</div>
+            <div class="dna-insight-line">{html.escape(sentence)}</div>
+        </div>
+        """
+    )
+
+
+def render_lab_profile_hero(profile: dict[str, object], subtitle: str, insight: str) -> None:
+    tiles = [
+        ("Archive record", dna_text(profile.get("record"), "Unavailable")),
+        ("Average FVCC score", dna_text(profile.get("average_score"), "N/A")),
+        ("Matches", dna_text(profile.get("subtitle"), "Building")),
+    ]
+    tile_html = "".join(
+        compact_html(
+            f"""
+            <div class="dna-hero-tile">
+                <span>{html.escape(label)}</span>
+                <strong>{html.escape(value)}</strong>
+            </div>
+            """
+        )
+        for label, value in tiles
+    )
+    render_player_dna_html(
+        f"""
+        <div class="dna-hero-card lab-hero-card">
+            <div class="dna-hero-main">
+                <div class="dna-kicker">{html.escape(subtitle)}</div>
+                <div class="dna-player-name">{html.escape(dna_text(profile.get("title"), "Scorebook Lab"))}</div>
+                <div class="dna-role-badge">{html.escape(insight)}</div>
+            </div>
+            <div class="dna-hero-grid">{tile_html}</div>
+        </div>
+        """
+    )
+
+
+def render_lab_feature_cards(records: list[dict[str, object] | None]) -> None:
+    usable = [record for record in records if record]
+    if not usable:
+        render_empty_insight_card("Feature cards", "Not enough data for feature cards yet.", "This will fill as scorecard coverage improves.")
+        return
+    card_html = "".join(render_lab_mini_card(record) for record in usable)
+    render_player_dna_html(f'<div class="dna-bonus-grid lab-feature-grid">{card_html}</div>')
+
+
+def render_lab_mini_card(record: dict[str, object]) -> str:
+    return compact_html(
+        f"""
+        <div class="dna-bonus-card">
+            <span>{html.escape(dna_text(record.get("badge"), "Insight"))}</span>
+            <strong>{html.escape(dna_text(record.get("title"), "Unknown"))}</strong>
+            <em>{html.escape(dna_text(record.get("value")))} · {html.escape(dna_text(record.get("subtitle")))}</em>
+            <div class="dna-insight-line">{html.escape(dna_text(record.get("detail")))}</div>
+        </div>
+        """
+    )
+
+
+def render_lab_ranked_card(title: str, records: list[dict[str, object]], insight: str) -> None:
+    if not records:
+        render_empty_insight_card(title, "No qualifying records yet.", "This card will fill as scorecard coverage improves.")
+        return
+    rows = "".join(render_lab_rank_row(rank, record) for rank, record in enumerate(records, start=1))
+    render_player_dna_html(
+        f"""
+        <div class="dna-card lab-ranked-card">
+            <div class="dna-card-title">{html.escape(title)}</div>
+            <div class="dna-insight-line">{html.escape(insight)}</div>
+            {rows}
+        </div>
+        """
+    )
+
+
+def render_lab_rank_row(rank: int, record: dict[str, object]) -> str:
+    return compact_html(
+        f"""
+        <div class="dna-rank-row">
+            <span class="progress-rank">{rank_badge(rank)}</span>
+            <div class="dna-rank-main">
+                <strong>{html.escape(dna_text(record.get("title"), "Unknown"))}</strong>
+                <span>{html.escape(dna_text(record.get("subtitle")))} | {html.escape(dna_text(record.get("detail") or record.get("context")))}</span>
+                <span class="lab-badge-line">{html.escape(dna_text(record.get("badge")))}</span>
+            </div>
+            <div class="dna-rank-value">{html.escape(dna_text(record.get("value")))}<span>{html.escape(dna_text(record.get("value_label")))}</span></div>
+        </div>
+        """
+    )
+
+
+def render_lab_heatmap_list(title: str, records: list[dict[str, object]]) -> None:
+    if not records:
+        render_empty_insight_card(title, "No ranked impact rows yet.", "This view needs batting or bowling scorecard rows.")
+        return
+    values = [lab_numeric_value(record.get("value")) for record in records]
+    max_value = max(values + [1])
+    rows = []
+    for record, raw in zip(records[:8], values[:8]):
+        width = 20 if raw <= 0 else max(12, min(float(raw) / float(max_value) * 100, 100))
+        rows.append(
+            compact_html(
+                f"""
+                <div class="dna-ladder-row">
+                    <div class="dna-ladder-top">
+                        <strong>{html.escape(dna_text(record.get("title"), "Unknown"))}</strong>
+                        <span>{html.escape(dna_text(record.get("value")))} · {html.escape(dna_text(record.get("subtitle")))}</span>
+                    </div>
+                    <div class="dna-contribution-track"><div style="width:{width:.0f}%"></div></div>
+                    <div class="dna-trait-copy">{html.escape(dna_text(record.get("detail")))}</div>
+                </div>
+                """
+            )
+        )
+    render_player_dna_html(f'<div class="dna-card"><div class="dna-card-title">{html.escape(title)}</div>{"".join(rows)}</div>')
+
+
+def render_lab_position_ladder(positions: pd.DataFrame) -> None:
+    if positions.empty:
+        render_empty_insight_card("Player position ladder", "This player has no match-centre batting-order rows yet.", "Try another player with scorecard batting entries.")
+        return
+    max_impact = max(float(positions["impact"].max()), 1)
+    rows = []
+    for index, row in positions.head(8).iterrows():
+        width = max(10, min(float(row.get("impact", 0)) / max_impact * 100, 100))
+        badge = '<span class="dna-mini-badge">Best role</span>' if index == positions.index[0] else ""
+        meta = f"{int(row['innings'])} inns | {int(row['runs'])} runs | {dna_decimal(row.get('average'))} avg | {dna_pct(row.get('contribution_pct'))} contribution"
+        rows.append(
+            compact_html(
+                f"""
+                <div class="dna-ladder-row">
+                    <div class="dna-ladder-top">
+                        <strong>No. {int(row['bat_order'])}</strong>
+                        <span>{html.escape(meta)} {badge}</span>
+                    </div>
+                    <div class="dna-contribution-track"><div style="width:{width:.0f}%"></div></div>
+                </div>
+                """
+            )
+        )
+    render_player_dna_html(f'<div class="dna-card"><div class="dna-card-title">Selected player batting-order ladder</div>{"".join(rows)}</div>')
+
+
+def render_hidden_mvp_card(mvp: dict[str, object]) -> None:
+    player = mvp.get("mvp", {})
+    batting_width = lab_width(player.get("batting"), player.get("total"))
+    bowling_width = lab_width(player.get("bowling"), player.get("total"))
+    fielding_width = lab_width(player.get("fielding"), player.get("total"))
+    lines = " | ".join(player.get("lines", [])[:3]) if isinstance(player.get("lines"), list) else ""
+    render_player_dna_html(
+        f"""
+        <div class="dna-hero-card lab-hero-card">
+            <div class="dna-hero-main">
+                <div class="dna-kicker">{html.escape(dna_text(mvp.get("match_title"), "Match Story"))}</div>
+                <div class="dna-player-name">{html.escape(dna_text(player.get("player"), "Hidden MVP"))}</div>
+                <div class="dna-role-badge">Scorebook MVP · {html.escape(f"{dna_float(player.get('total')):.0f}")} impact points</div>
+            </div>
+            <div class="lab-impact-stack">
+                {lab_stack_row("Batting", batting_width)}
+                {lab_stack_row("Bowling", bowling_width)}
+                {lab_stack_row("Fielding", fielding_width)}
+                <div class="dna-insight-line">{html.escape(lines or dna_text(mvp.get("result"), "MVP built from available scorecard impact."))}</div>
+            </div>
+        </div>
+        """
+    )
+
+
+def lab_stack_row(label: str, width: float) -> str:
+    return compact_html(
+        f"""
+        <div class="lab-stack-row">
+            <span>{html.escape(label)}</span>
+            <div class="dna-contribution-track"><div style="width:{width:.0f}%"></div></div>
+        </div>
+        """
+    )
+
+
+def render_match_story_cards(mvp: dict[str, object]) -> None:
+    cards = [mvp.get("top_batting"), mvp.get("top_bowling"), mvp.get("top_fielding")]
+    render_lab_feature_cards(cards)
+
+
+def render_story_timeline(story: list[dict[str, str]]) -> None:
+    rows = "".join(
+        compact_html(
+            f"""
+            <div class="lab-story-row">
+                <span></span>
+                <div>
+                    <strong>{html.escape(dna_text(item.get("title"), "Moment"))}</strong>
+                    <p>{html.escape(dna_text(item.get("text")))}</p>
+                </div>
+            </div>
+            """
+        )
+        for item in story
+    )
+    render_player_dna_html(f'<div class="dna-card lab-story-card"><div class="dna-card-title">Match story timeline</div>{rows}</div>')
+
+
+def lab_width(value: object, total: object) -> float:
+    total_value = dna_float(total)
+    if total_value <= 0:
+        return 0
+    return max(4, min(dna_float(value) / total_value * 100, 100))
+
+
+def lab_numeric_value(value: object) -> float:
+    numeric = pd.to_numeric(str(value or "0").replace("%", "").replace(",", ""), errors="coerce")
+    return 0.0 if pd.isna(numeric) else float(numeric)
 
 
 def render_advanced_table(title: str, table: pd.DataFrame) -> None:

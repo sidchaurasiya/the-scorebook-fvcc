@@ -1876,6 +1876,97 @@ def inject_theme() -> None:
             min-height: 120px;
         }
 
+        .block-container:has(.scorebook-lab-page) {
+            max-width: 1480px;
+        }
+
+        .lab-sentence-card {
+            background:
+                radial-gradient(circle at 96% 0%, rgba(122, 23, 53, 0.09), transparent 12rem),
+                #ffffff;
+        }
+
+        .lab-feature-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .lab-badge-line {
+            color: #7A1735 !important;
+            font-weight: 900 !important;
+        }
+
+        .lab-impact-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .lab-stack-row {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 86px minmax(0, 1fr);
+            align-items: center;
+        }
+
+        .lab-stack-row span {
+            color: #7a809d;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .lab-story-card {
+            overflow: hidden;
+        }
+
+        .lab-story-row {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 18px minmax(0, 1fr);
+            padding: 12px 0;
+            position: relative;
+        }
+
+        .lab-story-row::before {
+            background: #e8eaf4;
+            content: "";
+            height: 100%;
+            left: 8px;
+            position: absolute;
+            top: 18px;
+            width: 2px;
+        }
+
+        .lab-story-row:last-child::before {
+            display: none;
+        }
+
+        .lab-story-row > span {
+            background: linear-gradient(135deg, #7A1735, #4b37d8);
+            border: 3px solid #ffffff;
+            border-radius: 999px;
+            box-shadow: 0 5px 14px rgba(23, 27, 77, 0.16);
+            height: 18px;
+            margin-top: 2px;
+            position: relative;
+            width: 18px;
+            z-index: 1;
+        }
+
+        .lab-story-row strong {
+            color: var(--ink);
+            font-size: 0.94rem;
+            font-weight: 950;
+        }
+
+        .lab-story-row p {
+            color: #7d839e;
+            font-size: 0.82rem;
+            font-weight: 760;
+            line-height: 1.38;
+            margin: 4px 0 0;
+        }
+
         @media (max-width: 980px) {
             .dna-hero-card {
                 grid-template-columns: 1fr;
@@ -1884,7 +1975,8 @@ def inject_theme() -> None:
 
             .dna-hero-grid,
             .dna-performance-grid,
-            .dna-bonus-grid {
+            .dna-bonus-grid,
+            .lab-feature-grid {
                 grid-template-columns: 1fr;
             }
 
