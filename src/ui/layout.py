@@ -111,12 +111,16 @@ def query_param_value(name: str) -> str:
 
 def apply_navigation_query_params(page_labels: list[str]) -> None:
     requested_page = query_param_value("page").casefold()
-    requested_player = unquote(query_param_value("player"))
+    requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
     if requested_page == PLAYER_PROFILE_QUERY_PAGE or requested_player:
         if PLAYER_PROFILE_PAGE_LABEL in page_labels:
             st.session_state["selected_page_label"] = PLAYER_PROFILE_PAGE_LABEL
         if requested_player:
-            selected_player = str(st.session_state.get("selected_player_profile_id", "") or "").strip()
+            selected_player = str(
+                st.session_state.get("selected_player_id")
+                or st.session_state.get("selected_player_profile_id")
+                or ""
+            ).strip()
             last_query_player = st.session_state.get("last_player_profile_query_param")
             manual_override = bool(st.session_state.get("manual_player_profile_selection"))
             if manual_override and requested_player == last_query_player:
@@ -4619,50 +4623,75 @@ def render_player_profile_page() -> None:
 
     player_names_by_id = dict(zip(index["id"].astype(str), index["name"].astype(str)))
     option_ids = list(player_names_by_id.keys())
-    option_labels = list(player_names_by_id.values())
     st.session_state["player_profile_valid_ids"] = option_ids
     st.session_state["player_profile_name_to_id"] = {
         player_name: player_id
         for player_id, player_name in player_names_by_id.items()
         if player_id
     }
+
+    def set_selected_player_id(player_id: object, *, manual: bool = False) -> str:
+        player_id_text = str(player_id or "").strip()
+        st.session_state["selected_player_id"] = player_id_text
+        st.session_state["selected_player_profile_id"] = player_id_text
+        if manual:
+            st.session_state["manual_player_profile_selection"] = True
+            st.session_state["last_player_profile_query_param"] = query_param_value("player")
+        return player_id_text
+
     pending_player_id = str(st.session_state.get("pending_player_profile_id", "") or "").strip()
-    reset_selector_widget = False
     if pending_player_id in player_names_by_id:
-        st.session_state["selected_player_profile_id"] = pending_player_id
+        set_selected_player_id(pending_player_id)
         st.session_state["last_player_profile_query_param"] = pending_player_id
         st.session_state.pop("manual_player_profile_selection", None)
         st.session_state.pop("pending_player_profile_id", None)
-        reset_selector_widget = True
-    selected_player_id = str(st.session_state.get("selected_player_profile_id", "") or "").strip()
+        if st.session_state.get("player_profile_selector_id") != pending_player_id:
+            st.session_state.pop("player_profile_selector_id", None)
+    elif pending_player_id:
+        set_selected_player_id("")
+        st.session_state.pop("pending_player_profile_id", None)
+        st.session_state.pop("player_profile_selector_id", None)
+
+    selected_player_id = str(
+        st.session_state.get("selected_player_id")
+        or st.session_state.get("selected_player_profile_id")
+        or ""
+    ).strip()
+    widget_player_id = str(st.session_state.get("player_profile_selector_id") or "").strip()
+    if widget_player_id in player_names_by_id and widget_player_id != selected_player_id:
+        selected_player_id = set_selected_player_id(widget_player_id, manual=True)
+        if query_param_value("player") != selected_player_id:
+            st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
+            st.query_params["player"] = selected_player_id
+        st.session_state["last_player_profile_query_param"] = selected_player_id
     if selected_player_id not in player_names_by_id:
         selected_player_id = ""
-        st.session_state["selected_player_profile_id"] = selected_player_id
-        reset_selector_widget = True
-    selected_player_label = player_names_by_id.get(selected_player_id)
-    if (
-        reset_selector_widget
-        and
-        "player_profile_selector_label" in st.session_state
-        and st.session_state.get("player_profile_selector_label") != selected_player_label
-    ):
-        st.session_state.pop("player_profile_selector_label", None)
-    st.session_state.pop("player_profile_selector_id", None)
+        set_selected_player_id("")
+    st.session_state.pop("player_profile_selector_label", None)
     with st.container(key="player_selector_card"):
-        selected_label = st.selectbox(
+        selected_id = st.selectbox(
             "Search player",
-            option_labels,
-            index=option_labels.index(selected_player_label) if selected_player_label in option_labels else None,
+            option_ids,
+            index=option_ids.index(selected_player_id) if selected_player_id in option_ids else None,
+            format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
             placeholder="Select a player...",
-            key="player_profile_selector_label",
+            key="player_profile_selector_id",
         )
-        selected_id = resolve_player_profile_selector_value(selected_label)
+        selected_id = str(selected_id or "").strip()
         if selected_id != selected_player_id:
-            st.session_state["selected_player_profile_id"] = selected_id
-            current_query_player = unquote(query_param_value("player"))
-            if current_query_player:
-                st.session_state["last_player_profile_query_param"] = current_query_player
-            st.session_state["manual_player_profile_selection"] = True
+            selected_id = set_selected_player_id(selected_id, manual=True)
+            if selected_id:
+                st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
+                st.query_params["player"] = selected_id
+                st.session_state["last_player_profile_query_param"] = selected_id
+        elif (
+            selected_id
+            and st.session_state.get("manual_player_profile_selection")
+            and query_param_value("player") != selected_id
+        ):
+            st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
+            st.query_params["player"] = selected_id
+            st.session_state["last_player_profile_query_param"] = selected_id
         st.markdown(
             '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
             unsafe_allow_html=True,
