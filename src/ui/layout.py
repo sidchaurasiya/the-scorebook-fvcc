@@ -90,7 +90,23 @@ FASTEST_MILESTONE_RECORD_LIMIT = 6
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 SEASON_OVERVIEW_PAGE_LABEL = "⌂ Season Overview"
-SEASON_OVERVIEW_QUERY_PAGE = "season_overview"
+SEASON_OVERVIEW_QUERY_PAGE = "season-overview"
+
+BASE_PAGE_DEFINITIONS = (
+    ("hall-of-fame", "♕ Hall of Fame", "Hall of Fame"),
+    (SEASON_OVERVIEW_QUERY_PAGE, SEASON_OVERVIEW_PAGE_LABEL, "Season Overview"),
+    ("milestone", "☆ Milestone", "Milestone"),
+    (PLAYER_PROFILE_QUERY_PAGE, PLAYER_PROFILE_PAGE_LABEL, "Player Profile"),
+)
+EXPERIMENTAL_PAGE_DEFINITIONS = (
+    ("match-insights", "▦ Match Insights", "Match Insights"),
+    ("advanced-analytics", "◈ Advanced Analytics", "Advanced Analytics"),
+    ("player-dna", "◇ Player DNA", "Player DNA"),
+    ("scorebook-lab", "▣ Scorebook Lab", "Scorebook Lab"),
+)
+LEGACY_PAGE_SLUGS = {
+    "season_overview": SEASON_OVERVIEW_QUERY_PAGE,
+}
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
@@ -98,26 +114,68 @@ def log_hof_timing(label: str, started_at: float) -> None:
         print(f"[hall-of-fame] {label}: {(time.perf_counter() - started_at) * 1000:.1f} ms")
 
 
-def sync_selected_page(source_key: str) -> None:
-    selected_label = st.session_state[source_key]
-    st.session_state["selected_page_label"] = selected_label
-    if selected_label != PLAYER_PROFILE_PAGE_LABEL:
+def get_page_definitions() -> tuple[tuple[str, str, str], ...]:
+    definitions = list(BASE_PAGE_DEFINITIONS)
+    if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
+        definitions.extend(EXPERIMENTAL_PAGE_DEFINITIONS)
+    return tuple(definitions)
+
+
+def page_label_by_slug() -> dict[str, str]:
+    return {slug: label for slug, label, _ in get_page_definitions()}
+
+
+def page_title_by_slug() -> dict[str, str]:
+    return {slug: title for slug, _, title in get_page_definitions()}
+
+
+def page_slug_by_label() -> dict[str, str]:
+    return {label: slug for slug, label, _ in get_page_definitions()}
+
+
+def canonical_page_slug(value: object) -> str:
+    slug = str(value or "").strip().casefold()
+    return LEGACY_PAGE_SLUGS.get(slug, slug)
+
+
+def default_page_slug() -> str:
+    return BASE_PAGE_DEFINITIONS[0][0]
+
+
+def valid_page_slugs() -> set[str]:
+    return set(page_label_by_slug())
+
+
+def page_label_for_slug(slug: str) -> str:
+    labels = page_label_by_slug()
+    return labels.get(slug, labels[default_page_slug()])
+
+
+def set_current_page(slug: object, *, clear_context: bool = True, sync_url: bool = True) -> str:
+    target_slug = canonical_page_slug(slug)
+    if target_slug not in valid_page_slugs():
+        target_slug = default_page_slug()
+    st.session_state["current_page"] = target_slug
+    st.session_state["selected_page_label"] = page_label_for_slug(target_slug)
+
+    if clear_context and target_slug != PLAYER_PROFILE_QUERY_PAGE:
         st.session_state.pop("pending_player_profile_id", None)
         st.session_state.pop("manual_player_profile_selection", None)
         for param_name in ("player", "player_id"):
             st.query_params.pop(param_name, None)
-    if selected_label != SEASON_OVERVIEW_PAGE_LABEL:
+    if clear_context and target_slug != SEASON_OVERVIEW_QUERY_PAGE:
         st.session_state.pop("pending_season_overview_name", None)
         st.query_params.pop("season", None)
-    page_by_label = {
-        "♕ Hall of Fame": "hall-of-fame",
-        SEASON_OVERVIEW_PAGE_LABEL: SEASON_OVERVIEW_QUERY_PAGE,
-        "☆ Milestone": "milestone",
-        PLAYER_PROFILE_PAGE_LABEL: PLAYER_PROFILE_QUERY_PAGE,
-    }
-    target_page = page_by_label.get(selected_label)
-    if target_page:
-        st.query_params["page"] = target_page
+
+    if sync_url:
+        sync_query_param_with_current_page()
+    return target_slug
+
+
+def sync_selected_page(source_key: str) -> None:
+    selected_label = st.session_state[source_key]
+    target_page = page_slug_by_label().get(selected_label, default_page_slug())
+    set_current_page(target_page)
 
 
 def query_param_value(name: str) -> str:
@@ -127,8 +185,80 @@ def query_param_value(name: str) -> str:
     return str(value).strip()
 
 
+def sync_query_param_with_current_page() -> None:
+    current_page = st.session_state.get("current_page", default_page_slug())
+    current_page = canonical_page_slug(current_page)
+    if current_page not in valid_page_slugs():
+        current_page = default_page_slug()
+    if query_param_value("page") != current_page:
+        st.query_params["page"] = current_page
+    st.session_state["last_synced_page_query_param"] = current_page
+
+
+def initialize_current_page() -> None:
+    requested_page = canonical_page_slug(query_param_value("page"))
+    requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
+    requested_season = query_param_value("season")
+    requested_slug = requested_page
+    if requested_player:
+        requested_slug = PLAYER_PROFILE_QUERY_PAGE
+    elif requested_season:
+        requested_slug = SEASON_OVERVIEW_QUERY_PAGE
+
+    current_page = canonical_page_slug(st.session_state.get("current_page", ""))
+    last_synced_page = canonical_page_slug(st.session_state.get("last_synced_page_query_param", ""))
+    has_current_page = current_page in valid_page_slugs()
+    has_requested_page = bool(requested_page or requested_player or requested_season)
+    requested_is_valid = requested_slug in valid_page_slugs()
+
+    if not has_current_page:
+        set_current_page(requested_slug if requested_is_valid else default_page_slug(), clear_context=not requested_is_valid, sync_url=False)
+    elif requested_player and requested_is_valid and current_page != PLAYER_PROFILE_QUERY_PAGE:
+        set_current_page(PLAYER_PROFILE_QUERY_PAGE, clear_context=False, sync_url=False)
+    elif requested_season and requested_is_valid and current_page != SEASON_OVERVIEW_QUERY_PAGE:
+        set_current_page(SEASON_OVERVIEW_QUERY_PAGE, clear_context=False, sync_url=False)
+    elif has_requested_page and not requested_is_valid:
+        set_current_page(default_page_slug(), sync_url=False)
+    elif requested_page and requested_page != current_page and requested_page != last_synced_page:
+        # Once a Streamlit session exists, widget reruns must not be able to
+        # replace the active page with a stale URL value. Sidebar callbacks and
+        # deep links with page-specific context handle intentional navigation.
+        set_current_page(current_page, clear_context=False, sync_url=False)
+    elif has_requested_page and requested_is_valid and requested_slug != current_page and requested_slug != last_synced_page:
+        set_current_page(requested_slug, clear_context=False, sync_url=False)
+    else:
+        set_current_page(current_page, clear_context=False, sync_url=False)
+
+    if st.session_state["current_page"] == PLAYER_PROFILE_QUERY_PAGE and requested_player:
+        selected_player = str(
+            st.session_state.get("selected_player_id")
+            or st.session_state.get("selected_player_profile_id")
+            or ""
+        ).strip()
+        last_query_player = st.session_state.get("last_player_profile_query_param")
+        manual_override = bool(st.session_state.get("manual_player_profile_selection"))
+        if manual_override and requested_player == last_query_player:
+            pass
+        elif requested_player != last_query_player or requested_player != selected_player:
+            st.session_state["pending_player_profile_id"] = requested_player
+            st.session_state["last_player_profile_query_param"] = requested_player
+            st.session_state.pop("manual_player_profile_selection", None)
+    elif st.session_state["current_page"] == PLAYER_PROFILE_QUERY_PAGE:
+        st.session_state.pop("last_player_profile_query_param", None)
+        st.session_state.pop("manual_player_profile_selection", None)
+
+    if st.session_state["current_page"] == SEASON_OVERVIEW_QUERY_PAGE and requested_season:
+        st.session_state["pending_season_overview_name"] = unquote(requested_season)
+
+    sync_query_param_with_current_page()
+
+
 def apply_navigation_query_params(page_labels: list[str]) -> None:
-    requested_page = query_param_value("page").casefold()
+    initialize_current_page()
+
+
+def _legacy_apply_navigation_query_params(page_labels: list[str]) -> None:
+    requested_page = canonical_page_slug(query_param_value("page"))
     requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
     if requested_page == PLAYER_PROFILE_QUERY_PAGE or requested_player:
         if PLAYER_PROFILE_PAGE_LABEL in page_labels:
@@ -300,52 +430,38 @@ def render_page() -> None:
     """Render the dashboard."""
     inject_theme()
     selected_page = render_sidebar()
-    if selected_page == "Hall of Fame":
+    if selected_page == "hall-of-fame":
         render_hall_of_fame_page()
-    elif selected_page == "Season Overview":
+    elif selected_page == SEASON_OVERVIEW_QUERY_PAGE:
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
-    elif selected_page == "Milestone":
+    elif selected_page == "milestone":
         render_approaching_milestones_page()
-    elif selected_page == "Player Profile":
+    elif selected_page == PLAYER_PROFILE_QUERY_PAGE:
         render_player_profile_page()
-    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Match Insights":
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "match-insights":
         render_match_centre_page()
-    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Advanced Analytics":
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "advanced-analytics":
         render_advanced_analytics_page()
-    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Player DNA":
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "player-dna":
         render_player_dna_page()
-    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "Scorebook Lab":
+    elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "scorebook-lab":
         render_scorebook_lab_page()
     else:
+        set_current_page(default_page_slug())
         render_hall_of_fame_page()
     render_mobile_page_footer()
 
 
 def render_sidebar() -> str:
-    page_labels = [
-        "♕ Hall of Fame",
-        "⌂ Season Overview",
-        "☆ Milestone",
-        "♙ Player Profile",
-    ]
-    if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
-        page_labels.extend(
-            [
-                "▦ Match Insights",
-                "◈ Advanced Analytics",
-                "◇ Player DNA",
-                "▣ Scorebook Lab",
-            ]
-        )
+    page_labels = [label for _, label, _ in get_page_definitions()]
     apply_navigation_query_params(page_labels)
-    if "selected_page_label" not in st.session_state:
-        st.session_state["selected_page_label"] = page_labels[0]
+    current_page = st.session_state.get("current_page", default_page_slug())
+    current_label = page_label_for_slug(current_page)
 
-    current_label = st.session_state.get("selected_page_label", page_labels[0])
     if current_label not in page_labels:
         current_label = page_labels[0]
-        st.session_state["selected_page_label"] = current_label
+        set_current_page(page_slug_by_label().get(current_label, default_page_slug()))
     for widget_key in ["mobile_navigation", "main_navigation"]:
         if widget_key in st.session_state and st.session_state.get(widget_key) != current_label:
             st.session_state.pop(widget_key, None)
@@ -402,13 +518,15 @@ def render_sidebar() -> str:
     selected_label = st.sidebar.radio(
         "Navigation",
         page_labels,
-        index=page_labels.index(st.session_state.get("selected_page_label", page_labels[0])),
+        index=page_labels.index(page_label_for_slug(st.session_state.get("current_page", default_page_slug()))),
         label_visibility="collapsed",
         key="main_navigation",
         on_change=sync_selected_page,
         args=("main_navigation",),
     )
-    st.session_state["selected_page_label"] = selected_label
+    selected_slug = page_slug_by_label().get(selected_label, st.session_state.get("current_page", default_page_slug()))
+    if selected_slug != st.session_state.get("current_page"):
+        set_current_page(selected_slug)
     st.sidebar.markdown(
         """
         <div class="side-footer">
@@ -422,7 +540,7 @@ def render_sidebar() -> str:
         """,
         unsafe_allow_html=True,
     )
-    return selected_label.split(" ", 1)[1]
+    return st.session_state.get("current_page", default_page_slug())
 
 
 def render_mobile_page_footer() -> None:
