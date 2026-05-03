@@ -1000,11 +1000,17 @@ def inject_theme() -> None:
         }
 
         a.player-profile-link,
+        a.season-overview-link,
         a.player-profile-link:visited,
+        a.season-overview-link:visited,
         a[href*="page=player-profile"][href*="player="],
         a[href*="page=player-profile"][href*="player="]:visited,
+        a[href*="page=season_overview"][href*="season="],
+        a[href*="page=season_overview"][href*="season="]:visited,
         div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
-        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:visited {
+        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:visited,
+        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="],
+        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:visited {
             color: inherit !important;
             cursor: pointer;
             font: inherit;
@@ -1013,18 +1019,26 @@ def inject_theme() -> None:
         }
 
         a.player-profile-link:hover,
+        a.season-overview-link:hover,
         a.player-profile-link:focus-visible,
+        a.season-overview-link:focus-visible,
         a[href*="page=player-profile"][href*="player="]:hover,
         a[href*="page=player-profile"][href*="player="]:focus-visible,
+        a[href*="page=season_overview"][href*="season="]:hover,
+        a[href*="page=season_overview"][href*="season="]:focus-visible,
         div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:hover,
-        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:focus-visible {
+        div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:focus-visible,
+        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:hover,
+        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:focus-visible {
             color: #4b37d8 !important;
             text-decoration: underline !important;
             text-underline-offset: 3px;
         }
 
         a.player-profile-link:focus-visible,
-        a[href*="page=player-profile"][href*="player="]:focus-visible {
+        a.season-overview-link:focus-visible,
+        a[href*="page=player-profile"][href*="player="]:focus-visible,
+        a[href*="page=season_overview"][href*="season="]:focus-visible {
             border-radius: 4px;
             outline: 2px solid rgba(75, 55, 216, 0.35);
             outline-offset: 2px;

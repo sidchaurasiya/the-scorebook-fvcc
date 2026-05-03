@@ -86,6 +86,8 @@ SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 FASTEST_MILESTONE_RECORD_LIMIT = 6
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
+SEASON_OVERVIEW_PAGE_LABEL = "⌂ Season Overview"
+SEASON_OVERVIEW_QUERY_PAGE = "season_overview"
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
@@ -104,23 +106,27 @@ def query_param_value(name: str) -> str:
     return str(value).strip()
 
 
-def apply_player_profile_query_params(page_labels: list[str]) -> None:
+def apply_navigation_query_params(page_labels: list[str]) -> None:
     requested_page = query_param_value("page").casefold()
     requested_player = query_param_value("player")
     if requested_page == PLAYER_PROFILE_QUERY_PAGE or requested_player:
         if PLAYER_PROFILE_PAGE_LABEL in page_labels:
             st.session_state["selected_page_label"] = PLAYER_PROFILE_PAGE_LABEL
-            st.session_state["mobile_navigation"] = PLAYER_PROFILE_PAGE_LABEL
-            st.session_state["main_navigation"] = PLAYER_PROFILE_PAGE_LABEL
         if requested_player:
             st.session_state["pending_player_profile_id"] = unquote(requested_player)
+    requested_season = query_param_value("season")
+    if requested_page in {SEASON_OVERVIEW_QUERY_PAGE, "season-overview"} or requested_season:
+        if SEASON_OVERVIEW_PAGE_LABEL in page_labels:
+            st.session_state["selected_page_label"] = SEASON_OVERVIEW_PAGE_LABEL
+        if requested_season:
+            st.session_state["pending_season_overview_name"] = unquote(requested_season)
 
 
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
     player_id_text = str(player_id or "").strip()
     if not player_id_text:
         return ""
-    url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player={quote(player_id_text)}"
+    url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player={quote(player_id_text, safe='')}"
     player_name_text = str(player_name or "").strip()
     if player_name_text:
         url = f"{url}#{player_name_text}"
@@ -134,9 +140,37 @@ def player_profile_link_html(player_id: object, player_name: object, class_name:
         return html.escape(player_name_text)
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
-        f'title="Open Player Profile for {html.escape(player_name_text, quote=True)}">'
+        f'target="_self" title="Open Player Profile for {html.escape(player_name_text, quote=True)}">'
         f"{html.escape(player_name_text)}</a>"
     )
+
+
+def season_overview_url(season: object) -> str:
+    season_text = safe_season_label(season)
+    if not season_text:
+        return ""
+    return f"?page={SEASON_OVERVIEW_QUERY_PAGE}&season={quote(season_text, safe='')}#{season_text}"
+
+
+def season_overview_link_html(season: object, class_name: str = "season-overview-link") -> str:
+    season_text = safe_season_label(season)
+    url = season_overview_url(season_text)
+    if not url:
+        return html.escape(str(season or ""))
+    return (
+        f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
+        f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
+        f"{html.escape(season_text)}</a>"
+    )
+
+
+def safe_season_label(value: object) -> str:
+    if value is None or pd.isna(value):
+        return ""
+    text = str(value).strip()
+    if not text or text.casefold() in {"nan", "none", "nat", "—"}:
+        return ""
+    return text
 
 
 def player_id_from_row(row: pd.Series | dict[str, object]) -> str:
@@ -152,6 +186,10 @@ def profile_link_display_pattern() -> str:
     return r"#(.+)$"
 
 
+def overview_link_display_pattern() -> str:
+    return r"#(.+)$"
+
+
 def link_player_column(table: pd.DataFrame, id_column: str = "canonical_player_id") -> pd.DataFrame:
     if table.empty or "Player" not in table or id_column not in table:
         return table
@@ -161,6 +199,31 @@ def link_player_column(table: pd.DataFrame, id_column: str = "canonical_player_i
         for player_id, player in zip(output[id_column], output["Player"])
     ]
     return output.drop(columns=[id_column], errors="ignore")
+
+
+def link_season_columns(table: pd.DataFrame, columns: list[str] | None = None) -> pd.DataFrame:
+    if table.empty:
+        return table
+    output = table.copy()
+    for column in columns or ["Season", "Debut Season", "Latest Season"]:
+        if column in output:
+            output[column] = output[column].map(lambda value: season_overview_url(value) or value)
+    return output
+
+
+def add_missing_canonical_player_ids(table: pd.DataFrame) -> pd.DataFrame:
+    if table.empty or "canonical_player_id" in table:
+        return table
+    name_column = "canonical_player_name" if "canonical_player_name" in table else "player_name"
+    if name_column not in table:
+        return table
+    index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
+    if index.empty:
+        return table
+    id_by_name = dict(zip(index["name"].astype(str), index["id"].astype(str)))
+    output = table.copy()
+    output["canonical_player_id"] = output[name_column].astype(str).map(id_by_name).fillna("")
+    return output
 
 
 def render_page() -> None:
@@ -199,7 +262,7 @@ def render_sidebar() -> str:
                 "◈ Advanced Analytics",
             ]
         )
-    apply_player_profile_query_params(page_labels)
+    apply_navigation_query_params(page_labels)
     if "selected_page_label" not in st.session_state:
         st.session_state["selected_page_label"] = page_labels[0]
 
@@ -208,8 +271,8 @@ def render_sidebar() -> str:
         current_label = page_labels[0]
         st.session_state["selected_page_label"] = current_label
     for widget_key in ["mobile_navigation", "main_navigation"]:
-        if st.session_state.get(widget_key) != current_label:
-            st.session_state[widget_key] = current_label
+        if widget_key in st.session_state and st.session_state.get(widget_key) != current_label:
+            st.session_state.pop(widget_key, None)
 
     with st.container(key="mobile_nav_fallback"):
         experimental_help = ""
@@ -352,6 +415,18 @@ def render_data_source_panel() -> dict[str, object] | None:
         (index for index, season in enumerate(seasons) if season.get("isCurrentSeason")),
         0,
     )
+    requested_season_name = str(st.session_state.pop("pending_season_overview_name", "") or "").strip()
+    if requested_season_name:
+        requested_index = next(
+            (
+                index
+                for index, season in enumerate(seasons)
+                if str(season.get("name", "")).strip().casefold() == requested_season_name.casefold()
+            ),
+            None,
+        )
+        if requested_index is not None:
+            current_season_index = requested_index
 
     with st.container(key="season_controls"):
         season_col, team_col = st.columns([0.9, 1.35], gap="large")
@@ -2562,6 +2637,7 @@ def render_ranked_record_card(
     if rows.empty:
         render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
         return
+    rows = add_missing_canonical_player_ids(rows)
     rows["match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
     rows = rows.sort_values(
         [value_col, "final_runs", "match_date_sort"],
@@ -2593,8 +2669,7 @@ def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_s
         final_line = f"vs {opponent}"
     else:
         final_line = ""
-    meta = milestone_meta(row)
-    meta_html = f'<span>{html.escape(meta)}</span>' if meta else ""
+    meta_html = milestone_meta_html(row)
     value = safe_record_int(row.get(value_col))
     value_text = f"{value} {value_suffix}" if value else f"N/A {value_suffix}"
     return (
@@ -2629,12 +2704,15 @@ def render_empty_milestone_card(title: str, message: str, note: str) -> None:
     )
 
 
-def milestone_meta(row: pd.Series) -> str:
-    parts = [
-        safe_record_text(row.get("season")),
-        clean_grade_label_for_record(row.get("grade_name")),
-    ]
-    return " • ".join(part for part in parts if part)
+def milestone_meta_html(row: pd.Series) -> str:
+    parts = []
+    season = safe_record_text(row.get("season"))
+    if season:
+        parts.append(season_overview_link_html(season))
+    grade = clean_grade_label_for_record(row.get("grade_name"))
+    if grade:
+        parts.append(html.escape(grade))
+    return f"<span>{' • '.join(parts)}</span>" if parts else ""
 
 
 def clean_grade_label_for_record(value: object) -> str:
@@ -2701,8 +2779,7 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
             value = format_high_score_value(row)
         else:
             value = str(row.get("bowlingBestInnings", "-"))
-        meta = record_meta(row)
-        meta_html = f'<span>{html.escape(meta)}</span>' if meta else ""
+        meta_html = record_meta_html(row)
         name = row.get("canonical_player_name") or row.get("player_name") or "-"
         player_id = player_id_from_row(row)
         rows.append(
@@ -2922,7 +2999,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
         '<div class="best-season-card">'
         f'<div class="best-season-label">{html.escape(title)}</div>'
         f'<div class="best-season-player">{player_profile_link_html(row.get("player_id"), row["player"])}</div>'
-        f'<div class="best-season-season">{html.escape(str(row["season"]))}</div>'
+        f'<div class="best-season-season">{season_overview_link_html(row["season"])}</div>'
         f'<div class="best-season-primary">{html.escape(primary)}</div>'
         f'<div class="best-season-stats">{chip_html}</div>'
         "</div>"
@@ -2945,15 +3022,15 @@ def as_bool(value: object) -> bool:
     return bool(value)
 
 
-def record_meta(row: pd.Series) -> str:
+def record_meta_html(row: pd.Series) -> str:
     parts = []
     season = row.get("season")
     if pd.notna(season):
-        parts.append(str(season))
+        parts.append(season_overview_link_html(season))
     grade = row.get("canonical_grade_label") or canonical_grade_label(row.get("team_name", ""), row.get("grade_name", ""))
     if grade and grade != "—":
-        parts.append(str(grade))
-    return " - ".join(parts)
+        parts.append(html.escape(str(grade)))
+    return f"<span>{' - '.join(parts)}</span>" if parts else ""
 
 
 def compact_record_team_label(team_name: object) -> str:
@@ -2968,11 +3045,15 @@ def render_record_card(card: dict[str, str]) -> None:
 
 
 def record_card_html(card: dict[str, str]) -> str:
-    meta = f'<div class="record-meta">{html.escape(card["meta"])}</div>' if card.get("meta") else ""
+    meta = f'<div class="record-meta">{card["meta"]}</div>' if card.get("meta_html") else f'<div class="record-meta">{html.escape(card["meta"])}</div>' if card.get("meta") else ""
+    if card.get("link_type") == "season":
+        record_label = season_overview_link_html(card["player"])
+    else:
+        record_label = player_profile_link_html(card.get("player_id"), card["player"])
     return (
         '<div class="record-card">'
         f'<div class="record-label">{html.escape(card["title"])}</div>'
-        f'<div class="record-player">{player_profile_link_html(card.get("player_id"), card["player"])}</div>'
+        f'<div class="record-player">{record_label}</div>'
         f'<div class="record-value">{html.escape(card["value"])}</div>'
         f"{meta}"
         "</div>"
@@ -3059,6 +3140,7 @@ def format_all_time_table(all_time: pd.DataFrame) -> pd.DataFrame:
             table[column] = 0
     table = table.sort_values(["Runs", "Wickets", "Matches"], ascending=False, na_position="last")
     table = link_player_column(table)
+    table = link_season_columns(table)
     for column in ["Seasons Played", "Matches", "Runs", "50s", "100s", "Wickets", "5WI", "Catches", "Stumpings", "Run Outs", "Dismissals"]:
         if column in table:
             table[column] = pd.to_numeric(table[column], errors="coerce")
@@ -3091,6 +3173,7 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     if "Runs" in table:
         table = table.sort_values(["Runs", "Bat Avg", "Player"], ascending=[False, False, True], na_position="last")
     table = link_player_column(table)
+    table = link_season_columns(table)
     return coerce_display_numbers(table)
 
 
@@ -3120,6 +3203,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
     if "Wickets" in table:
         table = table.sort_values(["Wickets", "Bowl Avg", "Player"], ascending=[False, True, True], na_position="last")
     table = link_player_column(table)
+    table = link_season_columns(table)
     return coerce_display_numbers(table)
 
 
@@ -3139,6 +3223,7 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
     if "Catches" in table:
         table = table.sort_values(["Catches", "Matches", "Player"], ascending=[False, True, True], na_position="last")
     table = link_player_column(table)
+    table = link_season_columns(table)
     return coerce_display_numbers(table)
 
 
@@ -3284,7 +3369,7 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
     config["Teams/Grades"] = st.column_config.TextColumn("Teams/Grades", width=150)
     for column in ["Debut Season", "Latest Season"]:
         if column in columns:
-            config[column] = st.column_config.TextColumn(column, width=145)
+            config[column] = st.column_config.LinkColumn(column, width=145, display_text=overview_link_display_pattern())
     integer_columns = {
         "Seasons Played",
         "Matches",
@@ -4163,10 +4248,10 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
     leader_counts = player_leader_counts(profile_view)
     if str(career.get("HS", "—")) != "—":
         row = best_high_score_row(batting)
-        cards.append({"title": "Highest Score", "player": str(career["Player"]), "value": str(career["HS"]), "meta": profile_record_meta(row)})
+        cards.append({"title": "Highest Score", "player": str(career["Player"]), "value": str(career["HS"]), "meta": profile_record_meta_html(row), "meta_html": True})
     if str(career.get("BBI", "—")) != "—":
         row = best_bowling_row(bowling)
-        cards.append({"title": "Best Bowling Figures", "player": str(career["Player"]), "value": str(career["BBI"]), "meta": profile_record_meta(row)})
+        cards.append({"title": "Best Bowling Figures", "player": str(career["Player"]), "value": str(career["BBI"]), "meta": profile_record_meta_html(row), "meta_html": True})
     for title, metric, suffix in [
         ("Best Season by Runs", "Runs", "runs"),
         ("Best Season by Wickets", "Wickets", "wickets"),
@@ -4177,7 +4262,7 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
             output = output[output[metric] > 0].sort_values(metric, ascending=False)
             if not output.empty:
                 row = output.iloc[0]
-                cards.append({"title": title, "player": str(row["Season"]), "value": f"{int(row[metric]):,} {suffix}", "meta": str(row.get("Teams/Grades", ""))})
+                cards.append({"title": title, "player": str(row["Season"]), "value": f"{int(row[metric]):,} {suffix}", "meta": str(row.get("Teams/Grades", "")), "link_type": "season"})
     for title, metric, suffix in [("Total 50s", "50s", "fifties"), ("Total 100s", "100s", "hundreds"), ("Total 5-Wicket Hauls", "5WI", "five-wicket hauls")]:
         value = numeric_value(career, metric)
         if value > 0:
@@ -4197,7 +4282,8 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
                     "title": title,
                     "player": str(career["Player"]),
                     "value": f"{value:,} {label}",
-                    "meta": compact_leader_detail_meta(leader_details.get(key, [])),
+                    "meta": compact_leader_detail_meta_html(leader_details.get(key, [])),
+                    "meta_html": True,
                 }
             )
     return cards[:10]
@@ -4275,13 +4361,19 @@ def player_season_leader_details(df: pd.DataFrame, player_id: str, value_column:
     return details
 
 
-def compact_leader_detail_meta(details: list[str], limit: int = 3) -> str:
+def compact_leader_detail_meta_html(details: list[str], limit: int = 3) -> str:
     if not details:
         return ""
     visible = details[:limit]
     remaining = len(details) - len(visible)
-    suffix = f", +{remaining} more" if remaining > 0 else ""
-    return ", ".join(visible) + suffix
+    rendered = []
+    for detail in visible:
+        season, separator, rest = str(detail).partition(" · ")
+        linked = season_overview_link_html(season)
+        rendered.append(f"{linked}{html.escape(separator + rest) if separator else ''}")
+    if remaining > 0:
+        rendered.append(html.escape(f"+{remaining} more"))
+    return ", ".join(rendered)
 
 
 def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None:
@@ -4929,7 +5021,7 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         st.caption("No data available for this view.")
         return
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
-    display = format_profile_table(table)
+    display = link_season_columns(format_profile_table(table), ["Season"])
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
         display,
@@ -4946,10 +5038,15 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
     config: dict[str, object] = {}
     for column in columns:
         if column == pinned_column:
-            config[column] = st.column_config.TextColumn(column, pinned=True, width="medium")
+            if column == "Season":
+                config[column] = st.column_config.LinkColumn(column, pinned=True, width="medium", display_text=overview_link_display_pattern())
+            else:
+                config[column] = st.column_config.TextColumn(column, pinned=True, width="medium")
         elif column in {"Player", "Grade"}:
             config[column] = st.column_config.TextColumn(column, width="medium")
-        elif column in {"Season", "BBI", "HS", "Overs"}:
+        elif column == "Season":
+            config[column] = st.column_config.LinkColumn(column, width="small", display_text=overview_link_display_pattern())
+        elif column in {"BBI", "HS", "Overs"}:
             config[column] = st.column_config.TextColumn(column, width="small")
         else:
             config[column] = st.column_config.TextColumn(column, width="small")
@@ -5394,16 +5491,16 @@ def best_bowling_row(df: pd.DataFrame) -> pd.Series:
     return sorted_df.iloc[0] if not sorted_df.empty else pd.Series(dtype="object")
 
 
-def profile_record_meta(row: pd.Series) -> str:
+def profile_record_meta_html(row: pd.Series) -> str:
     if row.empty:
         return ""
     parts = []
     season = row.get("season")
     if pd.notna(season):
-        parts.append(str(season))
+        parts.append(season_overview_link_html(season))
     grade = row.get("canonical_grade_label") or canonical_grade_label(row.get("team_name", ""), row.get("grade_name", ""))
     if grade and grade != "—":
-        parts.append(str(grade))
+        parts.append(html.escape(str(grade)))
     return " - ".join(parts)
 
 
