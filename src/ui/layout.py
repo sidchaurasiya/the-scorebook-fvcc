@@ -2,6 +2,7 @@ import base64
 import html
 import os
 import re
+import textwrap
 import time
 from urllib.parse import quote, unquote
 from pathlib import Path
@@ -1053,14 +1054,13 @@ def render_hidden_performances_section(rows: dict[str, pd.DataFrame], frames: di
 
 
 def render_player_dna_page() -> None:
-    st.markdown(
+    render_player_dna_html(
         """
         <div class="player-dna-page"></div>
         <h1 class="page-title">Player DNA</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
         <div class="page-subtitle">A hidden experimental lens on player identity, strengths, and match-centre patterns.</div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     data = load_player_dna_cached(metadata_mtime(), player_aliases_mtime(), player_dna_data_signature())
@@ -1135,15 +1135,17 @@ def render_player_dna_hero_card(hero: dict[str, object]) -> None:
         ("Hidden performance", dna_text(hero.get("best_hidden"), "Profile building")),
     ]
     tile_html = "".join(
-        f"""
-        <div class="dna-hero-tile">
-            <span>{html.escape(label)}</span>
-            <strong>{html.escape(value)}</strong>
-        </div>
-        """
+        compact_html(
+            f"""
+            <div class="dna-hero-tile">
+                <span>{html.escape(label)}</span>
+                <strong>{html.escape(value)}</strong>
+            </div>
+            """
+        )
         for label, value in tiles
     )
-    st.markdown(
+    render_player_dna_html(
         f"""
         <div class="dna-hero-card">
             <div class="dna-hero-main">
@@ -1153,8 +1155,7 @@ def render_player_dna_hero_card(hero: dict[str, object]) -> None:
             </div>
             <div class="dna-hero-grid">{tile_html}</div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
 
@@ -1180,29 +1181,31 @@ def render_trait_group(title: str, traits: list[dict[str, object]], empty_messag
     if not traits:
         render_empty_insight_card(title, empty_message, "Scorecard-based traits will appear once this player has matching rows.")
         return
-    rows = "".join(render_trait_bar(trait) for trait in traits)
-    st.markdown(
-        f'<div class="dna-card"><div class="dna-card-title">{html.escape(title)}</div>{rows}</div>',
-        unsafe_allow_html=True,
-    )
+    with st.container(border=True):
+        st.markdown(f"#### {title}")
+        for trait in traits:
+            render_trait_bar(trait)
 
 
-def render_trait_bar(trait: dict[str, object]) -> str:
+def render_trait_bar(trait: dict[str, object]) -> None:
     score = dna_float(trait.get("score"))
     width = max(0, min(score, 100))
     label = dna_text(trait.get("label"), "Trait")
     level = dna_text(trait.get("level"), "Building")
     description = dna_text(trait.get("description"))
-    return f"""
-    <div class="dna-trait-row">
-        <div class="dna-trait-head">
-            <strong>{html.escape(label)}</strong>
-            <span>{html.escape(level)} · {width:.0f}/100</span>
-        </div>
-        <div class="dna-trait-track"><div style="width:{width:.0f}%"></div></div>
-        <div class="dna-trait-copy">{html.escape(description)}</div>
-    </div>
-    """
+    label_col, value_col = st.columns([0.62, 0.38])
+    label_col.markdown(f"**{label}**")
+    value_col.markdown(f"**{level} · {width:.0f}/100**")
+    st.progress(width / 100)
+    st.caption(description)
+
+
+def compact_html(markup: str) -> str:
+    return textwrap.dedent(markup).strip()
+
+
+def render_player_dna_html(markup: str) -> None:
+    st.markdown(compact_html(markup), unsafe_allow_html=True)
 
 
 def render_position_ladder(positions: pd.DataFrame) -> None:
@@ -1225,6 +1228,7 @@ def render_position_ladder(positions: pd.DataFrame) -> None:
         )
         best_badge = '<span class="dna-mini-badge">Best fit</span>' if index == 0 else ""
         rows.append(
+            compact_html(
             f"""
             <div class="dna-ladder-row">
                 <div class="dna-ladder-top">
@@ -1234,11 +1238,9 @@ def render_position_ladder(positions: pd.DataFrame) -> None:
                 <div class="dna-contribution-track"><div style="width:{width:.0f}%"></div></div>
             </div>
             """
+            )
         )
-    st.markdown(
-        f'<div class="dna-card"><div class="dna-card-title">Batting-position ladder</div>{"".join(rows)}</div>',
-        unsafe_allow_html=True,
-    )
+    render_player_dna_html(f'<div class="dna-card"><div class="dna-card-title">Batting-position ladder</div>{"".join(rows)}</div>')
 
 
 def render_ground_hunter_card(grounds: list[dict[str, object]]) -> None:
@@ -1275,6 +1277,7 @@ def render_hunter_card(title: str, insight: str, rows: list[dict[str, object]], 
         detail = dna_text(row.get("detail"))
         mode = dna_text(row.get("mode"))
         row_html.append(
+            compact_html(
             f"""
             <div class="dna-rank-row">
                 <span class="progress-rank">{rank_badge(rank)}</span>
@@ -1285,16 +1288,16 @@ def render_hunter_card(title: str, insight: str, rows: list[dict[str, object]], 
                 <div class="dna-rank-value">{html.escape(primary)}<span>{html.escape(primary_label)}</span></div>
             </div>
             """
+            )
         )
-    st.markdown(
+    render_player_dna_html(
         f"""
         <div class="dna-card">
             <div class="dna-card-title">{html.escape(title)}</div>
             <div class="dna-insight-line">{html.escape(insight)}</div>
             {"".join(row_html)}
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
 
@@ -1308,22 +1311,24 @@ def render_hidden_best_cards(records: list[dict[str, object]]) -> None:
         )
         return
     cards = "".join(render_ranked_insight_card(rank, record) for rank, record in enumerate(records[:6], start=1))
-    st.markdown(f'<div class="dna-performance-grid">{cards}</div>', unsafe_allow_html=True)
+    render_player_dna_html(f'<div class="dna-performance-grid">{cards}</div>')
 
 
 def render_ranked_insight_card(rank: int, record: dict[str, object]) -> str:
-    return f"""
-    <div class="dna-performance-card">
-        <div class="dna-performance-rank">{rank_badge(rank)}</div>
-        <div class="dna-performance-body">
-            <strong>{html.escape(dna_text(record.get("title"), "Performance"))}</strong>
-            <span>{html.escape(dna_text(record.get("subtitle")))}</span>
-            <em>{html.escape(dna_text(record.get("context")))}</em>
-            <small>{html.escape(dna_text(record.get("explanation")))}</small>
+    return compact_html(
+        f"""
+        <div class="dna-performance-card">
+            <div class="dna-performance-rank">{rank_badge(rank)}</div>
+            <div class="dna-performance-body">
+                <strong>{html.escape(dna_text(record.get("title"), "Performance"))}</strong>
+                <span>{html.escape(dna_text(record.get("subtitle")))}</span>
+                <em>{html.escape(dna_text(record.get("context")))}</em>
+                <small>{html.escape(dna_text(record.get("explanation")))}</small>
+            </div>
+            <div class="dna-performance-value">{html.escape(dna_text(record.get("value")))}</div>
         </div>
-        <div class="dna-performance-value">{html.escape(dna_text(record.get("value")))}</div>
-    </div>
-    """
+        """
+    )
 
 
 def render_dismissal_fingerprint(fingerprint: pd.DataFrame) -> None:
@@ -1339,6 +1344,7 @@ def render_dismissal_fingerprint(fingerprint: pd.DataFrame) -> None:
     for _, row in fingerprint.iterrows():
         pct = dna_float(row.get("pct"))
         rows.append(
+            compact_html(
             f"""
             <div class="dna-fingerprint-row">
                 <div class="dna-fingerprint-label">
@@ -1349,18 +1355,18 @@ def render_dismissal_fingerprint(fingerprint: pd.DataFrame) -> None:
                 <div class="dna-fingerprint-pct">{pct:.1f}%</div>
             </div>
             """
+            )
         )
     top = fingerprint.sort_values("pct", ascending=False).iloc[0]
     insight = f"Most dismissals are {dna_text(top.get('label')).casefold()}, suggesting a pattern worth reviewing."
-    st.markdown(
+    render_player_dna_html(
         f"""
         <div class="dna-card">
             <div class="dna-card-title">Dismissal fingerprint</div>
             {"".join(rows)}
             <div class="dna-insight-line">{html.escape(insight)}</div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
 
@@ -1375,28 +1381,29 @@ def render_ball_by_ball_bonus(cards: list[dict[str, object]], has_ball_by_ball: 
         render_empty_insight_card("Ball-by-ball profile", message, "Scorecard-based Player DNA remains available above.")
         return
     card_html = "".join(
-        f"""
-        <div class="dna-bonus-card">
-            <span>{html.escape(dna_text(card.get("label")))}</span>
-            <strong>{html.escape(dna_text(card.get("value")))}</strong>
-            <em>{html.escape(dna_text(card.get("detail")))}</em>
-        </div>
-        """
+        compact_html(
+            f"""
+            <div class="dna-bonus-card">
+                <span>{html.escape(dna_text(card.get("label")))}</span>
+                <strong>{html.escape(dna_text(card.get("value")))}</strong>
+                <em>{html.escape(dna_text(card.get("detail")))}</em>
+            </div>
+            """
+        )
         for card in cards
     )
-    st.markdown(f'<div class="dna-bonus-grid">{card_html}</div>', unsafe_allow_html=True)
+    render_player_dna_html(f'<div class="dna-bonus-grid">{card_html}</div>')
 
 
 def render_empty_insight_card(title: str, message: str, detail: str = "") -> None:
-    st.markdown(
+    render_player_dna_html(
         f"""
         <div class="dna-card dna-empty-card">
             <div class="dna-card-title">{html.escape(title)}</div>
             <div class="dna-empty-message">{html.escape(message)}</div>
             <div class="dna-empty-detail">{html.escape(detail)}</div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
 

@@ -661,6 +661,9 @@ def calculate_trait_scores(summary: dict[str, Any], match_centre: dict[str, pd.D
     phase = bowling_dot_pct(bowling, balls)
     if phase is not None:
         traits.append(trait("Phase control", phase, 55, "Dot-ball control from ball-by-ball bowling events.", category="Bowling"))
+    extras_rate = bowling_extras_rate(bowling)
+    if extras_rate is not None:
+        traits.append(inverse_trait("Extras control", extras_rate, low=0.0, high=1.1, description="Wides and no-balls per over from scorecards.", category="Bowling"))
     return [item for item in traits if item.get("score") is not None]
 
 
@@ -779,6 +782,17 @@ def bowling_dot_pct(bowling: pd.DataFrame, balls: pd.DataFrame) -> float | None:
     if legal.empty:
         return None
     return float((to_number(legal.get("total_runs")) == 0).mean() * 100)
+
+
+def bowling_extras_rate(bowling: pd.DataFrame) -> float | None:
+    if bowling.empty:
+        return None
+    balls = bowling.get("overs_bowled", pd.Series(dtype="object")).map(overs_to_balls)
+    overs = balls.sum() / 6
+    if overs <= 0:
+        return None
+    extras = to_number(bowling.get("wides")).sum() + to_number(bowling.get("no_balls")).sum()
+    return float(extras / overs)
 
 
 def fastest_milestone_score(milestones: pd.DataFrame) -> float | None:

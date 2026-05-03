@@ -1721,6 +1721,24 @@ def inject_theme() -> None:
             margin-top: 8px;
         }
 
+        .block-container:has(.player-dna-page) .dna-native-trait-score {
+            color: #7a809d;
+            font-size: 0.82rem;
+            font-weight: 900;
+            text-align: right;
+        }
+
+        .block-container:has(.player-dna-page) div[data-testid="stProgress"] > div > div > div {
+            background: linear-gradient(90deg, #7A1735, #4b37d8);
+        }
+
+        .block-container:has(.player-dna-page) div[data-testid="stVerticalBlockBorderWrapper"] {
+            background: #ffffff;
+            border-color: #e9ebf4;
+            border-radius: 16px;
+            box-shadow: 0 14px 34px rgba(23, 27, 77, 0.055);
+        }
+
         .dna-ladder-row,
         .dna-fingerprint-row {
             border-bottom: 1px solid #eef0f6;
