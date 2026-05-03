@@ -111,12 +111,23 @@ def query_param_value(name: str) -> str:
 
 def apply_navigation_query_params(page_labels: list[str]) -> None:
     requested_page = query_param_value("page").casefold()
-    requested_player = query_param_value("player")
+    requested_player = unquote(query_param_value("player"))
     if requested_page == PLAYER_PROFILE_QUERY_PAGE or requested_player:
         if PLAYER_PROFILE_PAGE_LABEL in page_labels:
             st.session_state["selected_page_label"] = PLAYER_PROFILE_PAGE_LABEL
         if requested_player:
-            st.session_state["pending_player_profile_id"] = unquote(requested_player)
+            selected_player = str(st.session_state.get("selected_player_profile_id", "") or "").strip()
+            last_query_player = st.session_state.get("last_player_profile_query_param")
+            manual_override = bool(st.session_state.get("manual_player_profile_selection"))
+            if manual_override and requested_player == last_query_player:
+                pass
+            elif requested_player != last_query_player or requested_player != selected_player:
+                st.session_state["pending_player_profile_id"] = requested_player
+                st.session_state["last_player_profile_query_param"] = requested_player
+                st.session_state.pop("manual_player_profile_selection", None)
+        else:
+            st.session_state.pop("last_player_profile_query_param", None)
+            st.session_state.pop("manual_player_profile_selection", None)
     requested_season = query_param_value("season")
     if requested_page in {SEASON_OVERVIEW_QUERY_PAGE, "season-overview"} or requested_season:
         if SEASON_OVERVIEW_PAGE_LABEL in page_labels:
@@ -180,9 +191,20 @@ def scorecard_link_html(match_id: object, label: str = "View scorecard ↗", cla
         return ""
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
-        'target="_self" '
+        'target="_blank" rel="noopener noreferrer" '
         f'title="Open PlayCricket scorecard">{html.escape(label)}</a>'
     )
+
+
+def resolve_player_profile_selector_value(value: object) -> str:
+    text = str(value or "").strip()
+    if not text or text == "Select a player...":
+        return ""
+    valid_ids = set(st.session_state.get("player_profile_valid_ids", []))
+    if text in valid_ids:
+        return text
+    name_to_id = st.session_state.get("player_profile_name_to_id", {})
+    return str(name_to_id.get(text, "") or "").strip()
 
 
 def safe_season_label(value: object) -> str:
@@ -4595,20 +4617,52 @@ def render_player_profile_page() -> None:
         st.info("Historical player data is not available yet. Refresh local backup to build player profiles.")
         return
 
-    player_names_by_id = {"": "Select a player..."}
-    player_names_by_id.update(dict(zip(index["id"].astype(str), index["name"].astype(str))))
+    player_names_by_id = dict(zip(index["id"].astype(str), index["name"].astype(str)))
     option_ids = list(player_names_by_id.keys())
+    option_labels = list(player_names_by_id.values())
+    st.session_state["player_profile_valid_ids"] = option_ids
+    st.session_state["player_profile_name_to_id"] = {
+        player_name: player_id
+        for player_id, player_name in player_names_by_id.items()
+        if player_id
+    }
     pending_player_id = str(st.session_state.get("pending_player_profile_id", "") or "").strip()
+    reset_selector_widget = False
     if pending_player_id in player_names_by_id:
-        st.session_state["player_profile_selector_id"] = pending_player_id
+        st.session_state["selected_player_profile_id"] = pending_player_id
+        st.session_state["last_player_profile_query_param"] = pending_player_id
+        st.session_state.pop("manual_player_profile_selection", None)
         st.session_state.pop("pending_player_profile_id", None)
+        reset_selector_widget = True
+    selected_player_id = str(st.session_state.get("selected_player_profile_id", "") or "").strip()
+    if selected_player_id not in player_names_by_id:
+        selected_player_id = ""
+        st.session_state["selected_player_profile_id"] = selected_player_id
+        reset_selector_widget = True
+    selected_player_label = player_names_by_id.get(selected_player_id)
+    if (
+        reset_selector_widget
+        and
+        "player_profile_selector_label" in st.session_state
+        and st.session_state.get("player_profile_selector_label") != selected_player_label
+    ):
+        st.session_state.pop("player_profile_selector_label", None)
+    st.session_state.pop("player_profile_selector_id", None)
     with st.container(key="player_selector_card"):
-        selected_id = st.selectbox(
+        selected_label = st.selectbox(
             "Search player",
-            option_ids,
-            format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
-            key="player_profile_selector_id",
+            option_labels,
+            index=option_labels.index(selected_player_label) if selected_player_label in option_labels else None,
+            placeholder="Select a player...",
+            key="player_profile_selector_label",
         )
+        selected_id = resolve_player_profile_selector_value(selected_label)
+        if selected_id != selected_player_id:
+            st.session_state["selected_player_profile_id"] = selected_id
+            current_query_player = unquote(query_param_value("player"))
+            if current_query_player:
+                st.session_state["last_player_profile_query_param"] = current_query_player
+            st.session_state["manual_player_profile_selection"] = True
         st.markdown(
             '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
             unsafe_allow_html=True,
