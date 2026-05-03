@@ -99,7 +99,25 @@ def log_hof_timing(label: str, started_at: float) -> None:
 
 
 def sync_selected_page(source_key: str) -> None:
-    st.session_state["selected_page_label"] = st.session_state[source_key]
+    selected_label = st.session_state[source_key]
+    st.session_state["selected_page_label"] = selected_label
+    if selected_label != PLAYER_PROFILE_PAGE_LABEL:
+        st.session_state.pop("pending_player_profile_id", None)
+        st.session_state.pop("manual_player_profile_selection", None)
+        for param_name in ("player", "player_id"):
+            st.query_params.pop(param_name, None)
+    if selected_label != SEASON_OVERVIEW_PAGE_LABEL:
+        st.session_state.pop("pending_season_overview_name", None)
+        st.query_params.pop("season", None)
+    page_by_label = {
+        "♕ Hall of Fame": "hall-of-fame",
+        SEASON_OVERVIEW_PAGE_LABEL: SEASON_OVERVIEW_QUERY_PAGE,
+        "☆ Milestone": "milestone",
+        PLAYER_PROFILE_PAGE_LABEL: PLAYER_PROFILE_QUERY_PAGE,
+    }
+    target_page = page_by_label.get(selected_label)
+    if target_page:
+        st.query_params["page"] = target_page
 
 
 def query_param_value(name: str) -> str:
