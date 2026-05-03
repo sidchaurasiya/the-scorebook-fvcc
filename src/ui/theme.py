@@ -1001,16 +1001,22 @@ def inject_theme() -> None:
 
         a.player-profile-link,
         a.season-overview-link,
+        a.scorecard-link,
         a.player-profile-link:visited,
         a.season-overview-link:visited,
+        a.scorecard-link:visited,
         a[href*="page=player-profile"][href*="player="],
         a[href*="page=player-profile"][href*="player="]:visited,
         a[href*="page=season_overview"][href*="season="],
         a[href*="page=season_overview"][href*="season="]:visited,
+        a[href*="play.cricket.com.au/match/"],
+        a[href*="play.cricket.com.au/match/"]:visited,
         div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
         div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:visited,
         div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="],
-        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:visited {
+        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:visited,
+        div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"],
+        div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"]:visited {
             color: inherit !important;
             cursor: pointer;
             font: inherit;
@@ -1020,16 +1026,22 @@ def inject_theme() -> None:
 
         a.player-profile-link:hover,
         a.season-overview-link:hover,
+        a.scorecard-link:hover,
         a.player-profile-link:focus-visible,
         a.season-overview-link:focus-visible,
+        a.scorecard-link:focus-visible,
         a[href*="page=player-profile"][href*="player="]:hover,
         a[href*="page=player-profile"][href*="player="]:focus-visible,
         a[href*="page=season_overview"][href*="season="]:hover,
         a[href*="page=season_overview"][href*="season="]:focus-visible,
+        a[href*="play.cricket.com.au/match/"]:hover,
+        a[href*="play.cricket.com.au/match/"]:focus-visible,
         div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:hover,
         div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="]:focus-visible,
         div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:hover,
-        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:focus-visible {
+        div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:focus-visible,
+        div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"]:hover,
+        div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"]:focus-visible {
             color: #4b37d8 !important;
             text-decoration: underline !important;
             text-underline-offset: 3px;
@@ -1037,11 +1049,18 @@ def inject_theme() -> None:
 
         a.player-profile-link:focus-visible,
         a.season-overview-link:focus-visible,
+        a.scorecard-link:focus-visible,
         a[href*="page=player-profile"][href*="player="]:focus-visible,
-        a[href*="page=season_overview"][href*="season="]:focus-visible {
+        a[href*="page=season_overview"][href*="season="]:focus-visible,
+        a[href*="play.cricket.com.au/match/"]:focus-visible {
             border-radius: 4px;
             outline: 2px solid rgba(75, 55, 216, 0.35);
             outline-offset: 2px;
+        }
+
+        a.scorecard-link {
+            color: #4b37d8 !important;
+            font-weight: 700;
         }
 
         .improver-gain {

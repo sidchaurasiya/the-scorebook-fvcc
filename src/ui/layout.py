@@ -167,6 +167,24 @@ def season_overview_link_html(season: object, class_name: str = "season-overview
     )
 
 
+def playcricket_scorecard_url(match_id: object) -> str:
+    match_id_text = str(match_id or "").strip()
+    if not match_id_text or match_id_text.casefold() in {"nan", "none", "nat"}:
+        return ""
+    return f"https://play.cricket.com.au/match/{quote(match_id_text, safe='')}?tab=scorecard"
+
+
+def scorecard_link_html(match_id: object, label: str = "View scorecard ↗", class_name: str = "scorecard-link") -> str:
+    url = playcricket_scorecard_url(match_id)
+    if not url:
+        return ""
+    return (
+        f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
+        'target="_self" '
+        f'title="Open PlayCricket scorecard">{html.escape(label)}</a>'
+    )
+
+
 def safe_season_label(value: object) -> str:
     if value is None or pd.isna(value):
         return ""
@@ -220,12 +238,17 @@ def add_missing_canonical_player_ids(table: pd.DataFrame) -> pd.DataFrame:
     name_column = "canonical_player_name" if "canonical_player_name" in table else "player_name"
     if name_column not in table:
         return table
-    index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
-    if index.empty:
-        return table
-    id_by_name = dict(zip(index["name"].astype(str), index["id"].astype(str)))
     output = table.copy()
-    output["canonical_player_id"] = output[name_column].astype(str).map(id_by_name).fillna("")
+    if "player_name" not in output:
+        output["player_name"] = output[name_column]
+    if "raw_player_id" not in output:
+        if "participant_id" in output:
+            output["raw_player_id"] = output["participant_id"]
+        elif "player_id" in output:
+            output["raw_player_id"] = output["player_id"]
+    if "raw_player_name" not in output:
+        output["raw_player_name"] = output[name_column]
+    output = apply_player_identity_mapping(output, load_player_aliases())
     return output
 
 
@@ -1808,6 +1831,7 @@ def render_advanced_table(title: str, table: pd.DataFrame) -> None:
         use_container_width=True,
         hide_index=True,
         height=table_height(display, max_rows=9),
+        column_config=numeric_column_config(display.columns.tolist()),
     )
 
 
@@ -2683,11 +2707,21 @@ def team_rows(frame: pd.DataFrame, team_id: str) -> pd.DataFrame:
 
 
 def display_table(frame: pd.DataFrame, columns: list[str], rename_map: dict[str, str]) -> pd.DataFrame:
-    output = frame.copy()
+    output = add_missing_canonical_player_ids(frame)
+    player_profile_ids = (
+        output["canonical_player_id"].copy()
+        if "canonical_player_id" in output and "player_name" in columns
+        else pd.Series([""] * len(output), index=output.index)
+    )
     for column in columns:
         if column not in output:
             output[column] = pd.NA
     output = output[columns].rename(columns=rename_map)
+    if "Player" in output:
+        output["Player"] = [
+            player_profile_url(player_id, player)
+            for player_id, player in zip(player_profile_ids, output["Player"])
+        ]
     return coerce_display_numbers(output)
 
 
@@ -2872,8 +2906,8 @@ def get_hall_of_fame_data(_local_version: float, _identity_version: float | None
     log_hof_timing("build Hall of Fame record holders", started_at)
 
     started_at = time.perf_counter()
-    iconic_batting = top_highest_scores(historical_data["batting_raw"], limit=10)
-    iconic_bowling = top_best_bowling_innings(historical_data["bowling_raw"], limit=10)
+    iconic_batting = attach_scorecard_match_ids(top_highest_scores(historical_data["batting_raw"], limit=10), "batting")
+    iconic_bowling = attach_scorecard_match_ids(top_best_bowling_innings(historical_data["bowling_raw"], limit=10), "bowling")
     log_hof_timing("build iconic performances", started_at)
 
     started_at = time.perf_counter()
@@ -3277,9 +3311,9 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
     batting_records = data.get("iconic_batting")
     bowling_records = data.get("iconic_bowling")
     if batting_records is None:
-        batting_records = top_highest_scores(data["batting_raw"], limit=10)
+        batting_records = attach_scorecard_match_ids(top_highest_scores(data["batting_raw"], limit=10), "batting")
     if bowling_records is None:
-        bowling_records = top_best_bowling_innings(data["bowling_raw"], limit=10)
+        bowling_records = attach_scorecard_match_ids(top_best_bowling_innings(data["bowling_raw"], limit=10), "bowling")
     if batting_records.empty and bowling_records.empty:
         return
     render_section_heading("Iconic Performances 🌟")
@@ -3367,6 +3401,85 @@ def match_centre_milestones_mtime() -> float | None:
     return path.stat().st_mtime
 
 
+def match_centre_all_available_signature() -> tuple[tuple[str, float], ...]:
+    return match_centre_scope_signature(MATCH_CENTRE_PROCESSED_ROOT / "all_available")
+
+
+@st.cache_data(show_spinner=False)
+def load_scorecard_record_rows(_signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+    scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
+    if not scope.exists():
+        return {"batting": pd.DataFrame(), "bowling": pd.DataFrame()}
+    matches = read_match_centre_csv(scope / "all_matches.csv")
+    context_columns = [column for column in ["match_id", "season", "first_match_day"] if column in matches]
+    context = matches[context_columns].drop_duplicates("match_id") if "match_id" in matches else pd.DataFrame()
+    output: dict[str, pd.DataFrame] = {}
+    for key, filename in {"batting": "all_scorecard_batting.csv", "bowling": "all_scorecard_bowling.csv"}.items():
+        frame = read_match_centre_csv(scope / filename)
+        if frame.empty:
+            output[key] = frame
+            continue
+        frame = add_missing_canonical_player_ids(frame)
+        if not context.empty and "match_id" in frame:
+            frame = frame.merge(context, on="match_id", how="left")
+        output[key] = frame
+    return output
+
+
+def attach_scorecard_match_ids(records: pd.DataFrame, mode: str) -> pd.DataFrame:
+    if records.empty or "match_id" in records:
+        return records
+    scorecards = load_scorecard_record_rows(match_centre_all_available_signature())
+    lookup = scorecards.get(mode, pd.DataFrame())
+    if lookup.empty or "canonical_player_id" not in records or "canonical_player_id" not in lookup:
+        return records
+    output = records.copy()
+    output["match_id"] = output.apply(lambda row: scorecard_match_id_for_record(row, lookup, mode), axis=1)
+    return output
+
+
+def scorecard_match_id_for_record(row: pd.Series, lookup: pd.DataFrame, mode: str) -> str:
+    player_id = str(row.get("canonical_player_id", "")).strip()
+    if not player_id:
+        return ""
+    candidates = lookup[lookup["canonical_player_id"].astype(str) == player_id].copy()
+    season = safe_season_label(row.get("season"))
+    if season and "season" in candidates:
+        candidates = candidates[candidates["season"].astype(str).str.strip().str.casefold() == season.casefold()]
+    if candidates.empty:
+        return ""
+    if mode == "batting":
+        score = safe_record_int(row.get("battingHighScore"))
+        if score is None or "runs_scored" not in candidates:
+            return ""
+        candidates = candidates[pd.to_numeric(candidates["runs_scored"], errors="coerce") == score]
+        sort_columns = [column for column in ["balls_faced", "first_match_day", "match_id"] if column in candidates]
+        ascending = [True, False, True][: len(sort_columns)]
+    else:
+        wickets, runs = parse_bowling_figures(row.get("bowlingBestInnings"))
+        if wickets is None or runs is None or not {"wickets_taken", "runs_conceded"}.issubset(candidates.columns):
+            return ""
+        candidates = candidates[
+            (pd.to_numeric(candidates["wickets_taken"], errors="coerce") == wickets)
+            & (pd.to_numeric(candidates["runs_conceded"], errors="coerce") == runs)
+        ]
+        sort_columns = [column for column in ["first_match_day", "match_id"] if column in candidates]
+        ascending = [False, True][: len(sort_columns)]
+    if candidates.empty:
+        return ""
+    if sort_columns:
+        candidates = candidates.sort_values(sort_columns, ascending=ascending, na_position="last")
+    return str(candidates.iloc[0].get("match_id", "") or "").strip()
+
+
+def parse_bowling_figures(value: object) -> tuple[int | None, int | None]:
+    text = safe_record_text(value)
+    match = re.search(r"(\d+)\s*[-/]\s*(\d+)", text)
+    if not match:
+        return None, None
+    return int(match.group(1)), int(match.group(2))
+
+
 def parse_record_bool(value: object) -> bool:
     if isinstance(value, bool):
         return value
@@ -3420,6 +3533,7 @@ def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_s
     else:
         final_line = ""
     meta_html = milestone_meta_html(row)
+    scorecard_html = scorecard_link_html(row.get("match_id"))
     value = safe_record_int(row.get(value_col))
     value_text = f"{value} {value_suffix}" if value else f"N/A {value_suffix}"
     return (
@@ -3429,6 +3543,7 @@ def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_s
         f'<strong>{player_profile_link_html(player_id, player)}</strong>'
         f'<span>{html.escape(final_line)}</span>'
         f'{meta_html}'
+        f'{f"<span>{scorecard_html}</span>" if scorecard_html else ""}'
         '</div>'
         f'<div class="performance-value">{html.escape(value_text)}</div>'
         '</div>'
@@ -3530,12 +3645,13 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         else:
             value = str(row.get("bowlingBestInnings", "-"))
         meta_html = record_meta_html(row)
+        scorecard_html = scorecard_link_html(row.get("match_id"))
         name = row.get("canonical_player_name") or row.get("player_name") or "-"
         player_id = player_id_from_row(row)
         rows.append(
             '<div class="performance-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
-            f'<div class="performance-player"><strong>{player_profile_link_html(player_id, name)}</strong>{meta_html}</div>'
+            f'<div class="performance-player"><strong>{player_profile_link_html(player_id, name)}</strong>{meta_html}{f"<span>{scorecard_html}</span>" if scorecard_html else ""}</div>'
             f'<div class="performance-value">{html.escape(str(value))}</div>'
             "</div>"
         )
@@ -3796,6 +3912,8 @@ def render_record_card(card: dict[str, str]) -> None:
 
 def record_card_html(card: dict[str, str]) -> str:
     meta = f'<div class="record-meta">{card["meta"]}</div>' if card.get("meta_html") else f'<div class="record-meta">{html.escape(card["meta"])}</div>' if card.get("meta") else ""
+    scorecard = scorecard_link_html(card.get("match_id"))
+    scorecard_meta = f'<div class="record-meta">{scorecard}</div>' if scorecard else ""
     if card.get("link_type") == "season":
         record_label = season_overview_link_html(card["player"])
     else:
@@ -3806,6 +3924,7 @@ def record_card_html(card: dict[str, str]) -> str:
         f'<div class="record-player">{record_label}</div>'
         f'<div class="record-value">{html.escape(card["value"])}</div>'
         f"{meta}"
+        f"{scorecard_meta}"
         "</div>"
     )
 
@@ -4998,10 +5117,10 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
     leader_counts = player_leader_counts(profile_view)
     if str(career.get("HS", "—")) != "—":
         row = best_high_score_row(batting)
-        cards.append({"title": "Highest Score", "player": str(career["Player"]), "value": str(career["HS"]), "meta": profile_record_meta_html(row), "meta_html": True})
+        cards.append({"title": "Highest Score", "player": str(career["Player"]), "value": str(career["HS"]), "meta": profile_record_meta_html(row), "meta_html": True, "match_id": scorecard_match_id_for_profile_record(row, "batting")})
     if str(career.get("BBI", "—")) != "—":
         row = best_bowling_row(bowling)
-        cards.append({"title": "Best Bowling Figures", "player": str(career["Player"]), "value": str(career["BBI"]), "meta": profile_record_meta_html(row), "meta_html": True})
+        cards.append({"title": "Best Bowling Figures", "player": str(career["Player"]), "value": str(career["BBI"]), "meta": profile_record_meta_html(row), "meta_html": True, "match_id": scorecard_match_id_for_profile_record(row, "bowling")})
     for title, metric, suffix in [
         ("Best Season by Runs", "Runs", "runs"),
         ("Best Season by Wickets", "Wickets", "wickets"),
@@ -5041,6 +5160,15 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
 
 def player_leader_counts(profile_view: dict[str, pd.DataFrame]) -> dict[str, int]:
     return {key: len(values) for key, values in player_leader_details(profile_view).items()}
+
+
+def scorecard_match_id_for_profile_record(row: pd.Series, mode: str) -> str:
+    if row.empty:
+        return ""
+    lookup = load_scorecard_record_rows(match_centre_all_available_signature()).get(mode, pd.DataFrame())
+    if lookup.empty:
+        return ""
+    return scorecard_match_id_for_record(row, lookup, mode)
 
 
 def player_leader_details(profile_view: dict[str, pd.DataFrame]) -> dict[str, list[str]]:
@@ -8349,7 +8477,7 @@ def prepare_table_frame(
     columns: list[str],
     rename_map: dict[str, str],
 ) -> pd.DataFrame:
-    output = add_display_stat_aliases(df)
+    output = add_missing_canonical_player_ids(add_display_stat_aliases(df))
     player_profile_ids = (
         output["canonical_player_id"].copy()
         if "canonical_player_id" in output and "player_name" in columns
@@ -8374,6 +8502,7 @@ def prepare_table_frame(
 def standard_column_config() -> dict[str, object]:
     return {
         "Player": st.column_config.LinkColumn("Player", pinned=True, width="medium", display_text=profile_link_display_pattern()),
+        "Scorecard": st.column_config.LinkColumn("Scorecard", width="small", display_text=r"scorecard$"),
         "Team": st.column_config.TextColumn("Team", width="small"),
     }
 
@@ -8833,7 +8962,7 @@ def select_display_columns(df: pd.DataFrame, desired_columns: list[str]) -> pd.D
 
 def coerce_display_numbers(df: pd.DataFrame) -> pd.DataFrame:
     output = df.copy()
-    text_columns = {"Player", "Team", "HS", "BBI", "Overs"}
+    text_columns = {"Player", "Team", "HS", "BBI", "Overs", "Scorecard"}
     for column in output.columns:
         if column not in text_columns:
             numeric_values = pd.to_numeric(output[column], errors="coerce")
