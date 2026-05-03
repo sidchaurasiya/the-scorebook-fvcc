@@ -3382,16 +3382,12 @@ def latest_activity_seasons(activity: pd.DataFrame, season_count: int) -> list[s
     if not season_table.empty and {"name", "startDate"}.issubset(season_table.columns):
         season_table = season_table.copy()
         season_table["season_sort"] = pd.to_datetime(season_table["startDate"], errors="coerce", utc=True)
-        current_rows = (
-            season_table[season_table["isCurrentSeason"].fillna(False).astype(bool)]
-            if "isCurrentSeason" in season_table
-            else pd.DataFrame()
+        ordered = (
+            season_table.sort_values(["season_sort", "name"], ascending=[False, False])["name"]
+            .dropna()
+            .drop_duplicates()
+            .tolist()
         )
-        anchor = current_rows.iloc[0] if not current_rows.empty else season_table.sort_values("season_sort", ascending=False).iloc[0]
-        anchor_family = str(anchor.get("name", "")).split(" ", 1)[0]
-        relevant = season_table[season_table["name"].astype(str).str.startswith(f"{anchor_family} ", na=False)]
-        relevant = relevant.sort_values(["season_sort", "name"], ascending=[False, False])
-        ordered = relevant["name"].dropna().drop_duplicates().tolist()
         if ordered:
             return ordered[:season_count]
 
