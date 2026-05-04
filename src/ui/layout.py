@@ -192,7 +192,6 @@ def sync_selected_page(source_key: str) -> None:
     selected_label = st.session_state[source_key]
     target_page = page_slug_by_label().get(selected_label, default_page_slug())
     set_current_page(target_page)
-    st.rerun()
 
 
 def query_param_value(name: str) -> str:
@@ -214,7 +213,6 @@ def sync_query_param_with_current_page() -> None:
 
 def initialize_current_page() -> None:
     if "routing_initialized" not in st.session_state:
-        initial_page_query = query_param_value("page")
         requested_slug, requested_player, requested_season = initial_page_from_query()
         set_current_page(requested_slug, clear_context=False, sync_url=False)
         st.session_state["routing_initialized"] = True
@@ -225,20 +223,24 @@ def initialize_current_page() -> None:
         if requested_slug == SEASON_OVERVIEW_QUERY_PAGE and requested_season:
             st.session_state["pending_season_overview_name"] = requested_season
         # Root URL without page param must initialize to hall-of-fame and sync query params.
-        should_rerun_after_initial_sync = initial_page_query != requested_slug
     else:
         current_page = canonical_page_slug(st.session_state.get("current_page", default_page_slug()))
         if current_page not in valid_page_slugs():
             current_page = default_page_slug()
         set_current_page(current_page, clear_context=False, sync_url=False)
-        should_rerun_after_initial_sync = False
     sync_query_param_with_current_page()
-    if should_rerun_after_initial_sync:
-        st.rerun()
 
 
 def apply_navigation_query_params(page_labels: list[str]) -> None:
     initialize_current_page()
+
+
+def pending_navigation_slug(page_labels: list[str], current_label: str) -> str:
+    for widget_key in ("main_navigation", "mobile_navigation"):
+        selected_label = st.session_state.get(widget_key)
+        if selected_label in page_labels and selected_label != current_label:
+            return page_slug_by_label().get(selected_label, "")
+    return ""
 
 
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
@@ -450,6 +452,11 @@ def render_sidebar() -> str:
     if current_label not in page_labels:
         current_label = page_labels[0]
         set_current_page(page_slug_by_label().get(current_label, default_page_slug()))
+    pending_slug = pending_navigation_slug(page_labels, current_label)
+    if pending_slug:
+        set_current_page(pending_slug)
+        current_page = st.session_state.get("current_page", default_page_slug())
+        current_label = page_label_for_slug(current_page)
     for widget_key in ["mobile_navigation", "main_navigation"]:
         if widget_key in st.session_state and st.session_state.get(widget_key) != current_label:
             st.session_state.pop(widget_key, None)
@@ -487,8 +494,6 @@ def render_sidebar() -> str:
             index=page_labels.index(current_label),
             key="mobile_navigation",
             label_visibility="collapsed",
-            on_change=sync_selected_page,
-            args=("mobile_navigation",),
         )
 
     st.sidebar.markdown(
@@ -509,8 +514,6 @@ def render_sidebar() -> str:
         index=page_labels.index(page_label_for_slug(st.session_state.get("current_page", default_page_slug()))),
         label_visibility="collapsed",
         key="main_navigation",
-        on_change=sync_selected_page,
-        args=("main_navigation",),
     )
     selected_slug = page_slug_by_label().get(selected_label, st.session_state.get("current_page", default_page_slug()))
     if selected_slug != st.session_state.get("current_page"):
