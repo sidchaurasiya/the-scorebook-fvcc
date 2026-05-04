@@ -4209,10 +4209,10 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Matches",
         "Overs",
         "Wickets",
-        "Maidens",
-        "Bowl Avg",
         "Econ",
+        "Bowl Avg",
         "Bowl SR",
+        "Maidens",
         "BBI",
         "5WI",
         "10WM",
@@ -6066,14 +6066,14 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
     with st.container(key="player_profile_season_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            columns = ["Season", "Matches", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "50s", "100s", "0s", "4s", "6s"]
-            render_profile_season_stat_table(season_table, columns, ["Matches", "Innings", "Runs", "50s", "100s"])
+            columns = ["Season", "Matches", "Runs", "Bat Avg", "Bat SR", "HS", "50s", "100s", "0s", "4s", "6s"]
+            render_profile_season_stat_table(season_table, columns, ["Matches", "Runs", "50s", "100s"])
         with bowling_tab:
             table = season_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
             render_profile_season_stat_table(
                 table.rename(columns={"BBI": "BBI"}),
-                ["Season", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"],
+                ["Season", "Matches", "Overs", "Wickets", "Econ", "Bowl Avg", "Bowl SR", "Maidens", "BBI", "5WI"],
                 ["Balls Bowled", "Runs Against", "Maidens", "Wickets", "Wides", "No Balls", "5WI"],
             )
         with fielding_tab:
@@ -6088,12 +6088,12 @@ def render_player_grade_table(grade_table: pd.DataFrame) -> None:
     with st.container(key="player_profile_grade_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            columns = ["Grade", "Matches", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "50s", "100s", "0s", "4s", "6s"]
-            render_profile_group_stat_table(grade_table, columns, ["Matches", "Innings", "Runs", "50s", "100s"], "Grade")
+            columns = ["Grade", "Matches", "Runs", "Bat Avg", "Bat SR", "HS", "50s", "100s", "0s", "4s", "6s"]
+            render_profile_group_stat_table(grade_table, columns, ["Matches", "Runs", "50s", "100s"], "Grade")
         with bowling_tab:
             table = grade_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
-            columns = ["Grade", "Matches", "Overs", "Maidens", "Wickets", "Bowl Avg", "Bowl SR", "Econ", "BBI", "5WI"]
+            columns = ["Grade", "Matches", "Overs", "Wickets", "Econ", "Bowl Avg", "Bowl SR", "Maidens", "BBI", "5WI"]
             render_profile_group_stat_table(
                 table,
                 columns,
@@ -8772,7 +8772,7 @@ def prepare_table_frame(
     if "Team" in output:
         output["Team"] = output["Team"].map(compact_team_label)
 
-    return output
+    return coerce_display_numbers(output)
 
 
 def standard_column_config() -> dict[str, object]:
@@ -8789,7 +8789,6 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
         "M",
         "Matches",
         "Seasons Played",
-        "Inns",
         "Runs",
         "BF",
         "NO",
@@ -8802,6 +8801,7 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
         "Wkts",
         "Wickets",
         "Mdns",
+        "Maidens",
         "Runs Against",
         "4W",
         "5W",
@@ -9119,7 +9119,6 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "player_name",
             "team_name",
             "matches",
-            "battingInnings",
             "battingAggregate",
             "balls_faced_display",
             "battingAverage",
@@ -9136,7 +9135,6 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Player",
             "Team",
             "M",
-            "Inns",
             "Runs",
             "BF",
             "Bat Avg",
@@ -9161,10 +9159,10 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "matches",
             "overs_bowled_display",
             "bowlingWickets",
-            "bowlingMaidens",
-            "bowlingAverage",
             "bowlingEconomyRate",
+            "bowlingAverage",
             "bowlingStrikeRate",
+            "bowlingMaidens",
             "bowlingBestInnings",
             "bowling4Wickets",
             "bowling5WIs",
@@ -9175,10 +9173,10 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "M",
             "Overs",
             "Wickets",
-            "Mdns",
-            "Bowl Avg",
             "Economy",
+            "Bowl Avg",
             "Bowl SR",
+            "Maidens",
             "BBI",
             "4W",
             "5W",
@@ -9229,7 +9227,7 @@ def prepare_curated_display_frame(
             player_profile_url(player_id, player)
             for player_id, player in zip(player_profile_ids, output["Player"])
         ]
-    return output
+    return coerce_display_numbers(output)
 
 
 def select_display_columns(df: pd.DataFrame, desired_columns: list[str]) -> pd.DataFrame:
@@ -9302,7 +9300,7 @@ def pretty_column_name_map() -> dict[str, str]:
         "bowlingBestInnings": "BBI",
         "bowlingBalls": "Balls",
         "bowlingRuns": "Runs",
-        "bowlingMaidens": "Mdns",
+        "bowlingMaidens": "Maidens",
         "bowling4Wickets": "4W",
         "bowling5WIs": "5W",
         "bowling10WMs": "10WM",
