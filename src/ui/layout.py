@@ -214,6 +214,7 @@ def sync_query_param_with_current_page() -> None:
 
 def initialize_current_page() -> None:
     if "routing_initialized" not in st.session_state:
+        initial_page_query = query_param_value("page")
         requested_slug, requested_player, requested_season = initial_page_from_query()
         set_current_page(requested_slug, clear_context=False, sync_url=False)
         st.session_state["routing_initialized"] = True
@@ -223,12 +224,17 @@ def initialize_current_page() -> None:
             st.session_state.pop("manual_player_profile_selection", None)
         if requested_slug == SEASON_OVERVIEW_QUERY_PAGE and requested_season:
             st.session_state["pending_season_overview_name"] = requested_season
+        # Root URL without page param must initialize to hall-of-fame and sync query params.
+        should_rerun_after_initial_sync = initial_page_query != requested_slug
     else:
         current_page = canonical_page_slug(st.session_state.get("current_page", default_page_slug()))
         if current_page not in valid_page_slugs():
             current_page = default_page_slug()
         set_current_page(current_page, clear_context=False, sync_url=False)
+        should_rerun_after_initial_sync = False
     sync_query_param_with_current_page()
+    if should_rerun_after_initial_sync:
+        st.rerun()
 
 
 def apply_navigation_query_params(page_labels: list[str]) -> None:
