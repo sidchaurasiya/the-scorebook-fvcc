@@ -2,6 +2,7 @@ import base64
 import html
 import os
 import re
+import subprocess
 import textwrap
 import time
 from urllib.parse import quote, unquote
@@ -84,6 +85,7 @@ HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
 )
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
+SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = os.getenv("FVCC_SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 6
@@ -151,6 +153,20 @@ def page_label_for_slug(slug: str) -> str:
     return labels.get(slug, labels[default_page_slug()])
 
 
+def initial_page_from_query() -> tuple[str, str, str]:
+    requested_page = canonical_page_slug(query_param_value("page"))
+    requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
+    requested_season = unquote(query_param_value("season"))
+    requested_slug = requested_page
+    if requested_player:
+        requested_slug = PLAYER_PROFILE_QUERY_PAGE
+    elif requested_season:
+        requested_slug = SEASON_OVERVIEW_QUERY_PAGE
+    if requested_slug not in valid_page_slugs():
+        requested_slug = default_page_slug()
+    return requested_slug, requested_player, requested_season
+
+
 def set_current_page(slug: object, *, clear_context: bool = True, sync_url: bool = True) -> str:
     target_slug = canonical_page_slug(slug)
     if target_slug not in valid_page_slugs():
@@ -176,6 +192,7 @@ def sync_selected_page(source_key: str) -> None:
     selected_label = st.session_state[source_key]
     target_page = page_slug_by_label().get(selected_label, default_page_slug())
     set_current_page(target_page)
+    st.rerun()
 
 
 def query_param_value(name: str) -> str:
@@ -196,96 +213,26 @@ def sync_query_param_with_current_page() -> None:
 
 
 def initialize_current_page() -> None:
-    requested_page = canonical_page_slug(query_param_value("page"))
-    requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
-    requested_season = query_param_value("season")
-    requested_slug = requested_page
-    if requested_player:
-        requested_slug = PLAYER_PROFILE_QUERY_PAGE
-    elif requested_season:
-        requested_slug = SEASON_OVERVIEW_QUERY_PAGE
-
-    current_page = canonical_page_slug(st.session_state.get("current_page", ""))
-    last_synced_page = canonical_page_slug(st.session_state.get("last_synced_page_query_param", ""))
-    has_current_page = current_page in valid_page_slugs()
-    has_requested_page = bool(requested_page or requested_player or requested_season)
-    requested_is_valid = requested_slug in valid_page_slugs()
-
-    if not has_current_page:
-        set_current_page(requested_slug if requested_is_valid else default_page_slug(), clear_context=not requested_is_valid, sync_url=False)
-    elif requested_player and requested_is_valid and current_page != PLAYER_PROFILE_QUERY_PAGE:
-        set_current_page(PLAYER_PROFILE_QUERY_PAGE, clear_context=False, sync_url=False)
-    elif requested_season and requested_is_valid and current_page != SEASON_OVERVIEW_QUERY_PAGE:
-        set_current_page(SEASON_OVERVIEW_QUERY_PAGE, clear_context=False, sync_url=False)
-    elif has_requested_page and not requested_is_valid:
-        set_current_page(default_page_slug(), sync_url=False)
-    elif requested_page and requested_page != current_page and requested_page != last_synced_page:
-        # Once a Streamlit session exists, widget reruns must not be able to
-        # replace the active page with a stale URL value. Sidebar callbacks and
-        # deep links with page-specific context handle intentional navigation.
-        set_current_page(current_page, clear_context=False, sync_url=False)
-    elif has_requested_page and requested_is_valid and requested_slug != current_page and requested_slug != last_synced_page:
+    if "routing_initialized" not in st.session_state:
+        requested_slug, requested_player, requested_season = initial_page_from_query()
         set_current_page(requested_slug, clear_context=False, sync_url=False)
-    else:
-        set_current_page(current_page, clear_context=False, sync_url=False)
-
-    if st.session_state["current_page"] == PLAYER_PROFILE_QUERY_PAGE and requested_player:
-        selected_player = str(
-            st.session_state.get("selected_player_id")
-            or st.session_state.get("selected_player_profile_id")
-            or ""
-        ).strip()
-        last_query_player = st.session_state.get("last_player_profile_query_param")
-        manual_override = bool(st.session_state.get("manual_player_profile_selection"))
-        if manual_override and requested_player == last_query_player:
-            pass
-        elif requested_player != last_query_player or requested_player != selected_player:
+        st.session_state["routing_initialized"] = True
+        if requested_slug == PLAYER_PROFILE_QUERY_PAGE and requested_player:
             st.session_state["pending_player_profile_id"] = requested_player
             st.session_state["last_player_profile_query_param"] = requested_player
             st.session_state.pop("manual_player_profile_selection", None)
-    elif st.session_state["current_page"] == PLAYER_PROFILE_QUERY_PAGE:
-        st.session_state.pop("last_player_profile_query_param", None)
-        st.session_state.pop("manual_player_profile_selection", None)
-
-    if st.session_state["current_page"] == SEASON_OVERVIEW_QUERY_PAGE and requested_season:
-        st.session_state["pending_season_overview_name"] = unquote(requested_season)
-
+        if requested_slug == SEASON_OVERVIEW_QUERY_PAGE and requested_season:
+            st.session_state["pending_season_overview_name"] = requested_season
+    else:
+        current_page = canonical_page_slug(st.session_state.get("current_page", default_page_slug()))
+        if current_page not in valid_page_slugs():
+            current_page = default_page_slug()
+        set_current_page(current_page, clear_context=False, sync_url=False)
     sync_query_param_with_current_page()
 
 
 def apply_navigation_query_params(page_labels: list[str]) -> None:
     initialize_current_page()
-
-
-def _legacy_apply_navigation_query_params(page_labels: list[str]) -> None:
-    requested_page = canonical_page_slug(query_param_value("page"))
-    requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
-    if requested_page == PLAYER_PROFILE_QUERY_PAGE or requested_player:
-        if PLAYER_PROFILE_PAGE_LABEL in page_labels:
-            st.session_state["selected_page_label"] = PLAYER_PROFILE_PAGE_LABEL
-        if requested_player:
-            selected_player = str(
-                st.session_state.get("selected_player_id")
-                or st.session_state.get("selected_player_profile_id")
-                or ""
-            ).strip()
-            last_query_player = st.session_state.get("last_player_profile_query_param")
-            manual_override = bool(st.session_state.get("manual_player_profile_selection"))
-            if manual_override and requested_player == last_query_player:
-                pass
-            elif requested_player != last_query_player or requested_player != selected_player:
-                st.session_state["pending_player_profile_id"] = requested_player
-                st.session_state["last_player_profile_query_param"] = requested_player
-                st.session_state.pop("manual_player_profile_selection", None)
-        else:
-            st.session_state.pop("last_player_profile_query_param", None)
-            st.session_state.pop("manual_player_profile_selection", None)
-    requested_season = query_param_value("season")
-    if requested_page in {SEASON_OVERVIEW_QUERY_PAGE, "season-overview"} or requested_season:
-        if SEASON_OVERVIEW_PAGE_LABEL in page_labels:
-            st.session_state["selected_page_label"] = SEASON_OVERVIEW_PAGE_LABEL
-        if requested_season:
-            st.session_state["pending_season_overview_name"] = unquote(requested_season)
 
 
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
@@ -426,6 +373,41 @@ def add_missing_canonical_player_ids(table: pd.DataFrame) -> pd.DataFrame:
     return output
 
 
+@st.cache_data(show_spinner=False)
+def app_build_commit() -> str:
+    for env_name in ("STREAMLIT_GIT_COMMIT", "COMMIT_SHA", "GIT_COMMIT", "SOURCE_VERSION"):
+        value = str(os.getenv(env_name, "") or "").strip()
+        if value:
+            return value[:7]
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=APP_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=2,
+        )
+    except Exception:
+        return "unknown"
+    return result.stdout.strip() or "unknown"
+
+
+def render_routing_debug_line() -> None:
+    if not SHOW_ROUTING_DEBUG:
+        return
+    st.sidebar.markdown(
+        f"""
+        <div class="routing-debug">
+            Build: {html.escape(app_build_commit())}<br>
+            current_page: {html.escape(str(st.session_state.get("current_page", "")))}<br>
+            query page: {html.escape(query_param_value("page") or "-")}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_page() -> None:
     """Render the dashboard."""
     inject_theme()
@@ -540,6 +522,7 @@ def render_sidebar() -> str:
         """,
         unsafe_allow_html=True,
     )
+    render_routing_debug_line()
     return st.session_state.get("current_page", default_page_slug())
 
 

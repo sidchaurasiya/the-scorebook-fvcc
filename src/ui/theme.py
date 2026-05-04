@@ -483,6 +483,16 @@ def inject_theme() -> None:
             word-break: break-word;
         }
 
+        .routing-debug {
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+            color: rgba(255, 255, 255, 0.48) !important;
+            font-size: 0.58rem;
+            line-height: 1.45;
+            margin-top: 14px;
+            padding-top: 10px;
+            word-break: break-word;
+        }
+
         .page-kicker {
             color: var(--ink);
             font-size: 18px;
