@@ -419,6 +419,7 @@ def inject_theme() -> None:
         .side-nav {
             display: grid;
             gap: 9px;
+            margin-top: 28px;
         }
 
         .side-nav-item {
@@ -430,6 +431,8 @@ def inject_theme() -> None:
             font-weight: 750;
             gap: 14px;
             padding: 13px 15px;
+            text-decoration: none !important;
+            transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
         }
 
         .side-nav-item span {
@@ -443,6 +446,13 @@ def inject_theme() -> None:
             background: linear-gradient(135deg, #6b3cff, #5630d7);
             box-shadow: 0 16px 34px rgba(99, 64, 255, 0.46);
             color: #ffffff !important;
+        }
+
+        .side-nav-item:hover,
+        .side-nav-item:focus-visible {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff !important;
+            text-decoration: none !important;
         }
 
         .side-footer {
@@ -3185,6 +3195,30 @@ def inject_theme() -> None:
 
             div.st-key-mobile_nav_fallback .mobile-nav-help-panel p:last-child {
                 margin-bottom: 0;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-links {
+                display: grid;
+                gap: 8px;
+                margin-top: 14px;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-link {
+                background: #ffffff;
+                border: 1px solid #E6E9F5;
+                border-radius: 14px;
+                color: var(--ink) !important;
+                display: block;
+                font-size: 0.88rem;
+                font-weight: 850;
+                padding: 11px 13px;
+                text-decoration: none !important;
+            }
+
+            div.st-key-mobile_nav_fallback .mobile-nav-link.active {
+                background: #F0EDFF;
+                border-color: #DCD4FF;
+                color: #5B3DF5 !important;
             }
 
             .mobile-page-footer {

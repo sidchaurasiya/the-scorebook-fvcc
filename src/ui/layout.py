@@ -127,14 +127,6 @@ def page_label_by_slug() -> dict[str, str]:
     return {slug: label for slug, label, _ in get_page_definitions()}
 
 
-def page_title_by_slug() -> dict[str, str]:
-    return {slug: title for slug, _, title in get_page_definitions()}
-
-
-def page_slug_by_label() -> dict[str, str]:
-    return {label: slug for slug, label, _ in get_page_definitions()}
-
-
 def canonical_page_slug(value: object) -> str:
     slug = str(value or "").strip().casefold()
     return LEGACY_PAGE_SLUGS.get(slug, slug)
@@ -153,45 +145,18 @@ def page_label_for_slug(slug: str) -> str:
     return labels.get(slug, labels[default_page_slug()])
 
 
-def initial_page_from_query() -> tuple[str, str, str]:
+def page_slug_from_query() -> str:
     requested_page = canonical_page_slug(query_param_value("page"))
     requested_player = unquote(query_param_value("player") or query_param_value("player_id"))
     requested_season = unquote(query_param_value("season"))
     requested_slug = requested_page
-    if requested_player:
+    if not requested_slug and requested_player:
         requested_slug = PLAYER_PROFILE_QUERY_PAGE
-    elif requested_season:
+    elif not requested_slug and requested_season:
         requested_slug = SEASON_OVERVIEW_QUERY_PAGE
     if requested_slug not in valid_page_slugs():
         requested_slug = default_page_slug()
-    return requested_slug, requested_player, requested_season
-
-
-def set_current_page(slug: object, *, clear_context: bool = True, sync_url: bool = True) -> str:
-    target_slug = canonical_page_slug(slug)
-    if target_slug not in valid_page_slugs():
-        target_slug = default_page_slug()
-    st.session_state["current_page"] = target_slug
-    st.session_state["selected_page_label"] = page_label_for_slug(target_slug)
-
-    if clear_context and target_slug != PLAYER_PROFILE_QUERY_PAGE:
-        st.session_state.pop("pending_player_profile_id", None)
-        st.session_state.pop("manual_player_profile_selection", None)
-        for param_name in ("player", "player_id"):
-            st.query_params.pop(param_name, None)
-    if clear_context and target_slug != SEASON_OVERVIEW_QUERY_PAGE:
-        st.session_state.pop("pending_season_overview_name", None)
-        st.query_params.pop("season", None)
-
-    if sync_url:
-        sync_query_param_with_current_page()
-    return target_slug
-
-
-def sync_selected_page(source_key: str) -> None:
-    selected_label = st.session_state[source_key]
-    target_page = page_slug_by_label().get(selected_label, default_page_slug())
-    set_current_page(target_page)
+    return requested_slug
 
 
 def query_param_value(name: str) -> str:
@@ -201,46 +166,34 @@ def query_param_value(name: str) -> str:
     return str(value).strip()
 
 
-def sync_query_param_with_current_page() -> None:
-    current_page = st.session_state.get("current_page", default_page_slug())
-    current_page = canonical_page_slug(current_page)
-    if current_page not in valid_page_slugs():
-        current_page = default_page_slug()
+def resolve_current_page_from_query() -> str:
+    current_page = page_slug_from_query()
+    st.session_state["current_page"] = current_page
     if query_param_value("page") != current_page:
-        st.query_params["page"] = current_page
-    st.session_state["last_synced_page_query_param"] = current_page
-
-
-def initialize_current_page() -> None:
-    if "routing_initialized" not in st.session_state:
-        requested_slug, requested_player, requested_season = initial_page_from_query()
-        set_current_page(requested_slug, clear_context=False, sync_url=False)
-        st.session_state["routing_initialized"] = True
-        if requested_slug == PLAYER_PROFILE_QUERY_PAGE and requested_player:
-            st.session_state["pending_player_profile_id"] = requested_player
-            st.session_state["last_player_profile_query_param"] = requested_player
-            st.session_state.pop("manual_player_profile_selection", None)
-        if requested_slug == SEASON_OVERVIEW_QUERY_PAGE and requested_season:
-            st.session_state["pending_season_overview_name"] = requested_season
         # Root URL without page param must initialize to hall-of-fame and sync query params.
-    else:
-        current_page = canonical_page_slug(st.session_state.get("current_page", default_page_slug()))
-        if current_page not in valid_page_slugs():
-            current_page = default_page_slug()
-        set_current_page(current_page, clear_context=False, sync_url=False)
-    sync_query_param_with_current_page()
+        st.query_params["page"] = current_page
+    return current_page
 
 
-def apply_navigation_query_params(page_labels: list[str]) -> None:
-    initialize_current_page()
+def nav_href(slug: str) -> str:
+    return f"?page={quote(slug, safe='')}"
 
 
-def pending_navigation_slug(page_labels: list[str], current_label: str) -> str:
-    for widget_key in ("main_navigation", "mobile_navigation"):
-        selected_label = st.session_state.get(widget_key)
-        if selected_label in page_labels and selected_label != current_label:
-            return page_slug_by_label().get(selected_label, "")
-    return ""
+def render_sidebar_nav_link(label: str, slug: str, current_page: str) -> str:
+    icon, text = label.split(" ", 1) if " " in label else ("", label)
+    active_class = " active" if slug == current_page else ""
+    return (
+        f'<a class="side-nav-item{active_class}" href="{html.escape(nav_href(slug), quote=True)}" target="_self">'
+        f'<span>{html.escape(icon)}</span>{html.escape(text)}</a>'
+    )
+
+
+def render_mobile_nav_link(label: str, slug: str, current_page: str) -> str:
+    active_class = " active" if slug == current_page else ""
+    return (
+        f'<a class="mobile-nav-link{active_class}" href="{html.escape(nav_href(slug), quote=True)}" target="_self">'
+        f"{html.escape(label)}</a>"
+    )
 
 
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
@@ -438,28 +391,17 @@ def render_page() -> None:
     elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "scorebook-lab":
         render_scorebook_lab_page()
     else:
-        set_current_page(default_page_slug())
         render_hall_of_fame_page()
     render_mobile_page_footer()
 
 
 def render_sidebar() -> str:
-    page_labels = [label for _, label, _ in get_page_definitions()]
-    apply_navigation_query_params(page_labels)
-    current_page = st.session_state.get("current_page", default_page_slug())
-    current_label = page_label_for_slug(current_page)
-
-    if current_label not in page_labels:
-        current_label = page_labels[0]
-        set_current_page(page_slug_by_label().get(current_label, default_page_slug()))
-    pending_slug = pending_navigation_slug(page_labels, current_label)
-    if pending_slug:
-        set_current_page(pending_slug)
-        current_page = st.session_state.get("current_page", default_page_slug())
-        current_label = page_label_for_slug(current_page)
-    for widget_key in ["mobile_navigation", "main_navigation"]:
-        if widget_key in st.session_state and st.session_state.get(widget_key) != current_label:
-            st.session_state.pop(widget_key, None)
+    page_definitions = get_page_definitions()
+    current_page = resolve_current_page_from_query()
+    mobile_links = "".join(
+        render_mobile_nav_link(label, slug, current_page)
+        for slug, label, _ in page_definitions
+    )
 
     with st.container(key="mobile_nav_fallback"):
         experimental_help = ""
@@ -485,15 +427,11 @@ def render_sidebar() -> str:
                     {experimental_help}
                 </div>
             </details>
+            <div class="mobile-nav-links">
+                {mobile_links}
+            </div>
             """,
             unsafe_allow_html=True,
-        )
-        st.selectbox(
-            "Choose a page",
-            page_labels,
-            index=page_labels.index(current_label),
-            key="mobile_navigation",
-            label_visibility="collapsed",
         )
 
     st.sidebar.markdown(
@@ -508,16 +446,11 @@ def render_sidebar() -> str:
         """,
         unsafe_allow_html=True,
     )
-    selected_label = st.sidebar.radio(
-        "Navigation",
-        page_labels,
-        index=page_labels.index(page_label_for_slug(st.session_state.get("current_page", default_page_slug()))),
-        label_visibility="collapsed",
-        key="main_navigation",
+    nav_links = "".join(
+        render_sidebar_nav_link(label, slug, current_page)
+        for slug, label, _ in page_definitions
     )
-    selected_slug = page_slug_by_label().get(selected_label, st.session_state.get("current_page", default_page_slug()))
-    if selected_slug != st.session_state.get("current_page"):
-        set_current_page(selected_slug)
+    st.sidebar.markdown(f'<nav class="side-nav">{nav_links}</nav>', unsafe_allow_html=True)
     st.sidebar.markdown(
         """
         <div class="side-footer">
@@ -532,7 +465,7 @@ def render_sidebar() -> str:
         unsafe_allow_html=True,
     )
     render_routing_debug_line()
-    return st.session_state.get("current_page", default_page_slug())
+    return current_page
 
 
 def render_mobile_page_footer() -> None:
