@@ -33,6 +33,7 @@ data/backups/data_snapshot_*/
 data/exports/
 data/debug_player_vs_peers.csv
 data/raw/match_centre/
+data/processed/experimental/
 data/processed/match_centre/
 data/raw/ball_by_ball_sample/
 data/raw/match_centre_pilot/
