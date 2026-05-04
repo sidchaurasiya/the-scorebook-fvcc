@@ -3071,7 +3071,7 @@ def normalise_player_names(df: pd.DataFrame) -> pd.DataFrame:
     if df.empty or "player_name" not in df:
         return df
     output = df.copy()
-    output["player_name"] = output["player_name"].astype(str).str.replace(r"\s+", " ", regex=True).str.strip()
+    output["player_name"] = output["player_name"].map(display_player_name)
     return output
 
 
@@ -4709,10 +4709,11 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
     table_columns = ["Player", "canonical_player_id", "Category", "Current Total", "Target Milestone", "Remaining", "Progress %"]
     table = filtered[[column for column in table_columns if column in filtered]].copy()
     table = link_player_column(table)
-    table["Current Total"] = table["Current Total"].map(lambda value: f"{int(value):,}")
-    table["Target Milestone"] = table["Target Milestone"].map(lambda value: f"{int(value):,}")
-    table["Remaining"] = table["Remaining"].map(lambda value: f"{int(value):,}")
-    table["Progress %"] = table["Progress %"].map(lambda value: f"{float(value):.1f}%")
+    for column in ["Current Total", "Target Milestone", "Remaining"]:
+        if column in table:
+            table[column] = pd.to_numeric(table[column], errors="coerce").round().astype("Int64")
+    if "Progress %" in table:
+        table["Progress %"] = pd.to_numeric(table["Progress %"], errors="coerce").round(1)
     with st.container(key="full_stats_card"):
         st.dataframe(
             table,
@@ -4722,10 +4723,10 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
             column_config={
                 "Player": st.column_config.LinkColumn("Player", pinned=True, width="medium", display_text=profile_link_display_pattern()),
                 "Category": st.column_config.TextColumn("Category", width="medium"),
-                "Current Total": st.column_config.TextColumn("Current Total"),
-                "Target Milestone": st.column_config.TextColumn("Target Milestone"),
-                "Remaining": st.column_config.TextColumn("Remaining"),
-                "Progress %": st.column_config.TextColumn("Progress %"),
+                "Current Total": st.column_config.NumberColumn("Current Total", format="%d"),
+                "Target Milestone": st.column_config.NumberColumn("Target Milestone", format="%d"),
+                "Remaining": st.column_config.NumberColumn("Remaining", format="%d"),
+                "Progress %": st.column_config.NumberColumn("Progress %", format="%.1f%%"),
             },
         )
 
@@ -4764,15 +4765,19 @@ def render_player_profile_page() -> None:
             st.session_state["last_player_profile_query_param"] = current_player_query_token()
         return player_id_text
 
-    query_player_id = resolve_player_query_to_id(player_names_by_id)
-    if query_player_id:
-        set_selected_player_id(query_player_id)
-        st.session_state["last_player_profile_query_param"] = current_player_query_token()
-        st.session_state.pop("manual_player_profile_selection", None)
-        if st.session_state.get("player_profile_selector_id") != query_player_id:
-            st.session_state.pop("player_profile_selector_id", None)
-        if query_param_value("player_id") != query_player_id:
-            sync_player_profile_query(query_player_id)
+    query_token = current_player_query_token()
+    last_query_token = str(st.session_state.get("last_player_profile_query_param", "") or "").strip()
+    if query_token and query_token != last_query_token:
+        query_player_id = resolve_player_query_to_id(player_names_by_id)
+        st.session_state["last_player_profile_query_param"] = query_player_id or query_token
+        if query_player_id:
+            set_selected_player_id(query_player_id)
+            st.session_state.pop("manual_player_profile_selection", None)
+            if st.session_state.get("player_profile_selector_id") != query_player_id:
+                st.session_state.pop("player_profile_selector_id", None)
+            if query_param_value("player_id") != query_player_id:
+                sync_player_profile_query(query_player_id)
+                st.session_state["last_player_profile_query_param"] = query_player_id
 
     pending_player_id = str(st.session_state.get("pending_player_profile_id", "") or "").strip()
     if pending_player_id in player_names_by_id:
@@ -6114,7 +6119,7 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         st.caption("No data available for this view.")
         return
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
-    display = link_season_columns(format_profile_table(table), ["Season"])
+    display = link_season_columns(format_profile_sortable_table(table), ["Season"])
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
         display,
@@ -6129,6 +6134,25 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
 
 def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[str, object]:
     config: dict[str, object] = {}
+    integer_columns = {
+        "Matches",
+        "Innings",
+        "Runs",
+        "BF",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Maidens",
+        "Wickets",
+        "5WI",
+        "Catches",
+        "Stumpings",
+        "Run Outs",
+        "Dismissals",
+    }
+    decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Bowl SR", "Econ"}
     for column in columns:
         if column == pinned_column:
             if column == "Season":
@@ -6141,6 +6165,10 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
             config[column] = st.column_config.LinkColumn(column, width="small", display_text=overview_link_display_pattern())
         elif column in {"BBI", "HS", "Overs"}:
             config[column] = st.column_config.TextColumn(column, width="small")
+        elif column in integer_columns:
+            config[column] = st.column_config.NumberColumn(column, width="small", format="%d")
+        elif column in decimal_columns:
+            config[column] = st.column_config.NumberColumn(column, width="small", format="%.2f")
         else:
             config[column] = st.column_config.TextColumn(column, width="small")
     return config
@@ -6178,7 +6206,7 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         table = table.sort_values("_sort_key").drop(columns="_sort_key")
     else:
         table = table.sort_values(label_column)
-    display = format_profile_table(table)
+    display = format_profile_sortable_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
         display,
@@ -6657,6 +6685,38 @@ def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
             output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "—" if pd.isna(value) else f"{int(value):,}")
         else:
             output[column] = output[column].map(lambda value: "—" if pd.isna(value) or str(value).strip() == "" else value)
+    return output
+
+
+def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
+    output = table.copy()
+    decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Econ", "Bowl SR"}
+    integer_columns = {
+        "Matches",
+        "Innings",
+        "Runs",
+        "BF",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Wickets",
+        "Maidens",
+        "5WI",
+        "Catches",
+        "Stumpings",
+        "Run Outs",
+        "Dismissals",
+    }
+    text_columns = {"Season", "Grade", "HS", "BBI", "Overs", "Teams", "Grades", "Teams/Grades"}
+    for column in output.columns:
+        if column in decimal_columns:
+            output[column] = pd.to_numeric(output[column], errors="coerce").round(2)
+        elif column in integer_columns:
+            output[column] = pd.to_numeric(output[column], errors="coerce").round().astype("Int64")
+        elif column in text_columns:
+            output[column] = output[column].map(lambda value: "—" if pd.isna(value) or str(value).strip() == "" else str(value))
     return output
 
 
@@ -8621,9 +8681,10 @@ def render_dashboard(dashboard_data: dict[str, object] | None) -> None:
 
 
 def make_chart_label(row: pd.Series) -> str:
+    player_name = display_player_name(row["player_name"])
     if "team_name" in row and pd.notna(row.get("team_name")):
-        return f"{row['player_name']} ({compact_team_label(row['team_name'])})"
-    return row["player_name"]
+        return f"{player_name} ({compact_team_label(row['team_name'])})"
+    return player_name
 
 
 def compact_team_label(team_name: object) -> str:

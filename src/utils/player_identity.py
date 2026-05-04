@@ -58,7 +58,28 @@ def clean_player_name(name: object) -> str:
 
 def display_player_name(name: object) -> str:
     value = "" if pd.isna(name) else str(name)
-    return re.sub(r"\s+", " ", value).strip()
+    value = re.sub(r"\s+", " ", value).strip()
+    if not value:
+        return ""
+    return " ".join(proper_case_name_part(part) for part in value.split(" "))
+
+
+def proper_case_name_part(part: str) -> str:
+    if not part:
+        return ""
+    return "-".join(proper_case_apostrophe_piece(piece) for piece in part.split("-"))
+
+
+def proper_case_apostrophe_piece(piece: str) -> str:
+    if not piece:
+        return ""
+    return "'".join(proper_case_token(token) for token in piece.split("'"))
+
+
+def proper_case_token(token: str) -> str:
+    if not token:
+        return ""
+    return token[0].upper() + token[1:].lower()
 
 
 def make_player_slug(name_or_id: object) -> str:
@@ -190,6 +211,8 @@ def apply_player_identity_mapping(
 def default_canonical_id(row: pd.Series) -> str:
     raw_id = str(row.get("raw_player_id", "")).strip()
     if raw_id:
+        if raw_id.startswith("raw_"):
+            return raw_id
         return f"raw_{make_player_slug(raw_id)}"
     return make_player_slug(row.get("raw_player_name", ""))
 

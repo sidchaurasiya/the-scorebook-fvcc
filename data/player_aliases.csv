@@ -1,7 +1,7 @@
 canonical_player_id,canonical_player_name,raw_player_id,raw_player_name,alias_name,notes,is_active,merge_source
 kalpeshkumar_patel,Kalpeshkumar Patel,2ef94b5b-a401-4c26-9ce7-7036d8a8c99f,Kalpesh Patel,Kalpesh Patel,confirmed same player,true,manual_confirmed
-predheesh_valayil_sivanandan,Predheesh valayil sivanandan,1f814c52-393e-4249-ba59-a29b5f498058,Predheesh valayil sivanandan,Predheesh valayil sivanandan,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
-predheesh_valayil_sivanandan,Predheesh valayil sivanandan,68aefde4-37c9-4a55-a67a-d0e30981c51a,Predheesh Valayil sivanandan,Predheesh Valayil sivanandan,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,1f814c52-393e-4249-ba59-a29b5f498058,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,68aefde4-37c9-4a55-a67a-d0e30981c51a,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 vinit_naidu,Vinit Naidu,0ae1d4fd-a68b-4131-9403-d1ecdd947553,Vinit Naidu,Vinit Naidu,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 vinit_naidu,Vinit Naidu,108897f7-87e7-4dde-8f1b-ea2410efc261,Vinit Naidu,Vinit Naidu,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 ibad_mohammed,Ibad Mohammed,329c4a39-9c6d-4eac-a9ef-b146c37f497c,Ibad Mohammed,Ibad Mohammed,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
@@ -61,10 +61,15 @@ deepak_sharma,Deepak Sharma,6b504af3-d693-4201-bc6b-9414a4b56a6b,Deepak Sharma,D
 danny_singh,Danny Singh,0603b074-3c32-44d5-b65c-16ada78950c9,Danny Singh,Danny Singh,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 danny_singh,Danny Singh,b47cab94-0a21-43b5-ace2-ee06304e1880,Danny Singh,Danny Singh,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,b96a3332-99ed-489f-95c8-72c56ffd7832,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
-vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,f84d40f4-35f3-4336-b26b-fd9c39ea83fd,Vinay Kumar reddy Kontham,Vinay Kumar reddy Kontham,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
-shrikant_sharma,Shrikant Sharma,478c050c-6e97-4198-ba77-24f46dd329d7,SHRIKANT SHARMA,SHRIKANT SHARMA,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
+vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,f84d40f4-35f3-4336-b26b-fd9c39ea83fd,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
+shrikant_sharma,Shrikant Sharma,478c050c-6e97-4198-ba77-24f46dd329d7,Shrikant Sharma,Shrikant Sharma,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 shrikant_sharma,Shrikant Sharma,b635f804-3ba5-467e-9b0f-3e632da6a44c,Shrikant Sharma,Shrikant Sharma,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 sanjay_ct,Sanjay Ct,74be02cf-9213-4fed-981b-52ee0093b149,Sanjay Ct,Sanjay Ct,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 sanjay_ct,Sanjay Ct,e37ed469-4350-462e-b2d2-0936981d9905,Sanjay Ct,Sanjay Ct,auto-added from 100 similarity duplicate audit,true,auto_similarity_100
 baurel_d_mello,Baurel D'Mello,ac85a6ff-a83b-42b1-9ecc-6de384b70536,Baurel D'Mello,Baurel D'Mello,confirmed same player,true,manual_confirmed
 baurel_d_mello,Baurel D'Mello,f58308c0-3264-4495-8ab0-7ce40fc9e2a5,Baurel Dmello,Baurel Dmello,confirmed same player,true,manual_confirmed
+ravi_chowdary,Ravi Chowdary,3f862060-4795-4936-9f1d-dfacd2aa1639,Chowdary Ravi,Chowdary Ravi,confirmed same player,true,manual_confirmed
+ravi_chowdary,Ravi Chowdary,408f67df-a64c-4ca2-8029-1f7c9a4e596a,Ravi Chowdary,Ravi Chowdary,confirmed same player,true,manual_confirmed
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,963a77d1-a875-44a9-8367-f8c5dfd0ae69,Predheesh Sivanandax,Predheesh Sivanandax,confirmed same player,true,manual_confirmed
+sandeep_gill,Sandeep Gill,ef15fcc4-a2d8-47af-af3f-9c4391db7c4a,Sandeep Gill,Sandeep Gill,confirmed same player,true,manual_confirmed
+sandeep_gill,Sandeep Gill,1ed3cbf4-b929-41ce-9113-83bc83af7355,Sandeep Singh,Sandeep Singh,confirmed same player,true,manual_confirmed
