@@ -84,6 +84,9 @@ MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
 HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
 )
+HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "scorecard_record_links.csv"
+)
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
@@ -198,10 +201,13 @@ def render_mobile_nav_link(label: str, slug: str, current_page: str) -> str:
 
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
     player_id_text = str(player_id or "").strip()
-    if not player_id_text:
-        return ""
-    url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player={quote(player_id_text, safe='')}"
     player_name_text = str(player_name or "").strip()
+    if player_id_text:
+        url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player_id={quote(player_id_text, safe='')}"
+    elif player_name_text:
+        url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player={quote(player_name_text, safe='')}"
+    else:
+        return ""
     if player_name_text:
         url = f"{url}#{player_name_text}"
     return url
@@ -265,6 +271,38 @@ def resolve_player_profile_selector_value(value: object) -> str:
         return text
     name_to_id = st.session_state.get("player_profile_name_to_id", {})
     return str(name_to_id.get(text, "") or "").strip()
+
+
+def resolve_player_query_to_id(player_names_by_id: dict[str, str]) -> str:
+    query_player_id = unquote(query_param_value("player_id"))
+    if query_player_id in player_names_by_id:
+        return query_player_id
+
+    query_player = unquote(query_param_value("player"))
+    if query_player in player_names_by_id:
+        return query_player
+    if not query_player:
+        return ""
+
+    target_name = query_player.strip().casefold()
+    matches = [
+        player_id
+        for player_id, player_name in player_names_by_id.items()
+        if str(player_name).strip().casefold() == target_name
+    ]
+    return matches[0] if len(matches) == 1 else ""
+
+
+def current_player_query_token() -> str:
+    return query_param_value("player_id") or query_param_value("player")
+
+
+def sync_player_profile_query(player_id: object) -> None:
+    player_id_text = str(player_id or "").strip()
+    st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
+    if player_id_text:
+        st.query_params["player_id"] = player_id_text
+        st.query_params.pop("player", None)
 
 
 def safe_season_label(value: object) -> str:
@@ -3492,11 +3530,23 @@ def match_centre_all_available_signature() -> tuple[tuple[str, float], ...]:
     return match_centre_scope_signature(MATCH_CENTRE_PROCESSED_ROOT / "all_available")
 
 
+def scorecard_record_rows_signature() -> tuple[tuple[str, float], ...]:
+    signature = list(match_centre_all_available_signature())
+    if HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH.exists():
+        signature.append(
+            (
+                str(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH),
+                HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH.stat().st_mtime,
+            )
+        )
+    return tuple(signature)
+
+
 @st.cache_data(show_spinner=False)
 def load_scorecard_record_rows(_signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
     scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
     if not scope.exists():
-        return {"batting": pd.DataFrame(), "bowling": pd.DataFrame()}
+        return load_deploy_scorecard_record_rows()
     matches = read_match_centre_csv(scope / "all_matches.csv")
     context_columns = [column for column in ["match_id", "season", "first_match_day"] if column in matches]
     context = matches[context_columns].drop_duplicates("match_id") if "match_id" in matches else pd.DataFrame()
@@ -3510,13 +3560,27 @@ def load_scorecard_record_rows(_signature: tuple[tuple[str, float], ...]) -> dic
         if not context.empty and "match_id" in frame:
             frame = frame.merge(context, on="match_id", how="left")
         output[key] = frame
+    fallback = load_deploy_scorecard_record_rows()
+    for key in ["batting", "bowling"]:
+        if output.get(key, pd.DataFrame()).empty and not fallback.get(key, pd.DataFrame()).empty:
+            output[key] = fallback[key]
     return output
+
+
+def load_deploy_scorecard_record_rows() -> dict[str, pd.DataFrame]:
+    frame = read_match_centre_csv(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH)
+    if frame.empty or "mode" not in frame:
+        return {"batting": pd.DataFrame(), "bowling": pd.DataFrame()}
+    return {
+        mode: frame[frame["mode"].astype(str) == mode].drop(columns=["mode"], errors="ignore").copy()
+        for mode in ["batting", "bowling"]
+    }
 
 
 def attach_scorecard_match_ids(records: pd.DataFrame, mode: str) -> pd.DataFrame:
     if records.empty or "match_id" in records:
         return records
-    scorecards = load_scorecard_record_rows(match_centre_all_available_signature())
+    scorecards = load_scorecard_record_rows(scorecard_record_rows_signature())
     lookup = scorecards.get(mode, pd.DataFrame())
     if lookup.empty or "canonical_player_id" not in records or "canonical_player_id" not in lookup:
         return records
@@ -4697,8 +4761,18 @@ def render_player_profile_page() -> None:
         st.session_state["selected_player_profile_id"] = player_id_text
         if manual:
             st.session_state["manual_player_profile_selection"] = True
-            st.session_state["last_player_profile_query_param"] = query_param_value("player")
+            st.session_state["last_player_profile_query_param"] = current_player_query_token()
         return player_id_text
+
+    query_player_id = resolve_player_query_to_id(player_names_by_id)
+    if query_player_id:
+        set_selected_player_id(query_player_id)
+        st.session_state["last_player_profile_query_param"] = current_player_query_token()
+        st.session_state.pop("manual_player_profile_selection", None)
+        if st.session_state.get("player_profile_selector_id") != query_player_id:
+            st.session_state.pop("player_profile_selector_id", None)
+        if query_param_value("player_id") != query_player_id:
+            sync_player_profile_query(query_player_id)
 
     pending_player_id = str(st.session_state.get("pending_player_profile_id", "") or "").strip()
     if pending_player_id in player_names_by_id:
@@ -4721,9 +4795,8 @@ def render_player_profile_page() -> None:
     widget_player_id = str(st.session_state.get("player_profile_selector_id") or "").strip()
     if widget_player_id in player_names_by_id and widget_player_id != selected_player_id:
         selected_player_id = set_selected_player_id(widget_player_id, manual=True)
-        if query_param_value("player") != selected_player_id:
-            st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
-            st.query_params["player"] = selected_player_id
+        if current_player_query_token() != selected_player_id:
+            sync_player_profile_query(selected_player_id)
         st.session_state["last_player_profile_query_param"] = selected_player_id
     if selected_player_id not in player_names_by_id:
         selected_player_id = ""
@@ -4742,16 +4815,14 @@ def render_player_profile_page() -> None:
         if selected_id != selected_player_id:
             selected_id = set_selected_player_id(selected_id, manual=True)
             if selected_id:
-                st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
-                st.query_params["player"] = selected_id
+                sync_player_profile_query(selected_id)
                 st.session_state["last_player_profile_query_param"] = selected_id
         elif (
             selected_id
             and st.session_state.get("manual_player_profile_selection")
-            and query_param_value("player") != selected_id
+            and current_player_query_token() != selected_id
         ):
-            st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
-            st.query_params["player"] = selected_id
+            sync_player_profile_query(selected_id)
             st.session_state["last_player_profile_query_param"] = selected_id
         st.markdown(
             '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
@@ -5309,7 +5380,7 @@ def player_leader_counts(profile_view: dict[str, pd.DataFrame]) -> dict[str, int
 def scorecard_match_id_for_profile_record(row: pd.Series, mode: str) -> str:
     if row.empty:
         return ""
-    lookup = load_scorecard_record_rows(match_centre_all_available_signature()).get(mode, pd.DataFrame())
+    lookup = load_scorecard_record_rows(scorecard_record_rows_signature()).get(mode, pd.DataFrame())
     if lookup.empty:
         return ""
     return scorecard_match_id_for_record(row, lookup, mode)
