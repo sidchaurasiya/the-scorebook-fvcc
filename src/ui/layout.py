@@ -74,6 +74,7 @@ from src.utils.team_grade import (
     export_team_grade_display_audit,
     grade_sort_key,
 )
+from src.utils.analytics import ga4_link_onclick, inject_ga4, track_event_once, track_page_view
 
 
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -90,7 +91,7 @@ HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH = (
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
-SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = os.getenv("FVCC_SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES") == "1"
+SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 FASTEST_MILESTONE_RECORD_LIMIT = 6
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
@@ -130,6 +131,10 @@ def page_label_by_slug() -> dict[str, str]:
     return {slug: label for slug, label, _ in get_page_definitions()}
 
 
+def page_title_by_slug() -> dict[str, str]:
+    return {slug: title for slug, _, title in get_page_definitions()}
+
+
 def canonical_page_slug(value: object) -> str:
     slug = str(value or "").strip().casefold()
     return LEGACY_PAGE_SLUGS.get(slug, slug)
@@ -146,6 +151,11 @@ def valid_page_slugs() -> set[str]:
 def page_label_for_slug(slug: str) -> str:
     labels = page_label_by_slug()
     return labels.get(slug, labels[default_page_slug()])
+
+
+def page_title_for_slug(slug: str) -> str:
+    titles = page_title_by_slug()
+    return titles.get(slug, titles[default_page_slug()])
 
 
 def page_slug_from_query() -> str:
@@ -251,13 +261,30 @@ def playcricket_scorecard_url(match_id: object) -> str:
     return f"https://play.cricket.com.au/match/{quote(match_id_text, safe='')}?tab=scorecard"
 
 
-def scorecard_link_html(match_id: object, label: str = "View scorecard ↗", class_name: str = "scorecard-link") -> str:
+def scorecard_link_html(
+    match_id: object,
+    label: str = "View scorecard ↗",
+    class_name: str = "scorecard-link",
+    *,
+    page_slug: str | None = None,
+    section_name: str = "scorecard",
+) -> str:
     url = playcricket_scorecard_url(match_id)
     if not url:
         return ""
+    match_id_text = str(match_id or "").strip()
+    onclick = ga4_link_onclick(
+        "playcricket_scorecard_click",
+        {
+            "page_slug": page_slug or page_slug_from_query(),
+            "match_id": match_id_text,
+            "section_name": section_name,
+        },
+    )
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
         'target="_blank" rel="noopener noreferrer" '
+        f'{onclick} '
         f'title="Open PlayCricket scorecard">{html.escape(label)}</a>'
     )
 
@@ -410,7 +437,9 @@ def render_routing_debug_line() -> None:
 def render_page() -> None:
     """Render the dashboard."""
     inject_theme()
+    inject_ga4()
     selected_page = render_sidebar()
+    track_page_view(selected_page, page_title_for_slug(selected_page))
     if selected_page == "hall-of-fame":
         render_hall_of_fame_page()
     elif selected_page == SEASON_OVERVIEW_QUERY_PAGE:
@@ -644,6 +673,28 @@ def render_data_source_panel() -> dict[str, object] | None:
             selected_season,
             selected_team,
             is_all_teams,
+        )
+        selected_season_name = str(selected_season.get("name", "") or "")
+        selected_team_label = format_team_option(selected_team)
+        selected_team_id = str(selected_team.get("id", "") or "")
+        selected_grade_id = str(grade.get("id", "") or "")
+        track_event_once(
+            "season_filter_change",
+            {
+                "page_slug": SEASON_OVERVIEW_QUERY_PAGE,
+                "selected_season": selected_season_name,
+                "selected_team": selected_team_label,
+            },
+            key=f"season-filter:{selected_season.get('id')}",
+        )
+        track_event_once(
+            "team_filter_change",
+            {
+                "page_slug": SEASON_OVERVIEW_QUERY_PAGE,
+                "selected_season": selected_season_name,
+                "selected_team": selected_team_label,
+            },
+            key=f"team-filter:{selected_season.get('id')}:{selected_team_id}:{selected_grade_id}",
         )
 
     with st.container(key="header_intro"):
@@ -2873,6 +2924,11 @@ def render_hall_of_fame_page() -> None:
     if hall_of_fame_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the Hall of Fame.")
         return
+    track_event_once(
+        "hall_of_fame_view",
+        {"page_slug": "hall-of-fame"},
+        key="hall-of-fame-view",
+    )
 
     st.markdown(
         """
@@ -3450,6 +3506,11 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
 
 
 def render_fastest_batting_milestone_records() -> None:
+    track_event_once(
+        "fastest_milestones_view",
+        {"page_slug": "hall-of-fame", "section_name": "fastest_batting_milestones"},
+        key="fastest-milestones-view",
+    )
     render_section_heading("Fastest Batting Milestones ⚡")
     st.caption("Fastest milestone records are based on available verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
@@ -3684,7 +3745,11 @@ def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_s
     else:
         final_line = ""
     meta_html = milestone_meta_html(row)
-    scorecard_html = scorecard_link_html(row.get("match_id"))
+    scorecard_html = scorecard_link_html(
+        row.get("match_id"),
+        page_slug="hall-of-fame",
+        section_name="fastest_batting_milestones",
+    )
     value = safe_record_int(row.get(value_col))
     value_text = f"{value} {value_suffix}" if value else f"N/A {value_suffix}"
     return (
@@ -3796,7 +3861,11 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         else:
             value = str(row.get("bowlingBestInnings", "-"))
         meta_html = record_meta_html(row)
-        scorecard_html = scorecard_link_html(row.get("match_id"))
+        scorecard_html = scorecard_link_html(
+            row.get("match_id"),
+            page_slug="hall-of-fame",
+            section_name="iconic_performances",
+        )
         name = row.get("canonical_player_name") or row.get("player_name") or "-"
         player_id = player_id_from_row(row)
         rows.append(
@@ -4063,7 +4132,11 @@ def render_record_card(card: dict[str, str]) -> None:
 
 def record_card_html(card: dict[str, str]) -> str:
     meta = f'<div class="record-meta">{card["meta"]}</div>' if card.get("meta_html") else f'<div class="record-meta">{html.escape(card["meta"])}</div>' if card.get("meta") else ""
-    scorecard = scorecard_link_html(card.get("match_id"))
+    scorecard = scorecard_link_html(
+        card.get("match_id"),
+        page_slug="hall-of-fame",
+        section_name=str(card.get("section_name") or card.get("title") or "record_card"),
+    )
     scorecard_meta = f'<div class="record-meta">{scorecard}</div>' if scorecard else ""
     if card.get("link_type") == "season":
         record_label = season_overview_link_html(card["player"])
@@ -4857,6 +4930,23 @@ def render_player_profile_page() -> None:
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
         return
+    profile_source = (
+        "dropdown"
+        if st.session_state.get("manual_player_profile_selection")
+        else "deep_link"
+        if current_player_query_token()
+        else "dropdown"
+    )
+    track_event_once(
+        "player_profile_view",
+        {
+            "page_slug": PLAYER_PROFILE_QUERY_PAGE,
+            "player_slug": selected_id,
+            "player_display_name": player_names_by_id.get(selected_id, selected_id),
+            "source": profile_source,
+        },
+        key=f"player-profile-view:{selected_id}",
+    )
 
     render_player_header_card(profile_view)
     render_player_breakdown(profile_view["career"].iloc[0])
