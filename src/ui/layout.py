@@ -330,6 +330,13 @@ def current_player_query_token() -> str:
     return query_param_value("player_id") or query_param_value("player")
 
 
+def analytics_player_slug(player_name: object, fallback_id: object = "") -> str:
+    source = str(player_name or fallback_id or "").strip().lower()
+    slug = re.sub(r"[^a-z0-9]+", "-", source)
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    return slug or "unknown-player"
+
+
 def sync_player_profile_query(player_id: object) -> None:
     player_id_text = str(player_id or "").strip()
     st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
@@ -4945,12 +4952,14 @@ def render_player_profile_page() -> None:
         if current_player_query_token()
         else "dropdown"
     )
+    player_name = player_names_by_id.get(selected_id, selected_id)
     track_event_once(
         "player_profile_view",
         {
             "page_slug": PLAYER_PROFILE_QUERY_PAGE,
-            "player_slug": selected_id,
-            "player_display_name": player_names_by_id.get(selected_id, selected_id),
+            "player_name": player_name,
+            "player_slug": analytics_player_slug(player_name, selected_id),
+            "player_id": selected_id,
             "source": profile_source,
         },
         key=f"player-profile-view:{selected_id}",
