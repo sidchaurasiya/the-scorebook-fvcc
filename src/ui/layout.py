@@ -2054,7 +2054,7 @@ def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
         if column not in output:
             output[column] = pd.NA
 
-    output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce")
+    output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce", utc=True)
     output["match_date_display"] = output["match_date"].dt.strftime("%d %b %Y").fillna("Date TBC")
     fvcc_is_home = output["home_team_name"].map(is_fvcc_team_name)
     output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
