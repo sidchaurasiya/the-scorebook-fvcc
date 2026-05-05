@@ -14,13 +14,13 @@ The Scorebook supports optional Google Analytics 4 tracking. If no GA4 measureme
 In Streamlit Cloud, open the app settings and add this secret:
 
 ```toml
-GA4_MEASUREMENT_ID = "G-XXXXXXXXXX"
+GA4_MEASUREMENT_ID = "G-D0D39PLD1X"
 ```
 
 For local testing, either add the same value to `.streamlit/secrets.toml` or run with an environment variable:
 
 ```bash
-export GA4_MEASUREMENT_ID="G-XXXXXXXXXX"
+export GA4_MEASUREMENT_ID="G-D0D39PLD1X"
 ./.venv-app/bin/streamlit run app.py --server.port 8502
 ```
 

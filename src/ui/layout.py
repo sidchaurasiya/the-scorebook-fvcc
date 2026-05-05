@@ -74,7 +74,13 @@ from src.utils.team_grade import (
     export_team_grade_display_audit,
     grade_sort_key,
 )
-from src.utils.analytics import ga4_link_onclick, inject_ga4, track_event_once, track_page_view
+from src.utils.analytics import (
+    ga4_link_onclick,
+    inject_ga4,
+    render_analytics_debug_status,
+    track_event_once,
+    track_page_view,
+)
 
 
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -532,6 +538,7 @@ def render_sidebar() -> str:
         unsafe_allow_html=True,
     )
     render_routing_debug_line()
+    render_analytics_debug_status()
     return current_page
 
 
@@ -549,6 +556,7 @@ def render_mobile_page_footer() -> None:
         """,
         unsafe_allow_html=True,
     )
+    render_analytics_debug_status(sidebar=False)
 
 
 def render_data_refresh_control() -> None:

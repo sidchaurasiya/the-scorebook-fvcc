@@ -119,6 +119,20 @@ def inject_ga4() -> None:
     st.session_state[session_key] = True
 
 
+def render_analytics_debug_status(*, sidebar: bool = True) -> None:
+    if os.getenv("FVCC_ANALYTICS_DEBUG") != "1":
+        return
+    measurement_id = _measurement_id()
+    if measurement_id:
+        message = f"Analytics: configured (...{measurement_id[-4:]})"
+    else:
+        message = "Analytics: missing GA4_MEASUREMENT_ID"
+    if sidebar:
+        st.sidebar.caption(message)
+    else:
+        st.caption(message)
+
+
 def track_event(event_name: str, params: Mapping[str, Any] | None = None) -> None:
     measurement_id = _measurement_id()
     cleaned_event = _clean_event_name(event_name)
