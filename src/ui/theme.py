@@ -1659,16 +1659,16 @@ def inject_theme() -> None:
             background:
                 radial-gradient(circle at top right, rgba(255, 193, 7, 0.12), transparent 13rem),
                 #ffffff;
-            margin-bottom: 18px;
+            margin-bottom: 0;
         }
 
         .premiership-win-row {
             align-items: center;
             border-bottom: 1px solid #eef0f6;
             display: grid;
-            gap: 12px;
-            grid-template-columns: 32px 132px minmax(0, 1fr) 138px 106px;
-            padding: 12px 0;
+            gap: 8px;
+            grid-template-columns: 26px 108px minmax(0, 1fr) 92px 82px;
+            padding: 10px 0;
         }
 
         .premiership-win-row:last-child {
@@ -1686,24 +1686,25 @@ def inject_theme() -> None:
             border: 1px solid #f4d777;
             border-radius: 999px;
             display: flex;
-            font-size: 0.88rem;
-            height: 26px;
+            font-size: 0.82rem;
+            height: 24px;
             justify-content: center;
-            width: 26px;
+            width: 24px;
         }
 
         .premiership-season {
             color: #4b37d8;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 950;
+            line-height: 1.18;
             text-transform: uppercase;
         }
 
         .premiership-title {
             color: var(--ink);
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             font-weight: 950;
-            line-height: 1.18;
+            line-height: 1.2;
         }
 
         .premiership-title span {
@@ -1714,10 +1715,10 @@ def inject_theme() -> None:
         .premiership-meta,
         .premiership-captain {
             color: #737994;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 750;
-            line-height: 1.32;
-            margin-top: 4px;
+            line-height: 1.28;
+            margin-top: 3px;
         }
 
         .premiership-captain {
@@ -1727,19 +1728,20 @@ def inject_theme() -> None:
 
         .premiership-result {
             color: #7a1f3d;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             font-weight: 950;
+            line-height: 1.2;
             text-align: right;
         }
 
         .premiership-link {
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 900;
             text-align: right;
         }
 
         .premiership-player-card {
-            margin-top: 6px;
+            margin-top: 0;
         }
 
         .premiership-player-row .performance-value {
@@ -2197,7 +2199,7 @@ def inject_theme() -> None:
 
             .premiership-win-row {
                 align-items: start;
-                grid-template-columns: 30px 118px minmax(0, 1fr);
+                grid-template-columns: 28px 112px minmax(0, 1fr);
             }
 
             .premiership-result,
@@ -2211,6 +2213,10 @@ def inject_theme() -> None:
 
             .premiership-link {
                 grid-column: 2 / -1;
+            }
+
+            .premiership-details {
+                grid-column: 3;
             }
 
             .dna-performance-card {
@@ -3155,6 +3161,37 @@ def inject_theme() -> None:
 
             .best-season-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .premiership-win-row {
+                align-items: start;
+                gap: 5px;
+                grid-template-columns: 1fr;
+                padding: 11px 0;
+            }
+
+            .premiership-cup {
+                display: none;
+            }
+
+            .premiership-season,
+            .premiership-details,
+            .premiership-result,
+            .premiership-link {
+                grid-column: 1;
+                text-align: left;
+            }
+
+            .premiership-season {
+                font-size: 0.82rem;
+            }
+
+            .premiership-title {
+                font-size: 0.9rem;
+            }
+
+            .premiership-result {
+                margin-top: 3px;
             }
 
             .record-card {

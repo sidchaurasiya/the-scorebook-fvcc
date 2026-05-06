@@ -3008,9 +3008,9 @@ def render_hall_of_fame_page() -> None:
         unsafe_allow_html=True,
     )
     render_hall_of_fame_kpis(hall_of_fame_data["kpis"])
+    render_premiership_records()
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
     render_match_winning_performances(hall_of_fame_data)
-    render_premiership_records()
     render_fastest_batting_milestone_records()
     render_record_holders(hall_of_fame_data)
     render_best_ever_seasons(hall_of_fame_data)
@@ -3560,8 +3560,8 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
     render_hof_expand_control(state_key, expanded, len(leaders))
 
 
-def render_hof_expand_control(state_key: str, expanded: bool, row_count: int) -> None:
-    if row_count <= 6:
+def render_hof_expand_control(state_key: str, expanded: bool, row_count: int, collapsed_limit: int = 6) -> None:
+    if row_count <= collapsed_limit:
         return
     with st.container(key=f"{state_key}_control"):
         if st.button(
@@ -3631,7 +3631,7 @@ def load_premiership_records(_signature: tuple[tuple[str, float], ...]) -> tuple
 def render_premiership_records() -> None:
     wins, players = load_premiership_records(premiership_records_signature())
     if wins.empty and players.empty:
-        render_section_heading("Premierships 🏆")
+        render_section_heading("Premierships 🛡️")
         st.markdown(
             '<div class="hof-card premiership-empty">'
             '<div class="card-title">Premiership records</div>'
@@ -3641,17 +3641,25 @@ def render_premiership_records() -> None:
         )
         return
 
-    render_section_heading("Premierships 🏆")
+    render_section_heading("Premierships 🛡️")
     st.caption("Premiership records are built from verified match-centre grand final scorecards.")
-    if not wins.empty:
-        render_premiership_wins(wins)
-    if not players.empty:
-        render_player_premiership_leaders(players)
-    else:
-        st.markdown(
-            '<div class="hof-card premiership-empty"><p>No verified player premiership records available yet.</p></div>',
-            unsafe_allow_html=True,
-        )
+    left_col, right_col = st.columns([1.22, 1], gap="large")
+    with left_col:
+        if not wins.empty:
+            render_premiership_wins(wins)
+        else:
+            st.markdown(
+                '<div class="hof-card premiership-empty"><p>No verified FVCC premiership wins available yet.</p></div>',
+                unsafe_allow_html=True,
+            )
+    with right_col:
+        if not players.empty:
+            render_player_premiership_leaders(players, premiership_win_count=len(wins))
+        else:
+            st.markdown(
+                '<div class="hof-card premiership-empty"><p>No verified player premiership records available yet.</p></div>',
+                unsafe_allow_html=True,
+            )
 
 
 def render_premiership_wins(wins: pd.DataFrame) -> None:
@@ -3703,10 +3711,20 @@ def premiership_win_row_html(row: pd.Series) -> str:
     )
 
 
-def render_player_premiership_leaders(players: pd.DataFrame) -> None:
+def render_player_premiership_leaders(players: pd.DataFrame, premiership_win_count: int = PREMIERSHIP_PLAYER_DEFAULT_LIMIT) -> None:
     state_key = "hof_player_premierships_expanded"
     expanded = bool(st.session_state.get(state_key, False))
-    limit = PREMIERSHIP_PLAYER_EXPANDED_LIMIT if expanded else PREMIERSHIP_PLAYER_DEFAULT_LIMIT
+    total_rows = len(players)
+    default_limit = max(
+        1,
+        min(
+            safe_record_int(premiership_win_count) or PREMIERSHIP_PLAYER_DEFAULT_LIMIT,
+            PREMIERSHIP_PLAYER_EXPANDED_LIMIT,
+            total_rows,
+        ),
+    )
+    expanded_limit = min(PREMIERSHIP_PLAYER_EXPANDED_LIMIT, total_rows)
+    limit = expanded_limit if expanded else default_limit
     rows = players.head(limit).copy()
     row_html = "".join(
         player_premiership_row_html(rank, row)
@@ -3719,7 +3737,7 @@ def render_player_premiership_leaders(players: pd.DataFrame) -> None:
         "</div>",
         unsafe_allow_html=True,
     )
-    render_hof_expand_control(state_key, expanded, min(len(players), PREMIERSHIP_PLAYER_EXPANDED_LIMIT))
+    render_hof_expand_control(state_key, expanded, expanded_limit, collapsed_limit=default_limit)
 
 
 def player_premiership_row_html(rank: int, row: pd.Series) -> str:
