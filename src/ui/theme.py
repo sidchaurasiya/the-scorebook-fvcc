@@ -981,6 +981,41 @@ def inject_theme() -> None:
             margin: -14px 0 20px;
         }
 
+        div[class*="st-key-hof_leader_expanded_"][class*="_control"] {
+            margin: -8px 0 18px;
+        }
+
+        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton {
+            align-items: flex-start;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton > button {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            color: #5B3DF5 !important;
+            display: inline-flex !important;
+            font-size: 0.82rem !important;
+            font-weight: 800 !important;
+            line-height: 1.2 !important;
+            min-height: 0 !important;
+            padding: 2px 0 !important;
+            text-align: left !important;
+            width: auto !important;
+        }
+
+        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton > button:hover,
+        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton > button:focus {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            color: #4324D8 !important;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
         .improver-grid {
             display: grid;
             gap: 20px;
@@ -3116,6 +3151,16 @@ def inject_theme() -> None:
 
             .mini-stat-block {
                 text-align: left;
+            }
+
+            .overview-section-title {
+                font-size: clamp(1.35rem, 7vw, 1.78rem);
+                line-height: 1.14;
+                margin: 34px 0 18px;
+            }
+
+            div[class*="st-key-hof_leader_expanded_"][class*="_control"] {
+                margin: -10px 0 16px;
             }
 
             div.st-key-mobile_nav_fallback {

@@ -3514,13 +3514,13 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
         unsafe_allow_html=True,
     )
     if len(leaders) > 6:
-        if st.button(
-            "Show less" if expanded else "Show top 10",
-            key=f"{state_key}_toggle",
-            use_container_width=True,
-        ):
-            st.session_state[state_key] = not expanded
-            st.rerun()
+        with st.container(key=f"{state_key}_control"):
+            if st.button(
+                "Show less ↑" if expanded else "Show top 10 ↓",
+                key=f"{state_key}_toggle",
+            ):
+                st.session_state[state_key] = not expanded
+                st.rerun()
 
 
 def render_match_winning_performances(data: dict[str, object]) -> None:
@@ -3546,13 +3546,13 @@ def render_fastest_batting_milestone_records() -> None:
         {"page_slug": "hall-of-fame", "section_name": "fastest_batting_milestones"},
         key="fastest-milestones-view",
     )
-    render_section_heading("Fastest Milestones ⚡")
+    render_section_heading("Fastest Innings ⚡")
     st.caption("Based on matches with verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
     if milestones.empty:
         render_empty_milestone_card(
-            "Fastest Milestones",
+            "Fastest Innings",
             "No ball-by-ball milestone data available yet.",
             "Run the match-centre milestone builder after refreshing match-centre data.",
         )
@@ -4213,7 +4213,7 @@ def render_milestone_club(all_time: pd.DataFrame) -> None:
 
 
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
-    render_section_heading("Detailed All-Time Records 📊")
+    render_section_heading("Detailed Records 📊")
     if isinstance(all_time_or_tables, dict):
         tables = {
             "batting": all_time_or_tables["batting"].copy(),
