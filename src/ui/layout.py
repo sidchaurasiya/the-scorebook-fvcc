@@ -3659,15 +3659,17 @@ def render_premiership_wins(wins: pd.DataFrame) -> None:
     if "match_date" in rows:
         rows["_date_sort"] = pd.to_datetime(rows["match_date"], errors="coerce", utc=True)
         rows = rows.sort_values(["_date_sort", "season"], ascending=[True, True], na_position="last")
-    card_html = "".join(premiership_win_card_html(row) for _, row in rows.iterrows())
+    row_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
     st.markdown(
         '<div class="premiership-subtitle">FVCC Premiership Wins</div>'
-        f'<div class="premiership-win-grid">{card_html}</div>',
+        '<div class="hof-card premiership-wins-card">'
+        f"{row_html}"
+        "</div>",
         unsafe_allow_html=True,
     )
 
 
-def premiership_win_card_html(row: pd.Series) -> str:
+def premiership_win_row_html(row: pd.Series) -> str:
     season = safe_record_text(row.get("season"), "Unknown season")
     grade = clean_grade_label_for_record(row.get("grade_name"))
     team = safe_record_text(row.get("fvcc_team_name"), "FVCC")
@@ -3675,26 +3677,26 @@ def premiership_win_card_html(row: pd.Series) -> str:
     captain = safe_record_text(row.get("captain_name"))
     result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
     venue = safe_record_text(row.get("venue_name"))
-    match_date = format_record_date(row.get("match_date"))
     scorecard = scorecard_url_link_html(
         row.get("scoreboard_url"),
         row.get("match_id"),
         page_slug="hall-of-fame",
         section_name="premiership_wins",
     )
-    context_parts = [part for part in [grade, venue, match_date] if part]
+    context_parts = [part for part in [grade, venue] if part]
     context = " • ".join(context_parts)
     captain_line = f"Captain: {captain}" if captain else "Captain not recorded"
     context_html = f'<div class="premiership-meta">{html.escape(context)}</div>' if context else ""
     scorecard_html = f'<div class="premiership-link">{scorecard}</div>' if scorecard else ""
     return (
-        '<div class="premiership-win-card">'
+        '<div class="premiership-win-row">'
         '<div class="premiership-cup">🏆</div>'
         f'<div class="premiership-season">{season_overview_link_html(season)}</div>'
-        f'<div class="premiership-title">{html.escape(team)} premiership</div>'
-        f'<div class="premiership-opponent">defeated {html.escape(opponent)}</div>'
+        '<div class="premiership-details">'
+        f'<div class="premiership-title">{html.escape(team)} <span>defeated {html.escape(opponent)}</span></div>'
         f"{context_html}"
         f'<div class="premiership-captain">{html.escape(captain_line)}</div>'
+        "</div>"
         f'<div class="premiership-result">{html.escape(result)}</div>'
         f"{scorecard_html}"
         "</div>"
@@ -3702,12 +3704,9 @@ def premiership_win_card_html(row: pd.Series) -> str:
 
 
 def render_player_premiership_leaders(players: pd.DataFrame) -> None:
-    show_top_10 = st.toggle(
-        "Show top 10 player premiership records",
-        value=False,
-        key="show_top_10_player_premierships",
-    )
-    limit = PREMIERSHIP_PLAYER_EXPANDED_LIMIT if show_top_10 else PREMIERSHIP_PLAYER_DEFAULT_LIMIT
+    state_key = "hof_player_premierships_expanded"
+    expanded = bool(st.session_state.get(state_key, False))
+    limit = PREMIERSHIP_PLAYER_EXPANDED_LIMIT if expanded else PREMIERSHIP_PLAYER_DEFAULT_LIMIT
     rows = players.head(limit).copy()
     row_html = "".join(
         player_premiership_row_html(rank, row)
@@ -3720,26 +3719,35 @@ def render_player_premiership_leaders(players: pd.DataFrame) -> None:
         "</div>",
         unsafe_allow_html=True,
     )
+    render_hof_expand_control(state_key, expanded, min(len(players), PREMIERSHIP_PLAYER_EXPANDED_LIMIT))
 
 
 def player_premiership_row_html(rank: int, row: pd.Series) -> str:
     player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
     count = safe_record_int(row.get("premiership_count")) or 0
-    seasons = safe_record_text(row.get("seasons"))
-    grades = compact_premiership_list(row.get("grades"))
-    teams = compact_premiership_list(row.get("teams"))
-    details = " • ".join(part for part in [seasons, grades, teams] if part)
+    details = linked_premiership_seasons(row.get("seasons"))
     value = f"{count} premiership{'s' if count != 1 else ''}"
     return (
         '<div class="performance-row premiership-player-row">'
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
         f'<strong>{player_profile_link_html("", player)}</strong>'
-        f'<span>{html.escape(details)}</span>'
+        f'<span>{details}</span>'
         '</div>'
         f'<div class="performance-value">{html.escape(value)}</div>'
         "</div>"
     )
+
+
+def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
+    seasons = [part.strip() for part in safe_record_text(value).split(",") if part.strip()]
+    if not seasons:
+        return ""
+    visible = seasons[:visible_limit]
+    links = [season_overview_link_html(season) for season in visible]
+    if len(seasons) > visible_limit:
+        links.append(f"+{len(seasons) - visible_limit} more")
+    return ", ".join(links)
 
 
 def compact_premiership_list(value: object, limit: int = 2) -> str:
