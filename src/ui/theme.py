@@ -1702,12 +1702,23 @@ def inject_theme() -> None:
             margin-bottom: 5px;
         }
 
-        .premiership-mainline,
-        .premiership-matchline {
-            align-items: baseline;
+        .premiership-row-body {
+            align-items: start;
             display: grid;
             gap: 12px;
             grid-template-columns: minmax(0, 1fr) auto;
+        }
+
+        .premiership-row-copy {
+            min-width: 0;
+        }
+
+        .premiership-sideblock {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            justify-self: end;
+            min-width: max-content;
         }
 
         .premiership-season {
@@ -1762,14 +1773,14 @@ def inject_theme() -> None:
             font-size: 0.88rem;
             font-weight: 950;
             line-height: 1.16;
-            text-align: right;
             white-space: nowrap;
         }
 
         .premiership-link {
+            align-self: flex-start;
             font-size: 0.74rem;
             font-weight: 900;
-            text-align: right;
+            margin-top: 5px;
             white-space: nowrap;
         }
 
@@ -3199,6 +3210,15 @@ def inject_theme() -> None:
 
             .premiership-title {
                 font-size: 0.9rem;
+            }
+
+            .premiership-row-body {
+                display: block;
+            }
+
+            .premiership-sideblock {
+                align-items: flex-start;
+                margin-top: 5px;
             }
 
             .premiership-captain {
