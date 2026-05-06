@@ -2260,6 +2260,28 @@ def inject_theme() -> None:
                 min-height: 0;
             }
 
+            .premiership-row-body {
+                display: block;
+            }
+
+            .premiership-sideblock {
+                align-items: flex-start;
+                justify-self: start;
+                margin-top: 6px;
+                min-width: 0;
+                width: 100%;
+            }
+
+            .premiership-result {
+                justify-content: flex-start;
+                text-align: left;
+            }
+
+            .premiership-link {
+                align-self: flex-start;
+                text-align: left;
+            }
+
             .dna-performance-card {
                 grid-template-columns: 28px minmax(0, 1fr);
             }
@@ -3210,15 +3232,6 @@ def inject_theme() -> None:
 
             .premiership-title {
                 font-size: 0.9rem;
-            }
-
-            .premiership-row-body {
-                display: block;
-            }
-
-            .premiership-sideblock {
-                align-items: flex-start;
-                margin-top: 5px;
             }
 
             .premiership-captain {
