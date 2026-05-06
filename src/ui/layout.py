@@ -98,7 +98,7 @@ DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
-FASTEST_MILESTONE_RECORD_LIMIT = 6
+FASTEST_MILESTONE_RECORD_LIMIT = 10
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 SEASON_OVERVIEW_PAGE_LABEL = "⌂ Season Overview"
@@ -3513,14 +3513,19 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
         f'<div class="hof-card"><div class="card-title">{html.escape(title)}</div>{"".join(rows)}</div>',
         unsafe_allow_html=True,
     )
-    if len(leaders) > 6:
-        with st.container(key=f"{state_key}_control"):
-            if st.button(
-                "Show less ↑" if expanded else "Show top 10 ↓",
-                key=f"{state_key}_toggle",
-            ):
-                st.session_state[state_key] = not expanded
-                st.rerun()
+    render_hof_expand_control(state_key, expanded, len(leaders))
+
+
+def render_hof_expand_control(state_key: str, expanded: bool, row_count: int) -> None:
+    if row_count <= 6:
+        return
+    with st.container(key=f"{state_key}_control"):
+        if st.button(
+            "Show less ↑" if expanded else "Show top 10 ↓",
+            key=f"{state_key}_toggle",
+        ):
+            st.session_state[state_key] = not expanded
+            st.rerun()
 
 
 def render_match_winning_performances(data: dict[str, object]) -> None:
@@ -3753,14 +3758,18 @@ def render_ranked_record_card(
         [value_col, "final_runs", "match_date_sort"],
         ascending=[True, False, False],
     ).head(FASTEST_MILESTONE_RECORD_LIMIT)
+    state_key = f"hof_ranked_record_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
+    expanded = bool(st.session_state.get(state_key, False))
+    displayed_rows = rows if expanded else rows.head(6)
     row_html = "".join(
         milestone_record_row_html(rank, row, value_col, value_suffix)
-        for rank, (_, row) in enumerate(rows.iterrows(), start=1)
+        for rank, (_, row) in enumerate(displayed_rows.iterrows(), start=1)
     )
     st.markdown(
         f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
         unsafe_allow_html=True,
     )
+    render_hof_expand_control(state_key, expanded, len(rows))
 
 
 def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
@@ -3889,8 +3898,12 @@ def top_best_bowling_innings(df: pd.DataFrame, limit: int = 10) -> pd.DataFrame:
 def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
     if df.empty:
         return
+    records = df.head(10).copy()
+    state_key = f"hof_performance_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
+    expanded = bool(st.session_state.get(state_key, False))
+    displayed_records = records if expanded else records.head(6)
     rows = []
-    for rank, (_, row) in enumerate(df.iterrows(), start=1):
+    for rank, (_, row) in enumerate(displayed_records.iterrows(), start=1):
         if mode == "batting":
             value = format_high_score_value(row)
         else:
@@ -3914,6 +3927,7 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{"".join(rows)}</div>',
         unsafe_allow_html=True,
     )
+    render_hof_expand_control(state_key, expanded, len(records))
 
 
 def sort_hof_leaders(df: pd.DataFrame, metric: str, mode: str) -> pd.DataFrame:
@@ -3987,7 +4001,7 @@ def render_best_ever_seasons(data: dict[str, object]) -> None:
     if batting is None and bowling is None:
         return
 
-    render_section_heading("Greatest Individual Seasons 🎖️")
+    render_section_heading("Greatest Individual Seasons 🎖️", mobile_title="Greatest Seasons 🎖️")
     cards = []
     if batting is not None:
         cards.append(best_season_card_html("Best batting season", batting, "batting"))
@@ -7703,8 +7717,15 @@ def render_overall_section(dashboard_data: dict[str, object]) -> None:
     render_biggest_improvers(dashboard_data)
 
 
-def render_section_heading(title: str) -> None:
-    st.markdown(f"<h2 class='overview-section-title'>{html.escape(title)}</h2>", unsafe_allow_html=True)
+def render_section_heading(title: str, mobile_title: str | None = None) -> None:
+    if mobile_title and mobile_title != title:
+        title_html = (
+            f"<span class='section-title-desktop'>{html.escape(title)}</span>"
+            f"<span class='section-title-mobile'>{html.escape(mobile_title)}</span>"
+        )
+    else:
+        title_html = html.escape(title)
+    st.markdown(f"<h2 class='overview-section-title'>{title_html}</h2>", unsafe_allow_html=True)
 
 
 def render_section_subtext(text: str) -> None:

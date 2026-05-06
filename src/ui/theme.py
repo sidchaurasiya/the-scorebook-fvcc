@@ -981,17 +981,21 @@ def inject_theme() -> None:
             margin: -14px 0 20px;
         }
 
-        div[class*="st-key-hof_leader_expanded_"][class*="_control"] {
+        .section-title-mobile {
+            display: none;
+        }
+
+        div[class*="st-key-hof_"][class*="_control"] {
             margin: -8px 0 18px;
         }
 
-        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton {
+        div[class*="st-key-hof_"][class*="_control"] .stButton {
             align-items: flex-start;
             display: flex;
             justify-content: flex-start;
         }
 
-        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton > button {
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button {
             background: transparent !important;
             border: 0 !important;
             box-shadow: none !important;
@@ -1006,8 +1010,8 @@ def inject_theme() -> None:
             width: auto !important;
         }
 
-        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton > button:hover,
-        div[class*="st-key-hof_leader_expanded_"][class*="_control"] .stButton > button:focus {
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover,
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button:focus {
             background: transparent !important;
             border: 0 !important;
             box-shadow: none !important;
@@ -3159,7 +3163,15 @@ def inject_theme() -> None:
                 margin: 34px 0 18px;
             }
 
-            div[class*="st-key-hof_leader_expanded_"][class*="_control"] {
+            .overview-section-title .section-title-desktop {
+                display: none;
+            }
+
+            .overview-section-title .section-title-mobile {
+                display: inline;
+            }
+
+            div[class*="st-key-hof_"][class*="_control"] {
                 margin: -10px 0 16px;
             }
 
