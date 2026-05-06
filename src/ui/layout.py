@@ -94,11 +94,19 @@ HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
 HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "scorecard_record_links.csv"
 )
+HALL_OF_FAME_PREMIERSHIP_WINS_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "premiership_wins.csv"
+)
+HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_premierships.csv"
+)
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 FASTEST_MILESTONE_RECORD_LIMIT = 10
+PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
+PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 SEASON_OVERVIEW_PAGE_LABEL = "⌂ Season Overview"
@@ -289,6 +297,41 @@ def scorecard_link_html(
     )
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
+        'target="_blank" rel="noopener noreferrer" '
+        f'{onclick} '
+        f'title="Open PlayCricket scorecard">{html.escape(label)}</a>'
+    )
+
+
+def scorecard_url_link_html(
+    url: object,
+    match_id: object = "",
+    label: str = "View scorecard",
+    class_name: str = "scorecard-link",
+    *,
+    page_slug: str | None = None,
+    section_name: str = "scorecard",
+) -> str:
+    url_text = safe_record_text(url)
+    if not url_text or not url_text.startswith("https://play.cricket.com.au/match/"):
+        return scorecard_link_html(
+            match_id,
+            label=label,
+            class_name=class_name,
+            page_slug=page_slug,
+            section_name=section_name,
+        )
+    match_id_text = safe_record_text(match_id)
+    onclick = ga4_link_onclick(
+        "playcricket_scorecard_click",
+        {
+            "page_slug": page_slug or page_slug_from_query(),
+            "match_id": match_id_text,
+            "section_name": section_name,
+        },
+    )
+    return (
+        f'<a class="{html.escape(class_name)}" href="{html.escape(url_text, quote=True)}" '
         'target="_blank" rel="noopener noreferrer" '
         f'{onclick} '
         f'title="Open PlayCricket scorecard">{html.escape(label)}</a>'
@@ -2967,6 +3010,7 @@ def render_hall_of_fame_page() -> None:
     render_hall_of_fame_kpis(hall_of_fame_data["kpis"])
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
     render_match_winning_performances(hall_of_fame_data)
+    render_premiership_records()
     render_fastest_batting_milestone_records()
     render_record_holders(hall_of_fame_data)
     render_best_ever_seasons(hall_of_fame_data)
@@ -3543,6 +3587,171 @@ def render_match_winning_performances(data: dict[str, object]) -> None:
         render_performance_card("Highest Individual Scores", batting_records, "batting")
     with columns[1]:
         render_performance_card("Best Bowling Innings", bowling_records, "bowling")
+
+
+def premiership_records_signature() -> tuple[tuple[str, float], ...]:
+    signature = []
+    for path in [HALL_OF_FAME_PREMIERSHIP_WINS_PATH, HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH]:
+        if path.exists():
+            signature.append((str(path), path.stat().st_mtime))
+    return tuple(signature)
+
+
+@st.cache_data(show_spinner=False)
+def load_premiership_records(_signature: tuple[tuple[str, float], ...]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    wins = read_match_centre_csv(HALL_OF_FAME_PREMIERSHIP_WINS_PATH)
+    players = read_match_centre_csv(HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH)
+    if not wins.empty:
+        wins = wins.drop_duplicates("match_id") if "match_id" in wins else wins
+        for column in ["season", "grade_name", "fvcc_team_name", "opponent_team_name", "captain_name", "result_text"]:
+            if column in wins:
+                wins[column] = wins[column].map(safe_record_text)
+        if "scoreboard_url" in wins:
+            wins["scoreboard_url"] = wins["scoreboard_url"].map(safe_record_text)
+    if not players.empty:
+        if {"premiership_count", "evidence_match_ids"}.issubset(players.columns):
+            players["premiership_count"] = pd.to_numeric(players["premiership_count"], errors="coerce").fillna(0).astype(int)
+            players = players[
+                players.apply(
+                    lambda row: int(row["premiership_count"]) == len({part.strip() for part in str(row["evidence_match_ids"]).split(",") if part.strip()}),
+                    axis=1,
+                )
+            ]
+        name_column = "display_player_name" if "display_player_name" in players else "canonical_player_name"
+        if name_column in players:
+            players[name_column] = players[name_column].map(display_player_name)
+        players = players.sort_values(
+            ["premiership_count", "latest_premiership_season", name_column],
+            ascending=[False, False, True],
+            na_position="last",
+        )
+    return wins, players
+
+
+def render_premiership_records() -> None:
+    wins, players = load_premiership_records(premiership_records_signature())
+    if wins.empty and players.empty:
+        render_section_heading("Premierships 🏆")
+        st.markdown(
+            '<div class="hof-card premiership-empty">'
+            '<div class="card-title">Premiership records</div>'
+            '<p>Premiership records are being prepared from verified finals scorecards.</p>'
+            "</div>",
+            unsafe_allow_html=True,
+        )
+        return
+
+    render_section_heading("Premierships 🏆")
+    st.caption("Premiership records are built from verified match-centre grand final scorecards.")
+    if not wins.empty:
+        render_premiership_wins(wins)
+    if not players.empty:
+        render_player_premiership_leaders(players)
+    else:
+        st.markdown(
+            '<div class="hof-card premiership-empty"><p>No verified player premiership records available yet.</p></div>',
+            unsafe_allow_html=True,
+        )
+
+
+def render_premiership_wins(wins: pd.DataFrame) -> None:
+    rows = wins.copy()
+    if "match_date" in rows:
+        rows["_date_sort"] = pd.to_datetime(rows["match_date"], errors="coerce", utc=True)
+        rows = rows.sort_values(["_date_sort", "season"], ascending=[True, True], na_position="last")
+    card_html = "".join(premiership_win_card_html(row) for _, row in rows.iterrows())
+    st.markdown(
+        '<div class="premiership-subtitle">FVCC Premiership Wins</div>'
+        f'<div class="premiership-win-grid">{card_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def premiership_win_card_html(row: pd.Series) -> str:
+    season = safe_record_text(row.get("season"), "Unknown season")
+    grade = clean_grade_label_for_record(row.get("grade_name"))
+    team = safe_record_text(row.get("fvcc_team_name"), "FVCC")
+    opponent = clean_opponent_label(row.get("opponent_team_name"), "Opposition")
+    captain = safe_record_text(row.get("captain_name"))
+    result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
+    venue = safe_record_text(row.get("venue_name"))
+    match_date = format_record_date(row.get("match_date"))
+    scorecard = scorecard_url_link_html(
+        row.get("scoreboard_url"),
+        row.get("match_id"),
+        page_slug="hall-of-fame",
+        section_name="premiership_wins",
+    )
+    context_parts = [part for part in [grade, venue, match_date] if part]
+    context = " • ".join(context_parts)
+    captain_line = f"Captain: {captain}" if captain else "Captain not recorded"
+    context_html = f'<div class="premiership-meta">{html.escape(context)}</div>' if context else ""
+    scorecard_html = f'<div class="premiership-link">{scorecard}</div>' if scorecard else ""
+    return (
+        '<div class="premiership-win-card">'
+        '<div class="premiership-cup">🏆</div>'
+        f'<div class="premiership-season">{season_overview_link_html(season)}</div>'
+        f'<div class="premiership-title">{html.escape(team)} premiership</div>'
+        f'<div class="premiership-opponent">defeated {html.escape(opponent)}</div>'
+        f"{context_html}"
+        f'<div class="premiership-captain">{html.escape(captain_line)}</div>'
+        f'<div class="premiership-result">{html.escape(result)}</div>'
+        f"{scorecard_html}"
+        "</div>"
+    )
+
+
+def render_player_premiership_leaders(players: pd.DataFrame) -> None:
+    show_top_10 = st.toggle(
+        "Show top 10 player premiership records",
+        value=False,
+        key="show_top_10_player_premierships",
+    )
+    limit = PREMIERSHIP_PLAYER_EXPANDED_LIMIT if show_top_10 else PREMIERSHIP_PLAYER_DEFAULT_LIMIT
+    rows = players.head(limit).copy()
+    row_html = "".join(
+        player_premiership_row_html(rank, row)
+        for rank, (_, row) in enumerate(rows.iterrows(), start=1)
+    )
+    st.markdown(
+        '<div class="hof-card performance-card premiership-player-card">'
+        '<div class="card-title">Most Premierships by Player</div>'
+        f"{row_html}"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def player_premiership_row_html(rank: int, row: pd.Series) -> str:
+    player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
+    count = safe_record_int(row.get("premiership_count")) or 0
+    seasons = safe_record_text(row.get("seasons"))
+    grades = compact_premiership_list(row.get("grades"))
+    teams = compact_premiership_list(row.get("teams"))
+    details = " • ".join(part for part in [seasons, grades, teams] if part)
+    value = f"{count} premiership{'s' if count != 1 else ''}"
+    return (
+        '<div class="performance-row premiership-player-row">'
+        f'<span class="progress-rank">{rank_badge(rank)}</span>'
+        '<div class="performance-player">'
+        f'<strong>{player_profile_link_html("", player)}</strong>'
+        f'<span>{html.escape(details)}</span>'
+        '</div>'
+        f'<div class="performance-value">{html.escape(value)}</div>'
+        "</div>"
+    )
+
+
+def compact_premiership_list(value: object, limit: int = 2) -> str:
+    parts = [part.strip() for part in safe_record_text(value).split(",") if part.strip()]
+    cleaned = []
+    for part in parts:
+        label = clean_grade_label_for_record(part)
+        if label and label not in cleaned:
+            cleaned.append(label)
+    if len(cleaned) <= limit:
+        return ", ".join(cleaned)
+    return ", ".join(cleaned[:limit]) + f" +{len(cleaned) - limit} more"
 
 
 def render_fastest_batting_milestone_records() -> None:

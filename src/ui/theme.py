@@ -1648,6 +1648,118 @@ def inject_theme() -> None:
             min-height: 0;
         }
 
+        .premiership-subtitle {
+            color: var(--ink);
+            font-size: 1.05rem;
+            font-weight: 950;
+            margin: 2px 0 12px;
+        }
+
+        .premiership-win-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-bottom: 24px;
+        }
+
+        .premiership-win-card {
+            background:
+                radial-gradient(circle at top right, rgba(255, 193, 7, 0.20), transparent 9rem),
+                linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+            border: 1px solid #e8e4f7;
+            border-radius: 18px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.07);
+            min-height: 218px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premiership-win-card::before {
+            background: linear-gradient(180deg, #7a1f3d, #4b37d8);
+            border-radius: 999px;
+            content: "";
+            height: calc(100% - 34px);
+            left: 0;
+            position: absolute;
+            top: 17px;
+            width: 4px;
+        }
+
+        .premiership-cup {
+            align-items: center;
+            background: #fff7da;
+            border: 1px solid #f4d777;
+            border-radius: 999px;
+            display: flex;
+            font-size: 1rem;
+            height: 34px;
+            justify-content: center;
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            width: 34px;
+        }
+
+        .premiership-season {
+            color: #4b37d8;
+            font-size: 0.78rem;
+            font-weight: 950;
+            margin-right: 44px;
+            text-transform: uppercase;
+        }
+
+        .premiership-title {
+            color: var(--ink);
+            font-size: 1.05rem;
+            font-weight: 950;
+            line-height: 1.18;
+            margin-top: 8px;
+            padding-right: 34px;
+        }
+
+        .premiership-opponent,
+        .premiership-meta,
+        .premiership-captain {
+            color: #737994;
+            font-size: 0.78rem;
+            font-weight: 750;
+            line-height: 1.32;
+            margin-top: 6px;
+        }
+
+        .premiership-captain {
+            color: #4b516e;
+            font-weight: 850;
+        }
+
+        .premiership-result {
+            color: #7a1f3d;
+            font-size: 1.02rem;
+            font-weight: 950;
+            margin-top: 12px;
+        }
+
+        .premiership-link {
+            font-size: 0.78rem;
+            font-weight: 900;
+            margin-top: 8px;
+        }
+
+        .premiership-player-card {
+            margin-top: 6px;
+        }
+
+        .premiership-player-row .performance-value {
+            color: #4b37d8;
+        }
+
+        .premiership-empty p {
+            color: #737994;
+            font-weight: 750;
+            margin: 6px 0 0;
+        }
+
         .block-container:has(.player-dna-page) {
             max-width: 1440px;
         }
@@ -2077,7 +2189,8 @@ def inject_theme() -> None:
             .dna-hero-grid,
             .dna-performance-grid,
             .dna-bonus-grid,
-            .lab-feature-grid {
+            .lab-feature-grid,
+            .premiership-win-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -3022,6 +3135,10 @@ def inject_theme() -> None:
             }
 
             .best-season-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .premiership-win-grid {
                 grid-template-columns: 1fr;
             }
 
