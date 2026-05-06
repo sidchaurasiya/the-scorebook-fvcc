@@ -482,16 +482,29 @@ def render_sidebar() -> str:
         render_mobile_nav_link(label, slug, current_page)
         for slug, label, _ in page_definitions
     )
+    help_text_by_slug = {
+        "hall-of-fame": ("Hall of Fame 🏆", "All-time club records, leaders, and iconic performances."),
+        SEASON_OVERVIEW_QUERY_PAGE: (
+            "Season Overview 📊",
+            "Season stats, team leaders, and detailed batting/bowling/fielding tables.",
+        ),
+        "milestone": ("Milestone 💪", "Active players closing in on major club milestones."),
+        PLAYER_PROFILE_QUERY_PAGE: ("Player Profile 🏏", "Search any player and view their career record."),
+        "match-insights": ("Match Insights", "Scorebook-only analysis from reviewed match-centre refresh outputs."),
+        "advanced-analytics": ("Advanced Analytics", "Player-level splits powered by match-centre scorecards and ball-by-ball data."),
+        "player-dna": ("Player DNA", "Experimental player identity cards, traits, and hidden impact patterns."),
+        "scorebook-lab": ("Scorebook Lab", "Experimental hidden records, matchup stories, MVP cards, and partnership insights."),
+    }
+    mobile_help_items = []
+    for slug, _, _ in page_definitions:
+        title, description = help_text_by_slug.get(slug, (page_title_for_slug(slug), ""))
+        if description:
+            mobile_help_items.append(
+                f"<p><strong>{html.escape(title)}</strong><br>{html.escape(description)}</p>"
+            )
+    mobile_help_html = "".join(mobile_help_items)
 
     with st.container(key="mobile_nav_fallback"):
-        experimental_help = ""
-        if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
-            experimental_help = """
-                    <p><strong>Match Insights</strong><br>Scorebook-only analysis from reviewed match-centre refresh outputs.</p>
-                    <p><strong>Advanced Analytics</strong><br>Player-level splits powered by match-centre scorecards and ball-by-ball data.</p>
-                    <p><strong>Player DNA</strong><br>Experimental player identity cards, traits, and hidden impact patterns.</p>
-                    <p><strong>Scorebook Lab</strong><br>Experimental hidden records, matchup stories, MVP cards, and partnership insights.</p>
-            """
         st.markdown(
             f"""
             <details class="mobile-nav-help">
@@ -500,11 +513,7 @@ def render_sidebar() -> str:
                     <span class="mobile-info-icon">ⓘ</span>
                 </summary>
                 <div class="mobile-nav-help-panel">
-                    <p><strong>Hall of Fame 🏆</strong><br>All-time club records, leaders, and iconic performances.</p>
-                    <p><strong>Season Overview 📊</strong><br>Season stats, team leaders, and detailed batting/bowling/fielding tables.</p>
-                    <p><strong>Milestone 💪</strong><br>Active players closing in on major club milestones.</p>
-                    <p><strong>Player Profile 🏏</strong><br>Search any player and view their career record.</p>
-                    {experimental_help}
+                    {mobile_help_html}
                 </div>
             </details>
             <div class="mobile-nav-links">
@@ -3484,9 +3493,12 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
     if leaders.empty:
         return
 
+    state_key = f"hof_leader_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
+    expanded = bool(st.session_state.get(state_key, False))
+    displayed_leaders = leaders if expanded else leaders.head(6)
     max_value = leaders[metric].max()
     rows = []
-    for rank, (_, row) in enumerate(leaders.iterrows(), start=1):
+    for rank, (_, row) in enumerate(displayed_leaders.iterrows(), start=1):
         value = float(row[metric])
         width = 0 if not max_value else value / max_value * 100
         rows.append(
@@ -3501,6 +3513,14 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
         f'<div class="hof-card"><div class="card-title">{html.escape(title)}</div>{"".join(rows)}</div>',
         unsafe_allow_html=True,
     )
+    if len(leaders) > 6:
+        if st.button(
+            "Show less" if expanded else "Show top 10",
+            key=f"{state_key}_toggle",
+            use_container_width=True,
+        ):
+            st.session_state[state_key] = not expanded
+            st.rerun()
 
 
 def render_match_winning_performances(data: dict[str, object]) -> None:
@@ -3526,13 +3546,13 @@ def render_fastest_batting_milestone_records() -> None:
         {"page_slug": "hall-of-fame", "section_name": "fastest_batting_milestones"},
         key="fastest-milestones-view",
     )
-    render_section_heading("Fastest Batting Milestones ⚡")
-    st.caption("Fastest milestone records are based on available verified ball-by-ball data.")
+    render_section_heading("Fastest Milestones ⚡")
+    st.caption("Based on matches with verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
     if milestones.empty:
         render_empty_milestone_card(
-            "Fastest Batting Milestones",
+            "Fastest Milestones",
             "No ball-by-ball milestone data available yet.",
             "Run the match-centre milestone builder after refreshing match-centre data.",
         )
@@ -4297,9 +4317,9 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Matches",
         "Overs",
         "Wickets",
-        "Econ",
         "Bowl Avg",
         "Bowl SR",
+        "Econ",
         "Maidens",
         "BBI",
         "5WI",
