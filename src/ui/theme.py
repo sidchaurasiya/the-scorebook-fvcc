@@ -1648,27 +1648,54 @@ def inject_theme() -> None:
             min-height: 0;
         }
 
-        .premiership-subtitle {
-            color: var(--ink);
-            font-size: 1.05rem;
-            font-weight: 950;
-            margin: 2px 0 12px;
+        .premiership-wall-grid {
+            align-items: stretch;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            margin: 6px 0 30px;
         }
 
-        .premiership-wins-card {
+        .premiership-wall-card {
             background:
-                radial-gradient(circle at top right, rgba(255, 193, 7, 0.12), transparent 13rem),
+                linear-gradient(90deg, rgba(244, 194, 79, 0.72) 0 4px, transparent 4px),
+                radial-gradient(circle at 94% 0%, rgba(255, 210, 96, 0.17), transparent 12rem),
                 #ffffff;
-            margin-bottom: 0;
+            border-color: #ebe5d7;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 620px;
+            padding: 20px 22px;
+        }
+
+        .premiership-card-title {
+            color: var(--ink);
+            font-size: 1.02rem;
+            font-weight: 950;
+            letter-spacing: 0;
+            margin: 0 0 14px;
+        }
+
+        .premiership-card-scroll {
+            flex: 1;
+            max-height: 560px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .premiership-card-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .premiership-card-scroll::-webkit-scrollbar-thumb {
+            background: rgba(122, 31, 61, 0.18);
+            border-radius: 999px;
         }
 
         .premiership-win-row {
-            align-items: center;
             border-bottom: 1px solid #eef0f6;
-            display: grid;
-            gap: 8px;
-            grid-template-columns: 26px 108px minmax(0, 1fr) 92px 82px;
-            padding: 10px 0;
+            padding: 11px 0 12px;
         }
 
         .premiership-win-row:last-child {
@@ -1680,24 +1707,44 @@ def inject_theme() -> None:
             padding-top: 0;
         }
 
-        .premiership-cup {
-            align-items: center;
-            background: #fff7da;
-            border: 1px solid #f4d777;
-            border-radius: 999px;
-            display: flex;
-            font-size: 0.82rem;
-            height: 24px;
-            justify-content: center;
-            width: 24px;
+        .premiership-grade {
+            color: #7b829c;
+            font-size: 0.72rem;
+            font-weight: 850;
+            line-height: 1.24;
+            margin-bottom: 5px;
+        }
+
+        .premiership-mainline,
+        .premiership-matchline {
+            align-items: baseline;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: minmax(0, 1fr) auto;
         }
 
         .premiership-season {
+            align-items: center;
             color: #4b37d8;
-            font-size: 0.78rem;
+            display: inline-flex;
+            font-size: 1rem;
             font-weight: 950;
-            line-height: 1.18;
+            gap: 7px;
+            line-height: 1.12;
             text-transform: uppercase;
+        }
+
+        .premiership-cup {
+            align-items: center;
+            background: #fff4ca;
+            border: 1px solid #eac961;
+            border-radius: 999px;
+            box-shadow: 0 5px 13px rgba(196, 138, 33, 0.14);
+            display: inline-flex;
+            font-size: 0.8rem;
+            height: 23px;
+            justify-content: center;
+            width: 23px;
         }
 
         .premiership-title {
@@ -1705,6 +1752,7 @@ def inject_theme() -> None:
             font-size: 0.84rem;
             font-weight: 950;
             line-height: 1.2;
+            min-width: 0;
         }
 
         .premiership-title span {
@@ -1712,36 +1760,37 @@ def inject_theme() -> None:
             font-weight: 850;
         }
 
-        .premiership-meta,
         .premiership-captain {
             color: #737994;
-            font-size: 0.7rem;
-            font-weight: 750;
-            line-height: 1.28;
-            margin-top: 3px;
-        }
-
-        .premiership-captain {
-            color: #4b516e;
-            font-weight: 850;
+            font-size: 0.72rem;
+            font-weight: 800;
+            line-height: 1.26;
+            margin-top: 5px;
         }
 
         .premiership-result {
             color: #7a1f3d;
-            font-size: 0.82rem;
+            font-size: 0.86rem;
             font-weight: 950;
-            line-height: 1.2;
+            line-height: 1.16;
             text-align: right;
+            white-space: nowrap;
         }
 
         .premiership-link {
             font-size: 0.74rem;
             font-weight: 900;
             text-align: right;
+            white-space: nowrap;
         }
 
         .premiership-player-card {
             margin-top: 0;
+        }
+
+        .premiership-player-card .performance-row {
+            min-height: 55px;
+            padding: 10px 0;
         }
 
         .premiership-player-row .performance-value {
@@ -2197,26 +2246,17 @@ def inject_theme() -> None:
                 grid-template-columns: 1fr;
             }
 
-            .premiership-win-row {
-                align-items: start;
-                grid-template-columns: 28px 112px minmax(0, 1fr);
+            .premiership-wall-grid {
+                grid-template-columns: 1fr;
             }
 
-            .premiership-result,
-            .premiership-link {
-                text-align: left;
+            .premiership-wall-card {
+                min-height: 0;
             }
 
-            .premiership-result {
-                grid-column: 2 / -1;
-            }
-
-            .premiership-link {
-                grid-column: 2 / -1;
-            }
-
-            .premiership-details {
-                grid-column: 3;
+            .premiership-card-scroll {
+                max-height: none;
+                overflow: visible;
             }
 
             .dna-performance-card {
@@ -3163,34 +3203,30 @@ def inject_theme() -> None:
                 grid-template-columns: 1fr;
             }
 
-            .premiership-win-row {
-                align-items: start;
-                gap: 5px;
-                grid-template-columns: 1fr;
-                padding: 11px 0;
-            }
-
-            .premiership-cup {
-                display: none;
-            }
-
-            .premiership-season,
-            .premiership-details,
-            .premiership-result,
-            .premiership-link {
-                grid-column: 1;
-                text-align: left;
-            }
-
             .premiership-season {
-                font-size: 0.82rem;
+                font-size: 0.98rem;
             }
 
             .premiership-title {
                 font-size: 0.9rem;
             }
 
+            .premiership-mainline,
+            .premiership-matchline {
+                display: block;
+            }
+
             .premiership-result {
+                margin-top: 5px;
+                text-align: left;
+            }
+
+            .premiership-link {
+                margin-top: 5px;
+                text-align: left;
+            }
+
+            .premiership-captain {
                 margin-top: 3px;
             }
 

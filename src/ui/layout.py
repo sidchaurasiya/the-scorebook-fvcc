@@ -3642,38 +3642,40 @@ def render_premiership_records() -> None:
         return
 
     render_section_heading("Premierships 🛡️")
-    st.caption("Premiership records are built from verified match-centre grand final scorecards.")
-    left_col, right_col = st.columns([1.22, 1], gap="large")
-    with left_col:
-        if not wins.empty:
-            render_premiership_wins(wins)
-        else:
-            st.markdown(
-                '<div class="hof-card premiership-empty"><p>No verified FVCC premiership wins available yet.</p></div>',
-                unsafe_allow_html=True,
-            )
-    with right_col:
-        if not players.empty:
-            render_player_premiership_leaders(players, premiership_win_count=len(wins))
-        else:
-            st.markdown(
-                '<div class="hof-card premiership-empty"><p>No verified player premiership records available yet.</p></div>',
-                unsafe_allow_html=True,
-            )
+    player_card_html, state_key, expanded, expanded_limit, default_limit = player_premiership_leaders_card_html(
+        players,
+        premiership_win_count=len(wins),
+    )
+    st.markdown(
+        '<div class="premiership-wall-grid">'
+        f"{premiership_wins_card_html(wins)}"
+        f"{player_card_html}"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+    render_hof_expand_control(state_key, expanded, expanded_limit, collapsed_limit=default_limit)
 
 
-def render_premiership_wins(wins: pd.DataFrame) -> None:
+def premiership_wins_card_html(wins: pd.DataFrame) -> str:
+    if wins.empty:
+        return (
+            '<div class="hof-card premiership-wall-card premiership-empty">'
+            '<div class="premiership-card-title">FVCC Premiership Wins</div>'
+            "<p>No verified FVCC premiership wins available yet.</p>"
+            "</div>"
+        )
     rows = wins.copy()
     if "match_date" in rows:
         rows["_date_sort"] = pd.to_datetime(rows["match_date"], errors="coerce", utc=True)
         rows = rows.sort_values(["_date_sort", "season"], ascending=[True, True], na_position="last")
     row_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
-    st.markdown(
-        '<div class="premiership-subtitle">FVCC Premiership Wins</div>'
-        '<div class="hof-card premiership-wins-card">'
+    return (
+        '<div class="hof-card premiership-wall-card premiership-wins-card">'
+        '<div class="premiership-card-title">FVCC Premiership Wins</div>'
+        '<div class="premiership-card-scroll">'
         f"{row_html}"
-        "</div>",
-        unsafe_allow_html=True,
+        "</div>"
+        "</div>"
     )
 
 
@@ -3684,34 +3686,36 @@ def premiership_win_row_html(row: pd.Series) -> str:
     opponent = clean_opponent_label(row.get("opponent_team_name"), "Opposition")
     captain = safe_record_text(row.get("captain_name"))
     result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
-    venue = safe_record_text(row.get("venue_name"))
     scorecard = scorecard_url_link_html(
         row.get("scoreboard_url"),
         row.get("match_id"),
+        label="View scorecard ↗",
         page_slug="hall-of-fame",
         section_name="premiership_wins",
     )
-    context_parts = [part for part in [grade, venue] if part]
-    context = " • ".join(context_parts)
+    grade_line = grade or "Grade not recorded"
     captain_line = f"Captain: {captain}" if captain else "Captain not recorded"
-    context_html = f'<div class="premiership-meta">{html.escape(context)}</div>' if context else ""
     scorecard_html = f'<div class="premiership-link">{scorecard}</div>' if scorecard else ""
     return (
         '<div class="premiership-win-row">'
-        '<div class="premiership-cup">🏆</div>'
-        f'<div class="premiership-season">{season_overview_link_html(season)}</div>'
-        '<div class="premiership-details">'
-        f'<div class="premiership-title">{html.escape(team)} <span>defeated {html.escape(opponent)}</span></div>'
-        f"{context_html}"
-        f'<div class="premiership-captain">{html.escape(captain_line)}</div>'
-        "</div>"
+        f'<div class="premiership-grade">{html.escape(grade_line)}</div>'
+        '<div class="premiership-mainline">'
+        f'<div class="premiership-season"><span class="premiership-cup">🏆</span>{season_overview_link_html(season)}</div>'
         f'<div class="premiership-result">{html.escape(result)}</div>'
+        "</div>"
+        '<div class="premiership-matchline">'
+        f'<div class="premiership-title">{html.escape(team)} <span>defeated {html.escape(opponent)}</span></div>'
         f"{scorecard_html}"
+        "</div>"
+        f'<div class="premiership-captain">{html.escape(captain_line)}</div>'
         "</div>"
     )
 
 
-def render_player_premiership_leaders(players: pd.DataFrame, premiership_win_count: int = PREMIERSHIP_PLAYER_DEFAULT_LIMIT) -> None:
+def player_premiership_leaders_card_html(
+    players: pd.DataFrame,
+    premiership_win_count: int = PREMIERSHIP_PLAYER_DEFAULT_LIMIT,
+) -> tuple[str, str, bool, int, int]:
     state_key = "hof_player_premierships_expanded"
     expanded = bool(st.session_state.get(state_key, False))
     total_rows = len(players)
@@ -3725,19 +3729,34 @@ def render_player_premiership_leaders(players: pd.DataFrame, premiership_win_cou
     )
     expanded_limit = min(PREMIERSHIP_PLAYER_EXPANDED_LIMIT, total_rows)
     limit = expanded_limit if expanded else default_limit
+    if players.empty:
+        return (
+            '<div class="hof-card premiership-wall-card premiership-empty">'
+            '<div class="premiership-card-title">Most Premierships by Player</div>'
+            "<p>No verified player premiership records available yet.</p>"
+            "</div>",
+            state_key,
+            expanded,
+            expanded_limit,
+            default_limit,
+        )
     rows = players.head(limit).copy()
     row_html = "".join(
         player_premiership_row_html(rank, row)
         for rank, (_, row) in enumerate(rows.iterrows(), start=1)
     )
-    st.markdown(
-        '<div class="hof-card performance-card premiership-player-card">'
-        '<div class="card-title">Most Premierships by Player</div>'
+    return (
+        '<div class="hof-card premiership-wall-card performance-card premiership-player-card">'
+        '<div class="premiership-card-title">Most Premierships by Player</div>'
+        '<div class="premiership-card-scroll">'
         f"{row_html}"
+        "</div>"
         "</div>",
-        unsafe_allow_html=True,
+        state_key,
+        expanded,
+        expanded_limit,
+        default_limit,
     )
-    render_hof_expand_control(state_key, expanded, expanded_limit, collapsed_limit=default_limit)
 
 
 def player_premiership_row_html(rank: int, row: pd.Series) -> str:
