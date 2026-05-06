@@ -1649,7 +1649,7 @@ def inject_theme() -> None:
         }
 
         .premiership-wall-grid {
-            align-items: stretch;
+            align-items: start;
             display: grid;
             gap: 20px;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1664,7 +1664,6 @@ def inject_theme() -> None:
             border-color: #ebe5d7;
             display: flex;
             flex-direction: column;
-            height: 100%;
             padding: 20px 22px;
         }
 
@@ -1731,7 +1730,7 @@ def inject_theme() -> None:
             font-size: 0.8rem;
             height: 23px;
             justify-content: center;
-            margin-right: 7px;
+            margin-left: 7px;
             width: 23px;
         }
 

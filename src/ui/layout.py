@@ -3696,7 +3696,7 @@ def premiership_win_row_html(row: pd.Series) -> str:
         f'<div class="premiership-grade">{html.escape(grade_line)}</div>'
         '<div class="premiership-mainline">'
         f'<div class="premiership-season">{season_overview_link_html(season)}</div>'
-        f'<div class="premiership-result"><span class="premiership-cup">🏆</span>{html.escape(result)}</div>'
+        f'<div class="premiership-result">{html.escape(result)}<span class="premiership-cup">🏆</span></div>'
         "</div>"
         '<div class="premiership-matchline">'
         f'<div class="premiership-title">{html.escape(team)} <span>defeated {html.escape(opponent)}</span></div>'
