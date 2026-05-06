@@ -3642,18 +3642,13 @@ def render_premiership_records() -> None:
         return
 
     render_section_heading("Premierships 🛡️")
-    player_card_html, state_key, expanded, expanded_limit, default_limit = player_premiership_leaders_card_html(
-        players,
-        premiership_win_count=len(wins),
-    )
     st.markdown(
         '<div class="premiership-wall-grid">'
         f"{premiership_wins_card_html(wins)}"
-        f"{player_card_html}"
+        f"{player_premiership_leaders_card_html(players)}"
         "</div>",
         unsafe_allow_html=True,
     )
-    render_hof_expand_control(state_key, expanded, expanded_limit, collapsed_limit=default_limit)
 
 
 def premiership_wins_card_html(wins: pd.DataFrame) -> str:
@@ -3700,8 +3695,8 @@ def premiership_win_row_html(row: pd.Series) -> str:
         '<div class="premiership-win-row">'
         f'<div class="premiership-grade">{html.escape(grade_line)}</div>'
         '<div class="premiership-mainline">'
-        f'<div class="premiership-season"><span class="premiership-cup">🏆</span>{season_overview_link_html(season)}</div>'
-        f'<div class="premiership-result">{html.escape(result)}</div>'
+        f'<div class="premiership-season">{season_overview_link_html(season)}</div>'
+        f'<div class="premiership-result"><span class="premiership-cup">🏆</span>{html.escape(result)}</div>'
         "</div>"
         '<div class="premiership-matchline">'
         f'<div class="premiership-title">{html.escape(team)} <span>defeated {html.escape(opponent)}</span></div>'
@@ -3714,32 +3709,15 @@ def premiership_win_row_html(row: pd.Series) -> str:
 
 def player_premiership_leaders_card_html(
     players: pd.DataFrame,
-    premiership_win_count: int = PREMIERSHIP_PLAYER_DEFAULT_LIMIT,
-) -> tuple[str, str, bool, int, int]:
-    state_key = "hof_player_premierships_expanded"
-    expanded = bool(st.session_state.get(state_key, False))
-    total_rows = len(players)
-    default_limit = max(
-        1,
-        min(
-            safe_record_int(premiership_win_count) or PREMIERSHIP_PLAYER_DEFAULT_LIMIT,
-            PREMIERSHIP_PLAYER_EXPANDED_LIMIT,
-            total_rows,
-        ),
-    )
-    expanded_limit = min(PREMIERSHIP_PLAYER_EXPANDED_LIMIT, total_rows)
-    limit = expanded_limit if expanded else default_limit
+) -> str:
     if players.empty:
         return (
             '<div class="hof-card premiership-wall-card premiership-empty">'
-            '<div class="premiership-card-title">Most Premierships by Player</div>'
+            '<div class="premiership-card-title">Most Premierships</div>'
             "<p>No verified player premiership records available yet.</p>"
-            "</div>",
-            state_key,
-            expanded,
-            expanded_limit,
-            default_limit,
+            "</div>"
         )
+    limit = min(PREMIERSHIP_PLAYER_EXPANDED_LIMIT, len(players))
     rows = players.head(limit).copy()
     row_html = "".join(
         player_premiership_row_html(rank, row)
@@ -3747,15 +3725,11 @@ def player_premiership_leaders_card_html(
     )
     return (
         '<div class="hof-card premiership-wall-card performance-card premiership-player-card">'
-        '<div class="premiership-card-title">Most Premierships by Player</div>'
+        '<div class="premiership-card-title">Most Premierships</div>'
         '<div class="premiership-card-scroll">'
         f"{row_html}"
         "</div>"
-        "</div>",
-        state_key,
-        expanded,
-        expanded_limit,
-        default_limit,
+        "</div>"
     )
 
 

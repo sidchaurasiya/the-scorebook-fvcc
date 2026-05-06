@@ -1665,7 +1665,6 @@ def inject_theme() -> None:
             display: flex;
             flex-direction: column;
             height: 100%;
-            min-height: 620px;
             padding: 20px 22px;
         }
 
@@ -1679,18 +1678,7 @@ def inject_theme() -> None:
 
         .premiership-card-scroll {
             flex: 1;
-            max-height: 560px;
-            overflow-y: auto;
             padding-right: 5px;
-        }
-
-        .premiership-card-scroll::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .premiership-card-scroll::-webkit-scrollbar-thumb {
-            background: rgba(122, 31, 61, 0.18);
-            border-radius: 999px;
         }
 
         .premiership-win-row {
@@ -1727,9 +1715,8 @@ def inject_theme() -> None:
             align-items: center;
             color: #4b37d8;
             display: inline-flex;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 950;
-            gap: 7px;
             line-height: 1.12;
             text-transform: uppercase;
         }
@@ -1744,6 +1731,7 @@ def inject_theme() -> None:
             font-size: 0.8rem;
             height: 23px;
             justify-content: center;
+            margin-right: 7px;
             width: 23px;
         }
 
@@ -1769,8 +1757,10 @@ def inject_theme() -> None:
         }
 
         .premiership-result {
+            align-items: center;
             color: #7a1f3d;
-            font-size: 0.86rem;
+            display: inline-flex;
+            font-size: 0.88rem;
             font-weight: 950;
             line-height: 1.16;
             text-align: right;
@@ -1789,8 +1779,10 @@ def inject_theme() -> None:
         }
 
         .premiership-player-card .performance-row {
-            min-height: 55px;
-            padding: 10px 0;
+            align-items: center;
+            grid-template-columns: 30px minmax(0, 1fr) auto;
+            min-height: 58px;
+            padding: 9px 0;
         }
 
         .premiership-player-row .performance-value {
@@ -1798,7 +1790,11 @@ def inject_theme() -> None:
         }
 
         .premiership-player-row .performance-player span {
-            white-space: normal;
+            display: block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .premiership-player-row .performance-player span a.season-overview-link,
@@ -2252,11 +2248,6 @@ def inject_theme() -> None:
 
             .premiership-wall-card {
                 min-height: 0;
-            }
-
-            .premiership-card-scroll {
-                max-height: none;
-                overflow: visible;
             }
 
             .dna-performance-card {
@@ -3209,21 +3200,6 @@ def inject_theme() -> None:
 
             .premiership-title {
                 font-size: 0.9rem;
-            }
-
-            .premiership-mainline,
-            .premiership-matchline {
-                display: block;
-            }
-
-            .premiership-result {
-                margin-top: 5px;
-                text-align: left;
-            }
-
-            .premiership-link {
-                margin-top: 5px;
-                text-align: left;
             }
 
             .premiership-captain {
