@@ -10608,6 +10608,8 @@ def build_full_stats_frame(
         if not show_team:
             output = output.drop(columns=["Team"])
     output = coerce_display_numbers(output)
+    if category == "bowling" and "Overs" in output:
+        output["Overs"] = ordered_overs_values(output["Overs"])
     if "BBI" in output:
         output["BBI"] = ordered_bbi_values(output["BBI"])
     if "HS" in output:
