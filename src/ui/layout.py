@@ -1121,12 +1121,16 @@ def scoped_bbb_batting_rates(frame: pd.DataFrame, season_id: str, season_name: s
         rows[column] = pd.to_numeric(rows[column], errors="coerce").fillna(0)
     if has_dot_ball_source:
         rows["bbb_dot_balls"] = pd.to_numeric(rows["bbb_dot_balls"], errors="coerce").fillna(0)
+        dot_denominator_column = "bbb_dot_ball_balls_faced" if "bbb_dot_ball_balls_faced" in rows else "bbb_balls_faced"
+        rows[dot_denominator_column] = pd.to_numeric(rows[dot_denominator_column], errors="coerce").fillna(0)
     else:
         rows["bbb_dot_balls"] = pd.NA
+        dot_denominator_column = "bbb_balls_faced"
     grouped = rows.groupby("player_key", as_index=False).agg(
         seasonDetailBatRuns=("bbb_runs", "sum"),
         seasonDetailBatBalls=("bbb_balls_faced", "sum"),
         seasonDetailBatDotBalls=("bbb_dot_balls", "sum"),
+        seasonDetailBatDotBallBalls=(dot_denominator_column, "sum"),
     )
     grouped["seasonDetailBatSR"] = grouped.apply(
         lambda row: divide_or_none(float(row["seasonDetailBatRuns"]) * 100, float(row["seasonDetailBatBalls"])),
@@ -1134,7 +1138,7 @@ def scoped_bbb_batting_rates(frame: pd.DataFrame, season_id: str, season_name: s
     )
     if has_dot_ball_source:
         grouped["seasonDetailBatDotBallPct"] = grouped.apply(
-            lambda row: divide_or_none(float(row["seasonDetailBatDotBalls"]) * 100, float(row["seasonDetailBatBalls"])),
+            lambda row: divide_or_none(float(row["seasonDetailBatDotBalls"]) * 100, float(row["seasonDetailBatDotBallBalls"])),
             axis=1,
         )
     else:

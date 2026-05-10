@@ -144,10 +144,59 @@ def match_context(matches: pd.DataFrame) -> pd.DataFrame:
 
 
 def prepare_scorecard_rows(rows: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
-    output = layout.filter_match_centre_fvcc_rows(rows, matches)
+    output = filter_fvcc_team_rows(rows)
     output = output.merge(match_context(matches), on="match_id", how="left", suffixes=("", "_match"))
+    output = fill_context_from_team(output)
     output = layout.prepare_match_centre_identity_rows(output)
     output["player_key"] = layout.player_keys(output)
+    return output
+
+
+def team_context() -> pd.DataFrame:
+    teams = pd.read_csv(ROOT / "data" / "processed" / "teams.csv")
+    columns = ["team_id", "team_name", "season_id", "season", "grade_id", "grade_name"]
+    output = teams[[column for column in columns if column in teams]].drop_duplicates("team_id").copy()
+    output["team_id"] = output["team_id"].astype(str)
+    return output
+
+
+def filter_fvcc_team_rows(rows: pd.DataFrame) -> pd.DataFrame:
+    if rows.empty:
+        return rows.copy()
+    output = rows.copy()
+    if "team_id" not in output:
+        return output
+    fvcc_team_ids = set(team_context()["team_id"].astype(str))
+    output = output[output["team_id"].astype(str).isin(fvcc_team_ids)].copy()
+    return output
+
+
+def fill_context_from_team(rows: pd.DataFrame) -> pd.DataFrame:
+    if rows.empty or "team_id" not in rows:
+        return rows
+    output = rows.copy()
+    lookup = team_context().rename(
+        columns={
+            "team_name": "team_name_team",
+            "season_id": "season_id_team",
+            "season": "season_team",
+            "grade_id": "grade_id_team",
+            "grade_name": "grade_name_team",
+        }
+    )
+    output["team_id"] = output["team_id"].astype(str)
+    output = output.merge(lookup, on="team_id", how="left")
+    for column in ["team_name", "season_id", "season", "grade_id", "grade_name"]:
+        team_column = f"{column}_team"
+        if team_column not in output:
+            continue
+        if column not in output:
+            output[column] = output[team_column]
+        else:
+            current = output[column]
+            missing = current.isna() | current.astype(str).str.strip().isin(["", "nan", "None"])
+            output.loc[missing, column] = output.loc[missing, team_column]
+        output = output.drop(columns=[team_column])
     return output
 
 
@@ -190,30 +239,52 @@ def build_scorecard_bowling(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
 def build_bbb_batting(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     batting = prepare_scorecard_rows(frames["batting"], frames["matches"])
     balls = frames["balls"].copy()
-    if batting.empty or balls.empty:
+    if batting.empty:
         return pd.DataFrame()
+    batting = layout.scorecard_dedupe(batting, ["match_id", "innings_id", "participant_id", "bat_instance"])
+    if "dismissal_text" in batting:
+        batting = batting[~batting["dismissal_text"].fillna("").astype(str).str.contains("did not bat", case=False, na=False)].copy()
+    batting["runs_scored"] = pd.to_numeric(batting.get("runs_scored"), errors="coerce").fillna(0)
+    batting["balls_faced"] = pd.to_numeric(batting.get("balls_faced"), errors="coerce").fillna(0)
+    grouped = group_scope(batting).agg(
+        display_player_name=("canonical_player_name", "first"),
+        bbb_runs=("runs_scored", "sum"),
+        bbb_balls_faced=("balls_faced", "sum"),
+        bbb_batting_innings=("innings_id", "nunique"),
+        bbb_matches=("match_id", "nunique"),
+        latest_match_date=("first_match_day", "max"),
+    )
+    grouped["bat_sr"] = grouped.apply(lambda row: layout.divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls_faced"])), axis=1)
+
+    if balls.empty:
+        grouped["bbb_dot_balls"] = pd.NA
+        grouped["bbb_dot_ball_balls_faced"] = pd.NA
+        grouped["batting_dot_ball_pct"] = pd.NA
+        return grouped
+
     lookup = batting.drop_duplicates(["match_id", "innings_id", "participant_id"])[
         scope_columns() + ["participant_id"]
     ].copy()
     lookup = key_lookup(lookup, "participant_id")
     rows = key_lookup(balls, "striker_participant_id").merge(lookup, on=["_match_id", "_innings_id", "_participant_id"], how="inner")
     if rows.empty:
-        return pd.DataFrame()
+        grouped["bbb_dot_balls"] = pd.NA
+        grouped["bbb_dot_ball_balls_faced"] = pd.NA
+        grouped["batting_dot_ball_pct"] = pd.NA
+        return grouped
     rows["runs_bat"] = pd.to_numeric(rows.get("runs_bat"), errors="coerce").fillna(0)
     rows["wides"] = pd.to_numeric(rows.get("wides"), errors="coerce").fillna(0)
     rows["ball_faced"] = rows["wides"].eq(0).astype(int)
     rows["batting_dot_ball"] = ((rows["ball_faced"] == 1) & (rows["runs_bat"] == 0)).astype(int)
-    grouped = group_scope(rows).agg(
-        display_player_name=("canonical_player_name", "first"),
-        bbb_runs=("runs_bat", "sum"),
-        bbb_balls_faced=("ball_faced", "sum"),
+    dot_grouped = group_scope(rows).agg(
         bbb_dot_balls=("batting_dot_ball", "sum"),
-        bbb_batting_innings=("innings_id_y", "nunique"),
-        bbb_matches=("match_id_y", "nunique"),
-        latest_match_date=("first_match_day", "max"),
+        bbb_dot_ball_balls_faced=("ball_faced", "sum"),
     )
-    grouped["bat_sr"] = grouped.apply(lambda row: layout.divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls_faced"])), axis=1)
-    grouped["batting_dot_ball_pct"] = grouped.apply(lambda row: layout.divide_or_none(float(row["bbb_dot_balls"]) * 100, float(row["bbb_balls_faced"])), axis=1)
+    grouped = grouped.merge(dot_grouped, on=group_columns(), how="left")
+    grouped["batting_dot_ball_pct"] = grouped.apply(
+        lambda row: layout.divide_or_none(float(row["bbb_dot_balls"]) * 100, float(row["bbb_dot_ball_balls_faced"])),
+        axis=1,
+    )
     return grouped
 
 
@@ -269,10 +340,14 @@ def key_lookup(frame: pd.DataFrame, participant_column: str) -> pd.DataFrame:
 
 def group_scope(rows: pd.DataFrame) -> pd.core.groupby.generic.DataFrameGroupBy:
     return rows.groupby(
-        ["season_id", "season", "team_id", "grade_id", "grade_name", "player_key", "canonical_player_id", "canonical_player_name"],
+        group_columns(),
         dropna=False,
         as_index=False,
     )
+
+
+def group_columns() -> list[str]:
+    return ["season_id", "season", "team_id", "grade_id", "grade_name", "player_key", "canonical_player_id", "canonical_player_name"]
 
 
 if __name__ == "__main__":
