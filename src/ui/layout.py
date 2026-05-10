@@ -5286,16 +5286,16 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       table.hof-detail-sortable {{
         border-collapse: separate;
         border-spacing: 0;
-        min-width: 980px;
+        min-width: 900px;
         width: 100%;
         color: var(--hof-ink);
-        font-size: 15px;
+        font-size: 13px;
       }}
       .hof-detail-sortable th,
       .hof-detail-sortable td {{
         border-right: 1px solid var(--hof-grid);
         border-bottom: 1px solid var(--hof-grid);
-        padding: 10px 12px;
+        padding: 8px 9px;
         white-space: nowrap;
         background: #fff;
       }}
@@ -5324,13 +5324,17 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         position: sticky;
         left: 0;
         z-index: 2;
-        min-width: 112px;
-        max-width: 124px;
+        min-width: 108px;
+        max-width: 118px;
         text-align: left;
         white-space: normal;
         line-height: 1.2;
         overflow-wrap: anywhere;
         box-shadow: 3px 0 8px rgba(8, 10, 63, 0.06);
+      }}
+      .hof-detail-sortable .hof-col-debut-season,
+      .hof-detail-sortable .hof-col-latest-season {{
+        min-width: 88px;
       }}
       .hof-detail-sortable th.hof-col-player {{
         z-index: 4;
