@@ -89,6 +89,11 @@ ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
 MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
+SEASON_OVERVIEW_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "season_overview"
+SEASON_OVERVIEW_BBB_BATTING_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_batting_rates_by_scope.csv"
+SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_bowling_dot_rates_by_scope.csv"
+SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_batting_milestones_by_scope.csv"
+SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_bowling_milestones_by_scope.csv"
 HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
 )
@@ -849,6 +854,12 @@ def render_data_source_panel() -> dict[str, object] | None:
             st.error(str(error))
             return None
 
+    dashboard_frames = add_season_overview_detail_metrics(
+        dashboard_frames,
+        selected_season,
+        teams if is_all_teams else [selected_team],
+    )
+
     return {
         "request": request,
         "season": selected_season,
@@ -1027,6 +1038,144 @@ def frame_for_team_scope(
     if not frame.empty and "team_id" in frame:
         frame = frame[frame["team_id"].astype(str).isin(team_ids)]
     return frame.copy()
+
+
+def season_overview_detail_source_signature() -> tuple[tuple[str, float], ...]:
+    paths = [
+        SEASON_OVERVIEW_BBB_BATTING_RATES_PATH,
+        SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH,
+        SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH,
+        SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH,
+    ]
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
+
+
+@st.cache_data(show_spinner=False)
+def load_season_overview_detail_sources(_signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+    return {
+        "bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
+        "bbb_bowling": read_match_centre_csv(SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH),
+        "scorecard_batting": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH),
+        "scorecard_bowling": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH),
+    }
+
+
+def add_season_overview_detail_metrics(
+    frames: dict[str, pd.DataFrame],
+    selected_season: dict,
+    teams: list[dict],
+) -> dict[str, pd.DataFrame]:
+    output = {key: value.copy() if isinstance(value, pd.DataFrame) else value for key, value in frames.items()}
+    sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
+    team_ids = {str(team.get("id", "")) for team in teams if str(team.get("id", "")).strip()}
+    season_id = str(selected_season.get("id", "") or "")
+    season_name = str(selected_season.get("name", "") or "")
+
+    batting = output.get("batting", pd.DataFrame()).copy()
+    if not batting.empty:
+        batting = merge_player_metric_frame(
+            batting,
+            scoped_bbb_batting_rates(sources.get("bbb_batting", pd.DataFrame()), season_id, season_name, team_ids),
+        )
+        batting = merge_player_metric_frame(
+            batting,
+            scoped_scorecard_batting_counts(sources.get("scorecard_batting", pd.DataFrame()), season_id, season_name, team_ids),
+        )
+        output["batting"] = batting
+
+    bowling = output.get("bowling", pd.DataFrame()).copy()
+    if not bowling.empty:
+        bowling = merge_player_metric_frame(
+            bowling,
+            scoped_bbb_bowling_dot_rates(sources.get("bbb_bowling", pd.DataFrame()), season_id, season_name, team_ids),
+        )
+        bowling = merge_player_metric_frame(
+            bowling,
+            scoped_scorecard_bowling_counts(sources.get("scorecard_bowling", pd.DataFrame()), season_id, season_name, team_ids),
+        )
+        output["bowling"] = bowling
+    return output
+
+
+def scoped_source_rows(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
+    if frame.empty:
+        return frame.copy()
+    output = frame.copy()
+    if season_id and "season_id" in output:
+        output = output[output["season_id"].astype(str) == season_id]
+    elif season_name and "season" in output:
+        output = output[output["season"].astype(str).str.casefold() == season_name.casefold()]
+    if team_ids and "team_id" in output:
+        output = output[output["team_id"].astype(str).isin(team_ids)]
+    return output.copy()
+
+
+def scoped_bbb_batting_rates(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
+    rows = scoped_source_rows(frame, season_id, season_name, team_ids)
+    if rows.empty:
+        return pd.DataFrame(columns=["player_key", "seasonDetailBatSR"])
+    for column in ["bbb_runs", "bbb_balls_faced"]:
+        rows[column] = pd.to_numeric(rows.get(column), errors="coerce").fillna(0)
+    grouped = rows.groupby("player_key", as_index=False).agg(
+        seasonDetailBatRuns=("bbb_runs", "sum"),
+        seasonDetailBatBalls=("bbb_balls_faced", "sum"),
+    )
+    grouped["seasonDetailBatSR"] = grouped.apply(
+        lambda row: divide_or_none(float(row["seasonDetailBatRuns"]) * 100, float(row["seasonDetailBatBalls"])),
+        axis=1,
+    )
+    return grouped[["player_key", "seasonDetailBatSR"]]
+
+
+def scoped_scorecard_batting_counts(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
+    rows = scoped_source_rows(frame, season_id, season_name, team_ids)
+    if rows.empty:
+        return pd.DataFrame(columns=["player_key", "seasonDetail30s"])
+    rows["thirties"] = pd.to_numeric(rows.get("thirties"), errors="coerce").fillna(0)
+    grouped = rows.groupby("player_key", as_index=False).agg(seasonDetail30s=("thirties", "sum"))
+    grouped["seasonDetail30s"] = pd.to_numeric(grouped["seasonDetail30s"], errors="coerce").fillna(0).astype(int)
+    return grouped
+
+
+def scoped_bbb_bowling_dot_rates(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
+    rows = scoped_source_rows(frame, season_id, season_name, team_ids)
+    if rows.empty:
+        return pd.DataFrame(columns=["player_key", "seasonDetailDotBallPct"])
+    for column in ["dot_balls", "legal_balls"]:
+        rows[column] = pd.to_numeric(rows.get(column), errors="coerce").fillna(0)
+    grouped = rows.groupby("player_key", as_index=False).agg(
+        seasonDetailDotBalls=("dot_balls", "sum"),
+        seasonDetailLegalBalls=("legal_balls", "sum"),
+    )
+    grouped["seasonDetailDotBallPct"] = grouped.apply(
+        lambda row: divide_or_none(float(row["seasonDetailDotBalls"]) * 100, float(row["seasonDetailLegalBalls"])),
+        axis=1,
+    )
+    return grouped[["player_key", "seasonDetailDotBallPct"]]
+
+
+def scoped_scorecard_bowling_counts(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
+    rows = scoped_source_rows(frame, season_id, season_name, team_ids)
+    if rows.empty:
+        return pd.DataFrame(columns=["player_key", "seasonDetail3WIs", "seasonDetail5WIs"])
+    for column in ["three_wicket_innings", "five_wicket_innings"]:
+        rows[column] = pd.to_numeric(rows.get(column), errors="coerce").fillna(0)
+    grouped = rows.groupby("player_key", as_index=False).agg(
+        seasonDetail3WIs=("three_wicket_innings", "sum"),
+        seasonDetail5WIs=("five_wicket_innings", "sum"),
+    )
+    for column in ["seasonDetail3WIs", "seasonDetail5WIs"]:
+        grouped[column] = pd.to_numeric(grouped[column], errors="coerce").fillna(0).astype(int)
+    return grouped
+
+
+def merge_player_metric_frame(base: pd.DataFrame, metrics: pd.DataFrame) -> pd.DataFrame:
+    if base.empty or metrics.empty or "player_key" not in metrics:
+        return base
+    output = base.copy()
+    output["player_key"] = player_keys(add_missing_canonical_player_ids(output))
+    output = output.merge(metrics, on="player_key", how="left")
+    return output.drop(columns=["player_key"], errors="ignore")
 
 
 def parse_bool(value: object) -> bool:
@@ -9824,7 +9973,7 @@ def rank_badge(rank: int) -> str:
 
 def render_full_stats_section(dashboard_data: dict[str, object]) -> None:
     st.markdown('<div id="full-stats"></div>', unsafe_allow_html=True)
-    render_section_heading("Detailed Stats")
+    render_section_heading("Detailed Stats 📊")
     with st.container(key="full_stats_card"):
         tabs = ["Batting", "Bowling", "Fielding"]
         batting_tab, bowling_tab, fielding_tab = st.tabs(tabs)
@@ -10120,6 +10269,7 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
     config = standard_column_config()
     integer_columns = {
         "M",
+        "Innings",
         "Matches",
         "Seasons Played",
         "Runs",
@@ -10139,6 +10289,7 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
         "4W",
         "5W",
         "Balls",
+        "30s",
         "3WI",
         "5WI",
         "10WM",
@@ -10158,10 +10309,12 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
         "Run Outs",
         "Total Dismissals",
     }
-    decimal_columns = {"Avg", "SR", "Bat Avg", "Bat SR", "Bowl Avg", "Econ", "Economy", "Bowl SR"}
+    decimal_columns = {"Avg", "SR", "Bat Avg", "Bat SR", "Bowl Avg", "Eco", "Econ", "Economy", "Bowl SR"}
     for column in columns:
         if column in integer_columns:
             config[column] = st.column_config.NumberColumn(format="%d")
+        elif column == "Dot Ball %":
+            config[column] = st.column_config.NumberColumn(format="%.1f%%")
         elif column in decimal_columns:
             config[column] = st.column_config.NumberColumn(format="%.2f")
 
@@ -10442,6 +10595,8 @@ def build_full_stats_frame(
     output = coerce_display_numbers(output)
     if "BBI" in output:
         output["BBI"] = ordered_bbi_values(output["BBI"])
+    if "HS" in output:
+        output["HS"] = ordered_high_score_values(output["HS"])
 
     return output
 
@@ -10453,12 +10608,12 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "player_name",
             "team_name",
             "matches",
+            "battingInnings",
             "battingAggregate",
-            "balls_faced_display",
             "battingAverage",
-            "battingStrikeRate",
+            "seasonDetailBatSR",
             "high_score",
-            "battingNotOuts",
+            "seasonDetail30s",
             "batting50s",
             "batting100s",
             "batting0s",
@@ -10469,12 +10624,12 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Player",
             "Team",
             "M",
+            "Innings",
             "Runs",
-            "BF",
             "Bat Avg",
             "Bat SR",
             "HS",
-            "NO",
+            "30s",
             "50s",
             "100s",
             "0s",
@@ -10492,28 +10647,30 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "team_name",
             "matches",
             "overs_bowled_display",
+            "bowlingMaidens",
             "bowlingWickets",
-            "bowlingEconomyRate",
             "bowlingAverage",
             "bowlingStrikeRate",
-            "bowlingMaidens",
+            "bowlingEconomyRate",
+            "seasonDetailDotBallPct",
             "bowlingBestInnings",
-            "bowling4Wickets",
-            "bowling5WIs",
+            "seasonDetail3WIs",
+            "seasonDetail5WIs",
         ],
         [
             "Player",
             "Team",
             "M",
             "Overs",
+            "Maidens",
             "Wickets",
-            "Economy",
             "Bowl Avg",
             "Bowl SR",
-            "Maidens",
+            "Eco",
+            "Dot Ball %",
             "BBI",
-            "4W",
-            "5W",
+            "3WI",
+            "5WI",
         ],
     )
 
@@ -10623,8 +10780,8 @@ def pretty_column_name_map() -> dict[str, str]:
         "team_name": "Team",
         "grade_name": "Grade",
         "matches": "M",
-        "innings": "Inns",
-        "battingInnings": "Inns",
+        "innings": "Innings",
+        "battingInnings": "Innings",
         "battingAggregate": "Runs",
         "balls_faced_display": "BF",
         "ballsFaced": "BF",
@@ -10638,6 +10795,8 @@ def pretty_column_name_map() -> dict[str, str]:
         "battingMinutes": "Mins",
         "battingAverage": "Bat Avg",
         "battingStrikeRate": "Bat SR",
+        "seasonDetailBatSR": "Bat SR",
+        "seasonDetail30s": "30s",
         "high_score": "HS",
         "battingHighScore": "Raw HS",
         "bowlingWickets": "Wickets",
@@ -10646,14 +10805,17 @@ def pretty_column_name_map() -> dict[str, str]:
         "bowlingOvers": "Overs",
         "overs": "Overs",
         "bowlingAverage": "Bowl Avg",
-        "bowlingEconomyRate": "Economy",
+        "bowlingEconomyRate": "Eco",
         "bowlingStrikeRate": "Bowl SR",
+        "seasonDetailDotBallPct": "Dot Ball %",
         "bowlingBestInnings": "BBI",
         "bowlingBalls": "Balls",
         "bowlingRuns": "Runs",
         "bowlingMaidens": "Maidens",
         "bowling4Wickets": "4W",
         "bowling5WIs": "5W",
+        "seasonDetail3WIs": "3WI",
+        "seasonDetail5WIs": "5WI",
         "bowling10WMs": "10WM",
         "bowlingWides": "Wides",
         "bowlingNoBalls": "NB",
