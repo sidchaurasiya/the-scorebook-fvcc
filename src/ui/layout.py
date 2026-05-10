@@ -1114,10 +1114,15 @@ def scoped_bbb_batting_rates(frame: pd.DataFrame, season_id: str, season_name: s
     rows = scoped_source_rows(frame, season_id, season_name, team_ids)
     if rows.empty:
         return pd.DataFrame(columns=["player_key", "seasonDetailBatSR", "seasonDetailBatDotBallPct"])
-    for column in ["bbb_runs", "bbb_balls_faced", "bbb_dot_balls"]:
+    has_dot_ball_source = "bbb_dot_balls" in rows
+    for column in ["bbb_runs", "bbb_balls_faced"]:
         if column not in rows:
             rows[column] = 0
         rows[column] = pd.to_numeric(rows[column], errors="coerce").fillna(0)
+    if has_dot_ball_source:
+        rows["bbb_dot_balls"] = pd.to_numeric(rows["bbb_dot_balls"], errors="coerce").fillna(0)
+    else:
+        rows["bbb_dot_balls"] = pd.NA
     grouped = rows.groupby("player_key", as_index=False).agg(
         seasonDetailBatRuns=("bbb_runs", "sum"),
         seasonDetailBatBalls=("bbb_balls_faced", "sum"),
@@ -1127,10 +1132,13 @@ def scoped_bbb_batting_rates(frame: pd.DataFrame, season_id: str, season_name: s
         lambda row: divide_or_none(float(row["seasonDetailBatRuns"]) * 100, float(row["seasonDetailBatBalls"])),
         axis=1,
     )
-    grouped["seasonDetailBatDotBallPct"] = grouped.apply(
-        lambda row: divide_or_none(float(row["seasonDetailBatDotBalls"]) * 100, float(row["seasonDetailBatBalls"])),
-        axis=1,
-    )
+    if has_dot_ball_source:
+        grouped["seasonDetailBatDotBallPct"] = grouped.apply(
+            lambda row: divide_or_none(float(row["seasonDetailBatDotBalls"]) * 100, float(row["seasonDetailBatBalls"])),
+            axis=1,
+        )
+    else:
+        grouped["seasonDetailBatDotBallPct"] = pd.NA
     return grouped[["player_key", "seasonDetailBatSR", "seasonDetailBatDotBallPct"]]
 
 
@@ -10609,7 +10617,7 @@ def build_full_stats_frame(
 
 
 def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
-    return prepare_curated_display_frame(
+    output = prepare_curated_display_frame(
         df,
         [
             "player_name",
@@ -10646,6 +10654,19 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "6s",
         ],
     )
+    return apply_batting_detail_fallbacks(output)
+
+
+def apply_batting_detail_fallbacks(df: pd.DataFrame) -> pd.DataFrame:
+    output = df.copy()
+    if "30s" in output:
+        thirties = pd.to_numeric(output["30s"], errors="coerce").fillna(0)
+        if "HS" in output:
+            hs_runs = output["HS"].map(lambda value: parse_batting_score(value)[0])
+            hs_fallback = pd.to_numeric(hs_runs, errors="coerce").between(30, 49, inclusive="both") & (thirties <= 0)
+            thirties = thirties.mask(hs_fallback, 1)
+        output["30s"] = thirties.astype(int)
+    return output
 
 
 def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
