@@ -101,6 +101,9 @@ HALL_OF_FAME_PREMIERSHIP_WINS_PATH = (
 HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_premierships.csv"
 )
+HALL_OF_FAME_PLAYER_WIN_RATES_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_win_rates.csv"
+)
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
@@ -672,18 +675,39 @@ def render_data_source_panel() -> dict[str, object] | None:
         (index for index, season in enumerate(seasons) if season.get("isCurrentSeason")),
         0,
     )
-    requested_season_name = str(st.session_state.pop("pending_season_overview_name", "") or "").strip()
-    if requested_season_name:
-        requested_index = next(
-            (
-                index
-                for index, season in enumerate(seasons)
-                if str(season.get("name", "")).strip().casefold() == requested_season_name.casefold()
-            ),
-            None,
-        )
-        if requested_index is not None:
-            current_season_index = requested_index
+    selected_season_key = "season_overview_selected_season"
+    requested_season_name = (
+        str(st.session_state.pop("pending_season_overview_name", "") or "").strip()
+        or unquote(query_param_value("season"))
+    )
+    requested_season_id = query_param_value("season_id")
+    requested_index = next(
+        (
+            index
+            for index, season in enumerate(seasons)
+            if (
+                requested_season_id
+                and str(season.get("id", "")).strip() == requested_season_id
+            )
+            or (
+                requested_season_name
+                and str(season.get("name", "")).strip().casefold() == requested_season_name.casefold()
+            )
+        ),
+        None,
+    )
+    if requested_index is not None:
+        current_season_index = requested_index
+        requested_token = f"{seasons[requested_index].get('id', '')}|{seasons[requested_index].get('name', '')}"
+        if st.session_state.get("season_overview_requested_token") != requested_token:
+            st.session_state[selected_season_key] = seasons[requested_index]
+            st.session_state["season_overview_requested_token"] = requested_token
+    elif not requested_season_name and not requested_season_id:
+        current = seasons[current_season_index]
+        current_token = f"{current.get('id', '')}|{current.get('name', '')}"
+        if st.session_state.get("season_overview_requested_token") != current_token:
+            st.session_state[selected_season_key] = current
+            st.session_state["season_overview_requested_token"] = current_token
 
     with st.container(key="season_controls"):
         season_col, team_col = st.columns([0.9, 1.35], gap="large")
@@ -695,7 +719,13 @@ def render_data_source_panel() -> dict[str, object] | None:
                 index=current_season_index,
                 format_func=lambda season: season["name"],
                 label_visibility="collapsed",
+                key=selected_season_key,
             )
+            selected_season_name_for_url = str(selected_season.get("name", "") or "").strip()
+            if selected_season_name_for_url and query_param_value("season") != selected_season_name_for_url:
+                st.query_params["season"] = selected_season_name_for_url
+            selected_token = f"{selected_season.get('id', '')}|{selected_season.get('name', '')}"
+            st.session_state["season_overview_requested_token"] = selected_token
 
         try:
             if using_local_backup:
@@ -3386,6 +3416,9 @@ def build_all_time_player_table(
 
 
 def build_match_centre_win_rates() -> pd.DataFrame:
+    deploy_rates = load_deploy_safe_win_rates(player_win_rates_signature())
+    if not deploy_rates.empty:
+        return deploy_rates
     scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
     matches = read_match_centre_csv(scope / "all_matches.csv")
     if matches.empty or "match_id" not in matches:
@@ -3432,6 +3465,31 @@ def build_match_centre_win_rates() -> pd.DataFrame:
     )
     grouped["win_pct"] = grouped.apply(lambda row: (row["Win Count"] * 100 / row["Win Matches"]) if row["Win Matches"] else pd.NA, axis=1)
     return grouped[["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"]]
+
+
+def player_win_rates_signature() -> tuple[tuple[str, float], ...]:
+    if HALL_OF_FAME_PLAYER_WIN_RATES_PATH.exists():
+        return ((str(HALL_OF_FAME_PLAYER_WIN_RATES_PATH), HALL_OF_FAME_PLAYER_WIN_RATES_PATH.stat().st_mtime),)
+    return tuple()
+
+
+@st.cache_data(show_spinner=False)
+def load_deploy_safe_win_rates(_signature: tuple[tuple[str, float], ...]) -> pd.DataFrame:
+    frame = read_match_centre_csv(HALL_OF_FAME_PLAYER_WIN_RATES_PATH)
+    if frame.empty:
+        return pd.DataFrame(columns=["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"])
+    output = frame.copy()
+    if "player_key" not in output:
+        output["player_key"] = output.get("canonical_player_id", "")
+    if "player_name_key" not in output:
+        name_source = output.get("display_player_name", output.get("canonical_player_name", pd.Series("", index=output.index)))
+        output["player_name_key"] = name_source.map(player_name_match_key)
+    output = output.rename(columns={"matches_with_result": "Win Matches", "wins": "Win Count"})
+    for column in ["Win Matches", "Win Count", "win_pct"]:
+        if column not in output:
+            output[column] = pd.NA
+        output[column] = pd.to_numeric(output[column], errors="coerce")
+    return output[["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"]]
 
 
 def build_player_identity_frame(frames: list[pd.DataFrame]) -> pd.DataFrame:
