@@ -104,6 +104,15 @@ HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH = (
 HALL_OF_FAME_PLAYER_WIN_RATES_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_win_rates.csv"
 )
+HALL_OF_FAME_BBB_BATTING_RATES_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_bbb_batting_rates.csv"
+)
+HALL_OF_FAME_SCORECARD_MILESTONES_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_scorecard_milestones.csv"
+)
+HALL_OF_FAME_BOWLING_MILESTONES_PATH = (
+    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_bowling_milestones.csv"
+)
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
@@ -3492,6 +3501,72 @@ def load_deploy_safe_win_rates(_signature: tuple[tuple[str, float], ...]) -> pd.
     return output[["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"]]
 
 
+def hall_of_fame_detail_source_signature() -> tuple[tuple[str, float], ...]:
+    paths = [
+        HALL_OF_FAME_BBB_BATTING_RATES_PATH,
+        HALL_OF_FAME_SCORECARD_MILESTONES_PATH,
+        HALL_OF_FAME_BOWLING_MILESTONES_PATH,
+    ]
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
+
+
+@st.cache_data(show_spinner=False)
+def load_deploy_safe_bbb_batting_rates(_signature: tuple[tuple[str, float], ...]) -> pd.DataFrame:
+    frame = read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH)
+    if frame.empty:
+        return pd.DataFrame(columns=["player_key", "ballByBallBatSR", "ballByBallBatRuns", "ballByBallBatBalls"])
+    output = frame.copy()
+    if "player_key" not in output:
+        output["player_key"] = output.get("canonical_player_id", "")
+    output = output.rename(
+        columns={
+            "bat_sr": "ballByBallBatSR",
+            "bbb_runs": "ballByBallBatRuns",
+            "bbb_balls_faced": "ballByBallBatBalls",
+        }
+    )
+    for column in ["ballByBallBatSR", "ballByBallBatRuns", "ballByBallBatBalls"]:
+        if column not in output:
+            output[column] = pd.NA
+        output[column] = pd.to_numeric(output[column], errors="coerce")
+    return output[["player_key", "ballByBallBatSR", "ballByBallBatRuns", "ballByBallBatBalls"]]
+
+
+@st.cache_data(show_spinner=False)
+def load_deploy_safe_scorecard_detail_milestones(_signature: tuple[tuple[str, float], ...]) -> pd.DataFrame:
+    batting = read_match_centre_csv(HALL_OF_FAME_SCORECARD_MILESTONES_PATH)
+    bowling = read_match_centre_csv(HALL_OF_FAME_BOWLING_MILESTONES_PATH)
+    frames = []
+    if not batting.empty:
+        bat_output = batting.copy()
+        if "player_key" not in bat_output:
+            bat_output["player_key"] = bat_output.get("canonical_player_id", "")
+        bat_output = bat_output.rename(columns={"thirties": "batting30s"})
+        if "batting30s" not in bat_output:
+            bat_output["batting30s"] = 0
+        bat_output["batting30s"] = pd.to_numeric(bat_output["batting30s"], errors="coerce").fillna(0).astype(int)
+        frames.append(bat_output[["player_key", "batting30s"]])
+    if not bowling.empty:
+        bowl_output = bowling.copy()
+        if "player_key" not in bowl_output:
+            bowl_output["player_key"] = bowl_output.get("canonical_player_id", "")
+        bowl_output = bowl_output.rename(columns={"three_wicket_innings": "bowling3WIs"})
+        if "bowling3WIs" not in bowl_output:
+            bowl_output["bowling3WIs"] = 0
+        bowl_output["bowling3WIs"] = pd.to_numeric(bowl_output["bowling3WIs"], errors="coerce").fillna(0).astype(int)
+        frames.append(bowl_output[["player_key", "bowling3WIs"]])
+    if not frames:
+        return pd.DataFrame(columns=["player_key", "batting30s", "bowling3WIs"])
+    output = frames[0]
+    for frame in frames[1:]:
+        output = output.merge(frame, on="player_key", how="outer")
+    for column in ["batting30s", "bowling3WIs"]:
+        if column not in output:
+            output[column] = 0
+        output[column] = pd.to_numeric(output[column], errors="coerce").fillna(0).astype(int)
+    return output[["player_key", "batting30s", "bowling3WIs"]]
+
+
 def build_player_identity_frame(frames: list[pd.DataFrame]) -> pd.DataFrame:
     records = []
     for frame in frames:
@@ -3706,6 +3781,9 @@ def parse_batting_score(score: object, dismissal_type: object = None) -> tuple[i
 
 def build_ball_by_ball_batting_strike_rates() -> pd.DataFrame:
     """Hall of Fame batting strike rate uses verified ball-by-ball coverage only."""
+    deploy_rates = load_deploy_safe_bbb_batting_rates(hall_of_fame_detail_source_signature())
+    if not deploy_rates.empty:
+        return deploy_rates
     scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
     matches = read_match_centre_csv(scope / "all_matches.csv")
     batting = read_match_centre_csv(scope / "all_scorecard_batting.csv")
@@ -3769,6 +3847,9 @@ def build_ball_by_ball_batting_strike_rates() -> pd.DataFrame:
 
 
 def build_scorecard_detail_milestone_counts() -> pd.DataFrame:
+    deploy_counts = load_deploy_safe_scorecard_detail_milestones(hall_of_fame_detail_source_signature())
+    if not deploy_counts.empty:
+        return deploy_counts
     scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
     matches = read_match_centre_csv(scope / "all_matches.csv")
     batting = read_match_centre_csv(scope / "all_scorecard_batting.csv")
