@@ -12,6 +12,8 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -118,6 +120,7 @@ def main() -> int:
     print_refresh_summary(summary)
 
     identity_summary = rebuild_identity_and_audits()
+    match_centre_summary = refresh_current_match_centre_summaries(current_ids)
     after = capture_snapshot()
 
     print()
@@ -126,6 +129,10 @@ def main() -> int:
     print()
     print("Identity and audit rebuild")
     for label, value in identity_summary.items():
+        print(f"- {label}: {value}")
+    print()
+    print("Current-season match-centre and deploy-safe detail summaries")
+    for label, value in match_centre_summary.items():
         print(f"- {label}: {value}")
 
     print()
@@ -230,6 +237,52 @@ def rebuild_identity_and_audits() -> dict[str, object]:
         "identity summary rows": identity_exports.get("summary_rows", 0),
         "possible duplicate rows": identity_exports.get("possible_duplicates", 0),
     }
+
+
+def refresh_current_match_centre_summaries(current_season_ids: set[str]) -> dict[str, object]:
+    teams = read_processed("teams")
+    if teams.empty or not current_season_ids:
+        return {"current scopes refreshed": 0, "detail exports rebuilt": "no current teams found"}
+    current = teams[teams["season_id"].astype(str).isin(current_season_ids)].copy()
+    current = current.drop_duplicates(["season_id", "team_id"])
+    if current.empty:
+        return {"current scopes refreshed": 0, "detail exports rebuilt": "no current teams found"}
+
+    scopes: list[str] = []
+    for season_id, group in current.groupby("season_id", sort=False):
+        season_name = str(group["season"].dropna().iloc[0] if "season" in group and not group["season"].dropna().empty else season_id)
+        scope_name = f"current_{slugify(season_name)}"
+        command = [
+            sys.executable,
+            str(ROOT / "scripts" / "refresh_match_centre_data.py"),
+            "--season-id",
+            str(season_id),
+            "--output-scope-name",
+            scope_name,
+            "--sleep-seconds",
+            "0.5",
+            "--force-refresh",
+        ]
+        for team_id in group["team_id"].dropna().astype(str).drop_duplicates():
+            command.extend(["--team-id", team_id])
+        subprocess.run(command, cwd=ROOT, check=True)
+        scopes.append(scope_name)
+
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_season_overview_detail_exports.py")],
+        cwd=ROOT,
+        check=True,
+    )
+    return {
+        "current scopes refreshed": len(scopes),
+        "scopes": ", ".join(scopes),
+        "detail exports rebuilt": "yes",
+    }
+
+
+def slugify(value: str) -> str:
+    text = re.sub(r"[^a-z0-9]+", "_", value.strip().casefold())
+    return text.strip("_") or "current_season"
 
 
 def combined_processed_frames(*, apply_identity: bool, aliases: pd.DataFrame | None = None) -> pd.DataFrame:

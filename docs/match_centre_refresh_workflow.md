@@ -4,6 +4,8 @@ Match-centre data is match-level PlayCricket data from public match-centre endpo
 
 This pipeline is separate from the existing aggregate stats refresh. It does not replace `scripts/refresh_data.py`, does not alter the Streamlit app, and does not write into the existing aggregate `data/processed/*.csv` tables.
 
+The weekly `scripts/refresh_data.py` workflow now runs a narrow current-season match-centre refresh after the aggregate PlayCricket refresh, then rebuilds the small deploy-safe Season Overview detail exports. This prevents aggregate scorecard stats from being current while ball-by-ball-derived metrics remain stale.
+
 ## Data Strategy
 
 Scorecard data is the base layer because every completed public match can have useful scorecard information even when ball-by-ball is missing. Ball-by-ball is an enrichment layer and should only be fetched when the scorecard says `isBallByBall` is true.
@@ -47,6 +49,29 @@ python scripts/refresh_match_centre_data.py \
 ```
 
 Use `--force-refresh` only when you intentionally want to refetch cached raw files.
+
+## Deploy-Safe Season Overview Exports
+
+After current-season match-centre data has been refreshed, rebuild the tracked Season Overview summaries:
+
+```bash
+python scripts/build_season_overview_detail_exports.py
+```
+
+This reads local processed match-centre scopes, including `all_available` and current-season scopes such as `current_winter_2026`, then de-duplicates overlapping matches. It writes small deploy-safe CSVs under:
+
+```text
+data/processed/season_overview/
+```
+
+These files power Season Overview ball-by-ball and scorecard-derived detailed-table metrics:
+
+- `bbb_batting_rates_by_scope.csv`
+- `bbb_bowling_dot_rates_by_scope.csv`
+- `scorecard_batting_milestones_by_scope.csv`
+- `scorecard_bowling_milestones_by_scope.csv`
+
+Do not commit `data/raw/match_centre/` or `data/processed/match_centre/`. Commit only the small deploy-safe `data/processed/season_overview/` exports when they are intentionally refreshed.
 
 ## Outputs
 

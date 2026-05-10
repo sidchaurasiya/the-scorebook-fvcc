@@ -59,6 +59,8 @@ git status
    - rebuild shared processed CSVs
    - reapply canonical player mapping
    - reapply team/grade cleaning
+   - refresh current-season match-centre data for live-scored matches
+   - rebuild deploy-safe Season Overview ball-by-ball detail summaries
    - print a refresh summary
 
 7. Restart the local app.
@@ -85,9 +87,11 @@ http://localhost:8502/
    Useful checks:
 
    - Season Overview season dropdown includes the latest season.
+   - Season Overview ball-by-ball metrics include the latest live-scored match.
    - Player Profile shows new season rows for players who played.
    - Hall of Fame totals update where relevant.
    - Milestone totals update where relevant.
+   - The latest match date appears in `data/processed/season_overview/*_by_scope.csv`.
    - Biggest Improvers uses the correct previous same-type season.
 
 11. Check changed files.
