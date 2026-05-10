@@ -1113,18 +1113,25 @@ def scoped_source_rows(frame: pd.DataFrame, season_id: str, season_name: str, te
 def scoped_bbb_batting_rates(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
     rows = scoped_source_rows(frame, season_id, season_name, team_ids)
     if rows.empty:
-        return pd.DataFrame(columns=["player_key", "seasonDetailBatSR"])
-    for column in ["bbb_runs", "bbb_balls_faced"]:
-        rows[column] = pd.to_numeric(rows.get(column), errors="coerce").fillna(0)
+        return pd.DataFrame(columns=["player_key", "seasonDetailBatSR", "seasonDetailBatDotBallPct"])
+    for column in ["bbb_runs", "bbb_balls_faced", "bbb_dot_balls"]:
+        if column not in rows:
+            rows[column] = 0
+        rows[column] = pd.to_numeric(rows[column], errors="coerce").fillna(0)
     grouped = rows.groupby("player_key", as_index=False).agg(
         seasonDetailBatRuns=("bbb_runs", "sum"),
         seasonDetailBatBalls=("bbb_balls_faced", "sum"),
+        seasonDetailBatDotBalls=("bbb_dot_balls", "sum"),
     )
     grouped["seasonDetailBatSR"] = grouped.apply(
         lambda row: divide_or_none(float(row["seasonDetailBatRuns"]) * 100, float(row["seasonDetailBatBalls"])),
         axis=1,
     )
-    return grouped[["player_key", "seasonDetailBatSR"]]
+    grouped["seasonDetailBatDotBallPct"] = grouped.apply(
+        lambda row: divide_or_none(float(row["seasonDetailBatDotBalls"]) * 100, float(row["seasonDetailBatBalls"])),
+        axis=1,
+    )
+    return grouped[["player_key", "seasonDetailBatSR", "seasonDetailBatDotBallPct"]]
 
 
 def scoped_scorecard_batting_counts(frame: pd.DataFrame, season_id: str, season_name: str, team_ids: set[str]) -> pd.DataFrame:
@@ -10612,6 +10619,7 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "battingAggregate",
             "battingAverage",
             "seasonDetailBatSR",
+            "seasonDetailBatDotBallPct",
             "high_score",
             "seasonDetail30s",
             "batting50s",
@@ -10628,6 +10636,7 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Runs",
             "Bat Avg",
             "Bat SR",
+            "Dot Ball %",
             "HS",
             "30s",
             "50s",
@@ -10796,6 +10805,7 @@ def pretty_column_name_map() -> dict[str, str]:
         "battingAverage": "Bat Avg",
         "battingStrikeRate": "Bat SR",
         "seasonDetailBatSR": "Bat SR",
+        "seasonDetailBatDotBallPct": "Dot Ball %",
         "seasonDetail30s": "30s",
         "high_score": "HS",
         "battingHighScore": "Raw HS",
