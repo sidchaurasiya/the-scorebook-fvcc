@@ -239,48 +239,69 @@ def build_scorecard_bowling(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
 def build_bbb_batting(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     batting = prepare_scorecard_rows(frames["batting"], frames["matches"])
     balls = frames["balls"].copy()
-    if batting.empty:
+    if batting.empty or balls.empty:
         return pd.DataFrame()
     batting = layout.scorecard_dedupe(batting, ["match_id", "innings_id", "participant_id", "bat_instance"])
-    if "dismissal_text" in batting:
-        batting = batting[~batting["dismissal_text"].fillna("").astype(str).str.contains("did not bat", case=False, na=False)].copy()
-    batting["runs_scored"] = pd.to_numeric(batting.get("runs_scored"), errors="coerce").fillna(0)
-    batting["balls_faced"] = pd.to_numeric(batting.get("balls_faced"), errors="coerce").fillna(0)
-    grouped = group_scope(batting).agg(
-        display_player_name=("canonical_player_name", "first"),
-        bbb_runs=("runs_scored", "sum"),
-        bbb_balls_faced=("balls_faced", "sum"),
-        bbb_batting_innings=("innings_id", "nunique"),
-        bbb_matches=("match_id", "nunique"),
-        latest_match_date=("first_match_day", "max"),
-    )
-    grouped["bat_sr"] = grouped.apply(lambda row: layout.divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls_faced"])), axis=1)
-
-    if balls.empty:
-        grouped["bbb_dot_balls"] = pd.NA
-        grouped["bbb_dot_ball_balls_faced"] = pd.NA
-        grouped["batting_dot_ball_pct"] = pd.NA
-        return grouped
-
+    batting["scorecard_runs"] = pd.to_numeric(batting.get("runs_scored"), errors="coerce")
+    batting["scorecard_balls"] = pd.to_numeric(batting.get("balls_faced"), errors="coerce")
     lookup = batting.drop_duplicates(["match_id", "innings_id", "participant_id"])[
-        scope_columns() + ["participant_id"]
+        scope_columns() + ["participant_id", "scorecard_runs", "scorecard_balls"]
     ].copy()
     lookup = key_lookup(lookup, "participant_id")
     rows = key_lookup(balls, "striker_participant_id").merge(lookup, on=["_match_id", "_innings_id", "_participant_id"], how="inner")
     if rows.empty:
-        grouped["bbb_dot_balls"] = pd.NA
-        grouped["bbb_dot_ball_balls_faced"] = pd.NA
-        grouped["batting_dot_ball_pct"] = pd.NA
-        return grouped
+        return pd.DataFrame()
     rows["runs_bat"] = pd.to_numeric(rows.get("runs_bat"), errors="coerce").fillna(0)
     rows["wides"] = pd.to_numeric(rows.get("wides"), errors="coerce").fillna(0)
+    rows["source_batter_runs"] = pd.to_numeric(rows.get("striker_runs_scored"), errors="coerce")
+    rows["source_batter_balls"] = pd.to_numeric(rows.get("striker_balls_faced"), errors="coerce")
     rows["ball_faced"] = rows["wides"].eq(0).astype(int)
     rows["batting_dot_ball"] = ((rows["ball_faced"] == 1) & (rows["runs_bat"] == 0)).astype(int)
-    dot_grouped = group_scope(rows).agg(
+    innings_grouped = rows.groupby(
+        group_columns() + ["match_id_y", "innings_id_y", "scorecard_runs", "scorecard_balls"],
+        dropna=False,
+        as_index=False,
+    ).agg(
+        display_player_name=("canonical_player_name", "first"),
+        summed_runs=("runs_bat", "sum"),
+        summed_balls_faced=("ball_faced", "sum"),
+        source_batter_runs=("source_batter_runs", "max"),
+        source_batter_balls=("source_batter_balls", "max"),
         bbb_dot_balls=("batting_dot_ball", "sum"),
-        bbb_dot_ball_balls_faced=("ball_faced", "sum"),
+        latest_match_date=("first_match_day", "max"),
     )
-    grouped = grouped.merge(dot_grouped, on=group_columns(), how="left")
+    innings_grouped["has_source_cumulative"] = innings_grouped["source_batter_runs"].notna() & innings_grouped["source_batter_balls"].notna()
+    innings_grouped["bbb_runs"] = innings_grouped["source_batter_runs"].where(
+        innings_grouped["has_source_cumulative"],
+        innings_grouped["summed_runs"],
+    )
+    innings_grouped["bbb_balls_faced"] = innings_grouped["source_batter_balls"].where(
+        innings_grouped["has_source_cumulative"],
+        innings_grouped["summed_balls_faced"],
+    )
+    innings_grouped["bbb_dot_ball_balls_faced"] = innings_grouped["bbb_balls_faced"]
+    innings_grouped["verified_bbb_innings"] = (
+        innings_grouped["scorecard_runs"].notna()
+        & innings_grouped["scorecard_balls"].notna()
+        & innings_grouped["scorecard_balls"].gt(0)
+        & innings_grouped["bbb_balls_faced"].gt(0)
+        & innings_grouped["bbb_runs"].eq(innings_grouped["scorecard_runs"])
+        & innings_grouped["bbb_balls_faced"].eq(innings_grouped["scorecard_balls"])
+    )
+    innings_grouped = innings_grouped[innings_grouped["verified_bbb_innings"]].copy()
+    if innings_grouped.empty:
+        return pd.DataFrame()
+    grouped = innings_grouped.groupby(group_columns(), dropna=False, as_index=False).agg(
+        display_player_name=("display_player_name", "first"),
+        bbb_runs=("bbb_runs", "sum"),
+        bbb_balls_faced=("bbb_balls_faced", "sum"),
+        bbb_dot_balls=("bbb_dot_balls", "sum"),
+        bbb_dot_ball_balls_faced=("bbb_dot_ball_balls_faced", "sum"),
+        bbb_batting_innings=("innings_id_y", "nunique"),
+        bbb_matches=("match_id_y", "nunique"),
+        latest_match_date=("latest_match_date", "max"),
+    )
+    grouped["bat_sr"] = grouped.apply(lambda row: layout.divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls_faced"])), axis=1)
     grouped["batting_dot_ball_pct"] = grouped.apply(
         lambda row: layout.divide_or_none(float(row["bbb_dot_balls"]) * 100, float(row["bbb_dot_ball_balls_faced"])),
         axis=1,
