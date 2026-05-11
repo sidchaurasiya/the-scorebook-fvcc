@@ -324,6 +324,16 @@ Sections:
 - Leaders by Team/Grade 👥
   - Subtext: `Top performers and key totals by team/grade.`
 
+Detailed Stats source rules:
+
+- Runs, Innings, Batting Average, HS, 30s, 50s, 100s, ducks, 4s, and 6s may use scorecard/aggregate sources.
+- Bat SR must be calculated only from verified ball-by-ball batting innings: ball-by-ball runs divided by ball-by-ball balls faced from the same innings.
+- Batting Dot Ball % must be calculated only from verified ball-by-ball deliveries: batter dot balls divided by ball-by-ball balls faced.
+- Any future batting metric that needs delivery-level data must also use ball-by-ball only. Examples: boundary percentage/rate from balls, balls per boundary, balls per dismissal, and similar quality/rate metrics.
+- Never mix all-scorecard totals with ball-by-ball denominators.
+- If verified ball-by-ball data is missing for the selected season/team scope, delivery-based metrics should show blank/`N/A`, not `0.0`.
+- This rule matters after every weekly data refresh because new scorecard totals can appear before or without usable ball-by-ball detail.
+
 Biggest Improvers logic:
 
 - Cards:
@@ -832,4 +842,3 @@ Before making any future change:
 5. Run local app on port 8502 for review.
 6. Commit locally after verification.
 7. Do not push until Preet confirms.
-

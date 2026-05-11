@@ -17,6 +17,23 @@ This means:
 - Validation warnings are reviewed, not treated as hard failures.
 - Raw files are cached so reruns avoid repeated public requests.
 
+## Ball-By-Ball Metric Source Rule
+
+Season Overview can use scorecard or aggregate data for normal totals such as Runs, Innings, Batting Average, HS, 30s, 50s, 100s, ducks, 4s, and 6s.
+
+Any metric that depends on delivery-level behaviour must come only from verified ball-by-ball computation in the same selected season/team scope. This includes:
+
+- Bat SR
+- Batting Dot Ball %
+- boundary percentage or boundary rate from balls
+- balls per boundary
+- balls per dismissal
+- any future batting quality/rate metric requiring delivery-level data
+
+Do not mix all-scorecard totals with ball-by-ball denominators. A bad example is total scorecard runs from all matches divided by balls faced from only ball-by-ball matches.
+
+If a player has no verified ball-by-ball data in the selected scope, delivery-based metrics should display blank/`N/A`, not `0.0`.
+
 ## Safe Refresh Examples
 
 Single team:
