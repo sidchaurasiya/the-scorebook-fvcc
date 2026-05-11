@@ -9896,13 +9896,13 @@ def render_leader_cards(dashboard_data: dict[str, object]) -> None:
             render_compact_leaderboard_card(
                 "Batting Leaders",
                 batting_df.sort_values("battingAggregate", ascending=False).head(5),
-                columns=["player_name", "matches", "battingAggregate", "battingAverage", "battingStrikeRate", "high_score"],
+                columns=["player_name", "matches", "battingAggregate", "battingAverage", "seasonDetailBatSR", "high_score"],
                 rename_map={
                     "player_name": "Player",
                     "matches": "M",
                     "battingAggregate": "Runs",
                     "battingAverage": "Avg",
-                    "battingStrikeRate": "SR",
+                    "seasonDetailBatSR": "SR",
                     "high_score": "HS",
                 },
                 link_label="View full batting stats",
@@ -10448,7 +10448,7 @@ def render_batting_table(
         "battingAggregate",
         "balls_faced_display",
         "battingAverage",
-        "battingStrikeRate",
+        "seasonDetailBatSR",
         "high_score",
     ]
     if show_team:
@@ -10465,7 +10465,7 @@ def render_batting_table(
                 "battingAggregate": "Runs",
                 "balls_faced_display": "BF",
                 "battingAverage": "Avg",
-                "battingStrikeRate": "SR",
+                "seasonDetailBatSR": "SR",
                 "high_score": "HS",
             },
         ),
