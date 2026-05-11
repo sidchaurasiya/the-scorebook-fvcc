@@ -10582,13 +10582,16 @@ def render_full_stats_table(
     show_team: bool = False,
 ) -> None:
     output = build_full_stats_frame(df, category, show_team)
+    column_config = numeric_column_config(output.columns.tolist())
+    if category == "batting" and "Bat SR" in output:
+        column_config["Bat SR"] = st.column_config.NumberColumn(format="%.1f%%")
     render_filterable_dataframe(
         output,
         key_prefix=f"full_stats_{category}_{'team' if show_team else 'no_team'}",
         use_container_width=True,
         hide_index=True,
         height=520,
-        column_config=numeric_column_config(output.columns.tolist()),
+        column_config=column_config,
         show_filters=False,
     )
 
@@ -10633,7 +10636,6 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "battingAggregate",
             "battingAverage",
             "seasonDetailBatSR",
-            "seasonDetailBatDotBallPct",
             "high_score",
             "seasonDetail30s",
             "batting50s",
@@ -10650,7 +10652,6 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Runs",
             "Bat Avg",
             "Bat SR",
-            "Dot Ball %",
             "HS",
             "30s",
             "50s",
@@ -10688,7 +10689,6 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "bowlingAverage",
             "bowlingStrikeRate",
             "bowlingEconomyRate",
-            "seasonDetailDotBallPct",
             "bowlingBestInnings",
             "seasonDetail3WIs",
             "seasonDetail5WIs",
@@ -10703,7 +10703,6 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Bowl Avg",
             "Bowl SR",
             "Eco",
-            "Dot Ball %",
             "BBI",
             "3WI",
             "5WI",
