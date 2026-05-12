@@ -3671,10 +3671,12 @@ def build_achieved_milestones(
 
     all_time = historical_data["all_time"].copy()
     period_totals = build_milestone_period_totals(historical_data, season_window)
+    season_totals = build_milestone_period_totals_by_season(historical_data, season_window)
     if all_time.empty or period_totals.empty:
         return pd.DataFrame(columns=columns)
 
     rows: list[dict[str, object]] = []
+    season_label = milestone_season_window_label(season_window)
     for spec in milestone_achievement_specs():
         metric = str(spec["metric"])
         if metric not in all_time or metric not in period_totals:
@@ -3700,7 +3702,14 @@ def build_achieved_milestones(
                             "Milestone": f"{int(threshold_value):,} {spec['unit']} reached",
                             "Threshold": int(threshold_value),
                             "Current Total": int(round(current_total)),
-                            "Season": milestone_season_window_label(season_window),
+                            "Season": milestone_reached_season(
+                                season_totals,
+                                str(player["player_key"]),
+                                metric,
+                                previous_total,
+                                threshold_value,
+                                season_label,
+                            ),
                             "Unit": spec["unit"],
                         }
                     )
@@ -3888,6 +3897,55 @@ def build_milestone_period_totals(
     return output
 
 
+def build_milestone_period_totals_by_season(
+    historical_data: dict[str, object],
+    season_window: list[str],
+) -> pd.DataFrame:
+    frames: list[pd.DataFrame] = []
+    for season in sorted(season_window, key=season_sort_value):
+        totals = build_milestone_period_totals(historical_data, [season])
+        if totals.empty:
+            continue
+        totals = totals.copy()
+        totals["season"] = season
+        frames.append(totals)
+    if not frames:
+        return pd.DataFrame(columns=["player_key", "season", "Matches", "Runs", "Wickets", "Catches"])
+    output = pd.concat(frames, ignore_index=True, sort=False)
+    for metric in ["Matches", "Runs", "Wickets", "Catches"]:
+        if metric not in output:
+            output[metric] = 0
+        output[metric] = pd.to_numeric(output[metric], errors="coerce").fillna(0)
+    return output
+
+
+def milestone_reached_season(
+    season_totals: pd.DataFrame,
+    player_key: str,
+    metric: str,
+    previous_total: float,
+    threshold: float,
+    fallback_label: str,
+) -> str:
+    if season_totals.empty or metric not in season_totals:
+        return fallback_label
+    player_rows = season_totals[season_totals["player_key"].astype(str) == str(player_key)].copy()
+    if player_rows.empty:
+        return fallback_label
+    player_rows["season_order"] = player_rows["season"].map(season_sort_value)
+    player_rows = player_rows.sort_values(["season_order", "season"], ascending=[True, True])
+
+    running_total = float(previous_total)
+    for _, row in player_rows.iterrows():
+        numeric_value = pd.to_numeric(row.get(metric), errors="coerce")
+        season_value = float(numeric_value) if pd.notna(numeric_value) else 0.0
+        after_season_total = running_total + season_value
+        if running_total < threshold <= after_season_total:
+            return str(row.get("season") or fallback_label)
+        running_total = after_season_total
+    return fallback_label
+
+
 def filter_milestone_window_frame(frame: object, season_window: list[str]) -> pd.DataFrame:
     if not isinstance(frame, pd.DataFrame) or frame.empty or "season" not in frame:
         return pd.DataFrame()
@@ -3948,7 +4006,7 @@ def render_achieved_milestones_view(
         (
             '<section class="milestone-view-panel">'
             '<div class="milestone-section-heading"><h2>Achieved Milestones 🏁</h2></div>'
-            f'<div class="milestone-section-subtitle">Achieved during {html.escape(window_label)} season</div>'
+            f'<div class="milestone-section-subtitle">Milestones reached during {html.escape(window_label)} season</div>'
             f"{''.join(groups)}"
             "</section>"
         ),

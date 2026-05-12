@@ -3972,6 +3972,13 @@ def inject_theme() -> None:
                 width: 100%;
             }
 
+            .block-container:has(.near-milestones-page) .milestone-segmented:not(.milestone-segmented-compact) {
+                display: grid;
+                gap: 6px;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                overflow: visible;
+            }
+
             .milestone-segmented-compact {
                 margin-bottom: 16px;
             }
@@ -3980,6 +3987,12 @@ def inject_theme() -> None:
                 align-items: center;
                 font-size: 0.84rem;
                 padding: 10px 13px;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-segmented:not(.milestone-segmented-compact) .milestone-segment {
+                padding-left: 6px;
+                padding-right: 6px;
+                width: 100%;
             }
 
             .milestone-label-desktop {
@@ -4018,6 +4031,39 @@ def inject_theme() -> None:
 
             .milestone-group-rule {
                 white-space: normal;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-group-head {
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-group-title {
+                min-width: 0;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-group-rule {
+                flex: 0 0 auto;
+                max-width: 52%;
+                text-align: right;
+                white-space: nowrap;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-progress-top {
+                align-items: flex-start;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-progress-top > div {
+                min-width: 0;
+            }
+
+            .block-container:has(.near-milestones-page) .milestone-away {
+                flex: 0 0 auto;
+                text-align: right;
+                white-space: nowrap;
             }
 
             .achievement-card {
