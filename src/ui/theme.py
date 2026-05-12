@@ -3337,6 +3337,10 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .milestone-label-mobile {
+            display: none;
+        }
+
         .milestone-segment:hover,
         .milestone-segment:focus-visible {
             background: #f1edff;
@@ -3356,6 +3360,19 @@ def inject_theme() -> None:
             box-shadow: 0 22px 52px rgba(23, 27, 77, 0.055);
             margin-top: 8px;
             padding: 26px;
+        }
+
+        div[class*="st-key-milestone_exclusive_panel"] {
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid rgba(231, 230, 245, 0.92);
+            border-radius: 28px;
+            box-shadow: 0 22px 52px rgba(23, 27, 77, 0.055);
+            margin-top: 8px;
+            padding: 26px;
+        }
+
+        div[class*="st-key-milestone_exclusive_panel"] .milestone-segmented-compact {
+            margin: 20px 0 24px;
         }
 
         .milestone-section-heading h2 {
@@ -3613,6 +3630,7 @@ def inject_theme() -> None:
         }
 
         .milestone-club-card {
+            margin-bottom: 14px;
             overflow: hidden;
             padding: 0;
         }
@@ -3661,6 +3679,35 @@ def inject_theme() -> None:
             flex: 0 0 auto;
             font-size: 0.86rem;
             font-weight: 950;
+        }
+
+        div[class*="st-key-milestone_club_"][class*="_control"] {
+            margin: -7px 0 18px;
+        }
+
+        div[class*="st-key-milestone_club_"][class*="_control"] .stButton {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        div[class*="st-key-milestone_club_"][class*="_control"] .stButton > button {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            color: #5B3DF5 !important;
+            display: inline-flex !important;
+            font-size: 0.82rem !important;
+            font-weight: 850 !important;
+            min-height: 0 !important;
+            padding: 2px 0 !important;
+            text-align: left !important;
+            width: auto !important;
+        }
+
+        div[class*="st-key-milestone_club_"][class*="_control"] .stButton > button:hover,
+        div[class*="st-key-milestone_club_"][class*="_control"] .stButton > button:focus {
+            color: #4324D8 !important;
+            text-decoration: underline !important;
         }
 
         .block-container:has(.near-milestones-page) .page-title {
@@ -3935,7 +3982,16 @@ def inject_theme() -> None:
                 padding: 10px 13px;
             }
 
-            .milestone-view-panel {
+            .milestone-label-desktop {
+                display: none;
+            }
+
+            .milestone-label-mobile {
+                display: inline;
+            }
+
+            .milestone-view-panel,
+            div[class*="st-key-milestone_exclusive_panel"] {
                 border-radius: 24px;
                 padding: 19px;
             }

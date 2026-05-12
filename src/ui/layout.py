@@ -3575,13 +3575,30 @@ def render_milestone_segmented_links(
         (
             f'<a class="milestone-segment{" active" if active else ""}" '
             f'href="{html.escape(url, quote=True)}" target="_self" role="tab" '
-            f'aria-selected="{str(active).lower()}">{html.escape(label)}</a>'
+            f'aria-selected="{str(active).lower()}">{milestone_segment_label_html(label, compact)}</a>'
         )
         for label, url, active in items
     )
     st.markdown(
         f'<nav class="{class_name}" aria-label="{html.escape(aria_label, quote=True)}">{links}</nav>',
         unsafe_allow_html=True,
+    )
+
+
+def milestone_segment_label_html(label: str, compact: bool = False) -> str:
+    if compact:
+        return html.escape(label)
+    mobile_labels = {
+        "Upcoming Milestones": "Upcoming",
+        "Achieved Milestones": "Achieved",
+        "Exclusive Clubs": "Exclusive Club",
+    }
+    mobile_label = mobile_labels.get(label, label)
+    if mobile_label == label:
+        return html.escape(label)
+    return (
+        f'<span class="milestone-label-desktop">{html.escape(label)}</span>'
+        f'<span class="milestone-label-mobile">{html.escape(mobile_label)}</span>'
     )
 
 
@@ -5851,7 +5868,7 @@ def exclusive_club_specs(category: str) -> list[dict[str, object]]:
 
 def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matches") -> None:
     selector = milestone_club_selector_html(selected_category)
-    rendered: list[str] = []
+    club_entries: list[tuple[pd.DataFrame, int, str, str]] = []
     for spec in exclusive_club_specs(selected_category):
         metric = str(spec["metric"])
         thresholds = [int(value) for value in spec["thresholds"]]
@@ -5870,20 +5887,33 @@ def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matc
             )
             if club_players.empty:
                 continue
-            rendered.append(milestone_club_card_html(club_players, threshold, str(spec["label"]), metric))
+            club_entries.append((club_players, threshold, str(spec["label"]), metric))
 
-    clubs = "".join(rendered) if rendered else '<div class="milestone-empty-card">No players have reached this exclusive club category yet.</div>'
-    st.markdown(
-        (
-            '<section class="milestone-view-panel">'
-            '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>'
-            '<div class="milestone-section-subtitle">Compact club views for major career totals only.</div>'
-            f"{selector}"
-            f'<div class="milestone-club-grid">{clubs}</div>'
-            "</section>"
-        ),
-        unsafe_allow_html=True,
-    )
+    with st.container(key="milestone_exclusive_panel"):
+        st.markdown(
+            (
+                '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>'
+                f"{selector}"
+            ),
+            unsafe_allow_html=True,
+        )
+        if not club_entries:
+            st.markdown(
+                '<div class="milestone-empty-card">No players have reached this exclusive club category yet.</div>',
+                unsafe_allow_html=True,
+            )
+            return
+
+        columns = st.columns(2)
+        for index, (club_players, threshold, label, metric) in enumerate(club_entries):
+            state_key = milestone_club_expand_state_key(metric, threshold)
+            expanded = bool(st.session_state.get(state_key, False))
+            with columns[index % 2]:
+                st.markdown(
+                    milestone_club_card_html(club_players, threshold, label, metric, expanded=expanded),
+                    unsafe_allow_html=True,
+                )
+                render_milestone_club_expand_control(state_key, expanded, len(club_players))
 
 
 def milestone_club_selector_html(selected_category: str) -> str:
@@ -5900,14 +5930,21 @@ def milestone_club_selector_html(selected_category: str) -> str:
     return f'<nav class="milestone-segmented milestone-segmented-compact" aria-label="Exclusive club category">{"".join(items)}</nav>'
 
 
-def milestone_club_card_html(players: pd.DataFrame, threshold: int, label: str, metric: str) -> str:
+def milestone_club_card_html(
+    players: pd.DataFrame,
+    threshold: int,
+    label: str,
+    metric: str,
+    expanded: bool = False,
+) -> str:
     member_rows = []
-    for index, (_, row) in enumerate(players.head(5).iterrows(), start=1):
+    visible_players = players.head(10 if expanded else 5)
+    for index, (_, row) in enumerate(visible_players.iterrows(), start=1):
         value = int(round(float(row[metric])))
         member_rows.append(
             '<div class="milestone-member-row">'
             f'<span>{index}. {player_profile_link_html(player_id_from_row(row), row["Player"])}</span>'
-            f'<strong>{value:,}</strong>'
+            f'<strong>{html.escape(milestone_club_value_label(value, label))}</strong>'
             "</div>"
         )
     return (
@@ -5919,6 +5956,26 @@ def milestone_club_card_html(players: pd.DataFrame, threshold: int, label: str, 
         f'<div class="milestone-member-list">{"".join(member_rows)}</div>'
         "</article>"
     )
+
+
+def milestone_club_value_label(value: int, label: str) -> str:
+    unit = label.casefold().strip()
+    return f"{value:,} {unit}"
+
+
+def milestone_club_expand_state_key(metric: str, threshold: int) -> str:
+    safe_metric = re.sub(r"[^a-z0-9]+", "_", metric.casefold()).strip("_")
+    return f"milestone_club_{safe_metric}_{threshold}_expanded"
+
+
+def render_milestone_club_expand_control(state_key: str, expanded: bool, player_count: int) -> None:
+    if player_count <= 5:
+        return
+    label = "Show less ↑" if expanded else "Show top 10 ↓"
+    with st.container(key=f"{state_key}_control"):
+        if st.button(label, key=f"{state_key}_toggle"):
+            st.session_state[state_key] = not expanded
+            st.rerun()
 
 
 def highest_reached_threshold(value: object, thresholds: list[int]) -> int | None:
