@@ -3307,31 +3307,31 @@ def inject_theme() -> None:
         .milestone-segmented {
             align-items: center;
             background: #ffffff;
-            border: 1px solid #efe3ea;
-            border-radius: 20px;
-            box-shadow: 0 12px 26px rgba(23, 27, 77, 0.045);
+            border: 1px solid #e7e6f5;
+            border-radius: 22px;
+            box-shadow: 0 12px 26px rgba(23, 27, 77, 0.055);
             display: flex;
             gap: 8px;
-            margin: 4px 0 26px;
+            margin: 30px 0 38px;
             max-width: 100%;
             overflow-x: auto;
-            padding: 7px 9px;
+            padding: 8px;
             width: fit-content;
         }
 
         .milestone-segmented-compact {
-            margin: 0 0 18px;
+            margin: 0 0 24px;
         }
 
         .milestone-segment {
             border-radius: 999px;
-            color: #9a405b !important;
+            color: #3f4565 !important;
             display: inline-flex;
             font-size: 0.88rem;
             font-weight: 900;
             justify-content: center;
             line-height: 1.1;
-            padding: 11px 18px;
+            padding: 12px 18px;
             text-decoration: none !important;
             transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
             white-space: nowrap;
@@ -3339,14 +3339,203 @@ def inject_theme() -> None:
 
         .milestone-segment:hover,
         .milestone-segment:focus-visible {
-            background: #fbedf3;
-            color: #801437 !important;
+            background: #f1edff;
+            color: #4b37d8 !important;
         }
 
         .milestone-segment.active {
-            background: #f8dfe9;
-            box-shadow: inset 0 0 0 1px rgba(128, 20, 55, 0.06);
-            color: #7a1f3d !important;
+            background: linear-gradient(180deg, #f1edff 0%, #e8e1ff 100%);
+            box-shadow: inset 0 0 0 1px rgba(75, 55, 216, 0.08);
+            color: #4b37d8 !important;
+        }
+
+        .milestone-view-panel {
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid rgba(231, 230, 245, 0.92);
+            border-radius: 28px;
+            box-shadow: 0 22px 52px rgba(23, 27, 77, 0.055);
+            margin-top: 8px;
+            padding: 26px;
+        }
+
+        .milestone-section-heading h2 {
+            color: var(--ink);
+            font-size: clamp(1.85rem, 3.8vw, 2.55rem);
+            font-weight: 950;
+            letter-spacing: 0;
+            line-height: 1.05;
+            margin: 0;
+        }
+
+        .milestone-section-subtitle {
+            color: #687093;
+            font-size: 0.95rem;
+            font-weight: 720;
+            margin: 8px 0 26px;
+        }
+
+        .milestone-watch-grid,
+        .milestone-club-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .milestone-group-card,
+        .milestone-club-card {
+            background: #ffffff;
+            border: 1px solid #e7e6f5;
+            border-radius: 22px;
+            box-shadow: 0 10px 26px rgba(23, 27, 77, 0.055);
+            padding: 18px;
+        }
+
+        .milestone-group-head {
+            align-items: center;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .milestone-group-title {
+            color: var(--ink);
+            font-size: 1rem;
+            font-weight: 950;
+        }
+
+        .milestone-group-rule {
+            background: #f8f6ff;
+            border: 1px solid #e5e1ff;
+            border-radius: 999px;
+            color: #5b5f7d;
+            flex: 0 0 auto;
+            font-size: 0.72rem;
+            font-weight: 850;
+            padding: 6px 9px;
+            white-space: nowrap;
+        }
+
+        .milestone-progress-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+            border: 1px solid #e8e8f4;
+            border-radius: 18px;
+            margin-top: 12px;
+            padding: 15px;
+        }
+
+        .milestone-progress-top {
+            align-items: flex-start;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .milestone-progress-top strong {
+            color: var(--ink);
+            display: block;
+            font-size: 1rem;
+            font-weight: 950;
+            line-height: 1.16;
+            margin-bottom: 5px;
+        }
+
+        .milestone-progress-top span:not(.milestone-row-badge) {
+            color: #687093;
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 820;
+        }
+
+        .milestone-row-badge {
+            background: #eef0ff;
+            border: 1px solid #dfe2ff;
+            border-radius: 999px;
+            color: #4b37d8;
+            display: inline-flex;
+            font-size: 0.68rem;
+            font-weight: 950;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            text-transform: uppercase;
+        }
+
+        .milestone-away {
+            color: #7a1735;
+            flex: 0 0 auto;
+            font-size: 0.83rem;
+            font-weight: 900;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .milestone-empty-card {
+            background: #fbfbff;
+            border: 1px dashed #d9dbec;
+            border-radius: 18px;
+            color: #687093;
+            font-size: 0.9rem;
+            font-weight: 760;
+            line-height: 1.4;
+            padding: 16px;
+        }
+
+        .milestone-hof-watch {
+            background:
+                linear-gradient(135deg, rgba(75, 55, 216, 0.09), rgba(122, 23, 53, 0.05)),
+                #ffffff;
+            border: 1px solid #e2dfff;
+            border-radius: 24px;
+            box-shadow: 0 10px 26px rgba(23, 27, 77, 0.055);
+            margin-top: 22px;
+            padding: 20px;
+        }
+
+        .milestone-hof-watch h3,
+        .milestone-achievement-group h3 {
+            color: var(--ink);
+            font-size: 1.12rem;
+            font-weight: 950;
+            margin: 0 0 14px;
+        }
+
+        .milestone-hof-watch .milestone-group-head h3 {
+            margin-bottom: 4px;
+        }
+
+        .milestone-mini-subtitle {
+            color: #687093;
+            font-size: 0.88rem;
+            font-weight: 720;
+        }
+
+        .milestone-mini-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .milestone-mini-card {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(231, 230, 245, 0.95);
+            border-radius: 17px;
+            padding: 14px;
+        }
+
+        .milestone-mini-card strong {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 950;
+            line-height: 1.16;
+            margin-bottom: 5px;
+        }
+
+        .milestone-mini-card div {
+            color: #687093;
+            font-size: 0.82rem;
+            font-weight: 760;
+            line-height: 1.35;
         }
 
         .achievement-grid {
@@ -3354,6 +3543,14 @@ def inject_theme() -> None:
             gap: 16px;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             margin-bottom: 28px;
+        }
+
+        .milestone-achievement-group {
+            margin-top: 22px;
+        }
+
+        .milestone-achievement-group:first-of-type {
+            margin-top: 0;
         }
 
         .achievement-card {
@@ -3378,6 +3575,12 @@ def inject_theme() -> None:
             margin-bottom: 12px;
             padding: 5px 9px;
             text-transform: uppercase;
+        }
+
+        .achievement-badge-gold {
+            background: #fff5dd;
+            border-color: #ffe5a4;
+            color: #a76800;
         }
 
         .achievement-player {
@@ -3410,7 +3613,54 @@ def inject_theme() -> None:
         }
 
         .milestone-club-card {
-            margin-top: 2px;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .milestone-club-card-head {
+            background: linear-gradient(135deg, #ffffff, #f7f5ff);
+            border-bottom: 1px solid #ecebf7;
+            padding: 16px 17px;
+        }
+
+        .milestone-club-name {
+            color: var(--ink);
+            font-size: 1.08rem;
+            font-weight: 950;
+            margin-bottom: 3px;
+        }
+
+        .milestone-club-count {
+            color: #687093;
+            font-size: 0.84rem;
+            font-weight: 760;
+        }
+
+        .milestone-member-list {
+            display: grid;
+            gap: 9px;
+            padding: 14px 17px 17px;
+        }
+
+        .milestone-member-row {
+            align-items: center;
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .milestone-member-row span {
+            color: var(--ink);
+            font-size: 0.9rem;
+            font-weight: 850;
+            min-width: 0;
+        }
+
+        .milestone-member-row strong {
+            color: #4b37d8;
+            flex: 0 0 auto;
+            font-size: 0.86rem;
+            font-weight: 950;
         }
 
         .block-container:has(.near-milestones-page) .page-title {
@@ -3420,9 +3670,9 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.near-milestones-page) .club-label {
-            color: #5B3DF5;
+            color: #4b5171;
             font-weight: 800;
-            margin: 0 0 9px;
+            margin: 0;
         }
 
         .block-container:has(.near-milestones-page) .page-subtitle {
@@ -3508,9 +3758,9 @@ def inject_theme() -> None:
         }
 
         .milestone-away {
-            color: #4b37d8;
+            color: #7a1735;
             flex: 0 0 auto;
-            font-size: 0.8rem;
+            font-size: 0.83rem;
             font-weight: 900;
             text-align: right;
             white-space: nowrap;
@@ -3685,8 +3935,33 @@ def inject_theme() -> None:
                 padding: 10px 13px;
             }
 
+            .milestone-view-panel {
+                border-radius: 24px;
+                padding: 19px;
+            }
+
+            .milestone-watch-grid,
+            .milestone-club-grid,
+            .milestone-mini-grid,
             .achievement-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .milestone-group-head,
+            .milestone-progress-top,
+            .milestone-member-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .milestone-away,
+            .milestone-member-row strong {
+                text-align: left;
+                white-space: normal;
+            }
+
+            .milestone-group-rule {
+                white-space: normal;
             }
 
             .achievement-card {
