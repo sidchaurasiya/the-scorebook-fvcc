@@ -3304,6 +3304,153 @@ def inject_theme() -> None:
             min-height: 312px;
         }
 
+        .milestone-segmented {
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #e8e9f6;
+            border-radius: 999px;
+            box-shadow: 0 14px 28px rgba(23, 27, 77, 0.05);
+            display: inline-flex;
+            gap: 6px;
+            margin: 4px 0 18px;
+            padding: 6px;
+        }
+
+        .milestone-segmented-compact {
+            margin-top: 0;
+        }
+
+        .milestone-segment {
+            border-radius: 999px;
+            color: #687093 !important;
+            display: inline-flex;
+            font-size: 0.9rem;
+            font-weight: 850;
+            justify-content: center;
+            line-height: 1.1;
+            padding: 11px 16px;
+            text-decoration: none !important;
+            transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .milestone-segment:hover,
+        .milestone-segment:focus-visible {
+            background: #f2edff;
+            color: #4b37d8 !important;
+        }
+
+        .milestone-segment.active {
+            background: linear-gradient(135deg, #6d4dff 0%, #4b37d8 100%);
+            box-shadow: 0 8px 18px rgba(91, 61, 245, 0.22);
+            color: #ffffff !important;
+        }
+
+        .milestone-summary-strip {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin: 0 0 28px;
+        }
+
+        .milestone-summary-card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 16px;
+            box-shadow: 0 14px 30px rgba(23, 27, 77, 0.052);
+            padding: 15px 17px;
+        }
+
+        .milestone-summary-card span {
+            color: #747b98;
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 850;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .milestone-summary-card strong {
+            color: var(--ink);
+            display: block;
+            font-size: 1.45rem;
+            font-weight: 950;
+            line-height: 1;
+        }
+
+        .milestone-summary-card em {
+            color: #7a809d;
+            display: block;
+            font-size: 0.82rem;
+            font-style: normal;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 28px;
+        }
+
+        .achievement-card {
+            background:
+                linear-gradient(135deg, rgba(109, 77, 255, 0.09), rgba(128, 20, 55, 0.06)),
+                #ffffff;
+            border: 1px solid #e9e6fb;
+            border-radius: 18px;
+            box-shadow: 0 16px 34px rgba(23, 27, 77, 0.06);
+            min-height: 164px;
+            padding: 18px 19px;
+        }
+
+        .achievement-badge {
+            background: rgba(128, 20, 55, 0.1);
+            border: 1px solid rgba(128, 20, 55, 0.15);
+            border-radius: 999px;
+            color: #801437;
+            display: inline-flex;
+            font-size: 0.72rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            padding: 5px 9px;
+            text-transform: uppercase;
+        }
+
+        .achievement-player {
+            color: var(--ink);
+            font-size: 1rem;
+            font-weight: 950;
+            line-height: 1.16;
+            margin-bottom: 6px;
+        }
+
+        .achievement-value {
+            color: #4b37d8;
+            font-size: 1.08rem;
+            font-weight: 950;
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .achievement-meta,
+        .achievement-total {
+            color: #747b98;
+            font-size: 0.82rem;
+            font-weight: 750;
+            line-height: 1.35;
+        }
+
+        .achievement-total {
+            color: #3d4263;
+            margin-top: 5px;
+        }
+
+        .milestone-club-card {
+            margin-top: 2px;
+        }
+
         .block-container:has(.near-milestones-page) .page-title {
             font-size: clamp(2.3rem, 3vw, 3.2rem);
             max-width: 1040px;
@@ -3555,6 +3702,35 @@ def inject_theme() -> None:
 
             .block-container:has(.near-milestones-page) .page-title {
                 font-size: clamp(1.85rem, 10.5vw, 2.65rem);
+            }
+
+            .milestone-segmented {
+                align-items: stretch;
+                border-radius: 18px;
+                display: grid;
+                gap: 6px;
+                grid-template-columns: 1fr;
+                width: 100%;
+            }
+
+            .milestone-segmented-compact {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .milestone-segment {
+                align-items: center;
+                font-size: 0.84rem;
+                padding: 10px 11px;
+            }
+
+            .milestone-summary-strip,
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .milestone-summary-card,
+            .achievement-card {
+                padding: 15px 16px;
             }
 
             div[data-testid="stDataFrame"],

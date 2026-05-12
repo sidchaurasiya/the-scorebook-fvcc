@@ -3491,17 +3491,338 @@ def render_approaching_milestones_page() -> None:
     watchlist = build_approaching_milestone_watchlist(historical_data["all_time"])
     if active_players:
         watchlist = watchlist[watchlist["Player"].isin(active_players)].copy()
+    season_window = milestone_achievement_season_window(historical_data)
+    achieved = build_achieved_milestones(historical_data, season_window)
+    selected_view = selected_milestone_page_view()
     st.markdown(
         """
         <div class="near-milestones-page"></div>
-        <h1 class="page-title">Players closing in on major club milestones 🎯</h1>
+        <h1 class="page-title">Players approaching major club milestones 🎯</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
-        <div class="page-subtitle">Showing active players only — players who have appeared for FVCC in the last 3 seasons.</div>
+        <div class="page-subtitle">Upcoming milestones show active players from the last 3 seasons. Achieved and exclusive clubs use canonical club records.</div>
         """,
         unsafe_allow_html=True,
     )
-    render_career_milestone_cards(watchlist)
-    render_milestone_club(historical_data["all_time"])
+    render_milestone_view_selector(selected_view)
+    render_milestone_summary_strip(watchlist, achieved, historical_data["all_time"])
+    if selected_view == "achieved":
+        render_achieved_milestones_view(achieved, season_window)
+    elif selected_view == "exclusive":
+        render_milestone_club(historical_data["all_time"], selected_milestone_club_category())
+    else:
+        render_career_milestone_cards(watchlist)
+
+
+def milestone_page_view_options() -> list[tuple[str, str]]:
+    return [
+        ("upcoming", "Upcoming Milestones"),
+        ("achieved", "Achieved Milestones"),
+        ("exclusive", "Exclusive Clubs"),
+    ]
+
+
+def milestone_club_category_options() -> list[tuple[str, str]]:
+    return [
+        ("matches", "Matches"),
+        ("runs", "Runs"),
+        ("wickets", "Wickets"),
+        ("fielding", "Fielding"),
+    ]
+
+
+def selected_milestone_page_view() -> str:
+    valid = {slug for slug, _ in milestone_page_view_options()}
+    requested = query_param_value("milestone_view").casefold()
+    return requested if requested in valid else "upcoming"
+
+
+def selected_milestone_club_category() -> str:
+    valid = {slug for slug, _ in milestone_club_category_options()}
+    requested = query_param_value("club_category").casefold()
+    return requested if requested in valid else "matches"
+
+
+def milestone_page_url(view: str, club_category: str | None = None) -> str:
+    url = f"?page=milestone&milestone_view={quote(view, safe='')}"
+    if club_category:
+        url = f"{url}&club_category={quote(club_category, safe='')}"
+    return url
+
+
+def render_milestone_view_selector(selected_view: str) -> None:
+    items = [
+        (label, milestone_page_url(slug), slug == selected_view)
+        for slug, label in milestone_page_view_options()
+    ]
+    render_milestone_segmented_links(items, "Milestone page view")
+
+
+def render_milestone_club_selector(selected_category: str) -> None:
+    items = [
+        (label, milestone_page_url("exclusive", slug), slug == selected_category)
+        for slug, label in milestone_club_category_options()
+    ]
+    render_milestone_segmented_links(items, "Exclusive club category", compact=True)
+
+
+def render_milestone_segmented_links(
+    items: list[tuple[str, str, bool]],
+    aria_label: str,
+    compact: bool = False,
+) -> None:
+    class_name = "milestone-segmented milestone-segmented-compact" if compact else "milestone-segmented"
+    links = "".join(
+        (
+            f'<a class="milestone-segment{" active" if active else ""}" '
+            f'href="{html.escape(url, quote=True)}" target="_self" role="tab" '
+            f'aria-selected="{str(active).lower()}">{html.escape(label)}</a>'
+        )
+        for label, url, active in items
+    )
+    st.markdown(
+        f'<nav class="{class_name}" aria-label="{html.escape(aria_label, quote=True)}">{links}</nav>',
+        unsafe_allow_html=True,
+    )
+
+
+def render_milestone_summary_strip(
+    watchlist: pd.DataFrame,
+    achieved: pd.DataFrame,
+    all_time: pd.DataFrame,
+) -> None:
+    cards = [
+        ("Upcoming", f"{len(watchlist):,}", "milestone opportunities"),
+        ("Achieved this season", f"{len(achieved):,}", "confirmed achievements"),
+        ("Exclusive members", f"{exclusive_member_count(all_time):,}", "players in a club"),
+    ]
+    html_cards = "".join(
+        (
+            '<div class="milestone-summary-card">'
+            f'<span>{html.escape(label)}</span>'
+            f'<strong>{html.escape(value)}</strong>'
+            f'<em>{html.escape(note)}</em>'
+            "</div>"
+        )
+        for label, value, note in cards
+    )
+    st.markdown(f'<div class="milestone-summary-strip">{html_cards}</div>', unsafe_allow_html=True)
+
+
+def exclusive_member_count(all_time: pd.DataFrame) -> int:
+    if all_time.empty:
+        return 0
+    player_column = "canonical_player_id" if "canonical_player_id" in all_time else "Player"
+    mask = pd.Series(False, index=all_time.index)
+    for spec in exclusive_club_specs("matches") + exclusive_club_specs("runs") + exclusive_club_specs("wickets") + exclusive_club_specs("fielding"):
+        metric = spec["metric"]
+        if metric in all_time:
+            values = pd.to_numeric(all_time[metric], errors="coerce").fillna(0)
+            mask = mask | (values >= min(spec["thresholds"]))
+    return int(all_time.loc[mask, player_column].dropna().astype(str).nunique())
+
+
+def milestone_achievement_season_window(historical_data: dict[str, object]) -> list[str]:
+    season_table = read_processed_table("seasons")
+    ordered = ordered_milestone_seasons(season_table)
+    if not ordered:
+        activity_frames = [
+            frame
+            for frame in [
+                historical_data.get("batting_raw"),
+                historical_data.get("bowling_raw"),
+                historical_data.get("fielding_raw"),
+            ]
+            if isinstance(frame, pd.DataFrame) and not frame.empty
+        ]
+        activity = pd.concat(activity_frames, ignore_index=True, sort=False) if activity_frames else pd.DataFrame()
+        ordered = latest_activity_seasons(activity, 12) if not activity.empty else []
+    if not ordered:
+        return []
+
+    latest = ordered[0]
+    if "winter" not in latest.casefold():
+        return [latest]
+
+    previous_summer = next(
+        (season for season in ordered[1:] if "summer" in season.casefold()),
+        "",
+    )
+    return [season for season in [latest, previous_summer] if season]
+
+
+def ordered_milestone_seasons(season_table: pd.DataFrame) -> list[str]:
+    if season_table.empty or "name" not in season_table:
+        return []
+    output = season_table.copy()
+    if "startDate" in output:
+        output["season_sort"] = pd.to_datetime(output["startDate"], errors="coerce", utc=True)
+    else:
+        output["season_sort"] = output["name"].map(season_sort_value)
+    output = output.sort_values(["season_sort", "name"], ascending=[False, False])
+    return output["name"].dropna().astype(str).drop_duplicates().tolist()
+
+
+def milestone_achievement_specs() -> list[dict[str, object]]:
+    return [
+        {"category": "Matches", "metric": "Matches", "unit": "matches", "thresholds": [50, 100, 150, 200, 250, 300, 350]},
+        {"category": "Runs", "metric": "Runs", "unit": "runs", "thresholds": [500, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 6000]},
+        {"category": "Wickets", "metric": "Wickets", "unit": "wickets", "thresholds": [50, 100, 150, 200, 250, 300, 350, 400]},
+        {"category": "Catches", "metric": "Catches", "unit": "catches", "thresholds": [25, 50, 75, 100, 150, 200]},
+        {"category": "Dismissals", "metric": "Dismissals", "unit": "dismissals", "thresholds": [25, 50, 75, 100, 150, 200]},
+        {"category": "50s", "metric": "50s", "unit": "50s", "thresholds": [10, 25, 50, 75, 100]},
+        {"category": "100s", "metric": "100s", "unit": "100s", "thresholds": [1, 5, 10, 15, 20]},
+        {"category": "5WI", "metric": "5WI", "unit": "five-wicket hauls", "thresholds": [1, 5, 10, 15, 20]},
+    ]
+
+
+def build_achieved_milestones(
+    historical_data: dict[str, object],
+    season_window: list[str],
+) -> pd.DataFrame:
+    columns = [
+        "Player",
+        "canonical_player_id",
+        "Category",
+        "Milestone",
+        "Threshold",
+        "Current Total",
+        "Season",
+        "Unit",
+    ]
+    if not season_window:
+        return pd.DataFrame(columns=columns)
+
+    all_time = historical_data["all_time"].copy()
+    period_totals = build_milestone_period_totals(historical_data, season_window)
+    if all_time.empty or period_totals.empty:
+        return pd.DataFrame(columns=columns)
+
+    rows: list[dict[str, object]] = []
+    for spec in milestone_achievement_specs():
+        metric = str(spec["metric"])
+        if metric not in all_time or metric not in period_totals:
+            continue
+        source = all_time[["player_key", "canonical_player_id", "Player", metric]].copy()
+        source[metric] = pd.to_numeric(source[metric], errors="coerce").fillna(0)
+        window_values = period_totals[["player_key", metric]].copy()
+        window_values[metric] = pd.to_numeric(window_values[metric], errors="coerce").fillna(0)
+        merged = source.merge(window_values, on="player_key", how="left", suffixes=("_current", "_window"))
+        merged[f"{metric}_window"] = pd.to_numeric(merged[f"{metric}_window"], errors="coerce").fillna(0)
+        merged[f"{metric}_previous"] = (merged[f"{metric}_current"] - merged[f"{metric}_window"]).clip(lower=0)
+        for _, player in merged[merged[f"{metric}_window"] > 0].iterrows():
+            current_total = float(player[f"{metric}_current"])
+            previous_total = float(player[f"{metric}_previous"])
+            for threshold in spec["thresholds"]:
+                threshold_value = float(threshold)
+                if previous_total < threshold_value <= current_total:
+                    rows.append(
+                        {
+                            "Player": player["Player"],
+                            "canonical_player_id": player.get("canonical_player_id", ""),
+                            "Category": spec["category"],
+                            "Milestone": f"{int(threshold_value):,} {spec['unit']} reached",
+                            "Threshold": int(threshold_value),
+                            "Current Total": int(round(current_total)),
+                            "Season": milestone_season_window_label(season_window),
+                            "Unit": spec["unit"],
+                        }
+                    )
+
+    if not rows:
+        return pd.DataFrame(columns=columns)
+    output = pd.DataFrame(rows).drop_duplicates(["canonical_player_id", "Category", "Threshold"])
+    output["category_order"] = output["Category"].map(
+        {str(spec["category"]): index for index, spec in enumerate(milestone_achievement_specs())}
+    )
+    output = output.sort_values(["category_order", "Threshold", "Player"], ascending=[True, False, True])
+    return output.drop(columns=["category_order"], errors="ignore")[columns]
+
+
+def build_milestone_period_totals(
+    historical_data: dict[str, object],
+    season_window: list[str],
+) -> pd.DataFrame:
+    frames = [
+        filter_milestone_window_frame(historical_data.get("batting_raw"), season_window),
+        filter_milestone_window_frame(historical_data.get("bowling_raw"), season_window),
+        filter_milestone_window_frame(historical_data.get("fielding_raw"), season_window),
+    ]
+    identity = build_player_identity_frame([frame for frame in frames if not frame.empty])
+    if identity.empty:
+        return pd.DataFrame(columns=["player_key"])
+
+    output = identity[["player_key", "canonical_player_id", "player_name"]].copy()
+    output = output.rename(columns={"player_name": "Player"})
+
+    matches = build_best_match_counts(frames).rename(columns={"matches": "Matches"})
+    output = output.merge(matches, on="player_key", how="left")
+    for frame, source_column, metric in [
+        (frames[0], "battingAggregate", "Runs"),
+        (frames[0], "batting50s", "50s"),
+        (frames[0], "batting100s", "100s"),
+        (frames[1], "bowlingWickets", "Wickets"),
+        (frames[1], "bowling5WIs", "5WI"),
+        (add_display_stat_aliases(frames[2]), "catches_display", "Catches"),
+        (add_display_stat_aliases(frames[2]), "dismissals_display", "Dismissals"),
+    ]:
+        totals = grouped_milestone_metric(frame, source_column, metric)
+        if not totals.empty:
+            output = output.merge(totals, on="player_key", how="left")
+
+    for metric in ["Matches", "Runs", "50s", "100s", "Wickets", "5WI", "Catches", "Dismissals"]:
+        if metric not in output:
+            output[metric] = 0
+        output[metric] = pd.to_numeric(output[metric], errors="coerce").fillna(0)
+    return output
+
+
+def filter_milestone_window_frame(frame: object, season_window: list[str]) -> pd.DataFrame:
+    if not isinstance(frame, pd.DataFrame) or frame.empty or "season" not in frame:
+        return pd.DataFrame()
+    return frame[frame["season"].isin(season_window)].copy()
+
+
+def grouped_milestone_metric(frame: pd.DataFrame, source_column: str, metric: str) -> pd.DataFrame:
+    if frame.empty or source_column not in frame:
+        return pd.DataFrame(columns=["player_key", metric])
+    output = frame.copy()
+    output["player_key"] = player_keys(output)
+    output[source_column] = pd.to_numeric(output[source_column], errors="coerce").fillna(0)
+    return output.groupby("player_key", as_index=False)[source_column].sum().rename(columns={source_column: metric})
+
+
+def milestone_season_window_label(season_window: list[str]) -> str:
+    if not season_window:
+        return "Current season window"
+    return " + ".join(season_window)
+
+
+def render_achieved_milestones_view(achieved: pd.DataFrame, season_window: list[str]) -> None:
+    render_section_heading("Achieved Milestones 🏁")
+    window_label = milestone_season_window_label(season_window)
+    st.markdown(
+        f'<div class="section-subtext">Season window: {html.escape(window_label)}.</div>',
+        unsafe_allow_html=True,
+    )
+    if achieved.empty:
+        st.markdown(
+            '<div class="milestone-card empty-state">No major club milestones were achieved in the selected season window.</div>',
+            unsafe_allow_html=True,
+        )
+        return
+
+    cards = []
+    for _, row in achieved.iterrows():
+        cards.append(
+            '<div class="achievement-card">'
+            '<div class="achievement-badge">Reached</div>'
+            f'<div class="achievement-player">{player_profile_link_html(player_id_from_row(row), row["Player"])}</div>'
+            f'<div class="achievement-value">{html.escape(str(row["Milestone"]))}</div>'
+            f'<div class="achievement-meta">{html.escape(str(row["Season"]))} · {html.escape(str(row["Category"]))}</div>'
+            f'<div class="achievement-total">Current total: {int(row["Current Total"]):,} {html.escape(str(row["Unit"]))}</div>'
+            "</div>"
+        )
+    st.markdown(f'<div class="achievement-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
 
 
 def render_identity_info_note() -> None:
@@ -5368,28 +5689,67 @@ def record_card_html(card: dict[str, str]) -> str:
     )
 
 
-def render_milestone_club(all_time: pd.DataFrame) -> None:
+def exclusive_club_specs(category: str) -> list[dict[str, object]]:
+    specs = {
+        "matches": [
+            {"metric": "Matches", "label": "matches", "thresholds": [50, 100, 150, 200, 250, 300, 350]},
+        ],
+        "runs": [
+            {"metric": "Runs", "label": "runs", "thresholds": [500, 1000, 1500, 2000, 3000, 4000, 5000, 6000]},
+        ],
+        "wickets": [
+            {"metric": "Wickets", "label": "wickets", "thresholds": [50, 100, 150, 200, 250, 300, 350, 400]},
+        ],
+        "fielding": [
+            {"metric": "Catches", "label": "catches", "thresholds": [25, 50, 75, 100, 150, 200]},
+            {"metric": "Stumpings", "label": "stumpings", "thresholds": [10, 25, 50, 75, 100]},
+            {"metric": "Run Outs", "label": "run outs", "thresholds": [10, 25, 50, 75, 100]},
+            {"metric": "Dismissals", "label": "dismissals", "thresholds": [25, 50, 75, 100, 150, 200]},
+        ],
+    }
+    return specs.get(category, specs["matches"])
+
+
+def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matches") -> None:
+    render_section_heading("Exclusive Clubs 💪")
+    render_milestone_club_selector(selected_category)
     rendered = []
-    for metric, step, suffix in [("Runs", 1000, "runs"), ("Wickets", 100, "wickets"), ("Matches", 100, "matches")]:
+    for spec in exclusive_club_specs(selected_category):
+        metric = str(spec["metric"])
+        thresholds = [int(value) for value in spec["thresholds"]]
         if metric not in all_time:
             continue
         players = all_time.copy()
         players[metric] = pd.to_numeric(players[metric], errors="coerce").fillna(0)
-        players = players[players[metric] >= step].copy()
+        players = players[players[metric] >= min(thresholds)].copy()
         if players.empty:
             continue
-        players["milestone_band"] = (players[metric] // step).astype(int) * step
+        players["milestone_band"] = players[metric].map(lambda value: highest_reached_threshold(value, thresholds))
+        players = players[players["milestone_band"].notna()].copy()
         for band in sorted(players["milestone_band"].dropna().unique(), reverse=True):
             band_players = players[players["milestone_band"] == band].sort_values(metric, ascending=False)
             chips = "".join(
-                f'<span class="milestone-chip">{player_profile_link_html(player_id_from_row(row), row["Player"])} · {int(row[metric]):,} {html.escape(suffix)}</span>'
-                for _, row in band_players.head(18).iterrows()
+                f'<span class="milestone-chip">{player_profile_link_html(player_id_from_row(row), row["Player"])} · {int(row[metric]):,} {html.escape(str(spec["label"]))}</span>'
+                for _, row in band_players.head(24).iterrows()
             )
-            rendered.append(f'<div class="milestone-group"><h4>{int(band):,}+ {html.escape(metric)}</h4><div>{chips}</div></div>')
+            rendered.append(
+                f'<div class="milestone-group"><h4>{int(band):,}+ {html.escape(str(spec["label"]))}</h4><div>{chips}</div></div>'
+            )
     if not rendered:
+        st.markdown(
+            '<div class="milestone-card empty-state">No players have reached this exclusive club category yet.</div>',
+            unsafe_allow_html=True,
+        )
         return
-    render_section_heading("Exclusive Club 💪")
-    st.markdown(f'<div class="milestone-card">{"".join(rendered)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="milestone-card milestone-club-card">{"".join(rendered)}</div>', unsafe_allow_html=True)
+
+
+def highest_reached_threshold(value: object, thresholds: list[int]) -> int | None:
+    numeric = pd.to_numeric(value, errors="coerce")
+    if pd.isna(numeric):
+        return None
+    reached = [threshold for threshold in thresholds if float(numeric) >= threshold]
+    return max(reached) if reached else None
 
 
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
@@ -6321,7 +6681,7 @@ def milestone_unique_players(watchlist: pd.DataFrame, categories: list[str]) -> 
 
 
 def render_career_milestone_cards(watchlist: pd.DataFrame) -> None:
-    render_section_heading("Milestone Watchlist 🎯")
+    render_section_heading("Milestone Watchlist 📍")
     column_groups = [["Matches", "Wickets"], ["Runs", "Catches"]]
     if not any(
         not milestone_category_rows(watchlist, category).empty
