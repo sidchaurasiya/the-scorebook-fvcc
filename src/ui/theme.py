@@ -3462,7 +3462,7 @@ def inject_theme() -> None:
         }
 
         .milestone-away {
-            color: #7a1735;
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.83rem;
             font-weight: 900;
@@ -3565,10 +3565,10 @@ def inject_theme() -> None:
         }
 
         .achievement-badge {
-            background: rgba(128, 20, 55, 0.1);
-            border: 1px solid rgba(128, 20, 55, 0.15);
+            background: #eaf8ef;
+            border: 1px solid #c7ecd2;
             border-radius: 999px;
-            color: #801437;
+            color: #187a3f;
             display: inline-flex;
             font-size: 0.72rem;
             font-weight: 900;
@@ -3670,7 +3670,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.near-milestones-page) .club-label {
-            color: #4b5171;
+            color: #5B3DF5;
             font-weight: 800;
             margin: 0;
         }
@@ -3758,7 +3758,7 @@ def inject_theme() -> None:
         }
 
         .milestone-away {
-            color: #7a1735;
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.83rem;
             font-weight: 900;

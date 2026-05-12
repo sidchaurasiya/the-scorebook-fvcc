@@ -5862,8 +5862,12 @@ def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matc
         players = players[players[metric] >= min(thresholds)].copy()
         if players.empty:
             continue
+        players["milestone_band"] = players[metric].apply(lambda value: highest_reached_threshold(value, thresholds))
+        players = players[players["milestone_band"].notna()].copy()
         for threshold in sorted(thresholds, reverse=True):
-            club_players = players[players[metric] >= threshold].sort_values([metric, "Player"], ascending=[False, True])
+            club_players = players[players["milestone_band"] == threshold].sort_values(
+                [metric, "Player"], ascending=[False, True]
+            )
             if club_players.empty:
                 continue
             rendered.append(milestone_club_card_html(club_players, threshold, str(spec["label"]), metric))
@@ -6913,16 +6917,14 @@ def milestone_progress_card_html(row: pd.Series) -> str:
     target = int(row["Target Milestone"])
     remaining = int(row["Remaining"])
     unit = str(row["Unit"])
-    category = str(row["Category"])
     return (
         '<div class="milestone-progress-card">'
         '<div class="milestone-progress-top">'
         "<div>"
-        f'<span class="milestone-row-badge">{html.escape(category)}</span>'
         f'<strong>{player_profile_link_html(player_id_from_row(row), row["Player"])}</strong>'
         f'<span>{current:,} / {target:,} {html.escape(unit)}</span>'
         "</div>"
-        f'<div class="milestone-away">{remaining:,} {html.escape(unit)} to go</div>'
+        f'<div class="milestone-away">{remaining:,} {html.escape(unit)} away</div>'
         "</div>"
         f'<div class="progress-track"><div style="width:{progress:.1f}%"></div></div>'
         "</div>"
