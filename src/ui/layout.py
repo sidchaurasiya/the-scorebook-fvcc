@@ -10839,65 +10839,368 @@ def render_full_stats_table(
     show_team: bool = False,
 ) -> None:
     output = build_full_stats_frame(df, category, show_team)
-    column_config = season_overview_detail_column_config(output.columns.tolist(), category)
-    if category == "batting" and "Bat SR" in output:
-        column_config["Bat SR"] = st.column_config.NumberColumn("Bat SR", format="%.1f%%", width="small")
-    render_filterable_dataframe(
-        output,
-        key_prefix=f"full_stats_{category}_{'team' if show_team else 'no_team'}",
-        use_container_width=True,
-        hide_index=True,
-        height=520,
-        column_config=column_config,
-        show_filters=False,
+    components.html(
+        season_overview_detail_table_html(
+            output,
+            category=category,
+            table_id=f"season-detail-{category}-{'team' if show_team else 'club'}",
+        ),
+        height=560,
+        scrolling=False,
     )
 
 
-def season_overview_detail_column_config(columns: list[str], category: str) -> dict[str, object]:
-    config = numeric_column_config(columns)
-    if "Player" in columns:
-        config["Player"] = st.column_config.LinkColumn(
-            "Player",
-            pinned=True,
-            width="small",
-            display_text=profile_link_display_pattern(),
+def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_id: str) -> str:
+    safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "season-detail-table"
+    columns = table.columns.tolist()
+    colgroup = "".join(
+        f'<col class="{season_detail_column_class(column)}">'
+        for column in columns
+    )
+    header_html = "".join(
+        (
+            f'<th class="{season_detail_column_class(column)}" data-column="{index}" '
+            f'data-default-dir="{season_detail_default_sort_dir(column)}">'
+            f'<button type="button">{html.escape(str(column))}<span class="sort-indicator"></span></button></th>'
         )
-    if "Team" in columns:
-        config["Team"] = st.column_config.TextColumn("Team", width="small")
-    compact_integer_columns = {
-        "M",
-        "Inn",
-        "Runs",
-        "30s",
-        "50s",
-        "100s",
-        "0s",
-        "4s",
-        "6s",
-        "Maidens",
-        "Wickets",
-        "3WI",
-        "5WI",
-        "Catches",
-        "Stumpings",
-        "Run Outs",
-        "Total Dismissals",
-    }
-    compact_decimal_columns = {"Bat Avg", "Bowl Avg", "Bowl SR", "Eco"}
-    for column in columns:
-        if column in compact_integer_columns:
-            config[column] = st.column_config.NumberColumn(column, format="%d", width="small")
-        elif column in compact_decimal_columns:
-            config[column] = st.column_config.NumberColumn(column, format="%.2f", width="small")
-    if "Bat SR" in columns:
-        config["Bat SR"] = st.column_config.NumberColumn("Bat SR", format="%.1f%%", width="small")
-    if "HS" in columns:
-        config["HS"] = st.column_config.TextColumn("HS", width="small")
-    if "Overs" in columns:
-        config["Overs"] = st.column_config.TextColumn("Overs", width="small")
-    if "BBI" in columns:
-        config["BBI"] = st.column_config.TextColumn("BBI", width="small")
-    return config
+        for index, column in enumerate(columns)
+    )
+    rows = []
+    for _, row in table.iterrows():
+        cells = []
+        for column in columns:
+            value = row.get(column)
+            display = season_detail_display_value(column, value)
+            sort_value, missing = season_detail_sort_value(column, value)
+            cells.append(
+                f'<td class="{season_detail_column_class(column)}" '
+                f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
+                f"{display}</td>"
+            )
+        rows.append(f"<tr>{''.join(cells)}</tr>")
+    empty_state = (
+        '<tr><td class="season-detail-empty" colspan="'
+        f'{max(len(columns), 1)}">No {html.escape(category)} data available.</td></tr>'
+        if table.empty
+        else ""
+    )
+    return f"""
+    <style>
+      html, body {{
+        background: transparent;
+        color-scheme: light;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+      }}
+      .season-detail-table-wrap {{
+        background: #ffffff;
+        border: 1px solid #dfe3ee;
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(23, 27, 77, 0.055);
+        height: 548px;
+        overflow: auto;
+      }}
+      table.season-detail-table {{
+        border-collapse: separate;
+        border-spacing: 0;
+        color: #080a3f;
+        font-size: 13px;
+        min-width: 100%;
+        table-layout: fixed;
+        width: max-content;
+      }}
+      .season-detail-table col.season-col-player {{ width: 148px; }}
+      .season-detail-table col.season-col-team {{ width: 112px; }}
+      .season-detail-table col.season-col-m,
+      .season-detail-table col.season-col-inn,
+      .season-detail-table col.season-col-0s,
+      .season-detail-table col.season-col-4s,
+      .season-detail-table col.season-col-6s,
+      .season-detail-table col.season-col-3wi,
+      .season-detail-table col.season-col-5wi {{ width: 48px; }}
+      .season-detail-table col.season-col-30s,
+      .season-detail-table col.season-col-50s,
+      .season-detail-table col.season-col-100s {{ width: 54px; }}
+      .season-detail-table col.season-col-runs,
+      .season-detail-table col.season-col-hs,
+      .season-detail-table col.season-col-eco,
+      .season-detail-table col.season-col-bbi,
+      .season-detail-table col.season-col-overs,
+      .season-detail-table col.season-col-maidens,
+      .season-detail-table col.season-col-wickets,
+      .season-detail-table col.season-col-catches,
+      .season-detail-table col.season-col-run-outs,
+      .season-detail-table col.season-col-stumpings {{ width: 66px; }}
+      .season-detail-table col.season-col-bat-avg,
+      .season-detail-table col.season-col-bat-sr,
+      .season-detail-table col.season-col-bowl-avg,
+      .season-detail-table col.season-col-bowl-sr,
+      .season-detail-table col.season-col-total-dismissals {{ width: 82px; }}
+      .season-detail-table th,
+      .season-detail-table td {{
+        background: #ffffff;
+        border-bottom: 1px solid #dfe3ee;
+        border-right: 1px solid #dfe3ee;
+        box-sizing: border-box;
+        line-height: 1.18;
+        padding: 8px 9px;
+        text-align: right;
+        vertical-align: middle;
+        white-space: nowrap;
+      }}
+      .season-detail-table th {{
+        background: #fbfbfe;
+        color: #687093;
+        font-weight: 780;
+        position: sticky;
+        top: 0;
+        z-index: 3;
+      }}
+      .season-detail-table th button {{
+        align-items: center;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        display: inline-flex;
+        font: inherit;
+        gap: 4px;
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }}
+      .season-detail-table th.sorted-asc .sort-indicator::after {{ content: "↑"; }}
+      .season-detail-table th.sorted-desc .sort-indicator::after {{ content: "↓"; }}
+      .season-detail-table .season-col-player,
+      .season-detail-table .season-col-team {{
+        left: 0;
+        position: sticky;
+        text-align: left;
+        white-space: normal;
+        z-index: 2;
+      }}
+      .season-detail-table th.season-col-player,
+      .season-detail-table th.season-col-team {{
+        z-index: 4;
+      }}
+      .season-detail-table .season-col-player {{
+        box-shadow: 4px 0 8px rgba(8, 10, 63, 0.08);
+      }}
+      .season-detail-table .season-col-player a {{
+        color: #0072ce;
+        display: block;
+        font-weight: 700;
+        line-height: 1.13;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        text-decoration: none;
+        white-space: normal;
+        word-break: normal;
+      }}
+      .season-detail-table .season-col-player a:hover {{
+        color: #5b3df5;
+        text-decoration: underline;
+      }}
+      .season-detail-table tr:nth-child(even) td {{
+        background: #fbfcff;
+      }}
+      .season-detail-table tr:hover td {{
+        background: #f7f5ff;
+      }}
+      .season-detail-empty {{
+        color: #7a819f;
+        font-weight: 800;
+        padding: 22px !important;
+        text-align: center !important;
+      }}
+      @media (max-width: 760px) {{
+        .season-detail-table-wrap {{
+          border-radius: 14px;
+          height: 538px;
+        }}
+        table.season-detail-table {{
+          font-size: 12px;
+        }}
+        .season-detail-table col.season-col-player {{ width: 110px; }}
+        .season-detail-table col.season-col-team {{ width: 92px; }}
+        .season-detail-table col.season-col-m,
+        .season-detail-table col.season-col-0s,
+        .season-detail-table col.season-col-4s,
+        .season-detail-table col.season-col-6s,
+        .season-detail-table col.season-col-3wi,
+        .season-detail-table col.season-col-5wi {{ width: 42px; }}
+        .season-detail-table col.season-col-inn,
+        .season-detail-table col.season-col-30s,
+        .season-detail-table col.season-col-50s {{ width: 46px; }}
+        .season-detail-table col.season-col-100s {{ width: 50px; }}
+        .season-detail-table col.season-col-runs,
+        .season-detail-table col.season-col-hs,
+        .season-detail-table col.season-col-eco,
+        .season-detail-table col.season-col-bbi {{ width: 56px; }}
+        .season-detail-table col.season-col-overs,
+        .season-detail-table col.season-col-maidens,
+        .season-detail-table col.season-col-wickets,
+        .season-detail-table col.season-col-catches,
+        .season-detail-table col.season-col-run-outs,
+        .season-detail-table col.season-col-stumpings {{ width: 58px; }}
+        .season-detail-table col.season-col-total-dismissals {{ width: 64px; }}
+        .season-detail-table col.season-col-bat-avg,
+        .season-detail-table col.season-col-bat-sr,
+        .season-detail-table col.season-col-bowl-avg,
+        .season-detail-table col.season-col-bowl-sr {{ width: 72px; }}
+        .season-detail-table th,
+        .season-detail-table td {{
+          padding: 7px 6px;
+        }}
+        .season-detail-table .season-col-player a {{
+          line-height: 1.12;
+        }}
+      }}
+    </style>
+    <div class="season-detail-table-wrap">
+      <table id="{html.escape(safe_table_id, quote=True)}" class="season-detail-table">
+        <colgroup>{colgroup}</colgroup>
+        <thead><tr>{header_html}</tr></thead>
+        <tbody>{empty_state if table.empty else ''.join(rows)}</tbody>
+      </table>
+    </div>
+    <script>
+      (() => {{
+        const table = document.getElementById({safe_table_id!r});
+        if (!table) return;
+        const tbody = table.querySelector("tbody");
+        const headers = Array.from(table.querySelectorAll("th"));
+        const textValue = (row, index) => row.children[index].textContent.trim().toLocaleLowerCase();
+        const sortValue = (row, index) => {{
+          const cell = row.children[index];
+          if (!cell || cell.dataset.missing === "1") return null;
+          const raw = cell.dataset.sort || "";
+          const numeric = Number(raw);
+          return Number.isFinite(numeric) && raw.trim() !== "" ? numeric : raw.toLocaleLowerCase();
+        }};
+        const compare = (a, b, index, dir) => {{
+          const av = sortValue(a, index);
+          const bv = sortValue(b, index);
+          if (av === null && bv === null) return textValue(a, 0).localeCompare(textValue(b, 0));
+          if (av === null) return 1;
+          if (bv === null) return -1;
+          let result = 0;
+          if (typeof av === "number" && typeof bv === "number") {{
+            result = av === bv ? 0 : av < bv ? -1 : 1;
+          }} else {{
+            result = String(av).localeCompare(String(bv), undefined, {{ numeric: true, sensitivity: "base" }});
+          }}
+          if (result === 0) result = textValue(a, 0).localeCompare(textValue(b, 0));
+          return dir === "asc" ? result : -result;
+        }};
+        const sortHeader = (header, index) => {{
+          const current = header.dataset.sortDir;
+          const dir = current ? (current === "asc" ? "desc" : "asc") : (header.dataset.defaultDir || "desc");
+          headers.forEach(item => {{
+            item.classList.remove("sorted-asc", "sorted-desc");
+            delete item.dataset.sortDir;
+          }});
+          header.dataset.sortDir = dir;
+          header.classList.add(`sorted-${{dir}}`);
+          Array.from(tbody.querySelectorAll("tr"))
+            .sort((a, b) => compare(a, b, index, dir))
+            .forEach(row => tbody.appendChild(row));
+        }};
+        const resolveInternalHref = (href) => {{
+          let base = document.referrer || window.location.href;
+          try {{
+            if (window.parent && window.parent.location && window.parent.location.href) base = window.parent.location.href;
+          }} catch (error) {{}}
+          return new URL(href, base).toString();
+        }};
+        table.addEventListener("click", event => {{
+          const link = event.target.closest('a[data-season-detail-link="1"]');
+          if (!link) return;
+          const href = resolveInternalHref(link.getAttribute("href") || "");
+          if (!href) return;
+          try {{
+            window.parent.location.href = href;
+            event.preventDefault();
+          }} catch (error) {{
+            link.setAttribute("href", href);
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+          }}
+        }});
+        headers.forEach((header, index) => header.addEventListener("click", () => sortHeader(header, index)));
+      }})();
+    </script>
+    """
+
+
+def season_detail_column_class(column: object) -> str:
+    text = re.sub(r"[^a-zA-Z0-9]+", "-", str(column).strip().casefold()).strip("-")
+    return f"season-col-{text or 'column'}"
+
+
+def season_detail_default_sort_dir(column: object) -> str:
+    return "asc" if str(column) in {"Player", "Team"} else "desc"
+
+
+def season_detail_display_value(column: str, value: object) -> str:
+    if column == "Player":
+        return season_detail_player_link_cell(value)
+    if pd.isna(value) or str(value).strip() == "":
+        return "N/A"
+    if column == "Bat SR":
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+    if column in {"Bat Avg", "Bowl Avg", "Bowl SR", "Eco"}:
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "N/A" if pd.isna(numeric) else f"{float(numeric):.2f}"
+    if column == "Overs":
+        balls = cricket_overs_to_balls(value)
+        return "N/A" if balls is None else balls_to_overs_display(balls) or "N/A"
+    if column in {"M", "Inn", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "Maidens", "Wickets", "3WI", "5WI", "Catches", "Stumpings", "Run Outs", "Total Dismissals"}:
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "N/A" if pd.isna(numeric) else f"{int(numeric):,}"
+    text = str(value).strip()
+    return html.escape(text if text and text not in {"—", "None", "nan"} else "N/A")
+
+
+def season_detail_player_link_cell(value: object) -> str:
+    if pd.isna(value) or str(value).strip() == "":
+        return "N/A"
+    text = str(value).strip()
+    label = link_display_label(text)
+    if text.startswith("?"):
+        return (
+            f'<a href="{html.escape(text, quote=True)}" data-season-detail-link="1" target="_top" '
+            f'title="Open Player Profile for {html.escape(label or text, quote=True)}">'
+            f"{html.escape(label or text)}</a>"
+        )
+    return html.escape(label or text)
+
+
+def season_detail_sort_value(column: str, value: object) -> tuple[str, bool]:
+    if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
+        return "", True
+    if column in {"Player", "Team"}:
+        return link_display_label(value).casefold(), False
+    if column == "HS":
+        runs, not_out = parse_batting_score(value)
+        if runs is None:
+            return "", True
+        return str(runs * 10 + int(not_out)), False
+    if column == "BBI":
+        wickets, runs = parse_bowling_figures(value)
+        if wickets is None or runs is None:
+            return "", True
+        return str(wickets * 10000 - runs), False
+    if column == "Overs":
+        balls = cricket_overs_to_balls(value)
+        return ("" if balls is None else str(balls), balls is None)
+    numeric = pd.to_numeric(value, errors="coerce")
+    if not pd.isna(numeric):
+        return str(float(numeric)), False
+    return str(value).casefold(), False
 
 
 def build_full_stats_frame(
