@@ -10913,12 +10913,19 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
       .season-detail-table col.season-col-player {{ width: 148px; }}
       .season-detail-table col.season-col-team {{ width: 112px; }}
       .season-detail-table col.season-col-m,
+      .season-detail-table col.season-col-mat,
       .season-detail-table col.season-col-inn,
+      .season-detail-table col.season-col-mdns,
+      .season-detail-table col.season-col-w,
+      .season-detail-table col.season-col-ct,
+      .season-detail-table col.season-col-st,
+      .season-detail-table col.season-col-ro,
       .season-detail-table col.season-col-0s,
       .season-detail-table col.season-col-4s,
       .season-detail-table col.season-col-6s,
       .season-detail-table col.season-col-3wi,
-      .season-detail-table col.season-col-5wi {{ width: 48px; }}
+      .season-detail-table col.season-col-5wi,
+      .season-detail-table col.season-col-dis {{ width: 48px; }}
       .season-detail-table col.season-col-30s,
       .season-detail-table col.season-col-50s,
       .season-detail-table col.season-col-100s {{ width: 54px; }}
@@ -11026,11 +11033,18 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         .season-detail-table col.season-col-player {{ width: 110px; }}
         .season-detail-table col.season-col-team {{ width: 92px; }}
         .season-detail-table col.season-col-m,
+        .season-detail-table col.season-col-mat,
+        .season-detail-table col.season-col-mdns,
+        .season-detail-table col.season-col-w,
+        .season-detail-table col.season-col-ct,
+        .season-detail-table col.season-col-st,
+        .season-detail-table col.season-col-ro,
         .season-detail-table col.season-col-0s,
         .season-detail-table col.season-col-4s,
         .season-detail-table col.season-col-6s,
         .season-detail-table col.season-col-3wi,
         .season-detail-table col.season-col-5wi {{ width: 42px; }}
+        .season-detail-table col.season-col-dis {{ width: 46px; }}
         .season-detail-table col.season-col-inn,
         .season-detail-table col.season-col-30s,
         .season-detail-table col.season-col-50s {{ width: 46px; }}
@@ -11158,7 +11172,32 @@ def season_detail_display_value(column: str, value: object) -> str:
     if column == "Overs":
         balls = cricket_overs_to_balls(value)
         return "N/A" if balls is None else balls_to_overs_display(balls) or "N/A"
-    if column in {"M", "Inn", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "Maidens", "Wickets", "3WI", "5WI", "Catches", "Stumpings", "Run Outs", "Total Dismissals"}:
+    if column in {
+        "M",
+        "Mat",
+        "Inn",
+        "Runs",
+        "30s",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Maidens",
+        "Mdns",
+        "Wickets",
+        "W",
+        "3WI",
+        "5WI",
+        "Catches",
+        "Ct",
+        "Stumpings",
+        "St",
+        "Run Outs",
+        "RO",
+        "Total Dismissals",
+        "Dis",
+    }:
         numeric = pd.to_numeric(value, errors="coerce")
         return "N/A" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
@@ -11284,7 +11323,7 @@ def apply_batting_detail_fallbacks(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
-    return prepare_curated_display_frame(
+    output = prepare_curated_display_frame(
         df,
         [
             "player_name",
@@ -11315,10 +11354,11 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "5WI",
         ],
     )
+    return output.rename(columns={"M": "Mat", "Maidens": "Mdns", "Wickets": "W"})
 
 
 def get_fielding_display_df(df: pd.DataFrame) -> pd.DataFrame:
-    return prepare_curated_display_frame(
+    output = prepare_curated_display_frame(
         df,
         [
             "player_name",
@@ -11338,6 +11378,9 @@ def get_fielding_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Run Outs",
             "Total Dismissals",
         ],
+    )
+    return output.rename(
+        columns={"Catches": "Ct", "Stumpings": "St", "Run Outs": "RO", "Total Dismissals": "Dis"}
     )
 
 
