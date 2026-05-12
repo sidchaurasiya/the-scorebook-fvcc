@@ -3307,28 +3307,31 @@ def inject_theme() -> None:
         .milestone-segmented {
             align-items: center;
             background: #ffffff;
-            border: 1px solid #e8e9f6;
-            border-radius: 999px;
-            box-shadow: 0 14px 28px rgba(23, 27, 77, 0.05);
-            display: inline-flex;
-            gap: 6px;
-            margin: 4px 0 18px;
-            padding: 6px;
+            border: 1px solid #efe3ea;
+            border-radius: 20px;
+            box-shadow: 0 12px 26px rgba(23, 27, 77, 0.045);
+            display: flex;
+            gap: 8px;
+            margin: 4px 0 26px;
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 7px 9px;
+            width: fit-content;
         }
 
         .milestone-segmented-compact {
-            margin-top: 0;
+            margin: 0 0 18px;
         }
 
         .milestone-segment {
             border-radius: 999px;
-            color: #687093 !important;
+            color: #9a405b !important;
             display: inline-flex;
-            font-size: 0.9rem;
-            font-weight: 850;
+            font-size: 0.88rem;
+            font-weight: 900;
             justify-content: center;
             line-height: 1.1;
-            padding: 11px 16px;
+            padding: 11px 18px;
             text-decoration: none !important;
             transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
             white-space: nowrap;
@@ -3336,55 +3339,14 @@ def inject_theme() -> None:
 
         .milestone-segment:hover,
         .milestone-segment:focus-visible {
-            background: #f2edff;
-            color: #4b37d8 !important;
+            background: #fbedf3;
+            color: #801437 !important;
         }
 
         .milestone-segment.active {
-            background: linear-gradient(135deg, #6d4dff 0%, #4b37d8 100%);
-            box-shadow: 0 8px 18px rgba(91, 61, 245, 0.22);
-            color: #ffffff !important;
-        }
-
-        .milestone-summary-strip {
-            display: grid;
-            gap: 12px;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            margin: 0 0 28px;
-        }
-
-        .milestone-summary-card {
-            background: #ffffff;
-            border: 1px solid #e9ebf4;
-            border-radius: 16px;
-            box-shadow: 0 14px 30px rgba(23, 27, 77, 0.052);
-            padding: 15px 17px;
-        }
-
-        .milestone-summary-card span {
-            color: #747b98;
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 850;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .milestone-summary-card strong {
-            color: var(--ink);
-            display: block;
-            font-size: 1.45rem;
-            font-weight: 950;
-            line-height: 1;
-        }
-
-        .milestone-summary-card em {
-            color: #7a809d;
-            display: block;
-            font-size: 0.82rem;
-            font-style: normal;
-            font-weight: 700;
-            margin-top: 6px;
+            background: #f8dfe9;
+            box-shadow: inset 0 0 0 1px rgba(128, 20, 55, 0.06);
+            color: #7a1f3d !important;
         }
 
         .achievement-grid {
@@ -3705,30 +3667,28 @@ def inject_theme() -> None:
             }
 
             .milestone-segmented {
-                align-items: stretch;
                 border-radius: 18px;
-                display: grid;
                 gap: 6px;
-                grid-template-columns: 1fr;
+                margin-bottom: 22px;
+                overflow-x: auto;
+                padding: 6px;
                 width: 100%;
             }
 
             .milestone-segmented-compact {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                margin-bottom: 16px;
             }
 
             .milestone-segment {
                 align-items: center;
                 font-size: 0.84rem;
-                padding: 10px 11px;
+                padding: 10px 13px;
             }
 
-            .milestone-summary-strip,
             .achievement-grid {
                 grid-template-columns: 1fr;
             }
 
-            .milestone-summary-card,
             .achievement-card {
                 padding: 15px 16px;
             }

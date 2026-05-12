@@ -3497,14 +3497,12 @@ def render_approaching_milestones_page() -> None:
     st.markdown(
         """
         <div class="near-milestones-page"></div>
-        <h1 class="page-title">Players approaching major club milestones 🎯</h1>
+        <h1 class="page-title">Players approaching major milestones 🎯</h1>
         <div class="club-label">Fiji Victorian Cricket Club</div>
-        <div class="page-subtitle">Upcoming milestones show active players from the last 3 seasons. Achieved and exclusive clubs use canonical club records.</div>
         """,
         unsafe_allow_html=True,
     )
     render_milestone_view_selector(selected_view)
-    render_milestone_summary_strip(watchlist, achieved, historical_data["all_time"])
     if selected_view == "achieved":
         render_achieved_milestones_view(achieved, season_window)
     elif selected_view == "exclusive":
@@ -3526,7 +3524,7 @@ def milestone_club_category_options() -> list[tuple[str, str]]:
         ("matches", "Matches"),
         ("runs", "Runs"),
         ("wickets", "Wickets"),
-        ("fielding", "Fielding"),
+        ("catches", "Catches"),
     ]
 
 
@@ -3585,42 +3583,6 @@ def render_milestone_segmented_links(
     )
 
 
-def render_milestone_summary_strip(
-    watchlist: pd.DataFrame,
-    achieved: pd.DataFrame,
-    all_time: pd.DataFrame,
-) -> None:
-    cards = [
-        ("Upcoming", f"{len(watchlist):,}", "milestone opportunities"),
-        ("Achieved this season", f"{len(achieved):,}", "confirmed achievements"),
-        ("Exclusive members", f"{exclusive_member_count(all_time):,}", "players in a club"),
-    ]
-    html_cards = "".join(
-        (
-            '<div class="milestone-summary-card">'
-            f'<span>{html.escape(label)}</span>'
-            f'<strong>{html.escape(value)}</strong>'
-            f'<em>{html.escape(note)}</em>'
-            "</div>"
-        )
-        for label, value, note in cards
-    )
-    st.markdown(f'<div class="milestone-summary-strip">{html_cards}</div>', unsafe_allow_html=True)
-
-
-def exclusive_member_count(all_time: pd.DataFrame) -> int:
-    if all_time.empty:
-        return 0
-    player_column = "canonical_player_id" if "canonical_player_id" in all_time else "Player"
-    mask = pd.Series(False, index=all_time.index)
-    for spec in exclusive_club_specs("matches") + exclusive_club_specs("runs") + exclusive_club_specs("wickets") + exclusive_club_specs("fielding"):
-        metric = spec["metric"]
-        if metric in all_time:
-            values = pd.to_numeric(all_time[metric], errors="coerce").fillna(0)
-            mask = mask | (values >= min(spec["thresholds"]))
-    return int(all_time.loc[mask, player_column].dropna().astype(str).nunique())
-
-
 def milestone_achievement_season_window(historical_data: dict[str, object]) -> list[str]:
     season_table = read_processed_table("seasons")
     ordered = ordered_milestone_seasons(season_table)
@@ -3664,14 +3626,10 @@ def ordered_milestone_seasons(season_table: pd.DataFrame) -> list[str]:
 
 def milestone_achievement_specs() -> list[dict[str, object]]:
     return [
-        {"category": "Matches", "metric": "Matches", "unit": "matches", "thresholds": [50, 100, 150, 200, 250, 300, 350]},
-        {"category": "Runs", "metric": "Runs", "unit": "runs", "thresholds": [500, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 6000]},
-        {"category": "Wickets", "metric": "Wickets", "unit": "wickets", "thresholds": [50, 100, 150, 200, 250, 300, 350, 400]},
-        {"category": "Catches", "metric": "Catches", "unit": "catches", "thresholds": [25, 50, 75, 100, 150, 200]},
-        {"category": "Dismissals", "metric": "Dismissals", "unit": "dismissals", "thresholds": [25, 50, 75, 100, 150, 200]},
-        {"category": "50s", "metric": "50s", "unit": "50s", "thresholds": [10, 25, 50, 75, 100]},
-        {"category": "100s", "metric": "100s", "unit": "100s", "thresholds": [1, 5, 10, 15, 20]},
-        {"category": "5WI", "metric": "5WI", "unit": "five-wicket hauls", "thresholds": [1, 5, 10, 15, 20]},
+        {"category": "Matches", "metric": "Matches", "unit": "matches", "thresholds": [100, 200, 300, 400, 500]},
+        {"category": "Runs", "metric": "Runs", "unit": "runs", "thresholds": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]},
+        {"category": "Wickets", "metric": "Wickets", "unit": "wickets", "thresholds": [100, 200, 300, 400, 500, 600]},
+        {"category": "Catches", "metric": "Catches", "unit": "catches", "thresholds": [100, 200, 300, 400, 500]},
     ]
 
 
@@ -3758,18 +3716,14 @@ def build_milestone_period_totals(
     output = output.merge(matches, on="player_key", how="left")
     for frame, source_column, metric in [
         (frames[0], "battingAggregate", "Runs"),
-        (frames[0], "batting50s", "50s"),
-        (frames[0], "batting100s", "100s"),
         (frames[1], "bowlingWickets", "Wickets"),
-        (frames[1], "bowling5WIs", "5WI"),
         (add_display_stat_aliases(frames[2]), "catches_display", "Catches"),
-        (add_display_stat_aliases(frames[2]), "dismissals_display", "Dismissals"),
     ]:
         totals = grouped_milestone_metric(frame, source_column, metric)
         if not totals.empty:
             output = output.merge(totals, on="player_key", how="left")
 
-    for metric in ["Matches", "Runs", "50s", "100s", "Wickets", "5WI", "Catches", "Dismissals"]:
+    for metric in ["Matches", "Runs", "Wickets", "Catches"]:
         if metric not in output:
             output[metric] = 0
         output[metric] = pd.to_numeric(output[metric], errors="coerce").fillna(0)
@@ -3794,14 +3748,16 @@ def grouped_milestone_metric(frame: pd.DataFrame, source_column: str, metric: st
 def milestone_season_window_label(season_window: list[str]) -> str:
     if not season_window:
         return "Current season window"
-    return " + ".join(season_window)
+    if len(season_window) == 1:
+        return season_window[0]
+    return " or ".join(season_window)
 
 
 def render_achieved_milestones_view(achieved: pd.DataFrame, season_window: list[str]) -> None:
     render_section_heading("Achieved Milestones 🏁")
     window_label = milestone_season_window_label(season_window)
     st.markdown(
-        f'<div class="section-subtext">Season window: {html.escape(window_label)}.</div>',
+        f'<div class="section-subtext">Achieved during {html.escape(window_label)} season</div>',
         unsafe_allow_html=True,
     )
     if achieved.empty:
@@ -5692,19 +5648,16 @@ def record_card_html(card: dict[str, str]) -> str:
 def exclusive_club_specs(category: str) -> list[dict[str, object]]:
     specs = {
         "matches": [
-            {"metric": "Matches", "label": "matches", "thresholds": [50, 100, 150, 200, 250, 300, 350]},
+            {"metric": "Matches", "label": "matches", "thresholds": [100, 200, 300, 400, 500]},
         ],
         "runs": [
-            {"metric": "Runs", "label": "runs", "thresholds": [500, 1000, 1500, 2000, 3000, 4000, 5000, 6000]},
+            {"metric": "Runs", "label": "runs", "thresholds": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]},
         ],
         "wickets": [
-            {"metric": "Wickets", "label": "wickets", "thresholds": [50, 100, 150, 200, 250, 300, 350, 400]},
+            {"metric": "Wickets", "label": "wickets", "thresholds": [100, 200, 300, 400, 500, 600]},
         ],
-        "fielding": [
-            {"metric": "Catches", "label": "catches", "thresholds": [25, 50, 75, 100, 150, 200]},
-            {"metric": "Stumpings", "label": "stumpings", "thresholds": [10, 25, 50, 75, 100]},
-            {"metric": "Run Outs", "label": "run outs", "thresholds": [10, 25, 50, 75, 100]},
-            {"metric": "Dismissals", "label": "dismissals", "thresholds": [25, 50, 75, 100, 150, 200]},
+        "catches": [
+            {"metric": "Catches", "label": "catches", "thresholds": [100, 200, 300, 400, 500]},
         ],
     }
     return specs.get(category, specs["matches"])
@@ -6496,14 +6449,10 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
 @st.cache_data(show_spinner=False)
 def build_approaching_milestone_watchlist(all_time: pd.DataFrame) -> pd.DataFrame:
     specs = [
-        ("Matches", "Matches", 100, 10, "matches", "Career Milestones"),
-        ("Runs", "Runs", 1000, 100, "runs", "Career Milestones"),
-        ("Wickets", "Wickets", 100, 10, "wickets", "Career Milestones"),
-        ("Catches", "Catches", 50, 5, "catches", "Career Milestones"),
-        ("Dismissals", "Dismissals", 50, 5, "dismissals", "Career Milestones"),
-        ("Half-centuries", "50s", 10, 1, "half-centuries", "Special Achievements"),
-        ("Centuries", "100s", 5, 1, "centuries", "Special Achievements"),
-        ("Five-wicket hauls", "5WI", 5, 1, "five-wicket hauls", "Special Achievements"),
+        ("Matches", "Matches", 100, 100, "matches", "Career Milestones"),
+        ("Runs", "Runs", 1000, 1000, "runs", "Career Milestones"),
+        ("Wickets", "Wickets", 100, 100, "wickets", "Career Milestones"),
+        ("Catches", "Catches", 100, 100, "catches", "Career Milestones"),
     ]
     frames = [
         build_milestone_watchlist(all_time, value_col, category, step, threshold, unit, group)
@@ -6656,10 +6605,10 @@ def next_milestone_target(value: float, step: int) -> int:
 
 def render_milestone_kpis(watchlist: pd.DataFrame) -> None:
     near_matches = milestone_unique_players(watchlist, ["Matches"])
-    near_batting = milestone_unique_players(watchlist, ["Runs", "Half-centuries", "Centuries"])
+    near_batting = milestone_unique_players(watchlist, ["Runs"])
     near_bowling_fielding = milestone_unique_players(
         watchlist,
-        ["Wickets", "Catches", "Dismissals", "Five-wicket hauls"],
+        ["Wickets", "Catches"],
     )
     cards = [
         ("Total Milestone Opportunities", f"{len(watchlist):,}", "", "milestones", "▦", "purple"),
@@ -6682,6 +6631,10 @@ def milestone_unique_players(watchlist: pd.DataFrame, categories: list[str]) -> 
 
 def render_career_milestone_cards(watchlist: pd.DataFrame) -> None:
     render_section_heading("Milestone Watchlist 📍")
+    st.markdown(
+        '<div class="section-subtext">Showing active players only — players who have appeared for FVCC in the last 3 seasons.</div>',
+        unsafe_allow_html=True,
+    )
     column_groups = [["Matches", "Wickets"], ["Runs", "Catches"]]
     if not any(
         not milestone_category_rows(watchlist, category).empty
@@ -6751,15 +6704,11 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
         st.info("No players are currently within milestone range for this category.")
         return
 
-    category_options = ["All", "Matches", "Runs", "Wickets", "Catches", "Dismissals"]
-    if (watchlist["Group"] == "Special Achievements").any():
-        category_options.append("Special Achievements")
+    category_options = ["All", "Matches", "Runs", "Wickets", "Catches"]
     selected_category = st.selectbox("Milestone category", category_options, key="milestone_category_filter")
 
     filtered = watchlist.copy()
-    if selected_category == "Special Achievements":
-        filtered = filtered[filtered["Group"] == "Special Achievements"]
-    elif selected_category != "All":
+    if selected_category != "All":
         filtered = filtered[filtered["Category"] == selected_category]
 
     if filtered.empty:
