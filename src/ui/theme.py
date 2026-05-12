@@ -3547,6 +3547,12 @@ def inject_theme() -> None:
                 font-size: clamp(2.25rem, 13vw, 3.15rem);
             }
 
+            .block-container:has(.seasons-page) .page-title {
+                font-size: clamp(2.05rem, 9.4vw, 2.65rem);
+                line-height: 1.02;
+                white-space: nowrap;
+            }
+
             .block-container:has(.near-milestones-page) .page-title {
                 font-size: clamp(1.85rem, 10.5vw, 2.65rem);
             }
@@ -3595,6 +3601,30 @@ def inject_theme() -> None:
             div[data-testid="stVegaLiteChart"] iframe {
                 background: #ffffff !important;
                 color-scheme: light !important;
+            }
+
+            .block-container:has(.seasons-page) div.st-key-full_stats_card {
+                border-radius: 18px;
+                padding: 14px 10px 16px;
+            }
+
+            .block-container:has(.seasons-page) div.st-key-full_stats_card div[data-testid="stDataFrame"] {
+                border-radius: 14px !important;
+                font-size: 0.72rem !important;
+            }
+
+            .block-container:has(.seasons-page) div.st-key-full_stats_card div[data-testid="stDataFrame"] [role="columnheader"],
+            .block-container:has(.seasons-page) div.st-key-full_stats_card div[data-testid="stDataFrame"] [role="gridcell"] {
+                font-size: 0.72rem !important;
+                line-height: 1.12 !important;
+            }
+
+            .block-container:has(.seasons-page) div.st-key-full_stats_card div[data-testid="stDataFrame"] a[href*="page=player-profile"] {
+                display: inline-block;
+                line-height: 1.12;
+                max-width: 92px;
+                white-space: normal;
+                word-break: normal;
             }
 
             .player-hero-card {

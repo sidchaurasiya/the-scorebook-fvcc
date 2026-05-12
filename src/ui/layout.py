@@ -563,7 +563,7 @@ def render_sidebar() -> str:
     help_text_by_slug = {
         "hall-of-fame": ("Hall of Fame 🏆", "All-time club records, leaders, and iconic performances."),
         SEASON_OVERVIEW_QUERY_PAGE: (
-            "Season Overview 📊",
+            "Season Overview 🧭",
             "Season stats, team leaders, and detailed batting/bowling/fielding tables.",
         ),
         SEASON_OVERVIEW_V2_QUERY_PAGE: (
@@ -683,7 +683,7 @@ def render_data_refresh_control() -> None:
 def render_data_source_panel(
     page_slug: str = SEASON_OVERVIEW_QUERY_PAGE,
     page_marker_class: str = "seasons-page",
-    header_title: str = "Season Overview 📊",
+    header_title: str = "Season Overview 🧭",
     header_description: str = "Track team performance, player leaders, and season-by-season club trends.",
 ) -> dict[str, object] | None:
     club_url = DEFAULT_CLUB_URL
@@ -9933,7 +9933,7 @@ def render_team_specific_leaders(dashboard_data: dict[str, object]) -> None:
     team_bowling = dashboard_data.get("team_bowling", dashboard_data["bowling"])
     teams = dashboard_data.get("teams", [])
 
-    render_section_heading("Leaders by Team/Grade 👥")
+    render_section_heading("Team/Grade Leaders 👥")
     render_section_subtext("Top performers by team/grade.")
     if not teams:
         st.caption("No teams available for this selection.")
@@ -10544,6 +10544,7 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
     config = standard_column_config()
     integer_columns = {
         "M",
+        "Inn",
         "Innings",
         "Matches",
         "Seasons Played",
@@ -10838,9 +10839,9 @@ def render_full_stats_table(
     show_team: bool = False,
 ) -> None:
     output = build_full_stats_frame(df, category, show_team)
-    column_config = numeric_column_config(output.columns.tolist())
+    column_config = season_overview_detail_column_config(output.columns.tolist(), category)
     if category == "batting" and "Bat SR" in output:
-        column_config["Bat SR"] = st.column_config.NumberColumn(format="%.1f%%")
+        column_config["Bat SR"] = st.column_config.NumberColumn("Bat SR", format="%.1f%%", width="small")
     render_filterable_dataframe(
         output,
         key_prefix=f"full_stats_{category}_{'team' if show_team else 'no_team'}",
@@ -10850,6 +10851,53 @@ def render_full_stats_table(
         column_config=column_config,
         show_filters=False,
     )
+
+
+def season_overview_detail_column_config(columns: list[str], category: str) -> dict[str, object]:
+    config = numeric_column_config(columns)
+    if "Player" in columns:
+        config["Player"] = st.column_config.LinkColumn(
+            "Player",
+            pinned=True,
+            width="small",
+            display_text=profile_link_display_pattern(),
+        )
+    if "Team" in columns:
+        config["Team"] = st.column_config.TextColumn("Team", width="small")
+    compact_integer_columns = {
+        "M",
+        "Inn",
+        "Runs",
+        "30s",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Maidens",
+        "Wickets",
+        "3WI",
+        "5WI",
+        "Catches",
+        "Stumpings",
+        "Run Outs",
+        "Total Dismissals",
+    }
+    compact_decimal_columns = {"Bat Avg", "Bowl Avg", "Bowl SR", "Eco"}
+    for column in columns:
+        if column in compact_integer_columns:
+            config[column] = st.column_config.NumberColumn(column, format="%d", width="small")
+        elif column in compact_decimal_columns:
+            config[column] = st.column_config.NumberColumn(column, format="%.2f", width="small")
+    if "Bat SR" in columns:
+        config["Bat SR"] = st.column_config.NumberColumn("Bat SR", format="%.1f%%", width="small")
+    if "HS" in columns:
+        config["HS"] = st.column_config.TextColumn("HS", width="small")
+    if "Overs" in columns:
+        config["Overs"] = st.column_config.TextColumn("Overs", width="small")
+    if "BBI" in columns:
+        config["BBI"] = st.column_config.TextColumn("BBI", width="small")
+    return config
 
 
 def build_full_stats_frame(
@@ -10904,7 +10952,7 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Player",
             "Team",
             "M",
-            "Innings",
+            "Inn",
             "Runs",
             "Bat Avg",
             "Bat SR",
@@ -11072,7 +11120,7 @@ def pretty_column_name_map() -> dict[str, str]:
         "grade_name": "Grade",
         "matches": "M",
         "innings": "Innings",
-        "battingInnings": "Innings",
+        "battingInnings": "Inn",
         "battingAggregate": "Runs",
         "balls_faced_display": "BF",
         "ballsFaced": "BF",
