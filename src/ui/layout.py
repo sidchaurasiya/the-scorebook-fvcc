@@ -48,6 +48,7 @@ from src.data.playcricket_ingestion import (
 )
 from src.data import player_dna_analytics as player_dna
 from src.data import scorebook_lab_analytics as scorebook_lab
+from src.data import season_story_analytics as season_story
 from src.ui.theme import inject_theme
 from src.utils.player_identity import (
     DUPLICATE_AUDIT_PATH,
@@ -122,6 +123,7 @@ DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
+SHOW_SEASON_OVERVIEW_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
@@ -130,6 +132,7 @@ PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 SEASON_OVERVIEW_PAGE_LABEL = "⌂ Season Overview"
 SEASON_OVERVIEW_QUERY_PAGE = "season-overview"
+SEASON_OVERVIEW_V2_QUERY_PAGE = "season-overview-v2"
 
 BASE_PAGE_DEFINITIONS = (
     ("hall-of-fame", "♕ Hall of Fame", "Hall of Fame"),
@@ -143,6 +146,9 @@ EXPERIMENTAL_PAGE_DEFINITIONS = (
     ("player-dna", "◇ Player DNA", "Player DNA"),
     ("scorebook-lab", "▣ Scorebook Lab", "Scorebook Lab"),
 )
+SEASON_OVERVIEW_V2_PAGE_DEFINITIONS = (
+    (SEASON_OVERVIEW_V2_QUERY_PAGE, "✦ Season Overview v2", "Season Overview v2"),
+)
 LEGACY_PAGE_SLUGS = {
     "season_overview": SEASON_OVERVIEW_QUERY_PAGE,
 }
@@ -155,6 +161,8 @@ def log_hof_timing(label: str, started_at: float) -> None:
 
 def get_page_definitions() -> tuple[tuple[str, str, str], ...]:
     definitions = list(BASE_PAGE_DEFINITIONS)
+    if SHOW_SEASON_OVERVIEW_V2:
+        definitions.extend(SEASON_OVERVIEW_V2_PAGE_DEFINITIONS)
     if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
         definitions.extend(EXPERIMENTAL_PAGE_DEFINITIONS)
     return tuple(definitions)
@@ -520,6 +528,14 @@ def render_page() -> None:
     elif selected_page == SEASON_OVERVIEW_QUERY_PAGE:
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
+    elif SHOW_SEASON_OVERVIEW_V2 and selected_page == SEASON_OVERVIEW_V2_QUERY_PAGE:
+        dashboard_data = render_data_source_panel(
+            page_slug=SEASON_OVERVIEW_V2_QUERY_PAGE,
+            page_marker_class="season-v2-page",
+            header_title="Season Overview v2 ✨",
+            header_description="A premium season story built from scorecards, records and match-centre insights.",
+        )
+        render_season_overview_v2(dashboard_data)
     elif selected_page == "milestone":
         render_approaching_milestones_page()
     elif selected_page == PLAYER_PROFILE_QUERY_PAGE:
@@ -549,6 +565,10 @@ def render_sidebar() -> str:
         SEASON_OVERVIEW_QUERY_PAGE: (
             "Season Overview 📊",
             "Season stats, team leaders, and detailed batting/bowling/fielding tables.",
+        ),
+        SEASON_OVERVIEW_V2_QUERY_PAGE: (
+            "Season Overview v2 ✨",
+            "Hidden preview for season stories, awards, pulse cards, and role maps.",
         ),
         "milestone": ("Milestone 💪", "Active players closing in on major club milestones."),
         PLAYER_PROFILE_QUERY_PAGE: ("Player Profile 🏏", "Search any player and view their career record."),
@@ -660,7 +680,12 @@ def render_data_refresh_control() -> None:
                 st.warning(f"{len(summary.failed_requests)} requests failed and were logged in data/metadata.json.")
 
 
-def render_data_source_panel() -> dict[str, object] | None:
+def render_data_source_panel(
+    page_slug: str = SEASON_OVERVIEW_QUERY_PAGE,
+    page_marker_class: str = "seasons-page",
+    header_title: str = "Season Overview 📊",
+    header_description: str = "Track team performance, player leaders, and season-by-season club trends.",
+) -> dict[str, object] | None:
     club_url = DEFAULT_CLUB_URL
     using_local_backup = local_backup_available()
     local_version = metadata_mtime()
@@ -794,29 +819,29 @@ def render_data_source_panel() -> dict[str, object] | None:
         track_event_once(
             "season_filter_change",
             {
-                "page_slug": SEASON_OVERVIEW_QUERY_PAGE,
+                "page_slug": page_slug,
                 "selected_season": selected_season_name,
                 "selected_team": selected_team_label,
             },
-            key=f"season-filter:{selected_season.get('id')}",
+            key=f"{page_slug}:season-filter:{selected_season.get('id')}",
         )
         track_event_once(
             "team_filter_change",
             {
-                "page_slug": SEASON_OVERVIEW_QUERY_PAGE,
+                "page_slug": page_slug,
                 "selected_season": selected_season_name,
                 "selected_team": selected_team_label,
             },
-            key=f"team-filter:{selected_season.get('id')}:{selected_team_id}:{selected_grade_id}",
+            key=f"{page_slug}:team-filter:{selected_season.get('id')}:{selected_team_id}:{selected_grade_id}",
         )
 
     with st.container(key="header_intro"):
         st.markdown(
             f"""
-            <div class="seasons-page"></div>
-            <h1 class="page-title">Season Overview 📊</h1>
+            <div class="{html.escape(page_marker_class)}"></div>
+            <h1 class="page-title">{html.escape(header_title)}</h1>
             <div class="club-label">Fiji Victorian Cricket Club</div>
-            <div class="page-subtitle">Track team performance, player leaders, and season-by-season club trends.</div>
+            <div class="page-subtitle">{html.escape(header_description)}</div>
             <div class="page-note">{html.escape(context_description)}</div>
             """,
             unsafe_allow_html=True,
@@ -874,6 +899,7 @@ def render_data_source_panel() -> dict[str, object] | None:
             if is_all_teams
             else format_team_option(selected_team)
         ),
+        "page_slug": page_slug,
         **dashboard_frames,
     }
 
@@ -1320,6 +1346,236 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
     render_overall_section(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
+
+
+def render_season_overview_v2(dashboard_data: dict[str, object] | None) -> None:
+    if not dashboard_data:
+        st.info("Load public PlayCricket stats to view the season story.")
+        return
+
+    match_data = season_story.load_match_centre_scope(MATCH_CENTRE_PROCESSED_ROOT)
+    story = season_story.build_season_story_summary(dashboard_data, match_data)
+    ended_today = season_story.build_if_season_ended_today(dashboard_data, match_data)
+    awards = season_story.build_season_awards(dashboard_data, match_data)
+    pulse = season_story.build_season_pulse(dashboard_data, match_data)
+    performances = season_story.build_top_performances(dashboard_data, match_data)
+    depth_chart = season_story.build_batting_depth_chart(dashboard_data, match_data)
+    role_map = season_story.build_bowling_role_map(dashboard_data, match_data)
+    records = season_story.build_records_broken(dashboard_data, match_data)
+    strengths_watchouts = season_story.build_strengths_watchouts(dashboard_data, match_data)
+
+    render_season_story_hero(story)
+    render_season_v2_awards_section("If the Season Ended Today 🏁", ended_today)
+    render_season_v2_awards_section("Season Awards 🏅", awards)
+    render_season_pulse_section(pulse)
+    render_top_performances_section(performances)
+    render_depth_and_role_section(depth_chart, role_map)
+    render_records_broken_section(records)
+    render_strengths_watchouts_section(strengths_watchouts)
+    render_team_specific_leaders(dashboard_data)
+    render_full_stats_section(dashboard_data)
+
+
+def render_season_story_hero(story: dict[str, object]) -> None:
+    tiles = story.get("tiles", [])
+    tile_html = "".join(
+        (
+            '<div class="season-v2-hero-tile">'
+            f'<div class="season-v2-tile-label">{html.escape(str(tile.get("label", "")))}</div>'
+            f'<div class="season-v2-tile-value">{html.escape(str(tile.get("value", "-")))}</div>'
+            f'<div class="season-v2-tile-detail">{html.escape(str(tile.get("detail", "")))}</div>'
+            "</div>"
+        )
+        for tile in tiles
+    )
+    st.markdown(
+        f"""
+        <section class="season-v2-hero">
+            <div class="season-v2-hero-copy">
+                <div class="season-v2-eyebrow">Season Story</div>
+                <h2>{html.escape(str(story.get("identity", "Season story")))}</h2>
+                <p>{html.escape(str(story.get("statement", "")))}</p>
+            </div>
+            <div class="season-v2-hero-grid">{tile_html}</div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_season_v2_awards_section(title: str, awards: list[dict[str, object]]) -> None:
+    render_section_heading(title)
+    if not awards:
+        render_empty_story_card("Awards will appear once this selection has enough scorecard data.")
+        return
+    cards = "".join(render_award_card_html(award) for award in awards)
+    st.markdown(f'<div class="season-v2-card-grid">{cards}</div>', unsafe_allow_html=True)
+
+
+def render_award_card_html(award: dict[str, object]) -> str:
+    player = player_profile_link_html(award.get("player_id"), award.get("player"))
+    value = season_v2_value(award.get("value"), award.get("unit"))
+    reason = str(award.get("reason") or award.get("unit") or "")
+    return (
+        '<article class="season-v2-award-card">'
+        f'<div class="season-v2-card-kicker">{html.escape(str(award.get("title", "")))}</div>'
+        f'<div class="season-v2-card-player">{player}</div>'
+        f'<div class="season-v2-card-value">{html.escape(value)}</div>'
+        f'<div class="season-v2-card-reason">{html.escape(reason)}</div>'
+        "</article>"
+    )
+
+
+def render_season_pulse_section(pulse: list[dict[str, object]]) -> None:
+    render_section_heading("Season Pulse 🧭")
+    render_section_subtext("Match-by-match story from available scorecards.")
+    if not pulse:
+        render_empty_story_card("Match-by-match story will appear when scorecard-level data is available for this season.")
+        return
+    cards = []
+    for item in pulse:
+        result = str(item.get("result", "UNKNOWN"))
+        top = item.get("top_batter") or {}
+        best = item.get("best_bowler") or {}
+        scorecard = scorecard_link_html(
+            item.get("match_id"),
+            page_slug=SEASON_OVERVIEW_V2_QUERY_PAGE,
+            section_name="season_pulse",
+        )
+        cards.append(
+            '<article class="season-v2-pulse-card">'
+            f'<div class="season-v2-result {html.escape(result.casefold())}">{html.escape(result)}</div>'
+            f'<div class="season-v2-pulse-opponent">vs {html.escape(str(item.get("opponent", "Opponent unknown")))}</div>'
+            f'<div class="season-v2-pulse-meta">{html.escape(str(item.get("grade", "")))} · {html.escape(str(item.get("date", "")))}</div>'
+            f'<div class="season-v2-pulse-line">Top: {html.escape(str(top.get("player", "-")))} {html.escape(str(top.get("value", "")))}</div>'
+            f'<div class="season-v2-pulse-line">Best: {html.escape(str(best.get("player", "-")))} {html.escape(str(best.get("value", "")))}</div>'
+            f'<div class="season-v2-pulse-link">{scorecard}</div>'
+            "</article>"
+        )
+    st.markdown(f'<div class="season-v2-pulse-strip">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def render_top_performances_section(performances: list[dict[str, object]]) -> None:
+    render_section_heading("Top Performances of the Season 🔥")
+    if not performances:
+        render_empty_story_card("Top performances will appear when scorecard-level data is available.")
+        return
+    cards = []
+    for item in performances:
+        scorecard = scorecard_link_html(
+            item.get("match_id"),
+            page_slug=SEASON_OVERVIEW_V2_QUERY_PAGE,
+            section_name="top_performances",
+        )
+        cards.append(
+            '<article class="season-v2-performance-card">'
+            f'<div class="season-v2-card-kicker">{html.escape(str(item.get("title", "")))}</div>'
+            f'<div class="season-v2-performance-value">{html.escape(str(item.get("value", "-")))}</div>'
+            f'<div class="season-v2-card-player">{html.escape(str(item.get("player", "-")))}</div>'
+            f'<div class="season-v2-card-reason">{html.escape(str(item.get("context", "")))}</div>'
+            f'<div class="season-v2-pulse-link">{scorecard}</div>'
+            "</article>"
+        )
+    st.markdown(f'<div class="season-v2-performance-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def render_depth_and_role_section(depth_chart: list[dict[str, object]], roles: list[dict[str, object]]) -> None:
+    left, right = st.columns(2, gap="large")
+    with left:
+        render_section_heading("Batting Depth Chart 🪜")
+        if depth_chart:
+            max_share = max([float(row.get("share") or 0) for row in depth_chart] + [1.0])
+            rows = []
+            for row in depth_chart:
+                share = float(row.get("share") or 0)
+                width = max(4, min(100, share / max_share * 100))
+                avg = row.get("average")
+                avg_text = "Avg. —" if pd.isna(avg) else f"Avg. {float(avg):.1f}"
+                rows.append(
+                    '<div class="season-v2-depth-row">'
+                    f'<div class="season-v2-depth-label">{html.escape(str(row.get("bucket", "")))}</div>'
+                    '<div class="season-v2-depth-track">'
+                    f'<span style="width:{width:.0f}%"></span>'
+                    "</div>"
+                    f'<div class="season-v2-depth-meta">{int(row.get("runs", 0))} runs · {avg_text}</div>'
+                    "</div>"
+                )
+            st.markdown(f'<div class="season-v2-panel">{"".join(rows)}</div>', unsafe_allow_html=True)
+        else:
+            render_empty_story_card("Batting order insights will appear when scorecard order data is available.")
+    with right:
+        render_section_heading("Bowling Role Map 🎯")
+        if roles:
+            cards = "".join(render_role_card_html(role) for role in roles)
+            st.markdown(f'<div class="season-v2-role-grid">{cards}</div>', unsafe_allow_html=True)
+        else:
+            render_empty_story_card("Bowling role cards will appear once bowling scorecard data is available.")
+
+
+def render_role_card_html(role: dict[str, object]) -> str:
+    player = player_profile_link_html(role.get("player_id"), role.get("player"))
+    return (
+        '<article class="season-v2-role-card">'
+        f'<div class="season-v2-card-kicker">{html.escape(str(role.get("title", "")))}</div>'
+        f'<div class="season-v2-card-player">{player}</div>'
+        f'<div class="season-v2-card-value">{html.escape(season_v2_value(role.get("value"), ""))}</div>'
+        f'<div class="season-v2-card-reason">{html.escape(str(role.get("reason", "")))}</div>'
+        "</article>"
+    )
+
+
+def render_records_broken_section(records: list[dict[str, object]]) -> None:
+    render_section_heading("Season Records Broken 🧨")
+    if not records:
+        render_empty_story_card("No verified record-breaking moments found for this season.")
+        return
+    cards = []
+    for item in records:
+        cards.append(
+            '<article class="season-v2-record-card">'
+            f'<div class="season-v2-record-badge">{html.escape(str(item.get("badge", "Season note")))}</div>'
+            f'<div class="season-v2-card-kicker">{html.escape(str(item.get("title", "")))}</div>'
+            f'<div class="season-v2-performance-value">{html.escape(str(item.get("value", "-")))}</div>'
+            f'<div class="season-v2-card-player">{html.escape(str(item.get("player", "-")))}</div>'
+            "</article>"
+        )
+    st.markdown(f'<div class="season-v2-card-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def render_strengths_watchouts_section(items: dict[str, list[str]]) -> None:
+    render_section_heading("Club Strengths & Watchouts 🧠")
+    cards = []
+    for title, key in [("Strengths", "strengths"), ("Watchouts", "watchouts")]:
+        bullets = "".join(f"<li>{html.escape(str(item))}</li>" for item in items.get(key, []))
+        cards.append(
+            '<article class="season-v2-insight-card">'
+            f"<h3>{html.escape(title)}</h3>"
+            f"<ul>{bullets}</ul>"
+            "</article>"
+        )
+    st.markdown(f'<div class="season-v2-insight-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def render_empty_story_card(message: str) -> None:
+    st.markdown(f'<div class="season-v2-empty">{html.escape(message)}</div>', unsafe_allow_html=True)
+
+
+def season_v2_value(value: object, unit: object) -> str:
+    if value is None:
+        return "-"
+    if isinstance(value, str):
+        return value
+    parsed = pd.to_numeric(value, errors="coerce")
+    if pd.isna(parsed):
+        return "-"
+    suffix = str(unit or "").strip()
+    if suffix in {"avg", "econ", "wickets/match"}:
+        return f"{float(parsed):.2f}"
+    if suffix == "impact pts":
+        return f"{float(parsed):.0f} pts"
+    if suffix:
+        return f"{float(parsed):,.0f} {suffix}"
+    return f"{float(parsed):,.1f}" if float(parsed) % 1 else f"{float(parsed):,.0f}"
 
 
 def render_match_centre_page() -> None:
