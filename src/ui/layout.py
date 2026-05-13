@@ -8368,8 +8368,15 @@ def profile_best_phase_label(rows: pd.DataFrame) -> str:
 
 def selected_profile_phase_model() -> str:
     options = {slug: label for slug, label in profile_phase_model_options()}
-    requested = query_param_value("profile_phase_model").casefold()
-    return options.get(requested, "One Day")
+    key = "player_profile_phase_model"
+    if key not in st.session_state:
+        requested = query_param_value("profile_phase_model").casefold()
+        st.session_state[key] = requested if requested in options else "one-day"
+    selected = str(st.session_state.get(key, "one-day")).casefold()
+    if selected not in options:
+        selected = "one-day"
+        st.session_state[key] = selected
+    return options[selected]
 
 
 def profile_phase_model_options() -> list[tuple[str, str]]:
@@ -8377,17 +8384,14 @@ def profile_phase_model_options() -> list[tuple[str, str]]:
 
 
 def render_profile_phase_selector(profile_view: dict[str, pd.DataFrame], selected_label: str) -> None:
-    player_id = str(profile_view["career"].iloc[0].get("canonical_player_id", "")).strip()
-    selected_slug = next((slug for slug, label in profile_phase_model_options() if label == selected_label), "one-day")
-    items = [
-        (
-            label,
-            player_profile_section_url(player_id, profile_phase_model=slug),
-            slug == selected_slug,
-        )
-        for slug, label in profile_phase_model_options()
-    ]
-    render_profile_segmented_links(items, "Bowling phase model", compact=True)
+    del profile_view
+    del selected_label
+    render_profile_segmented_widget(
+        "Bowling phase model",
+        profile_phase_model_options(),
+        key="player_profile_phase_model",
+        compact=True,
+    )
 
 
 def render_dismissal_fingerprint(profile_view: dict[str, pd.DataFrame]) -> None:
@@ -9155,9 +9159,10 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
     source = profile_view.get("performance_breakdown", pd.DataFrame()).copy()
     if source.empty:
         return
-    render_section_heading("Performance Breakdown 🧭")
+    render_section_heading("Career Breakdown 🧭")
     selected = selected_profile_breakdown_view()
-    render_profile_breakdown_selector(profile_view, selected)
+    selected_discipline = selected_profile_discipline_view()
+    render_profile_breakdown_controls(profile_view, selected, selected_discipline)
     label = profile_breakdown_label(selected)
     rows = source[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
     if rows.empty:
@@ -9165,13 +9170,7 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
         return
 
     with st.container(key="player_profile_performance_breakdown"):
-        batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
-        with batting_tab:
-            render_profile_performance_table(rows, label, "Batting")
-        with bowling_tab:
-            render_profile_performance_table(rows, label, "Bowling")
-        with fielding_tab:
-            render_profile_performance_table(rows, label, "Fielding")
+        render_profile_performance_table(rows, label, selected_discipline)
 
 
 def profile_breakdown_options() -> list[tuple[str, str]]:
@@ -9180,8 +9179,15 @@ def profile_breakdown_options() -> list[tuple[str, str]]:
 
 def selected_profile_breakdown_view() -> str:
     valid = {slug for slug, _label in profile_breakdown_options()}
-    requested = query_param_value("profile_breakdown").casefold()
-    return requested if requested in valid else "season"
+    key = "player_profile_breakdown_view"
+    if key not in st.session_state:
+        requested = query_param_value("profile_breakdown").casefold()
+        st.session_state[key] = requested if requested in valid else "season"
+    selected = str(st.session_state.get(key, "season")).casefold()
+    if selected not in valid:
+        selected = "season"
+        st.session_state[key] = selected
+    return selected
 
 
 def profile_discipline_options() -> list[tuple[str, str]]:
@@ -9190,8 +9196,15 @@ def profile_discipline_options() -> list[tuple[str, str]]:
 
 def selected_profile_discipline_view() -> str:
     options = {slug: label for slug, label in profile_discipline_options()}
-    requested = query_param_value("profile_discipline").casefold()
-    return options.get(requested, "Batting")
+    key = "player_profile_discipline_view"
+    if key not in st.session_state:
+        requested = query_param_value("profile_discipline").casefold()
+        st.session_state[key] = requested if requested in options else "batting"
+    selected = str(st.session_state.get(key, "batting")).casefold()
+    if selected not in options:
+        selected = "batting"
+        st.session_state[key] = selected
+    return options[selected]
 
 
 def profile_breakdown_label(slug: str) -> str:
@@ -9199,33 +9212,23 @@ def profile_breakdown_label(slug: str) -> str:
 
 
 def render_profile_breakdown_controls(profile_view: dict[str, pd.DataFrame], selected_breakdown: str, selected_discipline: str) -> None:
-    player_id = str(profile_view["career"].iloc[0].get("canonical_player_id", "")).strip()
-    breakdown_items = [
-        (
-            label,
-            player_profile_section_url(player_id, profile_breakdown=slug),
-            slug == selected_breakdown,
-        )
-        for slug, label in profile_breakdown_options()
-    ]
-    discipline_slug = next((slug for slug, label in profile_discipline_options() if label == selected_discipline), "batting")
-    discipline_items = [
-        (
-            label,
-            player_profile_section_url(player_id, profile_discipline=slug),
-            slug == discipline_slug,
-        )
-        for slug, label in profile_discipline_options()
-    ]
-    st.markdown(
-        (
-            '<div class="profile-breakdown-controls">'
-            f'{profile_segmented_links_html(breakdown_items, "Player performance breakdown")}'
-            f'{profile_segmented_links_html(discipline_items, "Player performance discipline")}'
-            '</div>'
-        ),
-        unsafe_allow_html=True,
-    )
+    del profile_view
+    del selected_breakdown
+    del selected_discipline
+    with st.container(key="profile_breakdown_controls"):
+        breakdown_col, discipline_col = st.columns([1.35, 1], gap="medium")
+        with breakdown_col:
+            render_profile_segmented_widget(
+                "Career breakdown view",
+                profile_breakdown_options(),
+                key="player_profile_breakdown_view",
+            )
+        with discipline_col:
+            render_profile_segmented_widget(
+                "Career breakdown discipline",
+                profile_discipline_options(),
+                key="player_profile_discipline_view",
+            )
 
 
 def player_profile_section_url(player_id: object, **params: str) -> str:
@@ -9251,6 +9254,31 @@ def render_profile_segmented_links(
         profile_segmented_links_html(items, aria_label, class_name=class_name),
         unsafe_allow_html=True,
     )
+
+
+def render_profile_segmented_widget(
+    label: str,
+    options: list[tuple[str, str]],
+    key: str,
+    compact: bool = False,
+) -> str:
+    option_slugs = [slug for slug, _label in options]
+    label_map = dict(options)
+    if key not in st.session_state or str(st.session_state.get(key)).casefold() not in option_slugs:
+        st.session_state[key] = option_slugs[0]
+    with st.container(key=f"{key}_control"):
+        selected = st.segmented_control(
+            label,
+            option_slugs,
+            format_func=lambda slug: label_map.get(slug, str(slug)),
+            key=key,
+            label_visibility="collapsed",
+        )
+    selected_slug = str(selected or st.session_state.get(key) or option_slugs[0]).casefold()
+    if selected_slug not in option_slugs:
+        selected_slug = option_slugs[0]
+        st.session_state[key] = selected_slug
+    return label_map.get(selected_slug, label_map[option_slugs[0]])
 
 
 def profile_segmented_links_html(

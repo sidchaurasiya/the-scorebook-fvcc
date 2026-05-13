@@ -371,16 +371,25 @@ def build_bowling_phase_summary(bowling: pd.DataFrame, balls: pd.DataFrame) -> p
         how="inner",
     )
     source = source[source["is_legal"]].copy()
+    if "ball_event_id" in source:
+        source = source.drop_duplicates("ball_event_id")
     if source.empty:
         return pd.DataFrame()
     source["wicket_credit"] = source.apply(is_bowler_wicket_ball, axis=1)
+    source["phase_model"] = source.get("match_type", pd.Series(index=source.index, dtype="object")).map(phase_model_from_match_type)
+    source = source[source["phase_model"].notna()].copy()
+    if source.empty:
+        return pd.DataFrame()
     frames = []
     for model in ["T20", "One Day", "Two Day"]:
-        model_rows = source.copy()
-        model_rows["phase_model"] = model
+        model_rows = source[source["phase_model"].eq(model)].copy()
+        if model_rows.empty:
+            continue
         model_rows["phase"] = model_rows["over_number_numeric"].map(lambda over: phase_for_model(over, model))
         model_rows["phase_order"] = model_rows["phase"].map({"Opening": 1, "Middle": 2, "Death": 3, "New Ball": 1, "Older Ball": 2})
         frames.append(model_rows)
+    if not frames:
+        return pd.DataFrame()
     output = pd.concat(frames, ignore_index=True)
     grouped = output.groupby(["canonical_player_id", "canonical_player_name", "display_player_name", "phase_model", "phase", "phase_order"], dropna=False, as_index=False).agg(
         legal_balls=("is_legal", "sum"),
@@ -448,6 +457,19 @@ def normalize_opponent_name(value: object) -> str:
 def normalize_ground_name(value: object) -> str:
     text = clean_text(value, "Unknown ground")
     return re.sub(r"\s+", " ", text).strip() or "Unknown ground"
+
+
+def phase_model_from_match_type(value: object) -> str | None:
+    text = clean_text(value).casefold()
+    if not text:
+        return None
+    if "t20" in text or "twenty20" in text or "twenty 20" in text:
+        return "T20"
+    if "one day" in text or "limited" in text or "odi" in text:
+        return "One Day"
+    if "two day" in text or "2 day" in text or "two-day" in text:
+        return "Two Day"
+    return None
 
 
 def clean_text(value: object, fallback: str = "") -> str:

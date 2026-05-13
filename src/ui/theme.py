@@ -3383,7 +3383,7 @@ def inject_theme() -> None:
         .fingerprint-marker {
             background: #6b7280;
             border-radius: 999px;
-            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.12);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.96), 0 3px 9px rgba(23, 27, 77, 0.18);
             display: inline-block;
             height: 17px;
             opacity: 0.95;
@@ -3574,6 +3574,60 @@ def inject_theme() -> None:
             opacity: 0.95;
             width: 4px;
             z-index: 1;
+        }
+
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] {
+            background: #ffffff;
+            border: 1px solid #e7e9f4;
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
+            gap: 8px;
+            padding: 7px;
+        }
+
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] {
+            border-radius: 14px;
+            box-shadow: none;
+            margin: -2px 0 14px;
+            padding: 5px;
+            width: fit-content;
+        }
+
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid^="stBaseButton-segmented_control"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"] {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 13px !important;
+            color: #6d7390 !important;
+            font-size: 0.86rem !important;
+            font-weight: 900 !important;
+            line-height: 1 !important;
+            min-height: 0 !important;
+            padding: 10px 14px !important;
+            white-space: nowrap;
+        }
+
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"] {
+            background: #f0edff !important;
+            box-shadow: inset 0 0 0 1px #ded8ff !important;
+            color: #5b3df5 !important;
         }
 
         .hof-progress-row {
@@ -4317,6 +4371,12 @@ def inject_theme() -> None:
                 font-size: clamp(1.85rem, 10.5vw, 2.65rem);
             }
 
+            .block-container:has(.player-profile-page) .page-title {
+                font-size: clamp(1.72rem, 9.4vw, 2.45rem);
+                line-height: 1.02;
+                white-space: nowrap;
+            }
+
             .milestone-segmented {
                 border-radius: 18px;
                 gap: 6px;
@@ -4541,6 +4601,25 @@ def inject_theme() -> None:
             }
 
             .profile-segment {
+                flex: 1 0 auto;
+                text-align: center;
+            }
+
+            .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] {
+                display: flex;
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button,
+            .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button,
+            .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid^="stBaseButton-segmented_control"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"] {
                 flex: 1 0 auto;
                 text-align: center;
             }
