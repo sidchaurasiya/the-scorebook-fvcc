@@ -634,7 +634,7 @@ def render_sidebar() -> str:
             <div class="side-footer-names">Siddhanth Chaurasiya |<br>Preet Kaur</div>
             <div class="side-footer-contact">
                 <div>For feedback/enquiries:</div>
-                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
+                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya<br>@gmail.com</a>
             </div>
         </div>
         """,
@@ -653,7 +653,7 @@ def render_mobile_page_footer() -> None:
             <div class="mobile-footer-names">Siddhanth Chaurasiya |<br>Preet Kaur</div>
             <div class="mobile-footer-contact">
                 <div>For feedback/enquiries:</div>
-                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya@gmail.com</a>
+                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya<br>@gmail.com</a>
             </div>
         </div>
         """,
@@ -7829,8 +7829,8 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             f'<div class="profile-meta">Grades played: {html.escape(str(career.get("Grades Played", "—") or "—"))}</div>'
             f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
             '</div>'
-            '</div>'
             f'<div class="profile-badges">{badge_html}</div>'
+            '</div>'
             '</div>'
         ),
         unsafe_allow_html=True,
@@ -8211,17 +8211,7 @@ def render_player_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
     if not (is_batsman or is_bowler) and profile_view.get("dismissal_fingerprint", pd.DataFrame()).empty:
         return
 
-    render_section_heading("Intelligence 🧠")
-    role_label = "All-rounder" if is_batsman and is_bowler else "Batter" if is_batsman else "Bowler" if is_bowler else "Profile"
-    st.markdown(
-        (
-            '<div class="profile-intelligence-intro">'
-            f'<span>{html.escape(role_label)} intelligence</span>'
-            '<p>Scorecard-safe trends are separated from verified ball-by-ball insights so the story stays trustworthy.</p>'
-            '</div>'
-        ),
-        unsafe_allow_html=True,
-    )
+    render_section_heading("Player DNA 🧬")
 
     top_columns = st.columns(2)
     with top_columns[0]:
@@ -8229,18 +8219,13 @@ def render_player_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
             render_batting_position_intelligence(profile_view)
         else:
             render_profile_intelligence_empty(
-                "Batting Position Intelligence",
+                "Batting Position",
                 "This module appears once the player has enough batting innings to identify a stable role.",
             )
     with top_columns[1]:
-        if is_bowler:
-            render_bowling_phase_intelligence(profile_view)
-        else:
-            render_profile_intelligence_empty(
-                "Bowling Phase Intelligence",
-                "This module appears for bowlers with enough verified ball-by-ball deliveries.",
-            )
-    render_dismissal_fingerprint(profile_view)
+        render_dismissal_fingerprint(profile_view)
+    if is_bowler:
+        render_bowling_phase_intelligence(profile_view)
 
 
 def player_profile_role_flags(career: pd.Series) -> tuple[bool, bool]:
@@ -8257,7 +8242,7 @@ def player_profile_role_flags(career: pd.Series) -> tuple[bool, bool]:
 def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
     rows = profile_view.get("batting_position", pd.DataFrame()).copy()
     if rows.empty:
-        render_profile_intelligence_empty("Batting Position Intelligence", "Scorecard batting-order data is not available for this player yet.")
+        render_profile_intelligence_empty("Batting Position", "Scorecard batting-order data is not available for this player yet.")
         return
     rows["position_order"] = pd.to_numeric(rows.get("position_order"), errors="coerce").fillna(99)
     rows["innings"] = pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0)
@@ -8265,6 +8250,7 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
     rows["average"] = pd.to_numeric(rows.get("average"), errors="coerce")
     rows = rows.sort_values("position_order")
     best = profile_best_position_label(rows)
+    best_note = "" if best else '<p class="profile-intelligence-note">More innings needed to identify best fit.</p>'
     max_runs = max(1.0, float(rows["runs"].max()))
     row_html = []
     for _, row in rows.iterrows():
@@ -8291,10 +8277,10 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
         (
             '<article class="profile-intelligence-card">'
             '<div class="profile-intelligence-card-head">'
-            '<span>Scorecard-safe</span>'
-            '<h3>Batting Position Intelligence</h3>'
+            '<div class="profile-card-title">Batting Position</div>'
             '</div>'
             f'{"".join(row_html)}'
+            f'{best_note}'
             '</article>'
         ),
         unsafe_allow_html=True,
@@ -8304,12 +8290,13 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
 def profile_best_position_label(rows: pd.DataFrame) -> str:
     if rows.empty:
         return ""
-    eligible = rows[pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0) >= 2].copy()
+    eligible = rows[pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0) >= 5].copy()
+    eligible = eligible[pd.to_numeric(eligible.get("average"), errors="coerce").notna()].copy()
     if eligible.empty:
-        eligible = rows.copy()
-    eligible["_average_sort"] = pd.to_numeric(eligible.get("average"), errors="coerce").fillna(-1)
-    eligible["_runs_sort"] = pd.to_numeric(eligible.get("runs"), errors="coerce").fillna(0)
-    eligible = eligible.sort_values(["_average_sort", "_runs_sort"], ascending=[False, False])
+        return ""
+    eligible["_average_sort"] = pd.to_numeric(eligible.get("average"), errors="coerce")
+    eligible["_position_sort"] = pd.to_numeric(eligible.get("position_order"), errors="coerce").fillna(99)
+    eligible = eligible.sort_values(["_average_sort", "_position_sort"], ascending=[False, True])
     return str(eligible.iloc[0].get("position_group", ""))
 
 
@@ -8317,7 +8304,7 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
     rows = profile_view.get("bowling_phase", pd.DataFrame()).copy()
     if rows.empty:
         render_profile_intelligence_empty(
-            "Bowling Phase Intelligence",
+            "Bowling by Phase",
             "Phase analytics use verified ball-by-ball matches only. No matched bowling phase data is available yet.",
         )
         return
@@ -8325,7 +8312,7 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
     render_profile_phase_selector(profile_view, selected)
     rows = rows[rows.get("phase_model", pd.Series(dtype=str)).astype(str).str.casefold() == selected.casefold()].copy()
     if rows.empty:
-        render_profile_intelligence_empty("Bowling Phase Intelligence", "No verified ball-by-ball deliveries are available for this phase model.")
+        render_profile_intelligence_empty("Bowling by Phase", "No verified ball-by-ball deliveries are available for this phase model.")
         return
     rows["phase_order"] = pd.to_numeric(rows.get("phase_order"), errors="coerce").fillna(99)
     rows["legal_balls"] = pd.to_numeric(rows.get("legal_balls"), errors="coerce").fillna(0)
@@ -8335,7 +8322,7 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
     rows["avg"] = pd.to_numeric(rows.get("avg"), errors="coerce")
     rows = rows[rows["legal_balls"] > 0].sort_values("phase_order")
     if rows.empty:
-        render_profile_intelligence_empty("Bowling Phase Intelligence", "No verified legal deliveries are available for this phase model.")
+        render_profile_intelligence_empty("Bowling by Phase", "No verified legal deliveries are available for this phase model.")
         return
     best_phase = profile_best_phase_label(rows)
     phase_rows = []
@@ -8358,8 +8345,7 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
         (
             '<article class="profile-intelligence-card">'
             '<div class="profile-intelligence-card-head">'
-            '<span>Verified ball-by-ball</span>'
-            '<h3>Bowling Phase Intelligence</h3>'
+            '<div class="profile-card-title">Bowling by Phase</div>'
             '</div>'
             f'{"".join(phase_rows)}'
             '<p class="profile-intelligence-note">Phase analytics use verified ball-by-ball matches only.</p>'
@@ -8438,13 +8424,11 @@ def render_dismissal_fingerprint(profile_view: dict[str, pd.DataFrame]) -> None:
         (
             '<article class="profile-intelligence-card profile-fingerprint-card">'
             '<div class="profile-intelligence-card-head">'
-            '<span>Scorecard-safe</span>'
-            '<h3>Dismissal Fingerprint</h3>'
+            '<div class="profile-card-title">Dismissal Fingerprint</div>'
             '</div>'
-            f'<p class="profile-fingerprint-insight">{html.escape(profile_dismissal_insight(player_name, player_map, club_map))}</p>'
             '<div class="fingerprint-legend"><span><i class="player"></i> Player</span><span><i class="club"></i> Club average</span></div>'
             f'{"".join(row_html)}'
-            '<p class="profile-intelligence-note">Not-outs are excluded from the dismissal mix.</p>'
+            f'<p class="profile-intelligence-note">{html.escape(profile_dismissal_insight(player_name, player_map, club_map))}</p>'
             '</article>'
         ),
         unsafe_allow_html=True,
@@ -8484,7 +8468,7 @@ def render_profile_intelligence_empty(title: str, copy: str) -> None:
             '<article class="profile-intelligence-card profile-empty-card">'
             '<div class="profile-intelligence-card-head">'
             '<span>Coverage limited</span>'
-            f'<h3>{html.escape(title)}</h3>'
+            f'<div class="profile-card-title">{html.escape(title)}</div>'
             '</div>'
             f'<p>{html.escape(copy)}</p>'
             '</article>'
@@ -8998,7 +8982,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
     if season_table.empty:
         return
     render_section_heading("Season Trends 📈")
-    chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
+    chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=True)
     specs = [("Runs by Season", "Runs", "#6D4DFF"), ("Wickets by Season", "Wickets", "#10B981")]
     for index in range(0, len(specs), 2):
         columns = st.columns(2)
@@ -9012,6 +8996,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     values[metric] = pd.to_numeric(values[metric], errors="coerce").fillna(0)
                     season_count = values["Season"].nunique()
                     chart_height = min(340, max(150, 30 * season_count))
+                    max_value = float(values[metric].max()) if not values.empty else 0.0
                     base = (
                         alt.Chart(values)
                         .encode(
@@ -9024,6 +9009,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                             x=alt.X(
                                 f"{metric}:Q",
                                 axis=alt.Axis(grid=False, labels=False, ticks=False, title=None),
+                                scale=alt.Scale(domain=[0, max(max_value * 1.08, 1.0)], nice=False),
                             ),
                             tooltip=[alt.Tooltip("Season:N"), alt.Tooltip(f"{metric}:Q", format=",.0f")],
                         )
@@ -9031,14 +9017,14 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     chart = (
                         base.mark_bar(cornerRadiusTopRight=7, cornerRadiusBottomRight=7, color=color)
                         + base.mark_text(
-                            align="left",
+                            align="right",
                             baseline="middle",
-                            color="#4f5875",
-                            dx=7,
+                            color="#ffffff",
+                            dx=-7,
                             fontSize=10,
                             fontWeight=800,
                         ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
-                    ).properties(height=chart_height, padding={"left": 4, "right": 36, "top": 8, "bottom": 4}).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
+                    ).properties(height=chart_height, padding={"left": 4, "right": 10, "top": 8, "bottom": 4}).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
                     st.altair_chart(chart, use_container_width=True)
 
 
@@ -9198,21 +9184,48 @@ def selected_profile_breakdown_view() -> str:
     return requested if requested in valid else "season"
 
 
+def profile_discipline_options() -> list[tuple[str, str]]:
+    return [("batting", "Batting"), ("bowling", "Bowling"), ("fielding", "Fielding")]
+
+
+def selected_profile_discipline_view() -> str:
+    options = {slug: label for slug, label in profile_discipline_options()}
+    requested = query_param_value("profile_discipline").casefold()
+    return options.get(requested, "Batting")
+
+
 def profile_breakdown_label(slug: str) -> str:
     return dict(profile_breakdown_options()).get(slug, "Season")
 
 
-def render_profile_breakdown_selector(profile_view: dict[str, pd.DataFrame], selected_slug: str) -> None:
+def render_profile_breakdown_controls(profile_view: dict[str, pd.DataFrame], selected_breakdown: str, selected_discipline: str) -> None:
     player_id = str(profile_view["career"].iloc[0].get("canonical_player_id", "")).strip()
-    items = [
+    breakdown_items = [
         (
             label,
             player_profile_section_url(player_id, profile_breakdown=slug),
-            slug == selected_slug,
+            slug == selected_breakdown,
         )
         for slug, label in profile_breakdown_options()
     ]
-    render_profile_segmented_links(items, "Player performance breakdown")
+    discipline_slug = next((slug for slug, label in profile_discipline_options() if label == selected_discipline), "batting")
+    discipline_items = [
+        (
+            label,
+            player_profile_section_url(player_id, profile_discipline=slug),
+            slug == discipline_slug,
+        )
+        for slug, label in profile_discipline_options()
+    ]
+    st.markdown(
+        (
+            '<div class="profile-breakdown-controls">'
+            f'{profile_segmented_links_html(breakdown_items, "Player performance breakdown")}'
+            f'{profile_segmented_links_html(discipline_items, "Player performance discipline")}'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
 
 
 def player_profile_section_url(player_id: object, **params: str) -> str:
@@ -9220,7 +9233,7 @@ def player_profile_section_url(player_id: object, **params: str) -> str:
         "page": PLAYER_PROFILE_QUERY_PAGE,
         "player_id": str(player_id or "").strip(),
     }
-    for key in ["profile_breakdown", "profile_phase_model"]:
+    for key in ["profile_breakdown", "profile_discipline", "profile_phase_model"]:
         existing = query_param_value(key)
         if existing:
             query[key] = existing
@@ -9234,6 +9247,17 @@ def render_profile_segmented_links(
     compact: bool = False,
 ) -> None:
     class_name = "profile-segmented profile-segmented-compact" if compact else "profile-segmented"
+    st.markdown(
+        profile_segmented_links_html(items, aria_label, class_name=class_name),
+        unsafe_allow_html=True,
+    )
+
+
+def profile_segmented_links_html(
+    items: list[tuple[str, str, bool]],
+    aria_label: str,
+    class_name: str = "profile-segmented",
+) -> str:
     links = "".join(
         (
             f'<a class="profile-segment{" active" if active else ""}" '
@@ -9242,10 +9266,7 @@ def render_profile_segmented_links(
         )
         for label, url, active in items
     )
-    st.markdown(
-        f'<nav class="{class_name}" aria-label="{html.escape(aria_label, quote=True)}">{links}</nav>',
-        unsafe_allow_html=True,
-    )
+    return f'<nav class="{class_name}" aria-label="{html.escape(aria_label, quote=True)}">{links}</nav>'
 
 
 def render_profile_breakdown_empty(label: str) -> None:
@@ -9332,15 +9353,370 @@ def render_profile_performance_table(rows: pd.DataFrame, label_column: str, disc
     if label_column == "Season":
         display = link_season_columns(display, ["Season"])
     height = min(460, max(170, 38 * (len(display) + 1)))
-    render_filterable_dataframe(
-        display,
-        key_prefix=f"profile_performance_{label_column}_{discipline}",
-        use_container_width=True,
-        hide_index=True,
+    components.html(
+        profile_performance_table_html(
+            display,
+            label_column=label_column,
+            discipline=discipline,
+            table_id=f"profile-performance-{label_column}-{discipline}",
+            height=height,
+        ),
         height=height,
-        column_config=profile_table_column_config(display.columns.tolist(), label_column),
-        show_filters=False,
+        scrolling=False,
     )
+
+
+def profile_performance_table_html(
+    table: pd.DataFrame,
+    label_column: str,
+    discipline: str,
+    table_id: str,
+    height: int,
+) -> str:
+    safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "profile-performance-table"
+    columns = table.columns.tolist()
+    colgroup = "".join(
+        f'<col class="{profile_performance_column_class(column, label_column)}">'
+        for column in columns
+    )
+    header_html = "".join(
+        (
+            f'<th class="{profile_performance_column_class(column, label_column)}" data-column="{index}" '
+            f'data-default-dir="{profile_performance_default_sort_dir(column, label_column)}">'
+            f'<button type="button">{html.escape(str(column))}<span class="sort-indicator"></span></button></th>'
+        )
+        for index, column in enumerate(columns)
+    )
+    body_rows = []
+    for _, row in table.iterrows():
+        cells = []
+        for column in columns:
+            value = row.get(column)
+            display = profile_performance_display_value(column, value, label_column)
+            sort_value, missing = profile_performance_sort_value(column, value, label_column)
+            cells.append(
+                f'<td class="{profile_performance_column_class(column, label_column)}" '
+                f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
+                f'{display}</td>'
+            )
+        body_rows.append(f"<tr>{''.join(cells)}</tr>")
+    empty_state = (
+        '<tr><td class="profile-performance-empty" colspan="'
+        f'{max(len(columns), 1)}">No {html.escape(discipline.lower())} data available for this view.</td></tr>'
+        if table.empty
+        else ""
+    )
+    return f"""
+    <style>
+      html, body {{
+        background: transparent;
+        color-scheme: light;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+      }}
+      .profile-performance-table-wrap {{
+        background: #ffffff;
+        border: 1px solid #dfe3ee;
+        border-radius: 16px;
+        box-shadow: 0 12px 28px rgba(23, 27, 77, 0.055);
+        height: {max(160, height - 12)}px;
+        overflow: auto;
+      }}
+      table.profile-performance-table {{
+        border-collapse: separate;
+        border-spacing: 0;
+        color: #080a3f;
+        font-size: 12.5px;
+        min-width: 100%;
+        table-layout: fixed;
+        width: max-content;
+      }}
+      .profile-performance-table col.profile-col-label {{ width: 184px; }}
+      .profile-performance-table col.profile-col-inn,
+      .profile-performance-table col.profile-col-m,
+      .profile-performance-table col.profile-col-w,
+      .profile-performance-table col.profile-col-30s,
+      .profile-performance-table col.profile-col-50s,
+      .profile-performance-table col.profile-col-100s,
+      .profile-performance-table col.profile-col-0s,
+      .profile-performance-table col.profile-col-4s,
+      .profile-performance-table col.profile-col-6s,
+      .profile-performance-table col.profile-col-3wi,
+      .profile-performance-table col.profile-col-5wi,
+      .profile-performance-table col.profile-col-ro {{ width: 48px; }}
+      .profile-performance-table col.profile-col-runs,
+      .profile-performance-table col.profile-col-hs,
+      .profile-performance-table col.profile-col-overs,
+      .profile-performance-table col.profile-col-eco,
+      .profile-performance-table col.profile-col-bbi,
+      .profile-performance-table col.profile-col-catches,
+      .profile-performance-table col.profile-col-stumpings {{ width: 64px; }}
+      .profile-performance-table col.profile-col-avg,
+      .profile-performance-table col.profile-col-sr,
+      .profile-performance-table col.profile-col-strike-rate,
+      .profile-performance-table col.profile-col-dismissals {{ width: 82px; }}
+      .profile-performance-table th,
+      .profile-performance-table td {{
+        background: #ffffff;
+        border-bottom: 1px solid #dfe3ee;
+        border-right: 1px solid #dfe3ee;
+        box-sizing: border-box;
+        line-height: 1.14;
+        padding: 7px 7px;
+        text-align: right;
+        vertical-align: middle;
+        white-space: nowrap;
+      }}
+      .profile-performance-table th {{
+        background: #fbfbfe;
+        color: #687093;
+        font-weight: 800;
+        position: sticky;
+        top: 0;
+        z-index: 3;
+      }}
+      .profile-performance-table th button {{
+        align-items: center;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        display: inline-flex;
+        font: inherit;
+        gap: 4px;
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }}
+      .profile-performance-table th.sorted-asc .sort-indicator::after {{ content: "↑"; }}
+      .profile-performance-table th.sorted-desc .sort-indicator::after {{ content: "↓"; }}
+      .profile-performance-table .profile-col-label {{
+        left: 0;
+        position: sticky;
+        text-align: left;
+        white-space: normal;
+        z-index: 2;
+        box-shadow: 4px 0 8px rgba(8, 10, 63, 0.08);
+      }}
+      .profile-performance-table th.profile-col-label {{
+        z-index: 4;
+      }}
+      .profile-performance-table .profile-label-text,
+      .profile-performance-table .profile-label-link {{
+        color: #0072ce;
+        display: block;
+        font-weight: 750;
+        line-height: 1.13;
+        overflow-wrap: anywhere;
+        text-decoration: none;
+        white-space: normal;
+        word-break: normal;
+      }}
+      .profile-performance-table .profile-label-text {{
+        color: #11154b;
+      }}
+      .profile-performance-table .profile-label-link:hover {{
+        color: #5b3df5;
+        text-decoration: underline;
+      }}
+      .profile-performance-table tr:nth-child(even) td {{
+        background: #fbfcff;
+      }}
+      .profile-performance-table tr:hover td {{
+        background: #f7f5ff;
+      }}
+      .profile-performance-empty {{
+        color: #7a819f;
+        font-weight: 800;
+        padding: 22px !important;
+        text-align: center !important;
+      }}
+      @media (max-width: 760px) {{
+        .profile-performance-table-wrap {{
+          border-radius: 14px;
+        }}
+        table.profile-performance-table {{
+          font-size: 11.5px;
+        }}
+        .profile-performance-table col.profile-col-label {{ width: 126px; }}
+        .profile-performance-table col.profile-col-inn,
+        .profile-performance-table col.profile-col-m,
+        .profile-performance-table col.profile-col-w,
+        .profile-performance-table col.profile-col-30s,
+        .profile-performance-table col.profile-col-50s,
+        .profile-performance-table col.profile-col-100s,
+        .profile-performance-table col.profile-col-0s,
+        .profile-performance-table col.profile-col-4s,
+        .profile-performance-table col.profile-col-6s,
+        .profile-performance-table col.profile-col-3wi,
+        .profile-performance-table col.profile-col-5wi,
+        .profile-performance-table col.profile-col-ro {{ width: 42px; }}
+        .profile-performance-table col.profile-col-runs,
+        .profile-performance-table col.profile-col-hs,
+        .profile-performance-table col.profile-col-overs,
+        .profile-performance-table col.profile-col-eco,
+        .profile-performance-table col.profile-col-bbi,
+        .profile-performance-table col.profile-col-catches,
+        .profile-performance-table col.profile-col-stumpings {{ width: 56px; }}
+        .profile-performance-table col.profile-col-avg,
+        .profile-performance-table col.profile-col-sr,
+        .profile-performance-table col.profile-col-strike-rate,
+        .profile-performance-table col.profile-col-dismissals {{ width: 70px; }}
+        .profile-performance-table th,
+        .profile-performance-table td {{
+          padding: 6px 5px;
+        }}
+      }}
+    </style>
+    <div class="profile-performance-table-wrap">
+      <table id="{html.escape(safe_table_id, quote=True)}" class="profile-performance-table">
+        <colgroup>{colgroup}</colgroup>
+        <thead><tr>{header_html}</tr></thead>
+        <tbody>{empty_state if table.empty else ''.join(body_rows)}</tbody>
+      </table>
+    </div>
+    <script>
+      (() => {{
+        const table = document.getElementById({safe_table_id!r});
+        if (!table) return;
+        const tbody = table.querySelector("tbody");
+        const headers = Array.from(table.querySelectorAll("th"));
+        const textValue = (row, index) => row.children[index].textContent.trim().toLocaleLowerCase();
+        const sortValue = (row, index) => {{
+          const cell = row.children[index];
+          if (!cell || cell.dataset.missing === "1") return null;
+          const raw = cell.dataset.sort || "";
+          const numeric = Number(raw);
+          return Number.isFinite(numeric) && raw.trim() !== "" ? numeric : raw.toLocaleLowerCase();
+        }};
+        const compare = (a, b, index, dir) => {{
+          const av = sortValue(a, index);
+          const bv = sortValue(b, index);
+          if (av === null && bv === null) return textValue(a, 0).localeCompare(textValue(b, 0));
+          if (av === null) return 1;
+          if (bv === null) return -1;
+          let result = 0;
+          if (typeof av === "number" && typeof bv === "number") {{
+            result = av === bv ? 0 : av < bv ? -1 : 1;
+          }} else {{
+            result = String(av).localeCompare(String(bv), undefined, {{ numeric: true, sensitivity: "base" }});
+          }}
+          if (result === 0) result = textValue(a, 0).localeCompare(textValue(b, 0));
+          return dir === "asc" ? result : -result;
+        }};
+        const sortHeader = (header, index) => {{
+          const current = header.dataset.sortDir;
+          const dir = current ? (current === "asc" ? "desc" : "asc") : (header.dataset.defaultDir || "desc");
+          headers.forEach(item => {{
+            item.classList.remove("sorted-asc", "sorted-desc");
+            delete item.dataset.sortDir;
+          }});
+          header.dataset.sortDir = dir;
+          header.classList.add(`sorted-${{dir}}`);
+          Array.from(tbody.querySelectorAll("tr"))
+            .sort((a, b) => compare(a, b, index, dir))
+            .forEach(row => tbody.appendChild(row));
+        }};
+        const resolveInternalHref = (href) => {{
+          let base = document.referrer || window.location.href;
+          try {{
+            if (window.parent && window.parent.location && window.parent.location.href) base = window.parent.location.href;
+          }} catch (error) {{}}
+          return new URL(href, base).toString();
+        }};
+        table.addEventListener("click", event => {{
+          const link = event.target.closest('a[data-profile-performance-link="1"]');
+          if (!link) return;
+          const href = resolveInternalHref(link.getAttribute("href") || "");
+          if (!href) return;
+          try {{
+            window.parent.location.href = href;
+            event.preventDefault();
+          }} catch (error) {{
+            link.setAttribute("href", href);
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+          }}
+        }});
+        headers.forEach((header, index) => header.addEventListener("click", () => sortHeader(header, index)));
+      }})();
+    </script>
+    """
+
+
+def profile_performance_column_class(column: object, label_column: str) -> str:
+    if str(column) == str(label_column):
+        return "profile-col-label"
+    text = re.sub(r"[^a-zA-Z0-9]+", "-", str(column).strip().casefold()).strip("-")
+    return f"profile-col-{text or 'column'}"
+
+
+def profile_performance_default_sort_dir(column: object, label_column: str) -> str:
+    return "asc" if str(column) == str(label_column) else "desc"
+
+
+def profile_performance_display_value(column: str, value: object, label_column: str) -> str:
+    if str(column) == str(label_column):
+        return profile_performance_label_cell(value)
+    if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
+        return "N/A"
+    if column == "Strike Rate":
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+    if column in {"Avg", "SR", "Eco"}:
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "N/A" if pd.isna(numeric) else f"{float(numeric):.2f}"
+    if column in {"Inn", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "M", "W", "3WI", "5WI", "Catches", "Stumpings", "RO", "Dismissals"}:
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "N/A" if pd.isna(numeric) else f"{int(numeric):,}"
+    text = str(value).strip()
+    return html.escape(text if text and text.casefold() not in {"none", "nan"} else "N/A")
+
+
+def profile_performance_label_cell(value: object) -> str:
+    if pd.isna(value) or str(value).strip() == "":
+        return '<span class="profile-label-text">N/A</span>'
+    text = str(value).strip()
+    label = link_display_label(text)
+    if text.startswith("?"):
+        return (
+            f'<a class="profile-label-link" href="{html.escape(text, quote=True)}" '
+            f'data-profile-performance-link="1" target="_top" '
+            f'title="Open {html.escape(label or text, quote=True)}">'
+            f'{html.escape(label or text)}</a>'
+        )
+    return f'<span class="profile-label-text">{html.escape(label or text)}</span>'
+
+
+def profile_performance_sort_value(column: str, value: object, label_column: str) -> tuple[str, bool]:
+    if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
+        return "", True
+    if str(column) == str(label_column):
+        label = link_display_label(value)
+        if str(label_column) == "Season":
+            return str(profile_season_sort_key(label)), False
+        if str(label_column) == "Grade":
+            return str(grade_sort_key(label)), False
+        return str(label).casefold(), False
+    if column == "HS":
+        runs, not_out = parse_batting_score(value)
+        if runs is None:
+            return "", True
+        return str(runs * 10 + int(not_out)), False
+    if column == "BBI":
+        wickets, runs = parse_bowling_figures(value)
+        if wickets is None or runs is None:
+            return "", True
+        return str(wickets * 10000 - runs), False
+    if column == "Overs":
+        balls = cricket_overs_to_balls(value)
+        return ("" if balls is None else str(balls), balls is None)
+    numeric = pd.to_numeric(value, errors="coerce")
+    if not pd.isna(numeric):
+        return str(float(numeric)), False
+    return str(value).casefold(), False
 
 
 def sort_profile_performance_table(table: pd.DataFrame, label_column: str, discipline: str) -> pd.DataFrame:
@@ -9605,7 +9981,7 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 
 
 def render_player_breakdown(career: pd.Series) -> None:
-    render_section_heading("Career Breakdown 🧩")
+    render_section_heading("Career Overview 🧩")
     cards = [
         ("Batting", [("Matches/Innings", f"{format_int(career.get('Matches'))} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
         ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", str(career.get("Overs", "—"))), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", str(career.get("BBI", "—")))]),

@@ -774,7 +774,7 @@ def inject_theme() -> None:
         .side-footer-contact a {
             color: rgba(255, 255, 255, 0.84);
             text-decoration: none;
-            word-break: break-word;
+            word-break: normal;
         }
 
         .routing-debug {
@@ -2831,9 +2831,10 @@ def inject_theme() -> None:
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            justify-content: flex-end;
-            max-width: 390px;
-            min-width: 220px;
+            justify-content: flex-start;
+            margin-top: 14px;
+            max-width: 920px;
+            min-width: 0;
         }
 
         .profile-badge {
@@ -3138,7 +3139,7 @@ def inject_theme() -> None:
             margin-bottom: 14px;
         }
 
-        .profile-intelligence-card-head span {
+        .profile-intelligence-card-head > span {
             background: #f0edff;
             border: 1px solid #dfd8ff;
             border-radius: 999px;
@@ -3152,7 +3153,12 @@ def inject_theme() -> None:
             text-transform: uppercase;
         }
 
-        .profile-intelligence-card-head h3 {
+        .profile-intelligence-card-head > span:empty {
+            display: none;
+        }
+
+        .profile-intelligence-card-head h3,
+        .profile-intelligence-card-head .profile-card-title {
             color: var(--ink);
             font-size: 1.02rem;
             font-weight: 950;
@@ -3292,6 +3298,18 @@ def inject_theme() -> None:
             box-shadow: inset 0 0 0 1px #ded8ff;
         }
 
+        .profile-breakdown-controls {
+            align-items: center;
+            display: flex;
+            gap: 14px;
+            justify-content: space-between;
+            margin: 0 0 18px;
+        }
+
+        .profile-breakdown-controls .profile-segmented {
+            margin-bottom: 0;
+        }
+
         .phase-row {
             align-items: center;
             border-top: 1px solid #eef0f7;
@@ -3363,17 +3381,20 @@ def inject_theme() -> None:
 
         .fingerprint-legend i.club,
         .fingerprint-marker {
-            background: #9aa1b8;
+            background: #6b7280;
             border-radius: 999px;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.12);
             display: inline-block;
-            height: 14px;
-            width: 3px;
+            height: 17px;
+            opacity: 0.95;
+            width: 4px;
         }
 
         .fingerprint-marker {
-            bottom: -2px;
             position: absolute;
-            top: -2px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
         }
 
         .peer-card {
@@ -4522,6 +4543,12 @@ def inject_theme() -> None:
             .profile-segment {
                 flex: 1 0 auto;
                 text-align: center;
+            }
+
+            .profile-breakdown-controls {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 10px;
             }
 
             .phase-row {

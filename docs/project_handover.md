@@ -25,6 +25,17 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
   - Commit locally after verification.
   - Do not push until Preet confirms.
 
+## Current Player Profile Work In Progress
+
+- Player Profile is being refined on `main`; do not push until Preet confirms the local review.
+- `Career Breakdown 🧩` is being renamed to `Career Overview 🧩` as a visible-label change only.
+- Player Profile now includes `Performance Breakdown 🧭`, combining Season / Grade / Opponent / Ground / H/A views with Batting / Bowling / Fielding discipline views.
+- Player Profile now includes an advanced player-analysis section being renamed to `Player DNA 🧬`.
+- Batting strike rate must use verified ball-by-ball runs and verified ball-by-ball balls from the same covered innings only. Do not mix all-scorecard runs with ball-by-ball denominators.
+- Batting Position, Dismissal Fingerprint, and Bowling Phase analysis are being added/refined. Batting Position uses scorecard batting-order groups; Bowling Phase uses verified ball-by-ball only.
+- Current UI fixes in progress: left-align player tags, place Batting Position and Dismissal Fingerprint side by side on desktop, improve dismissal benchmark styling/copy, order Season Trends earliest-to-latest, align Performance Breakdown toggles, wrap long Grade/Opponent/Ground labels, compact Performance Breakdown tables, and fix sidebar/footer email wrapping.
+- Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
+
 ## 2. Current App Pages / Navigation
 
 The app has four main pages:
@@ -58,9 +69,9 @@ The app has four main pages:
    - Career Highlights.
    - Player vs Peers.
    - Season Trends.
-   - Season History.
-   - Grade Breakdown.
-   - Career Breakdown.
+   - Performance Breakdown.
+   - Career Overview.
+   - Player DNA.
    - Milestone Watch.
 
 Navigation rules:
@@ -95,7 +106,8 @@ App created by
 Siddhanth Chaurasiya |
 Preet Kaur
 For feedback/enquiries:
-siddhanthchaurasiya@gmail.com
+siddhanthchaurasiya
+@gmail.com
 ```
 
 Footer placement:
@@ -443,7 +455,7 @@ Current section headings/emojis:
 - Season Trends 📈
 - Season History 📅
 - Grade Breakdown 🧭
-- Career Breakdown 🧩
+- Career Overview 🧩
 - Milestone Watch 🎯
 
 Tables:
@@ -458,7 +470,7 @@ Tables:
 - Tables should stay light/white on mobile and desktop.
 - Keep tables compact and sortable.
 
-Career Breakdown:
+Career Overview:
 
 - Batting order: Matches, Runs, Average, 4s, 6s, 0s, HS.
 - Bowling includes Strike Rate, Maidens, and BBI.
