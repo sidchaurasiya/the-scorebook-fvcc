@@ -2967,6 +2967,56 @@ def inject_theme() -> None:
             margin: 0 0 12px;
         }
 
+        .profile-season-summary-card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 18px;
+            box-shadow: 0 14px 34px rgba(23, 27, 77, 0.055);
+            margin-bottom: 18px;
+            padding: 20px 22px;
+        }
+
+        .profile-season-summary-card span {
+            color: #6d4dff;
+            display: block;
+            font-size: 0.74rem;
+            font-weight: 950;
+            letter-spacing: 0.06em;
+            margin-bottom: 9px;
+            text-transform: uppercase;
+        }
+
+        .profile-season-summary-card h4 {
+            color: var(--ink);
+            font-size: 1.08rem;
+            font-weight: 950;
+            margin: 0 0 6px;
+        }
+
+        .profile-season-summary-card strong {
+            color: var(--ink);
+            display: block;
+            font-size: 1.45rem;
+            font-weight: 950;
+            line-height: 1.05;
+            margin: 8px 0;
+        }
+
+        .profile-season-summary-card div,
+        .profile-season-summary-card p {
+            color: #626a88;
+            font-size: 0.88rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin: 0;
+        }
+
+        .profile-season-summary-card p {
+            color: #7b829d;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
         .profile-insight {
             color: #555d7b;
             font-size: 0.95rem;
@@ -4107,6 +4157,7 @@ def inject_theme() -> None:
             div.st-key-profile_chart_wickets,
             div.st-key-profile_chart_batting_average,
             div.st-key-profile_chart_bowling_average,
+            .profile-season-summary-card,
             div[data-testid="stVegaLiteChart"],
             div[data-testid="stVegaLiteChart"] > div,
             div[data-testid="stVegaLiteChart"] canvas,
@@ -4138,6 +4189,33 @@ def inject_theme() -> None:
                 max-width: 92px;
                 white-space: normal;
                 word-break: normal;
+            }
+
+            .block-container:has(.player-profile-page) div.st-key-player_profile_season_table div[data-testid="stDataFrame"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] {
+                border-radius: 14px !important;
+                font-size: 0.74rem !important;
+            }
+
+            .block-container:has(.player-profile-page) div.st-key-player_profile_season_table div[data-testid="stDataFrame"] [role="columnheader"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_season_table div[data-testid="stDataFrame"] [role="gridcell"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="columnheader"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="gridcell"] {
+                font-size: 0.74rem !important;
+                line-height: 1.14 !important;
+                padding-left: 6px !important;
+                padding-right: 6px !important;
+            }
+
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="gridcell"]:first-child,
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="columnheader"]:first-child {
+                max-width: 124px;
+                white-space: normal !important;
+                overflow-wrap: anywhere;
+            }
+
+            .profile-season-summary-card {
+                padding: 17px 18px;
             }
 
             .player-hero-card {
