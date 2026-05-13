@@ -4,6 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.data.name_normalization import normalize_opponent_club_name
+
 
 def safe_number(value: object, default: float = 0.0) -> float:
     parsed = pd.to_numeric(value, errors="coerce")
@@ -333,7 +335,7 @@ def opponent_name(match: pd.Series, team_ids: set[str]) -> str:
     home_id = clean_text(match.get("home_team_id"))
     home = clean_text(match.get("home_team_name"))
     away = clean_text(match.get("away_team_name"))
-    return away if home_id in team_ids else home
+    return normalize_opponent_club_name(away if home_id in team_ids else home)
 
 
 def scorecard_top_batter(rows: pd.DataFrame) -> dict[str, object] | None:

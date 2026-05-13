@@ -2627,6 +2627,8 @@ def read_match_centre_csv(path: Path) -> pd.DataFrame:
 
 
 def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
+    from src.data.name_normalization import normalize_opponent_club_name
+
     output = matches.copy()
     for column in [
         "home_team_name",
@@ -2649,7 +2651,9 @@ def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
     output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
     output["fvcc_team_name"] = output["home_team_name"].where(fvcc_is_home, output["away_team_name"]).fillna("FVCC")
     output["opponent_team_id"] = output["away_team_id"].where(fvcc_is_home, output["home_team_id"])
-    output["opponent_name"] = output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).fillna("Unknown opponent")
+    output["opponent_name"] = (
+        output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
+    )
     output["is_ball_by_ball_bool"] = output["is_ball_by_ball"].map(parse_bool)
     output["ball_by_ball_badge"] = output["is_ball_by_ball_bool"].map(lambda value: "Yes" if value else "No")
     output["match_title"] = output["fvcc_team_name"].fillna("FVCC") + " vs " + output["opponent_name"].fillna("Unknown opponent")
@@ -5467,10 +5471,10 @@ def clean_grade_label_for_record(value: object) -> str:
 
 
 def clean_opponent_label(value: object, fallback: str = "Unknown opposition") -> str:
+    from src.data.name_normalization import normalize_opponent_club_name
+
     text = safe_record_text(value, fallback)
-    text = re.sub(r"\s+\d+(st|nd|rd|th)?\s+XI$", "", text).strip()
-    text = re.sub(r"\s+XI$", "", text).strip()
-    return text
+    return normalize_opponent_club_name(text, fallback=fallback)
 
 
 def format_record_date(value: object) -> str:

@@ -20,6 +20,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import build_season_overview_detail_exports as season_exports  # noqa: E402
+from src.data.name_normalization import normalize_opponent_club_name, normalize_ground_name as shared_normalize_ground_name  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
@@ -450,19 +451,11 @@ def position_group(value: object) -> str | None:
 
 
 def normalize_opponent_name(value: object) -> str:
-    text = clean_text(value, "Unknown opponent")
-    text = re.sub(r"\b(Cricket Club|CC)\b", "CC", text, flags=re.IGNORECASE)
-    text = re.sub(r"\b(\d+(st|nd|rd|th)?\s*)?XI\b", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"\b(1s|2s|3s|4s|5s)\b", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"\b(1st|2nd|3rd|4th|5th)\s+XI\b", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"\s+", " ", text).strip(" -")
-    text = re.sub(r"\bCC\s+CC\b", "CC", text, flags=re.IGNORECASE)
-    return text or "Unknown opponent"
+    return normalize_opponent_club_name(value)
 
 
 def normalize_ground_name(value: object) -> str:
-    text = clean_text(value, "Unknown ground")
-    return re.sub(r"\s+", " ", text).strip() or "Unknown ground"
+    return shared_normalize_ground_name(value)
 
 
 def phase_model_from_match_type(value: object) -> str | None:
