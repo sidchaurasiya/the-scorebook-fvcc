@@ -28,12 +28,14 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 ## Current Player Profile Work In Progress
 
 - Player Profile is being refined on `main`; do not push until Preet confirms the local review.
-- `Career Breakdown 🧩` is being renamed to `Career Overview 🧩` as a visible-label change only.
-- Player Profile now includes `Performance Breakdown 🧭`, combining Season / Grade / Opponent / Ground / H/A views with Batting / Bowling / Fielding discipline views.
-- Player Profile now includes an advanced player-analysis section being renamed to `Player DNA 🧬`.
+- The current production section is `Career Breakdown 🧭`; earlier `Career Overview` naming was reviewed but the visible app section is now back to Career Breakdown.
+- Player Profile now includes `Career Breakdown 🧭`, combining Season / Grade / Opponent / Ground / Home/Away views with Batting / Bowling / Fielding discipline views.
+- Player Profile now includes `Player DNA 🧬` with Batting Position, Dismissal Fingerprint, and Bowling by Phase modules.
 - Batting strike rate must use verified ball-by-ball runs and verified ball-by-ball balls from the same covered innings only. Do not mix all-scorecard runs with ball-by-ball denominators.
-- Batting Position, Dismissal Fingerprint, and Bowling Phase analysis are being added/refined. Batting Position uses scorecard batting-order groups; Bowling Phase uses verified ball-by-ball only.
-- Current UI fixes in progress: left-align player tags, place Batting Position and Dismissal Fingerprint side by side on desktop, improve dismissal benchmark styling/copy, order Season Trends earliest-to-latest, align Performance Breakdown toggles, wrap long Grade/Opponent/Ground labels, compact Performance Breakdown tables, and fix sidebar/footer email wrapping.
+- Season Standout profile tags must count unique standout seasons only, not multiple club/grade or batting/bowling awards in the same season.
+- Premiership Winner and Premiership Winning Captain tags are being added from deploy-safe premiership records when evidence exists.
+- Batting Position uses scorecard batting-order groups; Bowling by Phase uses verified ball-by-ball only and must respect actual match type before phase buckets.
+- Current UI fixes in progress: compact Batting Position rows, shared toggle styling for Career Breakdown and Bowling by Phase, Bowling by Phase table columns, dismissal benchmark marker reuse from Player vs Peers, and compact/wrapped Career Breakdown tables.
 - Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
 
 ## 2. Current App Pages / Navigation

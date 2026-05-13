@@ -1,286 +1,286 @@
-canonical_player_id,canonical_player_name,display_player_name,phase_model,phase,phase_order,legal_balls,wickets,runs_conceded,match_count,overs,avg,eco,sr
-raw_00000000_0000_0000_0000_000000000001,********,********,One Day,Middle,2,48,0,32,2,8.0,,4.0,
-raw_00000000_0000_0000_0000_000000000002,********,********,One Day,Middle,2,24,1,12,1,4.0,12.0,3.0,24.0
-raw_00000000_0000_0000_0000_000000000005,********,********,One Day,Middle,2,25,0,32,1,4.1,,7.68,
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,One Day,Opening,1,139,3,115,8,23.1,38.333333333333336,4.9640287769784175,46.333333333333336
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,One Day,Middle,2,290,8,221,17,48.2,27.625,4.572413793103448,36.25
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,One Day,Death,3,40,1,49,6,6.4,49.0,7.35,40.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Two Day,New Ball,1,294,7,153,8,49.0,21.857142857142858,3.122448979591837,42.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Two Day,Older Ball,2,391,5,135,9,65.1,27.0,2.071611253196931,78.2
-raw_ac94098c_ddf6_45b6_aec2_27c97ec99aed,Ajith Kumar Vaddevolu,Ajith Kumar Vaddevolu,One Day,Middle,2,12,0,13,1,2.0,,6.5,
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,One Day,Middle,2,36,0,31,2,6.0,,5.166666666666667,
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,One Day,Death,3,12,0,7,2,2.0,,3.5,
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,T20,Death,3,6,1,3,1,1.0,3.0,3.0,6.0
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Two Day,Older Ball,2,72,2,11,1,12.0,5.5,0.9166666666666666,36.0
-raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,One Day,Middle,2,78,3,71,4,13.0,23.666666666666668,5.461538461538462,26.0
-raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,One Day,Death,3,41,2,50,3,6.5,25.0,7.317073170731708,20.5
-raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,Two Day,Older Ball,2,49,3,28,1,8.1,9.333333333333334,3.4285714285714284,16.333333333333332
-aravind_boddula,Aravind Boddula,Aravind Boddula,One Day,Opening,1,140,6,48,5,23.2,8.0,2.057142857142857,23.333333333333332
-aravind_boddula,Aravind Boddula,Aravind Boddula,One Day,Middle,2,30,2,10,3,5.0,5.0,2.0,15.0
-aravind_boddula,Aravind Boddula,Aravind Boddula,One Day,Death,3,18,0,7,2,3.0,,2.3333333333333335,
-aravind_boddula,Aravind Boddula,Aravind Boddula,Two Day,New Ball,1,36,0,20,1,6.0,,3.3333333333333335,
-aravind_boddula,Aravind Boddula,Aravind Boddula,Two Day,Older Ball,2,18,0,11,1,3.0,,3.6666666666666665,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,One Day,Opening,1,12,0,10,1,2.0,,5.0,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,One Day,Middle,2,63,4,60,5,10.3,15.0,5.714285714285714,15.75
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,One Day,Death,3,6,0,6,1,1.0,,6.0,
-raw_b3b52283_bba3_41bc_8dea_fe249e5487b3,Arun Parvathyraj,Arun Parvathyraj,One Day,Middle,2,6,1,6,1,1.0,6.0,6.0,6.0
-raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,T20,Death,3,6,0,9,1,1.0,,9.0,
-ashish_sharma,Ashish Sharma,Ashish Sharma,One Day,Middle,2,12,0,13,2,2.0,,6.5,
-ashish_sharma,Ashish Sharma,Ashish Sharma,One Day,Death,3,18,0,9,1,3.0,,3.0,
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,One Day,Opening,1,167,4,117,7,27.5,29.25,4.203592814371257,41.75
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,One Day,Middle,2,222,4,111,9,37.0,27.75,3.0,55.5
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,One Day,Death,3,55,4,53,6,9.1,13.25,5.781818181818182,13.75
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,T20,Opening,1,6,0,8,1,1.0,,8.0,
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,T20,Middle,2,6,0,12,1,1.0,,12.0,
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Two Day,New Ball,1,160,1,98,8,26.4,98.0,3.675,160.0
-balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Two Day,Older Ball,2,368,11,132,7,61.2,12.0,2.152173913043478,33.45454545454545
-baurel_d_mello,Baurel D'Mello,Baurel D'Mello,One Day,Middle,2,144,5,90,4,24.0,18.0,3.75,28.8
-baurel_d_mello,Baurel D'Mello,Baurel D'Mello,One Day,Death,3,18,1,20,2,3.0,20.0,6.666666666666667,18.0
-baurel_d_mello,Baurel D'Mello,Baurel D'Mello,T20,Middle,2,48,3,37,2,8.0,12.333333333333334,4.625,16.0
-baurel_d_mello,Baurel D'Mello,Baurel D'Mello,Two Day,New Ball,1,41,0,22,3,6.5,,3.2195121951219514,
-baurel_d_mello,Baurel D'Mello,Baurel D'Mello,Two Day,Older Ball,2,787,17,284,9,131.1,16.705882352941178,2.165184243964422,46.294117647058826
-raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,One Day,Middle,2,17,1,15,1,2.5,15.0,5.294117647058823,17.0
-raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,T20,Death,3,3,0,4,1,0.3,,8.0,
-raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,Two Day,Older Ball,2,48,1,32,1,8.0,32.0,4.0,48.0
-raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,One Day,Middle,2,24,1,9,1,4.0,9.0,2.25,24.0
-raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,One Day,Death,3,6,0,5,1,1.0,,5.0,
-raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,Two Day,Older Ball,2,12,0,16,1,2.0,,8.0,
-raw_05220db1_794d_452c_b921_2eb60d032d21,Chinni Raja Ammela,Chinni Raja Ammela,One Day,Death,3,11,0,18,1,1.5,,9.818181818181818,
-raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,One Day,Opening,1,48,1,55,2,8.0,55.0,6.875,48.0
-raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,One Day,Middle,2,60,3,49,4,10.0,16.333333333333332,4.9,20.0
-raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,One Day,Death,3,1,1,0,1,0.1,0.0,0.0,1.0
-raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,Two Day,New Ball,1,8,0,3,1,1.2,,2.25,
-raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,Two Day,Older Ball,2,108,2,40,4,18.0,20.0,2.2222222222222223,54.0
-damien_vikash,Damien Vikash,Damien Vikash,Two Day,New Ball,1,57,0,22,2,9.3,,2.3157894736842106,
-damien_vikash,Damien Vikash,Damien Vikash,Two Day,Older Ball,2,22,2,17,2,3.4,8.5,4.636363636363637,11.0
-danny_singh,Danny Singh,Danny Singh,One Day,Middle,2,48,1,44,4,8.0,44.0,5.5,48.0
-danny_singh,Danny Singh,Danny Singh,One Day,Death,3,2,1,0,1,0.2,0.0,0.0,2.0
-danny_singh,Danny Singh,Danny Singh,Two Day,Older Ball,2,30,0,26,1,5.0,,5.2,
-feroz_hassan,Feroz Hassan,Feroz Hassan,One Day,Opening,1,12,0,17,1,2.0,,8.5,
-feroz_hassan,Feroz Hassan,Feroz Hassan,One Day,Middle,2,138,5,101,6,23.0,20.2,4.391304347826087,27.6
-feroz_hassan,Feroz Hassan,Feroz Hassan,T20,Opening,1,12,0,3,1,2.0,,1.5,
-feroz_hassan,Feroz Hassan,Feroz Hassan,T20,Middle,2,36,4,25,2,6.0,6.25,4.166666666666667,9.0
-feroz_hassan,Feroz Hassan,Feroz Hassan,Two Day,New Ball,1,24,1,5,2,4.0,5.0,1.25,24.0
-feroz_hassan,Feroz Hassan,Feroz Hassan,Two Day,Older Ball,2,30,1,9,3,5.0,9.0,1.8,30.0
-raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,One Day,Opening,1,30,0,31,1,5.0,,6.2,
-raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,One Day,Middle,2,84,3,52,4,14.0,17.333333333333332,3.7142857142857144,28.0
-raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,One Day,Death,3,12,1,22,1,2.0,22.0,11.0,12.0
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,One Day,Middle,2,36,2,26,1,6.0,13.0,4.333333333333333,18.0
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,One Day,Death,3,6,1,5,1,1.0,5.0,5.0,6.0
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,T20,Opening,1,6,0,8,1,1.0,,8.0,
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,T20,Middle,2,6,0,10,1,1.0,,10.0,
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,T20,Death,3,6,0,30,1,1.0,,30.0,
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,Two Day,New Ball,1,18,1,12,1,3.0,12.0,4.0,18.0
-ibad_mohammed,Ibad Mohammed,Ibad Mohammed,Two Day,Older Ball,2,42,0,39,2,7.0,,5.571428571428571,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,One Day,Middle,2,12,0,9,1,2.0,,4.5,
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,One Day,Opening,1,6,0,9,1,1.0,,9.0,
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,One Day,Middle,2,216,7,182,7,36.0,26.0,5.055555555555555,30.857142857142858
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,One Day,Death,3,18,1,28,1,3.0,28.0,9.333333333333334,18.0
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,Two Day,New Ball,1,24,0,18,2,4.0,,4.5,
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,Two Day,Older Ball,2,219,7,103,4,36.3,14.714285714285714,2.8219178082191783,31.285714285714285
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,One Day,Opening,1,48,3,36,4,8.0,12.0,4.5,16.0
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,One Day,Middle,2,171,7,149,7,28.3,21.285714285714285,5.228070175438597,24.428571428571427
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,One Day,Death,3,26,1,32,3,4.2,32.0,7.384615384615385,26.0
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,T20,Opening,1,6,0,15,1,1.0,,15.0,
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,T20,Middle,2,24,1,17,1,4.0,17.0,4.25,24.0
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Two Day,New Ball,1,78,1,23,4,13.0,23.0,1.7692307692307692,78.0
-jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Two Day,Older Ball,2,643,12,259,11,107.1,21.583333333333332,2.416796267496112,53.583333333333336
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,One Day,Opening,1,12,0,20,1,2.0,,10.0,
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,One Day,Middle,2,180,6,108,7,30.0,18.0,3.6,30.0
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,One Day,Death,3,12,0,18,2,2.0,,9.0,
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,T20,Opening,1,6,0,6,1,1.0,,6.0,
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,T20,Middle,2,30,1,31,2,5.0,31.0,6.2,30.0
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Two Day,New Ball,1,42,0,12,3,7.0,,1.7142857142857142,
-raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Two Day,Older Ball,2,493,9,202,8,82.1,22.444444444444443,2.4584178498985803,54.77777777777778
-kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,Two Day,Older Ball,2,10,1,7,2,1.4,7.0,4.2,10.0
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,One Day,Opening,1,138,2,85,7,23.0,42.5,3.6956521739130435,69.0
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,One Day,Middle,2,102,4,75,5,17.0,18.75,4.411764705882353,25.5
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,One Day,Death,3,12,1,15,1,2.0,15.0,7.5,12.0
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Two Day,New Ball,1,222,6,143,7,37.0,23.833333333333332,3.864864864864865,37.0
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Two Day,Older Ball,2,186,4,67,6,31.0,16.75,2.161290322580645,46.5
-raw_68ac86a9_b0a2_4dfe_9c94_f8e2d566269b,Kavish Gambhir,Kavish Gambhir,Two Day,Older Ball,2,24,1,23,1,4.0,23.0,5.75,24.0
-kieran_bhan,Kieran Bhan,Kieran Bhan,One Day,Opening,1,36,0,32,4,6.0,,5.333333333333333,
-kieran_bhan,Kieran Bhan,Kieran Bhan,One Day,Middle,2,236,10,184,12,39.2,18.4,4.677966101694915,23.6
-kieran_bhan,Kieran Bhan,Kieran Bhan,One Day,Death,3,30,3,31,2,5.0,10.333333333333334,6.2,10.0
-kieran_bhan,Kieran Bhan,Kieran Bhan,T20,Opening,1,18,0,33,2,3.0,,11.0,
-kieran_bhan,Kieran Bhan,Kieran Bhan,Two Day,New Ball,1,12,1,5,1,2.0,5.0,2.5,12.0
-kieran_bhan,Kieran Bhan,Kieran Bhan,Two Day,Older Ball,2,244,5,148,7,40.4,29.6,3.639344262295082,48.8
-raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,One Day,Opening,1,48,0,46,3,8.0,,5.75,
-raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,One Day,Middle,2,30,0,48,4,5.0,,9.6,
-raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,One Day,Death,3,17,2,17,2,2.5,8.5,6.0,8.5
-raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,T20,Opening,1,12,2,21,1,2.0,10.5,10.5,6.0
-raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,Two Day,Older Ball,2,24,0,13,1,4.0,,3.25,
-raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,One Day,Opening,1,6,0,1,1,1.0,,1.0,
-raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,One Day,Middle,2,12,0,10,1,2.0,,5.0,
-raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,Two Day,New Ball,1,78,1,36,2,13.0,36.0,2.769230769230769,78.0
-raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,Two Day,Older Ball,2,12,0,11,2,2.0,,5.5,
-mayur_mohan,Mayur Mohan,Mayur Mohan,One Day,Opening,1,312,6,247,12,52.0,41.166666666666664,4.75,52.0
-mayur_mohan,Mayur Mohan,Mayur Mohan,One Day,Middle,2,146,8,139,10,24.2,17.375,5.712328767123288,18.25
-mayur_mohan,Mayur Mohan,Mayur Mohan,One Day,Death,3,24,1,32,2,4.0,32.0,8.0,24.0
-raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,One Day,Middle,2,60,3,66,3,10.0,22.0,6.6,20.0
-raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,One Day,Death,3,6,1,11,1,1.0,11.0,11.0,6.0
-raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,T20,Middle,2,6,0,4,1,1.0,,4.0,
-raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,T20,Death,3,18,0,20,2,3.0,,6.666666666666667,
-raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,Two Day,Older Ball,2,48,0,54,1,8.0,,6.75,
-raw_4c9e3082_4034_4e6d_9142_5a76549bd6be,Mohammed Adnanuddin,Mohammed Adnanuddin,One Day,Middle,2,6,1,5,1,1.0,5.0,5.0,6.0
-raw_4c9e3082_4034_4e6d_9142_5a76549bd6be,Mohammed Adnanuddin,Mohammed Adnanuddin,One Day,Death,3,7,0,14,1,1.1,,12.0,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,One Day,Opening,1,204,8,142,8,34.0,17.75,4.176470588235294,25.5
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,One Day,Middle,2,213,7,133,12,35.3,19.0,3.7464788732394365,30.428571428571427
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,One Day,Death,3,11,0,24,2,1.5,,13.090909090909092,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Two Day,New Ball,1,48,2,20,1,8.0,10.0,2.5,24.0
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Two Day,Older Ball,2,45,1,27,3,7.3,27.0,3.6,45.0
-raw_8557137e_8e9a_403f_a2e5_197066bc94b7,Muhammad Abidi,Muhammad Abidi,One Day,Middle,2,42,1,41,2,7.0,41.0,5.857142857142857,42.0
-raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,One Day,Opening,1,12,0,19,1,2.0,,9.5,
-raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,One Day,Middle,2,30,1,16,1,5.0,16.0,3.2,30.0
-raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,Two Day,New Ball,1,19,2,17,1,3.1,8.5,5.368421052631579,9.5
-raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,Two Day,Older Ball,2,30,3,10,1,5.0,3.3333333333333335,2.0,10.0
-nikhil_sawant,Nikhil Sawant,Nikhil Sawant,One Day,Opening,1,36,2,19,2,6.0,9.5,3.1666666666666665,18.0
-nikhil_sawant,Nikhil Sawant,Nikhil Sawant,One Day,Middle,2,43,3,16,2,7.1,5.333333333333333,2.2325581395348837,14.333333333333334
-nikhil_sawant,Nikhil Sawant,Nikhil Sawant,T20,Opening,1,30,1,37,2,5.0,37.0,7.4,30.0
-nikhil_sawant,Nikhil Sawant,Nikhil Sawant,T20,Death,3,6,0,7,1,1.0,,7.0,
-nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Two Day,New Ball,1,192,2,89,5,32.0,44.5,2.78125,96.0
-nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Two Day,Older Ball,2,135,2,43,6,22.3,21.5,1.9111111111111112,67.5
-raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,One Day,Middle,2,6,0,4,1,1.0,,4.0,
-raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,One Day,Opening,1,24,1,16,1,4.0,16.0,4.0,24.0
-raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,One Day,Middle,2,193,8,128,7,32.1,16.0,3.9792746113989637,24.125
-raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,One Day,Death,3,30,3,33,3,5.0,11.0,6.6,10.0
-raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,Two Day,New Ball,1,6,1,13,1,1.0,13.0,13.0,6.0
-raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,Two Day,Older Ball,2,78,1,80,2,13.0,80.0,6.153846153846154,78.0
-phanindra_padigella,Phanindra Padigella,Phanindra Padigella,One Day,Middle,2,24,0,10,1,4.0,,2.5,
-raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,One Day,Opening,1,90,2,68,3,15.0,34.0,4.533333333333333,45.0
-raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,One Day,Death,3,18,1,8,2,3.0,8.0,2.6666666666666665,18.0
-raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,Two Day,New Ball,1,204,2,76,7,34.0,38.0,2.235294117647059,102.0
-raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,Two Day,Older Ball,2,198,7,70,6,33.0,10.0,2.121212121212121,28.285714285714285
-predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,One Day,Middle,2,138,3,91,4,23.0,30.333333333333332,3.9565217391304346,46.0
-predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,One Day,Death,3,30,5,24,3,5.0,4.8,4.8,6.0
-predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,T20,Middle,2,18,0,17,1,3.0,,5.666666666666667,
-predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,Two Day,New Ball,1,6,0,2,1,1.0,,2.0,
-predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,Two Day,Older Ball,2,90,3,50,2,15.0,16.666666666666668,3.3333333333333335,30.0
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,One Day,Middle,2,12,0,10,2,2.0,,5.0,
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,One Day,Death,3,6,0,3,1,1.0,,3.0,
-raw_25166f1f_6d57_48e5_a9c5_218afdb3fe70,Rama Bashamoni,Rama Bashamoni,Two Day,New Ball,1,12,2,8,1,2.0,4.0,4.0,6.0
-raw_25166f1f_6d57_48e5_a9c5_218afdb3fe70,Rama Bashamoni,Rama Bashamoni,Two Day,Older Ball,2,36,1,18,1,6.0,18.0,3.0,36.0
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,One Day,Opening,1,30,1,24,3,5.0,24.0,4.8,30.0
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,One Day,Middle,2,258,11,200,12,43.0,18.181818181818183,4.651162790697675,23.454545454545453
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,One Day,Death,3,12,0,10,1,2.0,,5.0,
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,T20,Middle,2,24,3,33,2,4.0,11.0,8.25,8.0
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,T20,Death,3,6,1,3,1,1.0,3.0,3.0,6.0
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,Two Day,New Ball,1,12,0,11,1,2.0,,5.5,
-raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,Two Day,Older Ball,2,24,0,25,1,4.0,,6.25,
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,One Day,Opening,1,18,0,13,2,3.0,,4.333333333333333,
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,One Day,Middle,2,61,0,58,4,10.1,,5.704918032786885,
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,One Day,Death,3,12,0,19,1,2.0,,9.5,
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,T20,Opening,1,36,0,35,2,6.0,,5.833333333333333,
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,T20,Middle,2,6,0,5,1,1.0,,5.0,
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,Two Day,New Ball,1,69,1,16,3,11.3,16.0,1.391304347826087,69.0
-ravi_chowdary,Ravi Chowdary,Ravi Chowdary,Two Day,Older Ball,2,74,1,29,2,12.2,29.0,2.3513513513513513,74.0
-raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,One Day,Middle,2,24,1,29,2,4.0,29.0,7.25,24.0
-raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,Two Day,New Ball,1,12,0,21,1,2.0,,10.5,
-raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,Two Day,Older Ball,2,30,1,27,2,5.0,27.0,5.4,30.0
-raw_0a978d26_0a70_4656_bf41_5515d8dff64d,Sai Akhil Reddy Patil,Sai Akhil Reddy Patil,One Day,Middle,2,11,0,11,1,1.5,,6.0,
-raw_b0359b90_ca42_4a35_b0d1_46703899270f,Sai Krishna Buddaraju,Sai Krishna Buddaraju,One Day,Middle,2,12,0,12,1,2.0,,6.0,
-raw_8d406a25_db4b_4b64_b592_84d73e3ad834,Sainath Jamsandekar,Sainath Jamsandekar,One Day,Middle,2,29,1,14,1,4.5,14.0,2.896551724137931,29.0
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,One Day,Opening,1,36,0,30,2,6.0,,5.0,
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,One Day,Middle,2,85,2,61,5,14.1,30.5,4.305882352941176,42.5
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,One Day,Death,3,57,4,39,5,9.3,9.75,4.105263157894737,14.25
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,T20,Middle,2,12,1,8,1,2.0,8.0,4.0,12.0
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,T20,Death,3,24,2,27,2,4.0,13.5,6.75,12.0
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,Two Day,New Ball,1,36,0,10,2,6.0,,1.6666666666666667,
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,Two Day,Older Ball,2,465,15,192,8,77.3,12.8,2.47741935483871,31.0
-sandeep_gill,Sandeep Gill,Sandeep Gill,One Day,Opening,1,90,0,61,5,15.0,,4.066666666666666,
-sandeep_gill,Sandeep Gill,Sandeep Gill,One Day,Middle,2,174,7,135,6,29.0,19.285714285714285,4.655172413793103,24.857142857142858
-sandeep_gill,Sandeep Gill,Sandeep Gill,One Day,Death,3,14,0,14,3,2.2,,6.0,
-sandeep_gill,Sandeep Gill,Sandeep Gill,T20,Opening,1,6,0,9,1,1.0,,9.0,
-sandeep_gill,Sandeep Gill,Sandeep Gill,T20,Middle,2,6,0,7,1,1.0,,7.0,
-sandeep_gill,Sandeep Gill,Sandeep Gill,Two Day,New Ball,1,168,5,93,6,28.0,18.6,3.3214285714285716,33.6
-sandeep_gill,Sandeep Gill,Sandeep Gill,Two Day,Older Ball,2,159,6,77,5,26.3,12.833333333333334,2.9056603773584904,26.5
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,One Day,Opening,1,211,4,128,8,35.1,32.0,3.639810426540284,52.75
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,One Day,Middle,2,49,2,34,5,8.1,17.0,4.163265306122449,24.5
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,One Day,Death,3,42,1,34,4,7.0,34.0,4.857142857142857,42.0
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,T20,Opening,1,12,0,4,1,2.0,,2.0,
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,T20,Death,3,12,0,13,1,2.0,,6.5,
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,Two Day,New Ball,1,493,13,222,12,82.1,17.076923076923077,2.7018255578093306,37.92307692307692
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,Two Day,Older Ball,2,394,10,168,9,65.4,16.8,2.5583756345177666,39.4
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,One Day,Opening,1,18,1,9,1,3.0,9.0,3.0,18.0
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,One Day,Middle,2,139,2,126,8,23.1,63.0,5.438848920863309,69.5
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,One Day,Death,3,84,3,63,4,14.0,21.0,4.5,28.0
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,T20,Middle,2,6,0,6,1,1.0,,6.0,
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,T20,Death,3,6,3,2,1,1.0,0.6666666666666666,2.0,2.0
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,Two Day,New Ball,1,12,0,6,1,2.0,,3.0,
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,Two Day,Older Ball,2,149,3,105,5,24.5,35.0,4.228187919463087,49.666666666666664
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,One Day,Opening,1,300,5,185,11,50.0,37.0,3.7,60.0
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,One Day,Middle,2,102,6,57,6,17.0,9.5,3.3529411764705883,17.0
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,One Day,Death,3,90,6,60,6,15.0,10.0,4.0,15.0
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,T20,Opening,1,30,1,23,2,5.0,23.0,4.6,30.0
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,T20,Death,3,6,0,10,1,1.0,,10.0,
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,Two Day,New Ball,1,456,5,186,11,76.0,37.2,2.4473684210526314,91.2
-raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,Two Day,Older Ball,2,521,13,191,10,86.5,14.692307692307692,2.199616122840691,40.07692307692308
-shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,One Day,Middle,2,204,8,196,10,34.0,24.5,5.764705882352941,25.5
-shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,One Day,Death,3,55,4,40,4,9.1,10.0,4.363636363636363,13.75
-shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,T20,Middle,2,42,0,39,2,7.0,,5.571428571428571,
-shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,Two Day,New Ball,1,20,0,9,1,3.2,,2.7,
-shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,Two Day,Older Ball,2,397,11,256,9,66.1,23.272727272727273,3.8690176322418135,36.09090909090909
-shrikant_sharma,Shrikant Sharma,Shrikant Sharma,One Day,Middle,2,6,1,0,1,1.0,0.0,0.0,6.0
-shrikant_sharma,Shrikant Sharma,Shrikant Sharma,Two Day,New Ball,1,42,0,24,3,7.0,,3.4285714285714284,
-shrikant_sharma,Shrikant Sharma,Shrikant Sharma,Two Day,Older Ball,2,186,3,68,3,31.0,22.666666666666668,2.193548387096774,62.0
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,One Day,Opening,1,246,4,186,10,41.0,46.5,4.536585365853658,61.5
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,One Day,Middle,2,278,15,214,14,46.2,14.266666666666667,4.618705035971223,18.533333333333335
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,One Day,Death,3,33,2,36,4,5.3,18.0,6.545454545454546,16.5
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Two Day,New Ball,1,28,0,15,1,4.4,,3.2142857142857144,
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Two Day,Older Ball,2,251,8,120,6,41.5,15.0,2.8685258964143427,31.375
-raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,One Day,Opening,1,60,3,40,4,10.0,13.333333333333334,4.0,20.0
-raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,One Day,Middle,2,132,1,103,8,22.0,103.0,4.681818181818182,132.0
-raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,One Day,Death,3,12,2,0,2,2.0,0.0,0.0,6.0
-raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,T20,Middle,2,24,0,10,1,4.0,,2.5,
-raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,One Day,Opening,1,138,5,85,6,23.0,17.0,3.6956521739130435,27.6
-raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,One Day,Middle,2,66,2,66,5,11.0,33.0,6.0,33.0
-raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,One Day,Death,3,30,1,25,3,5.0,25.0,5.0,30.0
-raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,Two Day,New Ball,1,120,6,29,2,20.0,4.833333333333333,1.45,20.0
-raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,Two Day,Older Ball,2,293,6,122,6,48.5,20.333333333333332,2.4982935153583616,48.833333333333336
-raw_3dfa0dea_884b_4796_ad97_a36c652b3012,Sravan Kumar Saka,Sravan Kumar Saka,One Day,Death,3,3,0,1,1,0.3,,2.0,
-srikanth_para,Srikanth Para,Srikanth Para,One Day,Opening,1,6,0,3,1,1.0,,3.0,
-srikanth_para,Srikanth Para,Srikanth Para,One Day,Middle,2,54,0,32,3,9.0,,3.5555555555555554,
-srikanth_para,Srikanth Para,Srikanth Para,One Day,Death,3,12,1,9,1,2.0,9.0,4.5,12.0
-srikanth_para,Srikanth Para,Srikanth Para,T20,Opening,1,18,1,8,2,3.0,8.0,2.6666666666666665,18.0
-srikanth_para,Srikanth Para,Srikanth Para,T20,Middle,2,18,0,29,2,3.0,,9.666666666666666,
-srikanth_para,Srikanth Para,Srikanth Para,T20,Death,3,12,0,19,2,2.0,,9.5,
-raw_318eb254_0f61_4906_a4da_9c88a2637ebe,Sunil K Mekala,Sunil K Mekala,One Day,Opening,1,6,0,2,1,1.0,,2.0,
-raw_318eb254_0f61_4906_a4da_9c88a2637ebe,Sunil K Mekala,Sunil K Mekala,One Day,Middle,2,24,0,16,1,4.0,,4.0,
-raw_318eb254_0f61_4906_a4da_9c88a2637ebe,Sunil K Mekala,Sunil K Mekala,One Day,Death,3,6,0,3,1,1.0,,3.0,
-raw_97055023_9a2c_4f89_aa56_c8083a09f48f,Suraj Thapa,Suraj Thapa,Two Day,Older Ball,2,36,2,22,1,6.0,11.0,3.6666666666666665,18.0
-raw_c9e16142_3bba_44ab_8fad_4610a7f7f885,Suryakumar Patti,Suryakumar Patti,One Day,Opening,1,24,1,10,1,4.0,10.0,2.5,24.0
-raw_c9e16142_3bba_44ab_8fad_4610a7f7f885,Suryakumar Patti,Suryakumar Patti,One Day,Middle,2,18,1,13,1,3.0,13.0,4.333333333333333,18.0
-raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,One Day,Opening,1,54,1,22,3,9.0,22.0,2.4444444444444446,54.0
-raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,One Day,Middle,2,78,4,37,4,13.0,9.25,2.8461538461538463,19.5
-raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,One Day,Death,3,12,0,5,1,2.0,,2.5,
-raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,Two Day,New Ball,1,30,0,30,1,5.0,,6.0,
-raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,Two Day,Older Ball,2,42,1,8,1,7.0,8.0,1.1428571428571428,42.0
-raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,One Day,Middle,2,48,0,51,2,8.0,,6.375,
-raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,T20,Death,3,6,1,7,1,1.0,7.0,7.0,6.0
-raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,Two Day,New Ball,1,37,1,24,2,6.1,24.0,3.891891891891892,37.0
-raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,Two Day,Older Ball,2,229,7,74,4,38.1,10.571428571428571,1.9388646288209608,32.714285714285715
-vinit_naidu,Vinit Naidu,Vinit Naidu,One Day,Opening,1,204,7,137,7,34.0,19.571428571428573,4.029411764705882,29.142857142857142
-vinit_naidu,Vinit Naidu,Vinit Naidu,One Day,Middle,2,84,3,63,7,14.0,21.0,4.5,28.0
-vinit_naidu,Vinit Naidu,Vinit Naidu,One Day,Death,3,6,2,6,1,1.0,3.0,6.0,3.0
-vinit_naidu,Vinit Naidu,Vinit Naidu,Two Day,New Ball,1,317,8,112,7,52.5,14.0,2.1198738170347005,39.625
-vinit_naidu,Vinit Naidu,Vinit Naidu,Two Day,Older Ball,2,396,6,153,8,66.0,25.5,2.3181818181818183,66.0
-vishnu_para,Vishnu Para,Vishnu Para,One Day,Opening,1,42,2,21,4,7.0,10.5,3.0,21.0
-vishnu_para,Vishnu Para,Vishnu Para,One Day,Middle,2,91,5,91,7,15.1,18.2,6.0,18.2
-vishnu_para,Vishnu Para,Vishnu Para,One Day,Death,3,12,0,22,2,2.0,,11.0,
-vishnu_para,Vishnu Para,Vishnu Para,T20,Opening,1,12,0,9,1,2.0,,4.5,
-vishnu_para,Vishnu Para,Vishnu Para,T20,Middle,2,24,2,22,1,4.0,11.0,5.5,12.0
-vishnu_para,Vishnu Para,Vishnu Para,Two Day,New Ball,1,42,0,30,2,7.0,,4.285714285714286,
-vishnu_para,Vishnu Para,Vishnu Para,Two Day,Older Ball,2,67,3,35,4,11.1,11.666666666666666,3.1343283582089554,22.333333333333332
-wajhi_syed,Wajhi Syed,Wajhi Syed,One Day,Opening,1,6,0,2,1,1.0,,2.0,
-wajhi_syed,Wajhi Syed,Wajhi Syed,One Day,Middle,2,185,8,125,7,30.5,15.625,4.054054054054054,23.125
-wajhi_syed,Wajhi Syed,Wajhi Syed,One Day,Death,3,9,0,8,1,1.3,,5.333333333333333,
-wajhi_syed,Wajhi Syed,Wajhi Syed,T20,Middle,2,12,1,16,1,2.0,16.0,8.0,12.0
-wajhi_syed,Wajhi Syed,Wajhi Syed,T20,Death,3,12,2,4,2,2.0,2.0,2.0,6.0
-wajhi_syed,Wajhi Syed,Wajhi Syed,Two Day,Older Ball,2,155,6,71,3,25.5,11.833333333333334,2.7483870967741937,25.833333333333332
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,One Day,Opening,1,12,1,18,1,2.0,18.0,9.0,12.0
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,One Day,Middle,2,18,0,4,1,3.0,,1.3333333333333333,
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,T20,Opening,1,6,1,0,1,1.0,0.0,0.0,6.0
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,T20,Middle,2,12,1,2,1,2.0,2.0,1.0,12.0
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,T20,Death,3,2,0,1,1,0.2,,3.0,
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,Two Day,New Ball,1,48,1,7,2,8.0,7.0,0.875,48.0
-raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,Two Day,Older Ball,2,60,2,26,2,10.0,13.0,2.6,30.0
+canonical_player_id,canonical_player_name,display_player_name,phase_model,phase,phase_order,legal_balls,wickets,runs_conceded,dot_balls,boundary_balls,match_count,overs,avg,eco,sr,dot_ball_pct,boundary_rate
+raw_00000000_0000_0000_0000_000000000001,********,********,One Day,Middle,2,48,0,32,24,1,2,8.0,,4.0,,50.0,2.0833333333333335
+raw_00000000_0000_0000_0000_000000000002,********,********,One Day,Middle,2,24,1,12,16,1,1,4.0,12.0,3.0,24.0,66.66666666666667,4.166666666666667
+raw_00000000_0000_0000_0000_000000000005,********,********,One Day,Middle,2,25,0,32,11,4,1,4.1,,7.68,,44.0,16.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,One Day,Opening,1,139,3,115,83,13,8,23.1,38.333333333333336,4.9640287769784175,46.333333333333336,59.71223021582734,9.352517985611511
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,One Day,Middle,2,290,8,221,176,27,17,48.2,27.625,4.572413793103448,36.25,60.689655172413794,9.310344827586206
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,One Day,Death,3,40,1,49,16,6,6,6.4,49.0,7.35,40.0,40.0,15.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Two Day,New Ball,1,294,7,153,215,15,8,49.0,21.857142857142858,3.122448979591837,42.0,73.12925170068027,5.1020408163265305
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Two Day,Older Ball,2,391,5,135,314,10,9,65.1,27.0,2.071611253196931,78.2,80.30690537084399,2.557544757033248
+raw_ac94098c_ddf6_45b6_aec2_27c97ec99aed,Ajith Kumar Vaddevolu,Ajith Kumar Vaddevolu,One Day,Middle,2,12,0,13,8,3,1,2.0,,6.5,,66.66666666666667,25.0
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,One Day,Middle,2,36,0,31,19,3,2,6.0,,5.166666666666667,,52.77777777777778,8.333333333333334
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,One Day,Death,3,12,0,7,8,1,2,2.0,,3.5,,66.66666666666667,8.333333333333334
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,T20,Death,3,6,1,3,3,0,1,1.0,3.0,3.0,6.0,50.0,0.0
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Two Day,Older Ball,2,72,2,11,66,1,1,12.0,5.5,0.9166666666666666,36.0,91.66666666666667,1.3888888888888888
+raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,One Day,Middle,2,78,3,71,41,8,4,13.0,23.666666666666668,5.461538461538462,26.0,52.56410256410256,10.256410256410257
+raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,One Day,Death,3,41,2,50,17,6,3,6.5,25.0,7.317073170731708,20.5,41.46341463414634,14.634146341463415
+raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,Two Day,Older Ball,2,49,3,28,33,3,1,8.1,9.333333333333334,3.4285714285714284,16.333333333333332,67.34693877551021,6.122448979591836
+aravind_boddula,Aravind Boddula,Aravind Boddula,One Day,Opening,1,140,6,48,117,4,5,23.2,8.0,2.057142857142857,23.333333333333332,83.57142857142857,2.857142857142857
+aravind_boddula,Aravind Boddula,Aravind Boddula,One Day,Middle,2,30,2,10,24,1,3,5.0,5.0,2.0,15.0,80.0,3.3333333333333335
+aravind_boddula,Aravind Boddula,Aravind Boddula,One Day,Death,3,18,0,7,12,0,2,3.0,,2.3333333333333335,,66.66666666666667,0.0
+aravind_boddula,Aravind Boddula,Aravind Boddula,Two Day,New Ball,1,36,0,20,29,4,1,6.0,,3.3333333333333335,,80.55555555555556,11.11111111111111
+aravind_boddula,Aravind Boddula,Aravind Boddula,Two Day,Older Ball,2,18,0,11,13,0,1,3.0,,3.6666666666666665,,72.22222222222223,0.0
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,One Day,Opening,1,12,0,10,9,2,1,2.0,,5.0,,75.0,16.666666666666668
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,One Day,Middle,2,63,4,60,29,6,5,10.3,15.0,5.714285714285714,15.75,46.03174603174603,9.523809523809524
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,One Day,Death,3,6,0,6,1,0,1,1.0,,6.0,,16.666666666666668,0.0
+raw_b3b52283_bba3_41bc_8dea_fe249e5487b3,Arun Parvathyraj,Arun Parvathyraj,One Day,Middle,2,6,1,6,3,1,1,1.0,6.0,6.0,6.0,50.0,16.666666666666668
+raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,T20,Death,3,6,0,9,2,1,1,1.0,,9.0,,33.333333333333336,16.666666666666668
+ashish_sharma,Ashish Sharma,Ashish Sharma,One Day,Middle,2,12,0,13,4,1,2,2.0,,6.5,,33.333333333333336,8.333333333333334
+ashish_sharma,Ashish Sharma,Ashish Sharma,One Day,Death,3,18,0,9,11,0,1,3.0,,3.0,,61.111111111111114,0.0
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,One Day,Opening,1,167,4,117,114,16,7,27.5,29.25,4.203592814371257,41.75,68.26347305389221,9.580838323353293
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,One Day,Middle,2,222,4,111,169,12,9,37.0,27.75,3.0,55.5,76.12612612612612,5.405405405405405
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,One Day,Death,3,55,4,53,26,6,6,9.1,13.25,5.781818181818182,13.75,47.27272727272727,10.909090909090908
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,T20,Opening,1,6,0,8,4,2,1,1.0,,8.0,,66.66666666666667,33.333333333333336
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,T20,Middle,2,6,0,12,3,3,1,1.0,,12.0,,50.0,50.0
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Two Day,New Ball,1,160,1,98,114,10,8,26.4,98.0,3.675,160.0,71.25,6.25
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Two Day,Older Ball,2,368,11,132,301,11,7,61.2,12.0,2.152173913043478,33.45454545454545,81.79347826086956,2.989130434782609
+baurel_d_mello,Baurel D'Mello,Baurel D'Mello,One Day,Middle,2,144,5,90,100,12,4,24.0,18.0,3.75,28.8,69.44444444444444,8.333333333333334
+baurel_d_mello,Baurel D'Mello,Baurel D'Mello,One Day,Death,3,18,1,20,8,2,2,3.0,20.0,6.666666666666667,18.0,44.44444444444444,11.11111111111111
+baurel_d_mello,Baurel D'Mello,Baurel D'Mello,T20,Middle,2,48,3,37,27,4,2,8.0,12.333333333333334,4.625,16.0,56.25,8.333333333333334
+baurel_d_mello,Baurel D'Mello,Baurel D'Mello,Two Day,New Ball,1,41,0,22,34,5,3,6.5,,3.2195121951219514,,82.92682926829268,12.195121951219512
+baurel_d_mello,Baurel D'Mello,Baurel D'Mello,Two Day,Older Ball,2,787,17,284,632,24,9,131.1,16.705882352941178,2.165184243964422,46.294117647058826,80.30495552731894,3.0495552731893265
+raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,One Day,Middle,2,17,1,15,13,2,1,2.5,15.0,5.294117647058823,17.0,76.47058823529412,11.764705882352942
+raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,T20,Death,3,3,0,4,2,1,1,0.3,,8.0,,66.66666666666667,33.333333333333336
+raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,Two Day,Older Ball,2,48,1,32,29,2,1,8.0,32.0,4.0,48.0,60.416666666666664,4.166666666666667
+raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,One Day,Middle,2,24,1,9,19,1,1,4.0,9.0,2.25,24.0,79.16666666666667,4.166666666666667
+raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,One Day,Death,3,6,0,5,4,1,1,1.0,,5.0,,66.66666666666667,16.666666666666668
+raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,Two Day,Older Ball,2,12,0,16,4,2,1,2.0,,8.0,,33.333333333333336,16.666666666666668
+raw_05220db1_794d_452c_b921_2eb60d032d21,Chinni Raja Ammela,Chinni Raja Ammela,One Day,Death,3,11,0,18,3,3,1,1.5,,9.818181818181818,,27.272727272727273,27.272727272727273
+raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,One Day,Opening,1,48,1,55,31,8,2,8.0,55.0,6.875,48.0,64.58333333333333,16.666666666666668
+raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,One Day,Middle,2,60,3,49,30,4,4,10.0,16.333333333333332,4.9,20.0,50.0,6.666666666666667
+raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,One Day,Death,3,1,1,0,1,0,1,0.1,0.0,0.0,1.0,100.0,0.0
+raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,Two Day,New Ball,1,8,0,3,6,0,1,1.2,,2.25,,75.0,0.0
+raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,Two Day,Older Ball,2,108,2,40,89,6,4,18.0,20.0,2.2222222222222223,54.0,82.4074074074074,5.555555555555555
+damien_vikash,Damien Vikash,Damien Vikash,Two Day,New Ball,1,57,0,22,45,2,2,9.3,,2.3157894736842106,,78.94736842105263,3.508771929824561
+damien_vikash,Damien Vikash,Damien Vikash,Two Day,Older Ball,2,22,2,17,15,2,2,3.4,8.5,4.636363636363637,11.0,68.18181818181819,9.090909090909092
+danny_singh,Danny Singh,Danny Singh,One Day,Middle,2,48,1,44,28,6,4,8.0,44.0,5.5,48.0,58.333333333333336,12.5
+danny_singh,Danny Singh,Danny Singh,One Day,Death,3,2,1,0,2,0,1,0.2,0.0,0.0,2.0,100.0,0.0
+danny_singh,Danny Singh,Danny Singh,Two Day,Older Ball,2,30,0,26,14,1,1,5.0,,5.2,,46.666666666666664,3.3333333333333335
+feroz_hassan,Feroz Hassan,Feroz Hassan,One Day,Opening,1,12,0,17,4,2,1,2.0,,8.5,,33.333333333333336,16.666666666666668
+feroz_hassan,Feroz Hassan,Feroz Hassan,One Day,Middle,2,138,5,101,85,9,6,23.0,20.2,4.391304347826087,27.6,61.594202898550726,6.521739130434782
+feroz_hassan,Feroz Hassan,Feroz Hassan,T20,Opening,1,12,0,3,9,0,1,2.0,,1.5,,75.0,0.0
+feroz_hassan,Feroz Hassan,Feroz Hassan,T20,Middle,2,36,4,25,25,4,2,6.0,6.25,4.166666666666667,9.0,69.44444444444444,11.11111111111111
+feroz_hassan,Feroz Hassan,Feroz Hassan,Two Day,New Ball,1,24,1,5,22,1,2,4.0,5.0,1.25,24.0,91.66666666666667,4.166666666666667
+feroz_hassan,Feroz Hassan,Feroz Hassan,Two Day,Older Ball,2,30,1,9,24,1,3,5.0,9.0,1.8,30.0,80.0,3.3333333333333335
+raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,One Day,Opening,1,30,0,31,16,5,1,5.0,,6.2,,53.333333333333336,16.666666666666668
+raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,One Day,Middle,2,84,3,52,51,3,4,14.0,17.333333333333332,3.7142857142857144,28.0,60.714285714285715,3.5714285714285716
+raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,One Day,Death,3,12,1,22,5,3,1,2.0,22.0,11.0,12.0,41.666666666666664,25.0
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,One Day,Middle,2,36,2,26,21,2,1,6.0,13.0,4.333333333333333,18.0,58.333333333333336,5.555555555555555
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,One Day,Death,3,6,1,5,4,1,1,1.0,5.0,5.0,6.0,66.66666666666667,16.666666666666668
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,T20,Opening,1,6,0,8,1,1,1,1.0,,8.0,,16.666666666666668,16.666666666666668
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,T20,Middle,2,6,0,10,2,2,1,1.0,,10.0,,33.333333333333336,33.333333333333336
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,T20,Death,3,6,0,30,0,6,1,1.0,,30.0,,0.0,100.0
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,Two Day,New Ball,1,18,1,12,13,2,1,3.0,12.0,4.0,18.0,72.22222222222223,11.11111111111111
+ibad_mohammed,Ibad Mohammed,Ibad Mohammed,Two Day,Older Ball,2,42,0,39,23,4,2,7.0,,5.571428571428571,,54.76190476190476,9.523809523809524
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,One Day,Middle,2,12,0,9,7,0,1,2.0,,4.5,,58.333333333333336,0.0
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,One Day,Opening,1,6,0,9,2,1,1,1.0,,9.0,,33.333333333333336,16.666666666666668
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,One Day,Middle,2,216,7,182,108,20,7,36.0,26.0,5.055555555555555,30.857142857142858,50.0,9.25925925925926
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,One Day,Death,3,18,1,28,8,4,1,3.0,28.0,9.333333333333334,18.0,44.44444444444444,22.22222222222222
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,Two Day,New Ball,1,24,0,18,15,3,2,4.0,,4.5,,62.5,12.5
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,Two Day,Older Ball,2,219,7,103,159,12,4,36.3,14.714285714285714,2.8219178082191783,31.285714285714285,72.6027397260274,5.47945205479452
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,One Day,Opening,1,48,3,36,31,4,4,8.0,12.0,4.5,16.0,64.58333333333333,8.333333333333334
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,One Day,Middle,2,171,7,149,99,19,7,28.3,21.285714285714285,5.228070175438597,24.428571428571427,57.89473684210526,11.11111111111111
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,One Day,Death,3,26,1,32,14,4,3,4.2,32.0,7.384615384615385,26.0,53.84615384615385,15.384615384615385
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,T20,Opening,1,6,0,15,1,2,1,1.0,,15.0,,16.666666666666668,33.333333333333336
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,T20,Middle,2,24,1,17,14,1,1,4.0,17.0,4.25,24.0,58.333333333333336,4.166666666666667
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Two Day,New Ball,1,78,1,23,66,2,4,13.0,23.0,1.7692307692307692,78.0,84.61538461538461,2.5641025641025643
+jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Two Day,Older Ball,2,643,12,259,498,20,11,107.1,21.583333333333332,2.416796267496112,53.583333333333336,77.44945567651634,3.1104199066874028
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,One Day,Opening,1,12,0,20,5,3,1,2.0,,10.0,,41.666666666666664,25.0
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,One Day,Middle,2,180,6,108,130,13,7,30.0,18.0,3.6,30.0,72.22222222222223,7.222222222222222
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,One Day,Death,3,12,0,18,4,2,2,2.0,,9.0,,33.333333333333336,16.666666666666668
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,T20,Opening,1,6,0,6,1,0,1,1.0,,6.0,,16.666666666666668,0.0
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,T20,Middle,2,30,1,31,10,2,2,5.0,31.0,6.2,30.0,33.333333333333336,6.666666666666667
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Two Day,New Ball,1,42,0,12,39,3,3,7.0,,1.7142857142857142,,92.85714285714286,7.142857142857143
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Two Day,Older Ball,2,493,9,202,394,25,8,82.1,22.444444444444443,2.4584178498985803,54.77777777777778,79.91886409736308,5.070993914807302
+kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,Two Day,Older Ball,2,10,1,7,7,1,2,1.4,7.0,4.2,10.0,70.0,10.0
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,One Day,Opening,1,138,2,85,97,11,7,23.0,42.5,3.6956521739130435,69.0,70.28985507246377,7.971014492753623
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,One Day,Middle,2,102,4,75,61,8,5,17.0,18.75,4.411764705882353,25.5,59.80392156862745,7.8431372549019605
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,One Day,Death,3,12,1,15,4,1,1,2.0,15.0,7.5,12.0,33.333333333333336,8.333333333333334
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Two Day,New Ball,1,222,6,143,160,22,7,37.0,23.833333333333332,3.864864864864865,37.0,72.07207207207207,9.90990990990991
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Two Day,Older Ball,2,186,4,67,148,6,6,31.0,16.75,2.161290322580645,46.5,79.56989247311827,3.225806451612903
+raw_68ac86a9_b0a2_4dfe_9c94_f8e2d566269b,Kavish Gambhir,Kavish Gambhir,Two Day,Older Ball,2,24,1,23,16,4,1,4.0,23.0,5.75,24.0,66.66666666666667,16.666666666666668
+kieran_bhan,Kieran Bhan,Kieran Bhan,One Day,Opening,1,36,0,32,21,5,4,6.0,,5.333333333333333,,58.333333333333336,13.88888888888889
+kieran_bhan,Kieran Bhan,Kieran Bhan,One Day,Middle,2,236,10,184,147,23,12,39.2,18.4,4.677966101694915,23.6,62.28813559322034,9.745762711864407
+kieran_bhan,Kieran Bhan,Kieran Bhan,One Day,Death,3,30,3,31,15,2,2,5.0,10.333333333333334,6.2,10.0,50.0,6.666666666666667
+kieran_bhan,Kieran Bhan,Kieran Bhan,T20,Opening,1,18,0,33,5,6,2,3.0,,11.0,,27.77777777777778,33.333333333333336
+kieran_bhan,Kieran Bhan,Kieran Bhan,Two Day,New Ball,1,12,1,5,10,1,1,2.0,5.0,2.5,12.0,83.33333333333333,8.333333333333334
+kieran_bhan,Kieran Bhan,Kieran Bhan,Two Day,Older Ball,2,244,5,148,171,18,7,40.4,29.6,3.639344262295082,48.8,70.08196721311475,7.377049180327869
+raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,One Day,Opening,1,48,0,46,25,4,3,8.0,,5.75,,52.083333333333336,8.333333333333334
+raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,One Day,Middle,2,30,0,48,10,8,4,5.0,,9.6,,33.333333333333336,26.666666666666668
+raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,One Day,Death,3,17,2,17,7,2,2,2.5,8.5,6.0,8.5,41.1764705882353,11.764705882352942
+raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,T20,Opening,1,12,2,21,6,5,1,2.0,10.5,10.5,6.0,50.0,41.666666666666664
+raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,Two Day,Older Ball,2,24,0,13,16,0,1,4.0,,3.25,,66.66666666666667,0.0
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,One Day,Opening,1,6,0,1,5,0,1,1.0,,1.0,,83.33333333333333,0.0
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,One Day,Middle,2,12,0,10,9,2,1,2.0,,5.0,,75.0,16.666666666666668
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,Two Day,New Ball,1,78,1,36,60,5,2,13.0,36.0,2.769230769230769,78.0,76.92307692307692,6.410256410256411
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,Two Day,Older Ball,2,12,0,11,9,2,2,2.0,,5.5,,75.0,16.666666666666668
+mayur_mohan,Mayur Mohan,Mayur Mohan,One Day,Opening,1,312,6,247,198,35,12,52.0,41.166666666666664,4.75,52.0,63.46153846153846,11.217948717948717
+mayur_mohan,Mayur Mohan,Mayur Mohan,One Day,Middle,2,146,8,139,83,19,10,24.2,17.375,5.712328767123288,18.25,56.84931506849315,13.013698630136986
+mayur_mohan,Mayur Mohan,Mayur Mohan,One Day,Death,3,24,1,32,9,3,2,4.0,32.0,8.0,24.0,37.5,12.5
+raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,One Day,Middle,2,60,3,66,29,10,3,10.0,22.0,6.6,20.0,48.333333333333336,16.666666666666668
+raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,One Day,Death,3,6,1,11,2,2,1,1.0,11.0,11.0,6.0,33.333333333333336,33.333333333333336
+raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,T20,Middle,2,6,0,4,2,0,1,1.0,,4.0,,33.333333333333336,0.0
+raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,T20,Death,3,18,0,20,8,2,2,3.0,,6.666666666666667,,44.44444444444444,11.11111111111111
+raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,Two Day,Older Ball,2,48,0,54,24,7,1,8.0,,6.75,,50.0,14.583333333333334
+raw_4c9e3082_4034_4e6d_9142_5a76549bd6be,Mohammed Adnanuddin,Mohammed Adnanuddin,One Day,Middle,2,6,1,5,1,0,1,1.0,5.0,5.0,6.0,16.666666666666668,0.0
+raw_4c9e3082_4034_4e6d_9142_5a76549bd6be,Mohammed Adnanuddin,Mohammed Adnanuddin,One Day,Death,3,7,0,14,4,3,1,1.1,,12.0,,57.142857142857146,42.857142857142854
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,One Day,Opening,1,204,8,142,133,19,8,34.0,17.75,4.176470588235294,25.5,65.19607843137256,9.313725490196079
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,One Day,Middle,2,213,7,133,136,12,12,35.3,19.0,3.7464788732394365,30.428571428571427,63.84976525821596,5.633802816901408
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,One Day,Death,3,11,0,24,2,3,2,1.5,,13.090909090909092,,18.181818181818183,27.272727272727273
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Two Day,New Ball,1,48,2,20,37,3,1,8.0,10.0,2.5,24.0,77.08333333333333,6.25
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Two Day,Older Ball,2,45,1,27,31,3,3,7.3,27.0,3.6,45.0,68.88888888888889,6.666666666666667
+raw_8557137e_8e9a_403f_a2e5_197066bc94b7,Muhammad Abidi,Muhammad Abidi,One Day,Middle,2,42,1,41,17,5,2,7.0,41.0,5.857142857142857,42.0,40.476190476190474,11.904761904761905
+raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,One Day,Opening,1,12,0,19,4,3,1,2.0,,9.5,,33.333333333333336,25.0
+raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,One Day,Middle,2,30,1,16,22,2,1,5.0,16.0,3.2,30.0,73.33333333333333,6.666666666666667
+raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,Two Day,New Ball,1,19,2,17,13,3,1,3.1,8.5,5.368421052631579,9.5,68.42105263157895,15.789473684210526
+raw_6dafae49_e951_4b24_a74a_d5d1ab49db67,Muhammad Nauman,Muhammad Nauman,Two Day,Older Ball,2,30,3,10,27,2,1,5.0,3.3333333333333335,2.0,10.0,90.0,6.666666666666667
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,One Day,Opening,1,36,2,19,24,2,2,6.0,9.5,3.1666666666666665,18.0,66.66666666666667,5.555555555555555
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,One Day,Middle,2,43,3,16,35,2,2,7.1,5.333333333333333,2.2325581395348837,14.333333333333334,81.3953488372093,4.651162790697675
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,T20,Opening,1,30,1,37,19,7,2,5.0,37.0,7.4,30.0,63.333333333333336,23.333333333333332
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,T20,Death,3,6,0,7,1,0,1,1.0,,7.0,,16.666666666666668,0.0
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Two Day,New Ball,1,192,2,89,146,8,5,32.0,44.5,2.78125,96.0,76.04166666666667,4.166666666666667
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Two Day,Older Ball,2,135,2,43,113,5,6,22.3,21.5,1.9111111111111112,67.5,83.70370370370371,3.7037037037037037
+raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,One Day,Middle,2,6,0,4,2,0,1,1.0,,4.0,,33.333333333333336,0.0
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,One Day,Opening,1,24,1,16,14,2,1,4.0,16.0,4.0,24.0,58.333333333333336,8.333333333333334
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,One Day,Middle,2,193,8,128,121,15,7,32.1,16.0,3.9792746113989637,24.125,62.69430051813472,7.772020725388601
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,One Day,Death,3,30,3,33,10,3,3,5.0,11.0,6.6,10.0,33.333333333333336,10.0
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,Two Day,New Ball,1,6,1,13,2,3,1,1.0,13.0,13.0,6.0,33.333333333333336,50.0
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,Two Day,Older Ball,2,78,1,80,43,13,2,13.0,80.0,6.153846153846154,78.0,55.12820512820513,16.666666666666668
+phanindra_padigella,Phanindra Padigella,Phanindra Padigella,One Day,Middle,2,24,0,10,17,1,1,4.0,,2.5,,70.83333333333333,4.166666666666667
+raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,One Day,Opening,1,90,2,68,60,9,3,15.0,34.0,4.533333333333333,45.0,66.66666666666667,10.0
+raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,One Day,Death,3,18,1,8,12,0,2,3.0,8.0,2.6666666666666665,18.0,66.66666666666667,0.0
+raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,Two Day,New Ball,1,204,2,76,161,6,7,34.0,38.0,2.235294117647059,102.0,78.92156862745098,2.9411764705882355
+raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,Two Day,Older Ball,2,198,7,70,155,5,6,33.0,10.0,2.121212121212121,28.285714285714285,78.28282828282828,2.525252525252525
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,One Day,Middle,2,138,3,91,91,8,4,23.0,30.333333333333332,3.9565217391304346,46.0,65.94202898550725,5.797101449275362
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,One Day,Death,3,30,5,24,15,1,3,5.0,4.8,4.8,6.0,50.0,3.3333333333333335
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,T20,Middle,2,18,0,17,8,1,1,3.0,,5.666666666666667,,44.44444444444444,5.555555555555555
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,Two Day,New Ball,1,6,0,2,4,0,1,1.0,,2.0,,66.66666666666667,0.0
+predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,Two Day,Older Ball,2,90,3,50,64,5,2,15.0,16.666666666666668,3.3333333333333335,30.0,71.11111111111111,5.555555555555555
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,One Day,Middle,2,12,0,10,5,1,2,2.0,,5.0,,41.666666666666664,8.333333333333334
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,One Day,Death,3,6,0,3,4,0,1,1.0,,3.0,,66.66666666666667,0.0
+raw_25166f1f_6d57_48e5_a9c5_218afdb3fe70,Rama Bashamoni,Rama Bashamoni,Two Day,New Ball,1,12,2,8,10,2,1,2.0,4.0,4.0,6.0,83.33333333333333,16.666666666666668
+raw_25166f1f_6d57_48e5_a9c5_218afdb3fe70,Rama Bashamoni,Rama Bashamoni,Two Day,Older Ball,2,36,1,18,29,3,1,6.0,18.0,3.0,36.0,80.55555555555556,8.333333333333334
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,One Day,Opening,1,30,1,24,23,5,3,5.0,24.0,4.8,30.0,76.66666666666667,16.666666666666668
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,One Day,Middle,2,258,11,200,151,22,12,43.0,18.181818181818183,4.651162790697675,23.454545454545453,58.52713178294574,8.527131782945736
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,One Day,Death,3,12,0,10,3,0,1,2.0,,5.0,,25.0,0.0
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,T20,Middle,2,24,3,33,12,6,2,4.0,11.0,8.25,8.0,50.0,25.0
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,T20,Death,3,6,1,3,3,0,1,1.0,3.0,3.0,6.0,50.0,0.0
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,Two Day,New Ball,1,12,0,11,8,2,1,2.0,,5.5,,66.66666666666667,16.666666666666668
+raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,Two Day,Older Ball,2,24,0,25,11,4,1,4.0,,6.25,,45.833333333333336,16.666666666666668
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,One Day,Opening,1,18,0,13,12,2,2,3.0,,4.333333333333333,,66.66666666666667,11.11111111111111
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,One Day,Middle,2,61,0,58,27,6,4,10.1,,5.704918032786885,,44.26229508196721,9.836065573770492
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,One Day,Death,3,12,0,19,5,4,1,2.0,,9.5,,41.666666666666664,33.333333333333336
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,T20,Opening,1,36,0,35,17,4,2,6.0,,5.833333333333333,,47.22222222222222,11.11111111111111
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,T20,Middle,2,6,0,5,4,1,1,1.0,,5.0,,66.66666666666667,16.666666666666668
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,Two Day,New Ball,1,69,1,16,62,2,3,11.3,16.0,1.391304347826087,69.0,89.85507246376811,2.898550724637681
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,Two Day,Older Ball,2,74,1,29,53,1,2,12.2,29.0,2.3513513513513513,74.0,71.62162162162163,1.3513513513513513
+raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,One Day,Middle,2,24,1,29,11,5,2,4.0,29.0,7.25,24.0,45.833333333333336,20.833333333333332
+raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,Two Day,New Ball,1,12,0,21,3,3,1,2.0,,10.5,,25.0,25.0
+raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,Two Day,Older Ball,2,30,1,27,18,3,2,5.0,27.0,5.4,30.0,60.0,10.0
+raw_0a978d26_0a70_4656_bf41_5515d8dff64d,Sai Akhil Reddy Patil,Sai Akhil Reddy Patil,One Day,Middle,2,11,0,11,4,0,1,1.5,,6.0,,36.36363636363637,0.0
+raw_b0359b90_ca42_4a35_b0d1_46703899270f,Sai Krishna Buddaraju,Sai Krishna Buddaraju,One Day,Middle,2,12,0,12,6,2,1,2.0,,6.0,,50.0,16.666666666666668
+raw_8d406a25_db4b_4b64_b592_84d73e3ad834,Sainath Jamsandekar,Sainath Jamsandekar,One Day,Middle,2,29,1,14,19,1,1,4.5,14.0,2.896551724137931,29.0,65.51724137931035,3.4482758620689653
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,One Day,Opening,1,36,0,30,25,5,2,6.0,,5.0,,69.44444444444444,13.88888888888889
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,One Day,Middle,2,85,2,61,55,8,5,14.1,30.5,4.305882352941176,42.5,64.70588235294117,9.411764705882353
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,One Day,Death,3,57,4,39,33,2,5,9.3,9.75,4.105263157894737,14.25,57.89473684210526,3.508771929824561
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,T20,Middle,2,12,1,8,5,0,1,2.0,8.0,4.0,12.0,41.666666666666664,0.0
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,T20,Death,3,24,2,27,8,2,2,4.0,13.5,6.75,12.0,33.333333333333336,8.333333333333334
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,Two Day,New Ball,1,36,0,10,28,0,2,6.0,,1.6666666666666667,,77.77777777777777,0.0
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,Two Day,Older Ball,2,465,15,192,363,19,8,77.3,12.8,2.47741935483871,31.0,78.06451612903226,4.086021505376344
+sandeep_gill,Sandeep Gill,Sandeep Gill,One Day,Opening,1,90,0,61,64,7,5,15.0,,4.066666666666666,,71.11111111111111,7.777777777777778
+sandeep_gill,Sandeep Gill,Sandeep Gill,One Day,Middle,2,174,7,135,102,17,6,29.0,19.285714285714285,4.655172413793103,24.857142857142858,58.62068965517241,9.770114942528735
+sandeep_gill,Sandeep Gill,Sandeep Gill,One Day,Death,3,14,0,14,7,2,3,2.2,,6.0,,50.0,14.285714285714286
+sandeep_gill,Sandeep Gill,Sandeep Gill,T20,Opening,1,6,0,9,2,1,1,1.0,,9.0,,33.333333333333336,16.666666666666668
+sandeep_gill,Sandeep Gill,Sandeep Gill,T20,Middle,2,6,0,7,2,1,1,1.0,,7.0,,33.333333333333336,16.666666666666668
+sandeep_gill,Sandeep Gill,Sandeep Gill,Two Day,New Ball,1,168,5,93,121,14,6,28.0,18.6,3.3214285714285716,33.6,72.02380952380952,8.333333333333334
+sandeep_gill,Sandeep Gill,Sandeep Gill,Two Day,Older Ball,2,159,6,77,123,10,5,26.3,12.833333333333334,2.9056603773584904,26.5,77.35849056603773,6.289308176100629
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,One Day,Opening,1,211,4,128,149,13,8,35.1,32.0,3.639810426540284,52.75,70.61611374407583,6.161137440758294
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,One Day,Middle,2,49,2,34,29,3,5,8.1,17.0,4.163265306122449,24.5,59.183673469387756,6.122448979591836
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,One Day,Death,3,42,1,34,21,2,4,7.0,34.0,4.857142857142857,42.0,50.0,4.761904761904762
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,T20,Opening,1,12,0,4,9,0,1,2.0,,2.0,,75.0,0.0
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,T20,Death,3,12,0,13,4,1,1,2.0,,6.5,,33.333333333333336,8.333333333333334
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,Two Day,New Ball,1,493,13,222,378,25,12,82.1,17.076923076923077,2.7018255578093306,37.92307692307692,76.67342799188641,5.070993914807302
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,Two Day,Older Ball,2,394,10,168,315,20,9,65.4,16.8,2.5583756345177666,39.4,79.94923857868021,5.0761421319796955
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,One Day,Opening,1,18,1,9,13,1,1,3.0,9.0,3.0,18.0,72.22222222222223,5.555555555555555
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,One Day,Middle,2,139,2,126,72,14,8,23.1,63.0,5.438848920863309,69.5,51.798561151079134,10.071942446043165
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,One Day,Death,3,84,3,63,46,4,4,14.0,21.0,4.5,28.0,54.76190476190476,4.761904761904762
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,T20,Middle,2,6,0,6,2,0,1,1.0,,6.0,,33.333333333333336,0.0
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,T20,Death,3,6,3,2,4,0,1,1.0,0.6666666666666666,2.0,2.0,66.66666666666667,0.0
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,Two Day,New Ball,1,12,0,6,6,0,1,2.0,,3.0,,50.0,0.0
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,Two Day,Older Ball,2,149,3,105,96,13,5,24.5,35.0,4.228187919463087,49.666666666666664,64.42953020134229,8.724832214765101
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,One Day,Opening,1,300,5,185,208,19,11,50.0,37.0,3.7,60.0,69.33333333333333,6.333333333333333
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,One Day,Middle,2,102,6,57,77,6,6,17.0,9.5,3.3529411764705883,17.0,75.49019607843137,5.882352941176471
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,One Day,Death,3,90,6,60,50,2,6,15.0,10.0,4.0,15.0,55.55555555555556,2.2222222222222223
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,T20,Opening,1,30,1,23,16,1,2,5.0,23.0,4.6,30.0,53.333333333333336,3.3333333333333335
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,T20,Death,3,6,0,10,0,0,1,1.0,,10.0,,0.0,0.0
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,Two Day,New Ball,1,456,5,186,375,28,11,76.0,37.2,2.4473684210526314,91.2,82.23684210526316,6.140350877192983
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,Two Day,Older Ball,2,521,13,191,426,23,10,86.5,14.692307692307692,2.199616122840691,40.07692307692308,81.76583493282149,4.414587332053743
+shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,One Day,Middle,2,204,8,196,109,26,10,34.0,24.5,5.764705882352941,25.5,53.431372549019606,12.745098039215685
+shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,One Day,Death,3,55,4,40,38,5,4,9.1,10.0,4.363636363636363,13.75,69.0909090909091,9.090909090909092
+shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,T20,Middle,2,42,0,39,25,6,2,7.0,,5.571428571428571,,59.523809523809526,14.285714285714286
+shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,Two Day,New Ball,1,20,0,9,15,1,1,3.2,,2.7,,75.0,5.0
+shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,Two Day,Older Ball,2,397,11,256,285,35,9,66.1,23.272727272727273,3.8690176322418135,36.09090909090909,71.78841309823677,8.816120906801007
+shrikant_sharma,Shrikant Sharma,Shrikant Sharma,One Day,Middle,2,6,1,0,6,0,1,1.0,0.0,0.0,6.0,100.0,0.0
+shrikant_sharma,Shrikant Sharma,Shrikant Sharma,Two Day,New Ball,1,42,0,24,31,3,3,7.0,,3.4285714285714284,,73.80952380952381,7.142857142857143
+shrikant_sharma,Shrikant Sharma,Shrikant Sharma,Two Day,Older Ball,2,186,3,68,147,6,3,31.0,22.666666666666668,2.193548387096774,62.0,79.03225806451613,3.225806451612903
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,One Day,Opening,1,246,4,186,171,32,10,41.0,46.5,4.536585365853658,61.5,69.51219512195122,13.008130081300813
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,One Day,Middle,2,278,15,214,153,18,14,46.2,14.266666666666667,4.618705035971223,18.533333333333335,55.03597122302158,6.474820143884892
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,One Day,Death,3,33,2,36,14,4,4,5.3,18.0,6.545454545454546,16.5,42.42424242424242,12.121212121212121
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Two Day,New Ball,1,28,0,15,23,3,1,4.4,,3.2142857142857144,,82.14285714285714,10.714285714285714
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Two Day,Older Ball,2,251,8,120,192,18,6,41.5,15.0,2.8685258964143427,31.375,76.49402390438247,7.171314741035856
+raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,One Day,Opening,1,60,3,40,40,5,4,10.0,13.333333333333334,4.0,20.0,66.66666666666667,8.333333333333334
+raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,One Day,Middle,2,132,1,103,78,13,8,22.0,103.0,4.681818181818182,132.0,59.09090909090909,9.848484848484848
+raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,One Day,Death,3,12,2,0,12,0,2,2.0,0.0,0.0,6.0,100.0,0.0
+raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,T20,Middle,2,24,0,10,20,2,1,4.0,,2.5,,83.33333333333333,8.333333333333334
+raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,One Day,Opening,1,138,5,85,95,11,6,23.0,17.0,3.6956521739130435,27.6,68.84057971014492,7.971014492753623
+raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,One Day,Middle,2,66,2,66,34,9,5,11.0,33.0,6.0,33.0,51.515151515151516,13.636363636363637
+raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,One Day,Death,3,30,1,25,14,0,3,5.0,25.0,5.0,30.0,46.666666666666664,0.0
+raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,Two Day,New Ball,1,120,6,29,106,4,2,20.0,4.833333333333333,1.45,20.0,88.33333333333333,3.3333333333333335
+raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,Two Day,Older Ball,2,293,6,122,234,14,6,48.5,20.333333333333332,2.4982935153583616,48.833333333333336,79.86348122866895,4.778156996587031
+raw_3dfa0dea_884b_4796_ad97_a36c652b3012,Sravan Kumar Saka,Sravan Kumar Saka,One Day,Death,3,3,0,1,2,0,1,0.3,,2.0,,66.66666666666667,0.0
+srikanth_para,Srikanth Para,Srikanth Para,One Day,Opening,1,6,0,3,4,0,1,1.0,,3.0,,66.66666666666667,0.0
+srikanth_para,Srikanth Para,Srikanth Para,One Day,Middle,2,54,0,32,39,5,3,9.0,,3.5555555555555554,,72.22222222222223,9.25925925925926
+srikanth_para,Srikanth Para,Srikanth Para,One Day,Death,3,12,1,9,5,0,1,2.0,9.0,4.5,12.0,41.666666666666664,0.0
+srikanth_para,Srikanth Para,Srikanth Para,T20,Opening,1,18,1,8,13,1,2,3.0,8.0,2.6666666666666665,18.0,72.22222222222223,5.555555555555555
+srikanth_para,Srikanth Para,Srikanth Para,T20,Middle,2,18,0,29,5,3,2,3.0,,9.666666666666666,,27.77777777777778,16.666666666666668
+srikanth_para,Srikanth Para,Srikanth Para,T20,Death,3,12,0,19,2,2,2,2.0,,9.5,,16.666666666666668,16.666666666666668
+raw_318eb254_0f61_4906_a4da_9c88a2637ebe,Sunil K Mekala,Sunil K Mekala,One Day,Opening,1,6,0,2,4,0,1,1.0,,2.0,,66.66666666666667,0.0
+raw_318eb254_0f61_4906_a4da_9c88a2637ebe,Sunil K Mekala,Sunil K Mekala,One Day,Middle,2,24,0,16,15,2,1,4.0,,4.0,,62.5,8.333333333333334
+raw_318eb254_0f61_4906_a4da_9c88a2637ebe,Sunil K Mekala,Sunil K Mekala,One Day,Death,3,6,0,3,4,0,1,1.0,,3.0,,66.66666666666667,0.0
+raw_97055023_9a2c_4f89_aa56_c8083a09f48f,Suraj Thapa,Suraj Thapa,Two Day,Older Ball,2,36,2,22,24,2,1,6.0,11.0,3.6666666666666665,18.0,66.66666666666667,5.555555555555555
+raw_c9e16142_3bba_44ab_8fad_4610a7f7f885,Suryakumar Patti,Suryakumar Patti,One Day,Opening,1,24,1,10,16,0,1,4.0,10.0,2.5,24.0,66.66666666666667,0.0
+raw_c9e16142_3bba_44ab_8fad_4610a7f7f885,Suryakumar Patti,Suryakumar Patti,One Day,Middle,2,18,1,13,10,1,1,3.0,13.0,4.333333333333333,18.0,55.55555555555556,5.555555555555555
+raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,One Day,Opening,1,54,1,22,40,2,3,9.0,22.0,2.4444444444444446,54.0,74.07407407407408,3.7037037037037037
+raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,One Day,Middle,2,78,4,37,57,2,4,13.0,9.25,2.8461538461538463,19.5,73.07692307692308,2.5641025641025643
+raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,One Day,Death,3,12,0,5,7,0,1,2.0,,2.5,,58.333333333333336,0.0
+raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,Two Day,New Ball,1,30,0,30,20,5,1,5.0,,6.0,,66.66666666666667,16.666666666666668
+raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,Two Day,Older Ball,2,42,1,8,38,1,1,7.0,8.0,1.1428571428571428,42.0,90.47619047619048,2.380952380952381
+raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,One Day,Middle,2,48,0,51,28,7,2,8.0,,6.375,,58.333333333333336,14.583333333333334
+raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,T20,Death,3,6,1,7,4,1,1,1.0,7.0,7.0,6.0,66.66666666666667,16.666666666666668
+raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,Two Day,New Ball,1,37,1,24,29,5,2,6.1,24.0,3.891891891891892,37.0,78.37837837837837,13.513513513513514
+raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,Two Day,Older Ball,2,229,7,74,195,10,4,38.1,10.571428571428571,1.9388646288209608,32.714285714285715,85.1528384279476,4.366812227074236
+vinit_naidu,Vinit Naidu,Vinit Naidu,One Day,Opening,1,204,7,137,143,16,7,34.0,19.571428571428573,4.029411764705882,29.142857142857142,70.09803921568627,7.8431372549019605
+vinit_naidu,Vinit Naidu,Vinit Naidu,One Day,Middle,2,84,3,63,59,9,7,14.0,21.0,4.5,28.0,70.23809523809524,10.714285714285714
+vinit_naidu,Vinit Naidu,Vinit Naidu,One Day,Death,3,6,2,6,3,1,1,1.0,3.0,6.0,3.0,50.0,16.666666666666668
+vinit_naidu,Vinit Naidu,Vinit Naidu,Two Day,New Ball,1,317,8,112,262,10,7,52.5,14.0,2.1198738170347005,39.625,82.64984227129338,3.1545741324921135
+vinit_naidu,Vinit Naidu,Vinit Naidu,Two Day,Older Ball,2,396,6,153,305,14,8,66.0,25.5,2.3181818181818183,66.0,77.02020202020202,3.5353535353535355
+vishnu_para,Vishnu Para,Vishnu Para,One Day,Opening,1,42,2,21,28,1,4,7.0,10.5,3.0,21.0,66.66666666666667,2.380952380952381
+vishnu_para,Vishnu Para,Vishnu Para,One Day,Middle,2,91,5,91,46,10,7,15.1,18.2,6.0,18.2,50.54945054945055,10.989010989010989
+vishnu_para,Vishnu Para,Vishnu Para,One Day,Death,3,12,0,22,3,3,2,2.0,,11.0,,25.0,25.0
+vishnu_para,Vishnu Para,Vishnu Para,T20,Opening,1,12,0,9,8,1,1,2.0,,4.5,,66.66666666666667,8.333333333333334
+vishnu_para,Vishnu Para,Vishnu Para,T20,Middle,2,24,2,22,15,4,1,4.0,11.0,5.5,12.0,62.5,16.666666666666668
+vishnu_para,Vishnu Para,Vishnu Para,Two Day,New Ball,1,42,0,30,31,5,2,7.0,,4.285714285714286,,73.80952380952381,11.904761904761905
+vishnu_para,Vishnu Para,Vishnu Para,Two Day,Older Ball,2,67,3,35,50,5,4,11.1,11.666666666666666,3.1343283582089554,22.333333333333332,74.6268656716418,7.462686567164179
+wajhi_syed,Wajhi Syed,Wajhi Syed,One Day,Opening,1,6,0,2,5,0,1,1.0,,2.0,,83.33333333333333,0.0
+wajhi_syed,Wajhi Syed,Wajhi Syed,One Day,Middle,2,185,8,125,109,10,7,30.5,15.625,4.054054054054054,23.125,58.91891891891892,5.405405405405405
+wajhi_syed,Wajhi Syed,Wajhi Syed,One Day,Death,3,9,0,8,4,1,1,1.3,,5.333333333333333,,44.44444444444444,11.11111111111111
+wajhi_syed,Wajhi Syed,Wajhi Syed,T20,Middle,2,12,1,16,4,1,1,2.0,16.0,8.0,12.0,33.333333333333336,8.333333333333334
+wajhi_syed,Wajhi Syed,Wajhi Syed,T20,Death,3,12,2,4,8,0,2,2.0,2.0,2.0,6.0,66.66666666666667,0.0
+wajhi_syed,Wajhi Syed,Wajhi Syed,Two Day,Older Ball,2,155,6,71,118,8,3,25.5,11.833333333333334,2.7483870967741937,25.833333333333332,76.12903225806451,5.161290322580645
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,One Day,Opening,1,12,1,18,5,2,1,2.0,18.0,9.0,12.0,41.666666666666664,16.666666666666668
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,One Day,Middle,2,18,0,4,15,0,1,3.0,,1.3333333333333333,,83.33333333333333,0.0
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,T20,Opening,1,6,1,0,6,0,1,1.0,0.0,0.0,6.0,100.0,0.0
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,T20,Middle,2,12,1,2,10,0,1,2.0,2.0,1.0,12.0,83.33333333333333,0.0
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,T20,Death,3,2,0,1,1,0,1,0.2,,3.0,,50.0,0.0
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,Two Day,New Ball,1,48,1,7,44,1,2,8.0,7.0,0.875,48.0,91.66666666666667,2.0833333333333335
+raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,Two Day,Older Ball,2,60,2,26,45,2,2,10.0,13.0,2.6,30.0,75.0,3.3333333333333335

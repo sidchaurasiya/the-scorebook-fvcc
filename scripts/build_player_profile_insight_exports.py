@@ -376,6 +376,8 @@ def build_bowling_phase_summary(bowling: pd.DataFrame, balls: pd.DataFrame) -> p
     if source.empty:
         return pd.DataFrame()
     source["wicket_credit"] = source.apply(is_bowler_wicket_ball, axis=1)
+    source["dot_ball"] = source["total_runs_numeric"].eq(0)
+    source["boundary_ball"] = source["runs_bat_numeric"].isin([4, 6])
     source["phase_model"] = source.get("match_type", pd.Series(index=source.index, dtype="object")).map(phase_model_from_match_type)
     source = source[source["phase_model"].notna()].copy()
     if source.empty:
@@ -395,12 +397,16 @@ def build_bowling_phase_summary(bowling: pd.DataFrame, balls: pd.DataFrame) -> p
         legal_balls=("is_legal", "sum"),
         wickets=("wicket_credit", "sum"),
         runs_conceded=("total_runs_numeric", "sum"),
+        dot_balls=("dot_ball", "sum"),
+        boundary_balls=("boundary_ball", "sum"),
         match_count=("match_id", "nunique"),
     )
     grouped["overs"] = grouped["legal_balls"].map(layout.format_balls_as_overs)
     grouped["avg"] = grouped.apply(lambda row: divide_or_none(row["runs_conceded"], row["wickets"]), axis=1)
     grouped["eco"] = grouped.apply(lambda row: divide_or_none(row["runs_conceded"] * 6, row["legal_balls"]), axis=1)
     grouped["sr"] = grouped.apply(lambda row: divide_or_none(row["legal_balls"], row["wickets"]), axis=1)
+    grouped["dot_ball_pct"] = grouped.apply(lambda row: divide_or_none(row["dot_balls"] * 100, row["legal_balls"]), axis=1)
+    grouped["boundary_rate"] = grouped.apply(lambda row: divide_or_none(row["boundary_balls"] * 100, row["legal_balls"]), axis=1)
     return grouped.sort_values(["canonical_player_name", "phase_model", "phase_order"])
 
 

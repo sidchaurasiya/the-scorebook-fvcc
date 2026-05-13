@@ -2848,6 +2848,12 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .profile-badge-gold {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.20), rgba(245, 158, 11, 0.12));
+            border-color: rgba(180, 83, 9, 0.24);
+            color: #8a4b0f;
+        }
+
         .block-container:has(.player-profile-page) {
             padding-top: 1.15rem;
         }
@@ -3210,6 +3216,22 @@ def inject_theme() -> None:
             font-weight: 950;
         }
 
+        .position-row-label {
+            align-items: center;
+            display: inline-flex;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .position-row-summary {
+            color: #69718f;
+            flex: 0 0 auto;
+            font-size: 0.78rem;
+            font-weight: 850;
+            text-align: right;
+            white-space: nowrap;
+        }
+
         .fingerprint-top span {
             color: #5b3df5;
             font-size: 0.84rem;
@@ -3379,8 +3401,7 @@ def inject_theme() -> None:
             width: 20px;
         }
 
-        .fingerprint-legend i.club,
-        .fingerprint-marker {
+        .fingerprint-legend i.club {
             background: #6b7280;
             border-radius: 999px;
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.96), 0 3px 9px rgba(23, 27, 77, 0.18);
@@ -3391,10 +3412,80 @@ def inject_theme() -> None:
         }
 
         .fingerprint-marker {
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
+            z-index: 1;
+        }
+
+        .profile-fingerprint-card .profile-intelligence-note {
+            font-weight: 500;
+        }
+
+        div.st-key-profile_bowling_phase_card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 18px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin: 2px 0 18px;
+            padding: 18px 20px;
+        }
+
+        div.st-key-profile_bowling_phase_card .profile-intelligence-card-head {
+            margin-bottom: 10px;
+        }
+
+        .phase-table {
+            border: 1px solid #eef0f7;
+            border-radius: 14px;
+            overflow-x: auto;
+        }
+
+        .phase-table-row {
+            align-items: center;
+            border-top: 1px solid #eef0f7;
+            display: grid;
+            gap: 8px;
+            grid-template-columns: minmax(104px, 1.1fr) repeat(7, minmax(62px, 0.72fr));
+            min-width: 690px;
+            padding: 10px 12px;
+        }
+
+        .phase-table-row:first-child {
+            border-top: 0;
+        }
+
+        .phase-table-head {
+            background: #f8f8fd;
+            color: #747b98;
+            font-size: 0.7rem;
+            font-weight: 950;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .phase-table-row span,
+        .phase-table-phase {
+            color: #626a88;
+            font-size: 0.78rem;
+            font-weight: 850;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .phase-table-row .phase-table-phase,
+        .phase-table-head span:first-child {
+            text-align: left;
+        }
+
+        .phase-table-phase {
+            align-items: center;
+            display: inline-flex;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .phase-table-phase strong {
+            color: var(--ink);
+            font-size: 0.88rem;
+            font-weight: 950;
         }
 
         .peer-card {
@@ -3586,15 +3677,11 @@ def inject_theme() -> None:
             border: 1px solid #e7e9f4;
             border-radius: 18px;
             box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
+            display: inline-flex;
             gap: 8px;
+            max-width: 100%;
+            overflow-x: auto;
             padding: 7px;
-        }
-
-        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] {
-            border-radius: 14px;
-            box-shadow: none;
-            margin: -2px 0 14px;
-            padding: 5px;
             width: fit-content;
         }
 
@@ -3608,6 +3695,7 @@ def inject_theme() -> None:
             border: 0 !important;
             border-radius: 13px !important;
             color: #6d7390 !important;
+            flex: 0 0 auto;
             font-size: 0.86rem !important;
             font-weight: 900 !important;
             line-height: 1 !important;
@@ -4612,15 +4700,16 @@ def inject_theme() -> None:
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] {
                 display: flex;
+                max-width: 100%;
                 overflow-x: auto;
-                width: 100%;
+                width: fit-content;
             }
 
             .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button,
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button,
             .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid^="stBaseButton-segmented_control"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"] {
-                flex: 1 0 auto;
+                flex: 0 0 auto;
                 text-align: center;
             }
 
@@ -4628,6 +4717,22 @@ def inject_theme() -> None:
                 align-items: stretch;
                 flex-direction: column;
                 gap: 10px;
+            }
+
+            .position-row {
+                padding: 8px 0;
+            }
+
+            .position-row-top {
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .position-row-summary {
+                font-size: 0.74rem;
+                line-height: 1.25;
+                max-width: 62%;
+                white-space: normal;
             }
 
             .phase-row {

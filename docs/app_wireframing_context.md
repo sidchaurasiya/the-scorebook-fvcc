@@ -76,12 +76,14 @@ Current production navigation pages:
 ## Current Player Profile Work In Progress
 
 - Player Profile production refinements are in progress on `main`; do not push until Preet confirms the local review.
-- `Career Breakdown 🧩` is being renamed to `Career Overview 🧩`.
-- Player Profile now has `Performance Breakdown 🧭`, which combines Season / Grade / Opponent / Ground / H/A breakdown views with Batting / Bowling / Fielding discipline views.
-- Player Profile now has an advanced player-analysis section being renamed to `Player DNA 🧬`.
+- The current production section is `Career Breakdown 🧭`; earlier `Career Overview` naming was reviewed, but the visible app section is now back to Career Breakdown.
+- Player Profile now has `Career Breakdown 🧭`, which combines Season / Grade / Opponent / Ground / Home/Away breakdown views with Batting / Bowling / Fielding discipline views.
+- Player Profile now has `Player DNA 🧬`, with Batting Position, Dismissal Fingerprint, and Bowling by Phase modules.
 - Batting strike rate must always use verified ball-by-ball runs and verified ball-by-ball balls from the same covered innings only. Do not mix all-scorecard runs with ball-by-ball denominators.
-- Batting Position, Dismissal Fingerprint, and Bowling Phase analysis are being added/refined. Batting Position uses scorecard batting-order groups; Bowling Phase uses verified ball-by-ball only.
-- Current UI issues being fixed: player tags left alignment, Player DNA desktop layout, Batting Position best-fit confidence, dismissal benchmark marker/copy, Season Trends ordering and labels, repeated trust-pill cleanup, matching Performance Breakdown toggles, compact/wrapped Performance Breakdown tables, and sidebar/footer email wrapping.
+- Season Standout profile tags must count unique standout seasons only, not multiple club/grade or batting/bowling awards in the same season.
+- Premiership Winner and Premiership Winning Captain profile tags are being added from deploy-safe premiership records where evidence exists.
+- Batting Position uses scorecard batting-order groups; Bowling by Phase uses verified ball-by-ball only and must filter by actual match type before applying phase buckets.
+- Current UI issues being fixed: compact Batting Position rows, shared toggle styling for Career Breakdown and Bowling by Phase, Bowling by Phase table columns, dismissal benchmark marker reuse from Player vs Peers, compact/wrapped Career Breakdown tables, and no query-param navigation for in-page toggles.
 - Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
 
 Hidden preview pages:

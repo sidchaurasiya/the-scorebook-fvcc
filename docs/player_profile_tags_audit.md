@@ -23,12 +23,14 @@ Badge candidates are evaluated by priority and every applicable badge is display
 | Big Hitter | Shows for six-hitting profile. | Matches >= 30; 6s per match > 0.3. | Matches, 6s. | 12 | Style badge. |
 | Values His Wicket | Shows for patient batting profile. | Matches >= 20; Balls faced per dismissal >= 30. | Matches, BF, Outs. | 13 | Style badge. |
 | Gap Finder | Shows for four-hitting profile. | Matches >= 30; 4s per match > 2. | Matches, 4s. | 14 | Style badge. |
-| Quick Scorer | Shows for strong recent scoring tempo. | Matches >= 20; reliable Bat SR >= 90; reliable BF >= 125; reliable Runs >= 125. | Matches, reliable Bat SR, reliable balls faced, reliable runs. | 15 | Reliable Bat SR only uses Summer 2024/25 onward. |
+| Quick Scorer | Shows for strong verified scoring tempo. | Matches >= 20; verified Bat SR >= 90; verified BF >= 125; verified Runs >= 125. | Matches, verified ball-by-ball Bat SR, verified ball-by-ball balls faced, verified ball-by-ball runs. | 15 | Bat SR uses verified ball-by-ball runs and balls from the same covered innings only. |
 | Boundary Maker | Shows only when Big Hitter and Gap Finder do not already apply. | Matches >= 20; boundaries per match > 2.5; no Big Hitter; no Gap Finder. | Matches, 4s, 6s. | 15 | Demoted overlap badge. |
 | Workhorse | Shows for bowlers trusted with a heavy workload. | Overs >= 250; Matches >= 30. | Balls bowled converted to overs, Matches. | 16 | Bowling badge. |
 | Safe Hands | Shows for non-keeper fielding contribution. | Stumpings <= 0; Matches >= 20; Dismissals per match > 0.4. | Matches, Catches, Stumpings, Run Outs, Dismissals. | 17 | Fielding badge. |
 | Keeper Impact | Shows for wicketkeeping impact. | Stumpings > 0. | Stumpings. | 18 | Fielding/keeping badge. Can apply below 20 matches. |
-| Season Standout | Shows when the player has season-level leader achievements. | Any club/grade run or wicket leader detail count > 0. | Club run leader, grade run leader, club wicket leader, grade wicket leader counts. | 19 | Achievement badge. If count > 1, display is `Season Standout x N`. |
+| Premiership Winner | Shows when deploy-safe premiership evidence lists the player in a winning FVCC premiership side. | Player has >= 1 verified premiership in `player_premierships.csv`. | Canonical player name, premiership count, evidence match IDs. | 18 | Gold achievement badge. If count > 1, display is `Premiership Winner xN`. |
+| Premiership Winning Captain | Shows when deploy-safe premiership win evidence records the player as captain of the winning side. | Player appears as recorded captain in `premiership_wins.csv`. | Canonical player name matched to recorded captain name. | 18 | Gold achievement badge. Captaincy is not inferred when captain is missing. If count > 1, display is `Premiership Winning Captain xN`. |
+| Season Standout | Shows when the player has season-level leader achievements. | At least one club/grade run or wicket leader achievement in a season. | Unique season labels from club run leader, grade run leader, club wicket leader, and grade wicket leader details. | 19 | Achievement badge. Multiple achievements in the same season count once. If count > 1, display is `Season Standout xN`. |
 | Milestone Maker | Shows for major club milestone totals, unless Club Legend already applies. | Runs >= 1000 OR Wickets >= 100 OR Matches >= 100; no Club Legend. | Runs, Wickets, Matches. | 20 | Legacy badge. Low priority so it does not crowd out cricket-style badges. |
 | Club Veteran | Shows for long-serving players, unless Club Legend already applies. | Matches >= 100; no Club Legend. | Matches. | 21 | Legacy badge. Low priority. |
 | Mr Consistent | Shows for multi-season delivery. | At least 3 seasons with 200+ runs OR at least 3 seasons with 15+ wickets. | Season-level Runs, season-level Wickets. | 22 | Achievement badge. |
@@ -82,10 +84,11 @@ Only one summary sentence is displayed. The summary logic first checks blended C
 - Bowling strike rate uses balls bowled / wickets.
 - Overs are derived from balls bowled.
 - Dismissals are catches + stumpings + run outs.
-- Quick Scorer and career Bat SR use `reliable_batting_strike_rate()` and `reliable_batting_components()`, which only use batting rows from Summer 2024/25 onward.
+- Quick Scorer and career Bat SR use verified ball-by-ball batting summaries only. They must never divide all-scorecard runs by ball-by-ball balls.
 - Values His Wicket currently uses career balls faced per dismissal from available data.
 - Mr Consistent uses the already-built Player Profile season table and checks season totals.
-- Season Standout uses cached historical leader details and can show `Season Standout x N` when multiple leader achievements exist.
+- Season Standout uses cached historical leader details but counts unique season labels only. Multiple club/grade or batting/bowling achievements in the same season still show as one standout season.
+- Premiership Winner and Premiership Winning Captain use deploy-safe Hall of Fame premiership CSVs. Winner tags come from `data/processed/hall_of_fame/player_premierships.csv`; captain tags come from recorded `captain_name` values in `data/processed/hall_of_fame/premiership_wins.csv`.
 
 ## Concerns / Follow-Up Ideas
 

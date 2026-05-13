@@ -1,5 +1,6 @@
 import base64
 import html
+import math
 import os
 import re
 import subprocess
@@ -7816,7 +7817,10 @@ def enrich_player_profile_career(
 def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
     career = profile_view["career"].iloc[0]
     badges = player_role_badges(career, profile_view)
-    badge_html = "".join(f'<span class="profile-badge">{html.escape(badge)}</span>' for badge in badges)
+    badge_html = "".join(
+        f'<span class="{profile_badge_class(badge)}">{html.escape(badge)}</span>'
+        for badge in badges
+    )
     insight = player_profile_insight(career, badges)
     st.markdown(
         (
@@ -7859,12 +7863,12 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     wickets_per_match = divide_or_none(wickets, matches) or 0
     runs_per_match = divide_or_none(runs, matches) or 0
     balls_per_dismissal = divide_or_none(balls_faced, outs) or 0
-    leader_counts = player_leader_counts(profile_view)
+    leader_details = player_leader_details(profile_view)
     bbb_balls = numeric_value(career, "BBB Balls")
     bbb_runs = numeric_value(career, "BBB Runs")
     reliable_bat_sr = numeric_value(career, "Bat SR")
     season_table = profile_view.get("season_table", pd.DataFrame())
-    standout_count = sum(int(value) for value in leader_counts.values())
+    standout_count = player_unique_standout_season_count(leader_details)
     star_batter = matches_30 and bat_avg > 25
     big_hitter = matches_30 and matches and sixes / matches > 0.3
     gap_finder = matches_30 and matches and fours / matches > 2
@@ -7903,6 +7907,8 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     add_candidate("Workhorse", "bowling", 16, overs >= 250 and matches >= 30)
     add_candidate("Safe Hands", "fielding", 17, stumpings <= 0 and matches_20 and matches and dismissals / matches > 0.4)
     add_candidate("Keeper Impact", "fielding", 18, stumpings > 0)
+    for premiership_badge in player_premiership_profile_badges(career):
+        add_candidate(premiership_badge, "achievement", 18, True)
     add_candidate(season_standout_label(standout_count), "achievement", 19, standout_count > 0)
     add_candidate("Milestone Maker", "legacy", 20, (runs >= 1000 or wickets >= 100 or matches >= 100) and not club_legend)
     add_candidate("Club Veteran", "legacy", 21, matches >= 100 and not club_legend)
@@ -7976,11 +7982,61 @@ def player_profile_insight(career: pd.Series, badges: list[str]) -> str:
 
 
 def season_standout_label(count: int) -> str:
-    return "Season Standout" if count <= 1 else f"Season Standout x {count}"
+    return "Season Standout" if count <= 1 else f"Season Standout x{count}"
 
 
 def base_badge_label(label: str) -> str:
-    return re.sub(r"\s+x\s+\d+$", "", str(label)).strip()
+    return re.sub(r"\s+x\s*\d+$", "", str(label)).strip()
+
+
+def profile_badge_class(label: str) -> str:
+    base = base_badge_label(label)
+    if base in {"Premiership Winner", "Premiership Winning Captain"}:
+        return "profile-badge profile-badge-gold"
+    return "profile-badge"
+
+
+def counted_profile_badge(label: str, count: int) -> str:
+    return label if count <= 1 else f"{label} x{count}"
+
+
+def player_unique_standout_season_count(details: dict[str, list[str]]) -> int:
+    seasons: set[str] = set()
+    for values in details.values():
+        for detail in values:
+            season = str(detail or "").partition(" · ")[0].strip()
+            if season:
+                seasons.add(season)
+    return len(seasons)
+
+
+def player_premiership_profile_badges(career: pd.Series) -> list[str]:
+    player_name = str(career.get("Player", "") or "").strip()
+    name_key = player_name_match_key(player_name)
+    if not name_key:
+        return []
+    wins, players = load_premiership_records(premiership_records_signature())
+    badges: list[str] = []
+    winner_count = 0
+    if not players.empty:
+        output = players.copy()
+        name_column = "display_player_name" if "display_player_name" in output else "canonical_player_name"
+        if name_column in output:
+            matched = output[output[name_column].map(player_name_match_key) == name_key]
+            if not matched.empty:
+                winner_value = pd.to_numeric(matched.iloc[0].get("premiership_count"), errors="coerce")
+                winner_count = 0 if pd.isna(winner_value) else int(winner_value)
+    if winner_count > 0:
+        badges.append(counted_profile_badge("Premiership Winner", winner_count))
+
+    captain_count = 0
+    if not wins.empty and "captain_name" in wins:
+        captain_rows = wins[wins["captain_name"].map(player_name_match_key) == name_key].copy()
+        if not captain_rows.empty:
+            captain_count = int(captain_rows["match_id"].astype(str).nunique()) if "match_id" in captain_rows else int(len(captain_rows))
+    if captain_count > 0:
+        badges.append(counted_profile_badge("Premiership Winning Captain", captain_count))
+    return badges
 
 
 def select_profile_badges(candidates: list[dict[str, object]]) -> list[str]:
@@ -8258,15 +8314,18 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
         runs = float(row.get("runs", 0) or 0)
         width = max(4.0, min(100.0, (runs / max_runs) * 100))
         best_badge = '<span class="profile-best-badge">Best fit</span>' if label == best else ""
+        summary = (
+            f'{format_int(row.get("innings"))} inn'
+            f' · {format_int(row.get("runs"))} runs'
+            f' · Avg {format_decimal(row.get("average"))}'
+        )
         row_html.append(
             '<div class="position-row">'
             '<div class="position-row-top">'
+            '<div class="position-row-label">'
             f'<strong>{html.escape(label)}</strong>{best_badge}'
             '</div>'
-            '<div class="position-row-meta">'
-            f'<span>{format_int(row.get("innings"))} inn</span>'
-            f'<span>{format_int(row.get("runs"))} runs</span>'
-            f'<span>Avg {format_decimal(row.get("average"))}</span>'
+            f'<span class="position-row-summary">{html.escape(summary)}</span>'
             '</div>'
             '<div class="position-track">'
             f'<div style="width:{width:.1f}%"></div>'
@@ -8302,57 +8361,70 @@ def profile_best_position_label(rows: pd.DataFrame) -> str:
 
 def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
     rows = profile_view.get("bowling_phase", pd.DataFrame()).copy()
-    if rows.empty:
-        render_profile_intelligence_empty(
-            "Bowling by Phase",
-            "Phase analytics use verified ball-by-ball matches only. No matched bowling phase data is available yet.",
-        )
-        return
     selected = selected_profile_phase_model()
-    render_profile_phase_selector(profile_view, selected)
-    rows = rows[rows.get("phase_model", pd.Series(dtype=str)).astype(str).str.casefold() == selected.casefold()].copy()
-    if rows.empty:
-        render_profile_intelligence_empty("Bowling by Phase", "No verified ball-by-ball deliveries are available for this phase model.")
-        return
-    rows["phase_order"] = pd.to_numeric(rows.get("phase_order"), errors="coerce").fillna(99)
-    rows["legal_balls"] = pd.to_numeric(rows.get("legal_balls"), errors="coerce").fillna(0)
-    rows["wickets"] = pd.to_numeric(rows.get("wickets"), errors="coerce").fillna(0)
-    rows["eco"] = pd.to_numeric(rows.get("eco"), errors="coerce")
-    rows["sr"] = pd.to_numeric(rows.get("sr"), errors="coerce")
-    rows["avg"] = pd.to_numeric(rows.get("avg"), errors="coerce")
-    rows = rows[rows["legal_balls"] > 0].sort_values("phase_order")
-    if rows.empty:
-        render_profile_intelligence_empty("Bowling by Phase", "No verified legal deliveries are available for this phase model.")
-        return
-    best_phase = profile_best_phase_label(rows)
-    phase_rows = []
-    for _, row in rows.iterrows():
-        label = str(row.get("phase", "—"))
-        best_badge = '<span class="profile-best-badge">Best phase</span>' if label == best_phase else ""
-        phase_rows.append(
-            '<div class="phase-row">'
-            '<div class="phase-name">'
-            f'<strong>{html.escape(label)}</strong>{best_badge}'
-            '</div>'
-            f'<span>{html.escape(str(row.get("overs", "—")))} ov</span>'
-            f'<span>{format_int(row.get("wickets"))} W</span>'
-            f'<span>Avg {format_decimal(row.get("avg"))}</span>'
-            f'<span>Eco {format_decimal(row.get("eco"))}</span>'
-            f'<span>SR {format_decimal(row.get("sr"))}</span>'
-            '</div>'
-        )
-    st.markdown(
-        (
-            '<article class="profile-intelligence-card">'
+    with st.container(key="profile_bowling_phase_card"):
+        st.markdown(
             '<div class="profile-intelligence-card-head">'
             '<div class="profile-card-title">Bowling by Phase</div>'
-            '</div>'
-            f'{"".join(phase_rows)}'
-            '<p class="profile-intelligence-note">Phase analytics use verified ball-by-ball matches only.</p>'
-            '</article>'
-        ),
-        unsafe_allow_html=True,
-    )
+            '</div>',
+            unsafe_allow_html=True,
+        )
+        render_profile_phase_selector(profile_view, selected)
+        if rows.empty:
+            st.markdown(
+                '<div class="profile-breakdown-empty"><span>Phase analytics use verified ball-by-ball matches only. No matched bowling phase data is available yet.</span></div>',
+                unsafe_allow_html=True,
+            )
+            return
+        rows = rows[rows.get("phase_model", pd.Series(dtype=str)).astype(str).str.casefold() == selected.casefold()].copy()
+        if rows.empty:
+            st.markdown(
+                '<div class="profile-breakdown-empty"><span>No verified ball-by-ball deliveries are available for this phase model.</span></div>',
+                unsafe_allow_html=True,
+            )
+            return
+        rows["phase_order"] = pd.to_numeric(rows.get("phase_order"), errors="coerce").fillna(99)
+        for column in ["legal_balls", "wickets", "dot_balls", "boundary_balls"]:
+            rows[column] = pd.to_numeric(rows.get(column), errors="coerce").fillna(0)
+        for column in ["eco", "sr", "avg", "dot_ball_pct", "boundary_rate"]:
+            rows[column] = pd.to_numeric(rows.get(column), errors="coerce")
+        rows = rows[rows["legal_balls"] > 0].sort_values("phase_order")
+        if rows.empty:
+            st.markdown(
+                '<div class="profile-breakdown-empty"><span>No verified legal deliveries are available for this phase model.</span></div>',
+                unsafe_allow_html=True,
+            )
+            return
+        best_phase = profile_best_phase_label(rows)
+        phase_rows = []
+        for _, row in rows.iterrows():
+            label = str(row.get("phase", "—"))
+            best_badge = '<span class="profile-best-badge">Best phase</span>' if label == best_phase else ""
+            phase_rows.append(
+                '<div class="phase-table-row">'
+                f'<div class="phase-table-phase"><strong>{html.escape(label)}</strong>{best_badge}</div>'
+                f'<span>{html.escape(str(row.get("overs", "—")))}</span>'
+                f'<span>{format_int(row.get("wickets"))}</span>'
+                f'<span>{format_phase_metric(row.get("avg"))}</span>'
+                f'<span>{format_phase_metric(row.get("sr"))}</span>'
+                f'<span>{format_phase_metric(row.get("eco"))}</span>'
+                f'<span>{format_phase_metric(row.get("dot_ball_pct"), percent=True)}</span>'
+                f'<span>{format_phase_metric(row.get("boundary_rate"), percent=True)}</span>'
+                '</div>'
+            )
+        st.markdown(
+            (
+                '<div class="phase-table">'
+                '<div class="phase-table-row phase-table-head">'
+                '<span>Phase</span><span>Overs</span><span>Wickets</span><span>Bowl Avg</span>'
+                '<span>Bowl SR</span><span>Eco</span><span>Dot Ball %</span><span>Boundary Rate</span>'
+                '</div>'
+                f'{"".join(phase_rows)}'
+                '</div>'
+                '<p class="profile-intelligence-note">Phase analytics use verified ball-by-ball matches only.</p>'
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def profile_best_phase_label(rows: pd.DataFrame) -> str:
@@ -8364,6 +8436,14 @@ def profile_best_phase_label(rows: pd.DataFrame) -> str:
     output["_balls_sort"] = pd.to_numeric(output.get("legal_balls"), errors="coerce").fillna(0)
     output = output.sort_values(["_wickets_sort", "_eco_sort", "_balls_sort"], ascending=[False, True, False])
     return str(output.iloc[0].get("phase", ""))
+
+
+def format_phase_metric(value: object, *, percent: bool = False) -> str:
+    number = pd.to_numeric(value, errors="coerce")
+    if pd.isna(number) or not math.isfinite(float(number)):
+        return "N/A"
+    suffix = "%" if percent else ""
+    return f"{float(number):.1f}{suffix}" if percent else f"{float(number):.2f}"
 
 
 def selected_profile_phase_model() -> str:
@@ -8419,7 +8499,7 @@ def render_dismissal_fingerprint(profile_view: dict[str, pd.DataFrame]) -> None:
             '</div>'
             '<div class="fingerprint-track">'
             f'<div class="fingerprint-bar" style="width:{max(2.0, min(100.0, player_pct)):.1f}%"></div>'
-            f'<i class="fingerprint-marker" style="left:{max(0.0, min(100.0, club_pct)):.1f}%"></i>'
+            f'<span class="peer-marker avg-marker fingerprint-marker" style="left:{max(0.0, min(100.0, club_pct)):.1f}%"></span>'
             '</div>'
             '</div>'
         )
@@ -9174,7 +9254,7 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
 
 
 def profile_breakdown_options() -> list[tuple[str, str]]:
-    return [("season", "Season"), ("grade", "Grade"), ("opponent", "Opponent"), ("ground", "Ground"), ("ha", "H/A")]
+    return [("season", "Season"), ("grade", "Grade"), ("opponent", "Opponent"), ("ground", "Ground"), ("ha", "Home/Away")]
 
 
 def selected_profile_breakdown_view() -> str:
@@ -9208,6 +9288,8 @@ def selected_profile_discipline_view() -> str:
 
 
 def profile_breakdown_label(slug: str) -> str:
+    if slug == "ha":
+        return "H/A"
     return dict(profile_breakdown_options()).get(slug, "Season")
 
 

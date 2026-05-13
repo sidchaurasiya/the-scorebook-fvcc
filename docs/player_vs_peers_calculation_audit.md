@@ -35,9 +35,9 @@ The Player vs Peers batting card shows:
 | Metric | Selected Player Calculation | Peer Average Calculation | Min / Max Range | Better Direction | Missing / Zero Handling |
 | --- | --- | --- | --- | --- | --- |
 | Batting Avg | Total runs / total outs. Outs = innings - not outs. | Pooled peer runs / pooled peer outs. | Player-level min/max batting average. | Higher is better. | Blank if outs are 0 or missing. |
-| Strike Rate | Reliable runs * 100 / reliable balls faced, using Winter 2025 onward rows only. | Pooled reliable peer runs * 100 / pooled reliable peer balls, using Winter 2025 onward rows only. | Player-level min/max reliable strike rate. | Higher is better. | Blank if reliable balls faced are 0 or missing. |
-| Balls per Dismissal | Reliable balls faced / reliable outs, using Winter 2025 onward rows only. | Pooled reliable peer balls / pooled reliable peer outs. | Player-level min/max balls per dismissal. | Higher is better. | Blank if reliable outs are 0 or missing. |
-| Minutes per Dismissal | Reliable batting minutes / reliable outs, using Winter 2025 onward rows only. | Pooled reliable peer minutes / pooled reliable peer outs. | Player-level min/max minutes per dismissal. | Higher is better. | Hidden/blank if minutes are unavailable or zero. |
+| Strike Rate | Verified ball-by-ball runs * 100 / verified ball-by-ball balls faced, using all verified coverage for the player. | Pooled verified ball-by-ball peer runs * 100 / pooled verified ball-by-ball peer balls for players in the peer cohort. | Player-level min/max verified strike rate. | Higher is better. | Blank if verified ball-by-ball balls faced are 0 or missing. |
+| Balls per Dismissal | Scorecard balls faced / scorecard outs across the peer scope. | Pooled scorecard balls faced / pooled scorecard outs. | Player-level min/max balls per dismissal. | Higher is better. | Blank if outs are 0 or missing. |
+| Minutes per Dismissal | Scorecard batting minutes / scorecard outs where minutes are available. | Pooled scorecard minutes / pooled scorecard outs. | Player-level min/max minutes per dismissal. | Higher is better. | Hidden/blank if minutes are unavailable or zero. |
 | Boundary Rate | (4s + 6s) / innings. | Pooled peer boundaries / pooled peer innings. | Player-level min/max boundary rate. | Higher is better. | Blank if innings are 0 or missing. |
 | Innings per Duck | Innings / ducks. | Pooled peer innings / pooled peer ducks. | Player-level min/max innings per duck. | Higher is better. | Blank if ducks are 0. |
 
@@ -53,7 +53,7 @@ The Player vs Peers bowling card shows:
 | Bowling SR | Balls bowled / wickets. | Pooled peer balls bowled / pooled peer wickets. | Player-level min/max bowling strike rate. | Lower is better. | Blank if wickets are 0. |
 | Economy Rate | Runs conceded * 6 / balls bowled. | Pooled peer runs conceded * 6 / pooled peer balls bowled. | Player-level min/max economy. | Lower is better. | Blank if balls bowled are 0. |
 | Overs per Maiden | Overs / maidens. Overs are calculated from balls bowled. | Pooled peer overs / pooled peer maidens. | Player-level min/max overs per maiden. | Lower is better. | Blank if maidens are 0. |
-| Overs per Extra | Overs / (wides + no balls). | Pooled peer overs / pooled peer wides+no balls. | Player-level min/max overs per extra. | Higher is better. | Blank if extras are 0. |
+| Balls per Extra | Legal balls bowled / (wides + no balls). | Pooled peer legal balls / pooled peer wides+no balls. | Player-level min/max balls per extra. | Higher is better. | Blank / friendly unavailable state if extras are 0. |
 | Unassisted Wicket % | Unassisted wickets / wickets * 100. | Pooled peer unassisted wickets / pooled peer wickets * 100. | Player-level min/max unassisted wicket percentage. | Higher is treated as notable/better for this visual. | Blank if wickets are 0 or source data is unavailable. |
 
 ## Average-of-Averages Check
@@ -72,21 +72,27 @@ Pooled peer calculations are used for:
 - Bowling SR
 - Economy Rate
 - Overs per Maiden
-- Overs per Extra
+- Balls per Extra
 - Unassisted Wicket %
 
 Min/max values remain player-level min/max values so the range line still shows the lowest and highest individual peer values.
 
 ## Strike Rate Reliability Check
 
-Player vs Peers batting strike rate uses only data from Winter 2025 onward.
+Player vs Peers batting strike rate uses verified ball-by-ball batting summaries only. The selected-player Strike Rate should match the Player Profile career Strike Rate because both use the same verified career ball-by-ball source.
 
-The same Winter 2025 onward rule is also used for:
+The old Winter 2025 onward filter should not be used for:
 
 - Balls per Dismissal
 - Minutes per Dismissal
 
-Rows before Winter 2025 are excluded from those reliable batting metric numerators and denominators for both the selected player and peer averages.
+Those dismissal-frequency metrics use available scorecard balls/minutes and outs consistently across the selected peer scope.
+
+## Marker Visuals
+
+- Player marker: purple circular marker.
+- Peer average marker: grey vertical marker with the shared `.peer-marker.avg-marker` styling.
+- Dismissal Fingerprint should reuse the same grey benchmark marker class/style for club-average markers so the visual language remains consistent across Player DNA and Player vs Peers.
 
 ## Issues Found
 
