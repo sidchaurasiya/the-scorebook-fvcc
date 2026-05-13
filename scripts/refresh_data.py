@@ -273,10 +273,16 @@ def refresh_current_match_centre_summaries(current_season_ids: set[str]) -> dict
         cwd=ROOT,
         check=True,
     )
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_player_profile_insight_exports.py")],
+        cwd=ROOT,
+        check=True,
+    )
     return {
         "current scopes refreshed": len(scopes),
         "scopes": ", ".join(scopes),
         "detail exports rebuilt": "yes",
+        "player profile insight exports rebuilt": "yes",
     }
 
 

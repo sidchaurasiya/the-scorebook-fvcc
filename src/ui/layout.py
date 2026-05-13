@@ -95,6 +95,11 @@ SEASON_OVERVIEW_BBB_BATTING_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_b
 SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_bowling_dot_rates_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_batting_milestones_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_bowling_milestones_by_scope.csv"
+PLAYER_PROFILE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "player_profile"
+PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "performance_breakdown_by_dimension.csv"
+PLAYER_PROFILE_BATTING_POSITION_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "batting_position_summary.csv"
+PLAYER_PROFILE_BOWLING_PHASE_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "bowling_phase_summary.csv"
+PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "dismissal_fingerprint_summary.csv"
 HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
 )
@@ -7313,10 +7318,10 @@ def render_player_profile_page() -> None:
     render_player_header_card(profile_view)
     render_player_breakdown(profile_view["career"].iloc[0])
     render_player_highlights(profile_view)
+    render_player_intelligence(profile_view)
     render_player_peer_comparison(profile_view)
     render_player_trends(profile_view["season_table"])
-    render_player_season_table(profile_view["season_table"])
-    render_player_grade_table(profile_view["grade_table"])
+    render_player_performance_breakdown(profile_view)
     render_player_milestones(profile_view["career"].iloc[0])
 
 
@@ -7357,6 +7362,11 @@ def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFr
     career = build_player_career_totals(season_table, batting, bowling, fielding, profile)
     career = enrich_player_profile_career(career, profile, detail_sources)
     raw_profiles = build_player_raw_profile_table(batting, bowling, fielding)
+    performance_breakdown = player_profile_source_rows(detail_sources.get("performance_breakdown", pd.DataFrame()), profile)
+    batting_position = player_profile_source_rows(detail_sources.get("batting_position", pd.DataFrame()), profile)
+    bowling_phase = player_profile_source_rows(detail_sources.get("bowling_phase", pd.DataFrame()), profile)
+    dismissal_fingerprint = player_profile_source_rows(detail_sources.get("dismissal_fingerprint", pd.DataFrame()), profile)
+    club_dismissal_fingerprint = player_profile_club_rows(detail_sources.get("dismissal_fingerprint", pd.DataFrame()))
     return {
         "batting": batting,
         "bowling": bowling,
@@ -7365,6 +7375,11 @@ def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFr
         "grade_table": grade_table,
         "career": career,
         "raw_profiles": raw_profiles,
+        "performance_breakdown": performance_breakdown,
+        "batting_position": batting_position,
+        "bowling_phase": bowling_phase,
+        "dismissal_fingerprint": dismissal_fingerprint,
+        "club_dismissal_fingerprint": club_dismissal_fingerprint,
     }
 
 
@@ -7547,6 +7562,10 @@ def player_profile_detail_source_signature() -> tuple[tuple[str, float], ...]:
         SEASON_OVERVIEW_BBB_BATTING_RATES_PATH,
         SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH,
         SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH,
+        PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH,
+        PLAYER_PROFILE_BATTING_POSITION_PATH,
+        PLAYER_PROFILE_BOWLING_PHASE_PATH,
+        PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH,
     ]
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
@@ -7558,6 +7577,10 @@ def load_player_profile_detail_sources(_signature: tuple[tuple[str, float], ...]
         "scope_bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
         "scorecard_batting": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH),
         "scorecard_bowling": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH),
+        "performance_breakdown": read_match_centre_csv(PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH),
+        "batting_position": read_match_centre_csv(PLAYER_PROFILE_BATTING_POSITION_PATH),
+        "bowling_phase": read_match_centre_csv(PLAYER_PROFILE_BOWLING_PHASE_PATH),
+        "dismissal_fingerprint": read_match_centre_csv(PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH),
     }
 
 
@@ -7586,6 +7609,17 @@ def player_profile_source_rows(frame: pd.DataFrame, profile: dict[str, object]) 
             if column in output:
                 name_mask = name_mask | (output[column].map(player_name_match_key) == name_key)
     return output[name_mask].copy() if name_mask.any() else output.head(0).copy()
+
+
+def player_profile_club_rows(frame: pd.DataFrame) -> pd.DataFrame:
+    if frame.empty:
+        return frame.copy()
+    output = frame.copy()
+    if "scope" in output:
+        return output[output["scope"].astype(str).str.casefold() == "club"].copy()
+    if "canonical_player_id" in output:
+        return output[output["canonical_player_id"].astype(str).str.strip() == "__club__"].copy()
+    return output.head(0).copy()
 
 
 def profile_source_grade_label(row: pd.Series) -> str:
@@ -8171,6 +8205,294 @@ def compact_leader_detail_meta_html(details: list[str], limit: int = 3) -> str:
     return ", ".join(rendered)
 
 
+def render_player_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
+    career = profile_view["career"].iloc[0]
+    is_batsman, is_bowler = player_profile_role_flags(career)
+    if not (is_batsman or is_bowler) and profile_view.get("dismissal_fingerprint", pd.DataFrame()).empty:
+        return
+
+    render_section_heading("Intelligence 🧠")
+    role_label = "All-rounder" if is_batsman and is_bowler else "Batter" if is_batsman else "Bowler" if is_bowler else "Profile"
+    st.markdown(
+        (
+            '<div class="profile-intelligence-intro">'
+            f'<span>{html.escape(role_label)} intelligence</span>'
+            '<p>Scorecard-safe trends are separated from verified ball-by-ball insights so the story stays trustworthy.</p>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    top_columns = st.columns(2)
+    with top_columns[0]:
+        if is_batsman:
+            render_batting_position_intelligence(profile_view)
+        else:
+            render_profile_intelligence_empty(
+                "Batting Position Intelligence",
+                "This module appears once the player has enough batting innings to identify a stable role.",
+            )
+    with top_columns[1]:
+        if is_bowler:
+            render_bowling_phase_intelligence(profile_view)
+        else:
+            render_profile_intelligence_empty(
+                "Bowling Phase Intelligence",
+                "This module appears for bowlers with enough verified ball-by-ball deliveries.",
+            )
+    render_dismissal_fingerprint(profile_view)
+
+
+def player_profile_role_flags(career: pd.Series) -> tuple[bool, bool]:
+    innings = numeric_value(career, "Innings")
+    runs = numeric_value(career, "Runs")
+    balls_bowled = numeric_value(career, "Balls Bowled")
+    wickets = numeric_value(career, "Wickets")
+    # These thresholds intentionally classify broad cricket roles, not talent.
+    is_batsman = (innings >= 15 and runs >= 250) or runs >= 500
+    is_bowler = (balls_bowled >= 300 and wickets >= 15) or wickets >= 50
+    return is_batsman, is_bowler
+
+
+def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
+    rows = profile_view.get("batting_position", pd.DataFrame()).copy()
+    if rows.empty:
+        render_profile_intelligence_empty("Batting Position Intelligence", "Scorecard batting-order data is not available for this player yet.")
+        return
+    rows["position_order"] = pd.to_numeric(rows.get("position_order"), errors="coerce").fillna(99)
+    rows["innings"] = pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0)
+    rows["runs"] = pd.to_numeric(rows.get("runs"), errors="coerce").fillna(0)
+    rows["average"] = pd.to_numeric(rows.get("average"), errors="coerce")
+    rows = rows.sort_values("position_order")
+    best = profile_best_position_label(rows)
+    max_runs = max(1.0, float(rows["runs"].max()))
+    row_html = []
+    for _, row in rows.iterrows():
+        label = str(row.get("position_group", "—"))
+        runs = float(row.get("runs", 0) or 0)
+        width = max(4.0, min(100.0, (runs / max_runs) * 100))
+        best_badge = '<span class="profile-best-badge">Best fit</span>' if label == best else ""
+        row_html.append(
+            '<div class="position-row">'
+            '<div class="position-row-top">'
+            f'<strong>{html.escape(label)}</strong>{best_badge}'
+            '</div>'
+            '<div class="position-row-meta">'
+            f'<span>{format_int(row.get("innings"))} inn</span>'
+            f'<span>{format_int(row.get("runs"))} runs</span>'
+            f'<span>Avg {format_decimal(row.get("average"))}</span>'
+            '</div>'
+            '<div class="position-track">'
+            f'<div style="width:{width:.1f}%"></div>'
+            '</div>'
+            '</div>'
+        )
+    st.markdown(
+        (
+            '<article class="profile-intelligence-card">'
+            '<div class="profile-intelligence-card-head">'
+            '<span>Scorecard-safe</span>'
+            '<h3>Batting Position Intelligence</h3>'
+            '</div>'
+            f'{"".join(row_html)}'
+            '</article>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def profile_best_position_label(rows: pd.DataFrame) -> str:
+    if rows.empty:
+        return ""
+    eligible = rows[pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0) >= 2].copy()
+    if eligible.empty:
+        eligible = rows.copy()
+    eligible["_average_sort"] = pd.to_numeric(eligible.get("average"), errors="coerce").fillna(-1)
+    eligible["_runs_sort"] = pd.to_numeric(eligible.get("runs"), errors="coerce").fillna(0)
+    eligible = eligible.sort_values(["_average_sort", "_runs_sort"], ascending=[False, False])
+    return str(eligible.iloc[0].get("position_group", ""))
+
+
+def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
+    rows = profile_view.get("bowling_phase", pd.DataFrame()).copy()
+    if rows.empty:
+        render_profile_intelligence_empty(
+            "Bowling Phase Intelligence",
+            "Phase analytics use verified ball-by-ball matches only. No matched bowling phase data is available yet.",
+        )
+        return
+    selected = selected_profile_phase_model()
+    render_profile_phase_selector(profile_view, selected)
+    rows = rows[rows.get("phase_model", pd.Series(dtype=str)).astype(str).str.casefold() == selected.casefold()].copy()
+    if rows.empty:
+        render_profile_intelligence_empty("Bowling Phase Intelligence", "No verified ball-by-ball deliveries are available for this phase model.")
+        return
+    rows["phase_order"] = pd.to_numeric(rows.get("phase_order"), errors="coerce").fillna(99)
+    rows["legal_balls"] = pd.to_numeric(rows.get("legal_balls"), errors="coerce").fillna(0)
+    rows["wickets"] = pd.to_numeric(rows.get("wickets"), errors="coerce").fillna(0)
+    rows["eco"] = pd.to_numeric(rows.get("eco"), errors="coerce")
+    rows["sr"] = pd.to_numeric(rows.get("sr"), errors="coerce")
+    rows["avg"] = pd.to_numeric(rows.get("avg"), errors="coerce")
+    rows = rows[rows["legal_balls"] > 0].sort_values("phase_order")
+    if rows.empty:
+        render_profile_intelligence_empty("Bowling Phase Intelligence", "No verified legal deliveries are available for this phase model.")
+        return
+    best_phase = profile_best_phase_label(rows)
+    phase_rows = []
+    for _, row in rows.iterrows():
+        label = str(row.get("phase", "—"))
+        best_badge = '<span class="profile-best-badge">Best phase</span>' if label == best_phase else ""
+        phase_rows.append(
+            '<div class="phase-row">'
+            '<div class="phase-name">'
+            f'<strong>{html.escape(label)}</strong>{best_badge}'
+            '</div>'
+            f'<span>{html.escape(str(row.get("overs", "—")))} ov</span>'
+            f'<span>{format_int(row.get("wickets"))} W</span>'
+            f'<span>Avg {format_decimal(row.get("avg"))}</span>'
+            f'<span>Eco {format_decimal(row.get("eco"))}</span>'
+            f'<span>SR {format_decimal(row.get("sr"))}</span>'
+            '</div>'
+        )
+    st.markdown(
+        (
+            '<article class="profile-intelligence-card">'
+            '<div class="profile-intelligence-card-head">'
+            '<span>Verified ball-by-ball</span>'
+            '<h3>Bowling Phase Intelligence</h3>'
+            '</div>'
+            f'{"".join(phase_rows)}'
+            '<p class="profile-intelligence-note">Phase analytics use verified ball-by-ball matches only.</p>'
+            '</article>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def profile_best_phase_label(rows: pd.DataFrame) -> str:
+    if rows.empty:
+        return ""
+    output = rows.copy()
+    output["_wickets_sort"] = pd.to_numeric(output.get("wickets"), errors="coerce").fillna(0)
+    output["_eco_sort"] = pd.to_numeric(output.get("eco"), errors="coerce").fillna(999)
+    output["_balls_sort"] = pd.to_numeric(output.get("legal_balls"), errors="coerce").fillna(0)
+    output = output.sort_values(["_wickets_sort", "_eco_sort", "_balls_sort"], ascending=[False, True, False])
+    return str(output.iloc[0].get("phase", ""))
+
+
+def selected_profile_phase_model() -> str:
+    options = {slug: label for slug, label in profile_phase_model_options()}
+    requested = query_param_value("profile_phase_model").casefold()
+    return options.get(requested, "One Day")
+
+
+def profile_phase_model_options() -> list[tuple[str, str]]:
+    return [("t20", "T20"), ("one-day", "One Day"), ("two-day", "Two Day")]
+
+
+def render_profile_phase_selector(profile_view: dict[str, pd.DataFrame], selected_label: str) -> None:
+    player_id = str(profile_view["career"].iloc[0].get("canonical_player_id", "")).strip()
+    selected_slug = next((slug for slug, label in profile_phase_model_options() if label == selected_label), "one-day")
+    items = [
+        (
+            label,
+            player_profile_section_url(player_id, profile_phase_model=slug),
+            slug == selected_slug,
+        )
+        for slug, label in profile_phase_model_options()
+    ]
+    render_profile_segmented_links(items, "Bowling phase model", compact=True)
+
+
+def render_dismissal_fingerprint(profile_view: dict[str, pd.DataFrame]) -> None:
+    player_rows = profile_view.get("dismissal_fingerprint", pd.DataFrame()).copy()
+    club_rows = profile_view.get("club_dismissal_fingerprint", pd.DataFrame()).copy()
+    if player_rows.empty:
+        render_profile_intelligence_empty("Dismissal Fingerprint", "Dismissal detail is not available for this player yet.")
+        return
+    player_rows = player_rows[player_rows.get("scope", pd.Series(dtype=str)).astype(str).str.casefold().eq("player")].copy()
+    if player_rows.empty:
+        render_profile_intelligence_empty("Dismissal Fingerprint", "Dismissal detail is not available for this player yet.")
+        return
+    buckets = ["Caught", "Bowled", "LBW", "Run out", "Stumped", "Other"]
+    player_map = profile_dismissal_pct_map(player_rows)
+    club_map = profile_dismissal_pct_map(club_rows)
+    row_html = []
+    for bucket in buckets:
+        player_pct = player_map.get(bucket, 0.0)
+        club_pct = club_map.get(bucket, 0.0)
+        row_html.append(
+            '<div class="fingerprint-row">'
+            '<div class="fingerprint-top">'
+            f'<strong>{html.escape(bucket)}</strong>'
+            f'<span>{player_pct:.1f}%</span>'
+            '</div>'
+            '<div class="fingerprint-track">'
+            f'<div class="fingerprint-bar" style="width:{max(2.0, min(100.0, player_pct)):.1f}%"></div>'
+            f'<i class="fingerprint-marker" style="left:{max(0.0, min(100.0, club_pct)):.1f}%"></i>'
+            '</div>'
+            '</div>'
+        )
+    player_name = str(profile_view["career"].iloc[0].get("Player", "This player"))
+    st.markdown(
+        (
+            '<article class="profile-intelligence-card profile-fingerprint-card">'
+            '<div class="profile-intelligence-card-head">'
+            '<span>Scorecard-safe</span>'
+            '<h3>Dismissal Fingerprint</h3>'
+            '</div>'
+            f'<p class="profile-fingerprint-insight">{html.escape(profile_dismissal_insight(player_name, player_map, club_map))}</p>'
+            '<div class="fingerprint-legend"><span><i class="player"></i> Player</span><span><i class="club"></i> Club average</span></div>'
+            f'{"".join(row_html)}'
+            '<p class="profile-intelligence-note">Not-outs are excluded from the dismissal mix.</p>'
+            '</article>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def profile_dismissal_pct_map(rows: pd.DataFrame) -> dict[str, float]:
+    if rows.empty:
+        return {}
+    output = rows.copy()
+    output["pct"] = pd.to_numeric(output.get("pct"), errors="coerce").fillna(0)
+    return {
+        str(row.get("dismissal_bucket", "")).strip(): float(row.get("pct", 0) or 0)
+        for _, row in output.iterrows()
+    }
+
+
+def profile_dismissal_insight(player_name: str, player_map: dict[str, float], club_map: dict[str, float]) -> str:
+    first_name = str(player_name or "This player").split()[0]
+    diffs = []
+    labels = {"Caught": "caught", "Bowled": "bowled", "LBW": "LBW", "Run out": "run out", "Stumped": "stumped", "Other": "other ways"}
+    for bucket, player_pct in player_map.items():
+        diff = player_pct - club_map.get(bucket, 0.0)
+        if diff >= 6:
+            diffs.append((diff, labels.get(bucket, bucket.lower())))
+    if not diffs:
+        return f"{first_name}'s dismissal mix is broadly in line with the club average."
+    selected = [label for _diff, label in sorted(diffs, reverse=True)[:2]]
+    if len(selected) == 1:
+        return f"{first_name} is dismissed {selected[0]} more often than the club average."
+    return f"{first_name} is dismissed {selected[0]} and {selected[1]} more often than the club average."
+
+
+def render_profile_intelligence_empty(title: str, copy: str) -> None:
+    st.markdown(
+        (
+            '<article class="profile-intelligence-card profile-empty-card">'
+            '<div class="profile-intelligence-card-head">'
+            '<span>Coverage limited</span>'
+            f'<h3>{html.escape(title)}</h3>'
+            '</div>'
+            f'<p>{html.escape(copy)}</p>'
+            '</article>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
 def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None:
     career = profile_view["career"].iloc[0]
     season_table = profile_view.get("season_table", pd.DataFrame())
@@ -8257,7 +8579,7 @@ def get_player_peer_comparison(
         player_id,
         [
             ("Batting Avg", "bat_avg", False, "decimal"),
-            ("Strike Rate", "bat_sr", False, "decimal"),
+            ("Strike Rate", "bat_sr", False, "percent"),
             ("Balls per Dismissal", "balls_per_dismissal", False, "decimal"),
             ("Minutes per Dismissal", "minutes_per_dismissal", False, "decimal"),
             ("Boundary Rate", "boundary_rate", False, "decimal"),
@@ -8345,12 +8667,9 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
         not_outs = sum_column(group, "battingNotOuts")
         outs = max(0.0, innings - not_outs)
         balls = sum_column(group, "battingBallsFaced")
-        reliable_minutes_rows = group[group["season"].map(profile_season_sort_key) >= profile_season_sort_key("Winter 2025")].copy()
-        reliable_balls = sum_column(reliable_minutes_rows, "battingBallsFaced")
-        reliable_innings = sum_column(reliable_minutes_rows, "battingInnings")
-        reliable_not_outs = sum_column(reliable_minutes_rows, "battingNotOuts")
-        reliable_outs = max(0.0, reliable_innings - reliable_not_outs)
-        reliable_minutes = sum_column(reliable_minutes_rows, "battingMinutes")
+        reliable_balls = balls
+        reliable_outs = outs
+        reliable_minutes = sum_column(group, "battingMinutes")
         boundaries = sum_column(group, "battingFours") + sum_column(group, "battingSixes")
         ducks = sum_column(group, "batting0s")
         rows.append(
@@ -8381,18 +8700,9 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
 def add_bbb_peer_batting_rates(batting_rows: pd.DataFrame, seasons: tuple[str, ...], peer_scope: tuple[str, ...]) -> pd.DataFrame:
     if batting_rows.empty:
         return batting_rows
-    source = read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH)
-    if source.empty or "canonical_player_id" not in source or "season" not in source:
+    source = read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH)
+    if source.empty or "canonical_player_id" not in source:
         return batting_rows
-    source = source[source["season"].astype(str).isin(seasons)].copy()
-    if source.empty:
-        return batting_rows
-    source["Grade"] = source.apply(profile_source_grade_label, axis=1)
-    source["_peer_scope_key"] = source.apply(lambda row: peer_scope_key(row.get("season", ""), row.get("Grade", "")), axis=1)
-    if peer_scope:
-        matched = source[source["_peer_scope_key"].isin(peer_scope)].copy()
-        if not matched.empty:
-            source = matched
     for column in ["bbb_runs", "bbb_balls_faced"]:
         if column not in source:
             source[column] = 0
@@ -8688,7 +8998,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
     if season_table.empty:
         return
     render_section_heading("Season Trends 📈")
-    chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key))
+    chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
     specs = [("Runs by Season", "Runs", "#6D4DFF"), ("Wickets by Season", "Wickets", "#10B981")]
     for index in range(0, len(specs), 2):
         columns = st.columns(2)
@@ -8701,37 +9011,17 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     values = chart_data[["Season", metric]].copy()
                     values[metric] = pd.to_numeric(values[metric], errors="coerce").fillna(0)
                     season_count = values["Season"].nunique()
-                    bar_size = 9 if season_count >= 14 else 12 if season_count >= 10 else 18 if season_count >= 6 else 26
-                    label_size = 8 if season_count >= 14 else 9 if season_count >= 8 else 10
-                    label_kwargs = (
-                        {
-                            "align": "center",
-                            "baseline": "bottom",
-                            "color": "#4f5875",
-                            "dy": -5,
-                            "fontSize": label_size,
-                            "fontWeight": 800,
-                        }
-                        if season_count >= 10
-                        else {
-                            "align": "center",
-                            "baseline": "top",
-                            "color": "#ffffff",
-                            "dy": 5,
-                            "fontSize": label_size,
-                            "fontWeight": 800,
-                        }
-                    )
+                    chart_height = min(340, max(150, 30 * season_count))
                     base = (
                         alt.Chart(values)
                         .encode(
-                            x=alt.X(
+                            y=alt.Y(
                                 "Season:N",
                                 sort=list(values["Season"]),
-                                axis=alt.Axis(labelAngle=-30, labelLimit=72, labelColor="#737998", title=None),
-                                scale=alt.Scale(paddingInner=0.25, paddingOuter=0.18),
+                                axis=alt.Axis(labelColor="#737998", labelLimit=110, title=None),
+                                scale=alt.Scale(paddingInner=0.22, paddingOuter=0.12),
                             ),
-                            y=alt.Y(
+                            x=alt.X(
                                 f"{metric}:Q",
                                 axis=alt.Axis(grid=False, labels=False, ticks=False, title=None),
                             ),
@@ -8739,11 +9029,17 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                         )
                     )
                     chart = (
-                        base.mark_bar(cornerRadiusTopLeft=6, cornerRadiusTopRight=6, color=color, size=bar_size)
-                        + base.mark_text(**label_kwargs).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
-                    ).properties(height=220, padding={"left": 6, "right": 18, "top": 18, "bottom": 4}).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
+                        base.mark_bar(cornerRadiusTopRight=7, cornerRadiusBottomRight=7, color=color)
+                        + base.mark_text(
+                            align="left",
+                            baseline="middle",
+                            color="#4f5875",
+                            dx=7,
+                            fontSize=10,
+                            fontWeight=800,
+                        ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
+                    ).properties(height=chart_height, padding={"left": 4, "right": 36, "top": 8, "bottom": 4}).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
                     st.altair_chart(chart, use_container_width=True)
-    render_player_best_season_cards(chart_data)
 
 
 def render_player_best_season_cards(chart_data: pd.DataFrame) -> None:
@@ -8869,6 +9165,198 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
         st.altair_chart(chart, use_container_width=True)
 
 
+def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -> None:
+    source = profile_view.get("performance_breakdown", pd.DataFrame()).copy()
+    if source.empty:
+        return
+    render_section_heading("Performance Breakdown 🧭")
+    selected = selected_profile_breakdown_view()
+    render_profile_breakdown_selector(profile_view, selected)
+    label = profile_breakdown_label(selected)
+    rows = source[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
+    if rows.empty:
+        render_profile_breakdown_empty(label)
+        return
+
+    with st.container(key="player_profile_performance_breakdown"):
+        batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
+        with batting_tab:
+            render_profile_performance_table(rows, label, "Batting")
+        with bowling_tab:
+            render_profile_performance_table(rows, label, "Bowling")
+        with fielding_tab:
+            render_profile_performance_table(rows, label, "Fielding")
+
+
+def profile_breakdown_options() -> list[tuple[str, str]]:
+    return [("season", "Season"), ("grade", "Grade"), ("opponent", "Opponent"), ("ground", "Ground"), ("ha", "H/A")]
+
+
+def selected_profile_breakdown_view() -> str:
+    valid = {slug for slug, _label in profile_breakdown_options()}
+    requested = query_param_value("profile_breakdown").casefold()
+    return requested if requested in valid else "season"
+
+
+def profile_breakdown_label(slug: str) -> str:
+    return dict(profile_breakdown_options()).get(slug, "Season")
+
+
+def render_profile_breakdown_selector(profile_view: dict[str, pd.DataFrame], selected_slug: str) -> None:
+    player_id = str(profile_view["career"].iloc[0].get("canonical_player_id", "")).strip()
+    items = [
+        (
+            label,
+            player_profile_section_url(player_id, profile_breakdown=slug),
+            slug == selected_slug,
+        )
+        for slug, label in profile_breakdown_options()
+    ]
+    render_profile_segmented_links(items, "Player performance breakdown")
+
+
+def player_profile_section_url(player_id: object, **params: str) -> str:
+    query = {
+        "page": PLAYER_PROFILE_QUERY_PAGE,
+        "player_id": str(player_id or "").strip(),
+    }
+    for key in ["profile_breakdown", "profile_phase_model"]:
+        existing = query_param_value(key)
+        if existing:
+            query[key] = existing
+    query.update({key: str(value) for key, value in params.items() if str(value or "").strip()})
+    return "?" + "&".join(f"{quote(key, safe='')}={quote(value, safe='')}" for key, value in query.items() if value)
+
+
+def render_profile_segmented_links(
+    items: list[tuple[str, str, bool]],
+    aria_label: str,
+    compact: bool = False,
+) -> None:
+    class_name = "profile-segmented profile-segmented-compact" if compact else "profile-segmented"
+    links = "".join(
+        (
+            f'<a class="profile-segment{" active" if active else ""}" '
+            f'href="{html.escape(url, quote=True)}" target="_self" role="tab" '
+            f'aria-selected="{str(active).lower()}">{html.escape(label)}</a>'
+        )
+        for label, url, active in items
+    )
+    st.markdown(
+        f'<nav class="{class_name}" aria-label="{html.escape(aria_label, quote=True)}">{links}</nav>',
+        unsafe_allow_html=True,
+    )
+
+
+def render_profile_breakdown_empty(label: str) -> None:
+    st.markdown(
+        (
+            '<div class="profile-breakdown-empty">'
+            f'<strong>No {html.escape(label.lower())} breakdown available yet.</strong>'
+            '<span>This view will appear when reliable scorecard context exists for the selected player.</span>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def render_profile_performance_table(rows: pd.DataFrame, label_column: str, discipline: str) -> None:
+    filtered = rows[rows["discipline"].astype(str) == discipline].copy() if "discipline" in rows else rows.head(0)
+    filtered = filtered[filtered["breakdown_label"].astype(str).str.strip() != ""].copy() if "breakdown_label" in filtered else filtered
+    if filtered.empty:
+        st.caption("No data available for this view.")
+        return
+    if discipline == "Batting":
+        table = filtered.rename(
+            columns={
+                "breakdown_label": label_column,
+                "innings": "Inn",
+                "runs": "Runs",
+                "bat_avg": "Avg",
+                "strike_rate": "Strike Rate",
+                "high_score": "HS",
+                "thirties": "30s",
+                "fifties": "50s",
+                "hundreds": "100s",
+                "ducks": "0s",
+                "fours": "4s",
+                "sixes": "6s",
+            }
+        )
+        columns = [label_column, "Inn", "Runs", "Avg", "Strike Rate", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+        activity_columns = ["Inn", "Runs", "30s", "50s", "100s"]
+    elif discipline == "Bowling":
+        table = filtered.rename(
+            columns={
+                "breakdown_label": label_column,
+                "matches": "M",
+                "wickets": "W",
+                "bowl_avg": "Avg",
+                "bowl_sr": "SR",
+                "eco": "Eco",
+                "bbi": "BBI",
+                "three_wicket_innings": "3WI",
+                "five_wicket_innings": "5WI",
+            }
+        )
+        table["Overs"] = table["balls_bowled"].map(format_balls_as_overs) if "balls_bowled" in table else "—"
+        columns = [label_column, "M", "Overs", "W", "Avg", "SR", "Eco", "BBI", "3WI", "5WI"]
+        activity_columns = ["W", "balls_bowled", "3WI", "5WI"]
+    else:
+        table = filtered.rename(
+            columns={
+                "breakdown_label": label_column,
+                "run_outs": "RO",
+                "catches": "Catches",
+                "stumpings": "Stumpings",
+                "dismissals": "Dismissals",
+            }
+        )
+        columns = [label_column, "Catches", "Stumpings", "RO", "Dismissals"]
+        activity_columns = ["Catches", "Stumpings", "RO", "Dismissals"]
+
+    table = select_display_columns(table, columns).copy()
+    activity = pd.Series(False, index=table.index)
+    for column in activity_columns:
+        if column in table:
+            activity = activity | (pd.to_numeric(table[column], errors="coerce").fillna(0) > 0)
+        elif column == "balls_bowled" and "Overs" in table:
+            activity = activity | (table["Overs"].map(cricket_overs_to_balls).fillna(0) > 0)
+    table = table.loc[activity].copy()
+    if table.empty:
+        st.caption("No data available for this view.")
+        return
+
+    table = sort_profile_performance_table(table, label_column, discipline)
+    display = format_profile_sortable_table(table)
+    if label_column == "Season":
+        display = link_season_columns(display, ["Season"])
+    height = min(460, max(170, 38 * (len(display) + 1)))
+    render_filterable_dataframe(
+        display,
+        key_prefix=f"profile_performance_{label_column}_{discipline}",
+        use_container_width=True,
+        hide_index=True,
+        height=height,
+        column_config=profile_table_column_config(display.columns.tolist(), label_column),
+        show_filters=False,
+    )
+
+
+def sort_profile_performance_table(table: pd.DataFrame, label_column: str, discipline: str) -> pd.DataFrame:
+    output = table.copy()
+    if label_column == "Season":
+        return output.sort_values(label_column, key=lambda series: series.map(profile_season_sort_key), ascending=False)
+    if label_column == "Grade":
+        output["_sort_key"] = output[label_column].map(grade_sort_key)
+        return output.sort_values("_sort_key").drop(columns="_sort_key")
+    numeric_sort = "Runs" if discipline == "Batting" and "Runs" in output else "W" if discipline == "Bowling" and "W" in output else "Dismissals"
+    if numeric_sort in output:
+        output["_sort_key"] = pd.to_numeric(output[numeric_sort], errors="coerce").fillna(0)
+        return output.sort_values(["_sort_key", label_column], ascending=[False, True]).drop(columns="_sort_key")
+    return output.sort_values(label_column)
+
+
 def render_player_season_table(season_table: pd.DataFrame) -> None:
     render_section_heading("Season History 📅")
     with st.container(key="player_profile_season_table"):
@@ -8945,7 +9433,9 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
 def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[str, object]:
     config: dict[str, object] = {}
     integer_columns = {
+        "M",
         "Matches",
+        "Inn",
         "Innings",
         "Runs",
         "BF",
@@ -8960,15 +9450,18 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
         "4s",
         "6s",
         "Maidens",
+        "W",
         "Wickets",
         "3WI",
         "5WI",
         "Catches",
         "Stumpings",
+        "RO",
         "Run Outs",
         "Dismissals",
     }
-    decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Bowl SR", "Econ", "Eco"}
+    percent_columns = {"Bat SR", "Strike Rate"}
+    decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "SR", "Econ", "Eco"}
     for column in columns:
         if column == pinned_column:
             if column == "Season":
@@ -8983,6 +9476,8 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
             config[column] = st.column_config.TextColumn(column, width="small")
         elif column in integer_columns:
             config[column] = st.column_config.NumberColumn(column, width="small", format="%d")
+        elif column in percent_columns:
+            config[column] = st.column_config.NumberColumn(column, width="small", format="%.1f%%")
         elif column in decimal_columns:
             config[column] = st.column_config.NumberColumn(column, width="small", format="%.2f")
         else:
@@ -9112,7 +9607,7 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Breakdown 🧩")
     cards = [
-        ("Batting", [("Matches/Innings", f"{format_int(career.get('Matches'))} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Bat SR", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
+        ("Batting", [("Matches/Innings", f"{format_int(career.get('Matches'))} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
         ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", str(career.get("Overs", "—"))), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", str(career.get("BBI", "—")))]),
         ("Fielding", [("Catches", format_int(career.get("Catches"))), ("Stumpings", format_int(career.get("Stumpings"))), ("Run Outs", format_int(career.get("Run Outs"))), ("Dismissals", format_int(career.get("Dismissals")))]),
     ]
@@ -9125,7 +9620,7 @@ def render_player_breakdown(career: pd.Series) -> None:
 
 def format_bat_sr_display(value: object) -> str:
     number = pd.to_numeric(value, errors="coerce")
-    return "N/A" if pd.isna(number) else f"{float(number):.2f}"
+    return "N/A" if pd.isna(number) else f"{float(number):.1f}%"
 
 
 def render_player_milestones(career: pd.Series) -> None:
@@ -9500,8 +9995,8 @@ def format_decimal(value: object) -> str:
 
 def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
-    decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Econ", "Eco", "Bowl SR"}
-    integer_columns = {"Matches", "Innings", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "Run Outs", "Dismissals"}
+    decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Strike Rate", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
+    integer_columns = {"M", "Matches", "Inn", "Innings", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "W", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}
     for column in output.columns:
         if column in decimal_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "—" if pd.isna(value) else f"{float(value):.2f}")
@@ -9514,9 +10009,11 @@ def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
 
 def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
-    decimal_columns = {"Bat Avg", "Bat SR", "Bowl Avg", "Econ", "Eco", "Bowl SR"}
+    decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Strike Rate", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
     integer_columns = {
+        "M",
         "Matches",
+        "Inn",
         "Innings",
         "Runs",
         "BF",
@@ -9532,14 +10029,16 @@ def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
         "6s",
         "Wickets",
         "Maidens",
+        "W",
         "3WI",
         "5WI",
         "Catches",
         "Stumpings",
+        "RO",
         "Run Outs",
         "Dismissals",
     }
-    text_columns = {"Season", "Grade", "HS", "BBI", "Overs", "Teams", "Grades", "Teams/Grades"}
+    text_columns = {"Season", "Grade", "Opponent", "Ground", "H/A", "HS", "BBI", "Overs", "Teams", "Grades", "Teams/Grades"}
     for column in output.columns:
         if column in decimal_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").round(2)

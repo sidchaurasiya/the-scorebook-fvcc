@@ -3093,6 +3093,289 @@ def inject_theme() -> None:
             font-weight: 950;
         }
 
+        .profile-intelligence-intro {
+            align-items: center;
+            background: linear-gradient(135deg, rgba(109, 77, 255, 0.07), rgba(255,255,255,0.78));
+            border: 1px solid #e7e9f4;
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
+            display: flex;
+            gap: 14px;
+            justify-content: space-between;
+            margin: -4px 0 16px;
+            padding: 14px 18px;
+        }
+
+        .profile-intelligence-intro span {
+            color: #5b3df5;
+            font-size: 0.78rem;
+            font-weight: 950;
+            letter-spacing: 0.055em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .profile-intelligence-intro p {
+            color: #626a88;
+            font-size: 0.88rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin: 0;
+            text-align: right;
+        }
+
+        .profile-intelligence-card,
+        .profile-breakdown-empty {
+            background: #ffffff;
+            border: 1px solid #e8ebf5;
+            border-radius: 20px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin-bottom: 18px;
+            padding: 18px 20px;
+        }
+
+        .profile-intelligence-card-head {
+            margin-bottom: 14px;
+        }
+
+        .profile-intelligence-card-head span {
+            background: #f0edff;
+            border: 1px solid #dfd8ff;
+            border-radius: 999px;
+            color: #5b3df5;
+            display: inline-flex;
+            font-size: 0.66rem;
+            font-weight: 950;
+            letter-spacing: 0.055em;
+            margin-bottom: 9px;
+            padding: 5px 9px;
+            text-transform: uppercase;
+        }
+
+        .profile-intelligence-card-head h3 {
+            color: var(--ink);
+            font-size: 1.02rem;
+            font-weight: 950;
+            line-height: 1.18;
+            margin: 0;
+        }
+
+        .profile-empty-card p,
+        .profile-breakdown-empty span,
+        .profile-intelligence-note {
+            color: #747b98;
+            font-size: 0.84rem;
+            font-weight: 700;
+            line-height: 1.36;
+            margin: 8px 0 0;
+        }
+
+        .profile-breakdown-empty strong {
+            color: var(--ink);
+            display: block;
+            font-size: 0.98rem;
+            font-weight: 950;
+            margin-bottom: 4px;
+        }
+
+        .position-row,
+        .fingerprint-row {
+            border-top: 1px solid #eef0f7;
+            padding: 10px 0;
+        }
+
+        .position-row:first-of-type,
+        .fingerprint-row:first-of-type {
+            border-top: 0;
+        }
+
+        .position-row-top,
+        .fingerprint-top {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .position-row-top strong,
+        .fingerprint-top strong {
+            color: var(--ink);
+            font-size: 0.93rem;
+            font-weight: 950;
+        }
+
+        .fingerprint-top span {
+            color: #5b3df5;
+            font-size: 0.84rem;
+            font-weight: 950;
+        }
+
+        .position-row-meta {
+            color: #69718f;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            margin: 5px 0 8px;
+        }
+
+        .profile-best-badge {
+            background: #f7f1ff;
+            border: 1px solid #ded2ff;
+            border-radius: 999px;
+            color: #5b3df5;
+            font-size: 0.64rem;
+            font-weight: 950;
+            letter-spacing: 0.04em;
+            padding: 4px 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .position-track,
+        .fingerprint-track {
+            background: #eef1f8;
+            border-radius: 999px;
+            height: 9px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .position-track div,
+        .fingerprint-bar {
+            background: linear-gradient(90deg, #6d4dff, #8a63ff);
+            border-radius: inherit;
+            height: 100%;
+        }
+
+        .profile-segmented {
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #e7e9f4;
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
+            display: inline-flex;
+            gap: 8px;
+            margin: 0 0 18px;
+            padding: 7px;
+        }
+
+        .profile-segmented-compact {
+            border-radius: 14px;
+            box-shadow: none;
+            margin: -2px 0 14px;
+            padding: 5px;
+        }
+
+        .profile-segment {
+            border-radius: 13px;
+            color: #6d7390;
+            font-size: 0.86rem;
+            font-weight: 900;
+            line-height: 1;
+            padding: 10px 14px;
+            text-decoration: none !important;
+            transition: background 0.18s ease, color 0.18s ease;
+            white-space: nowrap;
+        }
+
+        .profile-segment:hover,
+        .profile-segment:focus-visible {
+            background: #f5f2ff;
+            color: #5b3df5;
+        }
+
+        .profile-segment.active {
+            background: #f0edff;
+            color: #5b3df5;
+            box-shadow: inset 0 0 0 1px #ded8ff;
+        }
+
+        .phase-row {
+            align-items: center;
+            border-top: 1px solid #eef0f7;
+            display: grid;
+            gap: 8px;
+            grid-template-columns: minmax(104px, 1.2fr) repeat(5, minmax(48px, 0.7fr));
+            padding: 10px 0;
+        }
+
+        .phase-row:first-of-type {
+            border-top: 0;
+        }
+
+        .phase-name {
+            align-items: center;
+            display: flex;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .phase-name strong {
+            color: var(--ink);
+            font-size: 0.9rem;
+            font-weight: 950;
+            white-space: nowrap;
+        }
+
+        .phase-row span:not(.profile-best-badge) {
+            color: #626a88;
+            font-size: 0.78rem;
+            font-weight: 850;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .profile-fingerprint-card {
+            margin-top: 2px;
+        }
+
+        .profile-fingerprint-insight {
+            color: #4d5576;
+            font-size: 0.92rem;
+            font-weight: 750;
+            line-height: 1.4;
+            margin: 0 0 12px;
+        }
+
+        .fingerprint-legend {
+            display: flex;
+            gap: 14px;
+            margin: 0 0 4px;
+        }
+
+        .fingerprint-legend span {
+            align-items: center;
+            color: #747b98;
+            display: inline-flex;
+            font-size: 0.76rem;
+            font-weight: 850;
+            gap: 6px;
+        }
+
+        .fingerprint-legend i.player {
+            background: #6d4dff;
+            border-radius: 999px;
+            height: 8px;
+            width: 20px;
+        }
+
+        .fingerprint-legend i.club,
+        .fingerprint-marker {
+            background: #9aa1b8;
+            border-radius: 999px;
+            display: inline-block;
+            height: 14px;
+            width: 3px;
+        }
+
+        .fingerprint-marker {
+            bottom: -2px;
+            position: absolute;
+            top: -2px;
+        }
+
         .peer-card {
             background: #ffffff;
             border: 1px solid #e9ebf4;
@@ -4153,6 +4436,7 @@ def inject_theme() -> None:
             div.st-key-full_stats_card,
             div.st-key-player_profile_season_table,
             div.st-key-player_profile_grade_table,
+            div.st-key-player_profile_performance_breakdown,
             div.st-key-profile_chart_runs,
             div.st-key-profile_chart_wickets,
             div.st-key-profile_chart_batting_average,
@@ -4192,26 +4476,64 @@ def inject_theme() -> None:
             }
 
             .block-container:has(.player-profile-page) div.st-key-player_profile_season_table div[data-testid="stDataFrame"],
-            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] {
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_performance_breakdown div[data-testid="stDataFrame"] {
                 border-radius: 14px !important;
-                font-size: 0.74rem !important;
+                font-size: 0.71rem !important;
             }
 
             .block-container:has(.player-profile-page) div.st-key-player_profile_season_table div[data-testid="stDataFrame"] [role="columnheader"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_season_table div[data-testid="stDataFrame"] [role="gridcell"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="columnheader"],
-            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="gridcell"] {
-                font-size: 0.74rem !important;
-                line-height: 1.14 !important;
-                padding-left: 6px !important;
-                padding-right: 6px !important;
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="gridcell"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_performance_breakdown div[data-testid="stDataFrame"] [role="columnheader"],
+            .block-container:has(.player-profile-page) div.st-key-player_profile_performance_breakdown div[data-testid="stDataFrame"] [role="gridcell"] {
+                font-size: 0.71rem !important;
+                line-height: 1.11 !important;
+                padding-left: 4px !important;
+                padding-right: 4px !important;
             }
 
             .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="gridcell"]:first-child,
-            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="columnheader"]:first-child {
-                max-width: 124px;
+            .block-container:has(.player-profile-page) div.st-key-player_profile_grade_table div[data-testid="stDataFrame"] [role="columnheader"]:first-child,
+            .block-container:has(.player-profile-page) div.st-key-player_profile_performance_breakdown div[data-testid="stDataFrame"] [role="gridcell"]:first-child,
+            .block-container:has(.player-profile-page) div.st-key-player_profile_performance_breakdown div[data-testid="stDataFrame"] [role="columnheader"]:first-child {
+                max-width: 128px;
                 white-space: normal !important;
                 overflow-wrap: anywhere;
+            }
+
+            .profile-intelligence-intro {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .profile-intelligence-intro p {
+                text-align: left;
+            }
+
+            .profile-segmented {
+                display: flex;
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            .profile-segment {
+                flex: 1 0 auto;
+                text-align: center;
+            }
+
+            .phase-row {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .phase-name {
+                grid-column: 1 / -1;
+            }
+
+            .phase-row span:not(.profile-best-badge) {
+                text-align: left;
             }
 
             .profile-season-summary-card {
