@@ -5,7 +5,7 @@ from typing import Any
 
 import pandas as pd
 
-from src.data.name_normalization import normalize_opponent_club_name
+from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 from src.data.playcricket_ingestion import read_processed_table
 
 
@@ -154,6 +154,7 @@ def prepare_matches(matches: pd.DataFrame) -> pd.DataFrame:
     output["opponent_name"] = (
         output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
     )
+    output["venue_name"] = output["venue_name"].map(normalize_ground_name)
     output["home_away"] = fvcc_is_home.map(lambda value: "Home" if value else "Away")
     output["format"] = output["match_type"].fillna("Unknown")
     return output

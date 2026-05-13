@@ -93,6 +93,13 @@ Current production navigation pages:
 - Keep distinct similarly named clubs separate unless explicitly mapped: examples include Bellfield / Bellfield Bulls / Bellfield Rocketz, Darebin Chargers / Deccan Chargers, Preston Footballers / Preston Baseballers / Preston Druids / Preston YCW District / Preston Himalayan, and Strathewen / Strathewen Cougars.
 - The ignored audit folder `data/processed/experimental/name_normalization_audit/` is for Preet review of raw/normalized opponent and ground names and should stay out of commits.
 
+## Ground Name Normalization Notes
+
+- The shared normalization helper also handles venue labels used by Player Profile ground breakdowns, favourite ground-style cards, and match-context displays.
+- Reviewed explicit merges: Donath Reserve East/Central/West variants -> `J.C. Donath Reserve`, and Chelsworth Park North/South -> `Chelsworth Park`.
+- Reviewed punctuation cleanups include `C.H. Sullivan Memorial Park`, `H.L.T. Oulten Park`, `H.P. Zwar Park`, `T.W. Blake Park`, `J.E. Moore Park`, `I.W. Dole Reserve`, and `W. Ruthven VC Reserve`.
+- Do not automatically merge directional ground names unless explicitly reviewed; North/South/East/West can be different playing surfaces at some venues.
+
 Hidden preview pages:
 
 - Season Overview v2

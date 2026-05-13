@@ -2627,7 +2627,7 @@ def read_match_centre_csv(path: Path) -> pd.DataFrame:
 
 
 def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
-    from src.data.name_normalization import normalize_opponent_club_name
+    from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 
     output = matches.copy()
     for column in [
@@ -2654,6 +2654,7 @@ def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
     output["opponent_name"] = (
         output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
     )
+    output["venue_name"] = output["venue_name"].map(normalize_ground_name)
     output["is_ball_by_ball_bool"] = output["is_ball_by_ball"].map(parse_bool)
     output["ball_by_ball_badge"] = output["is_ball_by_ball_bool"].map(lambda value: "Yes" if value else "No")
     output["match_title"] = output["fvcc_team_name"].fillna("FVCC") + " vs " + output["opponent_name"].fillna("Unknown opponent")

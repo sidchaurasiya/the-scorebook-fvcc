@@ -46,6 +46,14 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Do not over-merge similarly named clubs unless explicitly mapped. Keep distinct clubs such as Bellfield / Bellfield Bulls / Bellfield Rocketz, Darebin Chargers / Deccan Chargers, Lalor / Lalor Warriors, Reservoir Cobras / Reservoir Mayston, and Strathewen / Strathewen Cougars separate.
 - Local review CSVs for raw versus normalized opponent and ground names live under ignored `data/processed/experimental/name_normalization_audit/` and must not be committed unless Preet explicitly approves.
 
+## Current Ground Name Normalization
+
+- Ground labels use the same shared normalization module as opponent labels so Player Profile ground breakdowns, favourite ground labels, and match-context venue labels display clean venue-level names.
+- Reviewed explicit merges include `J.C Donath Reserve (East)`, `J.C. Donath Reserve (Central)`, and `J.C. Donath Reserve (West)` -> `J.C. Donath Reserve`.
+- Reviewed explicit merge: `Chelsworth Park North` and `Chelsworth Park South` -> `Chelsworth Park`.
+- Initial punctuation is normalized for reviewed venues such as `C.H. Sullivan Memorial Park`, `H.L.T. Oulten Park`, `H.P. Zwar Park`, `T.W. Blake Park`, `J.E. Moore Park`, `I.W. Dole Reserve`, and `W. Ruthven VC Reserve`.
+- Do not generally merge directional venue names unless Preet has reviewed and explicitly mapped them.
+
 ## 2. Current App Pages / Navigation
 
 The app has four main pages:

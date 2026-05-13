@@ -221,6 +221,61 @@ MANUAL_OPPONENT_CLUB_MAPPINGS = {
     re.sub(r"\s+", " ", raw).strip().casefold(): canonical for raw, canonical in _OPPONENT_MAPPING_ROWS
 }
 
+_GROUND_MAPPING_ROWS = [
+    ("Boeing Reserve", "Boeing Reserve"),
+    ("Bradford Avenue Reserve", "Bradford Avenue Reserve"),
+    ("C.H Sullivan Memorial Park", "C.H. Sullivan Memorial Park"),
+    ("C.H. Sullivan Memorial Park", "C.H. Sullivan Memorial Park"),
+    ("C.T. Barling Reserve", "C.T. Barling Reserve"),
+    ("Cartledge Reserve", "Cartledge Reserve"),
+    ("Chelsworth Park North", "Chelsworth Park"),
+    ("Chelsworth Park South", "Chelsworth Park"),
+    ("Epping Recreation Reserve", "Epping Recreation Reserve"),
+    ("Fairbairn Park", "Fairbairn Park"),
+    ("Fairfield Park", "Fairfield Park"),
+    ("Fairlea Ovals", "Fairlea Ovals"),
+    ("Ford Park", "Ford Park"),
+    ("H.L.T Oulten Park", "H.L.T. Oulten Park"),
+    ("H.L.T. Oulten Park", "H.L.T. Oulten Park"),
+    ("H.P Zwar Park", "H.P. Zwar Park"),
+    ("H.P. Zwar Park", "H.P. Zwar Park"),
+    ("Hayes Park", "Hayes Park"),
+    ("Huskisson Reserve", "Huskisson Reserve"),
+    ("I.W Dole Reserve", "I.W. Dole Reserve"),
+    ("I.W. Dole Reserve", "I.W. Dole Reserve"),
+    ("J.C Donath Reserve (East)", "J.C. Donath Reserve"),
+    ("J.C. Donath Reserve (Central)", "J.C. Donath Reserve"),
+    ("J.C. Donath Reserve (West)", "J.C. Donath Reserve"),
+    ("J.E Moore Park", "J.E. Moore Park"),
+    ("J.E. Moore Park", "J.E. Moore Park"),
+    ("John Hall Reserve", "John Hall Reserve"),
+    ("John Laffan Reserve", "John Laffan Reserve"),
+    ("Kinglake Memorial Reserve", "Kinglake Memorial Reserve"),
+    ("Lalor Reserve", "Lalor Reserve"),
+    ("Lowalde Recreation Reserve", "Lowalde Recreation Reserve"),
+    ("Main Street Reserve", "Main Street Reserve"),
+    ("McDonnell Park", "McDonnell Park"),
+    ("Meadowglen Reserve", "Meadowglen Reserve"),
+    ("Mernda Recreation Reserve", "Mernda Recreation Reserve"),
+    ("Olympic Park (West Heidelberg)", "Olympic Park (West Heidelberg)"),
+    ("Parker Reserve", "Parker Reserve"),
+    ("Poplar Oval", "Poplar Oval"),
+    ("Seddon Reserve", "Seddon Reserve"),
+    ("Shelley Park (Heidelberg Heights)", "Shelley Park (Heidelberg Heights)"),
+    ("Strathewen Reserve", "Strathewen Reserve"),
+    ("T.W Blake Park", "T.W. Blake Park"),
+    ("T.W. Blake Park", "T.W. Blake Park"),
+    ("Thomastown East Reserve", "Thomastown East Reserve"),
+    ("Unknown ground", UNKNOWN_GROUND),
+    ("W Ruthven VC Reserve", "W. Ruthven VC Reserve"),
+    ("W. Ruthven VC Reserve", "W. Ruthven VC Reserve"),
+    ("Warrawee Park (Bundoora)", "Warrawee Park (Bundoora)"),
+]
+
+MANUAL_GROUND_MAPPINGS = {
+    re.sub(r"\s+", " ", raw).strip().casefold(): canonical for raw, canonical in _GROUND_MAPPING_ROWS
+}
+
 
 def normalize_opponent_club_name(value: object, fallback: str = UNKNOWN_OPPONENT) -> str:
     """Return a club-level opponent display name without team suffix noise."""
@@ -257,11 +312,24 @@ def normalize_opponent_club_name(value: object, fallback: str = UNKNOWN_OPPONENT
 
 def normalize_ground_name(value: object, fallback: str = UNKNOWN_GROUND) -> str:
     text = _clean_text(value, fallback="")
-    return _collapse_spaces(text).strip() or fallback
+    if not text:
+        return fallback
+    mapped = _manual_ground_mapping(text)
+    if mapped:
+        return mapped
+    normalized = _normalize_initial_punctuation(text)
+    mapped = _manual_ground_mapping(normalized)
+    if mapped:
+        return mapped
+    return _collapse_spaces(normalized).strip() or fallback
 
 
 def _manual_opponent_mapping(value: str) -> str | None:
     return MANUAL_OPPONENT_CLUB_MAPPINGS.get(_collapse_spaces(value).casefold())
+
+
+def _manual_ground_mapping(value: str) -> str | None:
+    return MANUAL_GROUND_MAPPINGS.get(_collapse_spaces(value).casefold())
 
 
 def _clean_text(value: object, fallback: str = "") -> str:
@@ -275,6 +343,14 @@ def _clean_text(value: object, fallback: str = "") -> str:
 
 def _collapse_spaces(value: str) -> str:
     return re.sub(r"\s+", " ", str(value)).strip()
+
+
+def _normalize_initial_punctuation(value: str) -> str:
+    text = _collapse_spaces(value)
+    text = re.sub(r"\b([A-Z])\.([A-Z])\.([A-Z])(?=\s)", r"\1.\2.\3.", text)
+    text = re.sub(r"\b([A-Z])\.([A-Z])(?=\s)", r"\1.\2.", text)
+    text = re.sub(r"\b([A-Z])\s+(Ruthven VC Reserve)\b", r"\1. \2", text)
+    return _collapse_spaces(text)
 
 
 def _remove_team_suffixes(value: str) -> str:
