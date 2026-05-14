@@ -89,6 +89,10 @@ Current production navigation pages:
 - Current Player DNA visual rule: Dismissal Fingerprint should reuse the Player vs Peers comparison-bar/average-marker styling; Bowling by Phase remains verified ball-by-ball only but should not show a repeated visible footnote.
 - Current Player Profile Strike Rate split rule: split-level Strike Rate remains BBB-only; when BBB ball rows omit per-ball striker innings audit fields, accept the innings only if aggregated BBB runs and BBB balls exactly match the scorecard innings runs and balls. Mohaneesh Pitre at Epping Recreation Reserve is the known validation case.
 - Current Player Profile toggle visual rule: Career Breakdown segmented controls should match the app tab pill visual exactly, with the same rounded light container, soft lavender active pill, muted inactive labels, and no extra shadow.
+- Player Profile QA status: a 50-player QA audit has been run on the production Player Profile data sources. Latest result after QA follow-up: 0 Critical, 0 High, 0 Medium, 26 Low, 9 Info findings.
+- The remaining QA items are mostly coverage/empty-state issues. Missing verified ball-by-ball phase data should render a premium empty state, not zeros, global values, or stale tables.
+- Recommended permanent Player Profile tests: Bat Avg uses outs, BBB Strike Rate uses BBB runs/balls only, missing BBB stays `N/A`, 30s are 30-49 inclusive, 3WI excludes 5WI, BBI sorts/parses wickets then runs, Bowling Phase respects actual match type, and known aliases merge to one canonical profile.
+- Permanent lightweight Player Profile metric tests now live in `tests/test_player_profile_metrics.py`; the generated 50-player QA CSV/Markdown outputs stay ignored under `data/processed/experimental/player_profile_qa/`.
 
 ## Opponent Name Normalization Notes
 

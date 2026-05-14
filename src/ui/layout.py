@@ -8374,18 +8374,18 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
             '</div>',
             unsafe_allow_html=True,
         )
-        render_profile_phase_selector(profile_view, selected)
         if rows.empty:
-            st.markdown(
-                '<div class="profile-breakdown-empty"><span>Phase analytics use verified ball-by-ball matches only. No matched bowling phase data is available yet.</span></div>',
-                unsafe_allow_html=True,
+            render_profile_empty_state(
+                "Bowling phase data is not available for this player yet.",
+                "Verified ball-by-ball coverage is needed before phase splits can be shown.",
             )
             return
+        render_profile_phase_selector(profile_view, selected)
         rows = rows[rows.get("phase_model", pd.Series(dtype=str)).astype(str).str.casefold() == selected.casefold()].copy()
         if rows.empty:
-            st.markdown(
-                '<div class="profile-breakdown-empty"><span>No verified ball-by-ball deliveries are available for this phase model.</span></div>',
-                unsafe_allow_html=True,
+            render_profile_empty_state(
+                "Bowling phase data is not available for this format yet.",
+                "Try another format, or check back when verified ball-by-ball coverage exists.",
             )
             return
         rows["phase_order"] = pd.to_numeric(rows.get("phase_order"), errors="coerce").fillna(99)
@@ -8395,9 +8395,9 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
             rows[column] = pd.to_numeric(rows.get(column), errors="coerce")
         rows = rows[rows["legal_balls"] > 0].sort_values("phase_order")
         if rows.empty:
-            st.markdown(
-                '<div class="profile-breakdown-empty"><span>No verified legal deliveries are available for this phase model.</span></div>',
-                unsafe_allow_html=True,
+            render_profile_empty_state(
+                "Bowling phase data is not available for this format yet.",
+                "Verified legal deliveries are required for these bowling phase metrics.",
             )
             return
         best_phase = profile_best_phase_label(rows)
@@ -8558,6 +8558,19 @@ def render_profile_intelligence_empty(title: str, copy: str) -> None:
             '</div>'
             f'<p>{html.escape(copy)}</p>'
             '</article>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def render_profile_empty_state(title: str, copy: str = "") -> None:
+    body = f"<span>{html.escape(copy)}</span>" if copy else ""
+    st.markdown(
+        (
+            '<div class="profile-breakdown-empty">'
+            f'<strong>{html.escape(title)}</strong>'
+            f'{body}'
+            '</div>'
         ),
         unsafe_allow_html=True,
     )
@@ -9388,14 +9401,33 @@ def profile_segmented_links_html(
 
 
 def render_profile_breakdown_empty(label: str) -> None:
-    st.markdown(
-        (
-            '<div class="profile-breakdown-empty">'
-            f'<strong>No {html.escape(label.lower())} breakdown available yet.</strong>'
-            '<span>This view will appear when reliable scorecard context exists for the selected player.</span>'
-            '</div>'
-        ),
-        unsafe_allow_html=True,
+    render_profile_empty_state(
+        f"No {label.lower()} breakdown available yet.",
+        "This view will appear when reliable scorecard context exists for the selected player.",
+    )
+
+
+def profile_performance_empty_copy(label_column: str, discipline: str) -> tuple[str, str]:
+    label = "Home/Away" if label_column == "H/A" else label_column
+    discipline_label = str(discipline).lower()
+    if label_column == "Opponent":
+        return (
+            f"No opponent-level {discipline_label} split is available for this player yet.",
+            "Opponent rows appear once the scorecard source includes enough matched opposition context.",
+        )
+    if label_column == "Ground":
+        return (
+            f"No ground-level {discipline_label} split is available for this player yet.",
+            "Ground rows appear once the scorecard source includes enough matched venue context.",
+        )
+    if label_column == "H/A":
+        return (
+            f"No home/away {discipline_label} split is available for this player yet.",
+            "Home/away rows depend on reliable match venue and team-side context.",
+        )
+    return (
+        f"No {label.lower()} {discipline_label} split is available for this player yet.",
+        "This is usually a data coverage or discipline-specific gap, not an error.",
     )
 
 
@@ -9403,7 +9435,7 @@ def render_profile_performance_table(rows: pd.DataFrame, label_column: str, disc
     filtered = rows[rows["discipline"].astype(str) == discipline].copy() if "discipline" in rows else rows.head(0)
     filtered = filtered[filtered["breakdown_label"].astype(str).str.strip() != ""].copy() if "breakdown_label" in filtered else filtered
     if filtered.empty:
-        st.caption("No data available for this view.")
+        render_profile_empty_state(*profile_performance_empty_copy(label_column, discipline))
         return
     if discipline == "Batting":
         table = filtered.rename(
@@ -9463,7 +9495,7 @@ def render_profile_performance_table(rows: pd.DataFrame, label_column: str, disc
             activity = activity | (table["Overs"].map(cricket_overs_to_balls).fillna(0) > 0)
     table = table.loc[activity].copy()
     if table.empty:
-        st.caption("No data available for this view.")
+        render_profile_empty_state(*profile_performance_empty_copy(label_column, discipline))
         return
 
     table = sort_profile_performance_table(table, label_column, discipline)

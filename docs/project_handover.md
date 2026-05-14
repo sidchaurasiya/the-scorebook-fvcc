@@ -41,6 +41,11 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Current Player DNA visual fix: Dismissal Fingerprint should share the Player vs Peers comparison-bar classes/marker styling, Bowling by Phase values should render in dark table text, and the visible bowling-phase BBB footnote has been removed while the BBB-only calculation rule remains in code.
 - Current Player Profile BBB split-rate fix: split-level Strike Rate still uses only BBB runs and BBB balls, but verified innings can now pass completeness validation when ball rows omit striker innings audit fields, as long as the aggregated BBB runs/balls match the scorecard innings runs/balls. This fixes Mohaneesh Pitre at Epping Recreation Reserve showing `40.0%` instead of `N/A`.
 - Current Player Profile toggle styling: Career Breakdown dimension and discipline segmented controls should match the app tab pill style: light lavender-grey capsule, soft lavender active pill, fully rounded shape, no shadow, and consistent sizing.
+- Current Player Profile QA status: a 50-player audit script/report was added and run locally. Latest audit result after QA follow-up: 0 Critical, 0 High, 0 Medium, 26 Low, 9 Info findings.
+- Remaining Player Profile QA issues are mainly data-coverage and empty-state gaps, not confirmed formula bugs: older bowlers without verified ball-by-ball phase rows, sparse split views for players with no batting/bowling/fielding source rows, and documented missing BBB Strike Rate coverage.
+- Bowling Phase must never fake missing ball-by-ball coverage. If no verified BBB phase summary exists for a bowler, show a calm empty state such as `Bowling phase data is not available for this player yet.`
+- Recommended permanent tests for Player Profile metric rules: batting average uses outs, BBB Strike Rate uses BBB runs/balls only, missing BBB is `N/A`, 30s are 30-49 inclusive, 3WI excludes 5WI, BBI parses wickets then runs, bowling phase respects match type, and known aliases resolve to one canonical profile.
+- A lightweight permanent pytest file now covers those Player Profile metric doctrines at `tests/test_player_profile_metrics.py`; generated 50-player QA reports remain local under `data/processed/experimental/player_profile_qa/`.
 
 ## Current Opponent Name Normalization
 

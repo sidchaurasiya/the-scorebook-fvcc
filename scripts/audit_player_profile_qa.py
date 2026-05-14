@@ -632,13 +632,17 @@ def validate_performance_breakdown(sample: pd.DataFrame, performance: pd.DataFra
                 recommended_fix="Check canonical identity mapping in Player Profile export builder.",
             )
             continue
+        discipline_has_activity = {
+            discipline: player_has_performance_discipline(rows, discipline)
+            for discipline in ["Batting", "Bowling", "Fielding"]
+        }
         for dimension in ["Season", "Grade", "Opponent", "Ground", "Home/Away"]:
             for discipline in ["Batting", "Bowling", "Fielding"]:
                 subset = rows[
                     rows["dimension"].astype(str).eq(dimension)
                     & rows["discipline"].astype(str).eq(discipline)
                 ]
-                if subset.empty and dimension in {"Season", "Grade"}:
+                if subset.empty and dimension in {"Season", "Grade"} and discipline_has_activity.get(discipline, False):
                     add_finding(
                         findings,
                         severity="Medium",
@@ -810,6 +814,23 @@ def validate_performance_breakdown(sample: pd.DataFrame, performance: pd.DataFra
                 )
 
 
+def player_has_performance_discipline(rows: pd.DataFrame, discipline: str) -> bool:
+    subset = rows[rows.get("discipline", pd.Series(index=rows.index, dtype=object)).astype(str).eq(discipline)].copy()
+    if subset.empty:
+        return False
+    if discipline == "Batting":
+        activity_columns = ["innings", "runs", "thirties", "fifties", "hundreds"]
+    elif discipline == "Bowling":
+        activity_columns = ["balls_bowled", "wickets", "three_wicket_innings", "five_wicket_innings"]
+    else:
+        activity_columns = ["catches", "stumpings", "run_outs", "dismissals"]
+    activity = pd.Series(False, index=subset.index)
+    for column in activity_columns:
+        if column in subset:
+            activity = activity | pd.to_numeric(subset[column], errors="coerce").fillna(0).gt(0)
+    return bool(activity.any())
+
+
 def validate_player_dna(
     sample: pd.DataFrame,
     player_checks: pd.DataFrame,
@@ -897,10 +918,10 @@ def validate_player_dna(
         if is_bowler and phase_rows.empty:
             add_finding(
                 findings,
-                severity="Medium",
+                severity="Low",
                 category="data coverage",
                 section="Bowling by Phase",
-                issue="Bowling phase summary missing for bowler",
+                issue="Verified BBB bowling phase coverage missing for bowler",
                 detail="Player qualifies as a bowler but has no verified BBB phase rows.",
                 player_id=player_id,
                 player_name=name,
