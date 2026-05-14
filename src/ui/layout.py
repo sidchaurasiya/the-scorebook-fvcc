@@ -1436,13 +1436,16 @@ def selected_season_round_grade_filter(
         st.session_state[key] = valid[0]
     label_map = dict(options)
     with st.container(key="season_round_grade_filter_control"):
-        selected = st.segmented_control(
-            "Grade/team",
-            valid,
-            format_func=lambda slug: label_map.get(slug, slug),
-            key=key,
-            label_visibility="collapsed",
-        )
+        for slug in valid:
+            active = st.session_state.get(key) == slug
+            if st.button(
+                label_map.get(slug, slug),
+                key=f"{key}_{slug}",
+                type="primary" if active else "secondary",
+                use_container_width=True,
+            ):
+                st.session_state[key] = slug
+        selected = st.session_state.get(key)
     selected_slug = str(selected or st.session_state.get(key) or valid[0])
     if selected_slug not in valid:
         selected_slug = valid[0]
@@ -1552,15 +1555,36 @@ def season_round_grade_options(
     dashboard_data: dict[str, object],
     rows: list[dict[str, object]],
 ) -> list[tuple[str, str]]:
-    seen: dict[str, str] = {}
+    seen: dict[str, tuple[str, str]] = {}
     for slug, label in season_round_dashboard_team_options(dashboard_data):
-        seen.setdefault(slug, label)
+        seen.setdefault(slug, (season_round_toggle_label(label), label))
     for row in rows:
         slug = str(row.get("grade_slug") or "").strip()
         label = str(row.get("grade") or "").strip()
         if slug and label:
-            seen.setdefault(slug, label)
-    return sorted(seen.items(), key=lambda item: grade_sort_key(item[1]))
+            seen.setdefault(slug, (season_round_toggle_label(label), label))
+    return [
+        (slug, display_label)
+        for slug, (display_label, sort_label) in sorted(
+            seen.items(),
+            key=lambda item: grade_sort_key(item[1][1]),
+        )
+    ]
+
+
+def season_round_toggle_label(label: object) -> str:
+    text = safe_record_text(label, "Team")
+    replacements = {
+        "Jika Shield": "Jika",
+        "Jack Quick Shield": "Jack Quick",
+        "Jack Kelly Shield": "Jack Kelly",
+        "John Adams Shield": "John Adams",
+        "Les Horne Shield": "Les Horne",
+        "Robert Young Shield": "Robert Young",
+    }
+    for full, short in replacements.items():
+        text = text.replace(full, short)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def season_round_dashboard_team_options(dashboard_data: dict[str, object]) -> list[tuple[str, str]]:
