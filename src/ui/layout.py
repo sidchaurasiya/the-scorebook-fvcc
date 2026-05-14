@@ -76,6 +76,7 @@ from src.utils.team_grade import (
     clean_team_name,
     export_team_grade_display_audit,
     grade_sort_key,
+    normalize_spaces,
 )
 from src.utils.analytics import (
     ga4_link_onclick,
@@ -1349,9 +1350,394 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
         st.info("Load public PlayCricket stats to view the dashboard.")
         return
 
+    render_season_by_round(dashboard_data)
     render_overall_section(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
+
+
+def all_available_match_centre_scope() -> Path:
+    return MATCH_CENTRE_PROCESSED_ROOT / "all_available"
+
+
+def all_available_match_centre_signature() -> tuple[tuple[str, float], ...]:
+    return match_centre_scope_signature(all_available_match_centre_scope())
+
+
+@st.cache_data(show_spinner=False)
+def load_all_available_match_centre_sources(
+    _signature: tuple[tuple[str, float], ...],
+    _identity_version: float | None = None,
+) -> dict[str, pd.DataFrame]:
+    scope = all_available_match_centre_scope()
+    if not scope.exists():
+        return {"matches": pd.DataFrame(), "batting": pd.DataFrame(), "bowling": pd.DataFrame()}
+    matches = read_match_centre_csv(scope / "all_matches.csv")
+    batting = read_match_centre_csv(scope / "all_scorecard_batting.csv")
+    bowling = read_match_centre_csv(scope / "all_scorecard_bowling.csv")
+    if not matches.empty:
+        matches = build_match_archive_frame(matches)
+    if not batting.empty:
+        batting = add_missing_canonical_player_ids(batting)
+    if not bowling.empty:
+        bowling = add_missing_canonical_player_ids(bowling)
+    return {"matches": matches, "batting": batting, "bowling": bowling}
+
+
+def match_centre_sources_for_scorecards() -> dict[str, pd.DataFrame]:
+    return load_all_available_match_centre_sources(
+        all_available_match_centre_signature(),
+        player_aliases_mtime(),
+    )
+
+
+def render_season_by_round(dashboard_data: dict[str, object]) -> None:
+    render_section_heading("Season by Round 🗓️")
+    sources = match_centre_sources_for_scorecards()
+    rows = build_season_round_rows(dashboard_data, sources)
+    with st.container(key="season_by_round_card"):
+        st.markdown(
+            """
+            <div class="season-round-card-head">
+                <div>
+                    <h3>Round-by-round scorecards</h3>
+                    <p>Latest results first, with best FVCC batting and bowling performances from scorecard rows.</p>
+                </div>
+                <span>Scorecard-safe</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        if not rows:
+            render_season_round_empty_state()
+            return
+
+        options = season_round_grade_options(rows)
+        selected_slug = "all"
+        if len(options) > 2:
+            selected_slug = selected_season_round_grade_filter(options, dashboard_data)
+        elif len(options) == 2:
+            selected_slug = options[1][0]
+
+        visible_rows = rows if selected_slug == "all" else [row for row in rows if row.get("grade_slug") == selected_slug]
+        if not visible_rows:
+            render_season_round_empty_state()
+            return
+        st.markdown(season_round_cards_html(visible_rows, show_grade_column=selected_slug != "all"), unsafe_allow_html=True)
+
+
+def render_season_round_empty_state() -> None:
+    st.markdown(
+        '<div class="season-round-empty">Round-by-round scorecards are not available for this season yet.</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def selected_season_round_grade_filter(
+    options: list[tuple[str, str]],
+    dashboard_data: dict[str, object],
+) -> str:
+    season_id = re.sub(r"[^a-zA-Z0-9_]+", "_", str(dashboard_data.get("season", {}).get("id", "season") or "season"))
+    scope_id = "all" if dashboard_data.get("is_all_teams") else str(dashboard_data.get("team", {}).get("id", "team") or "team")
+    scope_id = re.sub(r"[^a-zA-Z0-9_]+", "_", scope_id)
+    key = f"season_round_grade_filter_{season_id}_{scope_id}"
+    valid = [slug for slug, _label in options]
+    if key not in st.session_state or st.session_state.get(key) not in valid:
+        st.session_state[key] = valid[0]
+    label_map = dict(options)
+    with st.container(key="season_round_grade_filter_control"):
+        selected = st.segmented_control(
+            "Grade/team",
+            valid,
+            format_func=lambda slug: label_map.get(slug, slug),
+            key=key,
+            label_visibility="collapsed",
+        )
+    selected_slug = str(selected or st.session_state.get(key) or valid[0])
+    if selected_slug not in valid:
+        selected_slug = valid[0]
+        st.session_state[key] = selected_slug
+    return selected_slug
+
+
+def build_season_round_rows(
+    dashboard_data: dict[str, object],
+    sources: dict[str, pd.DataFrame],
+) -> list[dict[str, object]]:
+    matches = sources.get("matches", pd.DataFrame()).copy()
+    if matches.empty:
+        return []
+    season = dashboard_data.get("season", {}) or {}
+    season_id = str(season.get("id", "") or "").strip()
+    season_name = str(season.get("name", "") or "").strip()
+    if season_id and "season_id" in matches:
+        matches = matches[matches["season_id"].astype(str) == season_id].copy()
+    elif season_name and "season" in matches:
+        matches = matches[matches["season"].astype(str).str.casefold() == season_name.casefold()].copy()
+    if matches.empty:
+        return []
+
+    team_ids = {
+        str(team.get("id", "") or "").strip()
+        for team in dashboard_data.get("teams", []) or []
+        if str(team.get("id", "") or "").strip()
+    }
+    if team_ids:
+        scope_mask = pd.Series(False, index=matches.index)
+        if "fvcc_team_id" in matches:
+            scope_mask = scope_mask | matches["fvcc_team_id"].astype(str).isin(team_ids)
+        if "source_team_ids" in matches:
+            scope_mask = scope_mask | matches["source_team_ids"].map(lambda value: match_source_contains_team(value, team_ids))
+        matches = matches[scope_mask].copy()
+    if matches.empty:
+        return []
+
+    best_batters = best_batters_by_match(sources.get("batting", pd.DataFrame()), matches)
+    best_bowlers = best_bowlers_by_match(sources.get("bowling", pd.DataFrame()), matches)
+    rows = []
+    for _, match in matches.iterrows():
+        match_id = str(match.get("match_id", "") or "").strip()
+        result = season_round_result(match)
+        grade_label = season_round_grade_label(match)
+        grade_slug = make_player_slug(grade_label or "grade")
+        rows.append(
+            {
+                "match_id": match_id,
+                "round": season_round_display(match.get("round_name")),
+                "round_sort": season_round_sort_value(match.get("round_name")),
+                "grade": grade_label,
+                "grade_slug": grade_slug,
+                "opponent": safe_record_text(match.get("opponent_name"), "Unknown opponent"),
+                "result_label": result["label"],
+                "result_class": result["class"],
+                "result_text": result["text"],
+                "best_batter": best_batters.get(match_id, "—"),
+                "best_bowler": best_bowlers.get(match_id, "—"),
+                "scorecard": scorecard_link_html(
+                    match_id,
+                    label="View scorecard ↗",
+                    class_name="season-round-scorecard-link",
+                    page_slug=SEASON_OVERVIEW_QUERY_PAGE,
+                    section_name="season_by_round",
+                )
+                or '<span class="season-round-pending">Scorecard pending</span>',
+                "match_date": match.get("match_date"),
+            }
+        )
+    return sorted(
+        rows,
+        key=lambda row: (
+            row.get("round_sort", -1),
+            pd.Timestamp(row["match_date"]).timestamp() if pd.notna(row.get("match_date")) else -1,
+            str(row.get("grade", "")).casefold(),
+        ),
+        reverse=True,
+    )
+
+
+def match_source_contains_team(value: object, team_ids: set[str]) -> bool:
+    text = str(value or "")
+    if not text:
+        return False
+    tokens = {token.strip() for token in re.split(r"[,;|]", text) if token.strip()}
+    return bool(tokens & team_ids)
+
+
+def season_round_grade_label(match: pd.Series) -> str:
+    team = clean_team_name(match.get("fvcc_team_name"))
+    grade = clean_grade_name(match.get("grade_name"))
+    if team and grade and team.casefold() not in grade.casefold():
+        return f"{team} - {grade}"
+    return grade or team or "Team"
+
+
+def season_round_grade_options(rows: list[dict[str, object]]) -> list[tuple[str, str]]:
+    seen: dict[str, str] = {}
+    for row in rows:
+        slug = str(row.get("grade_slug") or "").strip()
+        label = str(row.get("grade") or "").strip()
+        if slug and label:
+            seen.setdefault(slug, label)
+    ordered = sorted(seen.items(), key=lambda item: grade_sort_key(item[1]))
+    return [("all", "All"), *ordered]
+
+
+def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bool = False) -> str:
+    grouped: dict[str, list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault(str(row.get("grade") or "Team"), []).append(row)
+    cards = []
+    for grade_label, grade_rows in sorted(grouped.items(), key=lambda item: grade_sort_key(item[0])):
+        record = season_round_record_label(grade_rows)
+        row_html = "".join(season_round_row_html(row, show_grade_column=show_grade_column) for row in grade_rows)
+        head_cols = (
+            '<div class="season-round-row season-round-head">'
+            '<span>Round</span>'
+            + ('<span>Grade</span>' if show_grade_column else "")
+            + '<span>Opponent</span><span>Result</span><span>Best Batter</span><span>Best Bowler</span><span>Scorecard</span>'
+            '</div>'
+        )
+        card_class = "season-round-grade-card single-grade" if show_grade_column else "season-round-grade-card"
+        cards.append(
+            f'<article class="{card_class}">'
+            '<div class="season-round-grade-head">'
+            f'<h3>{html.escape(grade_label)}</h3>'
+            f'<span>{html.escape(record)}</span>'
+            '</div>'
+            f'<div class="season-round-scroll"><div class="season-round-grid">{head_cols}{row_html}</div></div>'
+            '</article>'
+        )
+    return "".join(cards)
+
+
+def season_round_row_html(row: dict[str, object], show_grade_column: bool = False) -> str:
+    scorecard = str(row.get("scorecard") or '<span class="season-round-pending">Scorecard pending</span>')
+    return (
+        '<div class="season-round-row">'
+        f'<strong>{html.escape(str(row.get("round") or "—"))}</strong>'
+        + (f'<span class="season-round-grade-cell">{html.escape(str(row.get("grade") or "—"))}</span>' if show_grade_column else "")
+        + f'<span class="season-round-opponent">vs {html.escape(str(row.get("opponent") or "Unknown opponent"))}</span>'
+        '<span class="season-round-result">'
+        f'<b class="season-result-pill {html.escape(str(row.get("result_class") or "none"))}">{html.escape(str(row.get("result_label") or "No Result"))}</b>'
+        f'<span>{html.escape(str(row.get("result_text") or "no result"))}</span>'
+        '</span>'
+        f'<span class="season-round-performer"><span class="mobile-label">Batter: </span>{html.escape(str(row.get("best_batter") or "—"))}</span>'
+        f'<span class="season-round-performer"><span class="mobile-label">Bowler: </span>{html.escape(str(row.get("best_bowler") or "—"))}</span>'
+        f'<span class="season-round-scorecard">{scorecard}</span>'
+        '</div>'
+    )
+
+
+def season_round_record_label(rows: list[dict[str, object]]) -> str:
+    counts = {"win": 0, "loss": 0, "draw": 0, "tie": 0, "none": 0}
+    for row in rows:
+        result_class = str(row.get("result_class") or "none")
+        counts[result_class if result_class in counts else "none"] += 1
+    parts = [f"{counts['win']}W", f"{counts['loss']}L"]
+    if counts["draw"]:
+        parts.append(f"{counts['draw']}D")
+    if counts["tie"]:
+        parts.append(f"{counts['tie']}T")
+    if counts["none"]:
+        parts.append(f"{counts['none']}NR")
+    return " - ".join(parts)
+
+
+def season_round_display(value: object) -> str:
+    label = safe_record_text(value, "Round")
+    if "final" in label.casefold():
+        return re.sub(r"\bRound\s+(\d+)\b", r"R\1", label, flags=re.IGNORECASE)
+    match = re.search(r"(\d+)", label)
+    if match and "round" in label.casefold():
+        return f"R{int(match.group(1))}"
+    return label
+
+
+def season_round_sort_value(value: object) -> int:
+    text = str(value or "").casefold()
+    if "grand final" in text:
+        return 1003
+    if "preliminary" in text:
+        return 1002
+    if "semi" in text:
+        return 1001
+    if "final" in text:
+        return 1000
+    match = re.search(r"(\d+)", text)
+    return int(match.group(1)) if match else -1
+
+
+def season_round_result(match: pd.Series) -> dict[str, str]:
+    text = normalize_result_wording(safe_record_text(match.get("result_text"), ""))
+    lowered = text.casefold()
+    if not text or any(token in lowered for token in ["no result", "abandoned", "washout", "rain"]):
+        reason = "rain" if "rain" in lowered else "abandoned" if "abandoned" in lowered else ""
+        return {"label": "No Result", "class": "none", "text": f"no result{' - ' + reason if reason else ''}"}
+    if "draw" in lowered or "drawn" in lowered or "points shared" in lowered:
+        return {"label": "Draw", "class": "draw", "text": "draw"}
+    if "tie" in lowered or "tied" in lowered:
+        return {"label": "Tie", "class": "tie", "text": "tie"}
+
+    winner = text.split(" won", 1)[0].strip() if " won" in lowered else ""
+    margin = ""
+    margin_match = re.search(r"\bwon\b\s*(.*)$", text, flags=re.IGNORECASE)
+    if margin_match:
+        margin = margin_match.group(1).strip()
+    margin = normalize_result_wording(margin)
+    if winner:
+        prefix = "won" if is_fvcc_team_name(winner) else "lost"
+        return {
+            "label": "Win" if prefix == "won" else "Loss",
+            "class": "win" if prefix == "won" else "loss",
+            "text": normalize_spaces(f"{prefix} {margin}").strip(),
+        }
+    return {"label": "No Result", "class": "none", "text": text}
+
+
+def normalize_result_wording(value: object) -> str:
+    text = normalize_spaces(str(value or ""))
+    replacements = {
+        r"\bwkts\b": "wickets",
+        r"\bwkt\b": "wicket",
+        r"\brns\b": "runs",
+    }
+    for pattern, replacement in replacements.items():
+        text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+    return normalize_spaces(text)
+
+
+def best_batters_by_match(batting: pd.DataFrame, matches: pd.DataFrame) -> dict[str, str]:
+    if batting.empty or matches.empty or "match_id" not in batting:
+        return {}
+    context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
+    rows = batting.merge(context, on="match_id", how="inner")
+    rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows = rows[~rows.get("dismissal_type", pd.Series(index=rows.index, dtype=str)).astype(str).str.casefold().isin({"did not bat", "absent"})]
+    rows["runs_scored"] = pd.to_numeric(rows.get("runs_scored"), errors="coerce").fillna(0)
+    rows["balls_faced"] = pd.to_numeric(rows.get("balls_faced"), errors="coerce")
+    rows = rows.sort_values(["match_id", "runs_scored", "balls_faced"], ascending=[True, False, True])
+    output = {}
+    for match_id, group in rows.groupby("match_id", sort=False):
+        row = group.iloc[0]
+        output[str(match_id)] = f"{display_player_name(row.get('canonical_player_name') or row.get('player_name'))} {format_scorecard_batting_score(row, include_balls=False)}"
+    return output
+
+
+def best_bowlers_by_match(bowling: pd.DataFrame, matches: pd.DataFrame) -> dict[str, str]:
+    if bowling.empty or matches.empty or "match_id" not in bowling:
+        return {}
+    context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
+    rows = bowling.merge(context, on="match_id", how="inner")
+    rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows["wickets_taken"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
+    rows["runs_conceded"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
+    rows = rows.sort_values(["match_id", "wickets_taken", "runs_conceded"], ascending=[True, False, True])
+    output = {}
+    for match_id, group in rows.groupby("match_id", sort=False):
+        row = group.iloc[0]
+        output[str(match_id)] = f"{display_player_name(row.get('canonical_player_name') or row.get('player_name'))} {format_scorecard_bowling_figures(row, separator='-')}"
+    return output
+
+
+def format_scorecard_batting_score(row: pd.Series, include_balls: bool = True) -> str:
+    runs = pd.to_numeric(row.get("runs_scored"), errors="coerce")
+    runs_text = "0" if pd.isna(runs) else str(int(runs))
+    dismissal = str(row.get("dismissal_type", "") or "").casefold()
+    if "not out" in dismissal:
+        runs_text += "*"
+    balls = pd.to_numeric(row.get("balls_faced"), errors="coerce")
+    if include_balls and pd.notna(balls) and float(balls) > 0:
+        runs_text += f"({int(balls)})"
+    return runs_text
+
+
+def format_scorecard_bowling_figures(row: pd.Series, separator: str = "/") -> str:
+    wickets = pd.to_numeric(row.get("wickets_taken"), errors="coerce")
+    runs = pd.to_numeric(row.get("runs_conceded"), errors="coerce")
+    wickets_text = "0" if pd.isna(wickets) else str(int(wickets))
+    runs_text = "0" if pd.isna(runs) else str(int(runs))
+    return f"{wickets_text}{separator}{runs_text}"
+
 
 
 def render_season_overview_v2(dashboard_data: dict[str, object] | None) -> None:
@@ -7364,6 +7750,7 @@ def render_player_profile_page() -> None:
 
     render_player_header_card(profile_view)
     render_player_breakdown(profile_view["career"].iloc[0])
+    render_player_recent_form(profile_view["career"].iloc[0])
     render_player_highlights(profile_view)
     render_player_intelligence(profile_view)
     render_player_peer_comparison(profile_view)
@@ -10224,6 +10611,154 @@ def render_player_breakdown(career: pd.Series) -> None:
             card_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
             card_classes = f"profile-breakdown-card profile-career-overview-card profile-career-card-{card_slug} {keeper_class}"
             st.markdown(f'<div class="{card_classes}"><h4>{html.escape(title)}</h4>{metric_html}</div>', unsafe_allow_html=True)
+
+
+def render_player_recent_form(career: pd.Series) -> None:
+    recent = build_player_recent_form(career)
+    render_section_heading("Recent Form ⚡")
+    batting_html = recent_form_line_html(
+        "Batting scores",
+        "Latest first · 10 shown",
+        recent["batting"],
+        "bat",
+        "No recent batting scores available.",
+    )
+    bowling_html = recent_form_line_html(
+        "Bowling figures",
+        "Latest first · 10 shown",
+        recent["bowling"],
+        "bowl",
+        "No recent bowling figures available.",
+    )
+    st.markdown(f'<div class="recent-form-card">{batting_html}{bowling_html}</div>', unsafe_allow_html=True)
+
+
+def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, object]]]:
+    player_id = str(career.get("canonical_player_id", "") or "").strip()
+    player_name_key = player_name_match_key(career.get("Player", ""))
+    sources = match_centre_sources_for_scorecards()
+    matches = sources.get("matches", pd.DataFrame()).copy()
+    if matches.empty:
+        return {"batting": [], "bowling": []}
+    context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
+    batting = player_recent_batting_rows(sources.get("batting", pd.DataFrame()), context, player_id, player_name_key)
+    bowling = player_recent_bowling_rows(sources.get("bowling", pd.DataFrame()), context, player_id, player_name_key)
+    return {
+        "batting": [
+            {
+                "label": format_scorecard_batting_score(row, include_balls=True),
+                "classes": recent_batting_chip_classes(row),
+            }
+            for _, row in batting.head(10).iterrows()
+        ],
+        "bowling": [
+            {
+                "label": format_scorecard_bowling_figures(row, separator="/"),
+                "classes": recent_bowling_chip_classes(row),
+            }
+            for _, row in bowling.head(10).iterrows()
+        ],
+    }
+
+
+def player_recent_batting_rows(
+    batting: pd.DataFrame,
+    context: pd.DataFrame,
+    player_id: str,
+    player_name_key_value: str,
+) -> pd.DataFrame:
+    if batting.empty or context.empty or "match_id" not in batting:
+        return pd.DataFrame()
+    rows = batting.merge(context, on="match_id", how="inner")
+    rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows = filter_recent_form_player_rows(rows, player_id, player_name_key_value)
+    if rows.empty:
+        return rows
+    dismissal = rows.get("dismissal_type", pd.Series(index=rows.index, dtype=str)).astype(str).str.casefold()
+    rows = rows[~dismissal.isin({"did not bat", "absent"})].copy()
+    rows["match_date"] = pd.to_datetime(rows.get("match_date"), errors="coerce", utc=True)
+    rows["bat_instance_sort"] = pd.to_numeric(rows.get("bat_instance"), errors="coerce").fillna(0)
+    rows["bat_order_sort"] = pd.to_numeric(rows.get("bat_order"), errors="coerce").fillna(99)
+    return rows.sort_values(["match_date", "bat_instance_sort", "bat_order_sort"], ascending=[False, False, True])
+
+
+def player_recent_bowling_rows(
+    bowling: pd.DataFrame,
+    context: pd.DataFrame,
+    player_id: str,
+    player_name_key_value: str,
+) -> pd.DataFrame:
+    if bowling.empty or context.empty or "match_id" not in bowling:
+        return pd.DataFrame()
+    rows = bowling.merge(context, on="match_id", how="inner")
+    rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows = filter_recent_form_player_rows(rows, player_id, player_name_key_value)
+    if rows.empty:
+        return rows
+    rows["match_date"] = pd.to_datetime(rows.get("match_date"), errors="coerce", utc=True)
+    rows["bowl_order_sort"] = pd.to_numeric(rows.get("bowl_order"), errors="coerce").fillna(99)
+    return rows.sort_values(["match_date", "bowl_order_sort"], ascending=[False, True])
+
+
+def filter_recent_form_player_rows(rows: pd.DataFrame, player_id: str, player_name_key_value: str) -> pd.DataFrame:
+    if rows.empty:
+        return rows
+    mask = pd.Series(False, index=rows.index)
+    if player_id and "canonical_player_id" in rows:
+        mask = mask | (rows["canonical_player_id"].astype(str).str.strip() == player_id)
+    if player_id and "participant_id" in rows:
+        mask = mask | (rows["participant_id"].astype(str).str.strip() == player_id)
+    if player_name_key_value:
+        for column in ["canonical_player_name", "player_name", "raw_player_name"]:
+            if column in rows:
+                mask = mask | (rows[column].map(player_name_match_key) == player_name_key_value)
+    return rows[mask].copy()
+
+
+def recent_form_line_html(
+    label: str,
+    meta: str,
+    chips: list[dict[str, object]],
+    tone: str,
+    empty_copy: str,
+) -> str:
+    if chips:
+        chip_html = "".join(
+            f'<span class="recent-form-chip {html.escape(tone)} {html.escape(str(chip.get("classes") or ""))}">{html.escape(str(chip.get("label") or "—"))}</span>'
+            for chip in chips
+        )
+    else:
+        chip_html = f'<span class="recent-form-empty">{html.escape(empty_copy)}</span>'
+    return (
+        '<div class="recent-form-line">'
+        f'<div class="recent-form-label">{html.escape(label)}<small>{html.escape(meta)}</small></div>'
+        f'<div class="recent-form-chip-row">{chip_html}</div>'
+        '</div>'
+    )
+
+
+def recent_batting_chip_classes(row: pd.Series) -> str:
+    classes = []
+    runs = pd.to_numeric(row.get("runs_scored"), errors="coerce")
+    dismissal = str(row.get("dismissal_type", "") or "").casefold()
+    if pd.notna(runs) and float(runs) >= 50:
+        classes.append("hot")
+    if "not out" in dismissal:
+        classes.append("notout")
+    if pd.notna(runs) and float(runs) == 0:
+        classes.append("quiet")
+    return " ".join(classes)
+
+
+def recent_bowling_chip_classes(row: pd.Series) -> str:
+    classes = []
+    wickets = pd.to_numeric(row.get("wickets_taken"), errors="coerce")
+    if pd.notna(wickets) and float(wickets) >= 3:
+        classes.append("hot")
+    if pd.notna(wickets) and float(wickets) == 0:
+        classes.append("quiet")
+    return " ".join(classes)
+
 
 
 def player_profile_is_keeper(career: pd.Series) -> bool:

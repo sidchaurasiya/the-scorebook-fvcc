@@ -3816,6 +3816,354 @@ def inject_theme() -> None:
             color: var(--pitch) !important;
         }
 
+        .recent-form-card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 18px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin-bottom: 20px;
+            padding: 16px 18px;
+        }
+
+        .recent-form-line {
+            align-items: center;
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 142px minmax(0, 1fr);
+        }
+
+        .recent-form-line + .recent-form-line {
+            border-top: 1px solid #eef0f7;
+            margin-top: 12px;
+            padding-top: 12px;
+        }
+
+        .recent-form-label {
+            color: var(--ink);
+            font-size: 0.92rem;
+            font-weight: 950;
+            line-height: 1.16;
+        }
+
+        .recent-form-label small {
+            color: #858ba3;
+            display: block;
+            font-size: 0.64rem;
+            font-weight: 850;
+            letter-spacing: 0.02em;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .recent-form-chip-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 2px 0 5px;
+        }
+
+        .recent-form-chip {
+            background: #f7f8fd;
+            border: 1px solid #e8ebf7;
+            border-radius: 999px;
+            color: var(--ink);
+            flex: 0 0 auto;
+            font-size: 0.88rem;
+            font-weight: 900;
+            line-height: 1;
+            padding: 9px 11px;
+            white-space: nowrap;
+        }
+
+        .recent-form-chip.bat {
+            background: #F0EDFF;
+            border-color: #ded8ff;
+            color: #5b3df5;
+        }
+
+        .recent-form-chip.bowl {
+            background: #eef8f6;
+            border-color: #cdebe4;
+            color: #116b63;
+        }
+
+        .recent-form-chip.hot {
+            box-shadow: inset 0 0 0 2px rgba(18, 122, 75, 0.15);
+        }
+
+        .recent-form-chip.notout {
+            box-shadow: inset 0 0 0 2px rgba(154, 107, 5, 0.18);
+        }
+
+        .recent-form-chip.quiet,
+        .recent-form-empty {
+            color: #747b98;
+        }
+
+        .recent-form-empty {
+            background: #f8f8fd;
+            border: 1px dashed #d8ddeb;
+            border-radius: 999px;
+            display: inline-flex;
+            flex: 0 0 auto;
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 8px 11px;
+        }
+
+        div.st-key-season_by_round_card {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 20px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin-bottom: 24px;
+            padding: 18px 20px 20px;
+        }
+
+        .season-round-card-head {
+            align-items: flex-start;
+            display: flex;
+            gap: 14px;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .season-round-card-head h3 {
+            color: var(--ink);
+            font-size: 1.12rem;
+            font-weight: 950;
+            line-height: 1.12;
+            margin: 0;
+        }
+
+        .season-round-card-head p {
+            color: #747b98;
+            font-size: 0.88rem;
+            font-weight: 700;
+            line-height: 1.36;
+            margin: 5px 0 0;
+        }
+
+        .season-round-card-head > span {
+            background: #ffffff;
+            border: 1px solid #e8ebf7;
+            border-radius: 999px;
+            color: #747b98;
+            flex: 0 0 auto;
+            font-size: 0.74rem;
+            font-weight: 900;
+            padding: 7px 10px;
+        }
+
+        div.st-key-season_round_grade_filter_control {
+            margin: -2px 0 14px;
+        }
+
+        div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"],
+        div.st-key-season_round_grade_filter_control [data-testid="stButtonGroup"] {
+            background: #F7F8FD;
+            border: 1px solid #E9ECF6;
+            border-radius: 999px;
+            box-shadow: none;
+            display: inline-flex;
+            gap: 4px;
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 5px;
+            width: fit-content;
+        }
+
+        div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button,
+        div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton-segmented_control"] {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 999px !important;
+            color: #737998 !important;
+            flex: 0 0 auto;
+            font-size: 0.9rem !important;
+            font-weight: 750 !important;
+            line-height: 1 !important;
+            min-height: 38px !important;
+            padding: 8px 16px !important;
+            white-space: nowrap;
+        }
+
+        div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        div.st-key-season_round_grade_filter_control button[data-testid="stBaseButton-segmented_controlActive"] {
+            background: #F0EDFF !important;
+            box-shadow: none !important;
+            color: var(--pitch) !important;
+        }
+
+        .season-round-grade-card {
+            border: 1px solid #e8ebf7;
+            border-radius: 16px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .season-round-grade-head {
+            align-items: center;
+            background: #fbfbff;
+            border-bottom: 1px solid #e8ebf7;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            padding: 12px 14px;
+        }
+
+        .season-round-grade-head h3 {
+            color: var(--ink);
+            font-size: 1rem;
+            font-weight: 950;
+            line-height: 1.16;
+            margin: 0;
+        }
+
+        .season-round-grade-head span {
+            background: #F0EDFF;
+            border: 1px solid #ded8ff;
+            border-radius: 999px;
+            color: #5b3df5;
+            flex: 0 0 auto;
+            font-size: 0.74rem;
+            font-weight: 950;
+            padding: 6px 9px;
+        }
+
+        .season-round-scroll {
+            max-height: 312px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+        .season-round-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .season-round-scroll::-webkit-scrollbar-thumb {
+            background: #d8ddee;
+            border-radius: 999px;
+        }
+
+        .season-round-row {
+            align-items: center;
+            border-top: 1px solid #e8ebf7;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 54px minmax(190px, 1.5fr) minmax(132px, 1.05fr) minmax(118px, 0.9fr) minmax(118px, 0.9fr) 112px;
+            min-height: 44px;
+            padding: 8px 12px;
+        }
+
+        .season-round-grade-card.single-grade .season-round-row {
+            grid-template-columns: 54px minmax(132px, 0.9fr) minmax(190px, 1.45fr) minmax(132px, 1.05fr) minmax(118px, 0.9fr) minmax(118px, 0.9fr) 112px;
+        }
+
+        .season-round-row:first-child {
+            border-top: 0;
+        }
+
+        .season-round-head {
+            background: #f8f8fd;
+            color: #747b98;
+            font-size: 0.68rem;
+            font-weight: 950;
+            letter-spacing: 0.04em;
+            min-height: 38px;
+            position: sticky;
+            text-transform: uppercase;
+            top: 0;
+            z-index: 2;
+        }
+
+        .season-round-row strong {
+            color: var(--ink);
+            font-size: 0.86rem;
+            font-weight: 950;
+        }
+
+        .season-round-row span {
+            color: #626a88;
+            font-size: 0.82rem;
+            font-weight: 750;
+            min-width: 0;
+        }
+
+        .season-round-opponent {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .season-round-result {
+            align-items: center;
+            display: flex;
+            gap: 7px;
+            min-width: 0;
+        }
+
+        .season-result-pill {
+            border-radius: 999px;
+            display: inline-flex;
+            flex: 0 0 auto;
+            font-size: 0.62rem;
+            font-weight: 950;
+            letter-spacing: 0.04em;
+            padding: 5px 8px;
+            text-transform: uppercase;
+        }
+
+        .season-result-pill.win {
+            background: #e9f8ef;
+            color: #137a4d;
+        }
+
+        .season-result-pill.loss {
+            background: #ffe8ef;
+            color: #9f2747;
+        }
+
+        .season-result-pill.draw,
+        .season-result-pill.tie {
+            background: #fff5d8;
+            color: #9a6b05;
+        }
+
+        .season-result-pill.none {
+            background: #F0EDFF;
+            color: #5b3df5;
+        }
+
+        .season-round-scorecard-link {
+            color: var(--pitch) !important;
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-decoration: none !important;
+            white-space: nowrap;
+        }
+
+        .season-round-pending {
+            color: #747b98 !important;
+            font-size: 0.78rem !important;
+            font-weight: 850 !important;
+        }
+
+        .season-round-empty {
+            background: #f8f8fd;
+            border: 1px dashed #d8ddeb;
+            border-radius: 14px;
+            color: #747b98;
+            font-size: 0.86rem;
+            font-weight: 800;
+            padding: 12px 13px;
+        }
+
+        .mobile-label {
+            display: none;
+        }
+
         .hof-progress-row {
             margin: 13px 0;
         }
@@ -4501,6 +4849,119 @@ def inject_theme() -> None:
             .section-subtext {
                 font-size: 0.9rem;
                 margin: -10px 0 16px;
+            }
+
+            .recent-form-card {
+                border-radius: 16px;
+                padding: 14px;
+            }
+
+            .recent-form-line {
+                align-items: start;
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .recent-form-label small {
+                font-size: 0.6rem;
+            }
+
+            .recent-form-chip:nth-of-type(n+6) {
+                display: none;
+            }
+
+            div.st-key-season_by_round_card {
+                border-radius: 18px;
+                padding: 14px;
+            }
+
+            .season-round-card-head {
+                display: block;
+            }
+
+            .season-round-card-head > span {
+                display: inline-flex;
+                margin-top: 10px;
+            }
+
+            .season-round-scroll {
+                max-height: 372px;
+            }
+
+            .season-round-grid {
+                display: grid;
+                gap: 9px;
+                padding: 10px;
+            }
+
+            .season-round-head {
+                display: none;
+            }
+
+            .season-round-row,
+            .season-round-grade-card.single-grade .season-round-row {
+                border: 1px solid #e8ebf7;
+                border-radius: 15px;
+                grid-template-columns: minmax(0, 1fr) 94px;
+                min-height: 0;
+                padding: 10px;
+            }
+
+            .season-round-row strong {
+                grid-column: 1;
+            }
+
+            .season-round-row span,
+            .season-round-row a {
+                grid-column: 1;
+            }
+
+            .season-round-grade-cell {
+                display: none;
+            }
+
+            .season-round-opponent {
+                white-space: normal;
+            }
+
+            .season-round-row .season-round-result {
+                align-items: flex-end;
+                flex-direction: column;
+                grid-column: 2;
+                grid-row: 1 / span 3;
+                justify-content: flex-start;
+                text-align: right;
+            }
+
+            .season-round-scorecard {
+                grid-column: 2 !important;
+                grid-row: 4;
+                text-align: right;
+            }
+
+            .season-round-scorecard-link::before {
+                content: "";
+            }
+
+            .season-round-scorecard-link {
+                font-size: 0.76rem !important;
+            }
+
+            .season-round-scorecard-link {
+                color: transparent !important;
+                position: relative;
+            }
+
+            .season-round-scorecard-link::after {
+                color: var(--pitch);
+                content: "View ↗";
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+
+            .mobile-label {
+                display: inline;
             }
 
             .improver-grid {
