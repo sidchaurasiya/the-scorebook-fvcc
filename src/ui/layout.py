@@ -8426,7 +8426,6 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
                 '</div>'
                 f'{"".join(phase_rows)}'
                 '</div>'
-                '<p class="profile-intelligence-note">Phase analytics use verified ball-by-ball matches only.</p>'
             ),
             unsafe_allow_html=True,
         )
@@ -8496,16 +8495,14 @@ def render_dismissal_fingerprint(profile_view: dict[str, pd.DataFrame]) -> None:
     for bucket in buckets:
         player_pct = player_map.get(bucket, 0.0)
         club_pct = club_map.get(bucket, 0.0)
+        average_marker = f'<span class="peer-marker avg-marker" style="left:{max(0.0, min(100.0, club_pct)):.1f}%;"></span>'
         row_html.append(
             '<div class="fingerprint-row">'
             '<div class="fingerprint-top">'
             f'<strong>{html.escape(bucket)}</strong>'
             f'<span>{player_pct:.1f}%</span>'
             '</div>'
-            '<div class="fingerprint-track">'
-            f'<div class="fingerprint-bar" style="width:{max(2.0, min(100.0, player_pct)):.1f}%"></div>'
-            f'<span class="peer-marker avg-marker fingerprint-marker" style="left:{max(0.0, min(100.0, club_pct)):.1f}%"></span>'
-            '</div>'
+            f'{comparison_bar_html(average_marker, fill_percent=max(2.0, min(100.0, player_pct)))}'
             '</div>'
         )
     player_name = str(profile_view["career"].iloc[0].get("Player", "This player"))
@@ -9051,9 +9048,7 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
             f'<span>Peer avg. {html.escape(format_peer_metric_value(average, str(row["format"])))}</span>'
             f"{status_html}"
             "</div>"
-            '<div class="peer-range">'
-            f"{average_marker}{player_marker}"
-            "</div>"
+            f"{comparison_bar_html(average_marker, player_marker)}"
             "</div>"
         )
     st.markdown(
@@ -9065,6 +9060,14 @@ def render_peer_comparison_card(title: str, rows: list[dict[str, object]], accen
         ),
         unsafe_allow_html=True,
     )
+
+
+def comparison_bar_html(average_marker: str = "", player_marker: str = "", fill_percent: float | None = None) -> str:
+    fill_html = ""
+    if fill_percent is not None:
+        fill_width = max(0.0, min(100.0, float(fill_percent)))
+        fill_html = f'<div class="peer-fill" style="width:{fill_width:.1f}%;"></div>'
+    return f'<div class="peer-range">{fill_html}{average_marker}{player_marker}</div>'
 
 
 def render_player_trends(season_table: pd.DataFrame) -> None:

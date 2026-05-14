@@ -3219,7 +3219,7 @@ def inject_theme() -> None:
         .position-row-label {
             align-items: center;
             display: inline-flex;
-            gap: 8px;
+            gap: 10px;
             min-width: 0;
         }
 
@@ -3256,6 +3256,8 @@ def inject_theme() -> None:
             font-size: 0.64rem;
             font-weight: 950;
             letter-spacing: 0.04em;
+            line-height: 1;
+            margin-left: 2px;
             padding: 4px 8px;
             text-transform: uppercase;
             white-space: nowrap;
@@ -3266,6 +3268,7 @@ def inject_theme() -> None:
             background: #eef1f8;
             border-radius: 999px;
             height: 9px;
+            margin-top: 8px;
             overflow: hidden;
             position: relative;
         }
@@ -3416,6 +3419,7 @@ def inject_theme() -> None:
         }
 
         .profile-fingerprint-card .profile-intelligence-note {
+            font-size: 0.72rem;
             font-weight: 500;
         }
 
@@ -3463,11 +3467,15 @@ def inject_theme() -> None:
 
         .phase-table-row span,
         .phase-table-phase {
-            color: #626a88;
+            color: var(--ink);
             font-size: 0.78rem;
-            font-weight: 850;
+            font-weight: 900;
             text-align: right;
             white-space: nowrap;
+        }
+
+        .phase-table-head span {
+            color: #747b98;
         }
 
         .phase-table-row .phase-table-phase,
@@ -3639,8 +3647,22 @@ def inject_theme() -> None:
             border-radius: 999px;
             height: 7px;
             margin-top: 6px;
+            overflow: visible;
             position: relative;
             width: 100%;
+        }
+
+        .peer-fill {
+            background: linear-gradient(90deg, #6d4dff, #8a63ff);
+            border-radius: inherit;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+
+        .fingerprint-row .peer-range {
+            margin-top: 7px;
         }
 
         .peer-marker {

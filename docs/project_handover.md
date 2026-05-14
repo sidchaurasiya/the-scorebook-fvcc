@@ -37,6 +37,8 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Batting Position uses scorecard batting-order groups; Bowling by Phase uses verified ball-by-ball only and must respect actual match type before phase buckets.
 - Current UI fixes in progress: compact Batting Position rows, shared toggle styling for Career Breakdown and Bowling by Phase, Bowling by Phase table columns, dismissal benchmark marker reuse from Player vs Peers, and compact/wrapped Career Breakdown tables.
 - Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
+- Current Player Profile split-average fix: Career Breakdown batting splits must exclude explicit `Did Not Bat` rows, count real batting innings only, and calculate average as `Runs / Outs` where `Outs = Innings - Not Outs`. True `0*` innings remain innings and not-outs; DNB rows are not innings.
+- Current Player DNA visual fix: Dismissal Fingerprint should share the Player vs Peers comparison-bar classes/marker styling, Bowling by Phase values should render in dark table text, and the visible bowling-phase BBB footnote has been removed while the BBB-only calculation rule remains in code.
 
 ## Current Opponent Name Normalization
 

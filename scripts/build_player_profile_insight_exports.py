@@ -95,6 +95,9 @@ def prepare_batting(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     rows = layout.scorecard_dedupe(rows, ["match_id", "innings_id", "participant_id", "bat_instance"])
     rows = add_match_dimensions(rows, frames["matches"])
     rows = ensure_display_player_name(rows)
+    rows = rows[rows.apply(is_batting_innings, axis=1)].copy()
+    if rows.empty:
+        return rows
     rows["runs_numeric"] = pd.to_numeric(rows.get("runs_scored"), errors="coerce").fillna(0)
     rows["balls_numeric"] = pd.to_numeric(rows.get("balls_faced"), errors="coerce").fillna(0)
     rows["fours_numeric"] = pd.to_numeric(rows.get("fours_scored"), errors="coerce").fillna(0)
@@ -481,6 +484,11 @@ def clean_text(value: object, fallback: str = "") -> str:
 def is_not_out(row: pd.Series) -> bool:
     text = f"{row.get('dismissal_type', '')} {row.get('dismissal_text', '')}".strip().casefold()
     return text in {"", "not out"} or "not out" in text or "retired not out" in text
+
+
+def is_batting_innings(row: pd.Series) -> bool:
+    text = f"{row.get('dismissal_type', '')} {row.get('dismissal_text', '')}".strip().casefold()
+    return not any(term in text for term in ["did not bat", "dnb", "absent"])
 
 
 def dismissal_bucket(row: pd.Series) -> str:

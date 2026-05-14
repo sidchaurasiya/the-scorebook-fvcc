@@ -85,6 +85,8 @@ Current production navigation pages:
 - Batting Position uses scorecard batting-order groups; Bowling by Phase uses verified ball-by-ball only and must filter by actual match type before applying phase buckets.
 - Current UI issues being fixed: compact Batting Position rows, shared toggle styling for Career Breakdown and Bowling by Phase, Bowling by Phase table columns, dismissal benchmark marker reuse from Player vs Peers, compact/wrapped Career Breakdown tables, and no query-param navigation for in-page toggles.
 - Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
+- Current Career Breakdown data rule: batting split averages use `Runs / Outs`, where `Outs = Innings - Not Outs`; explicit `Did Not Bat` rows must be excluded from split innings and outs.
+- Current Player DNA visual rule: Dismissal Fingerprint should reuse the Player vs Peers comparison-bar/average-marker styling; Bowling by Phase remains verified ball-by-ball only but should not show a repeated visible footnote.
 
 ## Opponent Name Normalization Notes
 
