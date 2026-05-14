@@ -3515,7 +3515,6 @@ def render_approaching_milestones_page() -> None:
         """,
         unsafe_allow_html=True,
     )
-    render_milestone_view_selector(selected_view)
     if selected_view == "achieved":
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
     elif selected_view == "exclusive":
@@ -3526,9 +3525,9 @@ def render_approaching_milestones_page() -> None:
 
 def milestone_page_view_options() -> list[tuple[str, str]]:
     return [
-        ("upcoming", "Upcoming Milestones"),
-        ("achieved", "Achieved Milestones"),
-        ("exclusive", "Exclusive Clubs"),
+        ("upcoming", "Upcoming"),
+        ("achieved", "Achieved"),
+        ("exclusive", "Exclusive Club"),
     ]
 
 
@@ -3543,8 +3542,15 @@ def milestone_club_category_options() -> list[tuple[str, str]]:
 
 def selected_milestone_page_view() -> str:
     valid = {slug for slug, _ in milestone_page_view_options()}
-    requested = query_param_value("milestone_view").casefold()
-    return requested if requested in valid else "upcoming"
+    state_key = "milestone_page_view"
+    if state_key not in st.session_state:
+        requested = query_param_value("milestone_view").casefold()
+        st.session_state[state_key] = requested if requested in valid else "upcoming"
+    selected = str(st.session_state.get(state_key, "upcoming")).casefold()
+    if selected not in valid:
+        selected = "upcoming"
+        st.session_state[state_key] = selected
+    return selected
 
 
 def selected_milestone_club_category() -> str:
@@ -3561,11 +3567,13 @@ def milestone_page_url(view: str, club_category: str | None = None) -> str:
 
 
 def render_milestone_view_selector(selected_view: str) -> None:
-    items = [
-        (label, milestone_page_url(slug), slug == selected_view)
-        for slug, label in milestone_page_view_options()
-    ]
-    render_milestone_segmented_links(items, "Milestone page view")
+    del selected_view
+    render_profile_segmented_widget(
+        "Milestone page view",
+        milestone_page_view_options(),
+        key="milestone_page_view",
+        compact=True,
+    )
 
 
 def render_milestone_club_selector(selected_category: str) -> None:
@@ -4013,16 +4021,16 @@ def render_achieved_milestones_view(
         "</div>"
     )
 
-    st.markdown(
-        (
-            '<section class="milestone-view-panel">'
-            '<div class="milestone-section-heading"><h2>Achieved Milestones 🏁</h2></div>'
-            f'<div class="milestone-section-subtitle">Milestones reached during {html.escape(window_label)} season</div>'
-            f"{''.join(groups)}"
-            "</section>"
-        ),
-        unsafe_allow_html=True,
-    )
+    with st.container(key="milestone_achieved_panel"):
+        render_milestone_view_selector("achieved")
+        st.markdown(
+            (
+                '<div class="milestone-section-heading"><h2>Achieved Milestones 🏁</h2></div>'
+                f'<div class="milestone-section-subtitle">Milestones reached during {html.escape(window_label)} season</div>'
+                f"{''.join(groups)}"
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def achievement_card_html(row: pd.Series) -> str:
@@ -5959,6 +5967,7 @@ def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matc
             club_entries.append((club_players, threshold, str(spec["label"]), metric))
 
     with st.container(key="milestone_exclusive_panel"):
+        render_milestone_view_selector("exclusive")
         st.markdown(
             (
                 '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>'
@@ -7010,19 +7019,19 @@ def render_career_milestone_cards(watchlist: pd.DataFrame, hall_of_fame_watch: p
         milestone_progress_group_html(watchlist, category)
         for category in ["Matches", "Runs", "Wickets", "Catches"]
     )
-    st.markdown(
-        (
-            '<section class="milestone-view-panel">'
-            '<div class="milestone-section-heading"><h2>Milestone Watchlist 📍</h2></div>'
-            '<div class="milestone-section-subtitle">'
-            "Showing active players only — players who have appeared for FVCC in the last 3 seasons."
-            "</div>"
-            f'<div class="milestone-watch-grid">{category_cards}</div>'
-            f"{hall_of_fame_watch_html(hall_of_fame_watch)}"
-            "</section>"
-        ),
-        unsafe_allow_html=True,
-    )
+    with st.container(key="milestone_upcoming_panel"):
+        render_milestone_view_selector("upcoming")
+        st.markdown(
+            (
+                '<div class="milestone-section-heading"><h2>Milestone Watchlist 📍</h2></div>'
+                '<div class="milestone-section-subtitle">'
+                "Showing active players only — players who have appeared for FVCC in the last 3 seasons."
+                "</div>"
+                f'<div class="milestone-watch-grid">{category_cards}</div>'
+                f"{hall_of_fame_watch_html(hall_of_fame_watch)}"
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def milestone_progress_group_html(watchlist: pd.DataFrame, category: str) -> str:
@@ -8476,12 +8485,12 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
             (
                 '<div class="phase-table">'
                 '<div class="phase-table-row phase-table-head">'
-                '<span>Phase</span><span>Overs</span><span>Wickets</span><span>Bowl Avg</span>'
-                '<span>Bowl SR</span><span>Eco</span><span>Dot Ball %</span><span>Boundary Rate</span>'
+                '<span>Phase</span><span>O</span><span>W</span><span>Avg</span>'
+                '<span>SR</span><span>Eco</span><span>Dot Ball %</span><span>Boundary %</span>'
                 '</div>'
                 f'{"".join(phase_rows)}'
                 '</div>'
-                '<p class="profile-phase-footnote">Phase metrics use verified ball-by-ball data where available.</p>'
+                '<p class="profile-phase-footnote">Phase metrics require ball-by-ball data.</p>'
             ),
             unsafe_allow_html=True,
         )
@@ -8603,7 +8612,7 @@ def profile_dismissal_insight(player_name: str, player_map: dict[str, float], cl
     labels = {"Caught": "caught", "Bowled": "bowled", "LBW": "LBW", "Run out": "run out", "Stumped": "stumped", "Other": "other ways"}
     for bucket, player_pct in player_map.items():
         diff = player_pct - club_map.get(bucket, 0.0)
-        if diff >= 10:
+        if diff >= 3:
             diffs.append((diff, labels.get(bucket, bucket.lower())))
     if not diffs:
         return f"{first_name}'s dismissal mix is broadly in line with the club average."
