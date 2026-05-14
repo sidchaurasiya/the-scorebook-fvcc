@@ -6411,14 +6411,14 @@ def apply_hof_table_sorting(table: pd.DataFrame, table_type: str) -> pd.DataFram
 def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", key_prefix).strip("-") or "hof-detail-table"
     columns = table.columns.tolist()
-    header_html = "".join(
-        f'<th class="{hof_detail_column_class(column)}" data-column="{index}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
+    header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
+        f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
         f'<span>{html.escape(str(column))}<span class="sort-indicator"></span></span></th>'
         for index, column in enumerate(columns)
     )
     rows = []
-    for _, row in table.iterrows():
-        cells = []
+    for row_index, (_, row) in enumerate(table.iterrows(), start=1):
+        cells = [f'<td class="hof-col-rank" data-rank-cell="1">{row_index}</td>']
         for column in columns:
             value = row.get(column)
             display = hof_detail_display_value(column, value)
@@ -6488,9 +6488,21 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       .hof-detail-sortable th:not(.hof-col-player):not(.hof-col-debut-season):not(.hof-col-latest-season) {{
         text-align: right;
       }}
-      .hof-detail-sortable .hof-col-player {{
+      .hof-detail-sortable .hof-col-rank {{
         position: sticky;
         left: 0;
+        z-index: 2;
+        min-width: 38px;
+        max-width: 38px;
+        width: 38px;
+        color: #737998;
+        font-weight: 750;
+        text-align: center !important;
+        background: #fff;
+      }}
+      .hof-detail-sortable .hof-col-player {{
+        position: sticky;
+        left: 38px;
         z-index: 2;
         min-width: 108px;
         max-width: 118px;
@@ -6507,6 +6519,10 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       .hof-detail-sortable th.hof-col-player {{
         z-index: 4;
       }}
+      .hof-detail-sortable th.hof-col-rank {{
+        z-index: 5;
+        background: #fbfbfe;
+      }}
       .hof-detail-sortable a {{
         color: #0072ce;
         text-decoration: none;
@@ -6519,12 +6535,13 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       .hof-detail-sortable tr:hover td {{
         background: var(--hof-soft);
       }}
+      .hof-detail-sortable tr:hover td.hof-col-rank,
       .hof-detail-sortable tr:hover td.hof-col-player {{
         background: var(--hof-soft);
       }}
     </style>
     <div class="hof-detail-table-wrap">
-      <table id="{html.escape(table_id, quote=True)}" class="hof-detail-sortable">
+      <table id="{html.escape(table_id, quote=True)}" class="hof-detail-sortable" data-player-column-index="1">
         <thead><tr>{header_html}</tr></thead>
         <tbody>{''.join(rows)}</tbody>
       </table>
@@ -6534,7 +6551,14 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         const table = document.getElementById({table_id!r});
         if (!table) return;
         const tbody = table.querySelector("tbody");
-        const headers = Array.from(table.querySelectorAll("th"));
+        const headers = Array.from(table.querySelectorAll("th[data-column]"));
+        const playerColumnIndex = Number(table.dataset.playerColumnIndex || 1);
+        const renumberRows = () => {{
+          Array.from(tbody.querySelectorAll("tr")).forEach((row, index) => {{
+            const rankCell = row.querySelector('[data-rank-cell="1"]');
+            if (rankCell) rankCell.textContent = String(index + 1);
+          }});
+        }};
         const textValue = (row, index) => row.children[index].textContent.trim().toLocaleLowerCase();
         const sortValue = (row, index) => {{
           const cell = row.children[index];
@@ -6546,7 +6570,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         const compare = (a, b, index, dir) => {{
           const av = sortValue(a, index);
           const bv = sortValue(b, index);
-          if (av === null && bv === null) return textValue(a, 0).localeCompare(textValue(b, 0));
+          if (av === null && bv === null) return textValue(a, playerColumnIndex).localeCompare(textValue(b, playerColumnIndex));
           if (av === null) return 1;
           if (bv === null) return -1;
           let result = 0;
@@ -6555,7 +6579,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
           }} else {{
             result = String(av).localeCompare(String(bv), undefined, {{ numeric: true, sensitivity: "base" }});
           }}
-          if (result === 0) result = textValue(a, 0).localeCompare(textValue(b, 0));
+          if (result === 0) result = textValue(a, playerColumnIndex).localeCompare(textValue(b, playerColumnIndex));
           return dir === "asc" ? result : -result;
         }};
         const sortHeader = (header, index) => {{
@@ -6570,6 +6594,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
             Array.from(tbody.querySelectorAll("tr"))
               .sort((a, b) => compare(a, b, index, dir))
               .forEach(row => tbody.appendChild(row));
+            renumberRows();
         }};
         const resolveInternalHref = (href) => {{
           let base = document.referrer || window.location.href;
@@ -6618,9 +6643,10 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
             event.preventDefault();
           }} catch (error) {{}}
         }});
-        headers.forEach((header, index) => {{
-          header.addEventListener("click", () => sortHeader(header, index));
+        headers.forEach(header => {{
+          header.addEventListener("click", () => sortHeader(header, Number(header.dataset.column)));
         }});
+        renumberRows();
       }})();
     </script>
     """
