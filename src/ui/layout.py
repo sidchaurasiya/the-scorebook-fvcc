@@ -1396,34 +1396,23 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
     sources = match_centre_sources_for_scorecards()
     rows = build_season_round_rows(dashboard_data, sources)
     with st.container(key="season_by_round_card"):
-        st.markdown(
-            """
-            <div class="season-round-card-head">
-                <div>
-                    <h3>Round-by-round scorecards</h3>
-                    <p>Latest results first, with best FVCC batting and bowling performances from scorecard rows.</p>
-                </div>
-                <span>Scorecard-safe</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
         if not rows:
             render_season_round_empty_state()
             return
 
         options = season_round_grade_options(rows)
-        selected_slug = "all"
-        if len(options) > 2:
+        if not options:
+            render_season_round_empty_state()
+            return
+        selected_slug = options[0][0]
+        if len(options) > 1:
             selected_slug = selected_season_round_grade_filter(options, dashboard_data)
-        elif len(options) == 2:
-            selected_slug = options[1][0]
 
-        visible_rows = rows if selected_slug == "all" else [row for row in rows if row.get("grade_slug") == selected_slug]
+        visible_rows = [row for row in rows if row.get("grade_slug") == selected_slug]
         if not visible_rows:
             render_season_round_empty_state()
             return
-        st.markdown(season_round_cards_html(visible_rows, show_grade_column=selected_slug != "all"), unsafe_allow_html=True)
+        st.markdown(season_round_cards_html(visible_rows), unsafe_allow_html=True)
 
 
 def render_season_round_empty_state() -> None:
@@ -1494,12 +1483,14 @@ def build_season_round_rows(
 
     best_batters = best_batters_by_match(sources.get("batting", pd.DataFrame()), matches)
     best_bowlers = best_bowlers_by_match(sources.get("bowling", pd.DataFrame()), matches)
+    premiership_match_ids = season_round_premiership_match_ids()
     rows = []
     for _, match in matches.iterrows():
         match_id = str(match.get("match_id", "") or "").strip()
         result = season_round_result(match)
         grade_label = season_round_grade_label(match)
         grade_slug = make_player_slug(grade_label or "grade")
+        is_premiership = match_id in premiership_match_ids
         rows.append(
             {
                 "match_id": match_id,
@@ -1507,10 +1498,11 @@ def build_season_round_rows(
                 "round_sort": season_round_sort_value(match.get("round_name")),
                 "grade": grade_label,
                 "grade_slug": grade_slug,
+                "is_premiership": is_premiership,
                 "opponent": safe_record_text(match.get("opponent_name"), "Unknown opponent"),
                 "result_label": result["label"],
                 "result_class": result["class"],
-                "result_text": result["text"],
+                "result_text": f'{result["text"]} 🏆' if is_premiership and result["class"] == "win" else result["text"],
                 "best_batter": best_batters.get(match_id, "—"),
                 "best_bowler": best_bowlers.get(match_id, "—"),
                 "scorecard": scorecard_link_html(
@@ -1558,8 +1550,7 @@ def season_round_grade_options(rows: list[dict[str, object]]) -> list[tuple[str,
         label = str(row.get("grade") or "").strip()
         if slug and label:
             seen.setdefault(slug, label)
-    ordered = sorted(seen.items(), key=lambda item: grade_sort_key(item[1]))
-    return [("all", "All"), *ordered]
+    return sorted(seen.items(), key=lambda item: grade_sort_key(item[1]))
 
 
 def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bool = False) -> str:
@@ -1569,6 +1560,8 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
     cards = []
     for grade_label, grade_rows in sorted(grouped.items(), key=lambda item: grade_sort_key(item[0])):
         record = season_round_record_label(grade_rows)
+        trophy = ' <span class="season-round-grade-trophy">🏆</span>' if any(row.get("is_premiership") for row in grade_rows) else ""
+        record_html = f'<span class="season-round-record">{html.escape(record)}</span>' if record else ""
         row_html = "".join(season_round_row_html(row, show_grade_column=show_grade_column) for row in grade_rows)
         head_cols = (
             '<div class="season-round-row season-round-head">'
@@ -1581,8 +1574,8 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
         cards.append(
             f'<article class="{card_class}">'
             '<div class="season-round-grade-head">'
-            f'<h3>{html.escape(grade_label)}</h3>'
-            f'<span>{html.escape(record)}</span>'
+            f'<h3>{html.escape(grade_label)}{trophy}</h3>'
+            f'{record_html}'
             '</div>'
             f'<div class="season-round-scroll"><div class="season-round-grid">{head_cols}{row_html}</div></div>'
             '</article>'
@@ -1592,8 +1585,9 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
 
 def season_round_row_html(row: dict[str, object], show_grade_column: bool = False) -> str:
     scorecard = str(row.get("scorecard") or '<span class="season-round-pending">Scorecard pending</span>')
+    row_class = "season-round-row season-round-premiership-row" if row.get("is_premiership") else "season-round-row"
     return (
-        '<div class="season-round-row">'
+        f'<div class="{row_class}">'
         f'<strong>{html.escape(str(row.get("round") or "—"))}</strong>'
         + (f'<span class="season-round-grade-cell">{html.escape(str(row.get("grade") or "—"))}</span>' if show_grade_column else "")
         + f'<span class="season-round-opponent">vs {html.escape(str(row.get("opponent") or "Unknown opponent"))}</span>'
@@ -1606,6 +1600,13 @@ def season_round_row_html(row: dict[str, object], show_grade_column: bool = Fals
         f'<span class="season-round-scorecard">{scorecard}</span>'
         '</div>'
     )
+
+
+def season_round_premiership_match_ids() -> set[str]:
+    wins, _players = load_premiership_records(premiership_records_signature())
+    if wins.empty or "match_id" not in wins:
+        return set()
+    return {str(match_id).strip() for match_id in wins["match_id"].dropna() if str(match_id).strip()}
 
 
 def season_round_record_label(rows: list[dict[str, object]]) -> str:
@@ -10618,14 +10619,14 @@ def render_player_recent_form(career: pd.Series) -> None:
     render_section_heading("Recent Form ⚡")
     batting_html = recent_form_line_html(
         "Batting scores",
-        "Latest first · 10 shown",
+        "",
         recent["batting"],
         "bat",
         "No recent batting scores available.",
     )
     bowling_html = recent_form_line_html(
         "Bowling figures",
-        "Latest first · 10 shown",
+        "",
         recent["bowling"],
         "bowl",
         "No recent bowling figures available.",
@@ -10722,6 +10723,7 @@ def recent_form_line_html(
     tone: str,
     empty_copy: str,
 ) -> str:
+    meta_html = f"<small>{html.escape(meta)}</small>" if str(meta).strip() else ""
     if chips:
         chip_html = "".join(
             f'<span class="recent-form-chip {html.escape(tone)} {html.escape(str(chip.get("classes") or ""))}">{html.escape(str(chip.get("label") or "—"))}</span>'
@@ -10731,7 +10733,7 @@ def recent_form_line_html(
         chip_html = f'<span class="recent-form-empty">{html.escape(empty_copy)}</span>'
     return (
         '<div class="recent-form-line">'
-        f'<div class="recent-form-label">{html.escape(label)}<small>{html.escape(meta)}</small></div>'
+        f'<div class="recent-form-label">{html.escape(label)}{meta_html}</div>'
         f'<div class="recent-form-chip-row">{chip_html}</div>'
         '</div>'
     )

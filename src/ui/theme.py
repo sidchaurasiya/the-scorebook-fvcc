@@ -3966,6 +3966,7 @@ def inject_theme() -> None:
             border-radius: 999px;
             box-shadow: none;
             display: inline-flex;
+            flex-wrap: nowrap;
             gap: 4px;
             max-width: 100%;
             overflow-x: auto;
@@ -4021,7 +4022,7 @@ def inject_theme() -> None:
             margin: 0;
         }
 
-        .season-round-grade-head span {
+        .season-round-grade-head .season-round-record {
             background: #F0EDFF;
             border: 1px solid #ded8ff;
             border-radius: 999px;
@@ -4030,6 +4031,11 @@ def inject_theme() -> None:
             font-size: 0.74rem;
             font-weight: 950;
             padding: 6px 9px;
+        }
+
+        .season-round-grade-trophy {
+            display: inline-block;
+            margin-left: 6px;
         }
 
         .season-round-scroll {
@@ -4063,6 +4069,12 @@ def inject_theme() -> None:
 
         .season-round-row:first-child {
             border-top: 0;
+        }
+
+        .season-round-premiership-row {
+            background: linear-gradient(90deg, rgba(255, 246, 218, 0.78), rgba(255, 255, 255, 0.96));
+            border-top-color: #f1dfad;
+            box-shadow: inset 3px 0 0 #d9a441;
         }
 
         .season-round-head {
@@ -4875,13 +4887,18 @@ def inject_theme() -> None:
                 padding: 14px;
             }
 
-            .season-round-card-head {
-                display: block;
+            div.st-key-season_round_grade_filter_control {
+                margin: 0 0 14px;
+                max-width: 100%;
+                overflow-x: auto;
             }
 
-            .season-round-card-head > span {
-                display: inline-flex;
-                margin-top: 10px;
+            div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"],
+            div.st-key-season_round_grade_filter_control [data-testid="stButtonGroup"] {
+                flex-wrap: nowrap !important;
+                max-width: 100%;
+                overflow-x: auto;
+                width: max-content;
             }
 
             .season-round-scroll {
@@ -4934,30 +4951,15 @@ def inject_theme() -> None:
             }
 
             .season-round-scorecard {
-                grid-column: 2 !important;
-                grid-row: 4;
-                text-align: right;
-            }
-
-            .season-round-scorecard-link::before {
-                content: "";
+                grid-column: 1 / -1 !important;
+                grid-row: auto;
+                margin-top: 2px;
+                text-align: left;
             }
 
             .season-round-scorecard-link {
                 font-size: 0.76rem !important;
-            }
-
-            .season-round-scorecard-link {
-                color: transparent !important;
-                position: relative;
-            }
-
-            .season-round-scorecard-link::after {
-                color: var(--pitch);
-                content: "View ↗";
-                position: absolute;
-                right: 0;
-                top: 0;
+                white-space: normal;
             }
 
             .mobile-label {
