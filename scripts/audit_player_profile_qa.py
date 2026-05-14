@@ -875,7 +875,7 @@ def validate_player_dna(
             pos_rows = pos_rows.copy()
             pos_rows["innings"] = pd.to_numeric(pos_rows.get("innings"), errors="coerce").fillna(0)
             pos_rows["average"] = pd.to_numeric(pos_rows.get("average"), errors="coerce")
-            qualifying = pos_rows[pos_rows["innings"] >= 5]
+            qualifying = pos_rows[pos_rows["innings"] >= 4]
             if qualifying.empty:
                 add_finding(
                     findings,
@@ -883,10 +883,10 @@ def validate_player_dna(
                     category="data coverage",
                     section="Player DNA - Batting Position",
                     issue="Best Fit should be withheld",
-                    detail="No batting-position group has at least five innings.",
+                    detail="No batting-position group has at least four innings.",
                     player_id=player_id,
                     player_name=name,
-                    recommended_fix="UI should show 'More innings needed to identify best fit.'",
+                    recommended_fix="UI should show 'Best fit needs 4+ innings in a position.'",
                 )
             else:
                 expected = qualifying.sort_values(["average", "innings"], ascending=[False, False]).iloc[0]

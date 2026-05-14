@@ -93,6 +93,7 @@ Current production navigation pages:
 - The remaining QA items are mostly coverage/empty-state issues. Missing verified ball-by-ball phase data should render a premium empty state, not zeros, global values, or stale tables.
 - Recommended permanent Player Profile tests: Bat Avg uses outs, BBB Strike Rate uses BBB runs/balls only, missing BBB stays `N/A`, 30s are 30-49 inclusive, 3WI excludes 5WI, BBI sorts/parses wickets then runs, Bowling Phase respects actual match type, and known aliases merge to one canonical profile.
 - Permanent lightweight Player Profile metric tests now live in `tests/test_player_profile_metrics.py`; the generated 50-player QA CSV/Markdown outputs stay ignored under `data/processed/experimental/player_profile_qa/`.
+- Current Player Profile polish: premiership tags lead the profile badge order, Career Highlights leader cards show season as the main context, Batting Position Best Fit uses a 4+ innings threshold, and Dismissal Fingerprint rows include compact `Club avg` / points-difference labels next to each dismissal type.
 
 ## Opponent Name Normalization Notes
 

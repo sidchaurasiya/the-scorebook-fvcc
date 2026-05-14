@@ -8031,9 +8031,6 @@ def player_premiership_profile_badges(career: pd.Series) -> list[str]:
             if not matched.empty:
                 winner_value = pd.to_numeric(matched.iloc[0].get("premiership_count"), errors="coerce")
                 winner_count = 0 if pd.isna(winner_value) else int(winner_value)
-    if winner_count > 0:
-        badges.append(counted_profile_badge("Premiership Winner", winner_count))
-
     captain_count = 0
     if not wins.empty and "captain_name" in wins:
         captain_rows = wins[wins["captain_name"].map(player_name_match_key) == name_key].copy()
@@ -8041,17 +8038,28 @@ def player_premiership_profile_badges(career: pd.Series) -> list[str]:
             captain_count = int(captain_rows["match_id"].astype(str).nunique()) if "match_id" in captain_rows else int(len(captain_rows))
     if captain_count > 0:
         badges.append(counted_profile_badge("Premiership Winning Captain", captain_count))
+    if winner_count > 0:
+        badges.append(counted_profile_badge("Premiership Winner", winner_count))
     return badges
 
 
 def select_profile_badges(candidates: list[dict[str, object]]) -> list[str]:
-    ordered = sorted(candidates, key=lambda candidate: int(candidate["priority"]))
+    ordered = sorted(candidates, key=profile_badge_sort_key)
     selected: list[str] = []
     for candidate in ordered:
         label = str(candidate["label"])
         if label not in selected:
             selected.append(label)
     return selected
+
+
+def profile_badge_sort_key(candidate: dict[str, object]) -> tuple[int, int]:
+    base = base_badge_label(str(candidate.get("label", "")))
+    if base == "Premiership Winning Captain":
+        return (0, int(candidate["priority"]))
+    if base == "Premiership Winner":
+        return (1, int(candidate["priority"]))
+    return (2, int(candidate["priority"]))
 
 
 def reliable_batting_components(batting: pd.DataFrame) -> dict[str, float]:
@@ -8157,14 +8165,15 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
     ]:
         value = int(leader_counts.get(key, 0))
         if value > 0:
+            details = leader_details.get(key, [])
             label = suffix if value == 1 else f"{suffix}s"
             cards.append(
                 {
                     "title": title,
-                    "player": str(career["Player"]),
+                    "player": leader_highlight_primary_context(details),
                     "value": f"{value:,} {label}",
-                    "meta": compact_leader_detail_meta_html(leader_details.get(key, [])),
-                    "meta_html": True,
+                    "meta": leader_highlight_secondary_context(details, by_grade=("grade" in key)),
+                    "link_type": "season",
                 }
             )
     return cards[:10]
@@ -8266,6 +8275,23 @@ def compact_leader_detail_meta_html(details: list[str], limit: int = 3) -> str:
     return ", ".join(rendered)
 
 
+def leader_highlight_primary_context(details: list[str]) -> str:
+    if not details:
+        return "Season not recorded"
+    season = str(details[0]).partition(" · ")[0].strip()
+    return season or "Season not recorded"
+
+
+def leader_highlight_secondary_context(details: list[str], *, by_grade: bool) -> str:
+    scope = "Whole club"
+    if details:
+        _season, separator, rest = str(details[0]).partition(" · ")
+        if by_grade and separator and rest.strip():
+            scope = rest.strip()
+    remaining = max(0, len(details) - 1)
+    return f"{scope} · +{remaining} more" if remaining else scope
+
+
 def render_player_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
     career = profile_view["career"].iloc[0]
     is_batsman, is_bowler = player_profile_role_flags(career)
@@ -8311,7 +8337,11 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
     rows["average"] = pd.to_numeric(rows.get("average"), errors="coerce")
     rows = rows.sort_values("position_order")
     best = profile_best_position_label(rows)
-    best_note = "" if best else '<p class="profile-intelligence-note">More innings needed to identify best fit.</p>'
+    best_note = (
+        '<p class="profile-intelligence-note">Best fit requires 4+ innings in a position.</p>'
+        if best
+        else '<p class="profile-intelligence-note">Best fit needs 4+ innings in a position.</p>'
+    )
     max_runs = max(1.0, float(rows["runs"].max()))
     row_html = []
     for _, row in rows.iterrows():
@@ -8354,7 +8384,7 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
 def profile_best_position_label(rows: pd.DataFrame) -> str:
     if rows.empty:
         return ""
-    eligible = rows[pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0) >= 5].copy()
+    eligible = rows[pd.to_numeric(rows.get("innings"), errors="coerce").fillna(0) >= 4].copy()
     eligible = eligible[pd.to_numeric(eligible.get("average"), errors="coerce").notna()].copy()
     if eligible.empty:
         return ""
@@ -8495,12 +8525,16 @@ def render_dismissal_fingerprint(profile_view: dict[str, pd.DataFrame]) -> None:
     for bucket in buckets:
         player_pct = player_map.get(bucket, 0.0)
         club_pct = club_map.get(bucket, 0.0)
+        detail = profile_dismissal_detail_text(player_pct, club_pct)
         average_marker = f'<span class="peer-marker avg-marker" style="left:{max(0.0, min(100.0, club_pct)):.1f}%;"></span>'
         row_html.append(
             '<div class="fingerprint-row">'
             '<div class="fingerprint-top">'
+            '<div class="fingerprint-label-block">'
             f'<strong>{html.escape(bucket)}</strong>'
-            f'<span>{player_pct:.1f}%</span>'
+            f'<span class="fingerprint-detail">{html.escape(detail)}</span>'
+            '</div>'
+            f'<span class="fingerprint-player-pct">{player_pct:.1f}%</span>'
             '</div>'
             f'{comparison_bar_html(average_marker, fill_percent=max(2.0, min(100.0, player_pct)))}'
             '</div>'
@@ -8530,6 +8564,11 @@ def profile_dismissal_pct_map(rows: pd.DataFrame) -> dict[str, float]:
         str(row.get("dismissal_bucket", "")).strip(): float(row.get("pct", 0) or 0)
         for _, row in output.iterrows()
     }
+
+
+def profile_dismissal_detail_text(player_pct: float, club_pct: float) -> str:
+    diff = player_pct - club_pct
+    return f"Club avg {club_pct:.1f}% | {diff:+.1f} pts"
 
 
 def profile_dismissal_insight(player_name: str, player_map: dict[str, float], club_map: dict[str, float]) -> str:

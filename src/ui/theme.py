@@ -3223,6 +3223,21 @@ def inject_theme() -> None:
             min-width: 0;
         }
 
+        .fingerprint-label-block {
+            align-items: baseline;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px 8px;
+            min-width: 0;
+        }
+
+        .fingerprint-detail {
+            color: #747b98;
+            font-size: 0.72rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
         .position-row-summary {
             color: #69718f;
             flex: 0 0 auto;
@@ -3232,10 +3247,11 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
-        .fingerprint-top span {
+        .fingerprint-player-pct {
             color: #5b3df5;
             font-size: 0.84rem;
             font-weight: 950;
+            white-space: nowrap;
         }
 
         .position-row-meta {

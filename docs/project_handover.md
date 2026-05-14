@@ -46,6 +46,7 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Bowling Phase must never fake missing ball-by-ball coverage. If no verified BBB phase summary exists for a bowler, show a calm empty state such as `Bowling phase data is not available for this player yet.`
 - Recommended permanent tests for Player Profile metric rules: batting average uses outs, BBB Strike Rate uses BBB runs/balls only, missing BBB is `N/A`, 30s are 30-49 inclusive, 3WI excludes 5WI, BBI parses wickets then runs, bowling phase respects match type, and known aliases resolve to one canonical profile.
 - A lightweight permanent pytest file now covers those Player Profile metric doctrines at `tests/test_player_profile_metrics.py`; generated 50-player QA reports remain local under `data/processed/experimental/player_profile_qa/`.
+- Current Player Profile polish: premiership profile tags are now top-priority (`Premiership Winning Captain` before `Premiership Winner`, both before other tags), Career Highlights leader cards use the season as their main context instead of repeating the selected player name, Batting Position `Best fit` now requires 4+ innings in a position, and Dismissal Fingerprint rows show compact club-average/difference detail beside each dismissal type.
 
 ## Current Opponent Name Normalization
 
