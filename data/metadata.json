@@ -213,8 +213,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-05-09T09:21:53.887365+00:00",
-  "last_successful_refresh_time": "2026-05-09T09:21:53.887365+00:00",
+  "fetch_date_time": "2026-05-14T13:34:18.857494+00:00",
+  "last_successful_refresh_time": "2026-05-14T13:34:18.857494+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -231,10 +231,11 @@
     "fielding": 1909
   },
   "live_requests": 5,
-  "cache_hits": 0,
+  "cache_hits": 248,
   "failed_requests": [],
   "notes": [
-    "Weekly scoped refresh replaced the current PlayCricket season rows and preserved historical processed rows.",
-    "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load."
+    "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",
+    "Refresh should be used sparingly; normal dashboard usage reads data/processed first.",
+    "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population."
   ]
 }

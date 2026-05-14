@@ -97,11 +97,14 @@ SEASON_OVERVIEW_BBB_BATTING_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_b
 SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_bowling_dot_rates_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_batting_milestones_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_bowling_milestones_by_scope.csv"
+SEASON_OVERVIEW_SEASON_BY_ROUND_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "season_by_round_scorecards.csv"
 PLAYER_PROFILE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "player_profile"
 PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "performance_breakdown_by_dimension.csv"
 PLAYER_PROFILE_BATTING_POSITION_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "batting_position_summary.csv"
 PLAYER_PROFILE_BOWLING_PHASE_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "bowling_phase_summary.csv"
 PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "dismissal_fingerprint_summary.csv"
+PLAYER_PROFILE_RECENT_FORM_BATTING_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "recent_form_batting.csv"
+PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "recent_form_bowling.csv"
 HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
     APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
 )
@@ -1079,6 +1082,7 @@ def season_overview_detail_source_signature() -> tuple[tuple[str, float], ...]:
         SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH,
         SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH,
         SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH,
+        SEASON_OVERVIEW_SEASON_BY_ROUND_PATH,
     ]
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
@@ -1090,6 +1094,7 @@ def load_season_overview_detail_sources(_signature: tuple[tuple[str, float], ...
         "bbb_bowling": read_match_centre_csv(SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH),
         "scorecard_batting": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH),
         "scorecard_bowling": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH),
+        "season_by_round": read_match_centre_csv(SEASON_OVERVIEW_SEASON_BY_ROUND_PATH),
     }
 
 
@@ -1393,8 +1398,8 @@ def match_centre_sources_for_scorecards() -> dict[str, pd.DataFrame]:
 
 def render_season_by_round(dashboard_data: dict[str, object]) -> None:
     render_section_heading("Season by Round 🗓️")
-    sources = match_centre_sources_for_scorecards()
-    rows = build_season_round_rows(dashboard_data, sources)
+    sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
+    rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
     with st.container(key="season_by_round_card"):
         if not rows:
             render_season_round_empty_state()
@@ -1451,19 +1456,19 @@ def selected_season_round_grade_filter(
 
 def build_season_round_rows(
     dashboard_data: dict[str, object],
-    sources: dict[str, pd.DataFrame],
+    source: pd.DataFrame,
 ) -> list[dict[str, object]]:
-    matches = sources.get("matches", pd.DataFrame()).copy()
-    if matches.empty:
+    rows_frame = source.copy()
+    if rows_frame.empty:
         return []
     season = dashboard_data.get("season", {}) or {}
     season_id = str(season.get("id", "") or "").strip()
     season_name = str(season.get("name", "") or "").strip()
-    if season_id and "season_id" in matches:
-        matches = matches[matches["season_id"].astype(str) == season_id].copy()
-    elif season_name and "season" in matches:
-        matches = matches[matches["season"].astype(str).str.casefold() == season_name.casefold()].copy()
-    if matches.empty:
+    if season_id and "season_id" in rows_frame:
+        rows_frame = rows_frame[rows_frame["season_id"].astype(str) == season_id].copy()
+    elif season_name and "season" in rows_frame:
+        rows_frame = rows_frame[rows_frame["season"].astype(str).str.casefold() == season_name.casefold()].copy()
+    if rows_frame.empty:
         return []
 
     team_ids = {
@@ -1472,39 +1477,37 @@ def build_season_round_rows(
         if str(team.get("id", "") or "").strip()
     }
     if team_ids:
-        scope_mask = pd.Series(False, index=matches.index)
-        if "fvcc_team_id" in matches:
-            scope_mask = scope_mask | matches["fvcc_team_id"].astype(str).isin(team_ids)
-        if "source_team_ids" in matches:
-            scope_mask = scope_mask | matches["source_team_ids"].map(lambda value: match_source_contains_team(value, team_ids))
-        matches = matches[scope_mask].copy()
-    if matches.empty:
+        scope_mask = pd.Series(False, index=rows_frame.index)
+        if "fvcc_team_id" in rows_frame:
+            scope_mask = scope_mask | rows_frame["fvcc_team_id"].astype(str).isin(team_ids)
+        if "source_team_ids" in rows_frame:
+            scope_mask = scope_mask | rows_frame["source_team_ids"].map(lambda value: match_source_contains_team(value, team_ids))
+        rows_frame = rows_frame[scope_mask].copy()
+    if rows_frame.empty:
         return []
 
-    best_batters = best_batters_by_match(sources.get("batting", pd.DataFrame()), matches)
-    best_bowlers = best_bowlers_by_match(sources.get("bowling", pd.DataFrame()), matches)
-    premiership_match_ids = season_round_premiership_match_ids()
     rows = []
-    for _, match in matches.iterrows():
+    for _, match in rows_frame.iterrows():
         match_id = str(match.get("match_id", "") or "").strip()
-        result = season_round_result(match)
-        grade_label = season_round_grade_label(match)
+        grade_label = safe_record_text(match.get("grade_label"), "Team")
         grade_slug = make_player_slug(grade_label or "grade")
-        is_premiership = match_id in premiership_match_ids
+        is_premiership = parse_bool(match.get("is_premiership"))
+        result_class = safe_record_text(match.get("result_class"), "none")
+        result_text = safe_record_text(match.get("result_text"), "no result")
         rows.append(
             {
                 "match_id": match_id,
-                "round": season_round_display(match.get("round_name")),
-                "round_sort": season_round_sort_value(match.get("round_name")),
+                "round": safe_record_text(match.get("round_display"), "Round"),
+                "round_sort": pd.to_numeric(match.get("round_sort"), errors="coerce"),
                 "grade": grade_label,
                 "grade_slug": grade_slug,
                 "is_premiership": is_premiership,
                 "opponent": safe_record_text(match.get("opponent_name"), "Unknown opponent"),
-                "result_label": result["label"],
-                "result_class": result["class"],
-                "result_text": f'{result["text"]} 🏆' if is_premiership and result["class"] == "win" else result["text"],
-                "best_batter": best_batters.get(match_id, "—"),
-                "best_bowler": best_bowlers.get(match_id, "—"),
+                "result_label": safe_record_text(match.get("result_label"), "No Result"),
+                "result_class": result_class,
+                "result_text": f"{result_text} 🏆" if is_premiership and result_class == "win" else result_text,
+                "best_batter": safe_record_text(match.get("best_batter"), "—"),
+                "best_bowler": safe_record_text(match.get("best_bowler"), "—"),
                 "scorecard": scorecard_link_html(
                     match_id,
                     label="View scorecard ↗",
@@ -1519,7 +1522,7 @@ def build_season_round_rows(
     return sorted(
         rows,
         key=lambda row: (
-            row.get("round_sort", -1),
+            -1 if pd.isna(row.get("round_sort")) else int(row.get("round_sort")),
             pd.Timestamp(row["match_date"]).timestamp() if pd.notna(row.get("match_date")) else -1,
             str(row.get("grade", "")).casefold(),
         ),
@@ -1710,6 +1713,9 @@ def best_bowlers_by_match(bowling: pd.DataFrame, matches: pd.DataFrame) -> dict[
     context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
     rows = bowling.merge(context, on="match_id", how="inner")
     rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows = filter_real_scorecard_bowling_rows(rows)
+    if rows.empty:
+        return {}
     rows["wickets_taken"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
     rows["runs_conceded"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
     rows = rows.sort_values(["match_id", "wickets_taken", "runs_conceded"], ascending=[True, False, True])
@@ -5660,22 +5666,21 @@ def match_centre_all_available_signature() -> tuple[tuple[str, float], ...]:
 
 
 def scorecard_record_rows_signature() -> tuple[tuple[str, float], ...]:
-    signature = list(match_centre_all_available_signature())
     if HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH.exists():
-        signature.append(
-            (
-                str(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH),
-                HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH.stat().st_mtime,
-            )
+        return (
+            (str(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH), HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH.stat().st_mtime),
         )
-    return tuple(signature)
+    return match_centre_all_available_signature()
 
 
 @st.cache_data(show_spinner=False)
 def load_scorecard_record_rows(_signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+    deploy = load_deploy_scorecard_record_rows()
+    if any(not frame.empty for frame in deploy.values()):
+        return deploy
     scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
     if not scope.exists():
-        return load_deploy_scorecard_record_rows()
+        return deploy
     matches = read_match_centre_csv(scope / "all_matches.csv")
     context_columns = [column for column in ["match_id", "season", "first_match_day"] if column in matches]
     context = matches[context_columns].drop_duplicates("match_id") if "match_id" in matches else pd.DataFrame()
@@ -5689,10 +5694,9 @@ def load_scorecard_record_rows(_signature: tuple[tuple[str, float], ...]) -> dic
         if not context.empty and "match_id" in frame:
             frame = frame.merge(context, on="match_id", how="left")
         output[key] = frame
-    fallback = load_deploy_scorecard_record_rows()
     for key in ["batting", "bowling"]:
-        if output.get(key, pd.DataFrame()).empty and not fallback.get(key, pd.DataFrame()).empty:
-            output[key] = fallback[key]
+        if output.get(key, pd.DataFrame()).empty and not deploy.get(key, pd.DataFrame()).empty:
+            output[key] = deploy[key]
     return output
 
 
@@ -8001,6 +8005,8 @@ def player_profile_detail_source_signature() -> tuple[tuple[str, float], ...]:
         PLAYER_PROFILE_BATTING_POSITION_PATH,
         PLAYER_PROFILE_BOWLING_PHASE_PATH,
         PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH,
+        PLAYER_PROFILE_RECENT_FORM_BATTING_PATH,
+        PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH,
     ]
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
@@ -8016,6 +8022,8 @@ def load_player_profile_detail_sources(_signature: tuple[tuple[str, float], ...]
         "batting_position": read_match_centre_csv(PLAYER_PROFILE_BATTING_POSITION_PATH),
         "bowling_phase": read_match_centre_csv(PLAYER_PROFILE_BOWLING_PHASE_PATH),
         "dismissal_fingerprint": read_match_centre_csv(PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH),
+        "recent_form_batting": read_match_centre_csv(PLAYER_PROFILE_RECENT_FORM_BATTING_PATH),
+        "recent_form_bowling": read_match_centre_csv(PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH),
     }
 
 
@@ -10637,29 +10645,41 @@ def render_player_recent_form(career: pd.Series) -> None:
 def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, object]]]:
     player_id = str(career.get("canonical_player_id", "") or "").strip()
     player_name_key = player_name_match_key(career.get("Player", ""))
-    sources = match_centre_sources_for_scorecards()
-    matches = sources.get("matches", pd.DataFrame()).copy()
-    if matches.empty:
-        return {"batting": [], "bowling": []}
-    context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
-    batting = player_recent_batting_rows(sources.get("batting", pd.DataFrame()), context, player_id, player_name_key)
-    bowling = player_recent_bowling_rows(sources.get("bowling", pd.DataFrame()), context, player_id, player_name_key)
+    sources = load_player_profile_detail_sources(player_profile_detail_source_signature())
+    batting = player_recent_form_deploy_rows(sources.get("recent_form_batting", pd.DataFrame()), player_id, player_name_key)
+    bowling = player_recent_form_deploy_rows(sources.get("recent_form_bowling", pd.DataFrame()), player_id, player_name_key)
     return {
         "batting": [
             {
-                "label": format_scorecard_batting_score(row, include_balls=True),
-                "classes": recent_batting_chip_classes(row),
+                "label": safe_record_text(row.get("display_value"), "—"),
+                "classes": safe_record_text(row.get("chip_classes"), ""),
             }
             for _, row in batting.head(10).iterrows()
         ],
         "bowling": [
             {
-                "label": format_scorecard_bowling_figures(row, separator="/"),
-                "classes": recent_bowling_chip_classes(row),
+                "label": safe_record_text(row.get("display_value"), "—"),
+                "classes": safe_record_text(row.get("chip_classes"), ""),
             }
             for _, row in bowling.head(10).iterrows()
         ],
     }
+
+
+def player_recent_form_deploy_rows(frame: pd.DataFrame, player_id: str, player_name_key_value: str) -> pd.DataFrame:
+    if frame.empty:
+        return pd.DataFrame()
+    rows = filter_recent_form_player_rows(frame, player_id, player_name_key_value)
+    if rows.empty:
+        return rows
+    if "match_date" in rows:
+        rows["match_date_sort"] = pd.to_datetime(rows["match_date"], errors="coerce", utc=True)
+    else:
+        rows["match_date_sort"] = pd.NaT
+    if "order_sort" not in rows:
+        rows["order_sort"] = 0
+    rows["order_sort"] = pd.to_numeric(rows["order_sort"], errors="coerce").fillna(0)
+    return rows.sort_values(["match_date_sort", "order_sort"], ascending=[False, True])
 
 
 def player_recent_batting_rows(
@@ -10694,11 +10714,31 @@ def player_recent_bowling_rows(
     rows = bowling.merge(context, on="match_id", how="inner")
     rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
     rows = filter_recent_form_player_rows(rows, player_id, player_name_key_value)
+    rows = filter_real_scorecard_bowling_rows(rows)
     if rows.empty:
         return rows
     rows["match_date"] = pd.to_datetime(rows.get("match_date"), errors="coerce", utc=True)
     rows["bowl_order_sort"] = pd.to_numeric(rows.get("bowl_order"), errors="coerce").fillna(99)
     return rows.sort_values(["match_date", "bowl_order_sort"], ascending=[False, True])
+
+
+def filter_real_scorecard_bowling_rows(rows: pd.DataFrame) -> pd.DataFrame:
+    if rows.empty:
+        return rows.copy()
+    output = rows.copy()
+    output["_bowling_balls"] = output.apply(scorecard_bowling_balls_bowled, axis=1)
+    output["_bowling_balls"] = pd.to_numeric(output["_bowling_balls"], errors="coerce").fillna(0)
+    output = output[output["_bowling_balls"].gt(0)].copy()
+    return output.drop(columns=["_bowling_balls"], errors="ignore")
+
+
+def scorecard_bowling_balls_bowled(row: pd.Series) -> int | None:
+    for column in ["balls_bowled", "legal_balls"]:
+        if column in row:
+            value = pd.to_numeric(row.get(column), errors="coerce")
+            if pd.notna(value):
+                return int(value)
+    return cricket_overs_to_balls(row.get("overs_bowled"))
 
 
 def filter_recent_form_player_rows(rows: pd.DataFrame, player_id: str, player_name_key_value: str) -> pd.DataFrame:

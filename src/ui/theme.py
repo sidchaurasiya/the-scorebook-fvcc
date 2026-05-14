@@ -4895,10 +4895,35 @@ def inject_theme() -> None:
 
             div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"],
             div.st-key-season_round_grade_filter_control [data-testid="stButtonGroup"] {
-                flex-wrap: nowrap !important;
+                background: transparent;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+                flex-wrap: wrap !important;
+                gap: 7px;
                 max-width: 100%;
-                overflow-x: auto;
-                width: max-content;
+                overflow: visible;
+                padding: 0;
+                width: 100%;
+            }
+
+            div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button,
+            div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton-segmented_control"] {
+                background: #F7F8FD !important;
+                border: 1px solid #E4E8F4 !important;
+                border-radius: 12px !important;
+                min-height: 34px !important;
+                padding: 7px 10px !important;
+                white-space: normal !important;
+                line-height: 1.12 !important;
+                text-align: left !important;
+            }
+
+            div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+            div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+            div.st-key-season_round_grade_filter_control button[data-testid="stBaseButton-segmented_controlActive"] {
+                background: #F0EDFF !important;
+                border-color: #ded8ff !important;
             }
 
             .season-round-scroll {

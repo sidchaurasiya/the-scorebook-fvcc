@@ -36,6 +36,7 @@ def main() -> int:
     build_scorecard_bowling(frames).to_csv(OUTPUT_DIR / "scorecard_bowling_milestones_by_scope.csv", index=False)
     build_bbb_batting(frames).to_csv(OUTPUT_DIR / "bbb_batting_rates_by_scope.csv", index=False)
     build_bbb_bowling(frames).to_csv(OUTPUT_DIR / "bbb_bowling_dot_rates_by_scope.csv", index=False)
+    build_season_by_round(frames).to_csv(OUTPUT_DIR / "season_by_round_scorecards.csv", index=False)
 
     print("Season Overview deploy-safe exports rebuilt")
     for path in sorted(OUTPUT_DIR.glob("*.csv")):
@@ -333,6 +334,84 @@ def build_bbb_bowling(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     )
     grouped["dot_ball_pct"] = grouped.apply(lambda row: layout.divide_or_none(float(row["dot_balls"]) * 100, float(row["legal_balls"])), axis=1)
     return grouped
+
+
+def build_season_by_round(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    matches = frames["matches"].copy()
+    if matches.empty:
+        return pd.DataFrame()
+
+    context = match_context(matches)
+    matches = layout.build_match_archive_frame(matches)
+    if not context.empty:
+        matches = matches.merge(
+            context[["match_id", "season_id", "season"]].drop_duplicates("match_id"),
+            on="match_id",
+            how="left",
+            suffixes=("", "_context"),
+        )
+        for column in ["season_id", "season"]:
+            context_column = f"{column}_context"
+            if context_column not in matches:
+                continue
+            if column not in matches:
+                matches[column] = matches[context_column]
+            else:
+                missing = matches[column].isna() | matches[column].astype(str).str.strip().isin(["", "nan", "None"])
+                matches.loc[missing, column] = matches.loc[missing, context_column]
+            matches = matches.drop(columns=[context_column])
+
+    batting = layout.add_missing_canonical_player_ids(frames["batting"])
+    bowling = layout.filter_real_scorecard_bowling_rows(layout.add_missing_canonical_player_ids(frames["bowling"]))
+    best_batters = layout.best_batters_by_match(batting, matches)
+    best_bowlers = layout.best_bowlers_by_match(bowling, matches)
+    premiership_match_ids = layout.season_round_premiership_match_ids()
+
+    rows = []
+    for _, match in matches.iterrows():
+        match_id = str(match.get("match_id", "") or "").strip()
+        if not match_id:
+            continue
+        result = layout.season_round_result(match)
+        grade_label = layout.season_round_grade_label(match)
+        rows.append(
+            {
+                "match_id": match_id,
+                "season_id": clean_value(match.get("season_id")),
+                "season": clean_value(match.get("season")),
+                "source_team_ids": clean_value(match.get("source_team_ids")),
+                "fvcc_team_id": clean_value(match.get("fvcc_team_id")),
+                "fvcc_team_name": clean_value(match.get("fvcc_team_name")),
+                "grade_id": clean_value(match.get("grade_id")),
+                "grade_name": clean_value(match.get("grade_name")),
+                "grade_label": grade_label,
+                "round_name": clean_value(match.get("round_name")),
+                "round_display": layout.season_round_display(match.get("round_name")),
+                "round_sort": layout.season_round_sort_value(match.get("round_name")),
+                "match_date": clean_value(match.get("match_date")),
+                "opponent_name": clean_value(match.get("opponent_name"), "Unknown opponent"),
+                "result_label": result["label"],
+                "result_class": result["class"],
+                "result_text": result["text"],
+                "best_batter": best_batters.get(match_id, "—"),
+                "best_bowler": best_bowlers.get(match_id, "—"),
+                "is_premiership": match_id in premiership_match_ids,
+            }
+        )
+    if not rows:
+        return pd.DataFrame()
+    output = pd.DataFrame(rows)
+    output["_match_date_sort"] = pd.to_datetime(output["match_date"], errors="coerce", utc=True)
+    return output.sort_values(["season", "grade_label", "round_sort", "_match_date_sort"], ascending=[True, True, False, False]).drop(
+        columns=["_match_date_sort"]
+    )
+
+
+def clean_value(value: object, fallback: str = "") -> str:
+    if pd.isna(value):
+        return fallback
+    text = str(value).strip()
+    return text if text and text.casefold() not in {"nan", "none", "nat"} else fallback
 
 
 def scope_columns() -> list[str]:

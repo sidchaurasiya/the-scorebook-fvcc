@@ -59,6 +59,8 @@ def main() -> int:
         "batting_position_summary.csv": build_batting_position_summary(batting),
         "bowling_phase_summary.csv": build_bowling_phase_summary(bowling, balls),
         "dismissal_fingerprint_summary.csv": build_dismissal_fingerprint_summary(batting),
+        "recent_form_batting.csv": build_recent_form_batting(batting),
+        "recent_form_bowling.csv": build_recent_form_bowling(bowling),
     }
     for filename, frame in outputs.items():
         frame.to_csv(OUTPUT_DIR / filename, index=False)
@@ -126,6 +128,7 @@ def prepare_bowling(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     rows["wickets_numeric"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
     rows["runs_against_numeric"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
     rows["balls_numeric"] = rows.get("overs_bowled", pd.Series(index=rows.index, dtype="object")).map(layout.cricket_overs_to_balls).fillna(0)
+    rows = rows[rows["balls_numeric"].gt(0)].copy()
     rows["is_3wi"] = rows["wickets_numeric"].isin([3, 4])
     rows["is_5wi"] = rows["wickets_numeric"].ge(5)
     rows["bbi_display"] = rows.apply(lambda row: f"{int(row['wickets_numeric'])}/{int(row['runs_against_numeric'])}", axis=1)
@@ -448,6 +451,78 @@ def build_dismissal_fingerprint_summary(batting: pd.DataFrame) -> pd.DataFrame:
     output["pct"] = output.apply(lambda row: divide_or_none(row["count"] * 100, row["total_dismissals"]), axis=1)
     output["dismissal_order"] = output["dismissal_bucket"].map(DISMISSAL_ORDER).fillna(99).astype(int)
     return output.sort_values(["scope", "canonical_player_name", "dismissal_order"])
+
+
+def build_recent_form_batting(batting: pd.DataFrame) -> pd.DataFrame:
+    if batting.empty:
+        return pd.DataFrame()
+    rows = batting.copy()
+    rows["match_date"] = pd.to_datetime(rows.get("first_match_day"), errors="coerce", utc=True)
+    rows["order_sort"] = pd.to_numeric(rows.get("bat_order"), errors="coerce").fillna(99)
+    rows["display_value"] = rows.apply(recent_batting_display, axis=1)
+    rows["chip_classes"] = rows.apply(recent_batting_chip_classes, axis=1)
+    return recent_form_output(rows, "batting")
+
+
+def build_recent_form_bowling(bowling: pd.DataFrame) -> pd.DataFrame:
+    if bowling.empty:
+        return pd.DataFrame()
+    rows = bowling.copy()
+    rows = rows[rows["wickets_numeric"].gt(0) | rows["runs_against_numeric"].gt(0)].copy()
+    if rows.empty:
+        return pd.DataFrame()
+    rows["match_date"] = pd.to_datetime(rows.get("first_match_day"), errors="coerce", utc=True)
+    rows["order_sort"] = pd.to_numeric(rows.get("bowl_order"), errors="coerce").fillna(99)
+    rows["display_value"] = rows.apply(lambda row: f"{int(row['wickets_numeric'])}/{int(row['runs_against_numeric'])}", axis=1)
+    rows["chip_classes"] = rows.apply(recent_bowling_chip_classes, axis=1)
+    return recent_form_output(rows, "bowling")
+
+
+def recent_form_output(rows: pd.DataFrame, discipline: str) -> pd.DataFrame:
+    columns = [
+        "canonical_player_id",
+        "canonical_player_name",
+        "display_player_name",
+        "match_id",
+        "match_date",
+        "order_sort",
+        "display_value",
+        "chip_classes",
+    ]
+    output = rows[[column for column in columns if column in rows]].copy()
+    for column in columns:
+        if column not in output:
+            output[column] = ""
+    output["discipline"] = discipline
+    return output.sort_values(["canonical_player_name", "match_date", "order_sort"], ascending=[True, False, True])
+
+
+def recent_batting_display(row: pd.Series) -> str:
+    score = f"{int(row['runs_numeric'])}{'*' if row.get('not_out') else ''}"
+    balls = pd.to_numeric(row.get("balls_numeric"), errors="coerce")
+    if pd.notna(balls) and float(balls) > 0:
+        score += f"({int(balls)})"
+    return score
+
+
+def recent_batting_chip_classes(row: pd.Series) -> str:
+    classes = []
+    if row.get("runs_numeric", 0) >= 50:
+        classes.append("hot")
+    if row.get("not_out"):
+        classes.append("notout")
+    if row.get("runs_numeric", 0) == 0:
+        classes.append("quiet")
+    return " ".join(classes)
+
+
+def recent_bowling_chip_classes(row: pd.Series) -> str:
+    classes = []
+    if row.get("wickets_numeric", 0) >= 3:
+        classes.append("hot")
+    if row.get("wickets_numeric", 0) == 0:
+        classes.append("quiet")
+    return " ".join(classes)
 
 
 def player_dimension_columns(column: str) -> list[str]:

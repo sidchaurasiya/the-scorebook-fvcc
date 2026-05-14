@@ -61,6 +61,9 @@ git status
    - reapply team/grade cleaning
    - refresh current-season match-centre data for live-scored matches
    - rebuild deploy-safe Season Overview ball-by-ball detail summaries
+   - rebuild deploy-safe Season Overview `season_by_round_scorecards.csv`
+   - rebuild deploy-safe Player Profile summaries, including Recent Form
+   - rebuild deploy-safe Hall of Fame match-centre summaries and premiership exports
    - print a refresh summary
 
    Important source rule for every weekly refresh:
@@ -70,6 +73,7 @@ git status
    - Do not mix all-scorecard totals with ball-by-ball denominators. For example, never calculate Bat SR as total scorecard runs divided by ball-by-ball balls faced.
    - Scorecard/aggregate data can still be used for totals such as Runs, Innings, Average, HS, 30s, 50s, 100s, ducks, 4s, and 6s.
    - If verified ball-by-ball data is missing for the selected season/team scope, the delivery-based metric should show blank/`N/A`, not `0.0`.
+   - Recent Form bowling chips should only include real non-empty bowling figures; do not pad non-bowling matches as `0/0`.
 
 7. Restart the local app.
 
