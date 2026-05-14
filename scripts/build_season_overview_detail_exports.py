@@ -95,7 +95,14 @@ def dedupe_scope_frame(key: str, frame: pd.DataFrame) -> pd.DataFrame:
         return frame
     frame = frame.sort_values("_scope_order").copy()
     if key == "matches" and "match_id" in frame:
-        return frame.drop_duplicates("match_id", keep="last")
+        context_columns = [column for column in ["season_id", "season"] if column in frame]
+        if context_columns:
+            frame["_context_score"] = 0
+            for column in context_columns:
+                has_value = ~(frame[column].isna() | frame[column].astype(str).str.strip().isin(["", "nan", "None"]))
+                frame["_context_score"] += has_value.astype(int)
+            frame = frame.sort_values(["_context_score", "_scope_order"])
+        return frame.drop_duplicates("match_id", keep="last").drop(columns=["_context_score"], errors="ignore")
     if key == "balls" and "ball_event_id" in frame:
         return frame.drop_duplicates("ball_event_id", keep="last")
     if key == "batting":

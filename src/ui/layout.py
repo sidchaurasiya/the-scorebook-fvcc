@@ -1401,11 +1401,7 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
     sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
     rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
     with st.container(key="season_by_round_card"):
-        if not rows:
-            render_season_round_empty_state()
-            return
-
-        options = season_round_grade_options(rows)
+        options = season_round_grade_options(dashboard_data, rows)
         if not options:
             render_season_round_empty_state()
             return
@@ -1415,14 +1411,14 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
 
         visible_rows = [row for row in rows if row.get("grade_slug") == selected_slug]
         if not visible_rows:
-            render_season_round_empty_state()
+            render_season_round_empty_state("Round-by-round scorecards are not available for this grade yet.")
             return
         st.markdown(season_round_cards_html(visible_rows), unsafe_allow_html=True)
 
 
-def render_season_round_empty_state() -> None:
+def render_season_round_empty_state(message: str = "Round-by-round scorecards are not available for this season yet.") -> None:
     st.markdown(
-        '<div class="season-round-empty">Round-by-round scorecards are not available for this season yet.</div>',
+        f'<div class="season-round-empty">{html.escape(message)}</div>',
         unsafe_allow_html=True,
     )
 
@@ -1486,11 +1482,17 @@ def build_season_round_rows(
     if rows_frame.empty:
         return []
 
+    option_lookup = season_round_team_option_lookup(dashboard_data)
     rows = []
     for _, match in rows_frame.iterrows():
         match_id = str(match.get("match_id", "") or "").strip()
-        grade_label = safe_record_text(match.get("grade_label"), "Team")
-        grade_slug = make_player_slug(grade_label or "grade")
+        team_id = str(match.get("fvcc_team_id", "") or "").strip()
+        option = season_round_option_for_match(team_id, match.get("source_team_ids"), option_lookup)
+        if option:
+            grade_slug, grade_label = option
+        else:
+            grade_label = safe_record_text(match.get("grade_label"), "Team")
+            grade_slug = make_player_slug(grade_label or "grade")
         is_premiership = parse_bool(match.get("is_premiership"))
         result_class = safe_record_text(match.get("result_class"), "none")
         result_text = safe_record_text(match.get("result_text"), "no result")
@@ -1546,14 +1548,63 @@ def season_round_grade_label(match: pd.Series) -> str:
     return grade or team or "Team"
 
 
-def season_round_grade_options(rows: list[dict[str, object]]) -> list[tuple[str, str]]:
+def season_round_grade_options(
+    dashboard_data: dict[str, object],
+    rows: list[dict[str, object]],
+) -> list[tuple[str, str]]:
     seen: dict[str, str] = {}
+    for slug, label in season_round_dashboard_team_options(dashboard_data):
+        seen.setdefault(slug, label)
     for row in rows:
         slug = str(row.get("grade_slug") or "").strip()
         label = str(row.get("grade") or "").strip()
         if slug and label:
             seen.setdefault(slug, label)
     return sorted(seen.items(), key=lambda item: grade_sort_key(item[1]))
+
+
+def season_round_dashboard_team_options(dashboard_data: dict[str, object]) -> list[tuple[str, str]]:
+    options: list[tuple[str, str]] = []
+    for team in dashboard_data.get("teams", []) or []:
+        team_id = str(team.get("id", "") or "").strip()
+        if not team_id or team_id == "__all_teams__":
+            continue
+        label = team_card_title(team)
+        if not label:
+            continue
+        options.append((season_round_team_slug(team), label))
+    return options
+
+
+def season_round_team_option_lookup(dashboard_data: dict[str, object]) -> dict[str, tuple[str, str]]:
+    lookup: dict[str, tuple[str, str]] = {}
+    for team in dashboard_data.get("teams", []) or []:
+        team_id = str(team.get("id", "") or "").strip()
+        if not team_id or team_id == "__all_teams__":
+            continue
+        lookup[team_id] = (season_round_team_slug(team), team_card_title(team))
+    return lookup
+
+
+def season_round_team_slug(team: dict[str, object]) -> str:
+    team_id = str(team.get("id", "") or "").strip()
+    if team_id:
+        return f"team_{make_player_slug(team_id)}"
+    return make_player_slug(team_card_title(team))
+
+
+def season_round_option_for_match(
+    team_id: str,
+    source_team_ids: object,
+    option_lookup: dict[str, tuple[str, str]],
+) -> tuple[str, str] | None:
+    if team_id in option_lookup:
+        return option_lookup[team_id]
+    for token in re.split(r"[,;|]", str(source_team_ids or "")):
+        token = token.strip()
+        if token in option_lookup:
+            return option_lookup[token]
+    return None
 
 
 def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bool = False) -> str:
