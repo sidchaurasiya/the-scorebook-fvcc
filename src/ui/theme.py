@@ -3282,30 +3282,31 @@ def inject_theme() -> None:
 
         .profile-segmented {
             align-items: center;
-            background: #ffffff;
-            border: 1px solid #e7e9f4;
-            border-radius: 18px;
-            box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
+            background: #F7F8FD;
+            border: 1px solid #E9ECF6;
+            border-radius: 999px;
+            box-shadow: none;
             display: inline-flex;
-            gap: 8px;
+            gap: 4px;
             margin: 0 0 18px;
-            padding: 7px;
+            padding: 5px;
         }
 
         .profile-segmented-compact {
-            border-radius: 14px;
+            border-radius: 999px;
             box-shadow: none;
             margin: -2px 0 14px;
             padding: 5px;
         }
 
         .profile-segment {
-            border-radius: 13px;
-            color: #6d7390;
-            font-size: 0.86rem;
-            font-weight: 900;
+            border-radius: 999px;
+            color: #737998;
+            font-size: 0.9rem;
+            font-weight: 750;
             line-height: 1;
-            padding: 10px 14px;
+            min-height: 38px;
+            padding: 11px 16px;
             text-decoration: none !important;
             transition: background 0.18s ease, color 0.18s ease;
             white-space: nowrap;
@@ -3318,9 +3319,9 @@ def inject_theme() -> None:
         }
 
         .profile-segment.active {
-            background: #f0edff;
-            color: #5b3df5;
-            box-shadow: inset 0 0 0 1px #ded8ff;
+            background: #F0EDFF;
+            color: var(--pitch);
+            box-shadow: none;
         }
 
         .profile-breakdown-controls {
@@ -3695,15 +3696,15 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] {
-            background: #ffffff;
-            border: 1px solid #e7e9f4;
-            border-radius: 18px;
-            box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
+            background: #F7F8FD;
+            border: 1px solid #E9ECF6;
+            border-radius: 999px;
+            box-shadow: none;
             display: inline-flex;
-            gap: 8px;
+            gap: 4px;
             max-width: 100%;
             overflow-x: auto;
-            padding: 7px;
+            padding: 5px;
             width: fit-content;
         }
 
@@ -3715,14 +3716,14 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"] {
             background: transparent !important;
             border: 0 !important;
-            border-radius: 13px !important;
-            color: #6d7390 !important;
+            border-radius: 999px !important;
+            color: #737998 !important;
             flex: 0 0 auto;
-            font-size: 0.86rem !important;
-            font-weight: 900 !important;
+            font-size: 0.9rem !important;
+            font-weight: 750 !important;
             line-height: 1 !important;
-            min-height: 0 !important;
-            padding: 10px 14px !important;
+            min-height: 38px !important;
+            padding: 8px 16px !important;
             white-space: nowrap;
         }
 
@@ -3735,9 +3736,9 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid="stBaseButton-segmented_controlActive"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid="stBaseButton-segmented_controlActive"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"] {
-            background: #f0edff !important;
-            box-shadow: inset 0 0 0 1px #ded8ff !important;
-            color: #5b3df5 !important;
+            background: #F0EDFF !important;
+            box-shadow: none !important;
+            color: var(--pitch) !important;
         }
 
         .hof-progress-row {

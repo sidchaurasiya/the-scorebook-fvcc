@@ -87,6 +87,8 @@ Current production navigation pages:
 - Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
 - Current Career Breakdown data rule: batting split averages use `Runs / Outs`, where `Outs = Innings - Not Outs`; explicit `Did Not Bat` rows must be excluded from split innings and outs.
 - Current Player DNA visual rule: Dismissal Fingerprint should reuse the Player vs Peers comparison-bar/average-marker styling; Bowling by Phase remains verified ball-by-ball only but should not show a repeated visible footnote.
+- Current Player Profile Strike Rate split rule: split-level Strike Rate remains BBB-only; when BBB ball rows omit per-ball striker innings audit fields, accept the innings only if aggregated BBB runs and BBB balls exactly match the scorecard innings runs and balls. Mohaneesh Pitre at Epping Recreation Reserve is the known validation case.
+- Current Player Profile toggle visual rule: Career Breakdown segmented controls should match the app tab pill visual exactly, with the same rounded light container, soft lavender active pill, muted inactive labels, and no extra shadow.
 
 ## Opponent Name Normalization Notes
 

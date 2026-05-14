@@ -39,6 +39,8 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Keep Hall of Fame, Season Overview, Milestone, routing, GA4, and experimental page visibility unchanged while this work is in progress.
 - Current Player Profile split-average fix: Career Breakdown batting splits must exclude explicit `Did Not Bat` rows, count real batting innings only, and calculate average as `Runs / Outs` where `Outs = Innings - Not Outs`. True `0*` innings remain innings and not-outs; DNB rows are not innings.
 - Current Player DNA visual fix: Dismissal Fingerprint should share the Player vs Peers comparison-bar classes/marker styling, Bowling by Phase values should render in dark table text, and the visible bowling-phase BBB footnote has been removed while the BBB-only calculation rule remains in code.
+- Current Player Profile BBB split-rate fix: split-level Strike Rate still uses only BBB runs and BBB balls, but verified innings can now pass completeness validation when ball rows omit striker innings audit fields, as long as the aggregated BBB runs/balls match the scorecard innings runs/balls. This fixes Mohaneesh Pitre at Epping Recreation Reserve showing `40.0%` instead of `N/A`.
+- Current Player Profile toggle styling: Career Breakdown dimension and discipline segmented controls should match the app tab pill style: light lavender-grey capsule, soft lavender active pill, fully rounded shape, no shadow, and consistent sizing.
 
 ## Current Opponent Name Normalization
 

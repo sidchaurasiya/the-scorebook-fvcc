@@ -258,7 +258,10 @@ def build_batting_breakdown(batting: pd.DataFrame, balls: pd.DataFrame, dimensio
 def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, column: str) -> pd.DataFrame:
     if batting.empty or balls.empty:
         return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced"])
-    keys = batting[player_dimension_columns(column) + ["match_id", "innings_id", "participant_id"]].drop_duplicates()
+    keys = batting[
+        player_dimension_columns(column)
+        + ["match_id", "innings_id", "participant_id", "runs_numeric", "balls_numeric"]
+    ].drop_duplicates()
     ball_source = balls.drop(columns=["season_label", "grade_label", "opponent_label", "ground_label", "home_away_label"], errors="ignore")
     source = ball_source.merge(
         keys,
@@ -281,14 +284,26 @@ def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, colu
         bbb_balls_faced=("ball_faced", "sum"),
         source_batter_runs=("source_batter_runs", "max"),
         source_batter_balls=("source_batter_balls", "max"),
+        scorecard_runs=("runs_numeric", "max"),
+        scorecard_balls=("balls_numeric", "max"),
     )
-    innings = innings[
-        innings["source_batter_runs"].notna()
-        & innings["source_batter_balls"].notna()
-        & innings["source_batter_balls"].gt(0)
-        & innings["bbb_balls_faced"].gt(0)
+    has_ball_audit = innings["source_batter_runs"].notna() & innings["source_batter_balls"].notna()
+    ball_audit_matches = (
+        innings["source_batter_balls"].gt(0)
         & innings["bbb_runs"].eq(innings["source_batter_runs"])
         & innings["bbb_balls_faced"].eq(innings["source_batter_balls"])
+    )
+    # Some verified ball-by-ball exports omit the per-ball striker innings totals.
+    # In that case, use the scorecard innings as a completeness check only; the
+    # returned strike-rate numerator and denominator remain BBB runs and BBB balls.
+    scorecard_audit_matches = (
+        innings["scorecard_balls"].gt(0)
+        & innings["bbb_runs"].eq(innings["scorecard_runs"])
+        & innings["bbb_balls_faced"].eq(innings["scorecard_balls"])
+    )
+    innings = innings[
+        innings["bbb_balls_faced"].gt(0)
+        & ((has_ball_audit & ball_audit_matches) | (~has_ball_audit & scorecard_audit_matches))
     ].copy()
     if innings.empty:
         return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced"])
