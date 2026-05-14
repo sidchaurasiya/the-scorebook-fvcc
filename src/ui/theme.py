@@ -3755,10 +3755,12 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"],
-        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control [data-testid="stButtonGroup"] {
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control [data-testid="stButtonGroup"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] {
             background: #F7F8FD;
             border: 1px solid #E9ECF6;
             border-radius: 999px;
@@ -3775,10 +3777,12 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button,
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button,
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"] button,
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button,
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid^="stBaseButton-segmented_control"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"],
-        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid^="stBaseButton-segmented_control"] {
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid^="stBaseButton-segmented_control"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid^="stBaseButton-segmented_control"] {
             background: transparent !important;
             border: 0 !important;
             border-radius: 999px !important;
@@ -3796,14 +3800,17 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid="stBaseButton-segmented_controlActive"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid="stBaseButton-segmented_controlActive"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid="stBaseButton-segmented_controlActive"] {
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid="stBaseButton-segmented_controlActive"] {
             background: #F0EDFF !important;
             box-shadow: none !important;
             color: var(--pitch) !important;
@@ -3967,6 +3974,10 @@ def inject_theme() -> None:
 
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control {
             margin: 0 0 20px;
+        }
+
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control {
+            margin: 20px 0 24px;
         }
 
         div.st-key-milestone_exclusive_panel .milestone-segmented-compact {
@@ -4844,10 +4855,12 @@ def inject_theme() -> None:
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"],
             .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"],
+            .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"],
-            .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control [data-testid="stButtonGroup"] {
+            .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control [data-testid="stButtonGroup"],
+            .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] {
                 display: flex;
                 max-width: 100%;
                 overflow-x: auto;
@@ -4858,10 +4871,12 @@ def inject_theme() -> None:
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button,
             .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button,
             .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"] button,
+            .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button,
             .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid^="stBaseButton-segmented_control"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"],
             .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"],
-            .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid^="stBaseButton-segmented_control"] {
+            .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid^="stBaseButton-segmented_control"],
+            .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid^="stBaseButton-segmented_control"] {
                 flex: 0 0 auto;
                 text-align: center;
             }

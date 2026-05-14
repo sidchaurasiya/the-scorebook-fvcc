@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Season Overview Week-by-Week Wireframe</title>
+  <style>
+    :root {
+      --bg: #f3f1fb;
+      --card: #ffffff;
+      --ink: #070d3f;
+      --muted: #747b98;
+      --line: #e8eaf5;
+      --purple: #5b3df5;
+      --lavender: #f0edff;
+      --green: #137a4d;
+      --green-soft: #eaf8ef;
+      --gold: #9a6b05;
+      --gold-soft: #fff6db;
+      --maroon: #9f2747;
+      --maroon-soft: #ffe8ef;
+      --shadow: 0 22px 50px rgba(23, 27, 77, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(91, 61, 245, 0.13), transparent 25rem),
+        linear-gradient(180deg, #f8f6ff 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    main {
+      margin: 0 auto;
+      max-width: 1220px;
+      padding: 42px 24px 80px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .eyebrow {
+      color: var(--purple);
+      font-size: 0.86rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      align-items: end;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr auto;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 7vw, 5.8rem);
+      letter-spacing: -0.02em;
+      line-height: 0.96;
+      margin-top: 10px;
+    }
+
+    .controls {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      padding: 16px;
+      width: min(470px, 100%);
+    }
+
+    .control {
+      background: #f8f8fd;
+      border: 1px solid #eceefa;
+      border-radius: 18px;
+      padding: 12px 14px;
+    }
+
+    .control span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 850;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .control strong { display: block; }
+
+    .story-card,
+    .grade-card,
+    .single-card,
+    .note-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .section-head {
+      align-items: start;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      letter-spacing: -0.01em;
+    }
+
+    .section-head p,
+    .note-card p {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .source-badge {
+      background: #f7f8fd;
+      border: 1px solid #e8ebf7;
+      border-radius: 999px;
+      color: var(--muted);
+      flex: 0 0 auto;
+      font-size: 0.72rem;
+      font-weight: 850;
+      padding: 8px 11px;
+      text-transform: uppercase;
+    }
+
+    .round-strip {
+      display: grid;
+      gap: 16px;
+    }
+
+    .round-row {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 108px 1fr;
+    }
+
+    .round-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding-top: 18px;
+      text-transform: uppercase;
+    }
+
+    .match-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .match-card {
+      background: #fff;
+      border: 1px solid #eceefa;
+      border-radius: 20px;
+      min-height: 220px;
+      padding: 16px;
+    }
+
+    .match-top {
+      align-items: center;
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .grade {
+      color: var(--purple);
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .result {
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 900;
+      padding: 6px 9px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .win { background: var(--green-soft); color: var(--green); }
+    .loss { background: var(--maroon-soft); color: var(--maroon); }
+    .draw { background: var(--gold-soft); color: var(--gold); }
+
+    .opponent {
+      display: block;
+      font-size: 1.08rem;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .scoreline {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 750;
+      margin-bottom: 16px;
+    }
+
+    .callouts {
+      display: grid;
+      gap: 9px;
+    }
+
+    .callout {
+      background: #fbfbff;
+      border: 1px solid #eef0f7;
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .callout span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .callout strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-top: 3px;
+    }
+
+    .scorecard-link {
+      color: var(--purple);
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-top: 13px;
+      text-decoration: none;
+    }
+
+    .grade-stack {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 24px;
+    }
+
+    .grade-card-head {
+      align-items: center;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .grade-record {
+      background: var(--lavender);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      font-size: 0.76rem;
+      font-weight: 900;
+      padding: 7px 10px;
+    }
+
+    .week-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .week-row {
+      align-items: center;
+      background: #fbfbff;
+      border: 1px solid #eef0f7;
+      border-radius: 16px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 76px 1fr auto;
+      padding: 12px;
+    }
+
+    .week-row .round {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .week-row strong { display: block; }
+    .week-row small { color: var(--muted); font-weight: 750; }
+
+    .single-card {
+      margin-top: 24px;
+    }
+
+    .single-timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .single-match {
+      align-items: center;
+      background: #fff;
+      border: 1px solid #eceefa;
+      border-radius: 18px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 100px 1fr 220px auto;
+      padding: 14px;
+    }
+
+    .empty {
+      align-items: center;
+      background: #f8f8fd;
+      border: 1px dashed #d9ddec;
+      border-radius: 18px;
+      color: var(--muted);
+      display: flex;
+      font-weight: 800;
+      min-height: 112px;
+      padding: 16px;
+    }
+
+    .mobile-preview {
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      margin: 28px auto 0;
+      max-width: 420px;
+      overflow: hidden;
+      padding: 16px;
+    }
+
+    .mobile-preview .story-card {
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .mobile-preview .round-row,
+    .mobile-preview .match-grid,
+    .mobile-preview .week-row {
+      grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 960px) {
+      main { padding: 28px 14px 56px; }
+      .hero,
+      .round-row,
+      .grade-stack,
+      .single-match {
+        grid-template-columns: 1fr;
+      }
+      .match-grid { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .source-badge { display: inline-block; margin-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Season Overview concept</div>
+        <h1>Week-by-Week Story</h1>
+      </div>
+      <div class="controls">
+        <div class="control"><span>Season</span><strong>Summer 2025/26</strong></div>
+        <div class="control"><span>Scope</span><strong>All teams</strong></div>
+      </div>
+    </section>
+
+    <section class="story-card">
+      <div class="section-head">
+        <div>
+          <h2>Season Pulse by Round</h2>
+          <p>Each week shows the match result, opponent, scorecard link, best performer and best bowler. This sits above Detailed Stats so the season reads like a story before becoming an audit table.</p>
+        </div>
+        <span class="source-badge">Match scorecards</span>
+      </div>
+
+      <div class="round-strip">
+        <div class="round-row">
+          <div class="round-label">Round 1<br />Oct 11</div>
+          <div class="match-grid">
+            <article class="match-card">
+              <div class="match-top"><span class="grade">2s</span><span class="result win">Win</span></div>
+              <strong class="opponent">vs Donath Cricket Club</strong>
+              <span class="scoreline">FVCC 7/184 def Donath 142</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Vinay Sharma - 64 and 2/18</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Jai Bhan - 4/23</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">View scorecard</a>
+            </article>
+            <article class="match-card">
+              <div class="match-top"><span class="grade">3s</span><span class="result loss">Loss</span></div>
+              <strong class="opponent">vs Olympic Colts Cricket Club</strong>
+              <span class="scoreline">FVCC 119 lost to Olympic Colts 6/121</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Armaan Datta - 48</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Siddhanth Chaurasiya - 2/21</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">View scorecard</a>
+            </article>
+            <article class="match-card">
+              <div class="match-top"><span class="grade">OD</span><span class="result draw">No result</span></div>
+              <strong class="opponent">vs Rivergum Cricket Club</strong>
+              <span class="scoreline">Rain affected after 18 overs</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Kalpeshkumar Patel - 39*</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Not enough overs</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">Scorecard pending</a>
+            </article>
+          </div>
+        </div>
+
+        <div class="round-row">
+          <div class="round-label">Round 2<br />Oct 18</div>
+          <div class="match-grid">
+            <article class="match-card">
+              <div class="match-top"><span class="grade">2s</span><span class="result loss">Loss</span></div>
+              <strong class="opponent">vs Holy Trinity Cricket Club</strong>
+              <span class="scoreline">FVCC 151 lost to Holy Trinity 5/154</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Jai Bhan - 71</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Vinay Sharma - 3/40</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">View scorecard</a>
+            </article>
+            <article class="match-card">
+              <div class="match-top"><span class="grade">3s</span><span class="result win">Win</span></div>
+              <strong class="opponent">vs Preston Baseballers Cricket Club</strong>
+              <span class="scoreline">FVCC 8/166 def Preston 160</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Siddhanth Chaurasiya - 36 and 3 catches</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Abcin Thomas - 3/28</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">View scorecard</a>
+            </article>
+            <article class="match-card">
+              <div class="match-top"><span class="grade">OD</span><span class="result win">Win</span></div>
+              <strong class="opponent">vs Camrea Cricket Club</strong>
+              <span class="scoreline">FVCC 4/173 def Camrea 129</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Nitin Tanwar - 88*</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Armaan Datta - 4/19</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">View scorecard</a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grade-stack">
+      <article class="grade-card">
+        <div class="grade-card-head">
+          <div><div class="eyebrow">All-teams view</div><h2>2s - Jack Kelly Shield</h2></div>
+          <span class="grade-record">4W - 2L</span>
+        </div>
+        <div class="week-list">
+          <div class="week-row"><span class="round">R1</span><div><strong>Win vs Donath Cricket Club</strong><small>Best performer: Vinay Sharma | Best bowler: Jai Bhan</small></div><span class="result win">Win</span></div>
+          <div class="week-row"><span class="round">R2</span><div><strong>Loss vs Holy Trinity Cricket Club</strong><small>Best performer: Jai Bhan | Best bowler: Vinay Sharma</small></div><span class="result loss">Loss</span></div>
+          <div class="week-row"><span class="round">R3</span><div><strong>Win vs Rivergum Cricket Club</strong><small>Best performer: Kalpeshkumar Patel | Best bowler: Armaan Datta</small></div><span class="result win">Win</span></div>
+        </div>
+      </article>
+
+      <article class="grade-card">
+        <div class="grade-card-head">
+          <div><div class="eyebrow">All-teams view</div><h2>3s - C Grade</h2></div>
+          <span class="grade-record">3W - 3L</span>
+        </div>
+        <div class="week-list">
+          <div class="week-row"><span class="round">R1</span><div><strong>Loss vs Olympic Colts Cricket Club</strong><small>Best performer: Armaan Datta | Best bowler: Siddhanth Chaurasiya</small></div><span class="result loss">Loss</span></div>
+          <div class="week-row"><span class="round">R2</span><div><strong>Win vs Preston Baseballers Cricket Club</strong><small>Best performer: Siddhanth Chaurasiya | Best bowler: Abcin Thomas</small></div><span class="result win">Win</span></div>
+          <div class="week-row"><span class="round">R3</span><div><strong>Scorecard unavailable</strong><small>Show clean empty match row, not placeholder stats.</small></div><span class="result draw">Pending</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="single-card">
+      <div class="section-head">
+        <div>
+          <h2>Single grade view</h2>
+          <p>When the Season Overview filter is scoped to one grade/team, the section becomes a compact fixture story list for that team only.</p>
+        </div>
+        <span class="source-badge">2s selected</span>
+      </div>
+      <div class="single-timeline">
+        <div class="single-match"><span class="round-label">Round 1</span><div><strong>Donath Cricket Club</strong><span style="color: var(--muted);">FVCC 7/184 def Donath 142</span></div><div><strong>Vinay Sharma</strong><span style="color: var(--muted);">64 and 2/18</span></div><span class="result win">Win</span></div>
+        <div class="single-match"><span class="round-label">Round 2</span><div><strong>Holy Trinity Cricket Club</strong><span style="color: var(--muted);">FVCC 151 lost to Holy Trinity 5/154</span></div><div><strong>Jai Bhan</strong><span style="color: var(--muted);">71 runs</span></div><span class="result loss">Loss</span></div>
+      </div>
+    </section>
+
+    <section class="note-card" style="margin-top: 24px;">
+      <h2>Rules and trust notes</h2>
+      <p>Best performer can use a simple scorecard-safe impact score combining batting runs, wickets, economy quality, fielding dismissals and match result context. Best bowler should use wickets first, then economy/runs conceded, then overs. If match-level scorecards are missing, show the empty state below.</p>
+      <div class="empty" style="margin-top: 16px;">No week-by-week scorecard data is available for this season/team yet.</div>
+    </section>
+
+    <section class="mobile-preview">
+      <div class="story-card">
+        <div class="section-head">
+          <div>
+            <h2>Mobile behavior</h2>
+            <p>Cards stack by round, each match remains scannable, and scorecard links stay subtle.</p>
+          </div>
+        </div>
+        <div class="round-row">
+          <div class="round-label">Round 1</div>
+          <div class="match-grid">
+            <article class="match-card">
+              <div class="match-top"><span class="grade">2s</span><span class="result win">Win</span></div>
+              <strong class="opponent">vs Donath Cricket Club</strong>
+              <span class="scoreline">FVCC 7/184 def Donath 142</span>
+              <div class="callouts">
+                <div class="callout"><span>Best performer</span><strong>Vinay Sharma - 64 and 2/18</strong></div>
+                <div class="callout"><span>Best bowler</span><strong>Jai Bhan - 4/23</strong></div>
+              </div>
+              <a class="scorecard-link" href="#">View scorecard</a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

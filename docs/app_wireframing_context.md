@@ -95,6 +95,8 @@ Current production navigation pages:
 - Permanent lightweight Player Profile metric tests now live in `tests/test_player_profile_metrics.py`; the generated 50-player QA CSV/Markdown outputs stay ignored under `data/processed/experimental/player_profile_qa/`.
 - Current Player Profile polish: premiership tags lead the profile badge order, Career Highlights leader cards show season as the main context, Batting Position Best Fit uses a 4+ innings threshold, and Dismissal Fingerprint rows include compact `Club avg` / points-difference labels next to each dismissal type.
 - Current Player Profile and Milestone polish: Career Overview hides Fielding on mobile for non-keepers, Career Highlights uses a compact two-card mobile grid, Career Breakdown controls are embedded in the section card, Bowling Phase uses compact mobile table labels (`O`, `W`, `Avg`, `SR`, `Boundary %`) with a subtle BBB coverage note, Dismissal Fingerprint insight sentences now call out dismissal types when they are 3+ points above club average, and the Milestone page view toggle is embedded in the content card using the shared Player Profile segmented styling with `st.session_state` rather than query-link navigation.
+- Current Milestone state: Exclusive Clubs category pills (`Matches`, `Runs`, `Wickets`, `Catches`) use `st.session_state` and shared segmented-control styling, not query-link navigation.
+- Current wireframing state: `docs/wireframes/player_profile_recent_form_wireframe.html` and `docs/wireframes/season_overview_week_by_week_wireframe.html` are review-only prototypes; recent form and week-by-week results are not production features until approved.
 
 ## Opponent Name Normalization Notes
 

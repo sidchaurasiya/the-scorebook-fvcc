@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Player Profile Recent Form Wireframe</title>
+  <style>
+    :root {
+      --bg: #f3f1fb;
+      --card: #ffffff;
+      --ink: #070d3f;
+      --muted: #747b98;
+      --line: #e8eaf5;
+      --purple: #5b3df5;
+      --lavender: #f0edff;
+      --green: #137a4d;
+      --green-soft: #eaf8ef;
+      --gold: #9a6b05;
+      --gold-soft: #fff6db;
+      --maroon: #9f2747;
+      --maroon-soft: #ffe8ef;
+      --shadow: 0 22px 50px rgba(23, 27, 77, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(91, 61, 245, 0.12), transparent 26rem),
+        linear-gradient(180deg, #f7f5ff 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    main {
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 42px 24px 80px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .eyebrow {
+      color: var(--purple);
+      font-size: 0.86rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 1.15fr 0.85fr;
+      margin-bottom: 28px;
+    }
+
+    .hero-title h1 {
+      font-size: clamp(2.4rem, 7vw, 5.6rem);
+      letter-spacing: -0.02em;
+      line-height: 0.96;
+      margin-top: 10px;
+    }
+
+    .selector {
+      align-self: end;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .selector label {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+
+    .search-box {
+      align-items: center;
+      background: #f8f8fd;
+      border: 1px solid #ebeefa;
+      border-radius: 999px;
+      color: var(--ink);
+      display: flex;
+      font-weight: 850;
+      justify-content: space-between;
+      padding: 13px 16px;
+    }
+
+    .profile-card,
+    .section-card,
+    .note-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .profile-card {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr auto;
+      margin-bottom: 28px;
+    }
+
+    .role-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 12px;
+    }
+
+    .pill {
+      background: var(--lavender);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      font-size: 0.78rem;
+      font-weight: 850;
+      padding: 7px 11px;
+    }
+
+    .profile-name {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1;
+    }
+
+    .profile-copy {
+      color: #555d7d;
+      max-width: 58ch;
+    }
+
+    .stat-strip {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      min-width: 310px;
+    }
+
+    .stat {
+      background: #f8f8fd;
+      border: 1px solid #eceefa;
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 800;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .section-head {
+      align-items: start;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      letter-spacing: -0.01em;
+    }
+
+    .section-head p,
+    .note-card p {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .source-badge {
+      background: #f7f8fd;
+      border: 1px solid #e8ebf7;
+      border-radius: 999px;
+      color: var(--muted);
+      flex: 0 0 auto;
+      font-size: 0.72rem;
+      font-weight: 850;
+      padding: 8px 11px;
+      text-transform: uppercase;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-panel {
+      background: #fbfbff;
+      border: 1px solid #eceefa;
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .form-panel-head {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .form-panel h3 {
+      font-size: 1.15rem;
+    }
+
+    .form-panel-head span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .form-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      scroll-snap-type: x proximity;
+    }
+
+    .form-chip {
+      background: #fff;
+      border: 1px solid #eceefa;
+      border-radius: 18px;
+      flex: 0 0 106px;
+      min-height: 114px;
+      padding: 13px;
+      scroll-snap-align: start;
+    }
+
+    .form-chip strong {
+      display: block;
+      font-size: 1.26rem;
+      line-height: 1;
+    }
+
+    .form-chip small {
+      color: var(--muted);
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      margin-top: 9px;
+    }
+
+    .form-chip a {
+      color: var(--purple);
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 850;
+      margin-top: 10px;
+      text-decoration: none;
+    }
+
+    .hot { background: var(--green-soft); border-color: #c7ecd3; color: var(--green); }
+    .good { background: var(--gold-soft); border-color: #f1dc91; color: var(--gold); }
+    .low { background: var(--maroon-soft); border-color: #f4c5d2; color: var(--maroon); }
+    .neutral { color: var(--ink); }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .match-card {
+      align-items: center;
+      background: #fff;
+      border: 1px solid #eceefa;
+      border-radius: 18px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 92px 1fr auto;
+      padding: 14px;
+    }
+
+    .match-card .round {
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .match-card strong { display: block; }
+
+    .result {
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 7px 10px;
+      text-transform: uppercase;
+    }
+
+    .win { background: var(--green-soft); color: var(--green); }
+    .loss { background: var(--maroon-soft); color: var(--maroon); }
+
+    .behavior-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .behavior {
+      background: #fff;
+      border: 1px solid #eceefa;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .behavior strong { display: block; margin-bottom: 8px; }
+    .behavior p { color: var(--muted); font-size: 0.9rem; }
+
+    .empty {
+      align-items: center;
+      background: #f8f8fd;
+      border: 1px dashed #d9ddec;
+      border-radius: 18px;
+      color: var(--muted);
+      display: flex;
+      font-weight: 800;
+      min-height: 112px;
+      padding: 16px;
+    }
+
+    .mobile-preview {
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      margin: 28px auto 0;
+      max-width: 410px;
+      overflow: hidden;
+      padding: 16px;
+    }
+
+    .mobile-preview .form-grid { grid-template-columns: 1fr; }
+    .mobile-preview .form-chip { flex-basis: 94px; }
+    .mobile-preview .section-card { border-radius: 24px; padding: 18px; }
+
+    @media (max-width: 820px) {
+      main { padding: 28px 14px 56px; }
+      .hero,
+      .profile-card,
+      .form-grid,
+      .behavior-grid {
+        grid-template-columns: 1fr;
+      }
+      .stat-strip { min-width: 0; }
+      .section-head { display: block; }
+      .source-badge { display: inline-block; margin-top: 12px; }
+      .match-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-title">
+        <div class="eyebrow">Player Profile concept</div>
+        <h1>Recent Form module</h1>
+      </div>
+      <div class="selector">
+        <label>Player selector</label>
+        <div class="search-box">Vinay Sharma <span>Search</span></div>
+      </div>
+    </section>
+
+    <section class="profile-card">
+      <div>
+        <div class="eyebrow">Fiji Victorian Cricket Club</div>
+        <h2 class="profile-name">Vinay Sharma</h2>
+        <div class="role-row">
+          <span class="pill">All-rounder</span>
+          <span class="pill">Premiership Winner</span>
+          <span class="pill">Middle-over control</span>
+        </div>
+        <p class="profile-copy">The recent form card should sit high enough to feel useful for coaches, but below the identity hero so it supports the player story rather than replacing it.</p>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><strong>168</strong><span>Matches</span></div>
+        <div class="stat"><strong>2,842</strong><span>Runs</span></div>
+        <div class="stat"><strong>176</strong><span>Wickets</span></div>
+        <div class="stat"><strong>11</strong><span>Verified BBB innings</span></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div>
+          <h2>Recent Form</h2>
+          <p>Scorecard-safe recent innings and bowling spells, ordered by latest match date where available.</p>
+        </div>
+        <span class="source-badge">Scorecard level</span>
+      </div>
+
+      <div class="form-grid">
+        <article class="form-panel">
+          <div class="form-panel-head">
+            <h3>Last 10 batting scores</h3>
+            <span>Not-outs retained</span>
+          </div>
+          <div class="form-strip">
+            <div class="form-chip hot"><strong>102*(49)</strong><small>vs Donath CC<br />Summer 2025/26</small><a href="#">Scorecard</a></div>
+            <div class="form-chip good"><strong>35(13)</strong><small>vs Rivergum<br />Winter 2026</small><a href="#">Scorecard</a></div>
+            <div class="form-chip neutral"><strong>25</strong><small>vs Holy Trinity<br />Winter 2026</small></div>
+            <div class="form-chip low"><strong>0</strong><small>vs Camrea<br />Winter 2026</small></div>
+            <div class="form-chip neutral"><strong>14*</strong><small>vs Olympic Colts<br />Summer 2025/26</small></div>
+            <div class="form-chip neutral"><strong>8</strong><small>vs Keon Park<br />Summer 2025/26</small></div>
+            <div class="form-chip good"><strong>47</strong><small>vs Dennis<br />Summer 2025/26</small></div>
+          </div>
+        </article>
+
+        <article class="form-panel">
+          <div class="form-panel-head">
+            <h3>Last 10 bowling spells</h3>
+            <span>Wickets / runs</span>
+          </div>
+          <div class="form-strip">
+            <div class="form-chip good"><strong>3/40</strong><small>vs Donath CC<br />Summer 2025/26</small><a href="#">Scorecard</a></div>
+            <div class="form-chip neutral"><strong>0/25</strong><small>vs Rivergum<br />Winter 2026</small></div>
+            <div class="form-chip good"><strong>2/18</strong><small>vs Holy Trinity<br />Winter 2026</small></div>
+            <div class="form-chip hot"><strong>4/11</strong><small>vs Camrea<br />Winter 2026</small><a href="#">Scorecard</a></div>
+            <div class="form-chip neutral"><strong>1/29</strong><small>vs Olympic Colts<br />Summer 2025/26</small></div>
+            <div class="form-chip low"><strong>0/44</strong><small>vs Keon Park<br />Summer 2025/26</small></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="timeline">
+        <div class="match-card">
+          <div class="round">Latest</div>
+          <div><strong>FVCC 3s vs Donath Cricket Club</strong><span style="color: var(--muted);">102*(49) and 3/40 made this the standout recent all-round match.</span></div>
+          <span class="result win">Win</span>
+        </div>
+        <div class="match-card">
+          <div class="round">Previous</div>
+          <div><strong>FVCC Winter XI vs Rivergum Cricket Club</strong><span style="color: var(--muted);">35(13), 0/25. Batting impact stayed positive, bowling no wicket.</span></div>
+          <span class="result loss">Loss</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="note-card" style="margin-top: 24px;">
+      <h2>Behavior notes</h2>
+      <p>The production section should use latest scorecard innings/performance rows only. Balls faced appear in brackets only when reliable. No ball-by-ball dependency is needed except where balls faced only exists in verified ball-by-ball coverage.</p>
+      <div class="behavior-grid">
+        <div class="behavior"><strong>All-rounder</strong><p>Show batting and bowling panels side by side on desktop, stacked on mobile.</p></div>
+        <div class="behavior"><strong>Batting-only</strong><p>Show batting first and replace bowling with a compact empty state.</p></div>
+        <div class="behavior"><strong>Bowling-only</strong><p>Show bowling first and replace batting with a compact empty state.</p></div>
+        <div class="behavior"><strong>No recent data</strong><p>Use a calm empty state, not zeros or blank cards.</p></div>
+      </div>
+    </section>
+
+    <section class="mobile-preview">
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <h2>Mobile behavior</h2>
+            <p>Panels stack, chips scroll horizontally, and the newest performance remains first.</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <article class="form-panel">
+            <div class="form-panel-head"><h3>Batting</h3><span>Last 10</span></div>
+            <div class="form-strip">
+              <div class="form-chip hot"><strong>102*</strong><small>Latest</small></div>
+              <div class="form-chip good"><strong>35</strong><small>Prev</small></div>
+              <div class="form-chip neutral"><strong>25</strong><small>Prev</small></div>
+            </div>
+          </article>
+          <article class="form-panel">
+            <div class="form-panel-head"><h3>Bowling</h3><span>Last 10</span></div>
+            <div class="form-strip">
+              <div class="form-chip good"><strong>3/40</strong><small>Latest</small></div>
+              <div class="form-chip neutral"><strong>0/25</strong><small>Prev</small></div>
+              <div class="form-chip hot"><strong>4/11</strong><small>Best</small></div>
+            </div>
+          </article>
+          <div class="empty">Empty state: no recent bowling performances available yet.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

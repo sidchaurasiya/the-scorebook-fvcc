@@ -3555,8 +3555,15 @@ def selected_milestone_page_view() -> str:
 
 def selected_milestone_club_category() -> str:
     valid = {slug for slug, _ in milestone_club_category_options()}
-    requested = query_param_value("club_category").casefold()
-    return requested if requested in valid else "matches"
+    state_key = "milestone_club_category"
+    if state_key not in st.session_state:
+        requested = query_param_value("club_category").casefold()
+        st.session_state[state_key] = requested if requested in valid else "matches"
+    selected = str(st.session_state.get(state_key, "matches")).casefold()
+    if selected not in valid:
+        selected = "matches"
+        st.session_state[state_key] = selected
+    return selected
 
 
 def milestone_page_url(view: str, club_category: str | None = None) -> str:
@@ -3577,11 +3584,13 @@ def render_milestone_view_selector(selected_view: str) -> None:
 
 
 def render_milestone_club_selector(selected_category: str) -> None:
-    items = [
-        (label, milestone_page_url("exclusive", slug), slug == selected_category)
-        for slug, label in milestone_club_category_options()
-    ]
-    render_milestone_segmented_links(items, "Exclusive club category", compact=True)
+    del selected_category
+    render_profile_segmented_widget(
+        "Exclusive club category",
+        milestone_club_category_options(),
+        key="milestone_club_category",
+        compact=True,
+    )
 
 
 def render_milestone_segmented_links(
@@ -5944,7 +5953,6 @@ def exclusive_club_specs(category: str) -> list[dict[str, object]]:
 
 
 def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matches") -> None:
-    selector = milestone_club_selector_html(selected_category)
     club_entries: list[tuple[pd.DataFrame, int, str, str]] = []
     for spec in exclusive_club_specs(selected_category):
         metric = str(spec["metric"])
@@ -5969,12 +5977,10 @@ def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matc
     with st.container(key="milestone_exclusive_panel"):
         render_milestone_view_selector("exclusive")
         st.markdown(
-            (
-                '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>'
-                f"{selector}"
-            ),
+            '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>',
             unsafe_allow_html=True,
         )
+        render_milestone_club_selector(selected_category)
         if not club_entries:
             st.markdown(
                 '<div class="milestone-empty-card">No players have reached this exclusive club category yet.</div>',
