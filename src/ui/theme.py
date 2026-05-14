@@ -3352,6 +3352,28 @@ def inject_theme() -> None:
             margin-bottom: 0;
         }
 
+        div.st-key-player_profile_performance_breakdown {
+            background: #ffffff;
+            border: 1px solid #e9ebf4;
+            border-radius: 20px;
+            box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
+            margin-bottom: 20px;
+            padding: 18px 20px 20px;
+        }
+
+        div.st-key-player_profile_performance_breakdown div.st-key-profile_breakdown_controls {
+            margin-bottom: 16px;
+        }
+
+        div.st-key-profile_breakdown_controls div[data-testid="stHorizontalBlock"] {
+            align-items: center;
+        }
+
+        div.st-key-profile_breakdown_controls div[data-testid="column"]:last-child {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .phase-row {
             align-items: center;
             border-top: 1px solid #eef0f7;
@@ -3436,8 +3458,15 @@ def inject_theme() -> None:
         }
 
         .profile-fingerprint-card .profile-intelligence-note {
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             font-weight: 500;
+        }
+
+        .profile-position-footnote {
+            color: #858ba3;
+            font-size: 0.76rem;
+            font-weight: 500;
+            margin-top: 8px;
         }
 
         div.st-key-profile_bowling_phase_card {
@@ -3495,6 +3524,12 @@ def inject_theme() -> None:
             color: #747b98;
         }
 
+        .phase-table-row:not(.phase-table-head) > span {
+            color: var(--ink);
+            font-size: 0.905rem;
+            font-weight: 950;
+        }
+
         .phase-table-row .phase-table-phase,
         .phase-table-head span:first-child {
             text-align: left;
@@ -3511,6 +3546,15 @@ def inject_theme() -> None:
             color: var(--ink);
             font-size: 0.88rem;
             font-weight: 950;
+        }
+
+
+        .profile-phase-footnote {
+            color: #858ba3;
+            font-size: 0.76rem;
+            font-weight: 500;
+            line-height: 1.36;
+            margin: 10px 0 0;
         }
 
         .peer-card {
@@ -3763,6 +3807,19 @@ def inject_theme() -> None:
 
         .record-card {
             min-height: 146px;
+        }
+
+
+        .profile-highlights-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-bottom: 18px;
+        }
+
+        .profile-highlights-grid .record-card {
+            height: 100%;
+            margin-bottom: 0;
         }
 
         .record-label {
@@ -4504,6 +4561,44 @@ def inject_theme() -> None:
                 white-space: nowrap;
             }
 
+            .block-container:has(.player-profile-page) .profile-career-card-fielding.profile-card-nonkeeper {
+                display: none;
+            }
+
+            .profile-highlights-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .profile-highlights-grid .record-card {
+                border-radius: 17px;
+                min-height: 0;
+                padding: 13px 12px;
+            }
+
+            .profile-highlights-grid .record-label {
+                font-size: 0.62rem;
+                line-height: 1.18;
+            }
+
+            .profile-highlights-grid .record-player {
+                font-size: 0.82rem;
+                line-height: 1.16;
+                margin-top: 10px;
+            }
+
+            .profile-highlights-grid .record-value {
+                font-size: 1.02rem;
+                line-height: 1.12;
+                margin-top: 7px;
+            }
+
+            .profile-highlights-grid .record-meta {
+                font-size: 0.64rem;
+                line-height: 1.28;
+                margin-top: 9px;
+            }
+
             .milestone-segmented {
                 border-radius: 18px;
                 gap: 6px;
@@ -4711,6 +4806,11 @@ def inject_theme() -> None:
                 overflow-wrap: anywhere;
             }
 
+            div.st-key-player_profile_performance_breakdown {
+                border-radius: 18px;
+                padding: 14px 10px 16px;
+            }
+
             .profile-intelligence-intro {
                 align-items: flex-start;
                 flex-direction: column;
@@ -4758,6 +4858,11 @@ def inject_theme() -> None:
                 gap: 10px;
             }
 
+
+            div.st-key-profile_breakdown_controls div[data-testid="column"]:last-child {
+                justify-content: flex-start;
+            }
+
             .position-row {
                 padding: 8px 0;
             }
@@ -4784,6 +4889,18 @@ def inject_theme() -> None:
 
             .phase-row span:not(.profile-best-badge) {
                 text-align: left;
+            }
+
+
+            .phase-table-phase {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .phase-table-phase .profile-best-badge {
+                margin-left: 0;
+                margin-top: 1px;
             }
 
             .profile-season-summary-card {

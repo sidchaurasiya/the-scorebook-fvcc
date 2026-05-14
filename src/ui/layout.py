@@ -8121,11 +8121,10 @@ def render_player_highlights(profile_view: dict[str, pd.DataFrame]) -> None:
     if not cards:
         return
     render_section_heading("Career Highlights 🌟")
-    for index in range(0, len(cards), 4):
-        columns = st.columns(4)
-        for column, card in zip(columns, cards[index : index + 4]):
-            with column:
-                render_record_card(card)
+    st.markdown(
+        f'<div class="profile-highlights-grid">{"".join(record_card_html(card) for card in cards)}</div>',
+        unsafe_allow_html=True,
+    )
 
 
 def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[str, str]]:
@@ -8338,9 +8337,9 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
     rows = rows.sort_values("position_order")
     best = profile_best_position_label(rows)
     best_note = (
-        '<p class="profile-intelligence-note">Best fit requires 4+ innings in a position.</p>'
+        '<p class="profile-intelligence-note profile-position-footnote">Best fit requires 4+ innings in a position.</p>'
         if best
-        else '<p class="profile-intelligence-note">Best fit needs 4+ innings in a position.</p>'
+        else '<p class="profile-intelligence-note profile-position-footnote">Best fit needs 4+ innings in a position.</p>'
     )
     max_runs = max(1.0, float(rows["runs"].max()))
     row_html = []
@@ -8456,6 +8455,7 @@ def render_bowling_phase_intelligence(profile_view: dict[str, pd.DataFrame]) -> 
                 '</div>'
                 f'{"".join(phase_rows)}'
                 '</div>'
+                '<p class="profile-phase-footnote">Phase metrics use verified ball-by-ball data where available.</p>'
             ),
             unsafe_allow_html=True,
         )
@@ -8577,7 +8577,7 @@ def profile_dismissal_insight(player_name: str, player_map: dict[str, float], cl
     labels = {"Caught": "caught", "Bowled": "bowled", "LBW": "LBW", "Run out": "run out", "Stumped": "stumped", "Other": "other ways"}
     for bucket, player_pct in player_map.items():
         diff = player_pct - club_map.get(bucket, 0.0)
-        if diff >= 6:
+        if diff >= 10:
             diffs.append((diff, labels.get(bucket, bucket.lower())))
     if not diffs:
         return f"{first_name}'s dismissal mix is broadly in line with the club average."
@@ -9302,14 +9302,13 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
     render_section_heading("Career Breakdown 🧭")
     selected = selected_profile_breakdown_view()
     selected_discipline = selected_profile_discipline_view()
-    render_profile_breakdown_controls(profile_view, selected, selected_discipline)
-    label = profile_breakdown_label(selected)
-    rows = source[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
-    if rows.empty:
-        render_profile_breakdown_empty(label)
-        return
-
     with st.container(key="player_profile_performance_breakdown"):
+        render_profile_breakdown_controls(profile_view, selected, selected_discipline)
+        label = profile_breakdown_label(selected)
+        rows = source[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
+        if rows.empty:
+            render_profile_breakdown_empty(label)
+            return
         render_profile_performance_table(rows, label, selected_discipline)
 
 
@@ -10171,6 +10170,7 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 
 def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Overview 🧩")
+    keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
     cards = [
         ("Batting", [("Matches/Innings", f"{format_int(career.get('Matches'))} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
         ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", str(career.get("Overs", "—"))), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", str(career.get("BBI", "—")))]),
@@ -10180,7 +10180,13 @@ def render_player_breakdown(career: pd.Series) -> None:
     for column, (title, metrics) in zip(columns, cards):
         with column:
             metric_html = "".join(f'<div><span>{html.escape(label)}</span><strong>{html.escape(value)}</strong></div>' for label, value in metrics)
-            st.markdown(f'<div class="profile-breakdown-card"><h4>{html.escape(title)}</h4>{metric_html}</div>', unsafe_allow_html=True)
+            card_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+            card_classes = f"profile-breakdown-card profile-career-overview-card profile-career-card-{card_slug} {keeper_class}"
+            st.markdown(f'<div class="{card_classes}"><h4>{html.escape(title)}</h4>{metric_html}</div>', unsafe_allow_html=True)
+
+
+def player_profile_is_keeper(career: pd.Series) -> bool:
+    return numeric_value(career, "Stumpings") > 0
 
 
 def format_bat_sr_display(value: object) -> str:
