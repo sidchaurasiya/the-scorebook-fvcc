@@ -3960,6 +3960,15 @@ def inject_theme() -> None:
             flex-wrap: wrap;
             gap: 8px;
             margin: -2px 0 14px;
+            width: 100%;
+        }
+
+        div.st-key-season_round_grade_filter_control div[data-testid="stHorizontalBlock"] {
+            align-items: stretch;
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 8px;
+            width: 100%;
         }
 
         div.st-key-season_round_grade_filter_control div[data-testid="stVerticalBlock"] {
@@ -4938,6 +4947,13 @@ def inject_theme() -> None:
                 max-width: 100%;
                 overflow: visible;
                 width: 100%;
+            }
+
+            div.st-key-season_round_grade_filter_control div[data-testid="stHorizontalBlock"] {
+                display: grid !important;
+                gap: 8px !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                width: 100% !important;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stVerticalBlock"] {

@@ -49,6 +49,7 @@ def load_match_centre_scopes() -> dict[str, pd.DataFrame]:
     scopes = available_scopes()
     frames = {
         "matches": [],
+        "innings": [],
         "batting": [],
         "bowling": [],
         "balls": [],
@@ -59,6 +60,7 @@ def load_match_centre_scopes() -> dict[str, pd.DataFrame]:
             continue
         for key, filename in {
             "matches": "all_matches.csv",
+            "innings": "all_match_innings.csv",
             "batting": "all_scorecard_batting.csv",
             "bowling": "all_scorecard_bowling.csv",
             "balls": "all_ball_by_ball.csv",
@@ -103,6 +105,8 @@ def dedupe_scope_frame(key: str, frame: pd.DataFrame) -> pd.DataFrame:
                 frame["_context_score"] += has_value.astype(int)
             frame = frame.sort_values(["_context_score", "_scope_order"])
         return frame.drop_duplicates("match_id", keep="last").drop(columns=["_context_score"], errors="ignore")
+    if key == "innings":
+        return layout.scorecard_dedupe(frame, ["match_id", "innings_id"])
     if key == "balls" and "ball_event_id" in frame:
         return frame.drop_duplicates("ball_event_id", keep="last")
     if key == "batting":
@@ -370,8 +374,8 @@ def build_season_by_round(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
     batting = layout.add_missing_canonical_player_ids(frames["batting"])
     bowling = layout.filter_real_scorecard_bowling_rows(layout.add_missing_canonical_player_ids(frames["bowling"]))
-    best_batters = layout.best_batters_by_match(batting, matches)
-    best_bowlers = layout.best_bowlers_by_match(bowling, matches)
+    best_batters = layout.best_batters_by_match(batting, matches, frames.get("innings", pd.DataFrame()))
+    best_bowlers = layout.best_bowlers_by_match(bowling, matches, frames.get("innings", pd.DataFrame()))
     premiership_match_ids = layout.season_round_premiership_match_ids()
 
     rows = []

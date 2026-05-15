@@ -1088,7 +1088,7 @@ def season_overview_detail_source_signature() -> tuple[tuple[str, float], ...]:
 
 
 @st.cache_data(show_spinner=False)
-def load_season_overview_detail_sources(_signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+def load_season_overview_detail_sources(signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
     return {
         "bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
         "bbb_bowling": read_match_centre_csv(SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH),
@@ -1436,15 +1436,17 @@ def selected_season_round_grade_filter(
         st.session_state[key] = valid[0]
     label_map = dict(options)
     with st.container(key="season_round_grade_filter_control"):
-        for slug in valid:
+        columns = st.columns(len(valid), gap="small")
+        for column, slug in zip(columns, valid):
             active = st.session_state.get(key) == slug
-            if st.button(
-                label_map.get(slug, slug),
-                key=f"{key}_{slug}",
-                type="primary" if active else "secondary",
-                use_container_width=True,
-            ):
-                st.session_state[key] = slug
+            with column:
+                if st.button(
+                    label_map.get(slug, slug),
+                    key=f"{key}_{slug}",
+                    type="primary" if active else "secondary",
+                    use_container_width=True,
+                ):
+                    st.session_state[key] = slug
         selected = st.session_state.get(key)
     selected_slug = str(selected or st.session_state.get(key) or valid[0])
     if selected_slug not in valid:
@@ -1765,40 +1767,147 @@ def normalize_result_wording(value: object) -> str:
     return normalize_spaces(text)
 
 
-def best_batters_by_match(batting: pd.DataFrame, matches: pd.DataFrame) -> dict[str, str]:
+def best_batters_by_match(
+    batting: pd.DataFrame,
+    matches: pd.DataFrame,
+    innings: pd.DataFrame | None = None,
+    *,
+    compact_names: bool = True,
+) -> dict[str, str]:
     if batting.empty or matches.empty or "match_id" not in batting:
         return {}
     context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
     rows = batting.merge(context, on="match_id", how="inner")
     rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows = add_missing_canonical_player_ids(rows)
+    rows = add_season_round_innings_order(rows, innings)
     rows = rows[~rows.get("dismissal_type", pd.Series(index=rows.index, dtype=str)).astype(str).str.casefold().isin({"did not bat", "absent"})]
     rows["runs_scored"] = pd.to_numeric(rows.get("runs_scored"), errors="coerce").fillna(0)
     rows["balls_faced"] = pd.to_numeric(rows.get("balls_faced"), errors="coerce")
-    rows = rows.sort_values(["match_id", "runs_scored", "balls_faced"], ascending=[True, False, True])
+    rows["_player_key"] = season_round_player_key(rows)
+    rows["_innings_sort"] = pd.to_numeric(rows.get("innings_order"), errors="coerce")
+    if rows["_innings_sort"].isna().all():
+        rows["_innings_sort"] = pd.to_numeric(rows.get("bat_instance"), errors="coerce")
+    rows["_innings_sort"] = rows["_innings_sort"].fillna(99)
+    rows["_bat_order_sort"] = pd.to_numeric(rows.get("bat_order"), errors="coerce").fillna(99)
+    rows = rows.sort_values(["match_id", "_player_key", "_innings_sort", "_bat_order_sort"], ascending=[True, True, True, True])
+    candidates: list[dict[str, object]] = []
+    for (match_id, player_key), group in rows.groupby(["match_id", "_player_key"], sort=False):
+        if not str(player_key or "").strip():
+            continue
+        total_runs = float(group["runs_scored"].sum())
+        high_score = float(group["runs_scored"].max())
+        total_balls = pd.to_numeric(group.get("balls_faced"), errors="coerce").sum(min_count=1)
+        name = season_round_player_display_name(group.iloc[0], compact=compact_names and len(group) > 1)
+        scores = [format_scorecard_batting_score(row, include_balls=False) for _, row in group.iterrows()]
+        candidates.append(
+            {
+                "match_id": str(match_id),
+                "player": name,
+                "display": f"{name} {' & '.join(score for score in scores if score)}".strip(),
+                "total_runs": total_runs,
+                "high_score": high_score,
+                "total_balls": float(total_balls) if pd.notna(total_balls) else 9999.0,
+            }
+        )
     output = {}
-    for match_id, group in rows.groupby("match_id", sort=False):
-        row = group.iloc[0]
-        output[str(match_id)] = f"{display_player_name(row.get('canonical_player_name') or row.get('player_name'))} {format_scorecard_batting_score(row, include_balls=False)}"
+    if not candidates:
+        return output
+    candidate_frame = pd.DataFrame(candidates)
+    for match_id, group in candidate_frame.groupby("match_id", sort=False):
+        group = group.sort_values(
+            ["total_runs", "high_score", "total_balls", "player"],
+            ascending=[False, False, True, True],
+        )
+        output[str(match_id)] = str(group.iloc[0]["display"])
     return output
 
 
-def best_bowlers_by_match(bowling: pd.DataFrame, matches: pd.DataFrame) -> dict[str, str]:
+def best_bowlers_by_match(
+    bowling: pd.DataFrame,
+    matches: pd.DataFrame,
+    innings: pd.DataFrame | None = None,
+    *,
+    compact_names: bool = True,
+) -> dict[str, str]:
     if bowling.empty or matches.empty or "match_id" not in bowling:
         return {}
     context = matches[["match_id", "fvcc_team_id", "match_date"]].drop_duplicates("match_id")
     rows = bowling.merge(context, on="match_id", how="inner")
     rows = rows[rows["team_id"].astype(str) == rows["fvcc_team_id"].astype(str)].copy()
+    rows = add_missing_canonical_player_ids(rows)
+    rows = add_season_round_innings_order(rows, innings)
     rows = filter_real_scorecard_bowling_rows(rows)
     if rows.empty:
         return {}
     rows["wickets_taken"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
     rows["runs_conceded"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
-    rows = rows.sort_values(["match_id", "wickets_taken", "runs_conceded"], ascending=[True, False, True])
+    rows["_player_key"] = season_round_player_key(rows)
+    rows["_innings_sort"] = pd.to_numeric(rows.get("innings_order"), errors="coerce").fillna(99)
+    rows["_bowl_order_sort"] = pd.to_numeric(rows.get("bowl_order"), errors="coerce").fillna(99)
+    rows["_single_figures_sort"] = rows["wickets_taken"] * 10000 - rows["runs_conceded"]
+    rows = rows.sort_values(["match_id", "_player_key", "_innings_sort", "_bowl_order_sort"], ascending=[True, True, True, True])
+    candidates: list[dict[str, object]] = []
+    for (match_id, player_key), group in rows.groupby(["match_id", "_player_key"], sort=False):
+        if not str(player_key or "").strip():
+            continue
+        total_wickets = float(group["wickets_taken"].sum())
+        total_runs = float(group["runs_conceded"].sum())
+        name = season_round_player_display_name(group.iloc[0], compact=compact_names and len(group) > 1)
+        figures = [format_scorecard_bowling_figures(row, separator="-") for _, row in group.iterrows()]
+        candidates.append(
+            {
+                "match_id": str(match_id),
+                "player": name,
+                "display": f"{name} {' & '.join(figure for figure in figures if figure)}".strip(),
+                "total_wickets": total_wickets,
+                "total_runs": total_runs,
+                "best_single": float(group["_single_figures_sort"].max()),
+            }
+        )
     output = {}
-    for match_id, group in rows.groupby("match_id", sort=False):
-        row = group.iloc[0]
-        output[str(match_id)] = f"{display_player_name(row.get('canonical_player_name') or row.get('player_name'))} {format_scorecard_bowling_figures(row, separator='-')}"
+    if not candidates:
+        return output
+    candidate_frame = pd.DataFrame(candidates)
+    for match_id, group in candidate_frame.groupby("match_id", sort=False):
+        group = group.sort_values(
+            ["total_wickets", "total_runs", "best_single", "player"],
+            ascending=[False, True, False, True],
+        )
+        output[str(match_id)] = str(group.iloc[0]["display"])
     return output
+
+
+def add_season_round_innings_order(rows: pd.DataFrame, innings: pd.DataFrame | None) -> pd.DataFrame:
+    if rows.empty or innings is None or innings.empty or "innings_id" not in rows or "innings_id" not in innings:
+        return rows.copy()
+    order_columns = [column for column in ["match_id", "innings_id", "innings_order", "innings_number"] if column in innings]
+    if "innings_order" not in order_columns and "innings_number" not in order_columns:
+        return rows.copy()
+    order_lookup = innings[order_columns].drop_duplicates(["match_id", "innings_id"] if "match_id" in order_columns else ["innings_id"])
+    return rows.merge(order_lookup, on=[column for column in ["match_id", "innings_id"] if column in rows and column in order_lookup], how="left")
+
+
+def season_round_player_key(rows: pd.DataFrame) -> pd.Series:
+    key = pd.Series("", index=rows.index, dtype="object")
+    for column in ["canonical_player_id", "participant_id", "raw_player_id", "canonical_player_name", "player_name"]:
+        if column in rows:
+            values = rows[column].fillna("").astype(str).str.strip()
+            key = key.where(key.astype(str).str.strip().ne(""), values)
+    return key
+
+
+def season_round_player_display_name(row: pd.Series, compact: bool = False) -> str:
+    name = display_player_name(row.get("canonical_player_name") or row.get("player_name") or row.get("player_short_name") or "Unknown player")
+    return format_player_name_compact(name, compact=compact)
+
+
+def format_player_name_compact(name: object, compact: bool = False) -> str:
+    text = safe_record_text(display_player_name(name), "Unknown player")
+    if not compact:
+        return text
+    first = re.split(r"\s+", text.strip())[0] if text.strip() else ""
+    return first or text
 
 
 def format_scorecard_batting_score(row: pd.Series, include_balls: bool = True) -> str:
@@ -1819,7 +1928,6 @@ def format_scorecard_bowling_figures(row: pd.Series, separator: str = "/") -> st
     wickets_text = "0" if pd.isna(wickets) else str(int(wickets))
     runs_text = "0" if pd.isna(runs) else str(int(runs))
     return f"{wickets_text}{separator}{runs_text}"
-
 
 
 def render_season_overview_v2(dashboard_data: dict[str, object] | None) -> None:
