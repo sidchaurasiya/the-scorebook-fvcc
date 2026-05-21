@@ -18,13 +18,14 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 
 ## Phase 2: Refactor Data Paths To Club-Aware Helpers
 
-- Add central path helpers for processed, Hall of Fame, Season Overview, Player Profile, identity, and export paths.
+- Add central path helpers for processed, Hall of Fame, Season Overview, Player Profile, match-centre, experimental, and root mapping paths.
 - Keep the default helpers pointing at the existing FVCC `data/...` layout.
-- Replace scattered path constants gradually by page/export area.
+- Replace low-risk runtime loaders first: aggregate processed reads, Hall of Fame deploy-safe files, Season Overview deploy-safe files, Player Profile processed summaries, and match-centre read roots.
+- Leave refresh/backfill scripts, data-generation scripts, player identity generation, and normalization mappings on legacy paths until later phases.
 
 ## Phase 3: Move FVCC Data Under `clubs/fvcc/data`
 
-- Move FVCC data into a club-owned folder only after path helpers are proven.
+- Move or copy FVCC data into a club-owned folder only after path helpers are proven.
 - Keep a compatibility shim for old `data/...` paths during transition.
 - Verify all stable pages and deploy-safe summaries before removing the shim.
 

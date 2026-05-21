@@ -17,6 +17,15 @@ except ModuleNotFoundError:  # Local venvs may not be refreshed immediately afte
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CLUBS_ROOT = REPO_ROOT / "clubs"
 DEFAULT_CLUB_ID = "fvcc"
+LEGACY_DATA_PATHS = {
+    "root_dir": "data",
+    "processed_dir": "data/processed",
+    "hall_of_fame_dir": "data/processed/hall_of_fame",
+    "season_overview_dir": "data/processed/season_overview",
+    "raw_match_centre_dir": "data/raw/match_centre",
+    "processed_match_centre_dir": "data/processed/match_centre",
+    "experimental_dir": "data/processed/experimental",
+}
 
 
 def get_active_club_id() -> str:
@@ -50,12 +59,57 @@ def get_club_short_name(club_id: str | None = None) -> str:
 
 def get_club_data_path(key: str, *parts: str | Path, club_id: str | None = None) -> Path:
     data_config = load_club_config(club_id).get("data", {})
-    if key not in data_config:
+    path_value = data_config.get(key, LEGACY_DATA_PATHS.get(key))
+    if path_value is None:
         raise KeyError(f"Data path '{key}' is not configured for club '{club_id or get_active_club_id()}'.")
-    path = Path(str(data_config[key]))
+    path = Path(str(path_value))
     if not path.is_absolute():
         path = REPO_ROOT / path
     return path.joinpath(*parts)
+
+
+def get_data_root(club_id: str | None = None) -> Path:
+    return get_club_data_path("root_dir", club_id=club_id)
+
+
+def get_processed_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("processed_dir", club_id=club_id)
+
+
+def get_processed_path(*parts: str | Path, club_id: str | None = None) -> Path:
+    return get_processed_dir(club_id).joinpath(*parts)
+
+
+def get_hall_of_fame_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("hall_of_fame_dir", club_id=club_id)
+
+
+def get_hall_of_fame_path(*parts: str | Path, club_id: str | None = None) -> Path:
+    return get_hall_of_fame_dir(club_id).joinpath(*parts)
+
+
+def get_season_overview_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("season_overview_dir", club_id=club_id)
+
+
+def get_season_overview_path(*parts: str | Path, club_id: str | None = None) -> Path:
+    return get_season_overview_dir(club_id).joinpath(*parts)
+
+
+def get_raw_match_centre_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("raw_match_centre_dir", club_id=club_id)
+
+
+def get_processed_match_centre_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("processed_match_centre_dir", club_id=club_id)
+
+
+def get_experimental_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("experimental_dir", club_id=club_id)
+
+
+def get_mapping_path(filename: str | Path, club_id: str | None = None) -> Path:
+    return get_data_root(club_id).joinpath(filename)
 
 
 def get_feature_flag(name: str, default: bool = False, club_id: str | None = None) -> bool:

@@ -13,6 +13,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
+from src.config.club_config import get_mapping_path, get_processed_path
 from src.data.playcricket_public import (
     PLAYCRICKET_PUBLIC_BASE_URL,
     PlayCricketPublicError,
@@ -238,50 +239,57 @@ def ensure_data_dirs() -> None:
 
 def local_backup_available() -> bool:
     required = [
-        PROCESSED_DIR / "seasons.csv",
-        PROCESSED_DIR / "teams.csv",
-        PROCESSED_DIR / "all_seasons_batting.csv",
-        PROCESSED_DIR / "all_seasons_bowling.csv",
-        PROCESSED_DIR / "all_seasons_fielding.csv",
-        METADATA_PATH,
+        get_processed_path("seasons.csv"),
+        get_processed_path("teams.csv"),
+        get_processed_path("all_seasons_batting.csv"),
+        get_processed_path("all_seasons_bowling.csv"),
+        get_processed_path("all_seasons_fielding.csv"),
+        active_metadata_path(),
     ]
     return all(path.exists() for path in required)
 
 
 def metadata_mtime() -> float:
-    return METADATA_PATH.stat().st_mtime if METADATA_PATH.exists() else 0.0
+    path = active_metadata_path()
+    return path.stat().st_mtime if path.exists() else 0.0
 
 
 def read_metadata() -> dict[str, Any]:
-    return _read_metadata_cached(metadata_mtime())
+    path = active_metadata_path()
+    return _read_metadata_cached(str(path), metadata_mtime())
 
 
 @st.cache_data(show_spinner=False)
-def _read_metadata_cached(_metadata_version: float) -> dict[str, Any]:
-    if not METADATA_PATH.exists():
+def _read_metadata_cached(path_value: str, _metadata_version: float) -> dict[str, Any]:
+    path = Path(path_value)
+    if not path.exists():
         return {}
     try:
-        return json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
 
 
 def read_processed_table(name: str) -> pd.DataFrame:
-    path = PROCESSED_DIR / f"{name}.csv"
+    path = get_processed_path(f"{name}.csv")
     if not path.exists():
         return pd.DataFrame()
-    return _read_processed_table_cached(name, path.stat().st_mtime)
+    return _read_processed_table_cached(str(path), path.stat().st_mtime)
 
 
 @st.cache_data(show_spinner=False)
-def _read_processed_table_cached(name: str, _file_version: float) -> pd.DataFrame:
-    path = PROCESSED_DIR / f"{name}.csv"
+def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.DataFrame:
+    path = Path(path_value)
     if not path.exists():
         return pd.DataFrame()
     try:
         return pd.read_csv(path)
     except (MemoryError, OSError, pd.errors.ParserError):
         return pd.DataFrame()
+
+
+def active_metadata_path() -> Path:
+    return get_mapping_path("metadata.json")
 
 
 def refresh_playcricket_backup(

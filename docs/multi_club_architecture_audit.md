@@ -2,7 +2,7 @@
 
 Last updated: 2026-05-21
 
-This audit captures FVCC-specific assumptions found before introducing the multi-club configuration foundation. Phase 1 only moves low-risk display identity and contact values into config. Data paths, refresh workflows, match-centre filters, and identity mappings stay unchanged for backwards compatibility.
+This audit captures FVCC-specific assumptions found while introducing the multi-club foundation. Phase 1 moved low-risk display identity and contact values into config. Phase 2 adds read-side path helpers while FVCC still points to the existing `data/...` layout.
 
 ## Config-Driven Now
 
@@ -14,15 +14,17 @@ This audit captures FVCC-specific assumptions found before introducing the multi
 | Creator credit | `Siddhanth Chaurasiya`, `Preet Kaur` | `src/ui/layout.py` sidebar/mobile footer/context line | Read from config `contact.creators` | Low |
 | Feedback email | `siddhanthchaurasiya@gmail.com` | `src/ui/layout.py` sidebar/mobile footer | Read from config `contact.feedback_email` | Low |
 | App branding colours | current purple, maroon, lavender | `.streamlit/config.toml`, `src/ui/theme.py` | Record in config only; CSS still unchanged | Low |
+| Runtime processed reads | existing `data/processed` folders | `src/config/club_config.py`, `src/data/playcricket_ingestion.py`, `src/ui/layout.py` | Read through club-aware helpers while still resolving to legacy paths | Low |
+| Deploy-safe HOF reads | `data/processed/hall_of_fame/...` | `src/ui/layout.py` | Read through `get_hall_of_fame_path(...)` | Low |
+| Deploy-safe Season Overview reads | `data/processed/season_overview/...` | `src/ui/layout.py` | Read through `get_season_overview_path(...)` | Low |
 
 ## Config Later
 
 | Area | Current assumption | Files / functions affected | Recommended phase | Risk |
 | --- | --- | --- | --- | --- |
 | PlayCricket club ID / URL | FVCC UUID and club URL | `src/data/playcricket_ingestion.py`, `scripts/refresh_data.py` | Phase 4 refresh workflow | Medium |
-| Processed data paths | `data/processed/...` | `src/ui/layout.py`, `src/utils/player_identity.py`, scripts under `scripts/` | Phase 2 path helpers, Phase 3 data move | Medium |
-| Deploy-safe HOF paths | `data/processed/hall_of_fame/...` | `src/ui/layout.py`, HOF export scripts | Phase 2 | Medium |
-| Deploy-safe Season Overview paths | `data/processed/season_overview/...` | `src/ui/layout.py`, Season Overview export scripts | Phase 2 | Medium |
+| Processed data write paths | `data/processed/...` | refresh/export scripts under `scripts/` | Phase 4 refresh workflow | Medium |
+| Deploy-safe export paths | `data/processed/hall_of_fame/...`, `data/processed/season_overview/...` | HOF and Season Overview export scripts | Phase 4 | Medium |
 | Player alias and merge files | `data/player_aliases.csv`, `data/manual_player_merges.csv` | `src/utils/player_identity.py`, merge audit UI | Phase 3 | High |
 | Team/grade labels | FVCC teams, NMCA grade naming, FVCC short-code assumptions | `src/utils/team_grade.py` | Phase 5 onboarding | High |
 | Grade sort order | FVCC/NMCA grade ordering | `src/utils/team_grade.py`, UI sort helpers | Phase 2 config read, Phase 5 per-club mapping | Medium |

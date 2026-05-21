@@ -73,6 +73,8 @@ Deployment:
 - Active club selection uses `CLUB_ID` from the environment, then Streamlit secrets, then defaults to `fvcc`.
 - Data still lives in existing `data/...` folders for this phase. Future phases will move data into club-specific folders after compatibility helpers are in place.
 - The config foundation currently covers low-risk identity/contact/display values. Team/grade mappings, opponent/ground normalization, player aliases, refresh workflows, and deploy-safe data generation remain FVCC-specific until later phases.
+- Phase 2 added club-aware path helpers and switched low-risk runtime loaders to use them. The configured FVCC paths still point at existing `data/...` folders; no data files have moved.
+- Refresh scripts, backfill scripts, player identity generation, opponent normalization, and ground normalization remain FVCC-specific for now.
 - Architecture audit: `docs/multi_club_architecture_audit.md`.
 - Roadmap: `docs/multi_club_scalability_plan.md`.
 

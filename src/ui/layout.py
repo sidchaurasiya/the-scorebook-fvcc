@@ -47,7 +47,15 @@ from src.data.playcricket_ingestion import (
     read_processed_table,
     refresh_playcricket_backup,
 )
-from src.config.club_config import get_club_name, get_club_short_name, load_club_config
+from src.config.club_config import (
+    get_club_name,
+    get_club_short_name,
+    get_hall_of_fame_path,
+    get_processed_match_centre_dir,
+    get_processed_path,
+    get_season_overview_path,
+    load_club_config,
+)
 from src.data import player_dna_analytics as player_dna
 from src.data import scorebook_lab_analytics as scorebook_lab
 from src.data import season_story_analytics as season_story
@@ -92,44 +100,28 @@ APP_ROOT = Path(__file__).resolve().parents[2]
 ICON_ASSET_DIR = APP_ROOT / "assets" / "icons"
 DEBUG_BIGGEST_IMPROVERS_PATH = APP_ROOT / "data" / "debug_biggest_improvers.csv"
 DEBUG_PLAYER_VS_PEERS_PATH = APP_ROOT / "data" / "debug_player_vs_peers.csv"
-MATCH_CENTRE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "match_centre"
-SEASON_OVERVIEW_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "season_overview"
+MATCH_CENTRE_PROCESSED_ROOT = get_processed_match_centre_dir()
+SEASON_OVERVIEW_PROCESSED_ROOT = get_season_overview_path()
 SEASON_OVERVIEW_BBB_BATTING_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_batting_rates_by_scope.csv"
 SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_bowling_dot_rates_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_batting_milestones_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_bowling_milestones_by_scope.csv"
 SEASON_OVERVIEW_SEASON_BY_ROUND_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "season_by_round_scorecards.csv"
-PLAYER_PROFILE_PROCESSED_ROOT = APP_ROOT / "data" / "processed" / "player_profile"
+PLAYER_PROFILE_PROCESSED_ROOT = get_processed_path("player_profile")
 PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "performance_breakdown_by_dimension.csv"
 PLAYER_PROFILE_BATTING_POSITION_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "batting_position_summary.csv"
 PLAYER_PROFILE_BOWLING_PHASE_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "bowling_phase_summary.csv"
 PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "dismissal_fingerprint_summary.csv"
 PLAYER_PROFILE_RECENT_FORM_BATTING_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "recent_form_batting.csv"
 PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "recent_form_bowling.csv"
-HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "fastest_batting_milestones.csv"
-)
-HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "scorecard_record_links.csv"
-)
-HALL_OF_FAME_PREMIERSHIP_WINS_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "premiership_wins.csv"
-)
-HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_premierships.csv"
-)
-HALL_OF_FAME_PLAYER_WIN_RATES_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_win_rates.csv"
-)
-HALL_OF_FAME_BBB_BATTING_RATES_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_bbb_batting_rates.csv"
-)
-HALL_OF_FAME_SCORECARD_MILESTONES_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_scorecard_milestones.csv"
-)
-HALL_OF_FAME_BOWLING_MILESTONES_PATH = (
-    APP_ROOT / "data" / "processed" / "hall_of_fame" / "player_bowling_milestones.csv"
-)
+HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = get_hall_of_fame_path("fastest_batting_milestones.csv")
+HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH = get_hall_of_fame_path("scorecard_record_links.csv")
+HALL_OF_FAME_PREMIERSHIP_WINS_PATH = get_hall_of_fame_path("premiership_wins.csv")
+HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH = get_hall_of_fame_path("player_premierships.csv")
+HALL_OF_FAME_PLAYER_WIN_RATES_PATH = get_hall_of_fame_path("player_win_rates.csv")
+HALL_OF_FAME_BBB_BATTING_RATES_PATH = get_hall_of_fame_path("player_bbb_batting_rates.csv")
+HALL_OF_FAME_SCORECARD_MILESTONES_PATH = get_hall_of_fame_path("player_scorecard_milestones.csv")
+HALL_OF_FAME_BOWLING_MILESTONES_PATH = get_hall_of_fame_path("player_bowling_milestones.csv")
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"

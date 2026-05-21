@@ -8,7 +8,22 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.config.club_config import get_active_club_id, get_club_data_path, get_club_name, load_club_config  # noqa: E402
+from src.config.club_config import (  # noqa: E402
+    get_active_club_id,
+    get_club_data_path,
+    get_club_name,
+    get_data_root,
+    get_experimental_dir,
+    get_hall_of_fame_dir,
+    get_hall_of_fame_path,
+    get_processed_dir,
+    get_processed_match_centre_dir,
+    get_processed_path,
+    get_raw_match_centre_dir,
+    get_season_overview_dir,
+    get_season_overview_path,
+    load_club_config,
+)
 
 
 CORE_PROCESSED_FILES = [
@@ -39,6 +54,16 @@ SEASON_OVERVIEW_FILES = [
     "season_by_round_scorecards.csv",
 ]
 
+HELPER_PATHS = {
+    "get_data_root": get_data_root,
+    "get_processed_dir": get_processed_dir,
+    "get_hall_of_fame_dir": get_hall_of_fame_dir,
+    "get_season_overview_dir": get_season_overview_dir,
+    "get_raw_match_centre_dir": get_raw_match_centre_dir,
+    "get_processed_match_centre_dir": get_processed_match_centre_dir,
+    "get_experimental_dir": get_experimental_dir,
+}
+
 
 def main() -> int:
     club_id = get_active_club_id()
@@ -67,17 +92,28 @@ def main() -> int:
         if key in {"root_dir", "processed_dir", "hall_of_fame_dir", "season_overview_dir"} and not path.exists():
             failures.append(f"Required data directory does not exist: {path}")
 
-    processed_dir = get_club_data_path("processed_dir", club_id=club_id)
+    print("\nHelper path checks:")
+    for label, helper in HELPER_PATHS.items():
+        path = helper(club_id=club_id)
+        status = "OK" if path.exists() else "MISSING"
+        print(f"{status}: {label} -> {relative_label(path)}")
+        if label in {"get_data_root", "get_processed_dir", "get_hall_of_fame_dir", "get_season_overview_dir"} and not path.exists():
+            failures.append(f"Required helper path does not exist: {path}")
+
+    processed_dir = get_processed_dir(club_id=club_id)
     for filename in CORE_PROCESSED_FILES:
-        require_file(processed_dir / filename, failures)
+        require_file(get_processed_path(filename, club_id=club_id), failures)
 
-    hall_of_fame_dir = get_club_data_path("hall_of_fame_dir", club_id=club_id)
+    hall_of_fame_dir = get_hall_of_fame_dir(club_id=club_id)
     for filename in HALL_OF_FAME_FILES:
-        require_file(hall_of_fame_dir / filename, failures)
+        require_file(get_hall_of_fame_path(filename, club_id=club_id), failures)
 
-    season_overview_dir = get_club_data_path("season_overview_dir", club_id=club_id)
+    season_overview_dir = get_season_overview_dir(club_id=club_id)
     for filename in SEASON_OVERVIEW_FILES:
-        require_file(season_overview_dir / filename, failures)
+        require_file(get_season_overview_path(filename, club_id=club_id), failures)
+
+    require_directory(hall_of_fame_dir, failures)
+    require_directory(season_overview_dir, failures)
 
     if failures:
         print("\nClub config check failed:")
@@ -91,10 +127,20 @@ def main() -> int:
 
 def require_file(path: Path, failures: list[str]) -> None:
     status = "OK" if path.exists() else "MISSING"
-    label = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
-    print(f"{status}: {label}")
+    print(f"{status}: {relative_label(path)}")
     if not path.exists():
         failures.append(f"Required file does not exist: {path}")
+
+
+def require_directory(path: Path, failures: list[str]) -> None:
+    status = "OK" if path.exists() and path.is_dir() else "MISSING"
+    print(f"{status}: directory {relative_label(path)}")
+    if not path.exists() or not path.is_dir():
+        failures.append(f"Required directory does not exist: {path}")
+
+
+def relative_label(path: Path) -> Path:
+    return path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
 
 
 if __name__ == "__main__":
