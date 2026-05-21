@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hall of Fame Redesign Wireframe</title>
+  <style>
+    :root {
+      --ink: #080b3f;
+      --muted: #687093;
+      --soft-muted: #8a90aa;
+      --purple: #4b37d8;
+      --purple-2: #6d4dff;
+      --lavender: #f1edff;
+      --lavender-2: #f8f6ff;
+      --page-bg: #f4f2ff;
+      --card: #ffffff;
+      --line: #e7e6f5;
+      --burgundy: #7a1735;
+      --burgundy-soft: #fff1f5;
+      --gold: #a76800;
+      --gold-soft: #fff5dd;
+      --green: #166b55;
+      --green-soft: #eaf8f1;
+      --shadow: 0 22px 52px rgba(23, 27, 77, 0.08);
+      --shadow-soft: 0 10px 26px rgba(23, 27, 77, 0.055);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(109, 77, 255, 0.16), transparent 34rem),
+        radial-gradient(circle at 94% 8%, rgba(167, 104, 0, 0.14), transparent 28rem),
+        linear-gradient(180deg, #fbfaff 0%, var(--page-bg) 56%, #f8f6ff 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a {
+      color: #0068c9;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--purple);
+      text-decoration: underline;
+    }
+
+    .shell {
+      margin: 0 auto;
+      max-width: 1220px;
+      padding: 46px 24px 76px;
+    }
+
+    .wire-note {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 18px;
+      color: var(--muted);
+      display: inline-flex;
+      font-size: 0.84rem;
+      font-weight: 760;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding: 12px 15px;
+    }
+
+    .wire-dot {
+      background: linear-gradient(135deg, var(--burgundy), var(--purple));
+      border-radius: 999px;
+      height: 10px;
+      width: 10px;
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(8, 11, 63, 0.94), rgba(29, 22, 105, 0.93)),
+        radial-gradient(circle at 82% 24%, rgba(255, 245, 221, 0.28), transparent 24rem);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      color: #ffffff;
+      overflow: hidden;
+      padding: 34px;
+      position: relative;
+    }
+
+    .hero::after {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      content: "";
+      height: 280px;
+      position: absolute;
+      right: -96px;
+      top: -110px;
+      width: 280px;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 28px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      color: #d9d3ff;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(3.15rem, 7vw, 6.8rem);
+      letter-spacing: 0;
+      line-height: 0.88;
+      margin: 0 0 18px;
+      max-width: 780px;
+    }
+
+    .hero-copy {
+      color: #e7e5ff;
+      font-size: clamp(1.02rem, 1.7vw, 1.26rem);
+      font-weight: 650;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 700px;
+    }
+
+    .source-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .badge {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: #ffffff;
+      display: inline-flex;
+      font-size: 0.78rem;
+      font-weight: 850;
+      gap: 7px;
+      padding: 8px 11px;
+      white-space: nowrap;
+    }
+
+    .hero-stats {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-stat {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 22px;
+      min-height: 126px;
+      padding: 17px;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 1.95rem;
+      font-weight: 950;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .hero-stat span {
+      color: #d9d3ff;
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 780;
+      line-height: 1.3;
+    }
+
+    .record-nav {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      gap: 8px;
+      margin: 26px 0 34px;
+      overflow-x: auto;
+      padding: 8px;
+    }
+
+    .record-nav a {
+      border-radius: 999px;
+      color: #3f4565;
+      display: inline-flex;
+      font-size: 0.87rem;
+      font-weight: 900;
+      padding: 12px 16px;
+      white-space: nowrap;
+    }
+
+    .record-nav a.active {
+      background: linear-gradient(180deg, #f1edff 0%, #e8e1ff 100%);
+      color: var(--purple);
+    }
+
+    .section {
+      margin: 34px 0 0;
+    }
+
+    .section-head {
+      align-items: flex-end;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+      margin: 0 0 18px;
+    }
+
+    .section-title {
+      margin: 0;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 4.5vw, 3.35rem);
+      line-height: 1;
+      margin: 0 0 8px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 720;
+      margin: 0;
+      max-width: 700px;
+    }
+
+    .trust-chip {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--purple);
+      flex: 0 0 auto;
+      font-size: 0.76rem;
+      font-weight: 900;
+      padding: 8px 11px;
+      white-space: nowrap;
+    }
+
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+    }
+
+    .grid-4,
+    .record-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+      padding: 22px;
+    }
+
+    .card.gold {
+      background:
+        linear-gradient(135deg, rgba(255, 245, 221, 0.94), rgba(255, 255, 255, 0.92)),
+        #ffffff;
+      border-color: #ffe8ac;
+    }
+
+    .card.burgundy {
+      background:
+        linear-gradient(135deg, rgba(122, 23, 53, 0.08), rgba(109, 77, 255, 0.05)),
+        #ffffff;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 13px;
+      margin-top: 12px;
+    }
+
+    .trophy-row {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 20px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 82px minmax(0, 1fr) auto;
+      padding: 14px;
+    }
+
+    .trophy-year {
+      color: var(--gold);
+      font-size: 1.2rem;
+      font-weight: 950;
+    }
+
+    .trophy-main strong,
+    .legend-title,
+    .record-title {
+      color: var(--ink);
+      display: block;
+      font-weight: 950;
+      line-height: 1.16;
+    }
+
+    .trophy-main span,
+    .meta {
+      color: var(--muted);
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 720;
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+
+    .result-pill {
+      background: var(--gold-soft);
+      border: 1px solid #ffe5a4;
+      border-radius: 999px;
+      color: var(--gold);
+      font-size: 0.76rem;
+      font-weight: 950;
+      padding: 7px 10px;
+      white-space: nowrap;
+    }
+
+    .leader-list,
+    .race-list,
+    .mini-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 16px;
+    }
+
+    .rank-row {
+      align-items: center;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+    }
+
+    .rank {
+      align-items: center;
+      background: var(--lavender);
+      border-radius: 999px;
+      color: var(--purple);
+      display: inline-flex;
+      font-size: 0.8rem;
+      font-weight: 950;
+      height: 28px;
+      justify-content: center;
+      width: 28px;
+    }
+
+    .rank.gold {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .rank-row strong {
+      font-size: 0.92rem;
+      font-weight: 930;
+      min-width: 0;
+    }
+
+    .rank-row span {
+      color: var(--purple);
+      font-size: 0.86rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .leader-card {
+      min-height: 274px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .leader-card::before {
+      background: linear-gradient(135deg, rgba(109, 77, 255, 0.14), rgba(122, 23, 53, 0.06));
+      content: "";
+      height: 82px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .leader-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .legend-kicker,
+    .record-kicker {
+      color: var(--burgundy);
+      font-size: 0.76rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .legend-title {
+      font-size: 1.1rem;
+      margin: 8px 0 14px;
+    }
+
+    .show-link {
+      color: var(--purple);
+      display: inline-flex;
+      font-size: 0.82rem;
+      font-weight: 900;
+      margin-top: 14px;
+    }
+
+    .performance-hero {
+      background:
+        linear-gradient(135deg, rgba(8, 11, 63, 0.96), rgba(45, 33, 138, 0.92)),
+        #080b3f;
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      min-height: 320px;
+    }
+
+    .performance-hero .meta,
+    .performance-hero .record-kicker {
+      color: #d9d3ff;
+    }
+
+    .performance-value {
+      color: #ffffff;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 950;
+      line-height: 0.95;
+      margin: 14px 0 8px;
+    }
+
+    .performance-player {
+      font-size: 1.26rem;
+      font-weight: 950;
+    }
+
+    .performance-link {
+      color: #dcd6ff;
+      display: inline-flex;
+      font-size: 0.86rem;
+      font-weight: 900;
+      margin-top: 22px;
+    }
+
+    .record-card {
+      min-height: 168px;
+    }
+
+    .record-title {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-bottom: 14px;
+    }
+
+    .record-player {
+      font-size: 1rem;
+      font-weight: 950;
+      line-height: 1.16;
+      margin-bottom: 8px;
+    }
+
+    .record-value {
+      color: var(--purple);
+      font-size: 1.18rem;
+      font-weight: 950;
+      line-height: 1.05;
+    }
+
+    .fastest-panel {
+      background:
+        linear-gradient(135deg, rgba(109, 77, 255, 0.1), rgba(255, 255, 255, 0.92)),
+        #ffffff;
+      border: 1px solid #ded8ff;
+      border-radius: 30px;
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+    }
+
+    .verified-badge {
+      background: #eaf8f1;
+      border: 1px solid #c7ecd2;
+      border-radius: 999px;
+      color: var(--green);
+      display: inline-flex;
+      font-size: 0.76rem;
+      font-weight: 950;
+      margin-bottom: 16px;
+      padding: 7px 10px;
+    }
+
+    .race-row {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 44px minmax(0, 1fr) auto;
+      padding: 12px;
+    }
+
+    .race-time {
+      color: var(--burgundy);
+      font-size: 1rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .season-card {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      min-height: 210px;
+    }
+
+    .season-score {
+      color: var(--purple);
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .tabs {
+      display: inline-flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 6px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+    }
+
+    .tab {
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 900;
+      padding: 10px 16px;
+    }
+
+    .tab.active {
+      background: var(--lavender);
+      color: var(--purple);
+    }
+
+    .table-shell {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 780px;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #eceef7;
+      font-size: 0.86rem;
+      padding: 13px 14px;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      color: var(--purple);
+      font-weight: 900;
+      text-align: left;
+    }
+
+    th {
+      background: #fbfbff;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .decision-panel {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .decision {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .decision h3 {
+      font-size: 0.92rem;
+      margin: 0 0 10px;
+    }
+
+    .decision p,
+    .decision li {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 720;
+      line-height: 1.45;
+    }
+
+    .decision ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 920px) {
+      .shell {
+        padding: 30px 16px 54px;
+      }
+
+      .hero,
+      .card,
+      .fastest-panel {
+        border-radius: 24px;
+      }
+
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .record-grid,
+      .decision-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 18vw, 4.8rem);
+      }
+
+      .hero-stats,
+      .record-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .trophy-row {
+        align-items: flex-start;
+        grid-template-columns: 1fr;
+      }
+
+      .rank-row {
+        grid-template-columns: 30px minmax(0, 1fr) auto;
+      }
+
+      .season-card {
+        grid-template-columns: 1fr;
+      }
+
+      .table-shell {
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-stats,
+      .record-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .record-nav {
+        border-radius: 18px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(1.85rem, 11vw, 2.4rem);
+      }
+
+      .performance-value {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="wire-note"><span class="wire-dot"></span>Hall of Fame redesign wireframe only — not production UI</div>
+
+    <section class="hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Fiji Victorian Cricket Club</div>
+          <h1>Hall of Fame 🏛️</h1>
+          <p class="hero-copy">A club record book for FVCC legends, premierships and iconic performances. Built to feel like a museum wall first, and a trusted stats archive second.</p>
+          <div class="source-badges">
+            <span class="badge">Scorecard records</span>
+            <span class="badge">Verified ball-by-ball</span>
+            <span class="badge">Premiership evidence</span>
+            <span class="badge">Canonical player profiles</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>25+</strong><span>Seasons covered across FVCC history</span></div>
+          <div class="hero-stat"><strong>3,747</strong><span>Deploy-safe scorecard record links</span></div>
+          <div class="hero-stat"><strong>297</strong><span>Players in scorecard milestone summaries</span></div>
+          <div class="hero-stat"><strong>57</strong><span>Verified fastest batting milestone records</span></div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="record-nav" aria-label="Record book navigation">
+      <a href="#premierships" class="active">Premierships</a>
+      <a href="#legends">Legends</a>
+      <a href="#performances">Performances</a>
+      <a href="#fastest">Fastest</a>
+      <a href="#records">Records</a>
+      <a href="#seasons">Seasons</a>
+      <a href="#detailed">Detailed</a>
+    </nav>
+
+    <section class="section" id="premierships">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Premiership Wall 🏆</h2>
+          <p>Move the trophy story right under the hero. Premierships are club-defining moments, so they should feel ceremonial, verified and scorecard-linked.</p>
+        </div>
+        <span class="trust-chip">Premiership evidence</span>
+      </div>
+      <div class="grid-2">
+        <div class="card gold">
+          <div class="record-kicker">FVCC premiership wins</div>
+          <div class="timeline">
+            <div class="trophy-row">
+              <div class="trophy-year">2001/02</div>
+              <div class="trophy-main"><strong>E Grade - Les Kemp Shield</strong><span>Fiji Victorian defeated Taipans · Captain: Amresh Bhan</span></div>
+              <div><span class="result-pill">Won by 38 runs</span><br><a href="#">View scorecard ↗</a></div>
+            </div>
+            <div class="trophy-row">
+              <div class="trophy-year">2010/11</div>
+              <div class="trophy-main"><strong>D Grade - Bob Herman Shield</strong><span>Fiji Victorian defeated Strathewen · Captain: Vinay Sharma</span></div>
+              <div><span class="result-pill">Won by 71 runs</span><br><a href="#">View scorecard ↗</a></div>
+            </div>
+            <div class="trophy-row">
+              <div class="trophy-year">2024/25</div>
+              <div class="trophy-main"><strong>Jack Kelly Shield</strong><span>Fiji Victorian CC 2nd XI defeated Northern Socials · Captain: Vinay Sharma</span></div>
+              <div><span class="result-pill">Won</span><br><a href="#">View scorecard ↗</a></div>
+            </div>
+          </div>
+          <a class="show-link" href="#">Show all 8 premierships ↓</a>
+        </div>
+
+        <div class="card">
+          <div class="record-kicker">Most premierships</div>
+          <h3 style="margin:8px 0 0;font-size:1.45rem;">Trophy cabinet leaders</h3>
+          <div class="leader-list">
+            <div class="rank-row"><span class="rank gold">1</span><strong>Amresh Bhan</strong><span>2 premierships</span></div>
+            <div class="rank-row"><span class="rank gold">2</span><strong>Balaji Viswanathan</strong><span>2 premierships</span></div>
+            <div class="rank-row"><span class="rank gold">3</span><strong>Vinay Sharma</strong><span>multiple captained wins</span></div>
+          </div>
+          <p class="meta" style="margin-top:18px;">Sort by premiership count, all-time matches, earliest premiership season, then player name.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="legends">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Club Legends 👑</h2>
+          <p>Reframe All-Time Leaders as a legends row. These cards are more screenshot-worthy than plain leaderboards but keep the same trusted rankings.</p>
+        </div>
+        <span class="trust-chip">All-time aggregates</span>
+      </div>
+      <div class="grid-4">
+        <article class="card leader-card">
+          <div class="legend-kicker">Most matches</div>
+          <div class="legend-title">Durability Kings</div>
+          <div class="leader-list">
+            <div class="rank-row"><span class="rank">1</span><strong>Danny Singh</strong><span>335</span></div>
+            <div class="rank-row"><span class="rank">2</span><strong>Vinit Naidu</strong><span>270</span></div>
+            <div class="rank-row"><span class="rank">3</span><strong>Nitin Tanwar</strong><span>247</span></div>
+          </div>
+          <a class="show-link" href="#">View top 10 ↓</a>
+        </article>
+        <article class="card leader-card">
+          <div class="legend-kicker">Most runs</div>
+          <div class="legend-title">Run Mountain</div>
+          <div class="leader-list">
+            <div class="rank-row"><span class="rank">1</span><strong>Danny Singh</strong><span>6,382</span></div>
+            <div class="rank-row"><span class="rank">2</span><strong>Shandil Bhan</strong><span>5,569</span></div>
+            <div class="rank-row"><span class="rank">3</span><strong>Nitin Tanwar</strong><span>5,305</span></div>
+          </div>
+          <a class="show-link" href="#">View top 10 ↓</a>
+        </article>
+        <article class="card leader-card">
+          <div class="legend-kicker">Most wickets</div>
+          <div class="legend-title">Wicket Wall</div>
+          <div class="leader-list">
+            <div class="rank-row"><span class="rank">1</span><strong>Shaun Vikash</strong><span>458</span></div>
+            <div class="rank-row"><span class="rank">2</span><strong>Vinit Naidu</strong><span>359</span></div>
+            <div class="rank-row"><span class="rank">3</span><strong>Clint Fernandes</strong><span>331</span></div>
+          </div>
+          <a class="show-link" href="#">View top 10 ↓</a>
+        </article>
+        <article class="card leader-card">
+          <div class="legend-kicker">Most catches</div>
+          <div class="legend-title">Safe Hands</div>
+          <div class="leader-list">
+            <div class="rank-row"><span class="rank">1</span><strong>Vinay Sharma</strong><span>277</span></div>
+            <div class="rank-row"><span class="rank">2</span><strong>Danny Singh</strong><span>217</span></div>
+            <div class="rank-row"><span class="rank">3</span><strong>Pramen Nand</strong><span>147</span></div>
+          </div>
+          <a class="show-link" href="#">View top 10 ↓</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="performances">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Iconic Performances 🌟</h2>
+          <p>Make individual brilliance cinematic. The current highest scores and best bowling records become hero cards with context and scorecard links.</p>
+        </div>
+        <span class="trust-chip">Scorecard records</span>
+      </div>
+      <div class="grid-2">
+        <article class="card performance-hero">
+          <div class="record-kicker">Highest individual score</div>
+          <div class="performance-value">204</div>
+          <div class="performance-player">Shandil Bhan</div>
+          <p class="meta">Summer 2007/08 · D Grade - Bob Herman Shield</p>
+          <a class="performance-link" href="#">View scorecard ↗</a>
+        </article>
+        <article class="card performance-hero">
+          <div class="record-kicker">Best bowling innings</div>
+          <div class="performance-value">8-27</div>
+          <div class="performance-player">Wesley Machado</div>
+          <p class="meta">Summer 2010/11 · D Grade - Bob Herman Shield</p>
+          <a class="performance-link" href="#">View scorecard ↗</a>
+        </article>
+      </div>
+      <div class="grid-2" style="margin-top:16px;">
+        <article class="card">
+          <div class="record-kicker">Recommended future card</div>
+          <div class="record-player">Best all-round display</div>
+          <div class="record-value">Runs + wickets impact</div>
+          <p class="meta">Show only once innings-level data is reliable enough to avoid overclaiming.</p>
+        </article>
+        <article class="card">
+          <div class="record-kicker">Recommended future card</div>
+          <div class="record-player">Best fielding display</div>
+          <div class="record-value">Catches / stumpings / run outs</div>
+          <p class="meta">Useful if scorecards support match-level fielding dismissals consistently.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="fastest">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Fastest Verified Innings ⚡</h2>
+          <p>Separate verified ball-by-ball records from scorecard-only records. This is a trust move as much as a design move.</p>
+        </div>
+        <span class="trust-chip">Verified ball-by-ball only</span>
+      </div>
+      <div class="fastest-panel">
+        <span class="verified-badge">Verified ball-by-ball only</span>
+        <div class="grid-2">
+          <div>
+            <div class="record-kicker">Fastest 50s</div>
+            <div class="race-list">
+              <div class="race-row"><span class="rank">1</span><strong>Armaan Datta <span class="meta">102* vs Brunswick</span></strong><span class="race-time">25 balls</span></div>
+              <div class="race-row"><span class="rank">2</span><strong>Vinay Sharma <span class="meta">64* vs Brunswick</span></strong><span class="race-time">32 balls</span></div>
+              <div class="race-row"><span class="rank">3</span><strong>Kalpeshkumar Patel <span class="meta">56 vs Olympic Colts</span></strong><span class="race-time">38 balls</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="record-kicker">Fastest 100s</div>
+            <div class="race-list">
+              <div class="race-row"><span class="rank">1</span><strong>Armaan Datta <span class="meta">102* vs Brunswick</span></strong><span class="race-time">49 balls</span></div>
+              <div class="race-row"><span class="rank">2</span><strong>Next verified 100 <span class="meta">Appears when BBB confirms it</span></strong><span class="race-time">TBC</span></div>
+              <div class="race-row"><span class="rank">3</span><strong>Coverage note <span class="meta">Missing BBB means not verified</span></strong><span class="race-time">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="records">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Record Holders 📘</h2>
+          <p>Keep the hard records, but make them lighter. Ducks move out of the headline grid into a smaller quirky records card.</p>
+        </div>
+      </div>
+      <div class="record-grid">
+        <article class="card record-card"><div class="record-title">Most 100s</div><div class="record-player">Shandil Bhan</div><div class="record-value">11 hundreds</div><span class="meta">1 every 19 innings</span></article>
+        <article class="card record-card"><div class="record-title">Most 50s</div><div class="record-player">Kalpeshkumar Patel</div><div class="record-value">35 fifties</div><span class="meta">1 every 5.5 innings</span></article>
+        <article class="card record-card"><div class="record-title">Most 4s</div><div class="record-player">Nitin Tanwar</div><div class="record-value">594 fours</div><span class="meta">2.4 fours per innings</span></article>
+        <article class="card record-card"><div class="record-title">Most 6s</div><div class="record-player">Kalpeshkumar Patel</div><div class="record-value">125 sixes</div><span class="meta">0.7 sixes per innings</span></article>
+        <article class="card record-card"><div class="record-title">5 Wicket Hauls</div><div class="record-player">Clint Fernandes</div><div class="record-value">18 hauls</div><span class="meta">1 every 6.4 matches</span></article>
+        <article class="card record-card"><div class="record-title">Most Maidens</div><div class="record-player">Shaun Vikash</div><div class="record-value">635 maidens</div><span class="meta">2.6 per match</span></article>
+        <article class="card record-card"><div class="record-title">Best Win %</div><div class="record-player">Jimmy Sharma</div><div class="record-value">65.9%</div><span class="meta">54 wins from 82 matches</span></article>
+        <article class="card record-card burgundy"><div class="record-title">Quirky Records</div><div class="record-player">Ducks corner</div><div class="record-value">Moved lower</div><span class="meta">Interesting, but not a headline achievement.</span></article>
+      </div>
+    </section>
+
+    <section class="section" id="seasons">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Greatest Individual Seasons 🎖️</h2>
+          <p>Give season-long excellence a more premium treatment and add an optional all-round season card when the calculation is trusted.</p>
+        </div>
+        <span class="trust-chip">Season aggregate records</span>
+      </div>
+      <div class="grid-3">
+        <article class="card season-card">
+          <div>
+            <div class="record-kicker">Best batting season</div>
+            <h3>Sanjay Ct</h3>
+            <p class="meta">Summer 2008/09 · 15 matches · HS 117</p>
+          </div>
+          <div class="season-score">720 runs</div>
+        </article>
+        <article class="card season-card">
+          <div>
+            <div class="record-kicker">Best bowling season</div>
+            <h3>Clint Fernandes</h3>
+            <p class="meta">Summer 2003/04 · 244.4 overs · BBI 6-11</p>
+          </div>
+          <div class="season-score">65 wkts</div>
+        </article>
+        <article class="card season-card">
+          <div>
+            <div class="record-kicker">Recommended future card</div>
+            <h3>All-round season</h3>
+            <p class="meta">Use only after a simple, agreed all-round impact formula is approved.</p>
+          </div>
+          <div class="season-score">TBC</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="detailed">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Detailed Records 📊</h2>
+          <p>The audit layer stays, but lower on the page. It remains the place for full sortable batting, bowling and fielding tables.</p>
+        </div>
+        <span class="trust-chip">Sortable audit tables</span>
+      </div>
+      <div class="card">
+        <div class="tabs">
+          <span class="tab active">Batting</span>
+          <span class="tab">Bowling</span>
+          <span class="tab">Fielding</span>
+        </div>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr><th>Player</th><th>Seasons</th><th>Matches</th><th>Win %</th><th>Runs</th><th>Bat SR</th><th>HS</th><th>30s</th><th>50s</th><th>100s</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Danny Singh</td><td>21</td><td>335</td><td>—</td><td>6,382</td><td>BBB only</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr><td>Shandil Bhan</td><td>18</td><td>—</td><td>—</td><td>5,569</td><td>BBB only</td><td>204</td><td>Scorecard</td><td>—</td><td>11</td></tr>
+              <tr><td>Nitin Tanwar</td><td>18</td><td>247</td><td>—</td><td>5,305</td><td>BBB only</td><td>—</td><td>Scorecard</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="meta" style="margin-top:14px;">Trust note: Bat SR uses verified ball-by-ball only. 30s use scorecard innings 30-49 inclusive. 3WI means exactly 3 or 4 wickets. 5WI means 5+. HS ignores not-out star for sorting; BBI sorts wickets descending then runs ascending.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>Design Recommendations</h2>
+          <p>The decisions this redesign makes compared with the current Hall of Fame page.</p>
+        </div>
+      </div>
+      <div class="decision-panel">
+        <div class="decision">
+          <h3>Keep</h3>
+          <ul>
+            <li>All existing record calculations.</li>
+            <li>Premierships, leaders, records, fastest innings, seasons and detailed tables.</li>
+            <li>Player, season and scorecard links.</li>
+          </ul>
+        </div>
+        <div class="decision">
+          <h3>Merge / Reorder</h3>
+          <ul>
+            <li>All-Time Leaders become Club Legends.</li>
+            <li>Premierships move directly below the hero.</li>
+            <li>Detailed Records move to the bottom as the audit layer.</li>
+          </ul>
+        </div>
+        <div class="decision">
+          <h3>Remove From Headline</h3>
+          <ul>
+            <li>Ducks move to Quirky Records.</li>
+            <li>Future all-round/fielding performance cards need reliability labels.</li>
+            <li>Do not call anything a club record unless all-time comparison confirms it.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

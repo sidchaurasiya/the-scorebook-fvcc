@@ -1,0 +1,1502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Player Profile Redesign Wireframe</title>
+  <style>
+    :root {
+      --ink: #080b3f;
+      --muted: #687093;
+      --soft-muted: #8a90aa;
+      --purple: #4b37d8;
+      --purple-2: #6d4dff;
+      --lavender: #f1edff;
+      --lavender-2: #f8f6ff;
+      --page-bg: #f4f2ff;
+      --card: #ffffff;
+      --line: #e7e6f5;
+      --burgundy: #7a1735;
+      --burgundy-soft: #fff1f5;
+      --gold: #a76800;
+      --gold-soft: #fff5dd;
+      --green: #166b55;
+      --green-soft: #eaf8f1;
+      --grey-soft: #f2f3f8;
+      --shadow: 0 22px 52px rgba(23, 27, 77, 0.08);
+      --shadow-soft: 0 10px 26px rgba(23, 27, 77, 0.055);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(109, 77, 255, 0.16), transparent 34rem),
+        radial-gradient(circle at 92% 10%, rgba(122, 23, 53, 0.11), transparent 28rem),
+        linear-gradient(180deg, #fbfaff 0%, var(--page-bg) 58%, #f8f6ff 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a {
+      color: #0068c9;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--purple);
+      text-decoration: underline;
+    }
+
+    .shell {
+      margin: 0 auto;
+      max-width: 1240px;
+      padding: 42px 24px 76px;
+    }
+
+    .wire-note {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 18px;
+      color: var(--muted);
+      display: inline-flex;
+      font-size: 0.84rem;
+      font-weight: 760;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 12px 15px;
+    }
+
+    .wire-dot {
+      background: linear-gradient(135deg, var(--burgundy), var(--purple));
+      border-radius: 999px;
+      height: 10px;
+      width: 10px;
+    }
+
+    .selector-card {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 14px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      margin-bottom: 24px;
+      padding: 14px;
+    }
+
+    .selector-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .selector-input {
+      align-items: center;
+      background: var(--lavender-2);
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      color: var(--ink);
+      display: flex;
+      font-size: 1rem;
+      font-weight: 860;
+      justify-content: space-between;
+      min-height: 52px;
+      padding: 0 16px;
+    }
+
+    .selector-pill {
+      background: var(--lavender);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      font-size: 0.8rem;
+      font-weight: 900;
+      padding: 10px 13px;
+      white-space: nowrap;
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(8, 11, 63, 0.95), rgba(25, 18, 91, 0.94)),
+        radial-gradient(circle at 78% 18%, rgba(109, 77, 255, 0.32), transparent 24rem),
+        radial-gradient(circle at 98% 75%, rgba(167, 104, 0, 0.20), transparent 22rem);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      color: #ffffff;
+      overflow: hidden;
+      padding: 34px;
+      position: relative;
+    }
+
+    .hero::after {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      content: "";
+      height: 290px;
+      position: absolute;
+      right: -105px;
+      top: -112px;
+      width: 290px;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: minmax(0, 1.12fr) minmax(330px, 0.88fr);
+      position: relative;
+      z-index: 1;
+    }
+
+    .club-label {
+      color: #d8d1ff;
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.1rem);
+      letter-spacing: 0;
+      line-height: 0.9;
+      margin: 0 0 14px;
+      max-width: 780px;
+    }
+
+    .hero-copy {
+      color: #e8e6ff;
+      font-size: clamp(1rem, 1.7vw, 1.22rem);
+      font-weight: 650;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 670px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 22px;
+    }
+
+    .badge {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: #ffffff;
+      display: inline-flex;
+      font-size: 0.78rem;
+      font-weight: 870;
+      gap: 7px;
+      padding: 8px 11px;
+      white-space: nowrap;
+    }
+
+    .badge.gold {
+      background: rgba(255, 245, 221, 0.15);
+      border-color: rgba(255, 230, 170, 0.32);
+      color: #fff2c2;
+    }
+
+    .badge.green {
+      background: rgba(234, 248, 241, 0.14);
+      border-color: rgba(177, 233, 207, 0.30);
+      color: #cbf4e3;
+    }
+
+    .identity-panel {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 18px;
+    }
+
+    .signature-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 22px;
+      margin-bottom: 14px;
+      padding: 18px;
+    }
+
+    .signature-card small,
+    .fact small,
+    .hero-mini small {
+      color: #d8d1ff;
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .signature-card strong {
+      display: block;
+      font-size: 1.9rem;
+      font-weight: 950;
+      line-height: 1.08;
+      margin-bottom: 7px;
+    }
+
+    .signature-card span {
+      color: #eeeaff;
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 720;
+      line-height: 1.4;
+    }
+
+    .hero-facts {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fact {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 1.18rem;
+      font-weight: 950;
+      line-height: 1.15;
+    }
+
+    .section {
+      margin: 34px 0 0;
+    }
+
+    .section-head {
+      align-items: end;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.4vw, 3rem);
+      letter-spacing: 0;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .section-kicker {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 760;
+      line-height: 1.45;
+      margin: 9px 0 0;
+      max-width: 740px;
+    }
+
+    .trust-chip,
+    .control-chip {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      display: inline-flex;
+      font-size: 0.78rem;
+      font-weight: 900;
+      gap: 7px;
+      padding: 8px 11px;
+      white-space: nowrap;
+    }
+
+    .trust-chip.bbb {
+      background: var(--green-soft);
+      border-color: #cfeade;
+      color: var(--green);
+    }
+
+    .trust-chip.scorecard {
+      background: var(--lavender-2);
+      border-color: #dfdcff;
+      color: var(--purple);
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(231, 230, 245, 0.98);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+      padding: 20px;
+    }
+
+    .card-title {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      margin-bottom: 9px;
+      text-transform: uppercase;
+    }
+
+    .card h3 {
+      font-size: 1.32rem;
+      letter-spacing: 0;
+      line-height: 1.12;
+      margin: 0 0 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+      line-height: 1.48;
+      margin: 0;
+    }
+
+    .stat-strip {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 0;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      overflow: hidden;
+    }
+
+    .stat-tile {
+      border-right: 1px solid var(--line);
+      padding: 18px;
+    }
+
+    .stat-tile:nth-child(6n) {
+      border-right: 0;
+    }
+
+    .stat-tile span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .stat-tile strong {
+      display: block;
+      font-size: 1.45rem;
+      font-weight: 950;
+      line-height: 1.05;
+    }
+
+    .dna-card {
+      min-height: 190px;
+      position: relative;
+    }
+
+    .trait-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .trait {
+      background: var(--lavender);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      font-size: 0.76rem;
+      font-weight: 900;
+      padding: 7px 10px;
+    }
+
+    .trait.gold {
+      background: var(--gold-soft);
+      border-color: #f0d89e;
+      color: var(--gold);
+    }
+
+    .trait.green {
+      background: var(--green-soft);
+      border-color: #cfeade;
+      color: var(--green);
+    }
+
+    .meter {
+      background: #eeedf8;
+      border-radius: 999px;
+      height: 8px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+
+    .meter > span {
+      background: linear-gradient(90deg, var(--purple), var(--purple-2));
+      border-radius: 999px;
+      display: block;
+      height: 100%;
+    }
+
+    .peer-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .peer-top {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .status {
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 950;
+      padding: 7px 9px;
+      white-space: nowrap;
+    }
+
+    .status.good {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .status.neutral {
+      background: var(--grey-soft);
+      color: var(--muted);
+    }
+
+    .status.watch {
+      background: var(--burgundy-soft);
+      color: var(--burgundy);
+    }
+
+    .range {
+      background: #eeedf8;
+      border-radius: 999px;
+      height: 9px;
+      position: relative;
+    }
+
+    .range .fill {
+      background: linear-gradient(90deg, rgba(75, 55, 216, 0.25), var(--purple));
+      border-radius: 999px;
+      height: 100%;
+      width: 68%;
+    }
+
+    .marker {
+      background: var(--ink);
+      border: 3px solid #fff;
+      border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(8, 11, 63, 0.18);
+      height: 16px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+    }
+
+    .marker.player {
+      background: var(--purple);
+      left: 68%;
+    }
+
+    .marker.peer {
+      background: var(--soft-muted);
+      left: 48%;
+    }
+
+    .range-labels {
+      color: var(--muted);
+      display: flex;
+      font-size: 0.74rem;
+      font-weight: 820;
+      justify-content: space-between;
+      margin-top: -5px;
+    }
+
+    .position-row,
+    .dismissal-row,
+    .club-row {
+      align-items: center;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 86px minmax(0, 1fr) 74px;
+      margin-top: 13px;
+    }
+
+    .position-row strong,
+    .dismissal-row strong,
+    .club-row strong {
+      font-size: 0.88rem;
+    }
+
+    .bar-track {
+      background: #eeedf8;
+      border-radius: 999px;
+      height: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      background: linear-gradient(90deg, var(--purple), var(--purple-2));
+      border-radius: 999px;
+      height: 100%;
+    }
+
+    .avg-marker {
+      background: var(--soft-muted);
+      border-radius: 999px;
+      height: 18px;
+      position: absolute;
+      top: -3px;
+      width: 3px;
+    }
+
+    .insight {
+      background: var(--lavender-2);
+      border: 1px solid #e1ddff;
+      border-radius: 18px;
+      color: #34395c;
+      font-size: 0.9rem;
+      font-weight: 730;
+      line-height: 1.45;
+      margin-top: 16px;
+      padding: 13px 14px;
+    }
+
+    .mini-stat-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 16px;
+    }
+
+    .mini-stat {
+      background: var(--lavender-2);
+      border: 1px solid #e6e2ff;
+      border-radius: 18px;
+      padding: 13px;
+    }
+
+    .mini-stat span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1.12rem;
+      font-weight: 950;
+    }
+
+    .performance-card {
+      background:
+        linear-gradient(180deg, #ffffff 0%, #fbfaff 100%);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .performance-head {
+      background: linear-gradient(135deg, rgba(75, 55, 216, 0.10), rgba(122, 23, 53, 0.08));
+      border-bottom: 1px solid var(--line);
+      padding: 18px;
+    }
+
+    .performance-value {
+      color: var(--ink);
+      font-size: 2.05rem;
+      font-weight: 950;
+      line-height: 1;
+      margin-top: 6px;
+    }
+
+    .performance-body {
+      padding: 18px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 740;
+      line-height: 1.45;
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .subtle-link {
+      background: var(--lavender-2);
+      border: 1px solid #e1ddff;
+      border-radius: 999px;
+      color: var(--purple);
+      display: inline-flex;
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 8px 10px;
+    }
+
+    .pair-card {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .pair-avatar {
+      align-items: center;
+      background: linear-gradient(135deg, var(--purple), var(--burgundy));
+      border-radius: 22px;
+      color: #fff;
+      display: flex;
+      font-size: 1.2rem;
+      font-weight: 950;
+      height: 54px;
+      justify-content: center;
+      width: 54px;
+    }
+
+    .progress-row {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .progress-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      padding: 17px;
+    }
+
+    .progress-card strong {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 950;
+      margin-bottom: 7px;
+    }
+
+    .progress-card .away {
+      color: var(--purple);
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 900;
+      margin-bottom: 13px;
+    }
+
+    .timeline {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 0;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      overflow: hidden;
+    }
+
+    .timeline-step {
+      border-right: 1px solid var(--line);
+      padding: 18px;
+      position: relative;
+    }
+
+    .timeline-step:last-child {
+      border-right: 0;
+    }
+
+    .timeline-dot {
+      background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      border-radius: 999px;
+      height: 10px;
+      margin-bottom: 10px;
+      width: 10px;
+    }
+
+    .timeline-step span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .timeline-step strong {
+      display: block;
+      font-size: 0.98rem;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .controls {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding: 8px;
+    }
+
+    .controls .control-chip.active {
+      background: linear-gradient(180deg, #f1edff 0%, #e8e1ff 100%);
+      border-color: #dfd7ff;
+      color: var(--purple);
+    }
+
+    .table-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 820px;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      padding: 13px 14px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #fbfaff;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    td:first-child,
+    th:first-child {
+      color: var(--ink);
+      font-weight: 900;
+      text-align: left;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    .coverage-card {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,246,255,0.96));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+      padding: 22px;
+    }
+
+    .trust-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .trust-list li {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 720;
+      line-height: 1.42;
+      list-style: none;
+      padding: 12px 13px;
+    }
+
+    .notes-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .note-card ul {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 680;
+      line-height: 1.45;
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid.two,
+      .grid.three,
+      .coverage-card,
+      .notes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid.four,
+      .progress-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stat-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .stat-tile:nth-child(3n) {
+        border-right: 0;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-step {
+        border-bottom: 1px solid var(--line);
+        border-right: 0;
+      }
+
+      .timeline-step:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        padding: 26px 14px 52px;
+      }
+
+      .selector-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        border-radius: 27px;
+        padding: 24px;
+      }
+
+      .hero-facts,
+      .mini-stat-grid,
+      .grid.four,
+      .progress-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stat-tile {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat-tile:nth-child(2n) {
+        border-right: 0;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .position-row,
+      .dismissal-row,
+      .club-row {
+        grid-template-columns: 72px minmax(0, 1fr) 58px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 16vw, 4.4rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="wire-note"><span class="wire-dot"></span> Standalone wireframe only. Production Player Profile, routing and data logic stay untouched.</div>
+
+    <section class="selector-card" aria-label="Player selector concept">
+      <div>
+        <div class="selector-label">Player Search</div>
+        <div class="selector-input">
+          <span>Vinay Sharma</span>
+          <span>⌄</span>
+        </div>
+      </div>
+      <div class="selector-pill">Canonical profile • aliases merged</div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="club-label">Fiji Victorian Cricket Club</div>
+          <h1>Vinay Sharma</h1>
+          <p class="hero-copy">
+            A long-career FVCC leader with premiership pedigree, heavy fielding impact and a batting profile built on patience, role flexibility and big moments.
+          </p>
+          <div class="badge-row">
+            <span class="badge gold">5× Premiership player</span>
+            <span class="badge">Club veteran</span>
+            <span class="badge green">Safe hands</span>
+            <span class="badge">Top-order capable</span>
+            <span class="badge">Scorecard-safe profile</span>
+          </div>
+        </div>
+
+        <aside class="identity-panel">
+          <div class="signature-card">
+            <small>Signature Stat</small>
+            <strong>277 catches</strong>
+            <span>One of the strongest all-time fielding records in the club data, with wicketkeeping and outfield impact both visible.</span>
+          </div>
+          <div class="hero-facts">
+            <div class="fact"><small>Career span</small><strong>2001/02 to 2026</strong></div>
+            <div class="fact"><small>Win rate</small><strong>51.6%</strong></div>
+            <div class="fact"><small>Favourite stage</small><strong>Finals cricket</strong></div>
+            <div class="fact"><small>Best fit</small><strong>Middle order</strong></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Career snapshot">
+      <div class="stat-strip">
+        <div class="stat-tile"><span>Matches</span><strong>228</strong></div>
+        <div class="stat-tile"><span>Runs</span><strong>3,923</strong></div>
+        <div class="stat-tile"><span>Bat Avg</span><strong>23.78</strong></div>
+        <div class="stat-tile"><span>Highest Score</span><strong>125</strong></div>
+        <div class="stat-tile"><span>Wickets</span><strong>5</strong></div>
+        <div class="stat-tile"><span>Catches</span><strong>277</strong></div>
+        <div class="stat-tile"><span>Run Outs</span><strong>34</strong></div>
+        <div class="stat-tile"><span>Stumpings</span><strong>30</strong></div>
+        <div class="stat-tile"><span>50s / 100s</span><strong>10 / 2</strong></div>
+        <div class="stat-tile"><span>Verified BBB SR</span><strong>62.4%</strong></div>
+        <div class="stat-tile"><span>Premierships</span><strong>5</strong></div>
+        <div class="stat-tile"><span>Result-mapped</span><strong>221</strong></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Player DNA Snapshot 🧬</h2>
+          <p class="section-kicker">The top of the profile should tell the player what kind of cricketer the data thinks they are before asking them to read tables.</p>
+        </div>
+        <span class="trust-chip scorecard">Scorecard + career totals</span>
+      </div>
+      <div class="grid four">
+        <article class="card dna-card">
+          <div class="card-title">Batter Type</div>
+          <h3>Patient accumulator</h3>
+          <p>Long innings, role flexibility and a strong base of scorecard runs. Rate metrics are separated when only ball-by-ball data can prove them.</p>
+          <div class="trait-tags">
+            <span class="trait">Anchor</span>
+            <span class="trait">Middle-order rescue</span>
+          </div>
+          <div class="meter"><span style="width: 68%"></span></div>
+        </article>
+        <article class="card dna-card">
+          <div class="card-title">Bowler Type</div>
+          <h3>Occasional option</h3>
+          <p>Bowling modules stay compact because the scorecard record does not support a full specialist-bowler identity.</p>
+          <div class="trait-tags">
+            <span class="trait">Part-time overs</span>
+            <span class="trait">Hide phase labels</span>
+          </div>
+          <div class="meter"><span style="width: 18%"></span></div>
+        </article>
+        <article class="card dna-card">
+          <div class="card-title">Fielding Profile</div>
+          <h3>Safe hands</h3>
+          <p>Catches, stumpings and run outs are strong enough to be part of the player identity, not just a table column.</p>
+          <div class="trait-tags">
+            <span class="trait green">Safe hands</span>
+            <span class="trait green">Keeper impact</span>
+          </div>
+          <div class="meter"><span style="width: 92%"></span></div>
+        </article>
+        <article class="card dna-card">
+          <div class="card-title">Match Impact</div>
+          <h3>Premiership leader</h3>
+          <p>Finals and premiership evidence should sit in the identity layer when it is deploy-safe and evidence-backed.</p>
+          <div class="trait-tags">
+            <span class="trait gold">Premiership player</span>
+            <span class="trait gold">Finals record</span>
+          </div>
+          <div class="meter"><span style="width: 88%"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Player vs Peers 📊</h2>
+          <p class="section-kicker">Replace plain comparison tables with range bars that show where the player sits against similar club players.</p>
+        </div>
+        <span class="trust-chip">Compared with similar seasons and grades</span>
+      </div>
+      <div class="grid three">
+        <article class="card peer-card">
+          <div class="peer-top">
+            <div>
+              <div class="card-title">Batting Average</div>
+              <h3>23.78</h3>
+            </div>
+            <span class="status good">Above peer avg</span>
+          </div>
+          <div class="range"><span class="fill"></span><span class="marker peer" title="Peer average"></span><span class="marker player" title="Vinay"></span></div>
+          <div class="range-labels"><span>Peer avg 18.2</span><span>Player 23.8</span></div>
+        </article>
+        <article class="card peer-card">
+          <div class="peer-top">
+            <div>
+              <div class="card-title">Verified Bat SR</div>
+              <h3>62.4%</h3>
+            </div>
+            <span class="status neutral">Coverage-limited</span>
+          </div>
+          <div class="range"><span class="fill" style="width: 43%"></span><span class="marker peer" style="left: 56%"></span><span class="marker player" style="left: 43%"></span></div>
+          <div class="range-labels"><span>BBB peer 78.0%</span><span>Player 62.4%</span></div>
+        </article>
+        <article class="card peer-card">
+          <div class="peer-top">
+            <div>
+              <div class="card-title">Fielding Impact</div>
+              <h3>341 dismissals</h3>
+            </div>
+            <span class="status good">Elite tier</span>
+          </div>
+          <div class="range"><span class="fill" style="width: 94%"></span><span class="marker peer" style="left: 44%"></span><span class="marker player" style="left: 94%"></span></div>
+          <div class="range-labels"><span>Peer avg 92</span><span>Player 341</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Advanced Insight Grid 🧠</h2>
+          <p class="section-kicker">Advanced analytics should feel useful and trustworthy: show what is reliable, label what needs ball-by-ball coverage, and never mix sources.</p>
+        </div>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="card-title">Best Batting Position</div>
+          <h3>No. 5 looks like the strongest fit</h3>
+          <p>Ordered by batting position, not by output rank, so the cricket story stays clear.</p>
+          <div class="position-row"><strong>Openers</strong><div class="bar-track"><span class="bar-fill" style="width: 38%"></span></div><strong>18.2 avg</strong></div>
+          <div class="position-row"><strong>No. 3</strong><div class="bar-track"><span class="bar-fill" style="width: 51%"></span></div><strong>22.7 avg</strong></div>
+          <div class="position-row"><strong>No. 4</strong><div class="bar-track"><span class="bar-fill" style="width: 62%"></span></div><strong>26.1 avg</strong></div>
+          <div class="position-row"><strong>No. 5</strong><div class="bar-track"><span class="bar-fill" style="width: 86%"></span></div><strong>34.8 avg</strong></div>
+          <div class="position-row"><strong>No. 6</strong><div class="bar-track"><span class="bar-fill" style="width: 70%"></span></div><strong>29.4 avg</strong></div>
+          <div class="position-row"><strong>Tail</strong><div class="bar-track"><span class="bar-fill" style="width: 21%"></span></div><strong>9.6 avg</strong></div>
+          <div class="insight">Best-fit label appears only when there is enough scorecard batting-order evidence. Otherwise this card becomes a clean coverage empty state.</div>
+        </article>
+
+        <article class="card">
+          <div class="card-title">Dismissal Fingerprint</div>
+          <h3>Bowled/LBW risk sits above club average</h3>
+          <p>Not-outs are excluded. Purple bars show the player; grey markers show the club average.</p>
+          <div class="dismissal-row"><strong>Caught</strong><div class="bar-track"><span class="bar-fill" style="width: 44%"></span><span class="avg-marker" style="left: 49%"></span></div><strong>44%</strong></div>
+          <div class="dismissal-row"><strong>Bowled</strong><div class="bar-track"><span class="bar-fill" style="width: 27%"></span><span class="avg-marker" style="left: 21%"></span></div><strong>27%</strong></div>
+          <div class="dismissal-row"><strong>LBW</strong><div class="bar-track"><span class="bar-fill" style="width: 12%"></span><span class="avg-marker" style="left: 8%"></span></div><strong>12%</strong></div>
+          <div class="dismissal-row"><strong>Run out</strong><div class="bar-track"><span class="bar-fill" style="width: 8%"></span><span class="avg-marker" style="left: 9%"></span></div><strong>8%</strong></div>
+          <div class="dismissal-row"><strong>Other</strong><div class="bar-track"><span class="bar-fill" style="width: 9%"></span><span class="avg-marker" style="left: 13%"></span></div><strong>9%</strong></div>
+          <div class="insight">This is a useful Player DNA feature, but it should be hidden unless scorecard dismissal data is complete enough for the selected player.</div>
+        </article>
+      </div>
+
+      <div class="grid two" style="margin-top: 16px;">
+        <article class="card">
+          <div class="card-title">Favourite Ground</div>
+          <h3>C.T. Barling Reserve</h3>
+          <p>Best venue card should balance batting and bowling, not just one rate stat.</p>
+          <div class="mini-stat-grid">
+            <div class="mini-stat"><span>Runs</span><strong>412</strong></div>
+            <div class="mini-stat"><span>Bat Avg</span><strong>31.7</strong></div>
+            <div class="mini-stat"><span>Best Score</span><strong>90*</strong></div>
+            <div class="mini-stat"><span>Sample</span><strong>Healthy</strong></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-title">Favourite Opponent</div>
+          <h3>Bellfield Bulls</h3>
+          <p>Opponent names should be normalized to club level so rivalry cards are readable and trusted.</p>
+          <div class="mini-stat-grid">
+            <div class="mini-stat"><span>Runs</span><strong>338</strong></div>
+            <div class="mini-stat"><span>Bat Avg</span><strong>37.6</strong></div>
+            <div class="mini-stat"><span>Best Score</span><strong>66*</strong></div>
+            <div class="mini-stat"><span>Record</span><strong>Strong</strong></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Standout Performances 🔥</h2>
+          <p class="section-kicker">Rename this away from strict match-winning language unless the result and impact are both proven.</p>
+        </div>
+        <span class="trust-chip scorecard">Scorecard-linked moments</span>
+      </div>
+      <div class="grid four">
+        <article class="performance-card">
+          <div class="performance-head">
+            <div class="card-title">Best Batting Innings</div>
+            <div class="performance-value">125</div>
+          </div>
+          <div class="performance-body">
+            <h3>vs Bob Herman Shield rivals</h3>
+            <div class="meta">Summer 2016/17 • D Grade • Personal best</div>
+            <div class="link-row"><a class="subtle-link" href="#">View scorecard ↗</a></div>
+          </div>
+        </article>
+        <article class="performance-card">
+          <div class="performance-head">
+            <div class="card-title">Finals Moment</div>
+            <div class="performance-value">5×</div>
+          </div>
+          <div class="performance-body">
+            <h3>Premiership evidence</h3>
+            <div class="meta">2009/10, 2010/11, 2011/12, 2016/17, 2024/25</div>
+            <div class="link-row"><a class="subtle-link" href="#">Open finals record ↗</a></div>
+          </div>
+        </article>
+        <article class="performance-card">
+          <div class="performance-head">
+            <div class="card-title">Fielding Display</div>
+            <div class="performance-value">4 ct</div>
+          </div>
+          <div class="performance-body">
+            <h3>High-impact keeping game</h3>
+            <div class="meta">Representative card • show only when match scorecard supports it</div>
+            <div class="link-row"><span class="subtle-link">Coverage check</span></div>
+          </div>
+        </article>
+        <article class="performance-card">
+          <div class="performance-head">
+            <div class="card-title">All-round Display</div>
+            <div class="performance-value">If reliable</div>
+          </div>
+          <div class="performance-body">
+            <h3>Future impact card</h3>
+            <div class="meta">Requires deterministic impact scoring, not a vibe-based claim</div>
+            <div class="link-row"><span class="subtle-link">Trust note</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Partnership Chemistry 🤝</h2>
+          <p class="section-kicker">Use pair cards instead of dense partnership tables. Hide bowling-only chemistry for players with tiny bowling samples.</p>
+        </div>
+      </div>
+      <div class="grid three">
+        <article class="card pair-card">
+          <div class="pair-avatar">DB</div>
+          <div>
+            <div class="card-title">Best Batting Partner</div>
+            <h3>Danny Singh</h3>
+            <p>842 stand runs • 31 stands • best stand 128. Scorecard partnerships only.</p>
+          </div>
+        </article>
+        <article class="card pair-card">
+          <div class="pair-avatar">KB</div>
+          <div>
+            <div class="card-title">Reliable Stand Builder</div>
+            <h3>Kieran Bhan</h3>
+            <p>Multiple 50+ stands, best used as a relationship card instead of a raw table.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-title">Bowling Tandems</div>
+          <h3>Verified ball-by-ball only</h3>
+          <p>Show this as an empty state unless alternating-over bowling spells can be detected from verified delivery data.</p>
+          <div class="trait-tags"><span class="trait green">Future module</span><span class="trait">Do not overclaim</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Milestone Watch 🎯</h2>
+          <p class="section-kicker">Keep milestone progress compact and aligned with the redesigned Milestone page thresholds.</p>
+        </div>
+        <a class="subtle-link" href="#">Open Milestone page ↗</a>
+      </div>
+      <div class="progress-row">
+        <article class="progress-card">
+          <strong>228 / 300 matches</strong>
+          <span class="away">72 matches away</span>
+          <div class="meter"><span style="width: 76%"></span></div>
+        </article>
+        <article class="progress-card">
+          <strong>3,923 / 4,000 runs</strong>
+          <span class="away">77 runs away</span>
+          <div class="meter"><span style="width: 98%"></span></div>
+        </article>
+        <article class="progress-card">
+          <strong>5 / 100 wickets</strong>
+          <span class="away">95 wickets away</span>
+          <div class="meter"><span style="width: 5%"></span></div>
+        </article>
+        <article class="progress-card">
+          <strong>277 / 300 catches</strong>
+          <span class="away">23 catches away</span>
+          <div class="meter"><span style="width: 92%"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Season Trends + Story Timeline 📈</h2>
+          <p class="section-kicker">Keep trends, but present them as career story first and charts second.</p>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-step"><div class="timeline-dot"></div><span>Debut era</span><strong>Summer 2001/02</strong></div>
+        <div class="timeline-step"><div class="timeline-dot"></div><span>First century</span><strong>Summer 2006/07</strong></div>
+        <div class="timeline-step"><div class="timeline-dot"></div><span>Best season</span><strong>479 runs in 2006/07</strong></div>
+        <div class="timeline-step"><div class="timeline-dot"></div><span>Premiership peak</span><strong>5 verified titles</strong></div>
+        <div class="timeline-step"><div class="timeline-dot"></div><span>Latest chapter</span><strong>Winter 2026 unbeaten runs</strong></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="coverage-card">
+        <div>
+          <div class="card-title">Data Coverage + Trust</div>
+          <h2>Make the stats feel safe</h2>
+          <p class="section-kicker">This card should appear before advanced metrics so the player knows what is complete, what is partial, and what is deliberately hidden.</p>
+        </div>
+        <ul class="trust-list">
+          <li><strong>Scorecard-safe:</strong> matches, runs, wickets, averages, catches, high score, BBI, 30s, 3WI and 5WI can use complete scorecard/aggregate sources.</li>
+          <li><strong>Verified ball-by-ball:</strong> Bat SR from balls, dot percentage, boundary rate, phase metrics, fastest innings and tandems must use only matched delivery data.</li>
+          <li><strong>Coverage example:</strong> Vinay has 19 verified ball-by-ball batting innings in the deploy-safe Hall of Fame summary, so rate cards should clearly label that subset.</li>
+          <li><strong>Missing coverage:</strong> show a premium empty state, not 0.0%, and never mix all-scorecard runs with ball-by-ball denominators.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Performance Breakdown 🧩</h2>
+          <p class="section-kicker">Move history tables lower and unify them behind a single breakdown surface.</p>
+        </div>
+        <span class="trust-chip">Audit layer</span>
+      </div>
+      <div class="controls">
+        <span class="control-chip active">Season</span>
+        <span class="control-chip">Grade</span>
+        <span class="control-chip">Ground</span>
+        <span class="control-chip">Opponent</span>
+        <span class="control-chip">Home/Away</span>
+      </div>
+      <div class="controls" style="margin-top: -6px;">
+        <span class="control-chip active">Batting</span>
+        <span class="control-chip">Bowling</span>
+        <span class="control-chip">Fielding</span>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Season</th>
+                <th>Inn</th>
+                <th>Runs</th>
+                <th>Avg</th>
+                <th>Bat SR</th>
+                <th>HS</th>
+                <th>30s</th>
+                <th>50s</th>
+                <th>100s</th>
+                <th>0s</th>
+                <th>4s</th>
+                <th>6s</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Winter 2026</td>
+                <td>2</td>
+                <td>78</td>
+                <td>Unbeaten</td>
+                <td>125.8%</td>
+                <td>64*</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>10</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Summer 2025/26</td>
+                <td>12</td>
+                <td>193</td>
+                <td>24.13</td>
+                <td>52.8%</td>
+                <td>64*</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>16</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Summer 2024/25</td>
+                <td>10</td>
+                <td>90</td>
+                <td>10.00</td>
+                <td>Coverage limited</td>
+                <td>35*</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+                <td>8</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Summer 2016/17</td>
+                <td>14</td>
+                <td>351</td>
+                <td>25.07</td>
+                <td>Coverage limited</td>
+                <td>125</td>
+                <td>3</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>36</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Wireframe Notes</h2>
+          <p class="section-kicker">Opinionated implementation notes for the eventual real app build.</p>
+        </div>
+      </div>
+      <div class="notes-grid">
+        <article class="card note-card">
+          <div class="card-title">Keep</div>
+          <h3>Core profile trust</h3>
+          <ul>
+            <li>Search and canonical player profile links.</li>
+            <li>Career snapshot, Player vs Peers, trends, tables and Milestone Watch.</li>
+            <li>Scorecard links where a match-level record is proven.</li>
+          </ul>
+        </article>
+        <article class="card note-card">
+          <div class="card-title">Reorder</div>
+          <h3>Story before audit</h3>
+          <ul>
+            <li>Identity hero and DNA cards first.</li>
+            <li>Advanced insight cards before detailed history tables.</li>
+            <li>Raw breakdown tables near the bottom.</li>
+          </ul>
+        </article>
+        <article class="card note-card">
+          <div class="card-title">Remove or hide</div>
+          <h3>Less clutter</h3>
+          <ul>
+            <li>Duplicate KPI blocks that repeat the hero stat strip.</li>
+            <li>Bowling-only modules for non-bowlers.</li>
+            <li>Ball-by-ball metrics when verified coverage is missing.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

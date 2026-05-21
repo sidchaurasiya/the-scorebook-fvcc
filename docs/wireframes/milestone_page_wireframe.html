@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milestone Page Wireframe</title>
+  <style>
+    :root {
+      --ink: #080b3f;
+      --muted: #687093;
+      --soft-muted: #8a90aa;
+      --purple: #4b37d8;
+      --purple-2: #6d4dff;
+      --lavender: #f1edff;
+      --lavender-2: #f8f6ff;
+      --page-bg: #f4f2ff;
+      --card: #ffffff;
+      --line: #e7e6f5;
+      --burgundy: #7a1735;
+      --green: #166b55;
+      --green-soft: #eaf8f1;
+      --gold: #a76800;
+      --gold-soft: #fff5dd;
+      --shadow: 0 18px 42px rgba(23, 27, 77, 0.08);
+      --shadow-soft: 0 10px 26px rgba(23, 27, 77, 0.055);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(109, 77, 255, 0.14), transparent 34rem),
+        linear-gradient(180deg, #fbfaff 0%, var(--page-bg) 55%, #f7f6ff 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a {
+      color: #0068c9;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--purple);
+      text-decoration: underline;
+    }
+
+    .shell {
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 48px 24px 72px;
+    }
+
+    .wire-note {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 18px;
+      color: var(--muted);
+      display: flex;
+      font-size: 0.84rem;
+      font-weight: 760;
+      gap: 10px;
+      margin-bottom: 34px;
+      padding: 12px 15px;
+      width: fit-content;
+    }
+
+    .wire-dot {
+      background: linear-gradient(135deg, var(--burgundy), var(--purple));
+      border-radius: 999px;
+      height: 10px;
+      width: 10px;
+    }
+
+    .page-kicker {
+      color: var(--burgundy);
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      color: var(--ink);
+      font-size: clamp(2.3rem, 5.6vw, 4.1rem);
+      letter-spacing: 0;
+      line-height: 0.98;
+      margin: 0;
+      max-width: 840px;
+    }
+
+    .club-label {
+      color: #4b5171;
+      font-size: 1.02rem;
+      font-weight: 850;
+      margin-top: 14px;
+    }
+
+    .top-space {
+      height: 34px;
+    }
+
+    .view-toggle-wrap {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow-soft);
+      display: inline-flex;
+      gap: 8px;
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 8px;
+    }
+
+    .view-pill {
+      border-radius: 999px;
+      color: #3f4565;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 0.92rem;
+      font-weight: 900;
+      line-height: 1.1;
+      padding: 12px 18px;
+      white-space: nowrap;
+    }
+
+    .view-pill.active {
+      background: linear-gradient(180deg, #f1edff 0%, #e8e1ff 100%);
+      box-shadow: inset 0 0 0 1px rgba(75, 55, 216, 0.08);
+      color: var(--purple);
+    }
+
+    .section {
+      margin-top: 38px;
+    }
+
+    .section + .section {
+      margin-top: 64px;
+    }
+
+    .view-panel {
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(231, 230, 245, 0.78);
+      border-radius: 28px;
+      box-shadow: 0 22px 52px rgba(23, 27, 77, 0.05);
+      padding: 26px;
+    }
+
+    .view-tag {
+      align-items: center;
+      background: #eef0ff;
+      border: 1px solid #dfe2ff;
+      border-radius: 999px;
+      color: var(--purple);
+      display: inline-flex;
+      font-size: 0.78rem;
+      font-weight: 950;
+      margin-bottom: 22px;
+      padding: 7px 11px;
+      text-transform: uppercase;
+    }
+
+    .section-heading {
+      align-items: baseline;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      color: var(--ink);
+      font-size: clamp(1.85rem, 3.8vw, 2.6rem);
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    h3 {
+      color: var(--ink);
+      font-size: 1.12rem;
+      margin: 0 0 14px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 720;
+      margin: 8px 0 26px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .group-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+    }
+
+    .group-head {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .group-title {
+      color: var(--ink);
+      font-size: 1rem;
+      font-weight: 950;
+    }
+
+    .group-rule {
+      background: var(--lavender-2);
+      border: 1px solid #e5e1ff;
+      border-radius: 999px;
+      color: #5b5f7d;
+      font-size: 0.72rem;
+      font-weight: 850;
+      padding: 6px 9px;
+      white-space: nowrap;
+    }
+
+    .progress-card {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+      border: 1px solid #e8e8f4;
+      border-radius: 18px;
+      margin-top: 12px;
+      padding: 15px;
+    }
+
+    .progress-top {
+      align-items: flex-start;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    .player-name {
+      color: #0068c9;
+      display: block;
+      font-size: 1rem;
+      font-weight: 950;
+      margin-bottom: 5px;
+    }
+
+    .progress-value {
+      color: var(--ink);
+      display: block;
+      font-size: 0.98rem;
+      font-weight: 900;
+    }
+
+    .to-go {
+      color: var(--burgundy);
+      font-size: 0.83rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .track {
+      background: #eceef9;
+      border-radius: 999px;
+      height: 9px;
+      margin-top: 13px;
+      overflow: hidden;
+    }
+
+    .track > span {
+      background: linear-gradient(90deg, var(--burgundy), var(--purple));
+      border-radius: inherit;
+      display: block;
+      height: 100%;
+    }
+
+    .empty {
+      background: #fbfbff;
+      border: 1px dashed #d9dbec;
+      border-radius: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 760;
+      line-height: 1.4;
+      padding: 16px;
+    }
+
+    .hof-watch {
+      background:
+        linear-gradient(135deg, rgba(75, 55, 216, 0.09), rgba(122, 23, 53, 0.05)),
+        #ffffff;
+      border: 1px solid #e2dfff;
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      margin-top: 22px;
+      padding: 20px;
+    }
+
+    .mini-card {
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(231, 230, 245, 0.95);
+      border-radius: 17px;
+      padding: 14px;
+    }
+
+    .mini-meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 760;
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+
+    .achievement-group {
+      margin-top: 22px;
+    }
+
+    .achievement-card {
+      background:
+        linear-gradient(135deg, rgba(109, 77, 255, 0.08), rgba(122, 23, 53, 0.045)),
+        #ffffff;
+      border: 1px solid #e8e4fb;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+      position: relative;
+    }
+
+    .badge {
+      background: #eef0ff;
+      border-radius: 999px;
+      color: var(--purple);
+      display: inline-flex;
+      font-size: 0.72rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+      padding: 6px 9px;
+      text-transform: uppercase;
+    }
+
+    .badge.gold {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .achievement-title {
+      color: var(--ink);
+      font-size: 1.08rem;
+      font-weight: 950;
+      margin-bottom: 5px;
+    }
+
+    .achievement-value {
+      color: var(--purple);
+      font-size: 1.18rem;
+      font-weight: 950;
+      margin-bottom: 8px;
+    }
+
+    .achievement-meta {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 760;
+      line-height: 1.4;
+    }
+
+    .club-toggle {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      display: inline-flex;
+      gap: 7px;
+      margin-bottom: 22px;
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 7px;
+    }
+
+    .club-pill {
+      border-radius: 999px;
+      color: #4f5575;
+      flex: 0 0 auto;
+      font-size: 0.85rem;
+      font-weight: 900;
+      padding: 10px 15px;
+      white-space: nowrap;
+    }
+
+    .club-pill.active {
+      background: var(--lavender);
+      color: var(--purple);
+    }
+
+    .club-card {
+      background: #ffffff;
+      border: 1px solid #e8e8f4;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .club-card-head {
+      background: linear-gradient(135deg, #ffffff, #f7f5ff);
+      border-bottom: 1px solid #ecebf7;
+      padding: 16px 17px;
+    }
+
+    .club-name {
+      color: var(--ink);
+      font-size: 1.08rem;
+      font-weight: 950;
+      margin-bottom: 3px;
+    }
+
+    .club-count {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 760;
+    }
+
+    .member-list {
+      display: grid;
+      gap: 9px;
+      padding: 14px 17px 17px;
+    }
+
+    .member-row {
+      align-items: center;
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
+    .member-left {
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 850;
+    }
+
+    .member-value {
+      color: var(--purple);
+      font-size: 0.86rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .view-members {
+      border-top: 1px solid #ecebf7;
+      color: var(--purple);
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 950;
+      padding: 13px 17px 15px;
+    }
+
+    .decision-note {
+      background: rgba(8, 11, 63, 0.04);
+      border: 1px solid rgba(8, 11, 63, 0.08);
+      border-radius: 20px;
+      color: #4c526e;
+      font-size: 0.9rem;
+      font-weight: 720;
+      line-height: 1.55;
+      margin-top: 36px;
+      padding: 18px;
+    }
+
+    @media (max-width: 860px) {
+      .shell {
+        padding: 30px 16px 52px;
+      }
+
+      .top-space {
+        height: 28px;
+      }
+
+      .view-toggle-wrap,
+      .club-toggle {
+        width: 100%;
+      }
+
+      .view-panel {
+        border-radius: 24px;
+        padding: 19px;
+      }
+
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: clamp(2rem, 10vw, 2.85rem);
+      }
+
+      .section + .section {
+        margin-top: 48px;
+      }
+
+      .progress-top,
+      .member-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .to-go,
+      .member-value {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="wire-note"><span class="wire-dot"></span> Standalone wireframe only. Sample data is illustrative and not wired to the app.</div>
+
+    <header>
+      <div class="page-kicker">Milestone hub concept</div>
+      <h1 class="page-title">Players approaching major milestones 🎯</h1>
+      <div class="club-label">Fiji Victorian Cricket Club</div>
+      <div class="top-space"></div>
+      <nav class="view-toggle-wrap" aria-label="Milestone page view">
+        <span class="view-pill active">Upcoming Milestones</span>
+        <span class="view-pill">Achieved Milestones</span>
+        <span class="view-pill">Exclusive Clubs</span>
+      </nav>
+    </header>
+
+    <section class="section view-panel">
+      <div class="view-tag">View 1 / Upcoming Milestones</div>
+      <div class="section-heading">
+        <h2>Milestone Watchlist 📍</h2>
+      </div>
+      <p class="section-subtitle">Showing active players only — players who have appeared for FVCC in the last 3 seasons.</p>
+
+      <div class="grid grid-3">
+        <article class="group-card">
+          <div class="group-head">
+            <div class="group-title">Runs</div>
+            <div class="group-rule">within 100 runs</div>
+          </div>
+          <div class="progress-card">
+            <div class="progress-top">
+              <div>
+                <a class="player-name" href="#">Kalpeshkumar Patel</a>
+                <span class="progress-value">4,796 / 5,000 runs</span>
+              </div>
+              <div class="to-go">204 to go</div>
+            </div>
+            <div class="track"><span style="width: 95.9%"></span></div>
+          </div>
+          <div class="progress-card">
+            <div class="progress-top">
+              <div>
+                <a class="player-name" href="#">Sajendra Shrestha</a>
+                <span class="progress-value">982 / 1,000 runs</span>
+              </div>
+              <div class="to-go">18 to go</div>
+            </div>
+            <div class="track"><span style="width: 98.2%"></span></div>
+          </div>
+        </article>
+
+        <article class="group-card">
+          <div class="group-head">
+            <div class="group-title">Wickets</div>
+            <div class="group-rule">within 10 wickets</div>
+          </div>
+          <div class="progress-card">
+            <div class="progress-top">
+              <div>
+                <a class="player-name" href="#">Shaun Vikash</a>
+                <span class="progress-value">194 / 200 wickets</span>
+              </div>
+              <div class="to-go">6 to go</div>
+            </div>
+            <div class="track"><span style="width: 97%"></span></div>
+          </div>
+          <div class="progress-card">
+            <div class="progress-top">
+              <div>
+                <a class="player-name" href="#">Santhosh Kumar Chappidi</a>
+                <span class="progress-value">112 / 200 wickets</span>
+              </div>
+              <div class="to-go">88 to go</div>
+            </div>
+            <div class="track"><span style="width: 56%"></span></div>
+          </div>
+        </article>
+
+        <article class="group-card">
+          <div class="group-head">
+            <div class="group-title">Catches</div>
+            <div class="group-rule">within 10 catches</div>
+          </div>
+          <div class="empty">No players within 10 catches of the next 100-catch milestone.</div>
+        </article>
+      </div>
+
+      <aside class="hof-watch">
+        <div class="group-head">
+          <div>
+            <h3>Hall of Fame Watch 👀</h3>
+            <div class="section-subtitle" style="margin: 0;">Players close to entering the all-time top 5.</div>
+          </div>
+          <div class="group-rule">top 5 movement</div>
+        </div>
+        <div class="grid grid-3">
+          <div class="mini-card">
+            <a class="player-name" href="#">Vinay Sharma</a>
+            <div class="mini-meta">42 runs from entering Top 5 all-time runs.</div>
+          </div>
+          <div class="mini-card">
+            <a class="player-name" href="#">Siddhanth Chaurasiya</a>
+            <div class="mini-meta">7 wickets from entering Top 5 all-time wickets.</div>
+          </div>
+          <div class="mini-card">
+            <a class="player-name" href="#">Armaan Datta</a>
+            <div class="mini-meta">9 matches from entering Top 5 active-era matches.</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section view-panel">
+      <div class="view-tag">View 2 / Achieved Milestones</div>
+      <div class="section-heading">
+        <h2>Achieved Milestones 🏁</h2>
+      </div>
+      <p class="section-subtitle">Achieved during Winter 2026 or Summer 2025/26 season</p>
+
+      <div class="achievement-group">
+        <h3>Runs</h3>
+        <div class="grid grid-3">
+          <article class="achievement-card">
+            <span class="badge">Reached</span>
+            <div class="achievement-title"><a href="#">Kalpeshkumar Patel</a></div>
+            <div class="achievement-value">4,000 runs reached</div>
+            <div class="achievement-meta">Current total: 4,796 runs<br>Summer 2025/26</div>
+          </article>
+          <article class="achievement-card">
+            <span class="badge">Reached</span>
+            <div class="achievement-title"><a href="#">Armaan Datta</a></div>
+            <div class="achievement-value">1,000 runs reached</div>
+            <div class="achievement-meta">Current total: 1,137 runs<br>Winter 2026</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="achievement-group">
+        <h3>Wickets</h3>
+        <div class="grid grid-3">
+          <article class="achievement-card">
+            <span class="badge">Reached</span>
+            <div class="achievement-title"><a href="#">Santhosh Kumar Chappidi</a></div>
+            <div class="achievement-value">100 wickets reached</div>
+            <div class="achievement-meta">Current total: 112 wickets<br>Summer 2025/26</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="achievement-group">
+        <h3>Catches</h3>
+        <div class="grid grid-3">
+          <article class="achievement-card">
+            <span class="badge">Reached</span>
+            <div class="achievement-title"><a href="#">Harish Kumar</a></div>
+            <div class="achievement-value">100 catches reached</div>
+            <div class="achievement-meta">Current total: 111 catches<br>Summer 2025/26</div>
+          </article>
+          <article class="achievement-card">
+            <span class="badge">Reached</span>
+            <div class="achievement-title"><a href="#">Reuel Sharan</a></div>
+            <div class="achievement-value">100 catches reached</div>
+            <div class="achievement-meta">Current total: 103 catches<br>Summer 2025/26</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="achievement-group">
+        <h3>Hall of Fame Movement</h3>
+        <div class="grid grid-3">
+          <article class="achievement-card">
+            <span class="badge gold">Hall of Fame Move</span>
+            <div class="achievement-title"><a href="#">Player Name</a></div>
+            <div class="achievement-value">Entered Top 5 for wickets</div>
+            <div class="achievement-meta">Current rank: #5<br>Summer 2025/26</div>
+          </article>
+          <div class="empty">If top-5 movement cannot be calculated reliably from before/after season totals, this group should use this clean empty state instead.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section view-panel">
+      <div class="view-tag">View 3 / Exclusive Clubs</div>
+      <div class="section-heading">
+        <h2>Exclusive Clubs 💎</h2>
+      </div>
+      <p class="section-subtitle">Compact club views for major career totals only.</p>
+      <nav class="club-toggle" aria-label="Exclusive club category">
+        <span class="club-pill active">Runs</span>
+        <span class="club-pill">Wickets</span>
+        <span class="club-pill">Catches</span>
+      </nav>
+
+      <div class="grid grid-3">
+        <article class="club-card">
+          <div class="club-card-head">
+            <div class="club-name">6,000 Runs Club</div>
+            <div class="club-count">1 player</div>
+          </div>
+          <div class="member-list">
+            <div class="member-row"><span class="member-left">1. Danny Singh</span><span class="member-value">6,382</span></div>
+          </div>
+          <a class="view-members" href="#">View members</a>
+        </article>
+
+        <article class="club-card">
+          <div class="club-card-head">
+            <div class="club-name">5,000 Runs Club</div>
+            <div class="club-count">3 players</div>
+          </div>
+          <div class="member-list">
+            <div class="member-row"><span class="member-left">1. Danny Singh</span><span class="member-value">6,382</span></div>
+            <div class="member-row"><span class="member-left">2. Shandil Bhan</span><span class="member-value">5,569</span></div>
+            <div class="member-row"><span class="member-left">3. Nitin Tanwar</span><span class="member-value">5,305</span></div>
+          </div>
+          <a class="view-members" href="#">View members</a>
+        </article>
+
+        <article class="club-card">
+          <div class="club-card-head">
+            <div class="club-name">4,000 Runs Club</div>
+            <div class="club-count">8 players</div>
+          </div>
+          <div class="member-list">
+            <div class="member-row"><span class="member-left">Top member</span><span class="member-value">Danny Singh</span></div>
+            <div class="member-row"><span class="member-left">Latest member</span><span class="member-value">Kalpeshkumar Patel</span></div>
+          </div>
+          <a class="view-members" href="#">View members</a>
+        </article>
+      </div>
+
+      <div class="decision-note">
+        Design note: the exclusive page should show one selected category at a time in production. This wireframe shows Runs as the active category, with Wickets and Catches available through the second-level pill control. Matches is intentionally omitted from this concept per the latest brief.
+      </div>
+    </section>
+  </main>
+</body>
+</html>

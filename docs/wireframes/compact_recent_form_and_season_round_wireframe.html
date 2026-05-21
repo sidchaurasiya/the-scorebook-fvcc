@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compact Recent Form And Season By Round Wireframe</title>
+  <style>
+    :root {
+      --bg: #f3f1fb;
+      --card: #ffffff;
+      --ink: #070d3f;
+      --muted: #747b98;
+      --line: #e8eaf5;
+      --purple: #5b3df5;
+      --purple-soft: #f0edff;
+      --green: #137a4d;
+      --green-soft: #e9f8ef;
+      --gold: #9a6b05;
+      --gold-soft: #fff5d8;
+      --maroon: #9f2747;
+      --maroon-soft: #ffe8ef;
+      --navy-soft: #f7f8fd;
+      --shadow: 0 18px 42px rgba(23, 27, 77, 0.075);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background:
+        radial-gradient(circle at 12% -10%, rgba(91, 61, 245, 0.12), transparent 24rem),
+        linear-gradient(180deg, #f8f6ff 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.34;
+      margin: 0;
+    }
+
+    main {
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 34px 22px 72px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .page-head {
+      align-items: flex-end;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      color: var(--purple);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-top: 6px;
+    }
+
+    .mini-note,
+    .source-chip {
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 850;
+      padding: 8px 11px;
+      white-space: nowrap;
+    }
+
+    .module {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 18px;
+      padding: 20px;
+    }
+
+    .module-head {
+      align-items: start;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .module-head h2 {
+      font-size: clamp(1.45rem, 2.5vw, 2rem);
+      letter-spacing: -0.01em;
+      line-height: 1.08;
+    }
+
+    .module-head p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 5px;
+      max-width: 70ch;
+    }
+
+    .pattern-label {
+      align-items: center;
+      color: var(--muted);
+      display: flex;
+      font-size: 0.72rem;
+      font-weight: 950;
+      gap: 8px;
+      letter-spacing: 0.07em;
+      margin: 18px 0 9px;
+      text-transform: uppercase;
+    }
+
+    .pattern-label::after {
+      background: var(--line);
+      content: "";
+      flex: 1;
+      height: 1px;
+    }
+
+    .segmented-wrap {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 14px;
+    }
+
+    .segmented-label {
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .segmented {
+      background: #f7f8fd;
+      border: 1px solid #e8ebf7;
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.78);
+      display: inline-flex;
+      gap: 4px;
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 5px;
+      width: fit-content;
+    }
+
+    .segment {
+      border-radius: 999px;
+      color: #6f7594;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 0.86rem;
+      font-weight: 780;
+      justify-content: center;
+      line-height: 1;
+      min-height: 36px;
+      padding: 10px 17px;
+      white-space: nowrap;
+    }
+
+    .segment.active {
+      background: var(--purple-soft);
+      color: var(--purple);
+      box-shadow: 0 1px 0 rgba(91, 61, 245, 0.08);
+    }
+
+    .grade-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+
+    .grade-card-head {
+      align-items: center;
+      background: #fbfbff;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 12px 14px;
+    }
+
+    .grade-card-head h3 {
+      font-size: 1rem;
+      line-height: 1.15;
+    }
+
+    .record-pill {
+      background: var(--purple-soft);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      flex: 0 0 auto;
+      font-size: 0.74rem;
+      font-weight: 950;
+      padding: 6px 9px;
+      white-space: nowrap;
+    }
+
+    .round-grid {
+      display: grid;
+    }
+
+    .round-scroll {
+      max-height: 312px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .round-scroll::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .round-scroll::-webkit-scrollbar-thumb {
+      background: #d8ddee;
+      border-radius: 999px;
+    }
+
+    .round-row {
+      align-items: center;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 54px minmax(185px, 1.6fr) minmax(132px, 1.1fr) minmax(120px, 1fr) minmax(118px, 1fr) 104px;
+      min-height: 44px;
+      padding: 8px 12px;
+    }
+
+    .round-row:first-child { border-top: 0; }
+
+    .single-grade .round-row {
+      grid-template-columns: 54px minmax(112px, 0.95fr) minmax(185px, 1.6fr) minmax(132px, 1.1fr) minmax(120px, 1fr) minmax(118px, 1fr) 104px;
+    }
+
+    .round-head {
+      background: #f8f8fd;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      min-height: 38px;
+      position: sticky;
+      top: 0;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .round-row strong {
+      color: var(--ink);
+      font-size: 0.86rem;
+      font-weight: 950;
+    }
+
+    .round-row span {
+      color: #626a88;
+      font-size: 0.82rem;
+      font-weight: 750;
+      min-width: 0;
+    }
+
+    .opponent {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .result-cell {
+      align-items: center;
+      display: flex;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .result-pill {
+      border-radius: 999px;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 0.62rem;
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      padding: 5px 8px;
+      text-transform: uppercase;
+    }
+
+    .win { background: var(--green-soft); color: var(--green); }
+    .loss { background: var(--maroon-soft); color: var(--maroon); }
+    .draw { background: var(--gold-soft); color: var(--gold); }
+    .none { background: var(--purple-soft); color: var(--purple); }
+
+    .link {
+      color: var(--purple) !important;
+      font-size: 0.78rem !important;
+      font-weight: 900 !important;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .pending {
+      color: var(--muted) !important;
+      font-size: 0.78rem !important;
+      font-weight: 850 !important;
+    }
+
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 15px;
+    }
+
+    .form-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .form-line {
+      align-items: center;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 128px 1fr;
+    }
+
+    .form-label {
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 950;
+    }
+
+    .form-label small {
+      color: var(--muted);
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 0 5px;
+    }
+
+    .form-chip {
+      background: var(--navy-soft);
+      border: 1px solid #e8ebf7;
+      border-radius: 999px;
+      color: var(--ink);
+      flex: 0 0 auto;
+      font-size: 0.88rem;
+      font-weight: 900;
+      line-height: 1;
+      padding: 9px 11px;
+      white-space: nowrap;
+    }
+
+    .bat { background: var(--purple-soft); border-color: #ded8ff; color: var(--purple); }
+    .bowl { background: #eef8f6; border-color: #cdebe4; color: #116b63; }
+    .hot { box-shadow: inset 0 0 0 2px rgba(18, 122, 75, 0.16); }
+    .notout { box-shadow: inset 0 0 0 2px rgba(154, 107, 5, 0.18); }
+    .quiet { color: var(--muted); }
+
+    .compact-notes {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 750;
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+
+    .compact-notes span::before {
+      color: var(--purple);
+      content: "• ";
+      font-weight: 950;
+    }
+
+    .empty-row {
+      background: #f8f8fd;
+      border: 1px dashed #d8ddeb;
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-top: 12px;
+      padding: 11px 12px;
+    }
+
+    .preview-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 390px;
+      margin-top: 18px;
+    }
+
+    .mobile-shell {
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 12px;
+    }
+
+    .mobile-title {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      margin: 4px 4px 9px;
+      text-transform: uppercase;
+    }
+
+    .mobile-grade {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .mobile-grade + .mobile-grade { margin-top: 10px; }
+
+    .mobile-grade-head {
+      align-items: center;
+      background: #fbfbff;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 11px;
+    }
+
+    .mobile-grade-head strong {
+      font-size: 0.86rem;
+      line-height: 1.1;
+    }
+
+    .mobile-match {
+      align-items: start;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr 92px;
+      padding: 9px 11px;
+    }
+
+    .mobile-match:first-of-type { border-top: 0; }
+
+    .mobile-main strong {
+      display: block;
+      font-size: 0.84rem;
+      margin-bottom: 3px;
+    }
+
+    .mobile-main span,
+    .mobile-side span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 780;
+      margin-top: 2px;
+    }
+
+    .mobile-side {
+      text-align: right;
+    }
+
+    .mobile-side .result-pill {
+      margin-left: auto;
+      margin-bottom: 4px;
+    }
+
+    .mobile-side .link,
+    .mobile-side .pending {
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .mobile-shell .module {
+      border-radius: 22px;
+      box-shadow: 0 12px 30px rgba(23, 27, 77, 0.065);
+      margin: 0;
+      padding: 15px;
+    }
+
+    .mobile-shell .form-line {
+      align-items: start;
+      display: block;
+    }
+
+    .mobile-shell .form-label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mobile-shell .form-line + .form-line {
+      margin-top: 12px;
+    }
+
+    .mobile-only-note {
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 800;
+      margin-top: 9px;
+    }
+
+    @media (max-width: 980px) {
+      main { padding: 26px 14px 54px; }
+      .page-head, .module-head { display: block; }
+      .mini-note, .source-chip { display: inline-block; margin-top: 10px; }
+      .preview-grid { grid-template-columns: 1fr; }
+      .round-grid { gap: 9px; }
+      .round-scroll { max-height: 370px; }
+      .round-head { display: none; }
+      .round-row,
+      .single-grade .round-row {
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        grid-template-columns: 1fr 92px;
+        min-height: 0;
+        padding: 10px;
+      }
+      .round-row strong:first-child,
+      .single-grade .round-row strong:first-child {
+        grid-column: 1;
+      }
+      .round-row span,
+      .round-row a {
+        grid-column: 1;
+      }
+      .round-row .result-cell {
+        align-items: flex-end;
+        flex-direction: column;
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        justify-content: flex-start;
+        text-align: right;
+      }
+      .opponent { white-space: normal; }
+      .form-line {
+        align-items: start;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">FVCC review prototype</div>
+        <h1>Compact feature wireframes</h1>
+      </div>
+      <div class="mini-note">Wireframe only - not production</div>
+    </header>
+
+    <section class="module">
+      <div class="module-head">
+        <div>
+          <h2>Season by Round 🗓️</h2>
+          <p>Compact scorecard-safe rows, latest round first. One-grade seasons use a single compact table; whole-club Summer seasons group rows by grade/team.</p>
+        </div>
+        <span class="source-chip">Scorecard-safe</span>
+      </div>
+
+      <div class="pattern-label">Single-grade season example</div>
+      <article class="grade-card single-grade">
+        <div class="grade-card-head">
+          <h3>Winter 2026 - North Division</h3>
+          <span class="record-pill">6W - 3L</span>
+        </div>
+        <div class="round-scroll" aria-label="Single-grade latest five results with older rounds scrollable">
+          <div class="round-grid" aria-label="Single-grade season by round table">
+            <div class="round-row round-head">
+              <span>Round</span>
+              <span>Grade</span>
+              <span>Opponent</span>
+              <span>Result</span>
+              <span>Best Batter</span>
+              <span>Best Bowler</span>
+              <span>Scorecard</span>
+            </div>
+            <div class="round-row">
+              <strong>R12</strong>
+              <span>North Div</span>
+              <span class="opponent">vs Donath Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 42 runs</span></span>
+              <span>Armaan 102*</span>
+              <span>Siddhanth 3-40</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R11</strong>
+              <span>North Div</span>
+              <span class="opponent">vs Bellfield Bulls Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 5 wickets</span></span>
+              <span>Vinay 64*</span>
+              <span>Kartik 2-25</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R10</strong>
+              <span>North Div</span>
+              <span class="opponent">vs Rivergum Cricket Club</span>
+              <span class="result-cell"><b class="result-pill none">No Result</b><span>no result - rain</span></span>
+              <span>Kalpesh 39*</span>
+              <span>—</span>
+              <span class="pending">Scorecard pending</span>
+            </div>
+            <div class="round-row">
+              <strong>R9</strong>
+              <span>North Div</span>
+              <span class="opponent">vs Olympic Colts Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 3 wickets</span></span>
+              <span>Jai 58</span>
+              <span>Abcin 3-28</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R8</strong>
+              <span>North Div</span>
+              <span class="opponent">vs Preston Baseballers Cricket Club</span>
+              <span class="result-cell"><b class="result-pill draw">Draw</b><span>draw</span></span>
+              <span>Shivnyl 45</span>
+              <span>Armaan 4-19</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R7</strong>
+              <span>North Div</span>
+              <span class="opponent">vs Cobras Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 18 runs</span></span>
+              <span>Priyanshu 42</span>
+              <span>—</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="pattern-label">All-teams Summer season example</div>
+      <div class="segmented-wrap" aria-label="Grade team toggle inside Season by Round card">
+        <span class="segmented-label">Grade/team</span>
+        <nav class="segmented" aria-label="Static grade/team toggle wireframe">
+          <span class="segment active">All</span>
+          <span class="segment">2s</span>
+          <span class="segment">3s</span>
+          <span class="segment">4s</span>
+          <span class="segment">OD</span>
+        </nav>
+      </div>
+
+      <article class="grade-card">
+        <div class="grade-card-head">
+          <h3>3s - B Grade</h3>
+          <span class="record-pill">7W - 4L</span>
+        </div>
+        <div class="round-scroll" aria-label="3s B Grade latest five results with older rounds scrollable">
+          <div class="round-grid" aria-label="3s B Grade season by round table">
+            <div class="round-row round-head">
+              <span>Round</span>
+              <span>Opponent</span>
+              <span>Result</span>
+              <span>Best Batter</span>
+              <span>Best Bowler</span>
+              <span>Scorecard</span>
+            </div>
+            <div class="round-row">
+              <strong>R12</strong>
+              <span class="opponent">vs Donath Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 42 runs</span></span>
+              <span>Armaan 102*</span>
+              <span>Siddhanth 3-40</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R11</strong>
+              <span class="opponent">vs Bellfield Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 5 wickets</span></span>
+              <span>Vinay 64*</span>
+              <span>Kartik 2-25</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R10</strong>
+              <span class="opponent">vs Rivergum Cricket Club</span>
+              <span class="result-cell"><b class="result-pill draw">Draw</b><span>draw</span></span>
+              <span>Jai 58</span>
+              <span>Abcin 3-28</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R9</strong>
+              <span class="opponent">vs Olympic Colts Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 3 wickets</span></span>
+              <span>Kalpesh 39*</span>
+              <span>Vinay 2-19</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R8</strong>
+              <span class="opponent">vs Preston Druids Cricket Club</span>
+              <span class="result-cell"><b class="result-pill none">No Result</b><span>no result - abandoned</span></span>
+              <span>—</span>
+              <span>—</span>
+              <span class="pending">Scorecard pending</span>
+            </div>
+            <div class="round-row">
+              <strong>R7</strong>
+              <span class="opponent">vs Cobras Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 18 runs</span></span>
+              <span>Shivnyl 45</span>
+              <span>Armaan 4-19</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="grade-card">
+        <div class="grade-card-head">
+          <h3>4s - C Grade</h3>
+          <span class="record-pill">5W - 6L</span>
+        </div>
+        <div class="round-scroll" aria-label="4s C Grade latest five results with older rounds scrollable">
+          <div class="round-grid" aria-label="4s C Grade season by round table">
+            <div class="round-row round-head">
+              <span>Round</span>
+              <span>Opponent</span>
+              <span>Result</span>
+              <span>Best Batter</span>
+              <span>Best Bowler</span>
+              <span>Scorecard</span>
+            </div>
+            <div class="round-row">
+              <strong>R12</strong>
+              <span class="opponent">vs Cobras Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 18 runs</span></span>
+              <span>Shivnyl 45</span>
+              <span>Armaan 4-19</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R11</strong>
+              <span class="opponent">vs Olympic Colts Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 3 wickets</span></span>
+              <span>Jai 58</span>
+              <span>Abcin 3-28</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R10</strong>
+              <span class="opponent">vs Preston Baseballers Cricket Club</span>
+              <span class="result-cell"><b class="result-pill none">No Result</b><span>no result - abandoned</span></span>
+              <span>Kalpesh 39*</span>
+              <span>—</span>
+              <span class="pending">Scorecard pending</span>
+            </div>
+            <div class="round-row">
+              <strong>R9</strong>
+              <span class="opponent">vs Holy Trinity Cricket Club</span>
+              <span class="result-cell"><b class="result-pill draw">Draw</b><span>draw</span></span>
+              <span>Armaan 37</span>
+              <span>Kartik 2-25</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R8</strong>
+              <span class="opponent">vs Northern Socials Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 21 runs</span></span>
+              <span>Vinay 64*</span>
+              <span>Siddhanth 3-40</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R7</strong>
+              <span class="opponent">vs Rivergum Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 4 wickets</span></span>
+              <span>Priyanshu 42</span>
+              <span>—</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="compact-notes">
+        <span>All teams view groups by grade/team instead of mixing rows.</span>
+        <span>Grade/team toggle is in-card and should update rows in place with session state, not URL navigation.</span>
+        <span>Latest five results are visible first; older rounds scroll inside the card.</span>
+        <span>Scorecard links remain secondary purple actions.</span>
+      </div>
+    </section>
+
+    <section class="module">
+      <div class="module-head">
+        <div>
+          <h2>Recent Form ⚡</h2>
+          <p>Desktop shows latest 10 batting scores and latest 10 bowling figures. Mobile trims each row to latest 5.</p>
+        </div>
+        <span class="source-chip">Latest first</span>
+      </div>
+
+      <div class="form-card">
+        <div class="form-stack">
+          <div class="form-line">
+            <span class="form-label">Batting scores<small>Latest first · 10 shown</small></span>
+            <div class="chip-row" aria-label="Last 10 batting scores">
+              <span class="form-chip bat hot notout">102*(49)</span>
+              <span class="form-chip bat">35(13)</span>
+              <span class="form-chip bat">25</span>
+              <span class="form-chip bat notout">14*</span>
+              <span class="form-chip quiet">0</span>
+              <span class="form-chip bat">8</span>
+              <span class="form-chip bat hot notout">53*</span>
+              <span class="form-chip bat">22</span>
+              <span class="form-chip bat">11</span>
+              <span class="form-chip bat">4</span>
+            </div>
+          </div>
+
+          <div class="form-line">
+            <span class="form-label">Bowling figures<small>Latest first · 10 shown</small></span>
+            <div class="chip-row" aria-label="Last 10 bowling figures">
+              <span class="form-chip bowl hot">3/40</span>
+              <span class="form-chip quiet">0/25</span>
+              <span class="form-chip bowl">2/18</span>
+              <span class="form-chip bowl hot">4/11</span>
+              <span class="form-chip bowl">1/22</span>
+              <span class="form-chip quiet">0/14</span>
+              <span class="form-chip bowl hot">3/28</span>
+              <span class="form-chip bowl">2/30</span>
+              <span class="form-chip quiet">0/10</span>
+              <span class="form-chip bowl">1/19</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-row">Compact empty state: No recent bowling figures available.</div>
+      </div>
+
+      <div class="compact-notes">
+        <span>Balls faced displays only when available and reliable.</span>
+        <span>Not-outs and strong performances get subtle highlights.</span>
+        <span>Ducks and 0-wicket spells stay neutral, not warning-heavy.</span>
+      </div>
+    </section>
+
+    <section class="preview-grid">
+      <div class="module">
+        <div class="module-head">
+          <div>
+            <h2>Desktop fit notes</h2>
+            <p>Stacked grade cards keep Summer seasons readable. Each card is dense enough to scan several rounds without the page becoming a wall of giant match cards.</p>
+          </div>
+        </div>
+        <div class="compact-notes" style="border-top: 0; margin-top: 0; padding-top: 0;">
+          <span>Use one compact card for one-grade seasons.</span>
+          <span>Use stacked compact grade cards for whole-club multi-grade seasons.</span>
+          <span>Keep scorecard context available but not visually dominant.</span>
+        </div>
+      </div>
+
+      <aside class="mobile-shell" aria-label="Mobile layout preview">
+        <div class="mobile-title">Mobile preview - shorter rows</div>
+        <div class="segmented-wrap" style="margin: 4px 0 10px;">
+          <nav class="segmented" aria-label="Mobile grade/team toggle preview">
+            <span class="segment active">All</span>
+            <span class="segment">3s</span>
+            <span class="segment">4s</span>
+            <span class="segment">OD</span>
+          </nav>
+        </div>
+        <div class="mobile-grade">
+          <div class="mobile-grade-head">
+            <strong>3s - B Grade</strong>
+            <span class="record-pill">7W - 4L</span>
+          </div>
+          <div class="mobile-match">
+            <div class="mobile-main">
+              <strong>R12 • B Grade</strong>
+              <span>vs Donath Cricket Club</span>
+              <span>Batter: Armaan 102*</span>
+              <span>Bowler: Siddhanth 3-40</span>
+            </div>
+            <div class="mobile-side">
+              <b class="result-pill win">Win</b>
+              <span>won by 42 runs</span>
+              <a class="link" href="#">View ↗</a>
+            </div>
+          </div>
+          <div class="mobile-match">
+            <div class="mobile-main">
+              <strong>R11 • B Grade</strong>
+              <span>vs Bellfield Bulls Cricket Club</span>
+              <span>Batter: Vinay 64*</span>
+              <span>Bowler: Kartik 2-25</span>
+            </div>
+            <div class="mobile-side">
+              <b class="result-pill loss">Loss</b>
+              <span>lost by 5 wickets</span>
+              <a class="link" href="#">View ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-grade">
+          <div class="mobile-grade-head">
+            <strong>4s - C Grade</strong>
+            <span class="record-pill">5W - 6L</span>
+          </div>
+          <div class="mobile-match">
+            <div class="mobile-main">
+              <strong>R10 • C Grade</strong>
+              <span>vs Preston Baseballers Cricket Club</span>
+              <span>Batter: Kalpesh 39*</span>
+              <span>Bowler: —</span>
+            </div>
+            <div class="mobile-side">
+              <b class="result-pill none">No Result</b>
+              <span>no result</span>
+              <span class="pending">Pending</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="module" style="margin-top: 12px;">
+          <div class="module-head">
+            <div>
+              <h2 style="font-size: 1.35rem;">Recent Form</h2>
+            </div>
+          </div>
+          <div class="form-card">
+            <div class="form-line">
+              <span class="form-label">Batting<small>Latest first · 5 shown</small></span>
+              <div class="chip-row">
+                <span class="form-chip bat hot notout">102*(49)</span>
+                <span class="form-chip bat">35(13)</span>
+                <span class="form-chip bat">25</span>
+                <span class="form-chip bat notout">14*</span>
+                <span class="form-chip quiet">0</span>
+              </div>
+            </div>
+            <div class="form-line">
+              <span class="form-label">Bowling<small>Latest first · 5 shown</small></span>
+              <div class="chip-row">
+                <span class="form-chip bowl hot">3/40</span>
+                <span class="form-chip quiet">0/25</span>
+                <span class="form-chip bowl">2/18</span>
+                <span class="form-chip bowl hot">4/11</span>
+                <span class="form-chip bowl">1/22</span>
+              </div>
+            </div>
+            <p class="mobile-only-note">Mobile intentionally shows latest 5 per row.</p>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
