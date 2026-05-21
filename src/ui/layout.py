@@ -134,15 +134,19 @@ SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 SHOW_SEASON_OVERVIEW_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
+SHOW_HALL_OF_FAME_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
+SHOW_PLAYER_PROFILE_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-detail-win-season-label-v1"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
+PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
 SEASON_OVERVIEW_PAGE_LABEL = "⌂ Season Overview"
 SEASON_OVERVIEW_QUERY_PAGE = "season-overview"
 SEASON_OVERVIEW_V2_QUERY_PAGE = "season-overview-v2"
+HALL_OF_FAME_V2_QUERY_PAGE = "hall-of-fame-v2"
 
 BASE_PAGE_DEFINITIONS = (
     ("hall-of-fame", "♕ Hall of Fame", "Hall of Fame"),
@@ -159,6 +163,12 @@ EXPERIMENTAL_PAGE_DEFINITIONS = (
 SEASON_OVERVIEW_V2_PAGE_DEFINITIONS = (
     (SEASON_OVERVIEW_V2_QUERY_PAGE, "✦ Season Overview v2", "Season Overview v2"),
 )
+HALL_OF_FAME_V2_PAGE_DEFINITIONS = (
+    (HALL_OF_FAME_V2_QUERY_PAGE, "♛ Hall of Fame v2", "Hall of Fame v2"),
+)
+PLAYER_PROFILE_V2_PAGE_DEFINITIONS = (
+    (PLAYER_PROFILE_V2_QUERY_PAGE, "♙ Player Profile v2", "Player Profile v2"),
+)
 LEGACY_PAGE_SLUGS = {
     "season_overview": SEASON_OVERVIEW_QUERY_PAGE,
 }
@@ -171,8 +181,12 @@ def log_hof_timing(label: str, started_at: float) -> None:
 
 def get_page_definitions() -> tuple[tuple[str, str, str], ...]:
     definitions = list(BASE_PAGE_DEFINITIONS)
+    if SHOW_HALL_OF_FAME_V2:
+        definitions.extend(HALL_OF_FAME_V2_PAGE_DEFINITIONS)
     if SHOW_SEASON_OVERVIEW_V2:
         definitions.extend(SEASON_OVERVIEW_V2_PAGE_DEFINITIONS)
+    if SHOW_PLAYER_PROFILE_V2:
+        definitions.extend(PLAYER_PROFILE_V2_PAGE_DEFINITIONS)
     if SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES:
         definitions.extend(EXPERIMENTAL_PAGE_DEFINITIONS)
     return tuple(definitions)
@@ -417,9 +431,9 @@ def analytics_player_slug(player_name: object, fallback_id: object = "") -> str:
     return slug or "unknown-player"
 
 
-def sync_player_profile_query(player_id: object) -> None:
+def sync_player_profile_query(player_id: object, page_slug: str = PLAYER_PROFILE_QUERY_PAGE) -> None:
     player_id_text = str(player_id or "").strip()
-    st.query_params["page"] = PLAYER_PROFILE_QUERY_PAGE
+    st.query_params["page"] = page_slug
     if player_id_text:
         st.query_params["player_id"] = player_id_text
         st.query_params.pop("player", None)
@@ -535,6 +549,8 @@ def render_page() -> None:
     track_page_view(selected_page, page_title_for_slug(selected_page))
     if selected_page == "hall-of-fame":
         render_hall_of_fame_page()
+    elif SHOW_HALL_OF_FAME_V2 and selected_page == HALL_OF_FAME_V2_QUERY_PAGE:
+        render_hall_of_fame_v2_page()
     elif selected_page == SEASON_OVERVIEW_QUERY_PAGE:
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
@@ -550,6 +566,8 @@ def render_page() -> None:
         render_approaching_milestones_page()
     elif selected_page == PLAYER_PROFILE_QUERY_PAGE:
         render_player_profile_page()
+    elif SHOW_PLAYER_PROFILE_V2 and selected_page == PLAYER_PROFILE_V2_QUERY_PAGE:
+        render_player_profile_v2_page()
     elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "match-insights":
         render_match_centre_page()
     elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "advanced-analytics":
@@ -572,6 +590,10 @@ def render_sidebar() -> str:
     )
     help_text_by_slug = {
         "hall-of-fame": ("Hall of Fame 🏆", "All-time club records, leaders, and iconic performances."),
+        HALL_OF_FAME_V2_QUERY_PAGE: (
+            "Hall of Fame v2 🏛️",
+            "Hidden preview for a museum-style club record book and premium Hall of Fame redesign.",
+        ),
         SEASON_OVERVIEW_QUERY_PAGE: (
             "Season Overview 🧭",
             "Season stats, team leaders, and detailed batting/bowling/fielding tables.",
@@ -582,6 +604,10 @@ def render_sidebar() -> str:
         ),
         "milestone": ("Milestone 💪", "Active players closing in on major club milestones."),
         PLAYER_PROFILE_QUERY_PAGE: ("Player Profile 🏏", "Search any player and view their career record."),
+        PLAYER_PROFILE_V2_QUERY_PAGE: (
+            "Player Profile v2 🧬",
+            "Hidden preview for a scouting-card style player profile with coach-focused insights.",
+        ),
         "match-insights": ("Match Insights", "Scorebook-only analysis from reviewed match-centre refresh outputs."),
         "advanced-analytics": ("Advanced Analytics", "Player-level splits powered by match-centre scorecards and ball-by-ball data."),
         "player-dna": ("Player DNA", "Experimental player identity cards, traits, and hidden impact patterns."),
@@ -4066,6 +4092,583 @@ def render_hall_of_fame_page() -> None:
     render_record_holders(hall_of_fame_data)
     render_best_ever_seasons(hall_of_fame_data)
     render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
+
+
+def render_hall_of_fame_v2_page() -> None:
+    started_at = time.perf_counter()
+    hall_of_fame_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime(), HALL_OF_FAME_DATA_VERSION)
+    log_hof_timing("load prepared Hall of Fame v2 data", started_at)
+    if hall_of_fame_data is None:
+        st.info("Historical data is not available yet. Refresh local backup to build the Hall of Fame.")
+        return
+    track_event_once(
+        "hall_of_fame_v2_view",
+        {"page_slug": HALL_OF_FAME_V2_QUERY_PAGE},
+        key="hall-of-fame-v2-view",
+    )
+
+    st.markdown('<div class="hall-of-fame-page hall-of-fame-v2-page"></div>', unsafe_allow_html=True)
+    render_hall_of_fame_v2_hero(hall_of_fame_data)
+    render_hall_of_fame_v2_nav()
+    render_hall_of_fame_v2_premiership_wall()
+    render_hall_of_fame_v2_club_legends(hall_of_fame_data["all_time"])
+    render_hall_of_fame_v2_iconic_performances(hall_of_fame_data)
+    render_hall_of_fame_v2_fastest_verified()
+    render_hall_of_fame_v2_record_holders(hall_of_fame_data)
+    render_hall_of_fame_v2_greatest_seasons(hall_of_fame_data)
+    render_hall_of_fame_v2_detailed_records(hall_of_fame_data["detailed_tables"])
+    render_hall_of_fame_v2_recommendations()
+
+
+def render_hall_of_fame_v2_hero(data: dict[str, object]) -> None:
+    kpis = data.get("kpis", {})
+    fastest_count = hall_of_fame_v2_verified_fastest_count()
+    stats = [
+        ("Seasons covered", format_int(kpis.get("total_seasons"))),
+        ("Matches recorded", format_int(kpis.get("total_matches"))),
+        ("Players recorded", format_int(kpis.get("total_players"))),
+        ("Verified fastest records", format_int(fastest_count)),
+    ]
+    stat_html = "".join(
+        '<div class="hof-v2-hero-stat">'
+        f"<strong>{html.escape(value or '0')}</strong>"
+        f"<span>{html.escape(label)}</span>"
+        "</div>"
+        for label, value in stats
+    )
+    st.markdown(
+        f"""
+        <section class="hof-v2-hero" id="top">
+            <div class="hof-v2-hero-grid">
+                <div>
+                    <div class="hof-v2-eyebrow">Fiji Victorian Cricket Club</div>
+                    <h1>Hall of Fame 🏛️</h1>
+                    <p class="hof-v2-hero-copy">A club record book for FVCC legends, premierships and iconic performances.</p>
+                    <div class="hof-v2-source-badges">
+                        <span>Scorecard records</span>
+                        <span>Verified ball-by-ball</span>
+                        <span>Premiership evidence</span>
+                    </div>
+                </div>
+                <div class="hof-v2-hero-stats">{stat_html}</div>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_verified_fastest_count() -> int:
+    milestone_path = batting_milestones_path()
+    milestones = load_batting_milestone_records(
+        str(milestone_path) if milestone_path else None,
+        match_centre_milestones_mtime(),
+    )
+    if milestones.empty:
+        return 0
+    columns = [column for column in ["balls_to_50", "balls_to_100"] if column in milestones]
+    if not columns:
+        return int(len(milestones))
+    return int(milestones[columns].notna().any(axis=1).sum())
+
+
+def render_hall_of_fame_v2_nav() -> None:
+    items = [
+        ("Premierships", "#premierships"),
+        ("Legends", "#legends"),
+        ("Records", "#records"),
+        ("Performances", "#performances"),
+        ("Fastest", "#fastest"),
+        ("Seasons", "#seasons"),
+        ("Detailed", "#detailed"),
+    ]
+    links = "".join(
+        f'<a href="{html.escape(url, quote=True)}" target="_self" class="{"active" if index == 0 else ""}">{html.escape(label)}</a>'
+        for index, (label, url) in enumerate(items)
+    )
+    st.markdown(f'<nav class="hof-v2-record-nav">{links}</nav>', unsafe_allow_html=True)
+
+
+def hof_v2_section_heading_html(section_id: str, title: str, copy: str, badge: str = "") -> str:
+    badge_html = f'<span class="hof-v2-trust-chip">{html.escape(badge)}</span>' if badge else ""
+    return (
+        f'<section class="hof-v2-section" id="{html.escape(section_id, quote=True)}">'
+        '<div class="hof-v2-section-head">'
+        '<div class="hof-v2-section-title">'
+        f"<h2>{html.escape(title)}</h2>"
+        f"<p>{html.escape(copy)}</p>"
+        "</div>"
+        f"{badge_html}"
+        "</div>"
+    )
+
+
+def render_hall_of_fame_v2_premiership_wall() -> None:
+    wins, players = load_premiership_records(premiership_records_signature())
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+                "premierships",
+                "Premiership Wall 🏆",
+                "The trophy story sits directly below the hero because premierships are club-defining, verified and scorecard-linked.",
+                "Premiership evidence",
+            )
+            + '<div class="hof-v2-grid-2">'
+            + hall_of_fame_v2_premiership_wins_card_html(wins)
+            + hall_of_fame_v2_player_premierships_card_html(players)
+            + "</div></section>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_premiership_wins_card_html(wins: pd.DataFrame) -> str:
+    if wins.empty:
+        return (
+            '<article class="hof-v2-card hof-v2-gold-card">'
+            '<div class="hof-v2-kicker">FVCC premiership wins</div>'
+            '<p class="hof-v2-muted">Premiership records are being prepared from verified finals scorecards.</p>'
+            "</article>"
+        )
+    rows = wins.copy()
+    if "match_date" in rows:
+        rows["_date_sort"] = pd.to_datetime(rows["match_date"], errors="coerce", utc=True)
+        rows = rows.sort_values(["_date_sort", "season"], ascending=[True, True], na_position="last")
+    row_html = "".join(hall_of_fame_v2_premiership_win_row_html(row) for _, row in rows.iterrows())
+    return (
+        '<article class="hof-v2-card hof-v2-gold-card">'
+        '<div class="hof-v2-kicker">FVCC premiership wins</div>'
+        f'<div class="hof-v2-timeline">{row_html}</div>'
+        "</article>"
+    )
+
+
+def hall_of_fame_v2_premiership_win_row_html(row: pd.Series) -> str:
+    season = safe_record_text(row.get("season"), "Unknown season")
+    grade = clean_grade_label_for_record(row.get("grade_name")) or "Grade not recorded"
+    team = safe_record_text(row.get("fvcc_team_name"), "FVCC")
+    opponent = clean_opponent_label(row.get("opponent_team_name"), "Opposition")
+    captain = safe_record_text(row.get("captain_name"))
+    result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"), "Won")
+    scorecard = scorecard_url_link_html(
+        row.get("scoreboard_url"),
+        row.get("match_id"),
+        label="View scorecard ↗",
+        page_slug=HALL_OF_FAME_V2_QUERY_PAGE,
+        section_name="premiership_wall",
+        class_name="hof-v2-subtle-link",
+    )
+    captain_text = f"Captain: {captain}" if captain else "Captain not recorded"
+    return (
+        '<div class="hof-v2-trophy-row">'
+        f'<div class="hof-v2-trophy-year">{season_overview_link_html(season)}</div>'
+        '<div class="hof-v2-trophy-main">'
+        f"<strong>{html.escape(grade)}</strong>"
+        f"<span>{html.escape(team)} defeated {html.escape(opponent)} · {html.escape(captain_text)}</span>"
+        "</div>"
+        '<div class="hof-v2-trophy-result">'
+        f'<span class="hof-v2-result-pill">{html.escape(result)}</span>'
+        f"{scorecard}"
+        "</div>"
+        "</div>"
+    )
+
+
+def hall_of_fame_v2_player_premierships_card_html(players: pd.DataFrame) -> str:
+    if players.empty:
+        return (
+            '<article class="hof-v2-card">'
+            '<div class="hof-v2-kicker">Most premierships</div>'
+            '<h3>Trophy cabinet leaders</h3>'
+            '<p class="hof-v2-muted">No verified player premiership records available yet.</p>'
+            "</article>"
+        )
+    rows = players.head(10).copy()
+    leader_rows = []
+    for rank, (_, row) in enumerate(rows.iterrows(), start=1):
+        player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
+        count = safe_record_int(row.get("premiership_count")) or 0
+        leader_rows.append(
+            '<div class="hof-v2-rank-row">'
+            f'<span class="hof-v2-rank gold">{rank}</span>'
+            f"<strong>{player_profile_link_html('', player)}</strong>"
+            f"<span>{count:,} premiership{'s' if count != 1 else ''}</span>"
+            "</div>"
+        )
+    return (
+        '<article class="hof-v2-card">'
+        '<div class="hof-v2-kicker">Most premierships</div>'
+        '<h3>Trophy cabinet leaders</h3>'
+        f'<div class="hof-v2-leader-list">{"".join(leader_rows)}</div>'
+        '<p class="hof-v2-muted">Sorted by premiership count, matches, earliest premiership and player name.</p>'
+        "</article>"
+    )
+
+
+def render_hall_of_fame_v2_club_legends(all_time: pd.DataFrame) -> None:
+    specs = [
+        ("Most matches", "Durability Kings", "Matches", "fielding", "matches"),
+        ("Most runs", "Run Mountain", "Runs", "batting", "runs"),
+        ("Most wickets", "Wicket Wall", "Wickets", "bowling", "wickets"),
+        ("Most catches", "Safe Hands", "Catches", "fielding", "catches"),
+    ]
+    cards = "".join(hall_of_fame_v2_legend_card_html(all_time, *spec) for spec in specs)
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+                "legends",
+                "Club Legends 👑",
+                "All-Time Leaders become a more screenshot-worthy legends row while keeping the same trusted rankings.",
+                "All-time aggregates",
+            )
+            + f'<div class="hof-v2-grid-4">{cards}</div></section>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_legend_card_html(
+    all_time: pd.DataFrame,
+    kicker: str,
+    title: str,
+    metric: str,
+    mode: str,
+    unit: str,
+) -> str:
+    if all_time.empty or metric not in all_time:
+        return ""
+    leaders = all_time.copy()
+    leaders[metric] = pd.to_numeric(leaders[metric], errors="coerce").fillna(0)
+    leaders = leaders[leaders[metric] > 0]
+    leaders = sort_hof_leaders(leaders, metric, mode).head(3)
+    rows = []
+    for rank, (_, row) in enumerate(leaders.iterrows(), start=1):
+        value = safe_record_int(row.get(metric)) or 0
+        rows.append(
+            '<div class="hof-v2-rank-row">'
+            f'<span class="hof-v2-rank">{rank}</span>'
+            f"<strong>{player_profile_link_html(player_id_from_row(row), row['Player'])}</strong>"
+            f"<span>{value:,} {html.escape(unit)}</span>"
+            "</div>"
+        )
+    return (
+        '<article class="hof-v2-card hof-v2-leader-card">'
+        f'<div class="hof-v2-kicker">{html.escape(kicker)}</div>'
+        f"<h3>{html.escape(title)}</h3>"
+        f'<div class="hof-v2-leader-list">{"".join(rows)}</div>'
+        "</article>"
+    )
+
+
+def render_hall_of_fame_v2_iconic_performances(data: dict[str, object]) -> None:
+    batting = data.get("iconic_batting", pd.DataFrame())
+    bowling = data.get("iconic_bowling", pd.DataFrame())
+    batting_card = hall_of_fame_v2_performance_hero_html(batting, "Highest individual score", "batting")
+    bowling_card = hall_of_fame_v2_performance_hero_html(bowling, "Best bowling innings", "bowling")
+    future_cards = (
+        '<article class="hof-v2-card">'
+        '<div class="hof-v2-kicker">Recommended future card</div>'
+        '<div class="hof-v2-record-player">Best all-round display</div>'
+        '<div class="hof-v2-record-value">Runs + wickets impact</div>'
+        '<p class="hof-v2-muted">Show only once innings-level data is reliable enough to avoid overclaiming.</p>'
+        "</article>"
+        '<article class="hof-v2-card">'
+        '<div class="hof-v2-kicker">Recommended future card</div>'
+        '<div class="hof-v2-record-player">Best fielding display</div>'
+        '<div class="hof-v2-record-value">Catches / stumpings / run outs</div>'
+        '<p class="hof-v2-muted">Useful if match-level fielding dismissals are consistently available.</p>'
+        "</article>"
+    )
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+                "performances",
+                "Iconic Performances 🌟",
+                "Individual brilliance becomes cinematic, scorecard-linked and context-rich.",
+                "Scorecard records",
+            )
+            + f'<div class="hof-v2-grid-2">{batting_card}{bowling_card}</div>'
+            + f'<div class="hof-v2-grid-2 hof-v2-top-gap">{future_cards}</div></section>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_performance_hero_html(records: pd.DataFrame, title: str, mode: str) -> str:
+    if records is None or records.empty:
+        return (
+            '<article class="hof-v2-card hof-v2-performance-hero">'
+            f'<div class="hof-v2-kicker">{html.escape(title)}</div>'
+            '<div class="hof-v2-performance-value">N/A</div>'
+            '<div class="hof-v2-performance-player">Record pending</div>'
+            '<p class="hof-v2-muted">Scorecard-linked record data is not available yet.</p>'
+            "</article>"
+        )
+    row = records.iloc[0]
+    if mode == "batting":
+        value = format_high_score_value(row)
+    else:
+        value = safe_record_text(row.get("bowlingBestInnings"), "N/A")
+    player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
+    grade = clean_grade_label_for_record(row.get("grade_name"))
+    season = safe_record_text(row.get("season"))
+    meta_parts = [part for part in [season_overview_link_html(season) if season else "", html.escape(grade) if grade else ""] if part]
+    scorecard = scorecard_link_html(
+        row.get("match_id"),
+        label="View scorecard ↗",
+        class_name="hof-v2-subtle-link",
+        page_slug=HALL_OF_FAME_V2_QUERY_PAGE,
+        section_name="iconic_performances",
+    )
+    return (
+        '<article class="hof-v2-card hof-v2-performance-hero">'
+        f'<div class="hof-v2-kicker">{html.escape(title)}</div>'
+        f'<div class="hof-v2-performance-value">{html.escape(str(value))}</div>'
+        f'<div class="hof-v2-performance-player">{player_profile_link_html(player_id_from_row(row), player)}</div>'
+        f'<p class="hof-v2-muted">{" · ".join(meta_parts)}</p>'
+        f"{scorecard}"
+        "</article>"
+    )
+
+
+def render_hall_of_fame_v2_fastest_verified() -> None:
+    milestone_path = batting_milestones_path()
+    milestones = load_batting_milestone_records(
+        str(milestone_path) if milestone_path else None,
+        match_centre_milestones_mtime(),
+    )
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+                "fastest",
+                "Fastest Verified Innings ⚡",
+                "Verified ball-by-ball records are visually separated from scorecard-only records, which makes the trust boundary obvious.",
+                "Verified ball-by-ball only",
+            )
+            + '<div class="hof-v2-fastest-panel"><span class="hof-v2-verified-badge">Verified ball-by-ball only</span>'
+            + '<div class="hof-v2-grid-2">'
+            + hall_of_fame_v2_fastest_list_html(milestones, "Fastest 50s", "balls_to_50")
+            + hall_of_fame_v2_fastest_list_html(milestones, "Fastest 100s", "balls_to_100")
+            + "</div></div></section>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_fastest_list_html(records: pd.DataFrame, title: str, value_col: str) -> str:
+    if records.empty or value_col not in records:
+        return (
+            '<div><div class="hof-v2-kicker">'
+            f"{html.escape(title)}"
+            '</div><div class="hof-v2-race-list"><div class="hof-v2-race-row">'
+            '<span class="hof-v2-rank">–</span><strong>No verified records yet <span>Appears when ball-by-ball confirms it</span></strong><span class="hof-v2-race-time">—</span>'
+            "</div></div></div>"
+        )
+    rows = records[records[value_col].notna()].copy()
+    if rows.empty:
+        return hall_of_fame_v2_fastest_list_html(pd.DataFrame(), title, value_col)
+    rows = add_missing_canonical_player_ids(rows)
+    rows["match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
+    rows = rows.sort_values([value_col, "final_runs", "match_date_sort"], ascending=[True, False, False]).head(3)
+    row_html = "".join(
+        hall_of_fame_v2_fastest_row_html(rank, row, value_col)
+        for rank, (_, row) in enumerate(rows.iterrows(), start=1)
+    )
+    return f'<div><div class="hof-v2-kicker">{html.escape(title)}</div><div class="hof-v2-race-list">{row_html}</div></div>'
+
+
+def hall_of_fame_v2_fastest_row_html(rank: int, row: pd.Series, value_col: str) -> str:
+    player = safe_record_text(row.get("canonical_player_name") or row.get("player_name"), "Unknown player")
+    final_score = safe_record_text(row.get("final_score_display"))
+    if not final_score:
+        final_runs = safe_record_int(row.get("final_runs"))
+        final_score = str(final_runs) if final_runs else ""
+    opponent = clean_opponent_label(row.get("opposition_team"), "")
+    value = safe_record_int(row.get(value_col))
+    context = " · ".join([part for part in [final_score, f"vs {opponent}" if opponent else ""] if part])
+    return (
+        '<div class="hof-v2-race-row">'
+        f'<span class="hof-v2-rank">{rank}</span>'
+        f'<strong>{player_profile_link_html(player_id_from_row(row), player)} <span>{html.escape(context)}</span></strong>'
+        f'<span class="hof-v2-race-time">{value if value else "N/A"} balls</span>'
+        "</div>"
+    )
+
+
+def render_hall_of_fame_v2_record_holders(data: dict[str, object]) -> None:
+    cards = data.get("record_holder_cards") or build_record_holder_cards(data)
+    primary_cards = [card for card in cards if card.get("title") != "Ducks"]
+    duck_cards = [card for card in cards if card.get("title") == "Ducks"]
+    cards_html = "".join(hall_of_fame_v2_record_card_html(card) for card in primary_cards)
+    cards_html += hall_of_fame_v2_quirky_record_card_html(duck_cards[0] if duck_cards else None)
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+                "records",
+                "Record Holders 📘",
+                "Hard records stay prominent, while ducks move into a smaller quirky-record treatment rather than the headline grid.",
+            )
+            + f'<div class="hof-v2-record-grid">{cards_html}</div></section>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_record_card_html(card: dict[str, str]) -> str:
+    player = safe_record_text(card.get("player"), "Unknown player")
+    meta = safe_record_text(card.get("meta"))
+    meta_html = f'<span class="hof-v2-muted">{html.escape(meta)}</span>' if meta else ""
+    return (
+        '<article class="hof-v2-card hof-v2-record-card">'
+        f'<div class="hof-v2-record-title">{html.escape(str(card.get("title", "Record")))}</div>'
+        f'<div class="hof-v2-record-player">{player_profile_link_html(card.get("player_id"), player)}</div>'
+        f'<div class="hof-v2-record-value">{html.escape(str(card.get("value", "-")))}</div>'
+        f"{meta_html}"
+        "</article>"
+    )
+
+
+def hall_of_fame_v2_quirky_record_card_html(card: dict[str, str] | None) -> str:
+    if not card:
+        value = "Interesting extras"
+        player = "Ducks corner"
+        meta = "Useful context, not a headline achievement."
+    else:
+        value = safe_record_text(card.get("value"), "Interesting extras")
+        player = player_profile_link_html(card.get("player_id"), safe_record_text(card.get("player"), "Ducks corner"))
+        meta = safe_record_text(card.get("meta"), "Useful context, not a headline achievement.")
+    return (
+        '<article class="hof-v2-card hof-v2-record-card hof-v2-burgundy-card">'
+        '<div class="hof-v2-record-title">Quirky Records</div>'
+        f'<div class="hof-v2-record-player">{player}</div>'
+        f'<div class="hof-v2-record-value">{html.escape(value)}</div>'
+        f'<span class="hof-v2-muted">{html.escape(meta)}</span>'
+        "</article>"
+    )
+
+
+def render_hall_of_fame_v2_greatest_seasons(data: dict[str, object]) -> None:
+    cards = []
+    batting = data.get("best_batting_season")
+    bowling = data.get("best_bowling_season")
+    if batting is not None:
+        cards.append(hall_of_fame_v2_best_season_card_html("Best batting season", batting, "batting"))
+    if bowling is not None:
+        cards.append(hall_of_fame_v2_best_season_card_html("Best bowling season", bowling, "bowling"))
+    cards.append(
+        '<article class="hof-v2-card hof-v2-season-card">'
+        '<div><div class="hof-v2-kicker">Recommended future card</div>'
+        '<h3>All-round season</h3>'
+        '<p class="hof-v2-muted">Use only after a simple, agreed all-round impact formula is approved.</p></div>'
+        '<div class="hof-v2-season-score">TBC</div>'
+        "</article>"
+    )
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+                "seasons",
+                "Greatest Individual Seasons 🎖️",
+                "Season-long excellence gets a premium treatment, with future all-round records clearly marked until the formula is trusted.",
+                "Season aggregate records",
+            )
+            + f'<div class="hof-v2-grid-3">{"".join(cards)}</div></section>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
+    if mode == "batting":
+        primary = f'{format_int(row.get("runs"))} runs'
+        meta = f'{format_int(row.get("matches"))} matches · HS {html.escape(str(row.get("hs", "—")))}'
+    else:
+        primary = f'{format_int(row.get("wickets"))} wkts'
+        meta = f'{row.get("overs", "—")} overs · BBI {html.escape(str(row.get("bbi", "—")))}'
+    return (
+        '<article class="hof-v2-card hof-v2-season-card">'
+        "<div>"
+        f'<div class="hof-v2-kicker">{html.escape(title)}</div>'
+        f'<h3>{player_profile_link_html(row.get("player_id"), row.get("player"))}</h3>'
+        f'<p class="hof-v2-muted">{season_overview_link_html(row.get("season"))} · {meta}</p>'
+        "</div>"
+        f'<div class="hof-v2-season-score">{html.escape(primary)}</div>'
+        "</article>"
+    )
+
+
+def render_hall_of_fame_v2_detailed_records(detailed_tables: dict[str, pd.DataFrame]) -> None:
+    st.markdown(
+        (
+            hof_v2_section_heading_html(
+            "detailed",
+            "Detailed Records 📊",
+            "The audit layer stays near the bottom as full sortable batting, bowling and fielding tables.",
+            "Sortable audit tables",
+            )
+            + "</section>"
+        ),
+        unsafe_allow_html=True,
+    )
+    with st.container(key="hof_v2_detailed_records"):
+        batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
+        with batting_tab:
+            render_all_time_detail_table(detailed_tables["batting"], "hof_v2_batting_detail")
+        with bowling_tab:
+            render_all_time_detail_table(detailed_tables["bowling"], "hof_v2_bowling_detail")
+        with fielding_tab:
+            render_all_time_detail_table(detailed_tables["fielding"], "hof_v2_fielding_detail")
+    st.markdown(
+        (
+            '<div class="hof-v2-card hof-v2-trust-note">'
+            '<strong>Trust note:</strong> Bat SR uses verified ball-by-ball only. '
+            '30s use scorecard innings from 30 to 49 inclusive. 3WI means exactly 3 or 4 wickets. '
+            '5WI means 5+. HS ignores the not-out star for sorting; BBI sorts wickets descending, then runs ascending.'
+            "</div>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def render_hall_of_fame_v2_recommendations() -> None:
+    st.markdown(
+        """
+        <section class="hof-v2-section">
+            <div class="hof-v2-section-head">
+                <div class="hof-v2-section-title">
+                    <h2>Design Recommendations</h2>
+                    <p>The redesign keeps the trusted records, changes the hierarchy, and makes the top half feel like a club museum wall instead of a spreadsheet.</p>
+                </div>
+            </div>
+            <div class="hof-v2-decision-panel">
+                <div class="hof-v2-decision">
+                    <h3>Keep</h3>
+                    <ul>
+                        <li>All existing Hall of Fame calculations.</li>
+                        <li>Premierships, leaders, records, fastest innings, seasons and detailed tables.</li>
+                        <li>Player, season and scorecard links.</li>
+                    </ul>
+                </div>
+                <div class="hof-v2-decision">
+                    <h3>Merge / Reorder</h3>
+                    <ul>
+                        <li>All-Time Leaders become Club Legends.</li>
+                        <li>Premierships move directly below the hero.</li>
+                        <li>Detailed Records move to the bottom as the audit layer.</li>
+                    </ul>
+                </div>
+                <div class="hof-v2-decision">
+                    <h3>Guardrails</h3>
+                    <ul>
+                        <li>Ducks move into Quirky Records.</li>
+                        <li>Future all-round/fielding cards need reliability labels.</li>
+                        <li>Do not call anything a club record unless all-time comparison confirms it.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_approaching_milestones_page() -> None:
@@ -7947,6 +8550,824 @@ def render_player_profile_page() -> None:
     render_player_milestones(profile_view["career"].iloc[0])
 
 
+def render_player_profile_v2_page() -> None:
+    index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
+    st.markdown('<div class="player-profile-v2-page"></div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="player-v2-topline">Player Profile v2 preview</div>
+        <div class="player-v2-title-row">
+            <div>
+                <h1 class="player-v2-page-title">Player scouting profile 🧬</h1>
+                <div class="club-label">Fiji Victorian Cricket Club</div>
+            </div>
+            <span class="player-v2-preview-badge">Hidden experimental page</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if index.empty:
+        st.info("Historical player data is not available yet. Refresh local backup to build player profiles.")
+        return
+
+    player_names_by_id = dict(zip(index["id"].astype(str), index["name"].astype(str)))
+    option_ids = list(player_names_by_id.keys())
+    st.session_state["player_profile_valid_ids"] = option_ids
+    st.session_state["player_profile_name_to_id"] = {
+        player_name: player_id
+        for player_id, player_name in player_names_by_id.items()
+        if player_id
+    }
+    query_player_id = resolve_player_query_to_id(player_names_by_id)
+    default_player_id = query_player_id or default_player_profile_v2_id(player_names_by_id)
+    with st.container(key="player_v2_selector_card"):
+        selected_id = st.selectbox(
+            "Search player",
+            option_ids,
+            index=option_ids.index(default_player_id) if default_player_id in option_ids else 0,
+            format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
+            placeholder="Select a player...",
+            key="player_profile_v2_selector_id",
+        )
+        selected_id = str(selected_id or "").strip()
+        st.markdown(
+            '<div class="profile-selector-help">Pick a player to view a scouting-card style profile built from club records.</div>',
+            unsafe_allow_html=True,
+        )
+    if selected_id and query_param_value("player_id") != selected_id:
+        sync_player_profile_query(selected_id, PLAYER_PROFILE_V2_QUERY_PAGE)
+
+    profile = get_player_profile_data(selected_id, metadata_mtime(), player_aliases_mtime())
+    profile_view = build_player_profile_view(profile)
+    if profile_view["career"].empty:
+        st.info("No local historical data is available for this player yet.")
+        return
+
+    player_name = player_names_by_id.get(selected_id, selected_id)
+    track_event_once(
+        "player_profile_v2_view",
+        {
+            "page_slug": PLAYER_PROFILE_V2_QUERY_PAGE,
+            "player_name": player_name,
+            "player_slug": analytics_player_slug(player_name, selected_id),
+            "player_id": selected_id,
+            "source": "deep_link" if current_player_query_token() else "dropdown",
+        },
+        key=f"player-profile-v2-view:{selected_id}",
+    )
+
+    context = build_player_profile_v2_context(profile_view)
+    render_player_profile_v2_hero(profile_view, context)
+    render_player_profile_v2_career_strip(profile_view["career"].iloc[0])
+    render_player_profile_v2_dna(profile_view, context)
+    render_player_profile_v2_coach_board(profile_view, context)
+    render_player_profile_v2_peer_comparison(profile_view)
+    render_player_profile_v2_advanced_grid(profile_view, context)
+    render_player_profile_v2_standout_performances(profile_view)
+    render_player_profile_v2_partnerships(profile_view)
+    render_player_profile_v2_milestone_watch(profile_view["career"].iloc[0])
+    render_player_profile_v2_timeline(profile_view, context)
+    render_player_profile_v2_coverage_card(profile_view, context)
+    render_player_profile_v2_breakdown(profile_view)
+
+
+def default_player_profile_v2_id(player_names_by_id: dict[str, str]) -> str:
+    for player_id, name in player_names_by_id.items():
+        if str(name).strip().casefold() == "vinay sharma":
+            return player_id
+    return next(iter(player_names_by_id), "")
+
+
+def build_player_profile_v2_context(profile_view: dict[str, pd.DataFrame]) -> dict[str, object]:
+    career = profile_view["career"].iloc[0]
+    player_id = str(career.get("canonical_player_id", "") or "").strip()
+    player_name = str(career.get("Player", "") or "").strip()
+    name_key = player_name_match_key(player_name)
+    win_row = player_v2_lookup_row(load_deploy_safe_win_rates(player_win_rates_signature()), player_id, name_key)
+    _, premierships = load_premiership_records(premiership_records_signature())
+    premiership_row = player_v2_lookup_row(premierships, player_id, name_key)
+    bbb_row = player_v2_lookup_row(read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH), player_id, name_key)
+    return {
+        "win_row": win_row,
+        "premiership_row": premiership_row,
+        "bbb_row": bbb_row,
+        "win_pct": pd.to_numeric(win_row.get("win_pct"), errors="coerce") if not win_row.empty else pd.NA,
+        "win_matches": pd.to_numeric(win_row.get("Win Matches"), errors="coerce") if not win_row.empty else pd.NA,
+        "wins": pd.to_numeric(win_row.get("Win Count"), errors="coerce") if not win_row.empty else pd.NA,
+        "premiership_count": int(pd.to_numeric(premiership_row.get("premiership_count"), errors="coerce") or 0) if not premiership_row.empty else 0,
+        "premiership_seasons": safe_record_text(premiership_row.get("seasons")) if not premiership_row.empty else "",
+        "bbb_runs": pd.to_numeric(bbb_row.get("bbb_runs"), errors="coerce") if not bbb_row.empty else pd.NA,
+        "bbb_balls": pd.to_numeric(bbb_row.get("bbb_balls_faced"), errors="coerce") if not bbb_row.empty else pd.NA,
+        "bbb_innings": pd.to_numeric(bbb_row.get("bbb_batting_innings"), errors="coerce") if not bbb_row.empty else pd.NA,
+    }
+
+
+def player_v2_lookup_row(frame: pd.DataFrame, player_id: str, name_key: str) -> pd.Series:
+    if frame.empty:
+        return pd.Series(dtype="object")
+    output = frame.copy()
+    if player_id:
+        for column in ["canonical_player_id", "player_key", "player_id"]:
+            if column in output:
+                matched = output[output[column].astype(str) == player_id]
+                if not matched.empty:
+                    return matched.iloc[0]
+    if name_key:
+        for column in ["player_name_key", "_player_name_key"]:
+            if column in output:
+                matched = output[output[column].astype(str) == name_key]
+                if not matched.empty:
+                    return matched.iloc[0]
+        for column in ["display_player_name", "canonical_player_name", "Player", "player_name"]:
+            if column in output:
+                matched = output[output[column].map(player_name_match_key) == name_key]
+                if not matched.empty:
+                    return matched.iloc[0]
+    return pd.Series(dtype="object")
+
+
+def render_player_profile_v2_hero(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> None:
+    career = profile_view["career"].iloc[0]
+    badges = player_role_badges(career, profile_view)
+    if int(context.get("premiership_count") or 0) > 0:
+        badges.append("Premiership Player")
+    if pd.notna(context.get("bbb_balls")) and float(context.get("bbb_balls") or 0) > 0:
+        badges.append("Verified Ball-by-Ball Batting")
+    badge_html = "".join(
+        f'<span class="player-v2-badge {player_v2_badge_class(badge)}">{html.escape(badge)}</span>'
+        for badge in unique_preserve_order(badges)[:7]
+    )
+    signature_title, signature_copy = player_v2_signature_stat(career, context)
+    fact_cards = [
+        ("Career span", str(career.get("Career Span", "—") or "—")),
+        ("Matches", format_int(career.get("Matches"))),
+        ("Runs", format_int(career.get("Runs"))),
+        ("Wickets", format_int(career.get("Wickets"))),
+        ("Catches", format_int(career.get("Catches"))),
+        ("Win %", player_v2_percent(context.get("win_pct"))),
+        ("Premierships", format_int(context.get("premiership_count")) if context.get("premiership_count") else "—"),
+        ("Best fit", player_v2_best_fit(profile_view)),
+    ]
+    facts_html = "".join(
+        f'<div class="player-v2-fact"><small>{html.escape(label)}</small><strong>{html.escape(value)}</strong></div>'
+        for label, value in fact_cards
+    )
+    insight = player_profile_insight(career, badges)
+    player_name = html.escape(str(career.get("Player", "-")))
+    st.markdown(
+        f"""
+        <section class="player-v2-hero">
+            <div class="player-v2-hero-grid">
+                <div>
+                    <div class="player-v2-club-eyebrow">Fiji Victorian Cricket Club</div>
+                    <h2>{player_name}</h2>
+                    <p class="player-v2-hero-copy">{html.escape(insight)}</p>
+                    <div class="player-v2-badge-row">{badge_html}</div>
+                </div>
+                <aside class="player-v2-identity-panel">
+                    <div class="player-v2-signature-card">
+                        <small>Signature stat</small>
+                        <strong>{html.escape(signature_title)}</strong>
+                        <span>{html.escape(signature_copy)}</span>
+                    </div>
+                    <div class="player-v2-facts">{facts_html}</div>
+                </aside>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def unique_preserve_order(values: list[str]) -> list[str]:
+    seen = set()
+    output = []
+    for value in values:
+        text = str(value or "").strip()
+        key = text.casefold()
+        if text and key not in seen:
+            output.append(text)
+            seen.add(key)
+    return output
+
+
+def player_v2_badge_class(label: object) -> str:
+    text = str(label).casefold()
+    if "premiership" in text or "legend" in text:
+        return "gold"
+    if "ball-by-ball" in text or "safe" in text or "winner" in text:
+        return "green"
+    return ""
+
+
+def player_v2_signature_stat(career: pd.Series, context: dict[str, object]) -> tuple[str, str]:
+    wickets = numeric_value(career, "Wickets")
+    balls_bowled = numeric_value(career, "Balls Bowled")
+    runs = numeric_value(career, "Runs")
+    matches = numeric_value(career, "Matches")
+    catches = numeric_value(career, "Catches")
+    bbb_runs = pd.to_numeric(context.get("bbb_runs"), errors="coerce")
+    bbb_balls = pd.to_numeric(context.get("bbb_balls"), errors="coerce")
+    if wickets >= 25 and balls_bowled > 0:
+        overs_per_wicket = balls_bowled / 6 / wickets
+        return f"Wicket every {overs_per_wicket:.1f} overs", "Bowling impact from scorecard-safe career wicket and overs records."
+    if pd.notna(bbb_runs) and pd.notna(bbb_balls) and bbb_balls > 0:
+        return f"Verified SR {bbb_runs * 100 / bbb_balls:.1f}%", "Uses ball-by-ball runs and balls only, never mixed with scorecard totals."
+    if runs >= 1000 and matches:
+        return f"{runs / matches:.1f} runs per match", "Career scoring footprint across scorecard-safe club records."
+    if catches >= 50 and matches:
+        return f"{catches / matches:.2f} catches per match", "Fielding involvement from scorecard-safe dismissal records."
+    return str(career.get("HS", "Record building") or "Record building"), "Profile identity will sharpen as more scorecard and ball-by-ball detail is promoted."
+
+
+def player_v2_best_fit(profile_view: dict[str, pd.DataFrame]) -> str:
+    grade_table = profile_view.get("grade_table", pd.DataFrame())
+    if grade_table.empty or "Grade" not in grade_table:
+        return "—"
+    output = grade_table.copy()
+    output["_impact"] = pd.to_numeric(output.get("Runs", 0), errors="coerce").fillna(0) + pd.to_numeric(output.get("Wickets", 0), errors="coerce").fillna(0) * 20
+    output = output[output["_impact"] > 0].sort_values("_impact", ascending=False)
+    return str(output.iloc[0].get("Grade", "—")) if not output.empty else "—"
+
+
+def render_player_profile_v2_career_strip(career: pd.Series) -> None:
+    cards = [
+        ("Matches", format_int(career.get("Matches"))),
+        ("Runs", format_int(career.get("Runs"))),
+        ("Bat Avg", format_decimal(career.get("Bat Avg"))),
+        ("HS", str(career.get("HS", "—") or "—")),
+        ("Wickets", format_int(career.get("Wickets"))),
+        ("Bowl Avg", format_decimal(career.get("Bowl Avg"))),
+        ("BBI", str(career.get("BBI", "—") or "—")),
+        ("Catches", format_int(career.get("Catches"))),
+        ("Run Outs", format_int(career.get("Run Outs"))),
+        ("Stumpings", format_int(career.get("Stumpings"))),
+        ("Dismissals", format_int(career.get("Dismissals"))),
+        ("Seasons", format_int(career.get("Seasons Count"))),
+    ]
+    html_cards = "".join(
+        f'<div class="player-v2-stat-tile"><span>{html.escape(label)}</span><strong>{html.escape(value)}</strong></div>'
+        for label, value in cards
+    )
+    st.markdown(f'<div class="player-v2-stat-strip">{html_cards}</div>', unsafe_allow_html=True)
+
+
+def render_player_profile_v2_dna(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> None:
+    section = player_v2_section_header("Player DNA Snapshot", "Identity cards designed for quick coaching readouts.", "Scorecard-safe")
+    st.markdown(section, unsafe_allow_html=True)
+    cards = player_v2_dna_cards(profile_view, context)
+    st.markdown(f'<div class="player-v2-grid player-v2-grid-4">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def player_v2_dna_cards(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> list[str]:
+    career = profile_view["career"].iloc[0]
+    matches = numeric_value(career, "Matches")
+    runs = numeric_value(career, "Runs")
+    wickets = numeric_value(career, "Wickets")
+    bat_avg = numeric_value(career, "Bat Avg")
+    bowl_avg = numeric_value(career, "Bowl Avg")
+    econ = numeric_value(career, "Econ")
+    dismissals = numeric_value(career, "Dismissals")
+    bat_label = "Anchor" if bat_avg >= 20 and runs >= 300 else "Run contributor" if runs >= 300 else "Lower-order contributor"
+    bowl_label = "Economy Controller" if econ and econ < 3.8 and wickets >= 25 else "Wicket Taker" if wickets >= 25 else "Occasional bowler"
+    field_label = "Safe Hands" if matches and dismissals / matches >= 0.35 else "Fielding contributor"
+    impact_label = "Premiership Player" if context.get("premiership_count") else "Club contributor"
+    return [
+        player_v2_dna_card("Batter type", bat_label, ["Bat avg " + format_decimal(career.get("Bat Avg")), f"{format_int(runs)} runs"], min(100, max(18, bat_avg * 2.5))),
+        player_v2_dna_card("Bowler type", bowl_label, [f"{format_int(wickets)} wickets", "Eco " + format_decimal(career.get("Econ"))], 78 if wickets >= 100 else 58 if wickets >= 25 else 30),
+        player_v2_dna_card("Fielding profile", field_label, [f"{format_int(dismissals)} dismissals", f"{format_int(career.get('Catches'))} catches"], 75 if dismissals >= 75 else 48),
+        player_v2_dna_card("Match impact", impact_label, [player_v2_percent(context.get("win_pct")) + " win rate", f"{format_int(context.get('premiership_count'))} premierships"], 84 if context.get("premiership_count") else 52),
+    ]
+
+
+def player_v2_dna_card(title: str, headline: str, tags: list[str], width: float) -> str:
+    tag_html = "".join(f'<span>{html.escape(tag)}</span>' for tag in tags if tag and tag != "—")
+    return (
+        '<article class="player-v2-card player-v2-dna-card">'
+        f'<div class="player-v2-kicker">{html.escape(title)}</div>'
+        f'<h3>{html.escape(headline)}</h3>'
+        f'<div class="player-v2-traits">{tag_html}</div>'
+        f'<div class="player-v2-meter"><span style="width:{max(0, min(100, width)):.0f}%"></span></div>'
+        '</article>'
+    )
+
+
+def render_player_profile_v2_coach_board(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> None:
+    st.markdown(
+        player_v2_section_header(
+            "Coach Insight Board 🧠",
+            "Practical selection, role and training cues from the available player record.",
+            "Coach view",
+        ),
+        unsafe_allow_html=True,
+    )
+    cards = player_v2_coach_cards(profile_view, context)
+    st.markdown(f'<div class="player-v2-grid player-v2-grid-3">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def player_v2_coach_cards(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> list[str]:
+    career = profile_view["career"].iloc[0]
+    season_table = profile_view.get("season_table", pd.DataFrame())
+    matches = numeric_value(career, "Matches")
+    runs = numeric_value(career, "Runs")
+    wickets = numeric_value(career, "Wickets")
+    balls_bowled = numeric_value(career, "Balls Bowled")
+    bat_avg = numeric_value(career, "Bat Avg")
+    dismissals = numeric_value(career, "Dismissals")
+    latest = latest_player_v2_season_summary(season_table)
+    role = "All-round selection option" if runs >= 500 and wickets >= 50 else "Batting-first profile" if runs >= wickets * 15 else "Bowling-first profile" if wickets >= 25 else "Squad depth profile"
+    batting_cue = "Reliable run base" if bat_avg >= 20 and runs >= 500 else "Can lift scoring impact with repeatable starts"
+    bowling_cue = "Use as workload bowler" if balls_bowled >= 900 else "Use in matchup spells" if wickets >= 15 else "Bowling sample is limited"
+    fielding_cue = "Reliable fielding asset" if matches and dismissals / matches >= 0.35 else "Fielding impact is building"
+    return [
+        player_v2_coach_card("Selection fit", role, "Role recommendation based on runs, wickets and workload balance."),
+        player_v2_coach_card("Batting plan", batting_cue, f"{format_int(runs)} scorecard runs at {format_decimal(career.get('Bat Avg'))}. Ball-faced rates stay in verified ball-by-ball sections."),
+        player_v2_coach_card("Bowling usage", bowling_cue, f"{format_balls_as_overs(balls_bowled) if balls_bowled else '—'} career overs from scorecard records."),
+        player_v2_coach_card("Field placement", fielding_cue, f"{format_int(dismissals)} fielding dismissals across {format_int(matches)} matches."),
+        player_v2_coach_card("Current form read", latest[0], latest[1]),
+        player_v2_coach_card("Data confidence", player_v2_coverage_label(context), "Ball-by-ball metrics are shown only when a verified deploy-safe summary exists."),
+    ]
+
+
+def player_v2_coach_card(title: str, headline: str, copy: str) -> str:
+    return (
+        '<article class="player-v2-card player-v2-coach-card">'
+        f'<div class="player-v2-kicker">{html.escape(title)}</div>'
+        f'<h3>{html.escape(headline)}</h3>'
+        f'<p>{html.escape(copy)}</p>'
+        '</article>'
+    )
+
+
+def latest_player_v2_season_summary(season_table: pd.DataFrame) -> tuple[str, str]:
+    if season_table.empty or "Season" not in season_table:
+        return "No recent season record", "Season-level profile will appear when aggregate rows exist."
+    row = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False).iloc[0]
+    headline = f"{row.get('Season', 'Latest season')}: {format_int(row.get('Runs'))} runs, {format_int(row.get('Wickets'))} wickets"
+    return headline, str(row.get("Teams/Grades", "Latest team/grade context unavailable") or "Latest team/grade context unavailable")
+
+
+def player_v2_coverage_label(context: dict[str, object]) -> str:
+    bbb_balls = pd.to_numeric(context.get("bbb_balls"), errors="coerce")
+    if pd.notna(bbb_balls) and bbb_balls > 0:
+        return f"Verified BBB sample: {int(bbb_balls):,} balls faced"
+    return "Scorecard-safe profile"
+
+
+def render_player_profile_v2_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None:
+    rows = player_v2_peer_rows(profile_view)
+    if not rows:
+        return
+    st.markdown(
+        player_v2_section_header(
+            "Player vs Peers 📊",
+            "Compared with players from the same seasons and available grade scope.",
+            "Peer model",
+        ),
+        unsafe_allow_html=True,
+    )
+    cards = "".join(player_v2_peer_card(category, metrics) for category, metrics in rows.items() if metrics)
+    st.markdown(f'<div class="player-v2-grid player-v2-grid-2">{cards}</div>', unsafe_allow_html=True)
+
+
+def player_v2_peer_rows(profile_view: dict[str, pd.DataFrame]) -> dict[str, list[dict[str, object]]]:
+    career = profile_view["career"].iloc[0]
+    season_table = profile_view.get("season_table", pd.DataFrame())
+    if season_table.empty or "Season" not in season_table:
+        return {}
+    seasons = tuple(sorted(season_table["Season"].dropna().astype(str).unique(), key=profile_season_sort_key))
+    player_id = str(career.get("canonical_player_id", "") or "").strip()
+    if not player_id or not seasons:
+        return {}
+    aliases = load_player_aliases()
+    batting = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_batting"), aliases))
+    bowling = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_bowling"), aliases))
+    batting_rows = aggregate_peer_batting(filter_peer_scope(batting, seasons, player_peer_grade_scope(profile_view)), seasons)
+    bowling_rows = aggregate_peer_bowling(filter_peer_scope(bowling, seasons, player_peer_grade_scope(profile_view)), seasons)
+    return {
+        "Batting": build_peer_metric_rows(
+            batting_rows,
+            player_id,
+            [
+                ("Batting Avg", "bat_avg", False, "decimal"),
+                ("Boundary Rate", "boundary_rate", False, "decimal"),
+                ("Innings per Duck", "innings_per_duck", False, "decimal"),
+            ],
+            average_overrides={
+                "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
+                "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
+            },
+        ),
+        "Bowling": build_peer_metric_rows(
+            bowling_rows,
+            player_id,
+            [
+                ("Bowling Avg", "bowl_avg", True, "decimal"),
+                ("Bowling SR", "bowl_sr", True, "decimal"),
+                ("Economy", "economy", True, "decimal"),
+            ],
+            average_overrides={
+                "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
+                "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
+                "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
+            },
+        ),
+    }
+
+
+def player_v2_peer_card(title: str, rows: list[dict[str, object]]) -> str:
+    item_html = []
+    for row in rows:
+        player_position = peer_marker_position(row.get("value"), row.get("minimum"), row.get("maximum"))
+        average_position = peer_marker_position(row.get("average"), row.get("minimum"), row.get("maximum"))
+        player_marker = f'<span class="player-v2-marker player" style="left:{player_position:.1f}%"></span>' if player_position is not None else ""
+        average_marker = f'<span class="player-v2-marker peer" style="left:{average_position:.1f}%"></span>' if average_position is not None else ""
+        status = str(row.get("status") or "—")
+        item_html.append(
+            '<div class="player-v2-peer-row">'
+            '<div class="player-v2-peer-top">'
+            f'<strong>{html.escape(str(row.get("label", "")))}</strong>'
+            f'<span>{html.escape(format_peer_metric_value(row.get("value"), str(row.get("format", "decimal"))))}</span>'
+            '</div>'
+            '<div class="player-v2-peer-meta">'
+            f'<span>Peer avg. {html.escape(format_peer_metric_value(row.get("average"), str(row.get("format", "decimal"))))}</span>'
+            f'<em class="{peer_status_class(status)}">{html.escape(status)}</em>'
+            '</div>'
+            f'<div class="player-v2-range">{average_marker}{player_marker}</div>'
+            '</div>'
+        )
+    return f'<article class="player-v2-card player-v2-peer-card"><h3>{html.escape(title)}</h3>{"".join(item_html)}</article>'
+
+
+def render_player_profile_v2_advanced_grid(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> None:
+    st.markdown(
+        player_v2_section_header(
+            "Advanced Identity Reads",
+            "Insight cards separate scorecard-safe evidence from ball-by-ball or match-centre coverage.",
+            "Trust labelled",
+        ),
+        unsafe_allow_html=True,
+    )
+    cards = [
+        player_v2_best_position_card(profile_view),
+        player_v2_dismissal_card(profile_view),
+        player_v2_favourite_grade_card(profile_view),
+        player_v2_favourite_opponent_card(context),
+    ]
+    st.markdown(f'<div class="player-v2-grid player-v2-grid-2">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def player_v2_best_position_card(profile_view: dict[str, pd.DataFrame]) -> str:
+    grade_table = profile_view.get("grade_table", pd.DataFrame())
+    if grade_table.empty:
+        return player_v2_empty_advanced_card("Best batting position", "Coverage limited", "Batting-order scorecard rows are not deployed yet.")
+    rows = grade_table.copy()
+    rows["_runs"] = pd.to_numeric(rows.get("Runs", 0), errors="coerce").fillna(0)
+    rows = rows[rows["_runs"] > 0].sort_values("_runs", ascending=False).head(4)
+    if rows.empty:
+        return player_v2_empty_advanced_card("Best batting position", "Coverage limited", "No batting sample available for a position-style read.")
+    max_runs = max(1.0, float(rows["_runs"].max()))
+    bars = "".join(
+        '<div class="player-v2-break-row">'
+        f'<strong>{html.escape(str(row.get("Grade", "—")))}</strong>'
+        f'<div><span style="width:{float(row["_runs"]) / max_runs * 100:.1f}%"></span></div>'
+        f'<em>{format_int(row.get("Runs"))}</em>'
+        '</div>'
+        for _, row in rows.iterrows()
+    )
+    return (
+        '<article class="player-v2-card player-v2-advanced-card">'
+        '<div class="player-v2-card-head"><div class="player-v2-kicker">Best Position</div><span>Scorecard-safe proxy</span></div>'
+        '<h3>Best deployed split is by grade</h3>'
+        f'{bars}'
+        '<p class="player-v2-insight">True batting-position reads need per-innings batting order data; this uses grade-level scoring as a safe coaching proxy.</p>'
+        '</article>'
+    )
+
+
+def player_v2_dismissal_card(profile_view: dict[str, pd.DataFrame]) -> str:
+    career = profile_view["career"].iloc[0]
+    innings = numeric_value(career, "Innings")
+    outs = numeric_value(career, "Outs")
+    not_outs = max(0, innings - outs)
+    ducks = numeric_value(career, "0s")
+    if innings <= 0:
+        return player_v2_empty_advanced_card("Dismissal fingerprint", "Coverage limited", "No batting innings are available for this player.")
+    values = [
+        ("Outs", outs, innings),
+        ("Not outs", not_outs, innings),
+        ("Ducks", ducks, innings),
+    ]
+    bars = "".join(
+        '<div class="player-v2-break-row">'
+        f'<strong>{html.escape(label)}</strong>'
+        f'<div><span style="width:{(value / max(1, total)) * 100:.1f}%"></span></div>'
+        f'<em>{value:.0f}</em>'
+        '</div>'
+        for label, value, total in values
+    )
+    return (
+        '<article class="player-v2-card player-v2-advanced-card">'
+        '<div class="player-v2-card-head"><div class="player-v2-kicker">Dismissal Fingerprint</div><span>Coverage limited</span></div>'
+        '<h3>Dismissal types need innings-level data</h3>'
+        f'{bars}'
+        '<p class="player-v2-insight">Caught/bowled/LBW fingerprinting will appear once dismissal-type scorecard rows are promoted to deploy-safe data.</p>'
+        '</article>'
+    )
+
+
+def player_v2_favourite_grade_card(profile_view: dict[str, pd.DataFrame]) -> str:
+    grade_table = profile_view.get("grade_table", pd.DataFrame())
+    if grade_table.empty:
+        return player_v2_empty_advanced_card("Favourite ground", "Coverage limited", "Ground-level records are not deployed for this player yet.")
+    rows = grade_table.copy()
+    rows["_impact"] = pd.to_numeric(rows.get("Runs", 0), errors="coerce").fillna(0) + pd.to_numeric(rows.get("Wickets", 0), errors="coerce").fillna(0) * 18
+    rows = rows[rows["_impact"] > 0].sort_values("_impact", ascending=False)
+    if rows.empty:
+        return player_v2_empty_advanced_card("Favourite ground", "Coverage limited", "Ground-level records are not deployed for this player yet.")
+    row = rows.iloc[0]
+    return (
+        '<article class="player-v2-card player-v2-advanced-card">'
+        '<div class="player-v2-card-head"><div class="player-v2-kicker">Favourite Ground / Grade</div><span>Scorecard-safe proxy</span></div>'
+        f'<h3>{html.escape(str(row.get("Grade", "Best split")))}</h3>'
+        '<div class="player-v2-mini-grid">'
+        f'<div><span>Runs</span><strong>{format_int(row.get("Runs"))}</strong></div>'
+        f'<div><span>Wickets</span><strong>{format_int(row.get("Wickets"))}</strong></div>'
+        f'<div><span>Bat avg</span><strong>{format_decimal(row.get("Bat Avg"))}</strong></div>'
+        f'<div><span>Eco</span><strong>{format_decimal(row.get("Econ"))}</strong></div>'
+        '</div>'
+        '<p class="player-v2-insight">Ground-level favourite cards will use venue records once deployed; this safely shows the strongest grade split today.</p>'
+        '</article>'
+    )
+
+
+def player_v2_favourite_opponent_card(context: dict[str, object]) -> str:
+    if int(context.get("premiership_count") or 0) > 0:
+        title = "Finals impact"
+        headline = f"{format_int(context.get('premiership_count'))} premierships"
+        copy = context.get("premiership_seasons") or "Verified finals evidence from premiership records."
+    else:
+        title = "Favourite opponent"
+        headline = "Coverage limited"
+        copy = "Opponent-normalised batting and bowling splits need match-level rows promoted to deploy-safe data."
+    return (
+        '<article class="player-v2-card player-v2-advanced-card">'
+        f'<div class="player-v2-card-head"><div class="player-v2-kicker">{html.escape(title)}</div><span>Match context</span></div>'
+        f'<h3>{html.escape(headline)}</h3>'
+        f'<p>{html.escape(str(copy))}</p>'
+        '</article>'
+    )
+
+
+def player_v2_empty_advanced_card(title: str, badge: str, copy: str) -> str:
+    return (
+        '<article class="player-v2-card player-v2-advanced-card player-v2-empty-card">'
+        f'<div class="player-v2-card-head"><div class="player-v2-kicker">{html.escape(title)}</div><span>{html.escape(badge)}</span></div>'
+        '<h3>Not enough deployed detail yet</h3>'
+        f'<p>{html.escape(copy)}</p>'
+        '</article>'
+    )
+
+
+def render_player_profile_v2_standout_performances(profile_view: dict[str, pd.DataFrame]) -> None:
+    cards = player_highlight_cards(profile_view)[:6]
+    if not cards:
+        return
+    st.markdown(
+        player_v2_section_header(
+            "Standout Performances 🔥",
+            "Best innings, spells, season peaks and record-book entries.",
+            "Scorecard-linked where available",
+        ),
+        unsafe_allow_html=True,
+    )
+    rendered = "".join(player_v2_performance_card(card) for card in cards)
+    st.markdown(f'<div class="player-v2-grid player-v2-grid-3">{rendered}</div>', unsafe_allow_html=True)
+
+
+def player_v2_performance_card(card: dict[str, str]) -> str:
+    value = str(card.get("value", "—"))
+    player = str(card.get("player", "—"))
+    meta = str(card.get("meta", "") or "")
+    if card.get("meta_html"):
+        meta_html = meta
+    elif card.get("link_type") == "season":
+        meta_html = season_overview_link_html(player) if player else html.escape(meta)
+    else:
+        meta_html = html.escape(meta)
+    scorecard = scorecard_link_html(card.get("match_id"), class_name="player-v2-subtle-link", page_slug=PLAYER_PROFILE_V2_QUERY_PAGE, section_name="player_profile_v2_performance") if card.get("match_id") else ""
+    return (
+        '<article class="player-v2-performance-card">'
+        '<div class="player-v2-performance-head">'
+        f'<div class="player-v2-kicker">{html.escape(str(card.get("title", "Performance")))}</div>'
+        f'<div class="player-v2-performance-value">{html.escape(value)}</div>'
+        '</div>'
+        '<div class="player-v2-performance-body">'
+        f'<h3>{html.escape(player)}</h3>'
+        f'<p>{meta_html}</p>'
+        f'{scorecard}'
+        '</div>'
+        '</article>'
+    )
+
+
+def render_player_profile_v2_partnerships(profile_view: dict[str, pd.DataFrame]) -> None:
+    st.markdown(
+        player_v2_section_header(
+            "Partnerships & Chemistry",
+            "Pairing cards are reserved for reliable innings or ball-by-ball partner data.",
+            "Coverage aware",
+        ),
+        unsafe_allow_html=True,
+    )
+    career = profile_view["career"].iloc[0]
+    cards = [
+        player_v2_pair_card("Batting partnerships", "Deploy-safe summary needed", "Best partner, average stand and best stand will appear once partnership rows are promoted."),
+        player_v2_pair_card("Bowling partnerships", "Scorecard pairing needed", "Useful for captaincy: combined wickets, economy and matches bowled together."),
+    ]
+    if numeric_value(career, "Wickets") >= 25:
+        cards.append(player_v2_pair_card("Verified bowling tandems", "Ball-by-ball only", "Alternating-over tandem reads should only use verified delivery data."))
+    st.markdown(f'<div class="player-v2-grid player-v2-grid-3">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def player_v2_pair_card(title: str, headline: str, copy: str) -> str:
+    initials = "".join(part[0] for part in title.split()[:2]).upper()
+    return (
+        '<article class="player-v2-card player-v2-pair-card">'
+        f'<div class="player-v2-pair-avatar">{html.escape(initials)}</div>'
+        '<div>'
+        f'<div class="player-v2-kicker">{html.escape(title)}</div>'
+        f'<h3>{html.escape(headline)}</h3>'
+        f'<p>{html.escape(copy)}</p>'
+        '</div>'
+        '</article>'
+    )
+
+
+def render_player_profile_v2_milestone_watch(career: pd.Series) -> None:
+    milestones = player_v2_milestone_rows(career)
+    if not milestones:
+        return
+    st.markdown(
+        player_v2_section_header(
+            "Milestone Watch 🎯",
+            "Major 100-match, 1000-run, 100-wicket and 100-catch targets.",
+            "Club milestones",
+        ),
+        unsafe_allow_html=True,
+    )
+    rows = "".join(player_v2_progress_card(row) for row in milestones)
+    st.markdown(f'<div class="player-v2-progress-row">{rows}</div>', unsafe_allow_html=True)
+
+
+def player_v2_milestone_rows(career: pd.Series) -> list[dict[str, object]]:
+    specs = [
+        ("Matches", "Matches", 100, "matches"),
+        ("Runs", "Runs", 1000, "runs"),
+        ("Wickets", "Wickets", 100, "wickets"),
+        ("Catches", "Catches", 100, "catches"),
+    ]
+    rows = []
+    for category, column, step, unit in specs:
+        current = int(numeric_value(career, column))
+        if current <= 0:
+            continue
+        target = next_milestone_target(current, step)
+        remaining = target - current
+        rows.append({"category": category, "current": current, "target": target, "remaining": remaining, "unit": unit, "progress": current / target * 100})
+    return rows
+
+
+def player_v2_progress_card(row: dict[str, object]) -> str:
+    return (
+        '<article class="player-v2-progress-card">'
+        f'<strong>{html.escape(str(row["category"]))}</strong>'
+        f'<span class="player-v2-away">{int(row["remaining"]):,} {html.escape(str(row["unit"]))} away</span>'
+        f'<div class="player-v2-progress-value">{int(row["current"]):,} / {int(row["target"]):,} {html.escape(str(row["unit"]))}</div>'
+        f'<div class="player-v2-progress-track"><span style="width:{float(row["progress"]):.1f}%"></span></div>'
+        '</article>'
+    )
+
+
+def render_player_profile_v2_timeline(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> None:
+    season_table = profile_view.get("season_table", pd.DataFrame())
+    if season_table.empty:
+        return
+    st.markdown(
+        player_v2_section_header(
+            "Season Trends + Story Timeline",
+            "A quick read of career shape before the detailed tables.",
+            "Season records",
+        ),
+        unsafe_allow_html=True,
+    )
+    ordered = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key))
+    latest = ordered.tail(5)
+    strip = "".join(
+        '<div class="player-v2-season-strip-card">'
+        f'<span>{season_overview_link_html(row.get("Season"))}</span>'
+        f'<strong>{format_int(row.get("Runs"))} runs</strong>'
+        f'<em>{format_int(row.get("Wickets"))} wickets</em>'
+        '</div>'
+        for _, row in latest.iterrows()
+    )
+    timeline_steps = player_v2_timeline_steps(ordered, context)
+    timeline = "".join(
+        '<div class="player-v2-timeline-step">'
+        '<span class="player-v2-timeline-dot"></span>'
+        f'<small>{html.escape(label)}</small>'
+        f'<strong>{value}</strong>'
+        '</div>'
+        for label, value in timeline_steps
+    )
+    st.markdown(f'<div class="player-v2-season-strip">{strip}</div><div class="player-v2-timeline">{timeline}</div>', unsafe_allow_html=True)
+
+
+def player_v2_timeline_steps(ordered: pd.DataFrame, context: dict[str, object]) -> list[tuple[str, str]]:
+    debut = str(ordered.iloc[0].get("Season", "—"))
+    latest = str(ordered.iloc[-1].get("Season", "—"))
+    runs = ordered.copy()
+    runs["_runs"] = pd.to_numeric(runs.get("Runs", 0), errors="coerce").fillna(0)
+    wickets = ordered.copy()
+    wickets["_wickets"] = pd.to_numeric(wickets.get("Wickets", 0), errors="coerce").fillna(0)
+    best_runs = runs.sort_values("_runs", ascending=False).iloc[0]
+    best_wickets = wickets.sort_values("_wickets", ascending=False).iloc[0]
+    prem = str(context.get("premiership_seasons") or "").split(",")[0].strip()
+    return [
+        ("Debut season", season_overview_link_html(debut)),
+        ("Best run season", f'{season_overview_link_html(best_runs.get("Season"))} · {format_int(best_runs.get("Runs"))} runs'),
+        ("Best wicket season", f'{season_overview_link_html(best_wickets.get("Season"))} · {format_int(best_wickets.get("Wickets"))} wickets'),
+        ("Premiership marker", season_overview_link_html(prem) if prem else "—"),
+        ("Latest season", season_overview_link_html(latest)),
+    ]
+
+
+def render_player_profile_v2_coverage_card(profile_view: dict[str, pd.DataFrame], context: dict[str, object]) -> None:
+    career = profile_view["career"].iloc[0]
+    bbb_balls = pd.to_numeric(context.get("bbb_balls"), errors="coerce")
+    bbb_text = f"{int(bbb_balls):,} verified batting balls" if pd.notna(bbb_balls) and bbb_balls > 0 else "No deploy-safe ball-by-ball batting sample for this player"
+    rows = [
+        ("Scorecard-safe", f"{format_int(career.get('Seasons Count'))} seasons, {format_int(career.get('Matches'))} matches, career totals and grade/season splits."),
+        ("Verified ball-by-ball", f"{bbb_text}. Rates and phase-style metrics stay blank unless verified."),
+        ("Coach notes", "Advanced opponent, ground, position, dismissal and partnership cards show coverage notes rather than fake values."),
+    ]
+    item_html = "".join(
+        f'<li><strong>{html.escape(title)}</strong><span>{html.escape(copy)}</span></li>'
+        for title, copy in rows
+    )
+    st.markdown(
+        f"""
+        <section class="player-v2-coverage-card">
+            <div>
+                <div class="player-v2-kicker">Data Coverage / Trust</div>
+                <h3>Designed to protect stat trust</h3>
+                <p>Ball-by-ball-only metrics never mix scorecard totals with delivery denominators. Missing coverage becomes a calm empty state.</p>
+            </div>
+            <ul>{item_html}</ul>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_player_profile_v2_breakdown(profile_view: dict[str, pd.DataFrame]) -> None:
+    st.markdown(
+        player_v2_section_header(
+            "Performance Breakdown",
+            "Lower audit layer for season and grade splits. Tables remain compact and sortable.",
+            "Audit layer",
+        ),
+        unsafe_allow_html=True,
+    )
+    season_tab, grade_tab = st.tabs(["Season", "Grade"])
+    with season_tab:
+        render_player_season_table(profile_view["season_table"])
+    with grade_tab:
+        render_player_grade_table(profile_view["grade_table"])
+
+
+def player_v2_section_header(title: str, subtitle: str = "", badge: str = "") -> str:
+    badge_html = f'<span class="player-v2-trust-chip">{html.escape(badge)}</span>' if badge else ""
+    subtitle_html = f'<p>{html.escape(subtitle)}</p>' if subtitle else ""
+    return (
+        '<section class="player-v2-section">'
+        '<div class="player-v2-section-head">'
+        '<div>'
+        f'<h2>{html.escape(title)}</h2>'
+        f'{subtitle_html}'
+        '</div>'
+        f'{badge_html}'
+        '</div>'
+        '</section>'
+    )
+
+
+def player_v2_percent(value: object) -> str:
+    number = pd.to_numeric(value, errors="coerce")
+    return "—" if pd.isna(number) else f"{float(number):.1f}%"
+
+
 @st.cache_data
 def load_player_profile_index(_local_version: float, _identity_version: float) -> pd.DataFrame:
     aliases = load_player_aliases()
@@ -10983,7 +12404,6 @@ def recent_bowling_chip_classes(row: pd.Series) -> str:
     if pd.notna(wickets) and float(wickets) == 0:
         classes.append("quiet")
     return " ".join(classes)
-
 
 
 def player_profile_is_keeper(career: pd.Series) -> bool:
