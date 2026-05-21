@@ -31,15 +31,16 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 
 ## Phase 3: Move FVCC Data Under `clubs/fvcc/data`
 
-- Move or copy FVCC data into a club-owned folder only after path helpers are proven.
-- Keep a compatibility shim for old `data/...` paths during transition.
-- Verify all stable pages and deploy-safe summaries before removing the shim.
+- Copy FVCC production-safe processed CSVs into `clubs/fvcc/data/processed/...`.
+- Prefer club-specific runtime files, with legacy `data/...` fallback for incomplete migration.
+- Keep raw match-centre, experimental data, mapping files, and refresh/write workflows in legacy locations until Phase 4+.
 
 ## Phase 4: Create `refresh_club.py --club fvcc`
 
 - Centralize club IDs, data paths, refresh outputs, and deploy-safe summary rebuilds.
 - Avoid direct script-level FVCC defaults once the new command exists.
 - Preserve no-network app runtime behaviour.
+- Make Hall of Fame, Season Overview, Player Profile, and milestone export builders write to the active club data folder.
 
 ## Phase 5: Create `onboard_club.py`
 

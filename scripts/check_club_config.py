@@ -9,6 +9,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.config.club_config import (  # noqa: E402
+    LEGACY_DATA_PATHS,
+    REPO_ROOT,
     get_active_club_id,
     get_club_data_path,
     get_club_name,
@@ -33,6 +35,10 @@ CORE_PROCESSED_FILES = [
     "all_seasons_batting.csv",
     "all_seasons_bowling.csv",
     "all_seasons_fielding.csv",
+    "all_seasons_matches.csv",
+    "all_seasons_scorecard_batting.csv",
+    "all_seasons_scorecard_bowling.csv",
+    "all_seasons_scorecard_fielding.csv",
 ]
 
 HALL_OF_FAME_FILES = [
@@ -145,7 +151,7 @@ def main() -> int:
 def require_file(path: Path, failures: list[str], label: str | None = None) -> None:
     status = "OK" if path.exists() else "MISSING"
     label_prefix = f"{label} -> " if label else ""
-    print(f"{status}: {label_prefix}{relative_label(path)}")
+    print(f"{status}: {label_prefix}{relative_label(path)} [{path_source_label(path)}]")
     if not path.exists():
         failures.append(f"Required file does not exist: {path}")
 
@@ -159,6 +165,41 @@ def require_directory(path: Path, failures: list[str]) -> None:
 
 def relative_label(path: Path) -> Path:
     return path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
+
+
+def path_source_label(path: Path) -> str:
+    resolved = path.resolve()
+    data_config = load_club_config().get("data", {})
+    for key in [
+        "root_dir",
+        "processed_dir",
+        "hall_of_fame_dir",
+        "season_overview_dir",
+    ]:
+        configured = configured_root(data_config.get(key))
+        legacy = configured_root(LEGACY_DATA_PATHS.get(key))
+        if configured and is_relative_to(resolved, configured):
+            return "club data"
+        if legacy and is_relative_to(resolved, legacy):
+            return "legacy fallback"
+    return "external"
+
+
+def configured_root(value: object) -> Path | None:
+    if value is None:
+        return None
+    path = Path(str(value))
+    if not path.is_absolute():
+        path = REPO_ROOT / path
+    return path.resolve()
+
+
+def is_relative_to(path: Path, parent: Path) -> bool:
+    try:
+        path.relative_to(parent)
+        return True
+    except ValueError:
+        return False
 
 
 if __name__ == "__main__":

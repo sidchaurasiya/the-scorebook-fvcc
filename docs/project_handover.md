@@ -32,13 +32,14 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Future-club starter template: `clubs/_template/club_config.yaml`.
 - Active club selection checks `CLUB_ID` from the environment first, then Streamlit secrets, and falls back to `fvcc`.
 - The new loader lives in `src/config/club_config.py`.
-- Existing data files still live in the current FVCC `data/...` paths. Do not move data into `clubs/fvcc/data` until a later migration phase.
+- Phase 3 copied production-safe FVCC processed CSVs into `clubs/fvcc/data/processed/...` and updated runtime reads to prefer those club-specific files.
 - `scripts/check_club_config.py` verifies the active club config and key deploy-safe data folders without network calls or file writes.
 - Phase 1 only wires low-risk display identity/contact values through config. Data paths, refresh scripts, team/grade logic, identity aliases, opponent mappings, and ground mappings remain unchanged for now.
-- Phase 2 adds explicit club-aware path helpers for processed, Hall of Fame, Season Overview, Player Profile, match-centre, experimental, and root mapping paths while still resolving FVCC to the existing `data/...` folders.
+- Phase 2 adds explicit club-aware path helpers for processed, Hall of Fame, Season Overview, Player Profile, match-centre, experimental, and root mapping paths.
 - Low-risk runtime readers now use config-aware paths for deploy-safe Hall of Fame files, Season Overview files, Player Profile processed summaries, match-centre read roots, and aggregate processed CSV reads. Refresh/backfill scripts and write workflows are not club-aware yet.
 - Phase 2.5 validates active-club runtime selection: no `CLUB_ID` defaults to `fvcc`, `CLUB_ID=fvcc` resolves the same paths and app pages, and invalid club IDs fail clearly in `scripts/check_club_config.py`.
-- FVCC data still lives in the legacy `data/...` layout. No data movement has happened; Phase 3 remains moving/copying FVCC data under `clubs/fvcc/data` with fallback.
+- Legacy `data/...` files remain in place as fallback during migration. Raw/full match-centre data, experimental outputs, player identity mapping files, and refresh/write workflows remain legacy until later phases.
+- Phase 4 should make refresh/export workflows club-aware so they can write deploy-safe summaries directly under each club data folder.
 - The detailed audit is in `docs/multi_club_architecture_audit.md`; the phased roadmap is in `docs/multi_club_scalability_plan.md`.
 
 ## Current Player Profile Work In Progress

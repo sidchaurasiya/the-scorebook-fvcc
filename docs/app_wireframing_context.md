@@ -71,11 +71,12 @@ Deployment:
 - Active FVCC config: `clubs/fvcc/club_config.yaml`.
 - Future-club template: `clubs/_template/club_config.yaml`.
 - Active club selection uses `CLUB_ID` from the environment, then Streamlit secrets, then defaults to `fvcc`.
-- Data still lives in existing `data/...` folders for this phase. Future phases will move data into club-specific folders after compatibility helpers are in place.
+- Production-safe FVCC processed data now lives under `clubs/fvcc/data/processed/...` for runtime reads, with legacy `data/...` files retained as fallback during migration.
 - The config foundation currently covers low-risk identity/contact/display values. Team/grade mappings, opponent/ground normalization, player aliases, refresh workflows, and deploy-safe data generation remain FVCC-specific until later phases.
-- Phase 2 added club-aware path helpers and switched low-risk runtime loaders to use them. The configured FVCC paths still point at existing `data/...` folders; no data files have moved.
+- Phase 2 added club-aware path helpers and switched low-risk runtime loaders to use them.
 - Refresh scripts, backfill scripts, player identity generation, opponent normalization, and ground normalization remain FVCC-specific for now.
-- Phase 2.5 validation confirms both no `CLUB_ID` and `CLUB_ID=fvcc` run against FVCC, while invalid club IDs return a clear checker error. Data still stays in legacy `data/...` paths until Phase 3.
+- Phase 2.5 validation confirmed both no `CLUB_ID` and `CLUB_ID=fvcc` run against FVCC, while invalid club IDs return a clear checker error.
+- Phase 3 copied only deploy/runtime-safe processed CSVs to `clubs/fvcc/data`; raw match-centre, experimental data, mapping files, and refresh/write workflows remain legacy until later phases.
 - Architecture audit: `docs/multi_club_architecture_audit.md`.
 - Roadmap: `docs/multi_club_scalability_plan.md`.
 

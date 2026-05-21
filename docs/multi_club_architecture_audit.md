@@ -2,7 +2,7 @@
 
 Last updated: 2026-05-21
 
-This audit captures FVCC-specific assumptions found while introducing the multi-club foundation. Phase 1 moved low-risk display identity and contact values into config. Phase 2 adds read-side path helpers while FVCC still points to the existing `data/...` layout.
+This audit captures FVCC-specific assumptions found while introducing the multi-club foundation. Phase 1 moved low-risk display identity and contact values into config. Phase 2 added read-side path helpers. Phase 3 copies FVCC production-safe processed data under `clubs/fvcc/data` while keeping legacy fallback paths.
 
 ## Config-Driven Now
 
@@ -17,6 +17,7 @@ This audit captures FVCC-specific assumptions found while introducing the multi-
 | Runtime processed reads | existing `data/processed` folders | `src/config/club_config.py`, `src/data/playcricket_ingestion.py`, `src/ui/layout.py` | Read through club-aware helpers while still resolving to legacy paths | Low |
 | Deploy-safe HOF reads | `data/processed/hall_of_fame/...` | `src/ui/layout.py` | Read through `get_hall_of_fame_path(...)` | Low |
 | Deploy-safe Season Overview reads | `data/processed/season_overview/...` | `src/ui/layout.py` | Read through `get_season_overview_path(...)` | Low |
+| Club production data copies | `clubs/fvcc/data/processed/...` | `clubs/fvcc/club_config.yaml`, `src/config/club_config.py` | Prefer club-specific processed CSVs with legacy fallback | Low |
 
 ## Config Later
 
@@ -25,7 +26,7 @@ This audit captures FVCC-specific assumptions found while introducing the multi-
 | PlayCricket club ID / URL | FVCC UUID and club URL | `src/data/playcricket_ingestion.py`, `scripts/refresh_data.py` | Phase 4 refresh workflow | Medium |
 | Processed data write paths | `data/processed/...` | refresh/export scripts under `scripts/` | Phase 4 refresh workflow | Medium |
 | Deploy-safe export paths | `data/processed/hall_of_fame/...`, `data/processed/season_overview/...` | HOF and Season Overview export scripts | Phase 4 | Medium |
-| Player alias and merge files | `data/player_aliases.csv`, `data/manual_player_merges.csv` | `src/utils/player_identity.py`, merge audit UI | Phase 3 | High |
+| Player alias and merge files | `data/player_aliases.csv`, `data/manual_player_merges.csv` | `src/utils/player_identity.py`, merge audit UI | Phase 4/5 | High |
 | Team/grade labels | FVCC teams, NMCA grade naming, FVCC short-code assumptions | `src/utils/team_grade.py` | Phase 5 onboarding | High |
 | Grade sort order | FVCC/NMCA grade ordering | `src/utils/team_grade.py`, UI sort helpers | Phase 2 config read, Phase 5 per-club mapping | Medium |
 | Opponent normalization | reviewed FVCC opponent mappings | `src/data/name_normalization.py` | Phase 5 onboarding and review pack | High |

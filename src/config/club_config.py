@@ -65,7 +65,18 @@ def get_club_data_path(key: str, *parts: str | Path, club_id: str | None = None)
     path = Path(str(path_value))
     if not path.is_absolute():
         path = REPO_ROOT / path
-    return path.joinpath(*parts)
+    configured_path = path.joinpath(*parts)
+    if not parts or configured_path.exists():
+        return configured_path
+
+    legacy_value = LEGACY_DATA_PATHS.get(key)
+    if legacy_value is None:
+        return configured_path
+    legacy_path = Path(legacy_value)
+    if not legacy_path.is_absolute():
+        legacy_path = REPO_ROOT / legacy_path
+    legacy_candidate = legacy_path.joinpath(*parts)
+    return legacy_candidate if legacy_candidate.exists() else configured_path
 
 
 def get_data_root(club_id: str | None = None) -> Path:
@@ -77,7 +88,7 @@ def get_processed_dir(club_id: str | None = None) -> Path:
 
 
 def get_processed_path(*parts: str | Path, club_id: str | None = None) -> Path:
-    return get_processed_dir(club_id).joinpath(*parts)
+    return get_club_data_path("processed_dir", *parts, club_id=club_id)
 
 
 def get_hall_of_fame_dir(club_id: str | None = None) -> Path:
@@ -85,7 +96,7 @@ def get_hall_of_fame_dir(club_id: str | None = None) -> Path:
 
 
 def get_hall_of_fame_path(*parts: str | Path, club_id: str | None = None) -> Path:
-    return get_hall_of_fame_dir(club_id).joinpath(*parts)
+    return get_club_data_path("hall_of_fame_dir", *parts, club_id=club_id)
 
 
 def get_season_overview_dir(club_id: str | None = None) -> Path:
@@ -93,7 +104,7 @@ def get_season_overview_dir(club_id: str | None = None) -> Path:
 
 
 def get_season_overview_path(*parts: str | Path, club_id: str | None = None) -> Path:
-    return get_season_overview_dir(club_id).joinpath(*parts)
+    return get_club_data_path("season_overview_dir", *parts, club_id=club_id)
 
 
 def get_raw_match_centre_dir(club_id: str | None = None) -> Path:
@@ -109,7 +120,7 @@ def get_experimental_dir(club_id: str | None = None) -> Path:
 
 
 def get_mapping_path(filename: str | Path, club_id: str | None = None) -> Path:
-    return get_data_root(club_id).joinpath(filename)
+    return get_club_data_path("root_dir", filename, club_id=club_id)
 
 
 def get_feature_flag(name: str, default: bool = False, club_id: str | None = None) -> bool:
