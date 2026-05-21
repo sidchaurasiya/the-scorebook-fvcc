@@ -37,6 +37,8 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Phase 1 only wires low-risk display identity/contact values through config. Data paths, refresh scripts, team/grade logic, identity aliases, opponent mappings, and ground mappings remain unchanged for now.
 - Phase 2 adds explicit club-aware path helpers for processed, Hall of Fame, Season Overview, Player Profile, match-centre, experimental, and root mapping paths while still resolving FVCC to the existing `data/...` folders.
 - Low-risk runtime readers now use config-aware paths for deploy-safe Hall of Fame files, Season Overview files, Player Profile processed summaries, match-centre read roots, and aggregate processed CSV reads. Refresh/backfill scripts and write workflows are not club-aware yet.
+- Phase 2.5 validates active-club runtime selection: no `CLUB_ID` defaults to `fvcc`, `CLUB_ID=fvcc` resolves the same paths and app pages, and invalid club IDs fail clearly in `scripts/check_club_config.py`.
+- FVCC data still lives in the legacy `data/...` layout. No data movement has happened; Phase 3 remains moving/copying FVCC data under `clubs/fvcc/data` with fallback.
 - The detailed audit is in `docs/multi_club_architecture_audit.md`; the phased roadmap is in `docs/multi_club_scalability_plan.md`.
 
 ## Current Player Profile Work In Progress

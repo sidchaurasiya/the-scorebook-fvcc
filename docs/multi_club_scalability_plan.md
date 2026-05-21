@@ -23,6 +23,12 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Replace low-risk runtime loaders first: aggregate processed reads, Hall of Fame deploy-safe files, Season Overview deploy-safe files, Player Profile processed summaries, and match-centre read roots.
 - Leave refresh/backfill scripts, data-generation scripts, player identity generation, and normalization mappings on legacy paths until later phases.
 
+## Phase 2.5: Validate Active Club Configuration
+
+- Validate `scripts/check_club_config.py` with no `CLUB_ID`, with `CLUB_ID=fvcc`, and with an invalid club ID.
+- Confirm the production-style app runs with `CLUB_ID=fvcc` and still loads Hall of Fame, Season Overview, Milestone, and Player Profile without exposing experimental pages.
+- Keep FVCC data in the legacy `data/...` layout; no data files move in this phase.
+
 ## Phase 3: Move FVCC Data Under `clubs/fvcc/data`
 
 - Move or copy FVCC data into a club-owned folder only after path helpers are proven.

@@ -75,6 +75,7 @@ Deployment:
 - The config foundation currently covers low-risk identity/contact/display values. Team/grade mappings, opponent/ground normalization, player aliases, refresh workflows, and deploy-safe data generation remain FVCC-specific until later phases.
 - Phase 2 added club-aware path helpers and switched low-risk runtime loaders to use them. The configured FVCC paths still point at existing `data/...` folders; no data files have moved.
 - Refresh scripts, backfill scripts, player identity generation, opponent normalization, and ground normalization remain FVCC-specific for now.
+- Phase 2.5 validation confirms both no `CLUB_ID` and `CLUB_ID=fvcc` run against FVCC, while invalid club IDs return a clear checker error. Data still stays in legacy `data/...` paths until Phase 3.
 - Architecture audit: `docs/multi_club_architecture_audit.md`.
 - Roadmap: `docs/multi_club_scalability_plan.md`.
 

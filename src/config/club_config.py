@@ -135,7 +135,8 @@ def _load_club_config_cached(club_id: str) -> dict[str, Any]:
     config_path = CLUBS_ROOT / club_id / "club_config.yaml"
     if not config_path.exists():
         raise RuntimeError(
-            f"Club config not found for '{club_id}'. Expected file: {config_path}"
+            f"Club config not found for '{club_id}'. Expected file: {config_path}. "
+            f"Create clubs/{club_id}/club_config.yaml or unset CLUB_ID to use '{DEFAULT_CLUB_ID}'."
         )
 
     config_text = config_path.read_text(encoding="utf-8")

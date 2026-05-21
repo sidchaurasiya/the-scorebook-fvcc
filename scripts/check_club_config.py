@@ -64,14 +64,27 @@ HELPER_PATHS = {
     "get_experimental_dir": get_experimental_dir,
 }
 
+DIAGNOSTIC_HELPER_FILES = [
+    ("get_processed_path", get_processed_path, "all_seasons_batting.csv"),
+    ("get_hall_of_fame_path", get_hall_of_fame_path, "fastest_batting_milestones.csv"),
+    ("get_season_overview_path", get_season_overview_path, "bbb_batting_rates_by_scope.csv"),
+]
+
 
 def main() -> int:
     club_id = get_active_club_id()
-    config = load_club_config(club_id)
+    try:
+        config = load_club_config(club_id)
+    except RuntimeError as error:
+        print("Club config check failed:")
+        print(f"- {error}")
+        return 1
     failures: list[str] = []
+    club_config = config.get("club", {})
 
     print(f"Active club ID: {club_id}")
-    print(f"Club name: {get_club_name(club_id)}")
+    print(f"Club display name: {get_club_name(club_id)}")
+    print(f"App name: {club_config.get('app_name', 'The Scorebook')}")
 
     data_config = config.get("data", {})
     for key in [
@@ -100,6 +113,10 @@ def main() -> int:
         if label in {"get_data_root", "get_processed_dir", "get_hall_of_fame_dir", "get_season_overview_dir"} and not path.exists():
             failures.append(f"Required helper path does not exist: {path}")
 
+    print("\nExplicit helper file checks:")
+    for label, helper, filename in DIAGNOSTIC_HELPER_FILES:
+        require_file(helper(filename, club_id=club_id), failures, label=f'{label}("{filename}")')
+
     processed_dir = get_processed_dir(club_id=club_id)
     for filename in CORE_PROCESSED_FILES:
         require_file(get_processed_path(filename, club_id=club_id), failures)
@@ -125,9 +142,10 @@ def main() -> int:
     return 0
 
 
-def require_file(path: Path, failures: list[str]) -> None:
+def require_file(path: Path, failures: list[str], label: str | None = None) -> None:
     status = "OK" if path.exists() else "MISSING"
-    print(f"{status}: {relative_label(path)}")
+    label_prefix = f"{label} -> " if label else ""
+    print(f"{status}: {label_prefix}{relative_label(path)}")
     if not path.exists():
         failures.append(f"Required file does not exist: {path}")
 
