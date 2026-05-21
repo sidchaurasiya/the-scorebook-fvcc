@@ -64,6 +64,18 @@ Deployment:
 - Push only after local review.
 - Streamlit cache/server may need reboot after pushed data changes.
 
+## Multi-Club Scalability Foundation
+
+- The app is beginning a safe move from FVCC-specific implementation toward a repeatable club analytics product.
+- FVCC remains the default active club and current visible app behaviour should stay unchanged.
+- Active FVCC config: `clubs/fvcc/club_config.yaml`.
+- Future-club template: `clubs/_template/club_config.yaml`.
+- Active club selection uses `CLUB_ID` from the environment, then Streamlit secrets, then defaults to `fvcc`.
+- Data still lives in existing `data/...` folders for this phase. Future phases will move data into club-specific folders after compatibility helpers are in place.
+- The config foundation currently covers low-risk identity/contact/display values. Team/grade mappings, opponent/ground normalization, player aliases, refresh workflows, and deploy-safe data generation remain FVCC-specific until later phases.
+- Architecture audit: `docs/multi_club_architecture_audit.md`.
+- Roadmap: `docs/multi_club_scalability_plan.md`.
+
 ## 2. Navigation And Access Model
 
 Current production navigation pages:

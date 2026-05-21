@@ -47,6 +47,7 @@ from src.data.playcricket_ingestion import (
     read_processed_table,
     refresh_playcricket_backup,
 )
+from src.config.club_config import get_club_name, get_club_short_name, load_club_config
 from src.data import player_dna_analytics as player_dna
 from src.data import scorebook_lab_analytics as scorebook_lab
 from src.data import season_story_analytics as season_story
@@ -242,6 +243,51 @@ def query_param_value(name: str) -> str:
     if isinstance(value, list):
         value = value[0] if value else ""
     return str(value).strip()
+
+
+def configured_club_label_html(class_name: str = "club-label") -> str:
+    return f'<div class="{html.escape(class_name)}">{html.escape(get_club_name())}</div>'
+
+
+def configured_club_short_name() -> str:
+    return get_club_short_name()
+
+
+def configured_club_shield_text() -> str:
+    short_name = configured_club_short_name()
+    return short_name[:2].upper() if short_name else "FV"
+
+
+def configured_contact() -> dict[str, object]:
+    contact = load_club_config().get("contact", {})
+    return contact if isinstance(contact, dict) else {}
+
+
+def configured_creator_names(separator: str = " | ") -> str:
+    creators = configured_contact().get("creators", [])
+    if not isinstance(creators, list):
+        creators = []
+    cleaned = [str(name).strip() for name in creators if str(name).strip()]
+    return separator.join(cleaned) if cleaned else "Siddhanth Chaurasiya | Preet Kaur"
+
+
+def configured_creator_names_html(separator: str = " |<br>") -> str:
+    creators = configured_contact().get("creators", [])
+    if not isinstance(creators, list):
+        creators = []
+    cleaned = [str(name).strip() for name in creators if str(name).strip()]
+    if not cleaned:
+        cleaned = ["Siddhanth Chaurasiya", "Preet Kaur"]
+    return separator.join(html.escape(name) for name in cleaned)
+
+
+def configured_feedback_email() -> str:
+    email = str(configured_contact().get("feedback_email", "")).strip()
+    return email or "siddhanthchaurasiya@gmail.com"
+
+
+def configured_feedback_email_html() -> str:
+    return html.escape(configured_feedback_email()).replace("@", "<br>@")
 
 
 def resolve_current_page_from_query() -> str:
@@ -642,11 +688,11 @@ def render_sidebar() -> str:
         )
 
     st.sidebar.markdown(
-        """
+        f"""
         <div class="side-brand">
-            <div class="side-shield">FV</div>
+            <div class="side-shield">{html.escape(configured_club_shield_text())}</div>
             <div>
-                <div class="side-title">FVCC</div>
+                <div class="side-title">{html.escape(configured_club_short_name())}</div>
                 <div class="side-subtitle">Stats Hub</div>
             </div>
         </div>
@@ -659,13 +705,13 @@ def render_sidebar() -> str:
     )
     st.sidebar.markdown(f'<nav class="side-nav">{nav_links}</nav>', unsafe_allow_html=True)
     st.sidebar.markdown(
-        """
+        f"""
         <div class="side-footer">
             <div class="side-footer-label">App created by</div>
-            <div class="side-footer-names">Siddhanth Chaurasiya |<br>Preet Kaur</div>
+            <div class="side-footer-names">{configured_creator_names_html()}</div>
             <div class="side-footer-contact">
                 <div>For feedback/enquiries:</div>
-                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya<br>@gmail.com</a>
+                <a href="mailto:{html.escape(configured_feedback_email())}">{configured_feedback_email_html()}</a>
             </div>
         </div>
         """,
@@ -678,13 +724,13 @@ def render_sidebar() -> str:
 
 def render_mobile_page_footer() -> None:
     st.markdown(
-        """
+        f"""
         <div class="mobile-page-footer">
             <div class="mobile-footer-label">App created by</div>
-            <div class="mobile-footer-names">Siddhanth Chaurasiya |<br>Preet Kaur</div>
+            <div class="mobile-footer-names">{configured_creator_names_html()}</div>
             <div class="mobile-footer-contact">
                 <div>For feedback/enquiries:</div>
-                <a href="mailto:siddhanthchaurasiya@gmail.com">siddhanthchaurasiya<br>@gmail.com</a>
+                <a href="mailto:{html.escape(configured_feedback_email())}">{configured_feedback_email_html()}</a>
             </div>
         </div>
         """,
@@ -876,7 +922,7 @@ def render_data_source_panel(
             f"""
             <div class="{html.escape(page_marker_class)}"></div>
             <h1 class="page-title">{html.escape(header_title)}</h1>
-            <div class="club-label">Fiji Victorian Cricket Club</div>
+            {configured_club_label_html()}
             <div class="page-subtitle">{html.escape(header_description)}</div>
             <div class="page-note">{html.escape(context_description)}</div>
             """,
@@ -2188,9 +2234,9 @@ def season_v2_value(value: object, unit: object) -> str:
 
 def render_match_centre_page() -> None:
     st.markdown(
-        """
+        f"""
         <h1 class="page-title">Match Insights</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <div class="page-subtitle">Scorebook-only match stories, player trends, and records from match-centre data.</div>
         """,
         unsafe_allow_html=True,
@@ -2264,9 +2310,9 @@ def render_match_centre_page() -> None:
 
 def render_advanced_analytics_page() -> None:
     st.markdown(
-        """
+        f"""
         <h1 class="page-title">Advanced Analytics</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <div class="page-subtitle">Player-level splits that go beyond the standard PlayCricket scorecard.</div>
         """,
         unsafe_allow_html=True,
@@ -2399,10 +2445,10 @@ def render_hidden_performances_section(rows: dict[str, pd.DataFrame], frames: di
 
 def render_player_dna_page() -> None:
     render_player_dna_html(
-        """
+        f"""
         <div class="player-dna-page"></div>
         <h1 class="page-title">Player DNA</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <div class="page-subtitle">A hidden experimental lens on player identity, strengths, and match-centre patterns.</div>
         """
     )
@@ -2777,10 +2823,10 @@ def dna_pct(value: object) -> str:
 
 def render_scorebook_lab_page() -> None:
     render_player_dna_html(
-        """
+        f"""
         <div class="scorebook-lab-page"></div>
         <h1 class="page-title">Scorebook Lab</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <div class="page-subtitle">Experimental hidden records, matchup stories, MVP cards, and scorecard intelligence.</div>
         """
     )
@@ -4076,10 +4122,10 @@ def render_hall_of_fame_page() -> None:
     )
 
     st.markdown(
-        """
+        f"""
         <div class="hall-of-fame-page"></div>
         <h1 class="page-title">Hall of Fame 🏆</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <div class="page-subtitle">The players who shaped the club’s history.</div>
         <div class="page-note">Players with multiple PlayCricket profiles are merged into one profile.</div>
         """,
@@ -4141,7 +4187,7 @@ def render_hall_of_fame_v2_hero(data: dict[str, object]) -> None:
         <section class="hof-v2-hero" id="top">
             <div class="hof-v2-hero-grid">
                 <div>
-                    <div class="hof-v2-eyebrow">Fiji Victorian Cricket Club</div>
+                    {configured_club_label_html("hof-v2-eyebrow")}
                     <h1>Hall of Fame 🏛️</h1>
                     <p class="hof-v2-hero-copy">A club record book for FVCC legends, premierships and iconic performances.</p>
                     <div class="hof-v2-source-badges">
@@ -4687,10 +4733,10 @@ def render_approaching_milestones_page() -> None:
     hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
     selected_view = selected_milestone_page_view()
     st.markdown(
-        """
+        f"""
         <div class="near-milestones-page"></div>
         <h1 class="page-title">Players approaching major milestones 🎯</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         """,
         unsafe_allow_html=True,
     )
@@ -8396,10 +8442,10 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
 def render_player_profile_page() -> None:
     index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
     st.markdown(
-        """
+        f"""
         <div class="player-profile-page"></div>
         <h1 class="page-title">Player Spotlight 🏏</h1>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <div class="page-subtitle">Search any player and explore their career story across seasons, teams, and formats.</div>
         """,
         unsafe_allow_html=True,
@@ -8559,7 +8605,7 @@ def render_player_profile_v2_page() -> None:
         <div class="player-v2-title-row">
             <div>
                 <h1 class="player-v2-page-title">Player scouting profile 🧬</h1>
-                <div class="club-label">Fiji Victorian Cricket Club</div>
+                {configured_club_label_html()}
             </div>
             <span class="player-v2-preview-badge">Hidden experimental page</span>
         </div>
@@ -8720,7 +8766,7 @@ def render_player_profile_v2_hero(profile_view: dict[str, pd.DataFrame], context
         <section class="player-v2-hero">
             <div class="player-v2-hero-grid">
                 <div>
-                    <div class="player-v2-club-eyebrow">Fiji Victorian Cricket Club</div>
+                    {configured_club_label_html("player-v2-club-eyebrow")}
                     <h2>{player_name}</h2>
                     <p class="player-v2-hero-copy">{html.escape(insight)}</p>
                     <div class="player-v2-badge-row">{badge_html}</div>
@@ -12854,9 +12900,9 @@ def render_player_merge_audit_page() -> None:
     suggestions = audit_data["suggestions"]
 
     st.markdown(
-        """
+        f"""
         <div class="page-kicker">Admin audit</div>
-        <div class="club-label">Fiji Victorian Cricket Club</div>
+        {configured_club_label_html()}
         <h1 class="page-title">Player Merge Audit</h1>
         <div class="page-subtitle">Review merged player profiles before trusting all-time records.</div>
         """,
@@ -13538,7 +13584,7 @@ def render_context_line(dashboard_data: dict[str, object]) -> None:
         f"""
         <div class="context-line">
             <span>{html.escape(str(dashboard_data["context_description"]))}</span>
-            <span class="source-note">App created by Siddhanth Chaurasiya | Preet Kaur</span>
+            <span class="source-note">App created by {html.escape(configured_creator_names())}</span>
         </div>
         """,
         unsafe_allow_html=True,

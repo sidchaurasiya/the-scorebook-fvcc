@@ -25,6 +25,18 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
   - Commit locally after verification.
   - Do not push until Preet confirms.
 
+## Multi-Club Scalability Foundation
+
+- Phase 1 introduces a config foundation only; FVCC remains the default and only real configured club.
+- Active config path: `clubs/fvcc/club_config.yaml`.
+- Future-club starter template: `clubs/_template/club_config.yaml`.
+- Active club selection checks `CLUB_ID` from the environment first, then Streamlit secrets, and falls back to `fvcc`.
+- The new loader lives in `src/config/club_config.py`.
+- Existing data files still live in the current FVCC `data/...` paths. Do not move data into `clubs/fvcc/data` until a later migration phase.
+- `scripts/check_club_config.py` verifies the active club config and key deploy-safe data folders without network calls or file writes.
+- Phase 1 only wires low-risk display identity/contact values through config. Data paths, refresh scripts, team/grade logic, identity aliases, opponent mappings, and ground mappings remain unchanged for now.
+- The detailed audit is in `docs/multi_club_architecture_audit.md`; the phased roadmap is in `docs/multi_club_scalability_plan.md`.
+
 ## Current Player Profile Work In Progress
 
 - Player Profile is being refined on `main`; do not push until Preet confirms the local review.

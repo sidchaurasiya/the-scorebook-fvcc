@@ -1,0 +1,48 @@
+club:
+  club_id: your-club-id
+  name: Your Cricket Club
+  short_name: YCC
+  display_name: Your Cricket Club
+  app_name: The Scorebook
+  playcricket_club_id: replace-with-playcricket-club-uuid
+  default_page: hall-of-fame
+
+branding:
+  primary_colour: "#6D4DFF"
+  secondary_colour: "#9F2747"
+  background_colour: "#F7F8FC"
+  logo_path: null
+
+contact:
+  creators:
+    - Your Name
+  feedback_email: hello@example.com
+
+features:
+  show_experimental_match_centre_pages: false
+  season_overview_v2_enabled: false
+  hall_of_fame_enabled: true
+  season_overview_enabled: true
+  milestone_enabled: true
+  player_profile_enabled: true
+
+data:
+  root_dir: clubs/your-club-id/data
+  processed_dir: clubs/your-club-id/data/processed
+  hall_of_fame_dir: clubs/your-club-id/data/processed/hall_of_fame
+  season_overview_dir: clubs/your-club-id/data/processed/season_overview
+  raw_match_centre_dir: clubs/your-club-id/data/raw/match_centre
+  processed_match_centre_dir: clubs/your-club-id/data/processed/match_centre
+  experimental_dir: clubs/your-club-id/data/processed/experimental
+
+display:
+  default_season: latest
+  include_summer: true
+  include_winter: true
+  grade_order:
+    - First XI
+    - Second XI
+    - Third XI
+  home_ground_keywords:
+    - Main Oval
+    - Home Reserve
