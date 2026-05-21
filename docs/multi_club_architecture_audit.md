@@ -1,6 +1,6 @@
 # Multi-Club Architecture Audit
 
-Last updated: 2026-05-21
+Last updated: 2026-05-22
 
 This audit captures FVCC-specific assumptions found while introducing the multi-club foundation. Phase 1 moved low-risk display identity and contact values into config. Phase 2 added read-side path helpers. Phase 3 copies FVCC production-safe processed data under `clubs/fvcc/data` while keeping legacy fallback paths.
 
@@ -34,6 +34,20 @@ This audit captures FVCC-specific assumptions found while introducing the multi-
 | Home ground assumptions | inferred from FVCC match context and reviewed venue labels | analytics/export scripts | Phase 6 QA pack | High |
 | Match-centre FVCC filters | `is_fvcc_team_name`, `fvcc_team_id`, FVCC-only scorecard rows | `src/analytics/match_centre_advanced.py`, `src/data/match_centre_milestones.py`, `src/ui/layout.py` | Phase 4/5 | High |
 | Refresh/backfill defaults | FVCC season/team IDs and local folders | `scripts/refresh_data.py`, `scripts/backfill_match_centre_available.py`, `scripts/pilot_match_centre_one_team_season.py` | Phase 4 | High |
+
+## Phase 4 Refresh / Export Script Audit
+
+| Script / module | Current inputs | Current outputs | Config usage after Phase 4 | Phase 4 action | Risk |
+| --- | --- | --- | --- | --- | --- |
+| `scripts/build_season_overview_detail_exports.py` | `data/processed/match_centre`, club `teams.csv` | `clubs/<club_id>/data/processed/season_overview` by default | `--club`, `get_processed_match_centre_dir`, `get_season_overview_dir`, `get_processed_path("teams.csv")` | Club-aware deploy-safe writer with `--dry-run`; legacy output only via `--legacy-output` | Medium |
+| `scripts/build_player_profile_insight_exports.py` | `data/processed/match_centre` via Season Overview helper | `clubs/<club_id>/data/processed/player_profile` by default | `--club`, `get_processed_dir`, shared match-centre helper | Club-aware deploy-safe writer with `--dry-run`; legacy output only via `--legacy-output` | Medium |
+| `scripts/build_hall_of_fame_detail_exports.py` | `data/processed/match_centre`, club `players.csv`, legacy `data/player_aliases.csv` fallback | `clubs/<club_id>/data/processed/hall_of_fame` by default | `--club`, `get_hall_of_fame_dir`, `get_processed_match_centre_dir`, `get_processed_path`, `get_mapping_path` | Club-aware deploy-safe writer with `--dry-run`; legacy output only via `--legacy-output` | Medium |
+| `scripts/build_premiership_hall_of_fame_exports.py` | `data/processed/experimental/premiership_exploration`, `data/processed/match_centre/all_available` | `clubs/<club_id>/data/processed/hall_of_fame` by default | `--club`, `get_experimental_dir`, `get_processed_match_centre_dir`, `get_hall_of_fame_dir` | Club-aware deploy-safe writer with `--dry-run`; legacy output only via `--legacy-output` | Medium |
+| `scripts/build_match_centre_milestones.py` | `data/processed/match_centre`, club `players.csv`, legacy `data/player_aliases.csv` fallback | `data/processed/match_centre` | `--club`, `get_processed_match_centre_dir`, `get_processed_path`, `get_mapping_path` | Add reporting/dry-run only; output remains ignored/generated match-centre folder | Medium |
+| `scripts/refresh_data.py` | PlayCricket API, legacy raw/processed aggregate paths, legacy match-centre refresh | Legacy aggregate outputs plus club-aware deploy-safe output builders | `--club`, active club PlayCricket ID, deploy-safe builder commands | Add club-aware dry-run plan and pass `--club` to deploy-safe builders; aggregate write migration remains later | High |
+| `scripts/refresh_match_centre_data.py` | PlayCricket match-centre API, command-line season/team IDs | `data/raw/match_centre`, `data/processed/match_centre` | None in Phase 4 | Remain legacy ignored raw/generated workflow | High |
+| `scripts/backfill_match_centre_available.py` | Existing local match-centre raw files and legacy teams | `data/raw/match_centre/all_available`, `data/processed/match_centre/all_available` | None in Phase 4 | Remain legacy ignored raw/generated workflow | High |
+| `src/data/playcricket_ingestion.py` | PlayCricket public API and legacy raw/processed paths | Legacy aggregate raw/processed outputs | Runtime reads are already club-aware; writes remain legacy | Leave write workflow unchanged until aggregate refresh migration | High |
 
 ## Remain Global
 

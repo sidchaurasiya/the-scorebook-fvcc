@@ -8,6 +8,7 @@ files instead of ignored experimental audit outputs.
 
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -18,18 +19,46 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
+from src.config.club_config import get_experimental_dir, get_hall_of_fame_dir, get_processed_match_centre_dir  # noqa: E402
 from src.utils.player_identity import display_player_name
 
 
-EXPLORATION_DIR = REPO_ROOT / "data" / "processed" / "experimental" / "premiership_exploration"
-MATCH_CENTRE_DIR = REPO_ROOT / "data" / "processed" / "match_centre" / "all_available"
 OUTPUT_DIR = REPO_ROOT / "data" / "processed" / "hall_of_fame"
+OUTPUT_FILENAMES = ["premiership_wins.csv", "player_premierships.csv"]
 
 
-def main() -> None:
-    wins = read_csv(EXPLORATION_DIR / "fvcc_premiership_win_candidates.csv")
-    players = read_csv(EXPLORATION_DIR / "premiership_players_candidate.csv")
-    matches = read_csv(MATCH_CENTRE_DIR / "all_matches.csv")
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Build deploy-safe Hall of Fame premiership exports.")
+    add_club_args(parser)
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    club_id = resolve_club_id(args.club)
+    exploration_dir = get_experimental_dir(club_id=club_id) / "premiership_exploration"
+    match_centre_dir = get_processed_match_centre_dir(club_id=club_id) / "all_available"
+    output_dir = OUTPUT_DIR if args.legacy_output else get_hall_of_fame_dir(club_id=club_id)
+    output_paths = [output_dir / filename for filename in OUTPUT_FILENAMES]
+
+    print_club_header("Hall of Fame premiership export builder", club_id)
+    print_paths(
+        "Inputs",
+        [
+            exploration_dir / "fvcc_premiership_win_candidates.csv",
+            exploration_dir / "premiership_players_candidate.csv",
+            match_centre_dir / "all_matches.csv",
+        ],
+    )
+    print_outputs("Outputs", output_paths)
+    if args.dry_run:
+        print("Dry run complete. No files were written.")
+        return 0
+
+    wins = read_csv(exploration_dir / "fvcc_premiership_win_candidates.csv")
+    players = read_csv(exploration_dir / "premiership_players_candidate.csv")
+    matches = read_csv(match_centre_dir / "all_matches.csv")
 
     if wins.empty:
         raise SystemExit("No premiership win candidates found. Run scripts/explore_premierships.py first.")
@@ -39,12 +68,13 @@ def main() -> None:
 
     validate_exports(wins_export, players_export)
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    wins_export.to_csv(OUTPUT_DIR / "premiership_wins.csv", index=False)
-    players_export.to_csv(OUTPUT_DIR / "player_premierships.csv", index=False)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    wins_export.to_csv(output_dir / "premiership_wins.csv", index=False)
+    players_export.to_csv(output_dir / "player_premierships.csv", index=False)
 
     print(f"Wrote {len(wins_export)} premiership wins")
     print(f"Wrote {len(players_export)} player premiership records")
+    return 0
 
 
 def read_csv(path: Path) -> pd.DataFrame:
@@ -241,4 +271,4 @@ def season_sort_key(value: object) -> int:
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

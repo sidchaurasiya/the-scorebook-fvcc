@@ -200,3 +200,22 @@ The runner writes one ignored combined scope:
 - `data/processed/match_centre/all_available/`
 
 It reuses cached files, sleeps between uncached public requests, deduplicates matches across team lists, fetches ball-by-ball only when `isBallByBall` is true, and regenerates batting milestone records for the `all_available` scope.
+
+## Multi-Club Phase 4 Notes
+
+Match-centre raw/full generated folders remain legacy ignored paths in Phase 4. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
+
+Dry-run commands:
+
+```bash
+./.venv-app/bin/python scripts/build_match_centre_milestones.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
+```
+
+Deploy-safe builders write to club folders by default:
+
+- Hall of Fame: `clubs/<club_id>/data/processed/hall_of_fame/`
+- Season Overview: `clubs/<club_id>/data/processed/season_overview/`
+- Player Profile: `clubs/<club_id>/data/processed/player_profile/`
+
+Use `--legacy-output` only when an explicit compatibility rebuild is required.

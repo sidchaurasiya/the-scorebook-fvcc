@@ -8,6 +8,7 @@ production app depend on ignored match-centre folders at runtime.
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -19,25 +20,59 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import build_player_profile_insight_exports as profile_exports  # noqa: E402
-from scripts import build_season_overview_detail_exports as season_exports  # noqa: E402
+from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
+from src.config.club_config import get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
 OUTPUT_DIR = ROOT / "data" / "processed" / "hall_of_fame"
+OUTPUT_FILENAMES = [
+    "player_win_rates.csv",
+    "player_bbb_batting_rates.csv",
+    "player_scorecard_milestones.csv",
+    "player_bowling_milestones.csv",
+    "scorecard_record_links.csv",
+    "fastest_batting_milestones.csv",
+]
 
 
-def main() -> int:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    frames = profile_exports.load_player_profile_scopes()
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Build deploy-safe Hall of Fame match-centre summaries.")
+    add_club_args(parser)
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    club_id = resolve_club_id(args.club)
+    output_dir = OUTPUT_DIR if args.legacy_output else get_hall_of_fame_dir(club_id=club_id)
+    output_paths = [output_dir / filename for filename in OUTPUT_FILENAMES]
+
+    print_club_header("Hall of Fame deploy-safe detail export builder", club_id)
+    print_paths(
+        "Inputs",
+        [
+            get_processed_match_centre_dir(club_id=club_id),
+            get_processed_path("players.csv", club_id=club_id),
+            get_mapping_path("player_aliases.csv", club_id=club_id),
+        ],
+    )
+    print_outputs("Outputs", output_paths)
+    if args.dry_run:
+        print("Dry run complete. No files were written.")
+        return 0
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    frames = profile_exports.load_player_profile_scopes(club_id=club_id)
     if frames["matches"].empty:
         print("No match-centre processed scopes found. No Hall of Fame detail exports built.")
         return 1
 
-    batting = profile_exports.prepare_batting(frames)
-    bowling = profile_exports.prepare_bowling(frames)
-    fielding = profile_exports.prepare_fielding(frames)
-    balls = profile_exports.prepare_ball_rows(frames)
+    batting = profile_exports.prepare_batting(frames, club_id=club_id)
+    bowling = profile_exports.prepare_bowling(frames, club_id=club_id)
+    fielding = profile_exports.prepare_fielding(frames, club_id=club_id)
+    balls = profile_exports.prepare_ball_rows(frames, club_id=club_id)
 
     outputs = {
         "player_win_rates.csv": build_player_win_rates(frames["matches"], batting, bowling, fielding),
@@ -45,14 +80,14 @@ def main() -> int:
         "player_scorecard_milestones.csv": build_player_scorecard_milestones(batting),
         "player_bowling_milestones.csv": build_player_bowling_milestones(bowling),
         "scorecard_record_links.csv": build_scorecard_record_links(batting, bowling),
-        "fastest_batting_milestones.csv": build_fastest_batting_milestones(),
+        "fastest_batting_milestones.csv": build_fastest_batting_milestones(club_id=club_id),
     }
     for filename, frame in outputs.items():
-        frame.to_csv(OUTPUT_DIR / filename, index=False)
+        frame.to_csv(output_dir / filename, index=False)
 
     print("Hall of Fame deploy-safe detail exports rebuilt")
     for filename, frame in outputs.items():
-        print(f"- {OUTPUT_DIR / filename}: {len(frame):,} rows")
+        print(f"- {output_dir / filename}: {len(frame):,} rows")
     return 0
 
 
@@ -215,11 +250,11 @@ def build_scorecard_record_links(batting: pd.DataFrame, bowling: pd.DataFrame) -
     return rows[columns].sort_values(["mode", "canonical_player_name", "first_match_day"])
 
 
-def build_fastest_batting_milestones() -> pd.DataFrame:
+def build_fastest_batting_milestones(club_id: str | None = None) -> pd.DataFrame:
     result = build_batting_milestones(
-        ROOT / "data" / "processed" / "match_centre",
-        players_path=ROOT / "data" / "processed" / "players.csv",
-        aliases_path=ROOT / "data" / "player_aliases.csv",
+        get_processed_match_centre_dir(club_id=club_id),
+        players_path=get_processed_path("players.csv", club_id=club_id),
+        aliases_path=get_mapping_path("player_aliases.csv", club_id=club_id),
     )
     return result.milestones
 

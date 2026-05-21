@@ -37,6 +37,14 @@ from src.data.playcricket_ingestion import (  # noqa: E402
     RefreshSummary,
     refresh_playcricket_backup,
 )
+from scripts.club_refresh_utils import print_club_header, print_paths, resolve_club_id  # noqa: E402
+from src.config.club_config import (  # noqa: E402
+    get_hall_of_fame_dir,
+    get_processed_dir,
+    get_processed_match_centre_dir,
+    get_season_overview_dir,
+    load_club_config,
+)
 from src.utils.player_identity import (  # noqa: E402
     apply_player_identity_mapping,
     ensure_identity_exports,
@@ -69,7 +77,8 @@ class TableSnapshot:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Refresh FVCC PlayCricket data for the Streamlit app.")
-    parser.add_argument("--dry-run", action="store_true", help="Check live season availability without changing app data.")
+    parser.add_argument("--club", default=None, help="Club config id. Defaults to CLUB_ID or fvcc.")
+    parser.add_argument("--dry-run", action="store_true", help="Print the club-aware refresh plan without network requests or writes.")
     parser.add_argument(
         "--force-all",
         action="store_true",
@@ -82,36 +91,38 @@ def main() -> int:
         help="Optional development/testing limit for number of seasons fetched.",
     )
     args = parser.parse_args()
+    club_id = resolve_club_id(args.club)
+    club_config = load_club_config(club_id)
+    playcricket_club_id = str(club_config.get("club", {}).get("playcricket_club_id") or DEFAULT_CLUB_ID)
 
     print("FVCC weekly PlayCricket refresh")
     print(f"Project: {ROOT}")
-    print(f"Mode: {'dry run' if args.dry_run else 'normal refresh'}")
+    print(f"Mode: {'dry run plan' if args.dry_run else 'normal refresh'}")
+    print_club_header("Club context", club_id)
     print()
+
+    if args.dry_run:
+        print_refresh_plan(club_id)
+        print()
+        print("Dry run complete. No network requests were made and no files were written.")
+        return 0
 
     before = capture_snapshot()
     print_snapshot("Current local data", before)
 
-    live_seasons = fetch_live_seasons(DEFAULT_CLUB_ID)
+    live_seasons = fetch_live_seasons(playcricket_club_id)
     latest_live = first_season_name(live_seasons)
     current_ids = current_season_ids(live_seasons)
     print(f"Live seasons found: {len(live_seasons)}")
     print(f"Latest live season: {latest_live or 'unknown'}")
     print(f"Current/live season ids to force-refresh weekly: {len(current_ids)}")
 
-    if args.dry_run:
-        local_has_latest = latest_live in before.seasons if latest_live else False
-        print()
-        print("Dry run complete. No raw or processed app data was changed.")
-        print(f"Latest live season already local: {'yes' if local_has_latest else 'no'}")
-        print("Run without --dry-run to create a timestamped backup and refresh app data.")
-        return 0
-
     backup_path = create_timestamped_backup()
     print()
     print(f"Rollback snapshot saved: {backup_path}")
 
     summary = refresh_playcricket_backup(
-        DEFAULT_CLUB_ID,
+        playcricket_club_id,
         force=args.force_all,
         season_limit=args.season_limit,
         force_seasons=True,
@@ -120,7 +131,7 @@ def main() -> int:
     print_refresh_summary(summary)
 
     identity_summary = rebuild_identity_and_audits()
-    match_centre_summary = refresh_current_match_centre_summaries(current_ids)
+    match_centre_summary = refresh_current_match_centre_summaries(current_ids, club_id=club_id)
     after = capture_snapshot()
 
     print()
@@ -139,6 +150,29 @@ def main() -> int:
     print("Next step")
     print("./.venv-app/bin/streamlit run app.py --server.port 8502")
     return 0 if not summary.failed_requests else 1
+
+
+def print_refresh_plan(club_id: str) -> None:
+    print("Refresh plan")
+    print_paths("Read/write roots", [RAW_DIR, PROCESSED_DIR, get_processed_match_centre_dir(club_id=club_id)])
+    print_paths(
+        "Deploy-safe output roots",
+        [
+            get_hall_of_fame_dir(club_id=club_id),
+            get_season_overview_dir(club_id=club_id),
+            get_processed_dir(club_id=club_id) / "player_profile",
+        ],
+    )
+    commands = [
+        "scripts/refresh_match_centre_data.py (legacy ignored match-centre scope output)",
+        f"scripts/build_season_overview_detail_exports.py --club {club_id}",
+        f"scripts/build_player_profile_insight_exports.py --club {club_id}",
+        f"scripts/build_hall_of_fame_detail_exports.py --club {club_id}",
+        f"scripts/build_premiership_hall_of_fame_exports.py --club {club_id}",
+    ]
+    print("Would run after live aggregate refresh:")
+    for command in commands:
+        print(f"- {command}")
 
 
 def capture_snapshot() -> TableSnapshot:
@@ -239,7 +273,7 @@ def rebuild_identity_and_audits() -> dict[str, object]:
     }
 
 
-def refresh_current_match_centre_summaries(current_season_ids: set[str]) -> dict[str, object]:
+def refresh_current_match_centre_summaries(current_season_ids: set[str], *, club_id: str) -> dict[str, object]:
     teams = read_processed("teams")
     if teams.empty or not current_season_ids:
         return {"current scopes refreshed": 0, "detail exports rebuilt": "no current teams found"}
@@ -269,22 +303,22 @@ def refresh_current_match_centre_summaries(current_season_ids: set[str]) -> dict
         scopes.append(scope_name)
 
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_season_overview_detail_exports.py")],
+        [sys.executable, str(ROOT / "scripts" / "build_season_overview_detail_exports.py"), "--club", club_id],
         cwd=ROOT,
         check=True,
     )
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_player_profile_insight_exports.py")],
+        [sys.executable, str(ROOT / "scripts" / "build_player_profile_insight_exports.py"), "--club", club_id],
         cwd=ROOT,
         check=True,
     )
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_hall_of_fame_detail_exports.py")],
+        [sys.executable, str(ROOT / "scripts" / "build_hall_of_fame_detail_exports.py"), "--club", club_id],
         cwd=ROOT,
         check=True,
     )
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_premiership_hall_of_fame_exports.py")],
+        [sys.executable, str(ROOT / "scripts" / "build_premiership_hall_of_fame_exports.py"), "--club", club_id],
         cwd=ROOT,
         check=True,
     )

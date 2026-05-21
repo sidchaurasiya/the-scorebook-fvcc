@@ -1739,8 +1739,10 @@ Mapping/audit files:
 
 Deploy-safe summaries:
 
-- `data/processed/hall_of_fame/*.csv`
-- `data/processed/season_overview/*.csv`
+- `clubs/fvcc/data/processed/hall_of_fame/*.csv`
+- `clubs/fvcc/data/processed/season_overview/*.csv`
+- `clubs/fvcc/data/processed/player_profile/*.csv`
+- legacy `data/processed/...` remains fallback during migration
 
 Ignored/generated files:
 
@@ -1750,7 +1752,18 @@ Ignored/generated files:
 - `data/debug_biggest_improvers.csv`
 - `data/debug_player_vs_peers.csv`
 
-## 19. Final Notes For Future Sessions
+## 19. Multi-Club Refresh / Export Status
+
+Phase 4 made deploy-safe export scripts club-aware while preserving the current FVCC user experience.
+
+- `CLUB_ID=fvcc` and the default no-`CLUB_ID` path both use the FVCC config.
+- Club runtime data lives under `clubs/fvcc/data/processed/...` with legacy fallback.
+- Deploy-safe builders support `--club`, `--dry-run`, and explicit `--legacy-output`.
+- `scripts/refresh_club_outputs.py --club fvcc --dry-run` lists the safe deploy-summary rebuild steps without fetching or writing.
+- Raw/full match-centre and experimental data remain in ignored legacy folders and are not production runtime dependencies.
+- Future weekly refresh order is aggregate data, match-centre data, Hall of Fame summaries, Season Overview summaries, Player Profile summaries, config check, smoke tests, then commit only club-specific processed/deploy-safe files.
+
+## 20. Final Notes For Future Sessions
 
 Before making future app changes:
 

@@ -897,7 +897,28 @@ Important source areas:
 - `src/utils/team_grade.py`
 - Player identity helpers and cached data-loading helpers in `src/`
 
-## 17. Final Instructions For Future Codex Session
+## 17. Multi-Club Refresh / Export Status
+
+Phase 4 made deploy-safe export workflows club-aware without changing visible app behaviour.
+
+- Active club remains FVCC by default, or via `CLUB_ID=fvcc`.
+- Runtime data is preferred from `clubs/fvcc/data/processed/...` with legacy `data/...` fallback.
+- Deploy-safe output builders now support `--club`, `--dry-run`, and explicit `--legacy-output`.
+- Hall of Fame exports write to `clubs/<club_id>/data/processed/hall_of_fame/` by default.
+- Season Overview exports write to `clubs/<club_id>/data/processed/season_overview/` by default.
+- Player Profile exports write to `clubs/<club_id>/data/processed/player_profile/` by default.
+- Raw/full match-centre and experimental folders remain legacy ignored paths and must not be committed.
+
+Safe planning commands:
+
+```bash
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
+```
+
+Future weekly order: aggregate refresh, match-centre refresh, Hall of Fame deploy-safe exports, Season Overview deploy-safe exports, Player Profile deploy-safe exports, club config check, local smoke test, then commit only club-specific production processed outputs.
+
+## 18. Final Instructions For Future Codex Session
 
 Before making any future change:
 

@@ -343,3 +343,33 @@ Examples:
 - Any visual requiring `all_seasons_matches.csv` or scorecard-level files to be populated with real rows.
 
 If a future visual needs those details, add the source pull to `src/data/playcricket_ingestion.py`, write timestamped raw responses to `data/raw/`, regenerate shared processed files in `data/processed/`, and document the new fields here.
+
+## Multi-Club Phase 4 Refresh Shape
+
+The app now reads FVCC production data from `clubs/fvcc/data/processed` with legacy fallback. Deploy-safe export builders are club-aware and default to writing summaries under `clubs/<club_id>/data/processed/...`.
+
+Current safe planning commands:
+
+```bash
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
+```
+
+Future weekly refresh order:
+
+1. Refresh aggregate data for the club.
+2. Refresh match-centre data for the club.
+3. Rebuild Hall of Fame deploy-safe summaries for the club.
+4. Rebuild Season Overview deploy-safe summaries for the club.
+5. Rebuild Player Profile deploy-safe summaries for the club.
+6. Run `scripts/check_club_config.py`.
+7. Smoke-test the app without experimental pages.
+8. Commit only club-specific production processed/deploy-safe files.
+
+Raw/full match-centre folders remain ignored and should not be committed:
+
+- `data/raw/match_centre/`
+- `data/processed/match_centre/`
+- `data/processed/experimental/`
+
+Legacy `data/...` paths remain fallback during the migration. Aggregate refresh writes are still legacy-compatible until the next phase makes the full refresh/write pipeline club-specific.

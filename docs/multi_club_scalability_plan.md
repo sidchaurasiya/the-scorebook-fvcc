@@ -1,6 +1,6 @@
 # Multi-Club Scalability Plan
 
-Last updated: 2026-05-21
+Last updated: 2026-05-22
 
 The long-term direction is one shared Scorebook codebase that can serve many cricket clubs, with each club carrying its own config, mappings, data folders, deploy-safe summaries, refresh workflow, and QA report.
 
@@ -41,6 +41,10 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Avoid direct script-level FVCC defaults once the new command exists.
 - Preserve no-network app runtime behaviour.
 - Make Hall of Fame, Season Overview, Player Profile, and milestone export builders write to the active club data folder.
+- Phase 4 first implementation uses `scripts/refresh_club_outputs.py --club fvcc --dry-run` as the safe deploy-summary wrapper.
+- Deploy-safe builders now default to `clubs/<club_id>/data/processed/...`; legacy deploy-safe output is explicit via `--legacy-output`.
+- Raw/full match-centre and experimental folders remain legacy ignored paths during this phase.
+- `scripts/refresh_data.py --club fvcc --dry-run` reports the future workflow without network requests or writes; full aggregate writes remain legacy-compatible until a later migration.
 
 ## Phase 5: Create `onboard_club.py`
 

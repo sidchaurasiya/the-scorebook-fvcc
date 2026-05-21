@@ -8,6 +8,7 @@ write raw/full match-centre outputs.
 
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -20,12 +21,21 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import build_season_overview_detail_exports as season_exports  # noqa: E402
+from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
+from src.config.club_config import get_processed_dir, get_processed_match_centre_dir  # noqa: E402
 from src.data.name_normalization import normalize_opponent_club_name, normalize_ground_name as shared_normalize_ground_name  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
-MATCH_CENTRE_ROOT = ROOT / "data" / "processed" / "match_centre"
 OUTPUT_DIR = ROOT / "data" / "processed" / "player_profile"
+OUTPUT_FILENAMES = [
+    "performance_breakdown_by_dimension.csv",
+    "batting_position_summary.csv",
+    "bowling_phase_summary.csv",
+    "dismissal_fingerprint_summary.csv",
+    "recent_form_batting.csv",
+    "recent_form_bowling.csv",
+]
 
 DIMENSION_ORDER = ["Season", "Grade", "Opponent", "Ground", "H/A"]
 POSITION_GROUP_ORDER = {
@@ -42,17 +52,35 @@ POSITION_GROUP_ORDER = {
 DISMISSAL_ORDER = {"Caught": 1, "Bowled": 2, "LBW": 3, "Run out": 4, "Stumped": 5, "Other": 6}
 
 
-def main() -> int:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    frames = load_player_profile_scopes()
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Build deploy-safe Player Profile insight summaries.")
+    add_club_args(parser)
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    club_id = resolve_club_id(args.club)
+    output_dir = OUTPUT_DIR if args.legacy_output else get_processed_dir(club_id=club_id) / "player_profile"
+    output_paths = [output_dir / filename for filename in OUTPUT_FILENAMES]
+
+    print_club_header("Player Profile deploy-safe insight export builder", club_id)
+    print_paths("Inputs", [get_processed_match_centre_dir(club_id=club_id)])
+    print_outputs("Outputs", output_paths)
+    if args.dry_run:
+        print("Dry run complete. No files were written.")
+        return 0
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    frames = load_player_profile_scopes(club_id=club_id)
     if frames["matches"].empty:
         print("No match-centre processed scopes found. No Player Profile insight exports built.")
         return 1
 
-    batting = prepare_batting(frames)
-    bowling = prepare_bowling(frames)
-    fielding = prepare_fielding(frames)
-    balls = prepare_ball_rows(frames)
+    batting = prepare_batting(frames, club_id=club_id)
+    bowling = prepare_bowling(frames, club_id=club_id)
+    fielding = prepare_fielding(frames, club_id=club_id)
+    balls = prepare_ball_rows(frames, club_id=club_id)
 
     outputs = {
         "performance_breakdown_by_dimension.csv": build_performance_breakdown(batting, bowling, fielding, balls),
@@ -63,18 +91,18 @@ def main() -> int:
         "recent_form_bowling.csv": build_recent_form_bowling(bowling),
     }
     for filename, frame in outputs.items():
-        frame.to_csv(OUTPUT_DIR / filename, index=False)
+        frame.to_csv(output_dir / filename, index=False)
 
     print("Player Profile deploy-safe insight exports rebuilt")
     for filename, frame in outputs.items():
-        print(f"- {OUTPUT_DIR / filename}: {len(frame):,} rows")
+        print(f"- {output_dir / filename}: {len(frame):,} rows")
     return 0
 
 
-def load_player_profile_scopes() -> dict[str, pd.DataFrame]:
-    frames = season_exports.load_match_centre_scopes()
+def load_player_profile_scopes(club_id: str | None = None) -> dict[str, pd.DataFrame]:
+    frames = season_exports.load_match_centre_scopes(club_id=club_id)
     fielding_parts = []
-    for scope_order, scope in enumerate(season_exports.available_scopes()):
+    for scope_order, scope in enumerate(season_exports.available_scopes(club_id=club_id)):
         fielding = season_exports.read_csv(scope / "all_scorecard_fielding.csv")
         if fielding.empty:
             continue
@@ -90,12 +118,12 @@ def load_player_profile_scopes() -> dict[str, pd.DataFrame]:
     return frames
 
 
-def prepare_batting(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    rows = season_exports.prepare_scorecard_rows(frames["batting"], frames["matches"])
+def prepare_batting(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:
+    rows = season_exports.prepare_scorecard_rows(frames["batting"], frames["matches"], club_id=club_id)
     if rows.empty:
         return rows
     rows = layout.scorecard_dedupe(rows, ["match_id", "innings_id", "participant_id", "bat_instance"])
-    rows = add_match_dimensions(rows, frames["matches"])
+    rows = add_match_dimensions(rows, frames["matches"], club_id=club_id)
     rows = ensure_display_player_name(rows)
     rows = rows[rows.apply(is_batting_innings, axis=1)].copy()
     if rows.empty:
@@ -118,12 +146,12 @@ def prepare_batting(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return rows
 
 
-def prepare_bowling(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    rows = season_exports.prepare_scorecard_rows(frames["bowling"], frames["matches"])
+def prepare_bowling(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:
+    rows = season_exports.prepare_scorecard_rows(frames["bowling"], frames["matches"], club_id=club_id)
     if rows.empty:
         return rows
     rows = layout.scorecard_dedupe(rows, ["match_id", "innings_id", "participant_id"])
-    rows = add_match_dimensions(rows, frames["matches"])
+    rows = add_match_dimensions(rows, frames["matches"], club_id=club_id)
     rows = ensure_display_player_name(rows)
     rows["wickets_numeric"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
     rows["runs_against_numeric"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
@@ -135,12 +163,12 @@ def prepare_bowling(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return rows
 
 
-def prepare_fielding(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+def prepare_fielding(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:
     frame = frames.get("fielding", pd.DataFrame())
     if frame.empty:
         return pd.DataFrame()
-    rows = season_exports.prepare_scorecard_rows(frame, frames["matches"])
-    rows = add_match_dimensions(rows, frames["matches"])
+    rows = season_exports.prepare_scorecard_rows(frame, frames["matches"], club_id=club_id)
+    rows = add_match_dimensions(rows, frames["matches"], club_id=club_id)
     rows = ensure_display_player_name(rows)
     for column in ["catches", "stumpings", "run_outs", "assisted_run_outs"]:
         if column not in rows:
@@ -151,11 +179,11 @@ def prepare_fielding(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return rows
 
 
-def prepare_ball_rows(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+def prepare_ball_rows(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:
     balls = frames.get("balls", pd.DataFrame()).copy()
     if balls.empty:
         return balls
-    matches = match_dimension_context(frames["matches"])
+    matches = match_dimension_context(frames["matches"], club_id=club_id)
     balls["match_id"] = balls["match_id"].astype(str)
     balls = balls.merge(matches, on="match_id", how="left", suffixes=("", "_match"))
     balls["is_legal"] = balls.get("is_legal_delivery", pd.Series(index=balls.index, dtype="object")).map(layout.parse_bool)
@@ -179,8 +207,8 @@ def ensure_display_player_name(rows: pd.DataFrame) -> pd.DataFrame:
     return output
 
 
-def match_dimension_context(matches: pd.DataFrame) -> pd.DataFrame:
-    context = season_exports.match_context(matches)
+def match_dimension_context(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+    context = season_exports.match_context(matches, club_id=club_id)
     if context.empty:
         return pd.DataFrame(columns=["match_id", "opponent_label", "ground_label", "home_away_label", "match_type"])
     raw = matches.copy()
@@ -188,7 +216,7 @@ def match_dimension_context(matches: pd.DataFrame) -> pd.DataFrame:
     for column in ["home_team_id", "away_team_id", "home_team_name", "away_team_name", "venue_name", "match_type"]:
         if column not in raw:
             raw[column] = ""
-    fvcc_team_ids = set(season_exports.team_context()["team_id"].astype(str))
+    fvcc_team_ids = set(season_exports.team_context(club_id=club_id)["team_id"].astype(str))
     fvcc_is_home = raw["home_team_id"].astype(str).isin(fvcc_team_ids)
     raw["opponent_label"] = raw["away_team_name"].where(fvcc_is_home, raw["home_team_name"]).map(normalize_opponent_name)
     raw["ground_label"] = raw["venue_name"].map(normalize_ground_name)
@@ -196,10 +224,10 @@ def match_dimension_context(matches: pd.DataFrame) -> pd.DataFrame:
     return raw[["match_id", "opponent_label", "ground_label", "home_away_label", "match_type"]].drop_duplicates("match_id")
 
 
-def add_match_dimensions(rows: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
+def add_match_dimensions(rows: pd.DataFrame, matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     output = rows.copy()
     output["match_id"] = output["match_id"].astype(str)
-    context = match_dimension_context(matches)
+    context = match_dimension_context(matches, club_id=club_id)
     if not context.empty:
         output = output.merge(context, on="match_id", how="left", suffixes=("", "_dimension"))
     output["season_label"] = output.get("season", pd.Series(index=output.index, dtype="object")).fillna("").astype(str).replace("", "Unknown season")
