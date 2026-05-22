@@ -219,3 +219,5 @@ Deploy-safe builders write to club folders by default:
 - Player Profile: `clubs/<club_id>/data/processed/player_profile/`
 
 Use `--legacy-output` only when an explicit compatibility rebuild is required.
+
+Phase 4.5 confirmed that the club-aware deploy-safe wrapper can rebuild FVCC summaries from these existing local inputs without changing the committed club CSVs. The rebuild did not fetch external data and produced identical hashes for all 19 deploy-safe Hall of Fame, Season Overview, and Player Profile CSVs.

@@ -373,3 +373,11 @@ Raw/full match-centre folders remain ignored and should not be committed:
 - `data/processed/experimental/`
 
 Legacy `data/...` paths remain fallback during the migration. Aggregate refresh writes are still legacy-compatible until the next phase makes the full refresh/write pipeline club-specific.
+
+Phase 4.5 validation ran the non-dry-run deploy-safe wrapper for FVCC using existing local inputs only:
+
+```bash
+./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc
+```
+
+The rebuild compared 19 club-specific deploy-safe CSVs before and after. Every row count and SHA-256 hash matched, so no CSV changes were committed.

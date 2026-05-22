@@ -46,6 +46,13 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Raw/full match-centre and experimental folders remain legacy ignored paths during this phase.
 - `scripts/refresh_data.py --club fvcc --dry-run` reports the future workflow without network requests or writes; full aggregate writes remain legacy-compatible until a later migration.
 
+## Phase 4.5: Validate Club-Aware Deploy-Safe Rebuild
+
+- Ran `scripts/refresh_club_outputs.py --club fvcc` from existing local inputs only; no external data was fetched.
+- Compared 19 club-specific deploy-safe CSVs before and after rebuild across Hall of Fame, Season Overview, and Player Profile.
+- Row counts and SHA-256 hashes were identical for every file, so the current deploy-safe export process is deterministic for FVCC.
+- No CSV changes were committed; only validation documentation was updated.
+
 ## Phase 5: Create `onboard_club.py`
 
 - Generate a starter config, data folders, mapping templates, and review checklist.

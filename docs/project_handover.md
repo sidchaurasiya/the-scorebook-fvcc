@@ -918,6 +918,8 @@ Safe planning commands:
 
 Future weekly order: aggregate refresh, match-centre refresh, Hall of Fame deploy-safe exports, Season Overview deploy-safe exports, Player Profile deploy-safe exports, club config check, local smoke test, then commit only club-specific production processed outputs.
 
+Phase 4.5 validation: `scripts/refresh_club_outputs.py --club fvcc` ran from existing local inputs only, fetched no external data, and regenerated all deploy-safe summaries deterministically. All 19 club-specific Hall of Fame, Season Overview, and Player Profile CSVs matched their previous row counts and SHA-256 hashes, so no CSV changes were committed.
+
 ## 18. Final Instructions For Future Codex Session
 
 Before making any future change:
