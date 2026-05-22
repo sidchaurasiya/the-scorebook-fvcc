@@ -25,6 +25,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.data.match_centre_fetcher import PoliteMatchCentreFetcher, RequestRecord  # noqa: E402
+from src.data.match_centre_ownership import ensure_club_ownership_columns  # noqa: E402
 from src.data.match_centre_parser import MatchCentrePayloads, parse_payloads  # noqa: E402
 from scripts.club_refresh_utils import (  # noqa: E402
     add_club_args,
@@ -276,7 +277,8 @@ def build_refresh_summary(
     matches = frames["all_matches"]
     validation = frames["validation_report"]
     status_counts = validation["status"].value_counts().to_dict() if not validation.empty else {}
-    fvcc_identity = identity[identity["is_fvcc_player"] == True] if not identity.empty else pd.DataFrame()  # noqa: E712
+    identity = ensure_club_ownership_columns(identity)
+    club_identity = identity[identity["is_club_player"] == True] if not identity.empty else pd.DataFrame()  # noqa: E712
     return pd.DataFrame(
         [
             {
@@ -298,10 +300,14 @@ def build_refresh_summary(
                 "validation_pass_count": int(status_counts.get("pass", 0)),
                 "validation_warning_count": int(status_counts.get("warning", 0)),
                 "validation_error_count": int(status_counts.get("error", 0)),
-                "fvcc_player_rows": len(fvcc_identity),
-                "fvcc_exact_player_matches": count_identity(fvcc_identity, "exact_match"),
-                "fvcc_likely_player_matches": count_identity(fvcc_identity, "likely_match"),
-                "fvcc_no_player_matches": count_identity(fvcc_identity, "no_match"),
+                "club_player_rows": len(club_identity),
+                "club_exact_player_matches": count_identity(club_identity, "exact_match"),
+                "club_likely_player_matches": count_identity(club_identity, "likely_match"),
+                "club_no_player_matches": count_identity(club_identity, "no_match"),
+                "fvcc_player_rows": len(club_identity),
+                "fvcc_exact_player_matches": count_identity(club_identity, "exact_match"),
+                "fvcc_likely_player_matches": count_identity(club_identity, "likely_match"),
+                "fvcc_no_player_matches": count_identity(club_identity, "no_match"),
                 "raw_data_size_mb": round(folder_size_mb(raw_dir), 3),
                 "processed_data_size_mb": round(folder_size_mb(processed_dir), 3),
                 "refreshed_at": now_iso(),
@@ -356,7 +362,7 @@ def build_validation_warnings_detail(frames: dict[str, pd.DataFrame]) -> pd.Data
 def build_player_identity_audit(
     frames: dict[str, pd.DataFrame],
     team_metadata: dict[str, dict[str, str]],
-    fvcc_team_ids: set[str],
+    club_team_ids: set[str],
     *,
     players_path: Path = PLAYERS_PATH,
     aliases_path: Path = ALIASES_PATH,
@@ -371,7 +377,7 @@ def build_player_identity_audit(
     rows = []
     for (participant_id, team_id), item in sorted(participants.items(), key=lambda entry: (entry[1].get("player_name", ""), entry[0])):
         identity = match_existing_identity(participant_id, item.get("player_name"), item.get("player_short_name"), existing)
-        is_fvcc = team_id in fvcc_team_ids
+        is_club_player = team_id in club_team_ids
         status = identity.get("status", "no_match")
         rows.append(
             {
@@ -381,7 +387,8 @@ def build_player_identity_audit(
                 "player_short_name": item.get("player_short_name"),
                 "team_id": team_id,
                 "team_name": team_lookup.get(team_id, {}).get("team_name", item.get("team_name", "")),
-                "is_fvcc_player": is_fvcc,
+                "is_club_player": is_club_player,
+                "is_fvcc_player": is_club_player,
                 "match_count": len(item["matches"]),
                 "batting_rows": item["batting_rows"],
                 "bowling_rows": item["bowling_rows"],
@@ -390,7 +397,7 @@ def build_player_identity_audit(
                 "existing_player_match_status": status,
                 "existing_player_id": identity.get("player_id", ""),
                 "existing_canonical_name": identity.get("canonical_name", ""),
-                "possible_reason_for_no_match": no_match_reason(is_fvcc, participant_id, item, status),
+                "possible_reason_for_no_match": no_match_reason(is_club_player, participant_id, item, status),
             }
         )
     return pd.DataFrame(rows)
@@ -485,16 +492,16 @@ def match_existing_identity(participant_id: str, player_name: Any, player_short_
     return {"player_id": "", "canonical_name": "", "status": "no_match"}
 
 
-def no_match_reason(is_fvcc: bool, participant_id: str, item: dict[str, Any], status: str) -> str:
+def no_match_reason(is_club_player: bool, participant_id: str, item: dict[str, Any], status: str) -> str:
     if status != "no_match":
         return ""
     if participant_id.startswith("00000000-0000-0000-0000"):
         return "masked_or_placeholder_participant_id"
     if str(item.get("player_name", "")).strip("* ") == "":
         return "masked_or_placeholder_name"
-    if not is_fvcc:
-        return "opposition_player_not_expected_in_fvcc_canonical_data"
-    return "fvcc_player_not_found_in_existing_players_or_aliases"
+    if not is_club_player:
+        return "opposition_player_not_expected_in_club_canonical_data"
+    return "club_player_not_found_in_existing_players_or_aliases"
 
 
 def write_refresh_manifest(

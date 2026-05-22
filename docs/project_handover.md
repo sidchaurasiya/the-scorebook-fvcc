@@ -900,7 +900,7 @@ Important source areas:
 
 ## 17. Multi-Club Refresh / Export Status
 
-Phase 6 adds club-aware dry-run/reporting to match-centre refresh/backfill workflows without changing visible app behaviour.
+Phase 6 adds club-aware dry-run/reporting to match-centre refresh/backfill workflows without changing visible app behaviour. Phase 6.5 generalizes match-centre club ownership field names while preserving FVCC compatibility.
 
 - Active club remains FVCC by default, or via `CLUB_ID=fvcc`.
 - Runtime data is preferred from `clubs/fvcc/data/processed/...` with legacy `data/...` fallback.
@@ -910,6 +910,9 @@ Phase 6 adds club-aware dry-run/reporting to match-centre refresh/backfill workf
 - `scripts/backfill_match_centre_available.py --club <club_id> --dry-run` uses club-aware `teams.csv`, `seasons.csv`, and `players.csv`, keeps aliases global, and reports scoped season/team counts without fetching or writing.
 - `scripts/build_match_centre_milestones.py --club <club_id> --dry-run` reports the config PlayCricket ID and generated match-centre milestone output paths.
 - `scripts/refresh_club_outputs.py --club <club_id> --dry-run` now lists the future weekly sequence: aggregate refresh, scoped match-centre refresh, all-available backfill, then deploy-safe summary rebuild.
+- Match-centre ownership code now prefers `club_team_id`, `club_team_name`, and `is_club_player`.
+- Existing FVCC generated files remain supported through fallback from `fvcc_team_id`, `fvcc_team_name`, and `is_fvcc_player`.
+- `scripts/check_match_centre_ownership.py --club fvcc` is a read-only diagnostic for old/new ownership columns, fallback-derived team IDs/names, and player ownership counts.
 - Use `--legacy-output` only when an explicit compatibility write to legacy `data/processed/` is required.
 - Deploy-safe output builders now support `--club`, `--dry-run`, and explicit `--legacy-output`.
 - Hall of Fame exports write to `clubs/<club_id>/data/processed/hall_of_fame/` by default.
@@ -931,7 +934,7 @@ Future weekly order: aggregate refresh with `scripts/refresh_data.py --club fvcc
 
 Phase 4.5 validation: `scripts/refresh_club_outputs.py --club fvcc` ran from existing local inputs only, fetched no external data, and regenerated all deploy-safe summaries deterministically. All 19 club-specific Hall of Fame, Season Overview, and Player Profile CSVs matched their previous row counts and SHA-256 hashes, so no CSV changes were committed.
 
-Phase 6 deliberately leaves raw/full match-centre data in ignored legacy folders: `data/raw/match_centre/`, `data/processed/match_centre/`, and `data/processed/experimental/`. Production pages should continue to depend only on deploy-safe summaries under `clubs/<club_id>/data/processed/...`. Parser ownership fields such as `fvcc_team_id`, `fvcc_team_name`, `is_fvcc_player`, and `FVCC_ORGANISATION_ID` remain later-phase risks before second-club match-centre features are trusted.
+Phase 6.5 deliberately leaves raw/full match-centre data in ignored legacy folders: `data/raw/match_centre/`, `data/processed/match_centre/`, and `data/processed/experimental/`. Production pages should continue to depend only on deploy-safe summaries under `clubs/<club_id>/data/processed/...`. Legacy `fvcc_*` column names may still appear in deploy-safe CSV schemas and UI code for compatibility, but new parser/exporter logic should use the neutral `club_*` fields first. Before a second club relies on match-centre features, review club-specific team ownership mappings and raw/generated folder scoping.
 
 ## 18. Final Instructions For Future Codex Session
 

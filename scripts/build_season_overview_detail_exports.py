@@ -21,6 +21,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import get_processed_match_centre_dir, get_processed_path, get_season_overview_dir  # noqa: E402
+from src.data.match_centre_ownership import ensure_club_ownership_columns  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
@@ -185,7 +186,7 @@ def match_context(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataF
 
 
 def prepare_scorecard_rows(rows: pd.DataFrame, matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
-    output = filter_fvcc_team_rows(rows, club_id=club_id)
+    output = filter_club_team_rows(rows, club_id=club_id)
     output = output.merge(match_context(matches, club_id=club_id), on="match_id", how="left", suffixes=("", "_match"))
     output = fill_context_from_team(output, club_id=club_id)
     output = layout.prepare_match_centre_identity_rows(output)
@@ -201,14 +202,14 @@ def team_context(club_id: str | None = None) -> pd.DataFrame:
     return output
 
 
-def filter_fvcc_team_rows(rows: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+def filter_club_team_rows(rows: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     if rows.empty:
         return rows.copy()
     output = rows.copy()
     if "team_id" not in output:
         return output
-    fvcc_team_ids = set(team_context(club_id=club_id)["team_id"].astype(str))
-    output = output[output["team_id"].astype(str).isin(fvcc_team_ids)].copy()
+    club_team_ids = set(team_context(club_id=club_id)["team_id"].astype(str))
+    output = output[output["team_id"].astype(str).isin(club_team_ids)].copy()
     return output
 
 
@@ -382,7 +383,7 @@ def build_season_by_round(frames: dict[str, pd.DataFrame], club_id: str | None =
         return pd.DataFrame()
 
     context = match_context(matches, club_id=club_id)
-    matches = layout.build_match_archive_frame(matches)
+    matches = ensure_club_ownership_columns(layout.build_match_archive_frame(matches))
     if not context.empty:
         matches = matches.merge(
             context[["match_id", "season_id", "season"]].drop_duplicates("match_id"),
@@ -420,8 +421,8 @@ def build_season_by_round(frames: dict[str, pd.DataFrame], club_id: str | None =
                 "season_id": clean_value(match.get("season_id")),
                 "season": clean_value(match.get("season")),
                 "source_team_ids": clean_value(match.get("source_team_ids")),
-                "fvcc_team_id": clean_value(match.get("fvcc_team_id")),
-                "fvcc_team_name": clean_value(match.get("fvcc_team_name")),
+                "fvcc_team_id": clean_value(match.get("club_team_id", match.get("fvcc_team_id"))),
+                "fvcc_team_name": clean_value(match.get("club_team_name", match.get("fvcc_team_name"))),
                 "grade_id": clean_value(match.get("grade_id")),
                 "grade_name": clean_value(match.get("grade_name")),
                 "grade_label": grade_label,

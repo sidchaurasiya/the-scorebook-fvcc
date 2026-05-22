@@ -69,8 +69,16 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - `scripts/build_match_centre_milestones.py --club <club_id> --dry-run` reports the config PlayCricket ID and generated milestone output paths.
 - Raw/full match-centre and experimental folders remain ignored legacy/global paths: `data/raw/match_centre`, `data/processed/match_centre`, and `data/processed/experimental`.
 - Deploy-safe summaries remain the only production runtime dependency and continue to be built into `clubs/<club_id>/data/processed/...` with `scripts/refresh_club_outputs.py --club <club_id>`.
-- Club-scoped raw/generated paths such as `data/raw/match_centre/<club_id>` and `data/processed/match_centre/<club_id>` are Phase 6.5/7 candidates, not part of Phase 6.
-- Parser ownership fields such as `fvcc_team_id`, `fvcc_team_name`, `is_fvcc_player`, and `FVCC_ORGANISATION_ID` remain documented risks before second-club ball-by-ball features are trusted.
+- Club-scoped raw/generated paths such as `data/raw/match_centre/<club_id>` and `data/processed/match_centre/<club_id>` are later-phase candidates, not part of Phase 6.
+
+## Phase 6.5: Generalize Match-Centre Club Ownership Fields
+
+- Match-centre parser/exporter paths now prefer neutral ownership fields: `club_team_id`, `club_team_name`, and `is_club_player`.
+- Existing FVCC generated files remain compatible because readers fall back from `fvcc_team_id`, `fvcc_team_name`, and `is_fvcc_player`.
+- `src/data/match_centre_ownership.py` centralizes ownership fallback and selected-club team matching.
+- `scripts/check_match_centre_ownership.py --club <club_id>` provides a read-only diagnostic for local processed match-centre scopes.
+- Deploy-safe FVCC outputs were rebuilt from existing local inputs and stayed identical, so no CSV schema or visible app behaviour changed.
+- Remaining later work: club-scoped raw/generated match-centre folders, reviewed team ownership mappings for each new club, and optional cleanup of legacy `fvcc_*` deploy-safe column names after compatibility is proven.
 
 ## Phase 7: Create `onboard_club.py`
 

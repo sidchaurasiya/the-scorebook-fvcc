@@ -5,6 +5,7 @@ from typing import Any
 import pandas as pd
 
 from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
+from src.data.match_centre_ownership import add_club_match_ownership, ensure_club_ownership_columns, is_selected_club_team_name
 
 
 def prepare_match_centre_frames(data: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
@@ -42,15 +43,14 @@ def build_match_context(matches: pd.DataFrame) -> pd.DataFrame:
             output[column] = pd.NA
     output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce", utc=True)
     output["match_date_display"] = output["match_date"].dt.strftime("%d %b %Y").fillna("Date TBC")
-    fvcc_is_home = output["home_team_name"].map(is_fvcc_team_name)
-    output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
-    output["fvcc_team_name"] = output["home_team_name"].where(fvcc_is_home, output["away_team_name"])
-    output["opponent_team_id"] = output["away_team_id"].where(fvcc_is_home, output["home_team_id"])
+    output = add_club_match_ownership(output)
+    club_is_home = output["home_team_id"].astype(str) == output["club_team_id"].astype(str)
+    output["opponent_team_id"] = output["away_team_id"].where(club_is_home, output["home_team_id"])
     output["opponent_name"] = (
-        output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
+        output["away_team_name"].where(club_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
     )
     output["venue_name"] = output["venue_name"].map(normalize_ground_name)
-    output["home_away"] = fvcc_is_home.map(lambda value: "Home" if value else "Away")
+    output["home_away"] = club_is_home.map(lambda value: "Home" if value else "Away")
     output["format"] = output["match_type"].fillna("Unknown")
     return output
 
@@ -61,7 +61,8 @@ def player_options(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
         frame = frames.get(source, pd.DataFrame())
         if frame.empty:
             continue
-        frame = frame[frame.get("team_id", pd.Series(dtype="object")).astype(str) == frame.get("fvcc_team_id", pd.Series(dtype="object")).astype(str)]
+        frame = ensure_club_ownership_columns(frame)
+        frame = frame[frame.get("team_id", pd.Series(dtype="object")).astype(str) == frame.get("club_team_id", pd.Series(dtype="object")).astype(str)]
         for _, row in frame.iterrows():
             participant_id = as_text(row.get("participant_id"))
             player_name = as_text(row.get("player_name") or row.get("player_short_name"))
@@ -86,9 +87,11 @@ def selected_player_rows(frames: dict[str, pd.DataFrame], participant_id: str) -
     bowling = frames["bowling"]
     ball_by_ball = frames["ball_by_ball"]
     fvcc_batting = batting[(batting.get("participant_id", pd.Series(dtype="object")).astype(str) == participant_id)]
-    fvcc_batting = fvcc_batting[fvcc_batting.get("team_id", pd.Series(dtype="object")).astype(str) == fvcc_batting.get("fvcc_team_id", pd.Series(dtype="object")).astype(str)]
+    fvcc_batting = ensure_club_ownership_columns(fvcc_batting)
+    fvcc_batting = fvcc_batting[fvcc_batting.get("team_id", pd.Series(dtype="object")).astype(str) == fvcc_batting.get("club_team_id", pd.Series(dtype="object")).astype(str)]
     fvcc_bowling = bowling[(bowling.get("participant_id", pd.Series(dtype="object")).astype(str) == participant_id)]
-    fvcc_bowling = fvcc_bowling[fvcc_bowling.get("team_id", pd.Series(dtype="object")).astype(str) == fvcc_bowling.get("fvcc_team_id", pd.Series(dtype="object")).astype(str)]
+    fvcc_bowling = ensure_club_ownership_columns(fvcc_bowling)
+    fvcc_bowling = fvcc_bowling[fvcc_bowling.get("team_id", pd.Series(dtype="object")).astype(str) == fvcc_bowling.get("club_team_id", pd.Series(dtype="object")).astype(str)]
     player_balls = pd.DataFrame()
     if not ball_by_ball.empty:
         striker = ball_by_ball.get("striker_participant_id", pd.Series(dtype="object")).astype(str) == participant_id
@@ -329,7 +332,7 @@ def calculate_bowling_wicket_contribution_percentage(bowling: pd.DataFrame, inni
 def add_match_context(frame: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
     if frame.empty or matches.empty or "match_id" not in frame:
         return frame.copy()
-    columns = ["match_id", "match_date_display", "fvcc_team_id", "opponent_name", "venue_name", "home_away", "format", "match_type", "result_text"]
+    columns = ["match_id", "match_date_display", "club_team_id", "fvcc_team_id", "opponent_name", "venue_name", "home_away", "format", "match_type", "result_text"]
     return frame.merge(matches[[column for column in columns if column in matches]].drop_duplicates("match_id"), on="match_id", how="left")
 
 
@@ -442,7 +445,7 @@ def safe_div(numerator: float, denominator: float) -> float | None:
 
 
 def is_fvcc_team_name(value: object) -> bool:
-    return "fiji victorian" in str(value).casefold()
+    return is_selected_club_team_name(value, "fiji victorian")
 
 
 def parse_bool(value: object) -> bool:

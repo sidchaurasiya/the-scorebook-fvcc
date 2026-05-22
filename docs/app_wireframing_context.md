@@ -1755,7 +1755,7 @@ Ignored/generated files:
 
 ## 19. Multi-Club Refresh / Export Status
 
-Phase 6 adds club-aware dry-run/reporting to match-centre workflows while preserving the current FVCC user experience.
+Phase 6 adds club-aware dry-run/reporting to match-centre workflows while preserving the current FVCC user experience. Phase 6.5 generalizes match-centre ownership field names while keeping existing FVCC generated files compatible.
 
 - `CLUB_ID=fvcc` and the default no-`CLUB_ID` path both use the FVCC config.
 - Club runtime data lives under `clubs/fvcc/data/processed/...` with legacy fallback.
@@ -1767,9 +1767,12 @@ Phase 6 adds club-aware dry-run/reporting to match-centre workflows while preser
 - `scripts/backfill_match_centre_available.py --club fvcc --dry-run` uses club-aware teams/seasons/players inputs, keeps aliases global, and reports scoped season/team counts without fetching or writing.
 - `scripts/build_match_centre_milestones.py --club fvcc --dry-run` reports the config PlayCricket ID and generated match-centre milestone paths without writing.
 - `scripts/refresh_club_outputs.py --club fvcc --dry-run` lists the safe deploy-summary rebuild steps without fetching or writing.
+- Match-centre ownership code now prefers `club_team_id`, `club_team_name`, and `is_club_player`.
+- Existing FVCC generated files remain readable through fallback from `fvcc_team_id`, `fvcc_team_name`, and `is_fvcc_player`.
+- `scripts/check_match_centre_ownership.py --club fvcc` audits old/new ownership columns and fallback mapping without fetching or writing.
 - Raw JSON backups, cache files, timestamped backups, full match-centre raw/generated folders, experimental data, and root-level player mapping/audit files remain legacy/global and are not production runtime dependencies.
 - Future weekly refresh order is aggregate data, controlled match-centre refresh/backfill, club deploy-safe summaries, config check, smoke tests, then commit only club-specific processed/deploy-safe files.
-- Club-specific raw/generated match-centre paths and parser ownership generalization remain future work before a second club can rely on ball-by-ball features.
+- Club-specific raw/generated match-centre paths and reviewed team ownership mappings remain future work before a second club can rely heavily on ball-by-ball features.
 
 ## 20. Final Notes For Future Sessions
 

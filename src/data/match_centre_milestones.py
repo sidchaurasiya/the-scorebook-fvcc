@@ -6,6 +6,8 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.match_centre_ownership import add_club_match_ownership, is_selected_club_team_name
+
 
 MILESTONES = [25, 50, 100, 150]
 
@@ -22,6 +24,8 @@ def build_batting_milestones(
     players_path: Path | None = None,
     aliases_path: Path | None = None,
     scope_names: list[str] | None = None,
+    club_team_ids: set[str] | None = None,
+    club_name_token: str | None = None,
 ) -> MilestoneBuildResult:
     scopes = available_scope_dirs(processed_root, scope_names=scope_names)
     frames = [load_scope(scope) for scope in scopes]
@@ -35,7 +39,7 @@ def build_batting_milestones(
     innings = pd.concat([frame["innings"] for frame in frames], ignore_index=True).drop_duplicates("innings_id")
     scope_names = [frame["scope_name"] for frame in frames]
 
-    matches = add_match_context(matches, frames)
+    matches = add_match_context(matches, frames, club_team_ids=club_team_ids, club_name_token=club_name_token)
     batting = add_batting_context(batting, matches, innings)
     identity = load_identity_lookup(players_path, aliases_path)
     milestones, validation = calculate_milestones(batting, balls, identity)
@@ -90,17 +94,23 @@ def read_first_existing(scope: Path, filenames: list[str]) -> pd.DataFrame:
     return pd.DataFrame()
 
 
-def add_match_context(matches: pd.DataFrame, frames: list[dict[str, Any]]) -> pd.DataFrame:
+def add_match_context(
+    matches: pd.DataFrame,
+    frames: list[dict[str, Any]],
+    *,
+    club_team_ids: set[str] | None = None,
+    club_name_token: str | None = None,
+) -> pd.DataFrame:
     output = matches.copy()
     for column in ["home_team_id", "away_team_id", "home_team_name", "away_team_name", "first_match_day", "grade_name", "venue_name", "match_type", "result_text"]:
         if column not in output:
             output[column] = pd.NA
     match_dates = pd.to_datetime(output["first_match_day"], errors="coerce", utc=True)
     output["match_date"] = match_dates.dt.date.astype("string")
-    fvcc_home = output["home_team_name"].map(is_fvcc_team_name)
-    output["fvcc_team_id"] = output["home_team_id"].where(fvcc_home, output["away_team_id"])
-    output["team_name"] = output["home_team_name"].where(fvcc_home, output["away_team_name"])
-    output["opposition_team"] = output["away_team_name"].where(fvcc_home, output["home_team_name"])
+    output = add_club_match_ownership(output, club_team_ids=club_team_ids, club_name_token=club_name_token)
+    home_is_club = output["home_team_id"].astype(str) == output["club_team_id"].astype(str)
+    output["team_name"] = output["home_team_name"].where(home_is_club, output["away_team_name"])
+    output["opposition_team"] = output["away_team_name"].where(home_is_club, output["home_team_name"])
     if "season" not in output or output["season"].fillna("").astype(str).str.strip().eq("").all():
         season_by_match: dict[str, str] = {}
         for frame in frames:
@@ -395,7 +405,7 @@ def infer_season(scope_name: str) -> str:
 
 
 def is_fvcc_team_name(value: object) -> bool:
-    return "fiji victorian" in str(value).casefold()
+    return is_selected_club_team_name(value, "fiji victorian")
 
 
 def parse_bool(value: object) -> bool:

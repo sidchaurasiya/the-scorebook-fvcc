@@ -25,6 +25,7 @@ if str(ROOT) not in sys.path:
 
 from src.data.match_centre_fetcher import PoliteMatchCentreFetcher, RequestRecord  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
+from src.data.match_centre_ownership import ensure_club_ownership_columns  # noqa: E402
 from src.data.match_centre_parser import MatchCentrePayloads, parse_payloads  # noqa: E402
 from scripts.refresh_match_centre_data import (  # noqa: E402
     build_player_identity_audit,
@@ -33,13 +34,14 @@ from scripts.refresh_match_centre_data import (  # noqa: E402
 )
 from scripts.club_refresh_utils import (  # noqa: E402
     add_club_args,
+    get_club_team_ids,
     get_playcricket_club_id,
     print_club_header,
     print_outputs,
     print_paths,
     resolve_club_id,
 )
-from src.config.club_config import get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir  # noqa: E402
+from src.config.club_config import get_club_name, get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir  # noqa: E402
 
 
 RAW_DIR = ROOT / "data" / "raw" / "match_centre" / "all_available"
@@ -129,6 +131,8 @@ def main() -> int:
         players_path=players_path,
         aliases_path=aliases_path,
         scope_names=["all_available"],
+        club_team_ids=get_club_team_ids(club_id),
+        club_name_token=get_club_name(club_id),
     )
     milestone_result.milestones.to_csv(processed_dir / "all_batting_milestones.csv", index=False)
     milestone_result.validation.to_csv(processed_dir / "batting_milestones_validation.csv", index=False)
@@ -352,7 +356,8 @@ def build_backfill_summary(
     validation = frames["validation_report"]
     status_counts = validation["status"].value_counts().to_dict() if not validation.empty else {}
     matches = frames["all_matches"]
-    fvcc_identity = identity[identity["is_fvcc_player"] == True] if not identity.empty else pd.DataFrame()  # noqa: E712
+    identity = ensure_club_ownership_columns(identity)
+    club_identity = identity[identity["is_club_player"] == True] if not identity.empty else pd.DataFrame()  # noqa: E712
     return pd.DataFrame(
         [
             {
@@ -376,10 +381,14 @@ def build_backfill_summary(
                 "validation_pass_count": int(status_counts.get("pass", 0)),
                 "validation_warning_count": int(status_counts.get("warning", 0)),
                 "validation_error_count": int(status_counts.get("error", 0)),
-                "fvcc_player_rows": len(fvcc_identity),
-                "fvcc_exact_player_matches": count_identity(fvcc_identity, "exact_match"),
-                "fvcc_likely_player_matches": count_identity(fvcc_identity, "likely_match"),
-                "fvcc_no_player_matches": count_identity(fvcc_identity, "no_match"),
+                "club_player_rows": len(club_identity),
+                "club_exact_player_matches": count_identity(club_identity, "exact_match"),
+                "club_likely_player_matches": count_identity(club_identity, "likely_match"),
+                "club_no_player_matches": count_identity(club_identity, "no_match"),
+                "fvcc_player_rows": len(club_identity),
+                "fvcc_exact_player_matches": count_identity(club_identity, "exact_match"),
+                "fvcc_likely_player_matches": count_identity(club_identity, "likely_match"),
+                "fvcc_no_player_matches": count_identity(club_identity, "no_match"),
                 "raw_data_size_mb": round(folder_size_mb(raw_dir), 3),
                 "processed_data_size_mb": round(folder_size_mb(processed_dir), 3),
                 "started_at": started_at,
@@ -399,8 +408,9 @@ def print_run_review(summary: pd.DataFrame, milestones: pd.DataFrame, milestone_
     print(f"\nMilestone validation warnings: {len(milestone_validation)}")
     print("Validation errors: 0")
     if not identity.empty:
-        no_matches = identity[(identity["is_fvcc_player"] == True) & (identity["existing_player_match_status"] == "no_match")]  # noqa: E712
-        print(f"FVCC player identity no-match rows: {len(no_matches)}")
+        identity = ensure_club_ownership_columns(identity)
+        no_matches = identity[(identity["is_club_player"] == True) & (identity["existing_player_match_status"] == "no_match")]  # noqa: E712
+        print(f"Club player identity no-match rows: {len(no_matches)}")
         if not no_matches.empty:
             print(no_matches.head(20).to_string(index=False))
 

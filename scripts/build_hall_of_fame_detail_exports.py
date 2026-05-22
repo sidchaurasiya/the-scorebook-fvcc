@@ -20,8 +20,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import build_player_profile_insight_exports as profile_exports  # noqa: E402
-from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
+from scripts.club_refresh_utils import add_club_args, get_club_team_ids, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
+from src.config.club_config import get_club_name, get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
 from src.ui import layout  # noqa: E402
 
@@ -255,6 +255,8 @@ def build_fastest_batting_milestones(club_id: str | None = None) -> pd.DataFrame
         get_processed_match_centre_dir(club_id=club_id),
         players_path=get_processed_path("players.csv", club_id=club_id),
         aliases_path=get_mapping_path("player_aliases.csv", club_id=club_id),
+        club_team_ids=get_club_team_ids(club_id),
+        club_name_token=get_club_name(club_id),
     )
     return result.milestones
 

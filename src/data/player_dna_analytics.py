@@ -5,6 +5,7 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.match_centre_ownership import add_club_match_ownership, ensure_club_ownership_columns, is_selected_club_team_name
 from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 from src.data.playcricket_ingestion import read_processed_table
 
@@ -147,28 +148,28 @@ def prepare_matches(matches: pd.DataFrame) -> pd.DataFrame:
             output[column] = pd.NA
     output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce", utc=True)
     output["match_date_display"] = output["match_date"].dt.strftime("%d %b %Y").fillna("")
-    fvcc_is_home = output["home_team_name"].map(is_fvcc_team_name)
-    output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
-    output["fvcc_team_name"] = output["home_team_name"].where(fvcc_is_home, output["away_team_name"])
-    output["opponent_team_id"] = output["away_team_id"].where(fvcc_is_home, output["home_team_id"])
+    output = add_club_match_ownership(output, club_name_token=FVCC_NAME_TOKEN)
+    club_is_home = output["home_team_id"].astype(str) == output["club_team_id"].astype(str)
+    output["opponent_team_id"] = output["away_team_id"].where(club_is_home, output["home_team_id"])
     output["opponent_name"] = (
-        output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
+        output["away_team_name"].where(club_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
     )
     output["venue_name"] = output["venue_name"].map(normalize_ground_name)
-    output["home_away"] = fvcc_is_home.map(lambda value: "Home" if value else "Away")
+    output["home_away"] = club_is_home.map(lambda value: "Home" if value else "Away")
     output["format"] = output["match_type"].fillna("Unknown")
     return output
 
 
 def prepare_identity(identity: pd.DataFrame) -> pd.DataFrame:
     if identity.empty:
-        return pd.DataFrame(columns=["participant_id", "player_key", "player_display_name", "is_fvcc_player"])
+        return pd.DataFrame(columns=["participant_id", "player_key", "player_display_name", "is_club_player", "is_fvcc_player"])
     output = identity.copy()
+    output = ensure_club_ownership_columns(output)
     for column in [
         "participant_id",
         "player_name",
         "player_short_name",
-        "is_fvcc_player",
+        "is_club_player",
         "existing_player_match_status",
         "existing_canonical_name",
     ]:
@@ -180,7 +181,8 @@ def prepare_identity(identity: pd.DataFrame) -> pd.DataFrame:
     )
     output["player_key"] = output["player_display_name"].map(player_key)
     output = output[output["player_key"] != ""].copy()
-    output["is_fvcc_player"] = output["is_fvcc_player"].map(parse_bool)
+    output["is_club_player"] = output["is_club_player"].map(parse_bool)
+    output["is_fvcc_player"] = output["is_club_player"]
     return output.drop_duplicates(["participant_id", "player_key"])
 
 
@@ -202,6 +204,8 @@ def add_match_context(frame: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFram
         "format",
         "match_type",
         "result_text",
+        "club_team_id",
+        "club_team_name",
         "fvcc_team_id",
         "fvcc_team_name",
     ]
@@ -220,7 +224,7 @@ def add_identity_context(frame: pd.DataFrame, identity: pd.DataFrame) -> pd.Data
         output["player_display_name"] = output.get("player_name", output.get("player_short_name", ""))
         return output
     context = identity[
-        ["participant_id", "player_key", "player_display_name", "is_fvcc_player", "existing_player_match_status"]
+        ["participant_id", "player_key", "player_display_name", "is_club_player", "is_fvcc_player", "existing_player_match_status"]
     ].drop_duplicates("participant_id")
     output = output.merge(context, on="participant_id", how="left")
     fallback_names = output.get("player_name", output.get("player_short_name", pd.Series("", index=output.index)))
@@ -822,10 +826,11 @@ def fielding_independent_wicket_pct(_batting_all: pd.DataFrame, _bowling: pd.Dat
 def get_fvcc_mask(frame: pd.DataFrame) -> pd.Series:
     if frame.empty:
         return pd.Series(dtype="bool")
-    if {"team_id", "fvcc_team_id"}.issubset(frame.columns):
-        return frame["team_id"].astype(str) == frame["fvcc_team_id"].astype(str)
-    if "is_fvcc_player" in frame and frame["is_fvcc_player"].notna().any():
-        return frame["is_fvcc_player"].map(parse_bool)
+    rows = ensure_club_ownership_columns(frame)
+    if {"team_id", "club_team_id"}.issubset(rows.columns):
+        return rows["team_id"].astype(str) == rows["club_team_id"].astype(str)
+    if "is_club_player" in rows and rows["is_club_player"].notna().any():
+        return rows["is_club_player"].map(parse_bool)
     if "team_name" in frame:
         return frame["team_name"].map(is_fvcc_team_name)
     return pd.Series([True] * len(frame), index=frame.index)
@@ -1062,7 +1067,7 @@ def player_key(value: Any) -> str:
 
 
 def is_fvcc_team_name(value: Any) -> bool:
-    return FVCC_NAME_TOKEN in str(value).casefold()
+    return is_selected_club_team_name(value, FVCC_NAME_TOKEN)
 
 
 def parse_bool(value: Any) -> bool:

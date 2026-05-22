@@ -8,7 +8,7 @@ from typing import Any
 import pandas as pd
 
 
-FVCC_ORGANISATION_ID = "7b78f08d-87d8-eb11-a7ad-2818780da0cc"
+DEFAULT_PLAYCRICKET_CLUB_ID = "7b78f08d-87d8-eb11-a7ad-2818780da0cc"
 
 MATCH_SCORECARDS_COLUMNS = [
     "match_id",
@@ -26,6 +26,8 @@ MATCH_SCORECARDS_COLUMNS = [
     "home_team_name",
     "away_team_id",
     "away_team_name",
+    "club_team_id",
+    "club_team_name",
     "fvcc_team_id",
     "fvcc_team_name",
     "venue_id",
@@ -145,7 +147,11 @@ class SamplePayloads:
     officials: dict[str, Any]
 
 
-def parse_sample_directory(sample_dir: Path) -> dict[str, pd.DataFrame]:
+def parse_sample_directory(
+    sample_dir: Path,
+    *,
+    playcricket_club_id: str = DEFAULT_PLAYCRICKET_CLUB_ID,
+) -> dict[str, pd.DataFrame]:
     payloads = load_sample_payloads(sample_dir)
     match_id = str(payloads.scorecard.get("id", ""))
     team_ids = [str(team.get("id", "")) for team in payloads.scorecard.get("teams", []) if team.get("id")]
@@ -164,7 +170,7 @@ def parse_sample_directory(sample_dir: Path) -> dict[str, pd.DataFrame]:
     ball_by_ball = build_ball_by_ball(match_id, ball_innings, team_ids)
 
     return {
-        "all_match_scorecards": build_match_scorecards(payloads, ball_innings),
+        "all_match_scorecards": build_match_scorecards(payloads, ball_innings, playcricket_club_id=playcricket_club_id),
         "all_ball_by_ball": ball_by_ball,
         "all_overs": build_overs(ball_by_ball),
         "all_partnerships": build_partnerships(ball_by_ball),
@@ -189,12 +195,17 @@ def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def build_match_scorecards(payloads: SamplePayloads, ball_innings: dict[str, dict[str, Any]]) -> pd.DataFrame:
+def build_match_scorecards(
+    payloads: SamplePayloads,
+    ball_innings: dict[str, dict[str, Any]],
+    *,
+    playcricket_club_id: str = DEFAULT_PLAYCRICKET_CLUB_ID,
+) -> pd.DataFrame:
     scorecard = payloads.scorecard
     summary_teams = scorecard.get("matchSummary", {}).get("teams", [])
     home = next((team for team in summary_teams if team.get("isHome")), {})
     away = next((team for team in summary_teams if team.get("isHome") is False), {})
-    fvcc = find_fvcc_team(scorecard.get("teams", []), summary_teams)
+    club_team = find_selected_club_team(scorecard.get("teams", []), summary_teams, playcricket_club_id=playcricket_club_id)
     venue = scorecard.get("venue", {}) or {}
     surface = venue.get("playingSurface", {}) or {}
     schedule = scorecard.get("matchSchedule", []) or []
@@ -218,8 +229,10 @@ def build_match_scorecards(payloads: SamplePayloads, ball_innings: dict[str, dic
             "home_team_name": home.get("displayName"),
             "away_team_id": away.get("id"),
             "away_team_name": away.get("displayName"),
-            "fvcc_team_id": fvcc.get("id"),
-            "fvcc_team_name": fvcc.get("displayName") or fvcc.get("name"),
+            "club_team_id": club_team.get("id"),
+            "club_team_name": club_team.get("displayName") or club_team.get("name"),
+            "fvcc_team_id": club_team.get("id"),
+            "fvcc_team_name": club_team.get("displayName") or club_team.get("name"),
             "venue_id": venue.get("id"),
             "venue_name": venue.get("name"),
             "playing_surface_id": surface.get("id"),
@@ -233,10 +246,15 @@ def build_match_scorecards(payloads: SamplePayloads, ball_innings: dict[str, dic
     return pd.DataFrame(rows, columns=MATCH_SCORECARDS_COLUMNS)
 
 
-def find_fvcc_team(scorecard_teams: list[dict[str, Any]], summary_teams: list[dict[str, Any]]) -> dict[str, Any]:
+def find_selected_club_team(
+    scorecard_teams: list[dict[str, Any]],
+    summary_teams: list[dict[str, Any]],
+    *,
+    playcricket_club_id: str = DEFAULT_PLAYCRICKET_CLUB_ID,
+) -> dict[str, Any]:
     for team in scorecard_teams:
         organisation = team.get("owningOrganisation", {}) or {}
-        if organisation.get("id") == FVCC_ORGANISATION_ID:
+        if organisation.get("id") == playcricket_club_id:
             summary = next((item for item in summary_teams if item.get("id") == team.get("id")), {})
             return {**team, **summary}
     return {}
@@ -546,4 +564,3 @@ def overs_to_balls(value: Any) -> int:
         return to_int(value) * 6
     overs_text, balls_text = text.split(".", 1)
     return to_int(overs_text) * 6 + to_int(balls_text[:1])
-

@@ -148,13 +148,14 @@ Review `validation_warnings_detail.csv` before using a scope in the app.
 
 Important columns:
 
+- `is_club_player`
 - `is_fvcc_player`
 - `existing_player_match_status`
 - `existing_player_id`
 - `existing_canonical_name`
 - `possible_reason_for_no_match`
 
-Common no-match reasons include opposition players, masked placeholder participants, and FVCC players not yet present in the existing aggregate player data.
+Common no-match reasons include opposition players, masked placeholder participants, and selected-club players not yet present in the existing aggregate player data. `is_fvcc_player` remains in generated files as a compatibility column; new code should prefer `is_club_player`.
 
 ## Milestone Records
 
@@ -204,9 +205,9 @@ The runner writes one ignored combined scope:
 
 It reuses cached files, sleeps between uncached public requests, deduplicates matches across team lists, fetches ball-by-ball only when `isBallByBall` is true, and regenerates batting milestone records for the `all_available` scope.
 
-## Multi-Club Phase 4 / Phase 6 Notes
+## Multi-Club Phase 4 / Phase 6.5 Notes
 
-Match-centre raw/full generated folders remain legacy ignored paths through Phase 6. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
+Match-centre raw/full generated folders remain legacy ignored paths through Phase 6.5. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
 
 Dry-run commands:
 
@@ -240,4 +241,11 @@ Phase 6 adds reporting-only safety for match-centre workflows:
 - `scripts/build_match_centre_milestones.py --club fvcc --dry-run` now reports the config PlayCricket ID and explicitly states external fetch is `no`.
 - `scripts/refresh_club_outputs.py --club fvcc --dry-run` lists the future weekly sequence, including aggregate refresh, match-centre refresh/backfill, and deploy-safe rebuild.
 
-Do not place raw/full match-centre data under `clubs/<club_id>/data/processed`. Club-specific raw/generated paths such as `data/raw/match_centre/<club_id>/` and `data/processed/match_centre/<club_id>/` are later-phase candidates. Before a second club relies on ball-by-ball or match-centre features, parser ownership fields such as `fvcc_team_id`, `fvcc_team_name`, `is_fvcc_player`, and `FVCC_ORGANISATION_ID` need to be generalized.
+Phase 6.5 generalized match-centre ownership naming:
+
+- preferred columns are `club_team_id`, `club_team_name`, and `is_club_player`.
+- legacy columns `fvcc_team_id`, `fvcc_team_name`, and `is_fvcc_player` are still read and preserved for compatibility with existing FVCC generated files and deploy-safe schemas.
+- `src/data/match_centre_ownership.py` provides the fallback shim used by parsers, exporters, and diagnostics.
+- `scripts/check_match_centre_ownership.py --club fvcc` reports old/new ownership columns, fallback-derived club team IDs/names, and player ownership counts without fetching or writing.
+
+Do not place raw/full match-centre data under `clubs/<club_id>/data/processed`. Club-specific raw/generated paths such as `data/raw/match_centre/<club_id>/` and `data/processed/match_centre/<club_id>/` are later-phase candidates. Before a second club relies heavily on ball-by-ball or match-centre features, review club-specific team ownership mappings and raw/generated folder scoping.

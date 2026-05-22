@@ -105,7 +105,8 @@ def build_premiership_wins(wins: pd.DataFrame, matches: pd.DataFrame) -> pd.Data
     output["scoreboard_url"] = output["match_id"].map(playcricket_scorecard_url)
     output["venue_name"] = output.get("venue_name", "").map(clean_text)
     output["opponent_team_name"] = output.get("opponent_team_name", "").map(clean_text)
-    output["fvcc_team_name"] = output.get("fvcc_team_name", "").map(clean_text)
+    output["club_team_name"] = output.get("club_team_name", output.get("fvcc_team_name", "")).map(clean_text)
+    output["fvcc_team_name"] = output["club_team_name"]
 
     columns = [
         "match_id",
@@ -153,6 +154,7 @@ def build_player_premierships(players: pd.DataFrame, wins: pd.DataFrame) -> pd.D
 
     valid_matches = set(wins["match_id"].astype(str))
     merged = players[players["match_id"].astype(str).isin(valid_matches)].copy()
+    merged["club_team_name"] = merged.get("club_team_name", merged.get("fvcc_team_name", "")).map(clean_text)
     merged["display_player_name"] = merged["canonical_player_name"].map(display_or_blank)
     merged["season_sort"] = merged["season"].map(season_sort_key)
 
@@ -170,7 +172,7 @@ def build_player_premierships(players: pd.DataFrame, wins: pd.DataFrame) -> pd.D
                 "premiership_count": len(unique_matches),
                 "seasons": ", ".join(seasons),
                 "grades": join_unique(group["grade_name"]),
-                "teams": join_unique(group["fvcc_team_name"]),
+                "teams": join_unique(group.get("club_team_name", group["fvcc_team_name"])),
                 "latest_premiership_season": latest,
                 "evidence_match_ids": ", ".join(unique_matches),
                 "confidence": combine_confidence(group.get("confidence", pd.Series(dtype=str))),
@@ -211,7 +213,7 @@ def validate_exports(wins: pd.DataFrame, players: pd.DataFrame) -> None:
 
 def result_margin_display(row: pd.Series) -> str:
     result = clean_text(row.get("result_text"))
-    team = clean_text(row.get("fvcc_team_name"))
+    team = clean_text(row.get("club_team_name") or row.get("fvcc_team_name"))
     if not result:
         return ""
     if team and result.casefold().startswith(team.casefold()):

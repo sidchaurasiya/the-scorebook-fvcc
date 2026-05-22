@@ -216,11 +216,11 @@ def match_dimension_context(matches: pd.DataFrame, club_id: str | None = None) -
     for column in ["home_team_id", "away_team_id", "home_team_name", "away_team_name", "venue_name", "match_type"]:
         if column not in raw:
             raw[column] = ""
-    fvcc_team_ids = set(season_exports.team_context(club_id=club_id)["team_id"].astype(str))
-    fvcc_is_home = raw["home_team_id"].astype(str).isin(fvcc_team_ids)
-    raw["opponent_label"] = raw["away_team_name"].where(fvcc_is_home, raw["home_team_name"]).map(normalize_opponent_name)
+    club_team_ids = set(season_exports.team_context(club_id=club_id)["team_id"].astype(str))
+    club_is_home = raw["home_team_id"].astype(str).isin(club_team_ids)
+    raw["opponent_label"] = raw["away_team_name"].where(club_is_home, raw["home_team_name"]).map(normalize_opponent_name)
     raw["ground_label"] = raw["venue_name"].map(normalize_ground_name)
-    raw["home_away_label"] = fvcc_is_home.map(lambda value: "Home" if value else "Away")
+    raw["home_away_label"] = club_is_home.map(lambda value: "Home" if value else "Away")
     return raw[["match_id", "opponent_label", "ground_label", "home_away_label", "match_type"]].drop_duplicates("match_id")
 
 

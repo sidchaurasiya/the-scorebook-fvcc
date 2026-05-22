@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import sys
 from pathlib import Path
 
@@ -12,6 +13,7 @@ if str(ROOT) not in sys.path:
 from src.config.club_config import (  # noqa: E402
     get_active_club_id,
     get_club_name,
+    get_processed_path,
     load_club_config,
     normalize_club_id,
 )
@@ -48,6 +50,19 @@ def get_playcricket_club_id(club_id: str) -> str:
     if not playcricket_club_id:
         raise SystemExit(f"Club '{club_id}' is missing club.playcricket_club_id in clubs/{club_id}/club_config.yaml.")
     return playcricket_club_id
+
+
+def get_club_team_ids(club_id: str | None) -> set[str]:
+    teams_path = get_processed_path("teams.csv", club_id=club_id)
+    if not teams_path.exists():
+        return set()
+    with teams_path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        return {
+            str(row.get("team_id") or "").strip()
+            for row in reader
+            if str(row.get("team_id") or "").strip()
+        }
 
 
 def print_club_header(title: str, club_id: str) -> None:

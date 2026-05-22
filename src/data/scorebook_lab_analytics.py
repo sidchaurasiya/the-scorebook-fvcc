@@ -6,6 +6,7 @@ from typing import Any
 import pandas as pd
 
 from src.data import player_dna_analytics as dna
+from src.data.match_centre_ownership import ensure_club_ownership_columns
 
 
 def load_scorebook_lab_data(app_root: str | Path) -> dict[str, Any]:
@@ -384,7 +385,9 @@ def calculate_match_story(
             row = best.iloc[0]
             story.append({"title": "Partnership moment", "text": f"{safe_text(row.get('batter_1_name'))} and {safe_text(row.get('batter_2_name'))} added {int(row['runs'])}."})
     if not inns.empty:
-        fvcc = inns[inns.get("batting_team_id", pd.Series(dtype="object")).astype(str).isin(set(match.get(key, "") for key in ["fvcc_team_id"]))].copy()
+        match = ensure_club_ownership_columns(pd.DataFrame([match])).iloc[0]
+        club_team_id = safe_text(match.get("club_team_id") or match.get("fvcc_team_id"))
+        fvcc = inns[inns.get("batting_team_id", pd.Series(dtype="object")).astype(str) == club_team_id].copy()
         if not fvcc.empty:
             row = fvcc.iloc[0]
             story.append({"title": "Scorecard frame", "text": f"FVCC made {safe_text(row.get('runs_scored'))}/{safe_text(row.get('wickets_fallen'))} from {safe_text(row.get('overs_bowled'))} overs."})
@@ -513,7 +516,8 @@ def fvcc_rows(frame: pd.DataFrame) -> pd.DataFrame:
 def fvcc_innings_at(innings: pd.DataFrame, matches: pd.DataFrame, match_ids: set[str]) -> pd.DataFrame:
     if innings.empty or matches.empty or not match_ids:
         return pd.DataFrame()
-    match_team = matches.set_index("match_id")["fvcc_team_id"].to_dict() if "fvcc_team_id" in matches else {}
+    matches = ensure_club_ownership_columns(matches)
+    match_team = matches.set_index("match_id")["club_team_id"].to_dict() if "club_team_id" in matches else {}
     rows = innings[innings.get("match_id", pd.Series(dtype="object")).astype(str).isin(match_ids)].copy()
     rows = rows[rows.apply(lambda row: safe_text(row.get("batting_team_id")) == safe_text(match_team.get(row.get("match_id"))), axis=1)]
     return rows
@@ -522,7 +526,8 @@ def fvcc_innings_at(innings: pd.DataFrame, matches: pd.DataFrame, match_ids: set
 def opponent_innings_at(innings: pd.DataFrame, matches: pd.DataFrame, match_ids: set[str]) -> pd.DataFrame:
     if innings.empty or matches.empty or not match_ids:
         return pd.DataFrame()
-    match_team = matches.set_index("match_id")["fvcc_team_id"].to_dict() if "fvcc_team_id" in matches else {}
+    matches = ensure_club_ownership_columns(matches)
+    match_team = matches.set_index("match_id")["club_team_id"].to_dict() if "club_team_id" in matches else {}
     rows = innings[innings.get("match_id", pd.Series(dtype="object")).astype(str).isin(match_ids)].copy()
     rows = rows[rows.apply(lambda row: safe_text(row.get("batting_team_id")) != safe_text(match_team.get(row.get("match_id"))), axis=1)]
     return rows
