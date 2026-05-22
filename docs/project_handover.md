@@ -900,12 +900,16 @@ Important source areas:
 
 ## 17. Multi-Club Refresh / Export Status
 
-Phase 5 made the aggregate refresh/write workflow club-aware without changing visible app behaviour.
+Phase 6 adds club-aware dry-run/reporting to match-centre refresh/backfill workflows without changing visible app behaviour.
 
 - Active club remains FVCC by default, or via `CLUB_ID=fvcc`.
 - Runtime data is preferred from `clubs/fvcc/data/processed/...` with legacy `data/...` fallback.
 - `scripts/refresh_data.py --club <club_id>` now reads `club.playcricket_club_id` from config and writes aggregate processed CSVs to `clubs/<club_id>/data/processed/` by default.
 - `scripts/refresh_data.py --club <club_id> --dry-run` makes no network requests and no writes; it reports the PlayCricket club ID, processed output directory, raw/cache/metadata paths, planned aggregate CSV outputs, and next deploy-safe rebuild command.
+- `scripts/refresh_match_centre_data.py --club <club_id> --dry-run` makes no network requests and no writes; scope args are optional in dry-run, and the report shows current legacy raw/generated match-centre output paths.
+- `scripts/backfill_match_centre_available.py --club <club_id> --dry-run` uses club-aware `teams.csv`, `seasons.csv`, and `players.csv`, keeps aliases global, and reports scoped season/team counts without fetching or writing.
+- `scripts/build_match_centre_milestones.py --club <club_id> --dry-run` reports the config PlayCricket ID and generated match-centre milestone output paths.
+- `scripts/refresh_club_outputs.py --club <club_id> --dry-run` now lists the future weekly sequence: aggregate refresh, scoped match-centre refresh, all-available backfill, then deploy-safe summary rebuild.
 - Use `--legacy-output` only when an explicit compatibility write to legacy `data/processed/` is required.
 - Deploy-safe output builders now support `--club`, `--dry-run`, and explicit `--legacy-output`.
 - Hall of Fame exports write to `clubs/<club_id>/data/processed/hall_of_fame/` by default.
@@ -917,12 +921,17 @@ Safe planning commands:
 
 ```bash
 ./.venv-app/bin/python scripts/refresh_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/refresh_match_centre_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/backfill_match_centre_available.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/build_match_centre_milestones.py --club fvcc --dry-run
 ./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
 ```
 
-Future weekly order: aggregate refresh with `scripts/refresh_data.py --club fvcc`, match-centre refresh, deploy-safe summaries with `scripts/refresh_club_outputs.py --club fvcc`, club config check, local smoke test, then commit only club-specific production processed/deploy-safe outputs and relevant code/docs.
+Future weekly order: aggregate refresh with `scripts/refresh_data.py --club fvcc`, controlled match-centre refresh/backfill, deploy-safe summaries with `scripts/refresh_club_outputs.py --club fvcc`, club config check, local smoke test, then commit only club-specific production processed/deploy-safe outputs and relevant code/docs.
 
 Phase 4.5 validation: `scripts/refresh_club_outputs.py --club fvcc` ran from existing local inputs only, fetched no external data, and regenerated all deploy-safe summaries deterministically. All 19 club-specific Hall of Fame, Season Overview, and Player Profile CSVs matched their previous row counts and SHA-256 hashes, so no CSV changes were committed.
+
+Phase 6 deliberately leaves raw/full match-centre data in ignored legacy folders: `data/raw/match_centre/`, `data/processed/match_centre/`, and `data/processed/experimental/`. Production pages should continue to depend only on deploy-safe summaries under `clubs/<club_id>/data/processed/...`. Parser ownership fields such as `fvcc_team_id`, `fvcc_team_name`, `is_fvcc_player`, and `FVCC_ORGANISATION_ID` remain later-phase risks before second-club match-centre features are trusted.
 
 ## 18. Final Instructions For Future Codex Session
 

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
+from scripts.club_refresh_utils import add_club_args, get_playcricket_club_id, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
 
@@ -31,6 +31,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     club_id = resolve_club_id(args.club)
+    playcricket_club_id = get_playcricket_club_id(club_id)
     processed_root = get_processed_match_centre_dir(club_id=club_id)
     players_path = get_processed_path("players.csv", club_id=club_id)
     aliases_path = get_mapping_path("player_aliases.csv", club_id=club_id)
@@ -38,9 +39,12 @@ def main(argv: list[str] | None = None) -> int:
     validation_path = processed_root / "batting_milestones_validation.csv"
 
     print_club_header("Match-centre batting milestone builder", club_id)
+    print(f"- PlayCricket club ID: {playcricket_club_id}")
+    print(f"- mode: {'dry run' if args.dry_run else 'build local milestone summaries'}")
+    print("- external fetch: no")
     print_paths("Inputs", [processed_root, players_path, aliases_path])
     print_outputs("Outputs", [milestones_path, validation_path])
-    print("Note: match-centre milestone outputs remain in the configured legacy match-centre folder for Phase 4.")
+    print("Note: match-centre milestone outputs remain in the configured legacy match-centre folder for Phase 6.")
     if args.dry_run:
         print("Dry run complete. No files were written.")
         return 0

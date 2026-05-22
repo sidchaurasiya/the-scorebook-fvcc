@@ -62,22 +62,32 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Raw JSON backups, cache files, timestamped backups, root-level player identity mapping files, match-centre raw/generated folders, and experimental/intermediate data remain legacy/global for now.
 - After aggregate refresh, run `scripts/refresh_club_outputs.py --club <club_id>` to rebuild deploy-safe summaries.
 
-## Phase 6: Create `onboard_club.py`
+## Phase 6: Add Club-Aware Match-Centre Dry-Run Reporting
+
+- `scripts/refresh_match_centre_data.py --club <club_id> --dry-run` now reports the active club, config PlayCricket ID, optional scope, legacy raw/generated match-centre paths, and confirms no network/no writes.
+- `scripts/backfill_match_centre_available.py --club <club_id> --dry-run` now uses club-aware `teams.csv`, `seasons.csv`, and `players.csv` paths, keeps aliases global, reports scoped season/team counts, and confirms no network/no writes.
+- `scripts/build_match_centre_milestones.py --club <club_id> --dry-run` reports the config PlayCricket ID and generated milestone output paths.
+- Raw/full match-centre and experimental folders remain ignored legacy/global paths: `data/raw/match_centre`, `data/processed/match_centre`, and `data/processed/experimental`.
+- Deploy-safe summaries remain the only production runtime dependency and continue to be built into `clubs/<club_id>/data/processed/...` with `scripts/refresh_club_outputs.py --club <club_id>`.
+- Club-scoped raw/generated paths such as `data/raw/match_centre/<club_id>` and `data/processed/match_centre/<club_id>` are Phase 6.5/7 candidates, not part of Phase 6.
+- Parser ownership fields such as `fvcc_team_id`, `fvcc_team_name`, `is_fvcc_player`, and `FVCC_ORGANISATION_ID` remain documented risks before second-club ball-by-ball features are trusted.
+
+## Phase 7: Create `onboard_club.py`
 
 - Generate a starter config, data folders, mapping templates, and review checklist.
 - Collect PlayCricket club ID, club/team identifiers, grade order, home grounds, aliases, and display branding.
 
-## Phase 7: Generate Club Review Pack
+## Phase 8: Generate Club Review Pack
 
 - Produce QA reports for player identity, team/grade labels, opponent names, ground names, missing scorecards, ball-by-ball coverage, and deploy-safe summary freshness.
 - Require review before a new club is considered production-ready.
 
-## Phase 8: Add Per-Club Deploy-Safe Summaries
+## Phase 9: Add Per-Club Deploy-Safe Summaries
 
 - Build Hall of Fame, Season Overview, Player Profile, and milestone summaries under each club data folder.
 - Keep raw and experimental outputs out of deployable paths.
 
-## Phase 9: Runtime / Deployment Strategy
+## Phase 10: Runtime / Deployment Strategy
 
 - Decide between one deployment per club, one runtime selected by `CLUB_ID`, or a multi-club selector.
 - Keep routing, GA4, and page availability consistent with the chosen deployment model.

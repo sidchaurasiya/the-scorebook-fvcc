@@ -344,7 +344,7 @@ Examples:
 
 If a future visual needs those details, add the source pull to `src/data/playcricket_ingestion.py`, write timestamped raw responses to `data/raw/`, regenerate active-club processed files in `clubs/<club_id>/data/processed/`, and document the new fields here.
 
-## Multi-Club Phase 5 Refresh Shape
+## Multi-Club Phase 6 Refresh Shape
 
 The app now reads FVCC production data from `clubs/fvcc/data/processed` with legacy fallback. Aggregate refresh and deploy-safe export builders are club-aware and default to writing production-safe outputs under `clubs/<club_id>/data/processed/...`.
 
@@ -352,13 +352,16 @@ Current safe planning commands:
 
 ```bash
 ./.venv-app/bin/python scripts/refresh_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/refresh_match_centre_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/backfill_match_centre_available.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/build_match_centre_milestones.py --club fvcc --dry-run
 ./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
 ```
 
 Future weekly refresh order:
 
 1. Refresh aggregate data for the club with `scripts/refresh_data.py --club fvcc`.
-2. Refresh match-centre data for the club.
+2. Refresh match-centre data for the club with a controlled `scripts/refresh_match_centre_data.py --club fvcc ...` scope, or use `scripts/backfill_match_centre_available.py --club fvcc` only when a reviewed all-available refresh is intended.
 3. Rebuild Hall of Fame, Season Overview, and Player Profile deploy-safe summaries with `scripts/refresh_club_outputs.py --club fvcc`.
 4. Run `scripts/check_club_config.py`.
 5. Smoke-test the app without experimental pages.
@@ -371,6 +374,8 @@ Raw/full match-centre folders remain ignored and should not be committed:
 - `data/processed/experimental/`
 
 Legacy `data/...` paths remain fallback during the migration. Raw JSON backups, cache files, timestamped backups, match-centre raw/generated folders, experimental/intermediate data, and root-level player identity mapping files remain legacy/global for now. Use `--legacy-output` only when an explicit compatibility aggregate write to `data/processed` is required.
+
+Phase 6 adds club-aware dry-run/reporting to match-centre refresh and backfill scripts only. Dry-runs print the active club, config PlayCricket ID, planned input paths, legacy ignored raw/generated output paths, and no-network/no-write status. Raw/full match-centre data is still not a production runtime dependency; production pages should continue reading only deploy-safe summaries under `clubs/<club_id>/data/processed/...`.
 
 Phase 4.5 validation ran the non-dry-run deploy-safe wrapper for FVCC using existing local inputs only:
 

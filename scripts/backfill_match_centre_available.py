@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Backfill public PlayCricket match-centre data for locally known FVCC teams.
+"""Backfill public PlayCricket match-centre data for locally known club teams.
 
 This runner is intentionally conservative and resumable. It reads season/team
 combinations from local processed tables, fetches public match-centre endpoints
@@ -31,6 +31,15 @@ from scripts.refresh_match_centre_data import (  # noqa: E402
     build_validation_warnings_detail,
     folder_size_mb,
 )
+from scripts.club_refresh_utils import (  # noqa: E402
+    add_club_args,
+    get_playcricket_club_id,
+    print_club_header,
+    print_outputs,
+    print_paths,
+    resolve_club_id,
+)
+from src.config.club_config import get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir  # noqa: E402
 
 
 RAW_DIR = ROOT / "data" / "raw" / "match_centre" / "all_available"
@@ -42,7 +51,8 @@ ALIASES_PATH = ROOT / "data" / "player_aliases.csv"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Backfill locally known FVCC match-centre data into one all_available scope.")
+    parser = argparse.ArgumentParser(description="Backfill locally known club match-centre data into one all_available scope.")
+    add_club_args(parser, legacy_output=False)
     parser.add_argument("--sleep-seconds", type=float, default=1.0, help="Delay between uncached public requests.")
     parser.add_argument("--max-seasons", type=int, default=None, help="Optional safety cap on seasons.")
     parser.add_argument("--max-teams", type=int, default=None, help="Optional safety cap on season/team combinations.")
@@ -50,52 +60,78 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--season-id", action="append", dest="season_ids", default=None, help="Optional season ID filter. Repeatable.")
     parser.add_argument("--team-id", action="append", dest="team_ids", default=None, help="Optional team ID filter. Repeatable.")
     parser.add_argument("--force-refresh", action="store_true", help="Refetch files even when cached raw files already exist.")
-    parser.add_argument("--dry-run", action="store_true", help="Show scope without fetching.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    club_id = resolve_club_id(args.club)
+    playcricket_club_id = get_playcricket_club_id(club_id)
+    raw_root = get_raw_match_centre_dir(club_id=club_id)
+    processed_root = get_processed_match_centre_dir(club_id=club_id)
+    raw_dir = raw_root / "all_available"
+    processed_dir = processed_root / "all_available"
+    teams_path = get_processed_path("teams.csv", club_id=club_id)
+    seasons_path = get_processed_path("seasons.csv", club_id=club_id)
+    players_path = get_processed_path("players.csv", club_id=club_id)
+    aliases_path = get_mapping_path("player_aliases.csv", club_id=club_id)
     started_at = now_iso()
-    combos = load_scope_combinations(args)
-    dry_run_summary(combos)
+    combos = load_scope_combinations(args, teams_path=teams_path, seasons_path=seasons_path)
+    dry_run_summary(
+        combos,
+        club_id=club_id,
+        playcricket_club_id=playcricket_club_id,
+        teams_path=teams_path,
+        seasons_path=seasons_path,
+        players_path=players_path,
+        aliases_path=aliases_path,
+        raw_dir=raw_dir,
+        processed_dir=processed_dir,
+        dry_run=args.dry_run,
+    )
     if args.dry_run:
         return 0
     if combos.empty:
         print("No season/team combinations found. Nothing to backfill.")
         return 0
 
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    processed_dir.mkdir(parents=True, exist_ok=True)
     fetcher = PoliteMatchCentreFetcher(sleep_seconds=args.sleep_seconds)
-    team_match_rows, request_records = fetch_team_match_lists(fetcher, combos, args.force_refresh)
+    team_match_rows, request_records = fetch_team_match_lists(fetcher, combos, args.force_refresh, raw_dir=raw_dir)
     unique_matches, source_team_map = unique_completed_matches(team_match_rows)
     if args.max_matches is not None:
         unique_matches = unique_matches[: args.max_matches]
 
-    scorecard_paths = fetch_match_payloads(fetcher, unique_matches, request_records, args.force_refresh)
-    write_manifest(RAW_DIR / "manifest.json", combos, team_match_rows, unique_matches, request_records, started_at)
+    scorecard_paths = fetch_match_payloads(fetcher, unique_matches, request_records, args.force_refresh, raw_dir=raw_dir)
+    write_manifest(raw_dir / "manifest.json", combos, team_match_rows, unique_matches, request_records, started_at)
 
-    payloads = load_match_payloads(scorecard_paths)
+    payloads = load_match_payloads(scorecard_paths, raw_dir=raw_dir)
     frames = parse_payloads(payloads)
     add_source_team_ids(frames["all_matches"], source_team_map)
     add_source_season_context(frames["all_matches"], team_match_rows, combos)
     for name, frame in frames.items():
-        frame.to_csv(PROCESSED_DIR / f"{name}.csv", index=False)
+        frame.to_csv(processed_dir / f"{name}.csv", index=False)
 
     warnings = build_validation_warnings_detail(frames)
-    warnings.to_csv(PROCESSED_DIR / "validation_warnings_detail.csv", index=False)
-    identity = build_player_identity_audit(frames, build_team_metadata(combos), set(combos["team_id"].astype(str)))
-    identity.to_csv(PROCESSED_DIR / "player_identity_audit.csv", index=False)
+    warnings.to_csv(processed_dir / "validation_warnings_detail.csv", index=False)
+    identity = build_player_identity_audit(
+        frames,
+        build_team_metadata(combos),
+        set(combos["team_id"].astype(str)),
+        players_path=players_path,
+        aliases_path=aliases_path,
+    )
+    identity.to_csv(processed_dir / "player_identity_audit.csv", index=False)
 
     milestone_result = build_batting_milestones(
-        ROOT / "data" / "processed" / "match_centre",
-        players_path=PLAYERS_PATH,
-        aliases_path=ALIASES_PATH,
+        processed_root,
+        players_path=players_path,
+        aliases_path=aliases_path,
         scope_names=["all_available"],
     )
-    milestone_result.milestones.to_csv(PROCESSED_DIR / "all_batting_milestones.csv", index=False)
-    milestone_result.validation.to_csv(PROCESSED_DIR / "batting_milestones_validation.csv", index=False)
+    milestone_result.milestones.to_csv(processed_dir / "all_batting_milestones.csv", index=False)
+    milestone_result.validation.to_csv(processed_dir / "batting_milestones_validation.csv", index=False)
 
     summary = build_backfill_summary(
         combos,
@@ -107,15 +143,17 @@ def main() -> int:
         milestone_result.milestones,
         started_at,
         now_iso(),
+        raw_dir=raw_dir,
+        processed_dir=processed_dir,
     )
-    summary.to_csv(PROCESSED_DIR / "backfill_summary.csv", index=False)
+    summary.to_csv(processed_dir / "backfill_summary.csv", index=False)
     print_run_review(summary, milestone_result.milestones, milestone_result.validation, identity)
     return 0
 
 
-def load_scope_combinations(args: argparse.Namespace) -> pd.DataFrame:
-    teams = pd.read_csv(TEAMS_PATH)
-    seasons = pd.read_csv(SEASONS_PATH) if SEASONS_PATH.exists() else pd.DataFrame(columns=["id", "startDate"])
+def load_scope_combinations(args: argparse.Namespace, *, teams_path: Path = TEAMS_PATH, seasons_path: Path = SEASONS_PATH) -> pd.DataFrame:
+    teams = pd.read_csv(teams_path)
+    seasons = pd.read_csv(seasons_path) if seasons_path.exists() else pd.DataFrame(columns=["id", "startDate"])
     teams = teams.drop_duplicates(["season_id", "team_id"]).copy()
     if args.season_ids:
         teams = teams[teams["season_id"].astype(str).isin(set(args.season_ids))]
@@ -136,28 +174,48 @@ def load_scope_combinations(args: argparse.Namespace) -> pd.DataFrame:
     return teams.reset_index(drop=True)
 
 
-def dry_run_summary(combos: pd.DataFrame) -> None:
+def dry_run_summary(
+    combos: pd.DataFrame,
+    *,
+    club_id: str,
+    playcricket_club_id: str,
+    teams_path: Path,
+    seasons_path: Path,
+    players_path: Path,
+    aliases_path: Path,
+    raw_dir: Path,
+    processed_dir: Path,
+    dry_run: bool,
+) -> None:
     seasons = combos[["season_id", "season"]].drop_duplicates() if not combos.empty else pd.DataFrame()
-    print("Match-centre available backfill scope")
+    print_club_header("Match-centre available backfill scope", club_id)
+    print(f"- PlayCricket club ID: {playcricket_club_id}")
+    print(f"- mode: {'dry run' if dry_run else 'backfill all available local scope'}")
+    print(f"- external fetch: {'no' if dry_run else 'would fetch uncached match-centre endpoints'}")
+    print_paths("Inputs", [teams_path, seasons_path, players_path, aliases_path])
+    print_outputs("Raw/generated outputs", [raw_dir, processed_dir])
+    print("- raw/generated match-centre outputs remain legacy ignored paths in Phase 6")
+    print("Scope summary")
     print(f"- seasons: {len(seasons):,}")
     print(f"- teams: {combos['team_id'].nunique() if not combos.empty else 0:,}")
     print(f"- season/team combinations: {len(combos):,}")
-    print("- output scope: data/raw/match_centre/all_available/ and data/processed/match_centre/all_available/")
     print("- ball-by-ball will only be fetched when scorecard isBallByBall is true")
+    if dry_run:
+        print("- dry run writes: no files")
     if not combos.empty:
         print("\nFirst combinations:")
         for _, row in combos.head(12).iterrows():
             print(f"  - {row['season']} | {row['team_name']} | {row.get('grade_name', '')}")
 
 
-def fetch_team_match_lists(fetcher: PoliteMatchCentreFetcher, combos: pd.DataFrame, force_refresh: bool) -> tuple[list[dict[str, Any]], list[RequestRecord]]:
+def fetch_team_match_lists(fetcher: PoliteMatchCentreFetcher, combos: pd.DataFrame, force_refresh: bool, *, raw_dir: Path = RAW_DIR) -> tuple[list[dict[str, Any]], list[RequestRecord]]:
     rows: list[dict[str, Any]] = []
     records: list[RequestRecord] = []
     for index, row in combos.iterrows():
         season_id = str(row["season_id"])
         team_id = str(row["team_id"])
         print(f"[{index + 1}/{len(combos)}] Team match list: {row['season']} | {row['team_name']} | {row.get('grade_name', '')}")
-        path = RAW_DIR / f"team_matches__season={season_id}__team={team_id}.json"
+        path = raw_dir / f"team_matches__season={season_id}__team={team_id}.json"
         payload, record = fetcher.get_json(
             f"/scores/teams/{team_id}/matches",
             {"seasonId": season_id, "jsconfig": "eccn:true"},
@@ -192,12 +250,14 @@ def fetch_match_payloads(
     matches: list[dict[str, Any]],
     records: list[RequestRecord],
     force_refresh: bool,
+    *,
+    raw_dir: Path = RAW_DIR,
 ) -> list[Path]:
     scorecard_paths: list[Path] = []
     for index, match in enumerate(matches, start=1):
         match_id = str(match.get("id"))
         print(f"[{index}/{len(matches)}] Match payloads: {match_id}")
-        scorecard_path = RAW_DIR / f"match={match_id}__scorecard.json"
+        scorecard_path = raw_dir / f"match={match_id}__scorecard.json"
         scorecard_payload, record = fetcher.get_json(
             f"/scores/matches/{match_id}",
             {"responseModifier": "includeScorecard", "jsconfig": "eccn:true"},
@@ -209,7 +269,7 @@ def fetch_match_payloads(
         records.append(record)
         scorecard_paths.append(scorecard_path)
 
-        officials_path = RAW_DIR / f"match={match_id}__officials.json"
+        officials_path = raw_dir / f"match={match_id}__officials.json"
         _, record = fetcher.get_json(
             f"/scores/matches/{match_id}/officials",
             {"jsconfig": "eccn:true"},
@@ -221,7 +281,7 @@ def fetch_match_payloads(
         records.append(record)
 
         if isinstance(scorecard_payload, dict) and scorecard_payload.get("isBallByBall"):
-            balls_path = RAW_DIR / f"match={match_id}__balls.json"
+            balls_path = raw_dir / f"match={match_id}__balls.json"
             _, record = fetcher.get_json(
                 f"/scores/matches/{match_id}/balls",
                 {"jsconfig": "eccn:true"},
@@ -234,13 +294,13 @@ def fetch_match_payloads(
     return scorecard_paths
 
 
-def load_match_payloads(scorecard_paths: list[Path]) -> list[MatchCentrePayloads]:
+def load_match_payloads(scorecard_paths: list[Path], *, raw_dir: Path = RAW_DIR) -> list[MatchCentrePayloads]:
     payloads = []
     for scorecard_path in sorted(set(scorecard_paths)):
         match_id = scorecard_path.name.removeprefix("match=").removesuffix("__scorecard.json")
         scorecard = read_json(scorecard_path)
-        officials_path = RAW_DIR / f"match={match_id}__officials.json"
-        balls_path = RAW_DIR / f"match={match_id}__balls.json"
+        officials_path = raw_dir / f"match={match_id}__officials.json"
+        balls_path = raw_dir / f"match={match_id}__balls.json"
         payloads.append(
             MatchCentrePayloads(
                 manifest={"fetched_at": scorecard.get("request", {}).get("fetched_at")},
@@ -285,6 +345,9 @@ def build_backfill_summary(
     milestones: pd.DataFrame,
     started_at: str,
     completed_at: str,
+    *,
+    raw_dir: Path = RAW_DIR,
+    processed_dir: Path = PROCESSED_DIR,
 ) -> pd.DataFrame:
     validation = frames["validation_report"]
     status_counts = validation["status"].value_counts().to_dict() if not validation.empty else {}
@@ -317,8 +380,8 @@ def build_backfill_summary(
                 "fvcc_exact_player_matches": count_identity(fvcc_identity, "exact_match"),
                 "fvcc_likely_player_matches": count_identity(fvcc_identity, "likely_match"),
                 "fvcc_no_player_matches": count_identity(fvcc_identity, "no_match"),
-                "raw_data_size_mb": round(folder_size_mb(RAW_DIR), 3),
-                "processed_data_size_mb": round(folder_size_mb(PROCESSED_DIR), 3),
+                "raw_data_size_mb": round(folder_size_mb(raw_dir), 3),
+                "processed_data_size_mb": round(folder_size_mb(processed_dir), 3),
                 "started_at": started_at,
                 "completed_at": completed_at,
             }

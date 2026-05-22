@@ -1755,7 +1755,7 @@ Ignored/generated files:
 
 ## 19. Multi-Club Refresh / Export Status
 
-Phase 5 made the aggregate refresh command club-aware while preserving the current FVCC user experience.
+Phase 6 adds club-aware dry-run/reporting to match-centre workflows while preserving the current FVCC user experience.
 
 - `CLUB_ID=fvcc` and the default no-`CLUB_ID` path both use the FVCC config.
 - Club runtime data lives under `clubs/fvcc/data/processed/...` with legacy fallback.
@@ -1763,9 +1763,13 @@ Phase 5 made the aggregate refresh command club-aware while preserving the curre
 - `scripts/refresh_data.py --club fvcc --dry-run` reports planned aggregate outputs and does not fetch or write.
 - `--legacy-output` is the explicit compatibility path for writing aggregate CSVs to legacy `data/processed/`.
 - Deploy-safe builders support `--club`, `--dry-run`, and explicit `--legacy-output`.
+- `scripts/refresh_match_centre_data.py --club fvcc --dry-run` reports the active club, config PlayCricket ID, optional scope, legacy ignored raw/generated match-centre output paths, and no-network/no-write status.
+- `scripts/backfill_match_centre_available.py --club fvcc --dry-run` uses club-aware teams/seasons/players inputs, keeps aliases global, and reports scoped season/team counts without fetching or writing.
+- `scripts/build_match_centre_milestones.py --club fvcc --dry-run` reports the config PlayCricket ID and generated match-centre milestone paths without writing.
 - `scripts/refresh_club_outputs.py --club fvcc --dry-run` lists the safe deploy-summary rebuild steps without fetching or writing.
 - Raw JSON backups, cache files, timestamped backups, full match-centre raw/generated folders, experimental data, and root-level player mapping/audit files remain legacy/global and are not production runtime dependencies.
-- Future weekly refresh order is aggregate data, match-centre data, club deploy-safe summaries, config check, smoke tests, then commit only club-specific processed/deploy-safe files.
+- Future weekly refresh order is aggregate data, controlled match-centre refresh/backfill, club deploy-safe summaries, config check, smoke tests, then commit only club-specific processed/deploy-safe files.
+- Club-specific raw/generated match-centre paths and parser ownership generalization remain future work before a second club can rely on ball-by-ball features.
 
 ## 20. Final Notes For Future Sessions
 

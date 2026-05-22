@@ -42,6 +42,14 @@ def resolve_club_id(club_id: str | None) -> str:
     return active_club_id
 
 
+def get_playcricket_club_id(club_id: str) -> str:
+    config = load_club_config(club_id)
+    playcricket_club_id = str(config.get("club", {}).get("playcricket_club_id") or "").strip()
+    if not playcricket_club_id:
+        raise SystemExit(f"Club '{club_id}' is missing club.playcricket_club_id in clubs/{club_id}/club_config.yaml.")
+    return playcricket_club_id
+
+
 def print_club_header(title: str, club_id: str) -> None:
     print(title)
     print(f"- active club: {club_id} ({get_club_name(club_id)})")

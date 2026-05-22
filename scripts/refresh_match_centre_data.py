@@ -26,6 +26,15 @@ if str(ROOT) not in sys.path:
 
 from src.data.match_centre_fetcher import PoliteMatchCentreFetcher, RequestRecord  # noqa: E402
 from src.data.match_centre_parser import MatchCentrePayloads, parse_payloads  # noqa: E402
+from scripts.club_refresh_utils import (  # noqa: E402
+    add_club_args,
+    get_playcricket_club_id,
+    print_club_header,
+    print_outputs,
+    print_paths,
+    resolve_club_id,
+)
+from src.config.club_config import get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir  # noqa: E402
 
 
 RAW_ROOT = ROOT / "data" / "raw" / "match_centre"
@@ -37,24 +46,60 @@ ALIASES_PATH = ROOT / "data" / "player_aliases.csv"
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Refresh scoped public PlayCricket match-centre data.")
-    parser.add_argument("--season-id", required=True, help="PlayCricket season ID.")
-    parser.add_argument("--team-id", action="append", required=True, dest="team_ids", help="Team ID. Repeat for a controlled multi-team scope.")
-    parser.add_argument("--output-scope-name", required=True, help="Folder-safe output scope name, e.g. summer_2025_26_3rd_xi.")
+    add_club_args(parser, legacy_output=False)
+    parser.add_argument("--season-id", default=None, help="PlayCricket season ID.")
+    parser.add_argument("--team-id", action="append", default=None, dest="team_ids", help="Team ID. Repeat for a controlled multi-team scope.")
+    parser.add_argument("--output-scope-name", default=None, help="Folder-safe output scope name, e.g. summer_2025_26_3rd_xi.")
     parser.add_argument("--force-refresh", action="store_true", help="Refetch files even when cached raw files already exist.")
     parser.add_argument("--sleep-seconds", type=float, default=1.0, help="Delay between uncached public requests.")
     parser.add_argument("--max-matches", type=int, default=None, help="Optional cap on unique completed matches for testing.")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not args.dry_run:
+        missing = []
+        if not args.season_id:
+            missing.append("--season-id")
+        if not args.team_ids:
+            missing.append("--team-id")
+        if not args.output_scope_name:
+            missing.append("--output-scope-name")
+        if missing:
+            parser.error(f"the following arguments are required unless --dry-run is used: {', '.join(missing)}")
+    return args
 
 
 def main() -> int:
     args = parse_args()
+    club_id = resolve_club_id(args.club)
+    playcricket_club_id = get_playcricket_club_id(club_id)
+    raw_root = get_raw_match_centre_dir(club_id=club_id)
+    processed_root = get_processed_match_centre_dir(club_id=club_id)
+    teams_path = get_processed_path("teams.csv", club_id=club_id)
+    players_path = get_processed_path("players.csv", club_id=club_id)
+    aliases_path = get_mapping_path("player_aliases.csv", club_id=club_id)
+    output_scope_name = args.output_scope_name or "<output-scope-name>"
+    raw_dir = raw_root / output_scope_name
+    processed_dir = processed_root / output_scope_name
+
+    print_club_header("Scoped match-centre refresh", club_id)
+    print(f"- PlayCricket club ID: {playcricket_club_id}")
+    print(f"- mode: {'dry run' if args.dry_run else 'refresh scoped match-centre data'}")
+    print(f"- external fetch: {'would fetch uncached match-centre endpoints' if not args.dry_run else 'no'}")
+    print_paths("Inputs", [teams_path, players_path, aliases_path])
+    print_outputs("Raw/generated outputs", [raw_dir, processed_dir])
+    print("- raw/generated match-centre outputs remain legacy ignored paths in Phase 6")
+    print(f"- season id: {args.season_id or '<required for real refresh>'}")
+    print(f"- team ids: {', '.join(unique_ordered(args.team_ids or [])) if args.team_ids else '<required for real refresh>'}")
+    print(f"- max matches: {args.max_matches if args.max_matches is not None else 'none'}")
+    print()
+    if args.dry_run:
+        print("Dry run complete. No network requests were made and no files were written.")
+        return 0
+
     team_ids = unique_ordered(args.team_ids)
-    raw_dir = RAW_ROOT / args.output_scope_name
-    processed_dir = PROCESSED_ROOT / args.output_scope_name
     raw_dir.mkdir(parents=True, exist_ok=True)
     processed_dir.mkdir(parents=True, exist_ok=True)
 
-    team_metadata = load_team_metadata(args.season_id)
+    team_metadata = load_team_metadata(args.season_id, teams_path=teams_path)
     fetcher = PoliteMatchCentreFetcher(sleep_seconds=args.sleep_seconds)
     team_match_rows, request_records = fetch_team_match_lists(fetcher, raw_dir, args.season_id, team_ids, args.force_refresh)
     unique_matches, source_team_map = unique_completed_matches(team_match_rows)
@@ -121,7 +166,7 @@ def main() -> int:
 
     warnings = build_validation_warnings_detail(frames)
     warnings.to_csv(processed_dir / "validation_warnings_detail.csv", index=False)
-    identity = build_player_identity_audit(frames, team_metadata, set(team_ids))
+    identity = build_player_identity_audit(frames, team_metadata, set(team_ids), players_path=players_path, aliases_path=aliases_path)
     identity.to_csv(processed_dir / "player_identity_audit.csv", index=False)
     summary = build_refresh_summary(
         output_scope_name=args.output_scope_name,
@@ -308,8 +353,15 @@ def build_validation_warnings_detail(frames: dict[str, pd.DataFrame]) -> pd.Data
     return pd.DataFrame(rows, columns=columns)
 
 
-def build_player_identity_audit(frames: dict[str, pd.DataFrame], team_metadata: dict[str, dict[str, str]], fvcc_team_ids: set[str]) -> pd.DataFrame:
-    existing = load_existing_player_identity()
+def build_player_identity_audit(
+    frames: dict[str, pd.DataFrame],
+    team_metadata: dict[str, dict[str, str]],
+    fvcc_team_ids: set[str],
+    *,
+    players_path: Path = PLAYERS_PATH,
+    aliases_path: Path = ALIASES_PATH,
+) -> pd.DataFrame:
+    existing = load_existing_player_identity(players_path=players_path, aliases_path=aliases_path)
     team_lookup = build_team_lookup(frames["all_matches"], team_metadata)
     participants: dict[tuple[str, str], dict[str, Any]] = {}
     add_participants(participants, frames["all_scorecard_batting"], "batting")
@@ -396,9 +448,13 @@ def participant_item(participants: dict[tuple[str, str], dict[str, Any]], partic
     return participants[key]
 
 
-def load_existing_player_identity() -> dict[str, Any]:
-    players = pd.read_csv(PLAYERS_PATH) if PLAYERS_PATH.exists() else pd.DataFrame(columns=["player_id", "player_name"])
-    aliases = pd.read_csv(ALIASES_PATH) if ALIASES_PATH.exists() else pd.DataFrame(columns=["raw_player_id", "canonical_player_id", "canonical_player_name", "raw_player_name"])
+def load_existing_player_identity(
+    *,
+    players_path: Path = PLAYERS_PATH,
+    aliases_path: Path = ALIASES_PATH,
+) -> dict[str, Any]:
+    players = pd.read_csv(players_path) if players_path.exists() else pd.DataFrame(columns=["player_id", "player_name"])
+    aliases = pd.read_csv(aliases_path) if aliases_path.exists() else pd.DataFrame(columns=["raw_player_id", "canonical_player_id", "canonical_player_name", "raw_player_name"])
     by_id = {}
     by_name: dict[str, list[dict[str, str]]] = {}
     for _, row in players.iterrows():
@@ -481,10 +537,10 @@ def build_team_lookup(matches: pd.DataFrame, team_metadata: dict[str, dict[str, 
     return lookup
 
 
-def load_team_metadata(season_id: str) -> dict[str, dict[str, str]]:
-    if not TEAMS_PATH.exists():
+def load_team_metadata(season_id: str, *, teams_path: Path = TEAMS_PATH) -> dict[str, dict[str, str]]:
+    if not teams_path.exists():
         return {}
-    teams = pd.read_csv(TEAMS_PATH)
+    teams = pd.read_csv(teams_path)
     teams = teams[teams["season_id"].astype(str) == str(season_id)]
     return {
         str(row["team_id"]): {

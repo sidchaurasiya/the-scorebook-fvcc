@@ -60,6 +60,15 @@ def main(argv: list[str] | None = None) -> int:
         commands.append((label, command))
 
     if args.dry_run:
+        print("Future weekly refresh sequence:")
+        print(f"- {sys.executable} {ROOT / 'scripts' / 'refresh_data.py'} --club {club_id}")
+        print(
+            f"- {sys.executable} {ROOT / 'scripts' / 'refresh_match_centre_data.py'} "
+            f"--club {club_id} --season-id <season-id> --team-id <team-id> --output-scope-name <scope>"
+        )
+        print(f"- {sys.executable} {ROOT / 'scripts' / 'backfill_match_centre_available.py'} --club {club_id}")
+        print(f"- {sys.executable} {ROOT / 'scripts' / 'refresh_club_outputs.py'} --club {club_id}")
+        print()
         print("Would run:")
         for label, command in commands:
             print(f"- {label}: {' '.join(command)}")

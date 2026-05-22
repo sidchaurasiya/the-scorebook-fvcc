@@ -42,6 +42,7 @@ Single team:
 
 ```bash
 python scripts/refresh_match_centre_data.py \
+  --club fvcc \
   --season-id a826b403-b813-4318-9805-5bbe4cf7f238 \
   --team-id c3859c82-3451-460a-a8af-f55240f3fec9 \
   --output-scope-name summer_2025_26_3rd_xi
@@ -51,6 +52,7 @@ Two-team controlled scope:
 
 ```bash
 python scripts/refresh_match_centre_data.py \
+  --club fvcc \
   --season-id a826b403-b813-4318-9805-5bbe4cf7f238 \
   --team-id c3859c82-3451-460a-a8af-f55240f3fec9 \
   --team-id 279aa49f-e6a9-4085-9db7-098edac9c90e \
@@ -61,6 +63,7 @@ Small test run:
 
 ```bash
 python scripts/refresh_match_centre_data.py \
+  --club fvcc \
   --season-id a826b403-b813-4318-9805-5bbe4cf7f238 \
   --team-id c3859c82-3451-460a-a8af-f55240f3fec9 \
   --output-scope-name test_match_centre_scope \
@@ -186,12 +189,12 @@ Do not run a full historical backfill until staged recent-season scopes have bee
 
 ## Available-Scope Backfill
 
-After recent scoped pilots have been reviewed, the controlled all-available runner can refresh every locally known FVCC season/team combination from `data/processed/teams.csv`:
+After recent scoped pilots have been reviewed, the controlled all-available runner can refresh every locally known club season/team combination from the active club `teams.csv`:
 
 ```bash
-python scripts/backfill_match_centre_available.py --dry-run
-python scripts/backfill_match_centre_available.py --max-seasons 1 --max-teams 1 --max-matches 3
-python scripts/backfill_match_centre_available.py
+python scripts/backfill_match_centre_available.py --club fvcc --dry-run
+python scripts/backfill_match_centre_available.py --club fvcc --max-seasons 1 --max-teams 1 --max-matches 3
+python scripts/backfill_match_centre_available.py --club fvcc
 ```
 
 The runner writes one ignored combined scope:
@@ -201,13 +204,15 @@ The runner writes one ignored combined scope:
 
 It reuses cached files, sleeps between uncached public requests, deduplicates matches across team lists, fetches ball-by-ball only when `isBallByBall` is true, and regenerates batting milestone records for the `all_available` scope.
 
-## Multi-Club Phase 4 / Phase 5 Notes
+## Multi-Club Phase 4 / Phase 6 Notes
 
-Match-centre raw/full generated folders remain legacy ignored paths through Phase 5. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
+Match-centre raw/full generated folders remain legacy ignored paths through Phase 6. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
 
 Dry-run commands:
 
 ```bash
+./.venv-app/bin/python scripts/refresh_match_centre_data.py --club fvcc --dry-run
+./.venv-app/bin/python scripts/backfill_match_centre_available.py --club fvcc --dry-run
 ./.venv-app/bin/python scripts/build_match_centre_milestones.py --club fvcc --dry-run
 ./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
 ```
@@ -225,5 +230,14 @@ Phase 4.5 confirmed that the club-aware deploy-safe wrapper can rebuild FVCC sum
 Phase 5 made the aggregate refresh command club-aware, but it deliberately did not move match-centre raw/generated folders. The weekly shape is now:
 
 1. `scripts/refresh_data.py --club fvcc` for aggregate processed CSVs under `clubs/fvcc/data/processed/`.
-2. Match-centre refresh/backfill workflows continue to write ignored raw/generated files under `data/raw/match_centre/` and `data/processed/match_centre/`.
+2. `scripts/refresh_match_centre_data.py --club fvcc ...` for controlled current-scope refreshes, or `scripts/backfill_match_centre_available.py --club fvcc` for reviewed all-available refreshes. Both continue to write ignored raw/generated files under `data/raw/match_centre/` and `data/processed/match_centre/`.
 3. `scripts/refresh_club_outputs.py --club fvcc` rebuilds deploy-safe summaries from those local inputs into the club data folder.
+
+Phase 6 adds reporting-only safety for match-centre workflows:
+
+- `--dry-run` for scoped refresh and all-available backfill makes no network requests and writes no files.
+- dry-run output prints the active club, config PlayCricket ID, input paths, legacy ignored raw/generated output paths, and whether a real run would fetch.
+- `scripts/build_match_centre_milestones.py --club fvcc --dry-run` now reports the config PlayCricket ID and explicitly states external fetch is `no`.
+- `scripts/refresh_club_outputs.py --club fvcc --dry-run` lists the future weekly sequence, including aggregate refresh, match-centre refresh/backfill, and deploy-safe rebuild.
+
+Do not place raw/full match-centre data under `clubs/<club_id>/data/processed`. Club-specific raw/generated paths such as `data/raw/match_centre/<club_id>/` and `data/processed/match_centre/<club_id>/` are later-phase candidates. Before a second club relies on ball-by-ball or match-centre features, parser ownership fields such as `fvcc_team_id`, `fvcc_team_name`, `is_fvcc_player`, and `FVCC_ORGANISATION_ID` need to be generalized.

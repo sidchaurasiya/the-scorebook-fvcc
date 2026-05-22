@@ -2,7 +2,7 @@
 
 Last updated: 2026-05-22
 
-This audit captures FVCC-specific assumptions found while introducing the multi-club foundation. Phase 1 moved low-risk display identity and contact values into config. Phase 2 added read-side path helpers. Phase 3 copied FVCC production-safe processed data under `clubs/fvcc/data` while keeping legacy fallback paths. Phase 5 made the aggregate refresh/write path club-aware by default.
+This audit captures FVCC-specific assumptions found while introducing the multi-club foundation. Phase 1 moved low-risk display identity and contact values into config. Phase 2 added read-side path helpers. Phase 3 copied FVCC production-safe processed data under `clubs/fvcc/data` while keeping legacy fallback paths. Phase 5 made the aggregate refresh/write path club-aware by default. Phase 6 added club-aware dry-run/reporting to match-centre workflows without moving raw/generated match-centre folders.
 
 ## Config-Driven Now
 
@@ -56,8 +56,20 @@ This audit captures FVCC-specific assumptions found while introducing the multi-
 | `scripts/refresh_data.py` | PlayCricket public aggregate endpoints, club config, legacy raw/cache folders | `clubs/<club_id>/data/processed/*.csv` by default; `data/processed/*.csv` only with `--legacy-output` | `--club`, `club.playcricket_club_id`, `get_processed_dir`, `get_data_root` | raw JSON backups, cache, timestamped backups, match-centre current-scope refresh roots | High |
 | `src/data/playcricket_ingestion.py` | PlayCricket public API, optional injected paths | Injected processed/raw/cache/exports/metadata paths when supplied; legacy paths when omitted | Path injection from caller | default raw/cache/exports constants remain legacy for backwards compatibility | High |
 | `src/utils/player_identity.py` | Club processed aggregate CSVs plus global alias/merge files | Canonicalized aggregate CSVs in selected processed directory | `scripts/refresh_data.py` passes selected processed dir | `data/player_aliases.csv`, `data/manual_player_merges.csv`, identity/audit CSVs stay global | High |
-| `scripts/refresh_match_centre_data.py` | PlayCricket match-centre API and explicit season/team IDs | legacy ignored `data/raw/match_centre` and `data/processed/match_centre` | None yet | full match-centre raw/generated folders | High |
-| `scripts/backfill_match_centre_available.py` | existing local match-centre files and legacy team lists | legacy ignored all-available match-centre folders | None yet | full match-centre raw/generated folders | High |
+| `scripts/refresh_match_centre_data.py` | PlayCricket match-centre API and explicit season/team IDs | legacy ignored `data/raw/match_centre` and `data/processed/match_centre` | Phase 6 adds `--club`, config PlayCricket ID reporting, and dry-run with no required scope args | full match-centre raw/generated folders | High |
+| `scripts/backfill_match_centre_available.py` | local club `teams.csv`, `seasons.csv`, `players.csv`, global aliases, PlayCricket match-centre endpoints | legacy ignored all-available match-centre folders | Phase 6 adds `--club`, club-aware input paths, config PlayCricket ID reporting, and no-network dry-run | full match-centre raw/generated folders | High |
+
+## Phase 6 Match-Centre Workflow Audit
+
+| Script / module | Inputs | Outputs | Config usage after Phase 6 | Dry-run behaviour | Risk / notes |
+| --- | --- | --- | --- | --- | --- |
+| `scripts/refresh_match_centre_data.py` | explicit season/team/scope args, club `teams.csv`, club `players.csv`, global `data/player_aliases.csv`, PlayCricket match-centre endpoints | non-dry-run still writes ignored `data/raw/match_centre/<scope>` and `data/processed/match_centre/<scope>` | `--club`, active club name, `club.playcricket_club_id`, `get_raw_match_centre_dir`, `get_processed_match_centre_dir`, `get_processed_path`, `get_mapping_path` | no network, no writes, scope args optional, prints planned inputs/outputs | High; parser still uses FVCC ownership fields and legacy generated roots |
+| `scripts/backfill_match_centre_available.py` | club `teams.csv`, club `seasons.csv`, club `players.csv`, global aliases, PlayCricket match-centre endpoints | non-dry-run still writes ignored `data/raw/match_centre/all_available` and `data/processed/match_centre/all_available` | `--club`, active club name, `club.playcricket_club_id`, club-aware aggregate input paths | no network, no writes, prints scoped season/team counts and planned legacy outputs | High; all-available scope is still global/legacy until Phase 6.5/7 |
+| `scripts/build_match_centre_milestones.py` | configured legacy match-centre processed root, club `players.csv`, global aliases | configured legacy match-centre processed root | `--club`, active club name, `club.playcricket_club_id`, club-aware players/alias paths | no network, no writes, reports generated milestone output paths | Medium; output remains generated input for deploy-safe Hall of Fame summaries |
+| `scripts/refresh_club_outputs.py` | existing local deploy-safe builder inputs | deploy-safe summaries under `clubs/<club_id>/data/processed/...` | `--club`, existing deploy-safe path helpers | no network, no writes, now prints the full future weekly sequence including match-centre refresh/backfill | Low |
+| `src/data/match_centre_fetcher.py` | public match-centre endpoints and local cache path chosen by caller | raw JSON files chosen by caller | caller supplies paths; no direct club config | not a CLI | Medium; safe if callers remain conservative |
+| `src/data/match_centre_parser.py` | raw scorecard/balls/officials payloads | parsed data frames | no direct club config | not a CLI | Medium; schema parsing is shared but club ownership fields remain FVCC-flavoured downstream |
+| `src/data/ball_by_ball_parser.py` | parsed delivery rows | delivery-derived metrics | no direct club config | not a CLI | High; hard-coded `FVCC_ORGANISATION_ID`, `fvcc_team_id`, `fvcc_team_name`, and `is_fvcc_player` need ownership generalization before second-club ball-by-ball features |
 
 ## Remain Global
 
