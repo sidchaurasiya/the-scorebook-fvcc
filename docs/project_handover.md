@@ -34,12 +34,13 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - The new loader lives in `src/config/club_config.py`.
 - Phase 3 copied production-safe FVCC processed CSVs into `clubs/fvcc/data/processed/...` and updated runtime reads to prefer those club-specific files.
 - `scripts/check_club_config.py` verifies the active club config and key deploy-safe data folders without network calls or file writes.
-- Phase 1 only wires low-risk display identity/contact values through config. Data paths, refresh scripts, team/grade logic, identity aliases, opponent mappings, and ground mappings remain unchanged for now.
+- Phase 1 only wired low-risk display identity/contact values through config. Team/grade logic, identity aliases, opponent mappings, and ground mappings remain later-phase work.
 - Phase 2 adds explicit club-aware path helpers for processed, Hall of Fame, Season Overview, Player Profile, match-centre, experimental, and root mapping paths.
-- Low-risk runtime readers now use config-aware paths for deploy-safe Hall of Fame files, Season Overview files, Player Profile processed summaries, match-centre read roots, and aggregate processed CSV reads. Refresh/backfill scripts and write workflows are not club-aware yet.
+- Low-risk runtime readers now use config-aware paths for deploy-safe Hall of Fame files, Season Overview files, Player Profile processed summaries, match-centre read roots, and aggregate processed CSV reads.
 - Phase 2.5 validates active-club runtime selection: no `CLUB_ID` defaults to `fvcc`, `CLUB_ID=fvcc` resolves the same paths and app pages, and invalid club IDs fail clearly in `scripts/check_club_config.py`.
-- Legacy `data/...` files remain in place as fallback during migration. Raw/full match-centre data, experimental outputs, player identity mapping files, and refresh/write workflows remain legacy until later phases.
-- Phase 4 should make refresh/export workflows club-aware so they can write deploy-safe summaries directly under each club data folder.
+- Phase 4 made deploy-safe export builders club-aware.
+- Phase 5 made aggregate refresh writes club-aware: `scripts/refresh_data.py --club <club_id>` writes processed aggregate CSVs to `clubs/<club_id>/data/processed/` by default.
+- Legacy `data/...` files remain in place as fallback during migration. Raw/full match-centre data, experimental outputs, player identity mapping files, raw JSON backups, cache, and timestamped backups remain legacy/global for later phases.
 - The detailed audit is in `docs/multi_club_architecture_audit.md`; the phased roadmap is in `docs/multi_club_scalability_plan.md`.
 
 ## Current Player Profile Work In Progress
@@ -899,15 +900,18 @@ Important source areas:
 
 ## 17. Multi-Club Refresh / Export Status
 
-Phase 4 made deploy-safe export workflows club-aware without changing visible app behaviour.
+Phase 5 made the aggregate refresh/write workflow club-aware without changing visible app behaviour.
 
 - Active club remains FVCC by default, or via `CLUB_ID=fvcc`.
 - Runtime data is preferred from `clubs/fvcc/data/processed/...` with legacy `data/...` fallback.
+- `scripts/refresh_data.py --club <club_id>` now reads `club.playcricket_club_id` from config and writes aggregate processed CSVs to `clubs/<club_id>/data/processed/` by default.
+- `scripts/refresh_data.py --club <club_id> --dry-run` makes no network requests and no writes; it reports the PlayCricket club ID, processed output directory, raw/cache/metadata paths, planned aggregate CSV outputs, and next deploy-safe rebuild command.
+- Use `--legacy-output` only when an explicit compatibility write to legacy `data/processed/` is required.
 - Deploy-safe output builders now support `--club`, `--dry-run`, and explicit `--legacy-output`.
 - Hall of Fame exports write to `clubs/<club_id>/data/processed/hall_of_fame/` by default.
 - Season Overview exports write to `clubs/<club_id>/data/processed/season_overview/` by default.
 - Player Profile exports write to `clubs/<club_id>/data/processed/player_profile/` by default.
-- Raw/full match-centre and experimental folders remain legacy ignored paths and must not be committed.
+- Raw JSON backups, cache files, timestamped backups, root-level player identity mapping/audit files, full match-centre raw/generated folders, and experimental folders remain legacy/global and must not be committed unless explicitly approved.
 
 Safe planning commands:
 
@@ -916,7 +920,7 @@ Safe planning commands:
 ./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
 ```
 
-Future weekly order: aggregate refresh, match-centre refresh, Hall of Fame deploy-safe exports, Season Overview deploy-safe exports, Player Profile deploy-safe exports, club config check, local smoke test, then commit only club-specific production processed outputs.
+Future weekly order: aggregate refresh with `scripts/refresh_data.py --club fvcc`, match-centre refresh, deploy-safe summaries with `scripts/refresh_club_outputs.py --club fvcc`, club config check, local smoke test, then commit only club-specific production processed/deploy-safe outputs and relevant code/docs.
 
 Phase 4.5 validation: `scripts/refresh_club_outputs.py --club fvcc` ran from existing local inputs only, fetched no external data, and regenerated all deploy-safe summaries deterministically. All 19 club-specific Hall of Fame, Season Overview, and Player Profile CSVs matched their previous row counts and SHA-256 hashes, so no CSV changes were committed.
 

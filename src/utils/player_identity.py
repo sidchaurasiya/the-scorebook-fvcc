@@ -655,6 +655,7 @@ def rebuild_canonical_processed_tables(
         "all_seasons_bowling",
         "all_seasons_fielding",
     ),
+    processed_dir: str | Path = PROCESSED_DIR,
 ) -> dict[str, int]:
     """Persist canonical fields into processed CSVs only.
 
@@ -663,9 +664,10 @@ def rebuild_canonical_processed_tables(
     time, so the workflow remains reversible.
     """
     aliases = load_player_aliases()
+    processed_path = Path(processed_dir)
     row_counts: dict[str, int] = {}
     for table_name in table_names:
-        path = PROCESSED_DIR / f"{table_name}.csv"
+        path = processed_path / f"{table_name}.csv"
         if not path.exists():
             continue
         frame = pd.read_csv(path)

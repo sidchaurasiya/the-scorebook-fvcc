@@ -37,7 +37,7 @@ git status
 5. Run the dry-run first.
 
 ```bash
-./.venv-app/bin/python scripts/refresh_data.py --dry-run
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc --dry-run
 ```
 
    Confirm the dry-run shows:
@@ -49,14 +49,14 @@ git status
 6. Run the real refresh.
 
 ```bash
-./.venv-app/bin/python scripts/refresh_data.py
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc
 ```
 
    The refresh should:
 
    - create a timestamped rollback snapshot
-   - write new timestamped raw PlayCricket backups
-   - rebuild shared processed CSVs
+   - write new timestamped raw PlayCricket backups under legacy `data/raw/`
+   - rebuild club-specific processed CSVs under `clubs/fvcc/data/processed/`
    - reapply canonical player mapping
    - reapply team/grade cleaning
    - refresh current-season match-centre data for live-scored matches
@@ -103,7 +103,7 @@ http://localhost:8502/
    - Player Profile shows new season rows for players who played.
    - Hall of Fame totals update where relevant.
    - Milestone totals update where relevant.
-   - The latest match date appears in `data/processed/season_overview/*_by_scope.csv`.
+   - The latest match date appears in `clubs/fvcc/data/processed/season_overview/*_by_scope.csv`.
    - Biggest Improvers uses the correct previous same-type season.
 
 11. Check changed files.
@@ -115,14 +115,14 @@ git status
    Expected changes usually include:
 
    - `data/raw/playcricket_*_<timestamp>.json`
-   - `data/processed/*.csv`
-   - `data/metadata.json`
+   - `clubs/fvcc/data/processed/*.csv`
+   - `clubs/fvcc/data/metadata.json`
    - audit/debug CSVs such as `data/team_grade_display_audit.csv` or `data/debug_biggest_improvers.csv`
 
 12. Commit the refreshed data after local review.
 
 ```bash
-git add data README.md docs src scripts
+git add clubs/fvcc/data/processed README.md docs src scripts
 git commit -m "Refresh PlayCricket data"
 ```
 
@@ -151,13 +151,13 @@ git push origin main
 ```bash
 cd "/Users/preetkaur/Documents/Codex/2026-04-24/you-are-an-expert-full-stack"
 
-./.venv-app/bin/python scripts/refresh_data.py
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc
 ```
 
 Preview mode:
 
 ```bash
-./.venv-app/bin/python scripts/refresh_data.py --dry-run
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc --dry-run
 ```
 
 Restart the app afterwards:
@@ -171,7 +171,7 @@ Restart the app afterwards:
 The refresh script must keep the app local-data-first:
 
 - Pull PlayCricket data into timestamped raw backups.
-- Rebuild shared processed datasets.
+- Rebuild active-club processed datasets.
 - Reapply canonical player mapping and manual aliases.
 - Reapply team/grade display normalization.
 - Leave raw historical backups intact.
@@ -181,7 +181,7 @@ Page code should consume the shared processed data layer. Avoid creating page-sp
 
 ## Source Files Refreshed
 
-The refresh process writes timestamped raw PlayCricket responses into `data/raw/`.
+The refresh process still writes timestamped raw PlayCricket responses into legacy `data/raw/`. Production processed outputs now default to the active club folder, such as `clubs/fvcc/data/processed/`.
 
 The raw files follow this pattern:
 
@@ -203,26 +203,26 @@ These snapshot folders are intentionally ignored by Git. They are local rollback
 
 ## Processed Files Regenerated
 
-The shared processed data lives in `data/processed/`.
+The active-club processed data lives in `clubs/<club_id>/data/processed/`, with legacy `data/processed/` retained as fallback during migration.
 
 | Processed File | How It Is Used |
 | --- | --- |
-| `data/processed/seasons.csv` | Season slicers, season ordering, current/latest season detection, previous same-type season logic. |
-| `data/processed/teams.csv` | Team/grade slicers, team/grade display labels, grade ordering, season/team scope. |
-| `data/processed/players.csv` | Basic player index from refreshed PlayCricket data. |
-| `data/processed/all_seasons_batting.csv` | Shared batting source for Hall of Fame, Season Overview, Milestone, Player Profile, Player vs Peers, Season History, Grade Breakdown, and all-time records. |
-| `data/processed/all_seasons_bowling.csv` | Shared bowling source for the same app-wide views and all bowling-derived visuals. |
-| `data/processed/all_seasons_fielding.csv` | Shared fielding source for catches, stumpings, run outs, dismissals, Player Profile, and all-time fielding records. |
-| `data/processed/all_seasons_matches.csv` | Stable placeholder for future match/result data. Currently empty because the public match/result endpoint was not available during implementation. |
-| `data/processed/all_seasons_scorecard_batting.csv` | Stable placeholder for future scorecard-level batting data. Currently empty. |
-| `data/processed/all_seasons_scorecard_bowling.csv` | Stable placeholder for future scorecard-level bowling data. Currently empty. |
-| `data/processed/all_seasons_scorecard_fielding.csv` | Stable placeholder for future scorecard-level fielding data. Currently empty. |
+| `clubs/<club_id>/data/processed/seasons.csv` | Season slicers, season ordering, current/latest season detection, previous same-type season logic. |
+| `clubs/<club_id>/data/processed/teams.csv` | Team/grade slicers, team/grade display labels, grade ordering, season/team scope. |
+| `clubs/<club_id>/data/processed/players.csv` | Basic player index from refreshed PlayCricket data. |
+| `clubs/<club_id>/data/processed/all_seasons_batting.csv` | Shared batting source for Hall of Fame, Season Overview, Milestone, Player Profile, Player vs Peers, Season History, Grade Breakdown, and all-time records. |
+| `clubs/<club_id>/data/processed/all_seasons_bowling.csv` | Shared bowling source for the same app-wide views and all bowling-derived visuals. |
+| `clubs/<club_id>/data/processed/all_seasons_fielding.csv` | Shared fielding source for catches, stumpings, run outs, dismissals, Player Profile, and all-time fielding records. |
+| `clubs/<club_id>/data/processed/all_seasons_matches.csv` | Stable placeholder for future match/result data. Currently empty because the public match/result endpoint was not available during implementation. |
+| `clubs/<club_id>/data/processed/all_seasons_scorecard_batting.csv` | Stable placeholder for future scorecard-level batting data. Currently empty. |
+| `clubs/<club_id>/data/processed/all_seasons_scorecard_bowling.csv` | Stable placeholder for future scorecard-level bowling data. Currently empty. |
+| `clubs/<club_id>/data/processed/all_seasons_scorecard_fielding.csv` | Stable placeholder for future scorecard-level fielding data. Currently empty. |
 
 The refresh also updates:
 
 | File | Purpose |
 | --- | --- |
-| `data/metadata.json` | Refresh metadata, source endpoints, row counts, cache hits, live requests, and failed requests. |
+| `clubs/<club_id>/data/metadata.json` | Refresh metadata, source endpoints, row counts, cache hits, live requests, and failed requests. |
 | `data/player_duplicate_audit.csv` | Duplicate/profile audit regenerated from the refreshed canonical data source. |
 | `data/player_identity_summary.csv` | Canonical identity summary regenerated from the refreshed data. |
 | `data/team_grade_display_audit.csv` | Team/grade display-normalization audit regenerated from refreshed batting/bowling/fielding/team data. |
@@ -342,11 +342,11 @@ Examples:
 - Fielding event context beyond aggregate catches/stumpings/run outs.
 - Any visual requiring `all_seasons_matches.csv` or scorecard-level files to be populated with real rows.
 
-If a future visual needs those details, add the source pull to `src/data/playcricket_ingestion.py`, write timestamped raw responses to `data/raw/`, regenerate shared processed files in `data/processed/`, and document the new fields here.
+If a future visual needs those details, add the source pull to `src/data/playcricket_ingestion.py`, write timestamped raw responses to `data/raw/`, regenerate active-club processed files in `clubs/<club_id>/data/processed/`, and document the new fields here.
 
-## Multi-Club Phase 4 Refresh Shape
+## Multi-Club Phase 5 Refresh Shape
 
-The app now reads FVCC production data from `clubs/fvcc/data/processed` with legacy fallback. Deploy-safe export builders are club-aware and default to writing summaries under `clubs/<club_id>/data/processed/...`.
+The app now reads FVCC production data from `clubs/fvcc/data/processed` with legacy fallback. Aggregate refresh and deploy-safe export builders are club-aware and default to writing production-safe outputs under `clubs/<club_id>/data/processed/...`.
 
 Current safe planning commands:
 
@@ -357,14 +357,12 @@ Current safe planning commands:
 
 Future weekly refresh order:
 
-1. Refresh aggregate data for the club.
+1. Refresh aggregate data for the club with `scripts/refresh_data.py --club fvcc`.
 2. Refresh match-centre data for the club.
-3. Rebuild Hall of Fame deploy-safe summaries for the club.
-4. Rebuild Season Overview deploy-safe summaries for the club.
-5. Rebuild Player Profile deploy-safe summaries for the club.
-6. Run `scripts/check_club_config.py`.
-7. Smoke-test the app without experimental pages.
-8. Commit only club-specific production processed/deploy-safe files.
+3. Rebuild Hall of Fame, Season Overview, and Player Profile deploy-safe summaries with `scripts/refresh_club_outputs.py --club fvcc`.
+4. Run `scripts/check_club_config.py`.
+5. Smoke-test the app without experimental pages.
+6. Commit only club-specific production processed/deploy-safe files.
 
 Raw/full match-centre folders remain ignored and should not be committed:
 
@@ -372,7 +370,7 @@ Raw/full match-centre folders remain ignored and should not be committed:
 - `data/processed/match_centre/`
 - `data/processed/experimental/`
 
-Legacy `data/...` paths remain fallback during the migration. Aggregate refresh writes are still legacy-compatible until the next phase makes the full refresh/write pipeline club-specific.
+Legacy `data/...` paths remain fallback during the migration. Raw JSON backups, cache files, timestamped backups, match-centre raw/generated folders, experimental/intermediate data, and root-level player identity mapping files remain legacy/global for now. Use `--legacy-output` only when an explicit compatibility aggregate write to `data/processed` is required.
 
 Phase 4.5 validation ran the non-dry-run deploy-safe wrapper for FVCC using existing local inputs only:
 

@@ -72,11 +72,12 @@ Deployment:
 - Future-club template: `clubs/_template/club_config.yaml`.
 - Active club selection uses `CLUB_ID` from the environment, then Streamlit secrets, then defaults to `fvcc`.
 - Production-safe FVCC processed data now lives under `clubs/fvcc/data/processed/...` for runtime reads, with legacy `data/...` files retained as fallback during migration.
-- The config foundation currently covers low-risk identity/contact/display values. Team/grade mappings, opponent/ground normalization, player aliases, refresh workflows, and deploy-safe data generation remain FVCC-specific until later phases.
+- The config foundation currently covers low-risk identity/contact/display values. Team/grade mappings, opponent/ground normalization, and player aliases remain FVCC-specific until later phases.
 - Phase 2 added club-aware path helpers and switched low-risk runtime loaders to use them.
-- Refresh scripts, backfill scripts, player identity generation, opponent normalization, and ground normalization remain FVCC-specific for now.
+- Deploy-safe export builders and the aggregate refresh command are now club-aware. Match-centre raw/backfill scripts, player identity generation outputs, opponent normalization, and ground normalization remain FVCC-specific for now.
 - Phase 2.5 validation confirmed both no `CLUB_ID` and `CLUB_ID=fvcc` run against FVCC, while invalid club IDs return a clear checker error.
-- Phase 3 copied only deploy/runtime-safe processed CSVs to `clubs/fvcc/data`; raw match-centre, experimental data, mapping files, and refresh/write workflows remain legacy until later phases.
+- Phase 3 copied only deploy/runtime-safe processed CSVs to `clubs/fvcc/data`; raw match-centre, experimental data, mapping files, raw/cache/backups, and full match-centre generated outputs remain legacy until later phases.
+- Phase 5 made `scripts/refresh_data.py --club <club_id>` write aggregate processed CSVs to `clubs/<club_id>/data/processed/` by default.
 - Architecture audit: `docs/multi_club_architecture_audit.md`.
 - Roadmap: `docs/multi_club_scalability_plan.md`.
 
@@ -1754,14 +1755,17 @@ Ignored/generated files:
 
 ## 19. Multi-Club Refresh / Export Status
 
-Phase 4 made deploy-safe export scripts club-aware while preserving the current FVCC user experience.
+Phase 5 made the aggregate refresh command club-aware while preserving the current FVCC user experience.
 
 - `CLUB_ID=fvcc` and the default no-`CLUB_ID` path both use the FVCC config.
 - Club runtime data lives under `clubs/fvcc/data/processed/...` with legacy fallback.
+- `scripts/refresh_data.py --club fvcc` now writes aggregate processed CSVs to `clubs/fvcc/data/processed/` by default.
+- `scripts/refresh_data.py --club fvcc --dry-run` reports planned aggregate outputs and does not fetch or write.
+- `--legacy-output` is the explicit compatibility path for writing aggregate CSVs to legacy `data/processed/`.
 - Deploy-safe builders support `--club`, `--dry-run`, and explicit `--legacy-output`.
 - `scripts/refresh_club_outputs.py --club fvcc --dry-run` lists the safe deploy-summary rebuild steps without fetching or writing.
-- Raw/full match-centre and experimental data remain in ignored legacy folders and are not production runtime dependencies.
-- Future weekly refresh order is aggregate data, match-centre data, Hall of Fame summaries, Season Overview summaries, Player Profile summaries, config check, smoke tests, then commit only club-specific processed/deploy-safe files.
+- Raw JSON backups, cache files, timestamped backups, full match-centre raw/generated folders, experimental data, and root-level player mapping/audit files remain legacy/global and are not production runtime dependencies.
+- Future weekly refresh order is aggregate data, match-centre data, club deploy-safe summaries, config check, smoke tests, then commit only club-specific processed/deploy-safe files.
 
 ## 20. Final Notes For Future Sessions
 

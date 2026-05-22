@@ -134,12 +134,14 @@ class PolitePlayCricketFetcher:
         delay_range: tuple[float, float] = (1.0, 2.0),
         max_retries: int = 3,
         cache_ttl_days: int = 30,
+        cache_dir: Path | str = CACHE_DIR,
     ) -> None:
         self.base_url = base_url
         self.timeout_seconds = timeout_seconds
         self.delay_range = delay_range
         self.max_retries = max_retries
         self.cache_ttl = timedelta(days=cache_ttl_days)
+        self.cache_dir = Path(cache_dir)
         self.live_requests = 0
         self.cache_hits = 0
 
@@ -151,8 +153,8 @@ class PolitePlayCricketFetcher:
         cache_name: str,
         force: bool = False,
     ) -> dict[str, Any] | list[dict[str, Any]]:
-        ensure_data_dirs()
-        cache_path = CACHE_DIR / f"{cache_name}.json"
+        ensure_data_dirs(cache_dir=self.cache_dir)
+        cache_path = self.cache_dir / f"{cache_name}.json"
         cached = self._read_cache(cache_path)
         if cached is not None and not force:
             self.cache_hits += 1
@@ -232,8 +234,14 @@ class PolitePlayCricketFetcher:
         time.sleep(random.uniform(*self.delay_range))
 
 
-def ensure_data_dirs() -> None:
-    for directory in [RAW_DIR, PROCESSED_DIR, CACHE_DIR, EXPORTS_DIR]:
+def ensure_data_dirs(
+    *,
+    raw_dir: Path | str = RAW_DIR,
+    processed_dir: Path | str = PROCESSED_DIR,
+    cache_dir: Path | str = CACHE_DIR,
+    exports_dir: Path | str = EXPORTS_DIR,
+) -> None:
+    for directory in [Path(raw_dir), Path(processed_dir), Path(cache_dir), Path(exports_dir)]:
         directory.mkdir(parents=True, exist_ok=True)
 
 
@@ -299,10 +307,27 @@ def refresh_playcricket_backup(
     season_limit: int | None = None,
     force_seasons: bool = False,
     force_season_ids: set[str] | None = None,
+    processed_dir: Path | str | None = None,
+    raw_dir: Path | str | None = None,
+    metadata_path: Path | str | None = None,
+    cache_dir: Path | str | None = None,
+    exports_dir: Path | str | None = None,
+    club_url: str | None = None,
 ) -> RefreshSummary:
-    ensure_data_dirs()
+    active_processed_dir = Path(processed_dir) if processed_dir is not None else PROCESSED_DIR
+    active_raw_dir = Path(raw_dir) if raw_dir is not None else RAW_DIR
+    active_metadata_path = Path(metadata_path) if metadata_path is not None else METADATA_PATH
+    active_cache_dir = Path(cache_dir) if cache_dir is not None else CACHE_DIR
+    active_exports_dir = Path(exports_dir) if exports_dir is not None else EXPORTS_DIR
+
+    ensure_data_dirs(
+        raw_dir=active_raw_dir,
+        processed_dir=active_processed_dir,
+        cache_dir=active_cache_dir,
+        exports_dir=active_exports_dir,
+    )
     summary = RefreshSummary(club_id=club_id, started_at=now_iso())
-    fetcher = PolitePlayCricketFetcher()
+    fetcher = PolitePlayCricketFetcher(cache_dir=active_cache_dir)
     timestamp = file_timestamp()
     source_endpoints: list[str] = []
 
@@ -315,7 +340,7 @@ def refresh_playcricket_backup(
             cache_name=cache_key("seasons", club_id),
             force=force or force_seasons,
         )
-        write_raw_json(f"playcricket_seasons_{timestamp}.json", seasons_payload)
+        write_raw_json(f"playcricket_seasons_{timestamp}.json", seasons_payload, raw_dir=active_raw_dir)
         source_endpoints.append("/fixturesladders/organisations/{club_id}/seasons")
         seasons = seasons_payload.get("seasons", []) if isinstance(seasons_payload, dict) else []
     except PlayCricketPublicError as error:
@@ -346,6 +371,7 @@ def refresh_playcricket_backup(
             write_raw_json(
                 f"playcricket_{safe_name(season_name)}_teams_{timestamp}.json",
                 teams_payload,
+                raw_dir=active_raw_dir,
             )
             source_endpoints.append("/fixturesladders/organisations/{club_id}/teams")
             teams = teams_payload.get("teams", []) if isinstance(teams_payload, dict) else []
@@ -369,6 +395,7 @@ def refresh_playcricket_backup(
                     write_raw_json(
                         f"playcricket_{safe_name(season_name)}_{safe_name(team.get('name', team_id))}_{category}_{timestamp}.json",
                         stats,
+                        raw_dir=active_raw_dir,
                     )
                     source_endpoints.append(
                         f"/participants/grades/{{grade_id}}/{SUPPORTED_STAT_CATEGORIES[category]}"
@@ -402,16 +429,16 @@ def refresh_playcricket_backup(
     teams_df = normalize_teams(all_teams)
     players_df = normalize_players(processed)
 
-    write_processed_csv("seasons", seasons_df)
-    write_processed_csv("teams", teams_df)
+    write_processed_csv("seasons", seasons_df, processed_dir=active_processed_dir)
+    write_processed_csv("teams", teams_df, processed_dir=active_processed_dir)
     for category, frame in processed.items():
-        write_processed_csv(f"all_seasons_{category}", frame)
+        write_processed_csv(f"all_seasons_{category}", frame, processed_dir=active_processed_dir)
         summary.stat_rows[category] = len(frame)
-    write_processed_csv("players", players_df)
-    write_processed_csv("all_seasons_matches", empty_table(MATCH_COLUMNS))
-    write_processed_csv("all_seasons_scorecard_batting", empty_table(BATTING_COLUMNS))
-    write_processed_csv("all_seasons_scorecard_bowling", empty_table(BOWLING_COLUMNS))
-    write_processed_csv("all_seasons_scorecard_fielding", empty_table(FIELDING_COLUMNS))
+    write_processed_csv("players", players_df, processed_dir=active_processed_dir)
+    write_processed_csv("all_seasons_matches", empty_table(MATCH_COLUMNS), processed_dir=active_processed_dir)
+    write_processed_csv("all_seasons_scorecard_batting", empty_table(BATTING_COLUMNS), processed_dir=active_processed_dir)
+    write_processed_csv("all_seasons_scorecard_bowling", empty_table(BOWLING_COLUMNS), processed_dir=active_processed_dir)
+    write_processed_csv("all_seasons_scorecard_fielding", empty_table(FIELDING_COLUMNS), processed_dir=active_processed_dir)
 
     summary.teams_found = len(all_teams)
     summary.live_requests = fetcher.live_requests
@@ -420,7 +447,7 @@ def refresh_playcricket_backup(
 
     metadata = {
         "club_id": club_id,
-        "club_url": DEFAULT_CLUB_URL,
+        "club_url": club_url if club_url is not None else (DEFAULT_CLUB_URL if club_id == DEFAULT_CLUB_ID else ""),
         "seasons_fetched": seasons_df.to_dict("records"),
         "fetch_date_time": summary.completed_at,
         "last_successful_refresh_time": summary.completed_at
@@ -436,11 +463,12 @@ def refresh_playcricket_backup(
         "failed_requests": summary.failed_requests,
         "notes": [
             "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",
-            "Refresh should be used sparingly; normal dashboard usage reads data/processed first.",
+            "Refresh should be used sparingly; normal dashboard usage reads the active club processed data first.",
             "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population.",
         ],
     }
-    METADATA_PATH.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    active_metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    active_metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     return summary
 
 
@@ -529,12 +557,16 @@ def normalize_players(processed: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def write_raw_json(filename: str, payload: Any) -> None:
-    (RAW_DIR / filename).write_text(json.dumps(payload, indent=2), encoding="utf-8")
+def write_raw_json(filename: str, payload: Any, *, raw_dir: Path | str = RAW_DIR) -> None:
+    path = Path(raw_dir) / filename
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
 
-def write_processed_csv(name: str, frame: pd.DataFrame) -> None:
-    frame.to_csv(PROCESSED_DIR / f"{name}.csv", index=False)
+def write_processed_csv(name: str, frame: pd.DataFrame, *, processed_dir: Path | str = PROCESSED_DIR) -> None:
+    path = Path(processed_dir) / f"{name}.csv"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_csv(path, index=False)
 
 
 def empty_table(columns: list[str]) -> pd.DataFrame:

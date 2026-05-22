@@ -201,9 +201,9 @@ The runner writes one ignored combined scope:
 
 It reuses cached files, sleeps between uncached public requests, deduplicates matches across team lists, fetches ball-by-ball only when `isBallByBall` is true, and regenerates batting milestone records for the `all_available` scope.
 
-## Multi-Club Phase 4 Notes
+## Multi-Club Phase 4 / Phase 5 Notes
 
-Match-centre raw/full generated folders remain legacy ignored paths in Phase 4. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
+Match-centre raw/full generated folders remain legacy ignored paths through Phase 5. They are still used as local inputs for deploy-safe builders, but production runtime should read only small tracked summaries under `clubs/<club_id>/data/processed/...`.
 
 Dry-run commands:
 
@@ -221,3 +221,9 @@ Deploy-safe builders write to club folders by default:
 Use `--legacy-output` only when an explicit compatibility rebuild is required.
 
 Phase 4.5 confirmed that the club-aware deploy-safe wrapper can rebuild FVCC summaries from these existing local inputs without changing the committed club CSVs. The rebuild did not fetch external data and produced identical hashes for all 19 deploy-safe Hall of Fame, Season Overview, and Player Profile CSVs.
+
+Phase 5 made the aggregate refresh command club-aware, but it deliberately did not move match-centre raw/generated folders. The weekly shape is now:
+
+1. `scripts/refresh_data.py --club fvcc` for aggregate processed CSVs under `clubs/fvcc/data/processed/`.
+2. Match-centre refresh/backfill workflows continue to write ignored raw/generated files under `data/raw/match_centre/` and `data/processed/match_centre/`.
+3. `scripts/refresh_club_outputs.py --club fvcc` rebuilds deploy-safe summaries from those local inputs into the club data folder.

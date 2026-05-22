@@ -44,7 +44,7 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Phase 4 first implementation uses `scripts/refresh_club_outputs.py --club fvcc --dry-run` as the safe deploy-summary wrapper.
 - Deploy-safe builders now default to `clubs/<club_id>/data/processed/...`; legacy deploy-safe output is explicit via `--legacy-output`.
 - Raw/full match-centre and experimental folders remain legacy ignored paths during this phase.
-- `scripts/refresh_data.py --club fvcc --dry-run` reports the future workflow without network requests or writes; full aggregate writes remain legacy-compatible until a later migration.
+- `scripts/refresh_data.py --club fvcc --dry-run` reports the future workflow without network requests or writes.
 
 ## Phase 4.5: Validate Club-Aware Deploy-Safe Rebuild
 
@@ -53,22 +53,31 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Row counts and SHA-256 hashes were identical for every file, so the current deploy-safe export process is deterministic for FVCC.
 - No CSV changes were committed; only validation documentation was updated.
 
-## Phase 5: Create `onboard_club.py`
+## Phase 5: Make Aggregate Refresh Club-Aware
+
+- `scripts/refresh_data.py --club <club_id>` now resolves the active club config and uses `club.playcricket_club_id` instead of a script-level FVCC UUID.
+- Aggregate processed CSV outputs default to `clubs/<club_id>/data/processed/`.
+- `--dry-run` makes no network requests and no writes while showing the PlayCricket club ID, processed output directory, raw/cache/metadata paths, planned aggregate CSV outputs, and next deploy-safe rebuild command.
+- `--legacy-output` remains available for explicit compatibility writes to legacy `data/processed`.
+- Raw JSON backups, cache files, timestamped backups, root-level player identity mapping files, match-centre raw/generated folders, and experimental/intermediate data remain legacy/global for now.
+- After aggregate refresh, run `scripts/refresh_club_outputs.py --club <club_id>` to rebuild deploy-safe summaries.
+
+## Phase 6: Create `onboard_club.py`
 
 - Generate a starter config, data folders, mapping templates, and review checklist.
 - Collect PlayCricket club ID, club/team identifiers, grade order, home grounds, aliases, and display branding.
 
-## Phase 6: Generate Club Review Pack
+## Phase 7: Generate Club Review Pack
 
 - Produce QA reports for player identity, team/grade labels, opponent names, ground names, missing scorecards, ball-by-ball coverage, and deploy-safe summary freshness.
 - Require review before a new club is considered production-ready.
 
-## Phase 7: Add Per-Club Deploy-Safe Summaries
+## Phase 8: Add Per-Club Deploy-Safe Summaries
 
 - Build Hall of Fame, Season Overview, Player Profile, and milestone summaries under each club data folder.
 - Keep raw and experimental outputs out of deployable paths.
 
-## Phase 8: Runtime / Deployment Strategy
+## Phase 9: Runtime / Deployment Strategy
 
 - Decide between one deployment per club, one runtime selected by `CLUB_ID`, or a multi-club selector.
 - Keep routing, GA4, and page availability consistent with the chosen deployment model.

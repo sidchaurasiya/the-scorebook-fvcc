@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Weekly FVCC PlayCricket data refresh.
+"""Weekly club PlayCricket aggregate data refresh.
 
 This script is intentionally local-data-first:
 - It keeps existing raw JSON backups.
@@ -28,7 +28,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.data.playcricket_ingestion import (  # noqa: E402
-    DEFAULT_CLUB_ID,
+    CACHE_DIR,
+    EXPORTS_DIR,
     METADATA_PATH,
     PLAYCRICKET_PUBLIC_BASE_URL,
     PROCESSED_DIR,
@@ -37,8 +38,9 @@ from src.data.playcricket_ingestion import (  # noqa: E402
     RefreshSummary,
     refresh_playcricket_backup,
 )
-from scripts.club_refresh_utils import print_club_header, print_paths, resolve_club_id  # noqa: E402
+from scripts.club_refresh_utils import print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import (  # noqa: E402
+    get_data_root,
     get_hall_of_fame_dir,
     get_processed_dir,
     get_processed_match_centre_dir,
@@ -65,6 +67,18 @@ PROCESSED_TABLES = (
     "all_seasons_bowling",
     "all_seasons_fielding",
 )
+AGGREGATE_OUTPUT_TABLES = (
+    "seasons",
+    "teams",
+    "players",
+    "all_seasons_batting",
+    "all_seasons_bowling",
+    "all_seasons_fielding",
+    "all_seasons_matches",
+    "all_seasons_scorecard_batting",
+    "all_seasons_scorecard_bowling",
+    "all_seasons_scorecard_fielding",
+)
 
 
 @dataclass
@@ -76,9 +90,14 @@ class TableSnapshot:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Refresh FVCC PlayCricket data for the Streamlit app.")
+    parser = argparse.ArgumentParser(description="Refresh PlayCricket aggregate data for The Scorebook.")
     parser.add_argument("--club", default=None, help="Club config id. Defaults to CLUB_ID or fvcc.")
     parser.add_argument("--dry-run", action="store_true", help="Print the club-aware refresh plan without network requests or writes.")
+    parser.add_argument(
+        "--legacy-output",
+        action="store_true",
+        help="Write aggregate processed CSVs to legacy data/processed instead of the active club folder.",
+    )
     parser.add_argument(
         "--force-all",
         action="store_true",
@@ -93,21 +112,33 @@ def main() -> int:
     args = parser.parse_args()
     club_id = resolve_club_id(args.club)
     club_config = load_club_config(club_id)
-    playcricket_club_id = str(club_config.get("club", {}).get("playcricket_club_id") or DEFAULT_CLUB_ID)
+    playcricket_club_id = configured_playcricket_club_id(club_config, club_id)
+    processed_output_dir = PROCESSED_DIR if args.legacy_output else get_processed_dir(club_id=club_id)
+    raw_output_dir = RAW_DIR
+    cache_output_dir = CACHE_DIR
+    exports_output_dir = EXPORTS_DIR
+    metadata_output_path = METADATA_PATH if args.legacy_output else get_data_root(club_id=club_id) / "metadata.json"
 
-    print("FVCC weekly PlayCricket refresh")
+    print("The Scorebook PlayCricket refresh")
     print(f"Project: {ROOT}")
     print(f"Mode: {'dry run plan' if args.dry_run else 'normal refresh'}")
     print_club_header("Club context", club_id)
     print()
 
     if args.dry_run:
-        print_refresh_plan(club_id)
+        print_refresh_plan(
+            club_id,
+            playcricket_club_id=playcricket_club_id,
+            processed_dir=processed_output_dir,
+            raw_dir=raw_output_dir,
+            cache_dir=cache_output_dir,
+            metadata_path=metadata_output_path,
+        )
         print()
         print("Dry run complete. No network requests were made and no files were written.")
         return 0
 
-    before = capture_snapshot()
+    before = capture_snapshot(processed_output_dir)
     print_snapshot("Current local data", before)
 
     live_seasons = fetch_live_seasons(playcricket_club_id)
@@ -117,7 +148,11 @@ def main() -> int:
     print(f"Latest live season: {latest_live or 'unknown'}")
     print(f"Current/live season ids to force-refresh weekly: {len(current_ids)}")
 
-    backup_path = create_timestamped_backup()
+    backup_path = create_timestamped_backup(
+        processed_dir=processed_output_dir,
+        raw_dir=raw_output_dir,
+        metadata_path=metadata_output_path,
+    )
     print()
     print(f"Rollback snapshot saved: {backup_path}")
 
@@ -127,12 +162,17 @@ def main() -> int:
         season_limit=args.season_limit,
         force_seasons=True,
         force_season_ids=None if args.force_all else current_ids,
+        processed_dir=processed_output_dir,
+        raw_dir=raw_output_dir,
+        metadata_path=metadata_output_path,
+        cache_dir=cache_output_dir,
+        exports_dir=exports_output_dir,
     )
     print_refresh_summary(summary)
 
-    identity_summary = rebuild_identity_and_audits()
-    match_centre_summary = refresh_current_match_centre_summaries(current_ids, club_id=club_id)
-    after = capture_snapshot()
+    identity_summary = rebuild_identity_and_audits(processed_output_dir)
+    match_centre_summary = refresh_current_match_centre_summaries(current_ids, club_id=club_id, processed_dir=processed_output_dir)
+    after = capture_snapshot(processed_output_dir)
 
     print()
     print_snapshot("Refreshed local data", after)
@@ -148,13 +188,33 @@ def main() -> int:
 
     print()
     print("Next step")
-    print("./.venv-app/bin/streamlit run app.py --server.port 8502")
+    print(f"./.venv-app/bin/python scripts/refresh_club_outputs.py --club {club_id}")
+    print(f"CLUB_ID={club_id} ./.venv-app/bin/streamlit run app.py --server.port 8502")
     return 0 if not summary.failed_requests else 1
 
 
-def print_refresh_plan(club_id: str) -> None:
+def configured_playcricket_club_id(config: dict[str, Any], club_id: str) -> str:
+    playcricket_club_id = str(config.get("club", {}).get("playcricket_club_id") or "").strip()
+    if not playcricket_club_id:
+        raise SystemExit(f"Club '{club_id}' is missing club.playcricket_club_id in clubs/{club_id}/club_config.yaml.")
+    return playcricket_club_id
+
+
+def print_refresh_plan(
+    club_id: str,
+    *,
+    playcricket_club_id: str,
+    processed_dir: Path,
+    raw_dir: Path,
+    cache_dir: Path,
+    metadata_path: Path,
+) -> None:
     print("Refresh plan")
-    print_paths("Read/write roots", [RAW_DIR, PROCESSED_DIR, get_processed_match_centre_dir(club_id=club_id)])
+    print(f"- PlayCricket club ID: {playcricket_club_id}")
+    print_paths("Aggregate refresh roots", [processed_dir, raw_dir, cache_dir, metadata_path.parent])
+    print_outputs("Planned aggregate CSV outputs", aggregate_output_paths(processed_dir))
+    print_outputs("Planned metadata output", [metadata_path])
+    print_paths("Match-centre generated root", [get_processed_match_centre_dir(club_id=club_id)])
     print_paths(
         "Deploy-safe output roots",
         [
@@ -173,32 +233,37 @@ def print_refresh_plan(club_id: str) -> None:
     print("Would run after live aggregate refresh:")
     for command in commands:
         print(f"- {command}")
+    print(f"Next deploy-safe rebuild command: scripts/refresh_club_outputs.py --club {club_id}")
 
 
-def capture_snapshot() -> TableSnapshot:
+def aggregate_output_paths(processed_dir: Path) -> list[Path]:
+    return [processed_dir / f"{table}.csv" for table in AGGREGATE_OUTPUT_TABLES]
+
+
+def capture_snapshot(processed_dir: Path) -> TableSnapshot:
     rows: dict[str, int] = {}
     for table in PROCESSED_TABLES:
-        frame = read_processed(table)
+        frame = read_processed(table, processed_dir=processed_dir)
         rows[table] = len(frame)
 
-    seasons_frame = read_processed("seasons")
+    seasons_frame = read_processed("seasons", processed_dir=processed_dir)
     seasons = seasons_frame["name"].dropna().astype(str).tolist() if "name" in seasons_frame else []
     latest = seasons[0] if seasons else ""
-    estimated_matches = estimate_total_matches_from_processed()
+    estimated_matches = estimate_total_matches_from_processed(processed_dir)
     return TableSnapshot(rows=rows, seasons=seasons, latest_season=latest, estimated_matches=estimated_matches)
 
 
-def read_processed(table: str) -> pd.DataFrame:
-    path = PROCESSED_DIR / f"{table}.csv"
+def read_processed(table: str, *, processed_dir: Path) -> pd.DataFrame:
+    path = processed_dir / f"{table}.csv"
     if not path.exists():
         return pd.DataFrame()
     return pd.read_csv(path)
 
 
-def estimate_total_matches_from_processed() -> int:
+def estimate_total_matches_from_processed(processed_dir: Path) -> int:
     team_totals: dict[tuple[str, str], float] = {}
     for table in ("all_seasons_batting", "all_seasons_bowling", "all_seasons_fielding"):
-        frame = read_processed(table)
+        frame = read_processed(table, processed_dir=processed_dir)
         if frame.empty or "matches" not in frame:
             continue
         frame = frame.copy()
@@ -236,30 +301,30 @@ def current_season_ids(seasons: list[dict[str, Any]]) -> set[str]:
     return {str(first)} if first else set()
 
 
-def create_timestamped_backup() -> Path:
+def create_timestamped_backup(*, processed_dir: Path, raw_dir: Path, metadata_path: Path) -> Path:
     timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     target = BACKUP_DIR / f"data_snapshot_{timestamp}"
     target.mkdir(parents=True, exist_ok=False)
-    for source in [RAW_DIR, PROCESSED_DIR]:
+    for source in [raw_dir, processed_dir]:
         if source.exists():
             shutil.copytree(source, target / source.name)
-    if METADATA_PATH.exists():
-        shutil.copy2(METADATA_PATH, target / METADATA_PATH.name)
+    if metadata_path.exists():
+        shutil.copy2(metadata_path, target / metadata_path.name)
     return target
 
 
-def rebuild_identity_and_audits() -> dict[str, object]:
-    source = combined_processed_frames(apply_identity=False)
+def rebuild_identity_and_audits(processed_dir: Path) -> dict[str, object]:
+    source = combined_processed_frames(apply_identity=False, processed_dir=processed_dir)
     mapping_update = ensure_player_alias_mappings(source)
-    canonical_counts = rebuild_canonical_processed_tables()
+    canonical_counts = rebuild_canonical_processed_tables(processed_dir=processed_dir)
     aliases = load_player_aliases()
-    canonical_source = combined_processed_frames(apply_identity=True, aliases=aliases)
+    canonical_source = combined_processed_frames(apply_identity=True, aliases=aliases, processed_dir=processed_dir)
     identity_exports = ensure_identity_exports(canonical_source, aliases)
     audit_frames = [
-        read_processed("all_seasons_batting"),
-        read_processed("all_seasons_bowling"),
-        read_processed("all_seasons_fielding"),
-        read_processed("teams"),
+        read_processed("all_seasons_batting", processed_dir=processed_dir),
+        read_processed("all_seasons_bowling", processed_dir=processed_dir),
+        read_processed("all_seasons_fielding", processed_dir=processed_dir),
+        read_processed("teams", processed_dir=processed_dir),
     ]
     export_team_grade_display_audit(audit_frames)
     return {
@@ -273,8 +338,8 @@ def rebuild_identity_and_audits() -> dict[str, object]:
     }
 
 
-def refresh_current_match_centre_summaries(current_season_ids: set[str], *, club_id: str) -> dict[str, object]:
-    teams = read_processed("teams")
+def refresh_current_match_centre_summaries(current_season_ids: set[str], *, club_id: str, processed_dir: Path) -> dict[str, object]:
+    teams = read_processed("teams", processed_dir=processed_dir)
     if teams.empty or not current_season_ids:
         return {"current scopes refreshed": 0, "detail exports rebuilt": "no current teams found"}
     current = teams[teams["season_id"].astype(str).isin(current_season_ids)].copy()
@@ -337,10 +402,10 @@ def slugify(value: str) -> str:
     return text.strip("_") or "current_season"
 
 
-def combined_processed_frames(*, apply_identity: bool, aliases: pd.DataFrame | None = None) -> pd.DataFrame:
+def combined_processed_frames(*, apply_identity: bool, processed_dir: Path, aliases: pd.DataFrame | None = None) -> pd.DataFrame:
     frames = []
     for table in ("all_seasons_batting", "all_seasons_bowling", "all_seasons_fielding"):
-        frame = read_processed(table)
+        frame = read_processed(table, processed_dir=processed_dir)
         if frame.empty:
             continue
         frames.append(apply_player_identity_mapping(frame, aliases) if apply_identity else frame)
