@@ -37,7 +37,7 @@ OUTPUT_FILENAMES = [
     "recent_form_bowling.csv",
 ]
 
-DIMENSION_ORDER = ["Season", "Grade", "Opponent", "Ground", "H/A"]
+DIMENSION_ORDER = ["Season", "Grade", "Opponent", "Ground", "H/A", "Captain"]
 POSITION_GROUP_ORDER = {
     "Opener": 1,
     "No. 3": 3,
@@ -210,7 +210,7 @@ def ensure_display_player_name(rows: pd.DataFrame) -> pd.DataFrame:
 def match_dimension_context(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     context = season_exports.match_context(matches, club_id=club_id)
     if context.empty:
-        return pd.DataFrame(columns=["match_id", "opponent_label", "ground_label", "home_away_label", "match_type"])
+        return pd.DataFrame(columns=["match_id", "opponent_label", "ground_label", "home_away_label", "captain_label", "match_type"])
     raw = matches.copy()
     raw["match_id"] = raw["match_id"].astype(str)
     for column in ["home_team_id", "away_team_id", "home_team_name", "away_team_name", "venue_name", "match_type"]:
@@ -221,7 +221,28 @@ def match_dimension_context(matches: pd.DataFrame, club_id: str | None = None) -
     raw["opponent_label"] = raw["away_team_name"].where(club_is_home, raw["home_team_name"]).map(normalize_opponent_name)
     raw["ground_label"] = raw["venue_name"].map(normalize_ground_name)
     raw["home_away_label"] = club_is_home.map(lambda value: "Home" if value else "Away")
-    return raw[["match_id", "opponent_label", "ground_label", "home_away_label", "match_type"]].drop_duplicates("match_id")
+    raw["captain_label"] = raw.apply(lambda row: match_captain_label(row, club_is_home.loc[row.name]), axis=1)
+    return raw[["match_id", "opponent_label", "ground_label", "home_away_label", "captain_label", "match_type"]].drop_duplicates("match_id")
+
+
+def match_captain_label(row: pd.Series, club_is_home: bool) -> str:
+    """Return a club-side captain only when the match export supplies one."""
+    candidate_columns = [
+        "club_captain_name",
+        "fvcc_captain_name",
+        "captain_name",
+        "home_captain_name" if club_is_home else "away_captain_name",
+    ]
+    for column in candidate_columns:
+        if column not in row:
+            continue
+        value = row.get(column)
+        if pd.isna(value):
+            continue
+        text = re.sub(r"\s+", " ", str(value)).strip()
+        if text:
+            return layout.display_player_name(text)
+    return ""
 
 
 def add_match_dimensions(rows: pd.DataFrame, matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
@@ -235,6 +256,7 @@ def add_match_dimensions(rows: pd.DataFrame, matches: pd.DataFrame, club_id: str
     output["opponent_label"] = output.get("opponent_label", pd.Series(index=output.index, dtype="object")).fillna("Unknown opponent")
     output["ground_label"] = output.get("ground_label", pd.Series(index=output.index, dtype="object")).fillna("Unknown ground")
     output["home_away_label"] = output.get("home_away_label", pd.Series(index=output.index, dtype="object")).fillna("")
+    output["captain_label"] = output.get("captain_label", pd.Series(index=output.index, dtype="object")).fillna("")
     return output
 
 
@@ -251,6 +273,7 @@ def build_performance_breakdown(
         ("Opponent", "opponent_label"),
         ("Ground", "ground_label"),
         ("H/A", "home_away_label"),
+        ("Captain", "captain_label"),
     ]:
         frames.append(build_batting_breakdown(batting, balls, dimension, column))
         frames.append(build_bowling_breakdown(bowling, dimension, column))
@@ -293,7 +316,7 @@ def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, colu
         player_dimension_columns(column)
         + ["match_id", "innings_id", "participant_id", "runs_numeric", "balls_numeric"]
     ].drop_duplicates()
-    ball_source = balls.drop(columns=["season_label", "grade_label", "opponent_label", "ground_label", "home_away_label"], errors="ignore")
+    ball_source = balls.drop(columns=["season_label", "grade_label", "opponent_label", "ground_label", "home_away_label", "captain_label"], errors="ignore")
     source = ball_source.merge(
         keys,
         left_on=["match_id", "innings_id", "striker_participant_id"],

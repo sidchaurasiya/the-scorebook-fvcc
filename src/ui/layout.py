@@ -1498,20 +1498,12 @@ def selected_season_round_grade_filter(
     valid = [slug for slug, _label in options]
     if key not in st.session_state or st.session_state.get(key) not in valid:
         st.session_state[key] = valid[0]
-    label_map = dict(options)
-    with st.container(key="season_round_grade_filter_control"):
-        columns = st.columns(len(valid), gap="small")
-        for column, slug in zip(columns, valid):
-            active = st.session_state.get(key) == slug
-            with column:
-                if st.button(
-                    label_map.get(slug, slug),
-                    key=f"{key}_{slug}",
-                    type="primary" if active else "secondary",
-                    use_container_width=True,
-                ):
-                    st.session_state[key] = slug
-        selected = st.session_state.get(key)
+    selected = render_folder_tab_widget(
+        "Season by Round grade",
+        options,
+        key=key,
+        control_key="season_round_grade_folder_tabs",
+    )
     selected_slug = str(selected or st.session_state.get(key) or valid[0])
     if selected_slug not in valid:
         selected_slug = valid[0]
@@ -4792,11 +4784,11 @@ def milestone_page_url(view: str, club_category: str | None = None) -> str:
 
 def render_milestone_view_selector(selected_view: str) -> None:
     del selected_view
-    render_profile_segmented_widget(
+    render_folder_tab_widget(
         "Milestone page view",
         milestone_page_view_options(),
         key="milestone_page_view",
-        compact=True,
+        control_key="milestone_page_view_folder_tabs",
     )
 
 
@@ -11386,13 +11378,20 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
         label = profile_breakdown_label(selected)
         rows = source[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
         if rows.empty:
-            render_profile_breakdown_empty(label)
+            render_profile_empty_state(*profile_performance_empty_copy(label, selected_discipline))
             return
         render_profile_performance_table(rows, label, selected_discipline)
 
 
 def profile_breakdown_options() -> list[tuple[str, str]]:
-    return [("season", "Season"), ("grade", "Grade"), ("opponent", "Opponent"), ("ground", "Ground"), ("ha", "Home/Away")]
+    return [
+        ("season", "Season"),
+        ("grade", "Grade"),
+        ("opponent", "Opponent"),
+        ("ground", "Ground"),
+        ("ha", "Home/Away"),
+        ("captain", "Captain"),
+    ]
 
 
 def selected_profile_breakdown_view() -> str:
@@ -11435,20 +11434,18 @@ def render_profile_breakdown_controls(profile_view: dict[str, pd.DataFrame], sel
     del profile_view
     del selected_breakdown
     del selected_discipline
+    render_folder_tab_widget(
+        "Career breakdown view",
+        profile_breakdown_options(),
+        key="player_profile_breakdown_view",
+        control_key="player_profile_breakdown_folder_tabs",
+    )
     with st.container(key="profile_breakdown_controls"):
-        breakdown_col, discipline_col = st.columns([1.35, 1], gap="medium")
-        with breakdown_col:
-            render_profile_segmented_widget(
-                "Career breakdown view",
-                profile_breakdown_options(),
-                key="player_profile_breakdown_view",
-            )
-        with discipline_col:
-            render_profile_segmented_widget(
-                "Career breakdown discipline",
-                profile_discipline_options(),
-                key="player_profile_discipline_view",
-            )
+        render_profile_segmented_widget(
+            "Career breakdown discipline",
+            profile_discipline_options(),
+            key="player_profile_discipline_view",
+        )
 
 
 def player_profile_section_url(player_id: object, **params: str) -> str:
@@ -11501,6 +11498,39 @@ def render_profile_segmented_widget(
     return label_map.get(selected_slug, label_map[option_slugs[0]])
 
 
+def render_folder_tab_widget(
+    label: str,
+    options: list[tuple[str, str]],
+    key: str,
+    control_key: str | None = None,
+) -> str:
+    option_slugs = [slug for slug, _label in options]
+    option_slug_lookup = {str(slug).casefold(): slug for slug in option_slugs}
+    label_map = dict(options)
+    if not option_slugs:
+        return ""
+    current_key = str(st.session_state.get(key)).casefold()
+    if key not in st.session_state or current_key not in option_slug_lookup:
+        st.session_state[key] = option_slugs[0]
+    elif st.session_state.get(key) != option_slug_lookup[current_key]:
+        st.session_state[key] = option_slug_lookup[current_key]
+    container_key = control_key or f"{key}_folder_tabs"
+    with st.container(key=container_key):
+        selected = st.segmented_control(
+            label,
+            option_slugs,
+            format_func=lambda slug: label_map.get(slug, str(slug)),
+            key=key,
+            label_visibility="collapsed",
+        )
+    selected_key = str(selected or st.session_state.get(key) or option_slugs[0]).casefold()
+    selected_slug = option_slug_lookup.get(selected_key, option_slugs[0])
+    if selected_slug not in option_slugs:
+        selected_slug = option_slugs[0]
+        st.session_state[key] = selected_slug
+    return selected_slug
+
+
 def profile_segmented_links_html(
     items: list[tuple[str, str, bool]],
     aria_label: str,
@@ -11527,6 +11557,11 @@ def render_profile_breakdown_empty(label: str) -> None:
 def profile_performance_empty_copy(label_column: str, discipline: str) -> tuple[str, str]:
     label = "Home/Away" if label_column == "H/A" else label_column
     discipline_label = str(discipline).lower()
+    if label_column == "Captain":
+        return (
+            "Captain breakdown is not available for this player yet.",
+            "This split appears only when reliable match captain data exists for the selected player's scorecard rows.",
+        )
     if label_column == "Opponent":
         return (
             f"No opponent-level {discipline_label} split is available for this player yet.",

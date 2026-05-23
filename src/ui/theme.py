@@ -3880,6 +3880,83 @@ def inject_theme() -> None:
             box-shadow: none;
         }
 
+        div.st-key-season_round_grade_folder_tabs,
+        div.st-key-milestone_page_view_folder_tabs,
+        div.st-key-player_profile_breakdown_folder_tabs {
+            margin: -4px 0 14px;
+            position: relative;
+            z-index: 3;
+        }
+
+        div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"],
+        div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"],
+        div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"],
+        div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"],
+        div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"],
+        div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] {
+            align-items: flex-end;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-width: 100%;
+            overflow: visible;
+            padding: 0 !important;
+            width: fit-content;
+        }
+
+        div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"] button,
+        div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"] button,
+        div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] button,
+        div.st-key-season_round_grade_folder_tabs button[data-testid^="stBaseButton-segmented_control"],
+        div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton-segmented_control"],
+        div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton-segmented_control"] {
+            background: #fbfcff !important;
+            border: 1px solid #e4e8f4 !important;
+            border-bottom-color: #dfe4f2 !important;
+            border-radius: 14px 14px 0 0 !important;
+            box-shadow: 0 -3px 12px rgba(23, 27, 77, 0.035) !important;
+            color: #737998 !important;
+            flex: 0 0 auto;
+            font-size: 0.88rem !important;
+            font-weight: 850 !important;
+            line-height: 1.08 !important;
+            min-height: 40px !important;
+            padding: 10px 16px 9px !important;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"] button[kind="primary"],
+        div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"] button[kind="primary"],
+        div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] button[kind="primary"],
+        div.st-key-season_round_grade_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"],
+        div.st-key-milestone_page_view_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"],
+        div.st-key-player_profile_breakdown_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"] {
+            background: #F0EDFF !important;
+            border-color: #ded8ff !important;
+            border-bottom-color: #ffffff !important;
+            box-shadow: 0 -7px 18px rgba(91, 61, 245, 0.08) !important;
+            color: var(--pitch) !important;
+            transform: translateY(1px);
+            z-index: 2;
+        }
+
+        div.st-key-season_round_grade_folder_tabs button[data-testid^="stBaseButton"] p,
+        div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton"] p,
+        div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton"] p,
+        div.st-key-season_round_grade_folder_tabs button[data-testid^="stBaseButton"] span,
+        div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton"] span,
+        div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton"] span {
+            line-height: 1.08 !important;
+            white-space: inherit !important;
+        }
+
         .recent-form-card {
             background: #ffffff;
             border: 1px solid #e9ebf4;
@@ -6357,6 +6434,35 @@ def inject_theme() -> None:
             div.st-key-season_by_round_card {
                 border-radius: 18px;
                 padding: 14px;
+            }
+
+            div.st-key-season_round_grade_folder_tabs,
+            div.st-key-milestone_page_view_folder_tabs,
+            div.st-key-player_profile_breakdown_folder_tabs {
+                margin: -2px 0 12px;
+                width: 100%;
+            }
+
+            div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"],
+            div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"],
+            div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"],
+            div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"],
+            div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"],
+            div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] {
+                display: grid !important;
+                gap: 6px !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                width: 100% !important;
+            }
+
+            div.st-key-season_round_grade_folder_tabs button[data-testid^="stBaseButton"],
+            div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton"],
+            div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton"] {
+                min-height: 42px !important;
+                padding: 9px 10px 8px !important;
+                text-align: center !important;
+                white-space: normal !important;
+                width: 100% !important;
             }
 
             div.st-key-season_round_grade_filter_control {

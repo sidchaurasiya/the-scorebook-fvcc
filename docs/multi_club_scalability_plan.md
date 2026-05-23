@@ -78,6 +78,13 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - `src/data/match_centre_ownership.py` centralizes ownership fallback and selected-club team matching.
 - `scripts/check_match_centre_ownership.py --club <club_id>` provides a read-only diagnostic for local processed match-centre scopes.
 - Deploy-safe FVCC outputs were rebuilt from existing local inputs and stayed identical, so no CSV schema or visible app behaviour changed.
+
+## Shared UI Components
+
+- The production app now has a reusable session-state folder-tab pattern for card-attached view switching.
+- The first shared users are Season Overview `Season by Round`, Milestone main views, and Player Profile `Career Breakdown` dimensions.
+- The component is club-neutral: no FVCC labels, data paths, or team assumptions are hard-coded in the helper/style.
+- Player Profile `Captain` breakdown support is also club-neutral. Deploy-safe summary exports may emit `dimension=Captain` only when a reliable club-side captain field is present; otherwise the app shows a clean empty state instead of falling back to another club's data.
 - Remaining later work: club-scoped raw/generated match-centre folders, reviewed team ownership mappings for each new club, and optional cleanup of legacy `fvcc_*` deploy-safe column names after compatibility is proven.
 
 ## Phase 7: Create `onboard_club.py`
