@@ -1464,14 +1464,15 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
     render_section_heading("Season by Round 🗓️")
     sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
     rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
+    options = season_round_grade_options(dashboard_data, rows)
+    selected_slug = options[0][0] if options else ""
+    if len(options) > 1:
+        selected_slug = selected_season_round_grade_filter(options, dashboard_data)
+
     with st.container(key="season_by_round_card"):
-        options = season_round_grade_options(dashboard_data, rows)
         if not options:
             render_season_round_empty_state()
             return
-        selected_slug = options[0][0]
-        if len(options) > 1:
-            selected_slug = selected_season_round_grade_filter(options, dashboard_data)
 
         visible_rows = [row for row in rows if row.get("grade_slug") == selected_slug]
         if not visible_rows:
@@ -5239,8 +5240,8 @@ def render_achieved_milestones_view(
         "</div>"
     )
 
+    render_milestone_view_selector("achieved")
     with st.container(key="milestone_achieved_panel"):
-        render_milestone_view_selector("achieved")
         st.markdown(
             (
                 '<div class="milestone-section-heading"><h2>Achieved Milestones 🏁</h2></div>'
@@ -7181,8 +7182,8 @@ def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matc
                 continue
             club_entries.append((club_players, threshold, str(spec["label"]), metric))
 
+    render_milestone_view_selector("exclusive")
     with st.container(key="milestone_exclusive_panel"):
-        render_milestone_view_selector("exclusive")
         st.markdown(
             '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>',
             unsafe_allow_html=True,
@@ -8232,8 +8233,8 @@ def render_career_milestone_cards(watchlist: pd.DataFrame, hall_of_fame_watch: p
         milestone_progress_group_html(watchlist, category)
         for category in ["Matches", "Runs", "Wickets", "Catches"]
     )
+    render_milestone_view_selector("upcoming")
     with st.container(key="milestone_upcoming_panel"):
-        render_milestone_view_selector("upcoming")
         st.markdown(
             (
                 '<div class="milestone-section-heading"><h2>Milestone Watchlist 📍</h2></div>'
@@ -11373,6 +11374,7 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
     render_section_heading("Career Breakdown 🧭")
     selected = selected_profile_breakdown_view()
     selected_discipline = selected_profile_discipline_view()
+    render_profile_breakdown_tabs()
     with st.container(key="player_profile_performance_breakdown"):
         render_profile_breakdown_controls(profile_view, selected, selected_discipline)
         label = profile_breakdown_label(selected)
@@ -11434,18 +11436,21 @@ def render_profile_breakdown_controls(profile_view: dict[str, pd.DataFrame], sel
     del profile_view
     del selected_breakdown
     del selected_discipline
-    render_folder_tab_widget(
-        "Career breakdown view",
-        profile_breakdown_options(),
-        key="player_profile_breakdown_view",
-        control_key="player_profile_breakdown_folder_tabs",
-    )
     with st.container(key="profile_breakdown_controls"):
         render_profile_segmented_widget(
             "Career breakdown discipline",
             profile_discipline_options(),
             key="player_profile_discipline_view",
         )
+
+
+def render_profile_breakdown_tabs() -> None:
+    render_folder_tab_widget(
+        "Career breakdown view",
+        profile_breakdown_options(),
+        key="player_profile_breakdown_view",
+        control_key="player_profile_breakdown_folder_tabs",
+    )
 
 
 def player_profile_section_url(player_id: object, **params: str) -> str:

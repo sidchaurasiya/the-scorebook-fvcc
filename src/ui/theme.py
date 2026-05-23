@@ -3883,9 +3883,16 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_folder_tabs,
         div.st-key-milestone_page_view_folder_tabs,
         div.st-key-player_profile_breakdown_folder_tabs {
-            margin: -1px 0 0;
+            margin: 0 0 -1px;
+            padding-left: 14px;
             position: relative;
             z-index: 3;
+        }
+
+        div[data-testid="stElementContainer"]:has(> div.st-key-season_round_grade_folder_tabs),
+        div[data-testid="stElementContainer"]:has(> div.st-key-milestone_page_view_folder_tabs),
+        div[data-testid="stElementContainer"]:has(> div.st-key-player_profile_breakdown_folder_tabs) {
+            margin-bottom: 0 !important;
         }
 
         div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"],
@@ -3904,6 +3911,16 @@ def inject_theme() -> None:
             max-width: 100%;
             overflow: visible;
             padding: 0 !important;
+            width: fit-content;
+        }
+
+        div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"] > div,
+        div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"] > div,
+        div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] > div {
+            align-items: flex-end;
+            display: flex !important;
+            flex-wrap: wrap;
+            gap: 6px;
             width: fit-content;
         }
 
@@ -3943,7 +3960,7 @@ def inject_theme() -> None:
             border-bottom-color: #ffffff !important;
             box-shadow: 0 -7px 18px rgba(91, 61, 245, 0.08) !important;
             color: var(--pitch) !important;
-            transform: translateY(2px);
+            transform: translateY(1px);
             z-index: 2;
         }
 
@@ -4055,11 +4072,12 @@ def inject_theme() -> None:
         div.st-key-season_by_round_card {
             background: #ffffff;
             border: 1px solid #e9ebf4;
-            border-radius: 20px;
+            border-radius: 0 20px 20px 20px;
             box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
             margin-bottom: 24px;
+            margin-top: -15px;
             overflow: visible;
-            padding: 0 20px 20px;
+            padding: 16px 20px 20px;
         }
 
         .season-round-card-head {
@@ -4385,15 +4403,16 @@ def inject_theme() -> None:
         div.st-key-player_profile_performance_breakdown {
             background: #ffffff;
             border: 1px solid #e9ebf4;
-            border-radius: 20px;
+            border-radius: 0 20px 20px 20px;
             box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
             margin-bottom: 20px;
+            margin-top: -15px;
             overflow: visible;
-            padding: 0 20px 20px;
+            padding: 16px 20px 20px;
         }
 
         div.st-key-player_profile_performance_breakdown div.st-key-profile_breakdown_controls {
-            margin: 14px 0 14px;
+            margin: 0 0 12px;
         }
 
         .phase-row {
@@ -4984,19 +5003,19 @@ def inject_theme() -> None:
         div.st-key-milestone_upcoming_panel,
         div.st-key-milestone_achieved_panel,
         div.st-key-milestone_exclusive_panel {
-            background: rgba(255, 255, 255, 0.68);
+            background: #ffffff;
             border: 1px solid rgba(231, 230, 245, 0.92);
-            border-radius: 28px;
+            border-radius: 0 28px 28px 28px;
             box-shadow: 0 22px 52px rgba(23, 27, 77, 0.055);
-            margin-top: 8px;
+            margin-top: -15px;
             overflow: visible;
-            padding: 0 26px 26px;
+            padding: 24px 26px 26px;
         }
 
         div.st-key-milestone_upcoming_panel .milestone-section-heading,
         div.st-key-milestone_achieved_panel .milestone-section-heading,
         div.st-key-milestone_exclusive_panel .milestone-section-heading {
-            padding-top: 22px;
+            padding-top: 0;
         }
 
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control {
@@ -6432,26 +6451,43 @@ def inject_theme() -> None:
             }
 
             div.st-key-season_by_round_card {
-                border-radius: 18px;
-                padding: 0 14px 14px;
+                border-radius: 0 18px 18px 18px;
+                margin-top: -15px;
+                padding: 14px;
             }
 
             div.st-key-season_round_grade_folder_tabs,
             div.st-key-milestone_page_view_folder_tabs,
             div.st-key-player_profile_breakdown_folder_tabs {
-                margin: -1px 0 0;
+                margin: 0 0 -1px;
+                padding-left: 8px;
                 width: 100%;
             }
 
             div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"],
             div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"],
-            div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"],
-            div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"],
-            div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"],
-            div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] {
+            div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] {
                 display: grid !important;
                 gap: 6px !important;
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                width: 100% !important;
+            }
+
+            div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"],
+            div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"],
+            div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] {
+                display: block !important;
+                gap: 6px !important;
+                width: 100% !important;
+            }
+
+            div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"] > div,
+            div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"] > div,
+            div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] > div {
+                display: grid !important;
+                gap: 6px !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                max-width: 100% !important;
                 width: 100% !important;
             }
 
@@ -6786,8 +6822,9 @@ def inject_theme() -> None:
             div.st-key-milestone_upcoming_panel,
             div.st-key-milestone_achieved_panel,
             div.st-key-milestone_exclusive_panel {
-                border-radius: 24px;
-                padding: 0 19px 19px;
+                border-radius: 0 24px 24px 24px;
+                margin-top: -15px;
+                padding: 18px 19px 19px;
             }
 
             .milestone-watch-grid,
@@ -6952,8 +6989,9 @@ def inject_theme() -> None:
             }
 
             div.st-key-player_profile_performance_breakdown {
-                border-radius: 18px;
-                padding: 0 10px 16px;
+                border-radius: 0 18px 18px 18px;
+                margin-top: -15px;
+                padding: 12px 10px 16px;
             }
 
             .profile-intelligence-intro {
