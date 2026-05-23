@@ -9,6 +9,7 @@ write raw/full match-centre outputs.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -22,7 +23,7 @@ if str(ROOT) not in sys.path:
 
 from scripts import build_season_overview_detail_exports as season_exports  # noqa: E402
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_processed_dir, get_processed_match_centre_dir  # noqa: E402
+from src.config.club_config import get_processed_dir, get_processed_match_centre_dir, get_raw_match_centre_dir  # noqa: E402
 from src.data.name_normalization import normalize_opponent_club_name, normalize_ground_name as shared_normalize_ground_name  # noqa: E402
 from src.ui import layout  # noqa: E402
 
@@ -101,6 +102,7 @@ def main(argv: list[str] | None = None) -> int:
 
 def load_player_profile_scopes(club_id: str | None = None) -> dict[str, pd.DataFrame]:
     frames = season_exports.load_match_centre_scopes(club_id=club_id)
+    frames["matches"] = add_scorecard_captain_context(frames.get("matches", pd.DataFrame()), club_id=club_id)
     fielding_parts = []
     for scope_order, scope in enumerate(season_exports.available_scopes(club_id=club_id)):
         fielding = season_exports.read_csv(scope / "all_scorecard_fielding.csv")
@@ -116,6 +118,100 @@ def load_player_profile_scopes(club_id: str | None = None) -> dict[str, pd.DataF
         else pd.DataFrame()
     )
     return frames
+
+
+def add_scorecard_captain_context(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+    """Attach the club-side captain from cached scorecard team roles when available."""
+    if matches.empty:
+        return matches
+    output = matches.copy()
+    captain_lookup = cached_scorecard_captain_lookup(club_id=club_id)
+    if captain_lookup.empty:
+        return output
+    club_team_ids = set(season_exports.team_context(club_id=club_id)["team_id"].astype(str))
+    for column in ["match_id", "home_team_id", "away_team_id", "source_team_ids"]:
+        if column not in output:
+            output[column] = ""
+    output["match_id"] = output["match_id"].astype(str)
+    output["_club_captain_team_id"] = output.apply(lambda row: club_match_team_id(row, club_team_ids), axis=1)
+    output = output.merge(
+        captain_lookup,
+        left_on=["match_id", "_club_captain_team_id"],
+        right_on=["match_id", "team_id"],
+        how="left",
+    )
+    existing = output.get("club_captain_name", pd.Series("", index=output.index, dtype="object")).fillna("").astype(str)
+    from_lookup = output.get("captain_name_from_scorecard", pd.Series("", index=output.index, dtype="object")).fillna("").astype(str)
+    output["club_captain_name"] = existing.where(existing.str.strip().ne(""), from_lookup)
+    return output.drop(columns=["_club_captain_team_id", "team_id", "captain_name_from_scorecard"], errors="ignore")
+
+
+def club_match_team_id(row: pd.Series, club_team_ids: set[str]) -> str:
+    home_team_id = str(row.get("home_team_id") or "").strip()
+    away_team_id = str(row.get("away_team_id") or "").strip()
+    if home_team_id in club_team_ids:
+        return home_team_id
+    if away_team_id in club_team_ids:
+        return away_team_id
+    for team_id in str(row.get("source_team_ids") or "").split("|"):
+        team_id = team_id.strip()
+        if team_id in club_team_ids:
+            return team_id
+    return ""
+
+
+def cached_scorecard_captain_lookup(club_id: str | None = None) -> pd.DataFrame:
+    rows: list[dict[str, str]] = []
+    raw_root = get_raw_match_centre_dir(club_id=club_id)
+    if not raw_root.exists():
+        return pd.DataFrame(columns=["match_id", "team_id", "captain_name_from_scorecard"])
+    for path in sorted(raw_root.glob("**/match=*__scorecard.json")):
+        match_id = scorecard_match_id_from_path(path)
+        if not match_id:
+            continue
+        payload = read_scorecard_payload(path)
+        if not payload:
+            continue
+        for team in payload.get("teams", []) or []:
+            team_id = str(team.get("id") or "").strip()
+            if not team_id:
+                continue
+            captain_name = scorecard_team_captain_name(team)
+            if captain_name:
+                rows.append(
+                    {
+                        "match_id": match_id,
+                        "team_id": team_id,
+                        "captain_name_from_scorecard": layout.display_player_name(captain_name),
+                    }
+                )
+    if not rows:
+        return pd.DataFrame(columns=["match_id", "team_id", "captain_name_from_scorecard"])
+    return pd.DataFrame(rows).drop_duplicates(["match_id", "team_id"], keep="last")
+
+
+def scorecard_match_id_from_path(path: Path) -> str:
+    name = path.name
+    if not name.startswith("match=") or "__scorecard" not in name:
+        return ""
+    return name.split("__", 1)[0].replace("match=", "", 1)
+
+
+def read_scorecard_payload(path: Path) -> dict:
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    payload = raw.get("payload") if isinstance(raw, dict) else {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def scorecard_team_captain_name(team: dict) -> str:
+    for player in team.get("players", []) or []:
+        roles = [str(role).strip().casefold() for role in (player.get("roles") or [])]
+        if "captain" in roles:
+            return re.sub(r"\s+", " ", str(player.get("name") or "")).strip()
+    return ""
 
 
 def prepare_batting(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:

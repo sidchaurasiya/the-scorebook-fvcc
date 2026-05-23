@@ -3883,7 +3883,7 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_folder_tabs,
         div.st-key-milestone_page_view_folder_tabs,
         div.st-key-player_profile_breakdown_folder_tabs {
-            margin: -4px 0 14px;
+            margin: -1px 0 0;
             position: relative;
             z-index: 3;
         }
@@ -3943,7 +3943,7 @@ def inject_theme() -> None:
             border-bottom-color: #ffffff !important;
             box-shadow: 0 -7px 18px rgba(91, 61, 245, 0.08) !important;
             color: var(--pitch) !important;
-            transform: translateY(1px);
+            transform: translateY(2px);
             z-index: 2;
         }
 
@@ -4058,7 +4058,8 @@ def inject_theme() -> None:
             border-radius: 20px;
             box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
             margin-bottom: 24px;
-            padding: 18px 20px 20px;
+            overflow: visible;
+            padding: 0 20px 20px;
         }
 
         .season-round-card-head {
@@ -4193,7 +4194,7 @@ def inject_theme() -> None:
         .season-round-grade-card {
             border: 1px solid #e8ebf7;
             border-radius: 16px;
-            margin-top: 12px;
+            margin-top: 0;
             overflow: hidden;
         }
 
@@ -4387,20 +4388,12 @@ def inject_theme() -> None:
             border-radius: 20px;
             box-shadow: 0 16px 38px rgba(23, 27, 77, 0.06);
             margin-bottom: 20px;
-            padding: 18px 20px 20px;
+            overflow: visible;
+            padding: 0 20px 20px;
         }
 
         div.st-key-player_profile_performance_breakdown div.st-key-profile_breakdown_controls {
-            margin-bottom: 16px;
-        }
-
-        div.st-key-profile_breakdown_controls div[data-testid="stHorizontalBlock"] {
-            align-items: center;
-        }
-
-        div.st-key-profile_breakdown_controls div[data-testid="column"]:last-child {
-            display: flex;
-            justify-content: flex-end;
+            margin: 14px 0 14px;
         }
 
         .phase-row {
@@ -4996,7 +4989,14 @@ def inject_theme() -> None:
             border-radius: 28px;
             box-shadow: 0 22px 52px rgba(23, 27, 77, 0.055);
             margin-top: 8px;
-            padding: 26px;
+            overflow: visible;
+            padding: 0 26px 26px;
+        }
+
+        div.st-key-milestone_upcoming_panel .milestone-section-heading,
+        div.st-key-milestone_achieved_panel .milestone-section-heading,
+        div.st-key-milestone_exclusive_panel .milestone-section-heading {
+            padding-top: 22px;
         }
 
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control {
@@ -6433,13 +6433,13 @@ def inject_theme() -> None:
 
             div.st-key-season_by_round_card {
                 border-radius: 18px;
-                padding: 14px;
+                padding: 0 14px 14px;
             }
 
             div.st-key-season_round_grade_folder_tabs,
             div.st-key-milestone_page_view_folder_tabs,
             div.st-key-player_profile_breakdown_folder_tabs {
-                margin: -2px 0 12px;
+                margin: -1px 0 0;
                 width: 100%;
             }
 
@@ -6787,7 +6787,7 @@ def inject_theme() -> None:
             div.st-key-milestone_achieved_panel,
             div.st-key-milestone_exclusive_panel {
                 border-radius: 24px;
-                padding: 19px;
+                padding: 0 19px 19px;
             }
 
             .milestone-watch-grid,
@@ -6953,7 +6953,7 @@ def inject_theme() -> None:
 
             div.st-key-player_profile_performance_breakdown {
                 border-radius: 18px;
-                padding: 14px 10px 16px;
+                padding: 0 10px 16px;
             }
 
             .profile-intelligence-intro {
