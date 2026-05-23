@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Folder Toggle System Wireframe</title>
+  <style>
+    :root {
+      --bg: #f3f1fb;
+      --card: #ffffff;
+      --ink: #070d3f;
+      --muted: #747b98;
+      --line: #e7e9f5;
+      --line-strong: #dfe3f2;
+      --purple: #5b3df5;
+      --purple-deep: #4426da;
+      --purple-soft: #f0edff;
+      --purple-tab: #eee9ff;
+      --green: #137a4d;
+      --green-soft: #e9f8ef;
+      --gold: #9a6b05;
+      --gold-soft: #fff5d8;
+      --maroon: #9f2747;
+      --maroon-soft: #ffe8ef;
+      --navy-soft: #f7f8fd;
+      --shadow: 0 18px 44px rgba(23, 27, 77, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background:
+        radial-gradient(circle at 12% -10%, rgba(91, 61, 245, 0.13), transparent 25rem),
+        linear-gradient(180deg, #faf8ff 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.34;
+      margin: 0;
+    }
+
+    main {
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 34px 22px 74px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .page-head {
+      align-items: flex-end;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--purple);
+      font-size: 0.74rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-top: 6px;
+    }
+
+    .page-note {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      flex: 0 0 auto;
+      font-size: 0.76rem;
+      font-weight: 850;
+      padding: 8px 11px;
+      white-space: nowrap;
+    }
+
+    .module {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      margin-top: 20px;
+      padding: 20px;
+    }
+
+    .module-head {
+      align-items: start;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .module-head h2 {
+      font-size: clamp(1.45rem, 2.5vw, 2.05rem);
+      letter-spacing: -0.015em;
+      line-height: 1.06;
+    }
+
+    .module-head p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 5px;
+      max-width: 72ch;
+    }
+
+    .usage-note {
+      background: var(--navy-soft);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 750;
+      margin-top: 14px;
+      padding: 12px 13px;
+    }
+
+    .usage-note strong {
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .folder-shell {
+      margin-top: 14px;
+    }
+
+    .folder-tabs {
+      align-items: end;
+      display: flex;
+      gap: 4px;
+      margin: 0 0 -1px 12px;
+      max-width: calc(100% - 24px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .folder-tab {
+      background: #fbfbff;
+      border: 1px solid var(--line-strong);
+      border-bottom-color: var(--line);
+      border-radius: 15px 15px 0 0;
+      color: #68708e;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 0.84rem;
+      font-weight: 900;
+      justify-content: center;
+      line-height: 1.05;
+      min-height: 38px;
+      padding: 11px 16px 10px;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .folder-tab::after {
+      background: linear-gradient(180deg, rgba(23, 27, 77, 0.06), rgba(23, 27, 77, 0));
+      bottom: -2px;
+      content: "";
+      height: 2px;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+
+    .folder-tab.active {
+      background: var(--purple-tab);
+      border-color: #dcd5ff;
+      border-bottom-color: var(--purple-tab);
+      box-shadow: 0 -6px 18px rgba(91, 61, 245, 0.08);
+      color: var(--purple-deep);
+      min-height: 44px;
+      padding-top: 13px;
+      z-index: 3;
+    }
+
+    .folder-tab.active::after {
+      background: var(--purple-tab);
+      bottom: -2px;
+      height: 3px;
+    }
+
+    .folder-panel {
+      background: var(--card);
+      border: 1px solid var(--line-strong);
+      border-radius: 20px;
+      box-shadow: 0 18px 36px rgba(23, 27, 77, 0.065);
+      overflow: hidden;
+    }
+
+    .panel-pad {
+      padding: 16px;
+    }
+
+    .panel-title-row {
+      align-items: center;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 16px 18px;
+    }
+
+    .panel-title-row h3 {
+      font-size: 1.08rem;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+
+    .record-pill {
+      background: var(--purple-soft);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      flex: 0 0 auto;
+      font-size: 0.74rem;
+      font-weight: 950;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+
+    .table-scroll {
+      max-height: 284px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .table-scroll::-webkit-scrollbar { width: 8px; }
+    .table-scroll::-webkit-scrollbar-thumb {
+      background: #d8ddee;
+      border-radius: 999px;
+    }
+
+    .round-row,
+    .data-row {
+      align-items: center;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      min-height: 46px;
+      padding: 9px 16px;
+    }
+
+    .round-row {
+      grid-template-columns: 58px minmax(190px, 1.6fr) minmax(145px, 1.1fr) minmax(130px, 1fr) minmax(126px, 1fr) 116px;
+    }
+
+    .data-row {
+      grid-template-columns: minmax(130px, 1fr) 62px 82px 82px 112px 72px 56px 56px 56px;
+    }
+
+    .round-head,
+    .data-head {
+      background: #f8f8fd;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      min-height: 38px;
+      position: sticky;
+      text-transform: uppercase;
+      top: 0;
+      z-index: 2;
+    }
+
+    .round-row strong,
+    .data-row strong {
+      color: var(--ink);
+      font-size: 0.86rem;
+      font-weight: 950;
+      min-width: 0;
+    }
+
+    .round-row span,
+    .data-row span {
+      color: #626a88;
+      font-size: 0.82rem;
+      font-weight: 760;
+      min-width: 0;
+    }
+
+    .num { text-align: right; }
+
+    .opponent {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .result-cell {
+      align-items: center;
+      display: flex;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .result-pill {
+      border-radius: 999px;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 0.62rem;
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      padding: 5px 8px;
+      text-transform: uppercase;
+    }
+
+    .win { background: var(--green-soft); color: var(--green); }
+    .loss { background: var(--maroon-soft); color: var(--maroon); }
+    .draw { background: var(--gold-soft); color: var(--gold); }
+
+    .link {
+      color: var(--purple) !important;
+      font-size: 0.78rem !important;
+      font-weight: 900 !important;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .milestone-list {
+      display: grid;
+      gap: 12px;
+      padding: 0 16px 16px;
+    }
+
+    .milestone-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .milestone-meta {
+      align-items: start;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    .milestone-meta h4 {
+      font-size: 0.98rem;
+      margin: 0 0 4px;
+    }
+
+    .milestone-meta p {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .distance-pill {
+      background: var(--purple-soft);
+      border: 1px solid #ded8ff;
+      border-radius: 999px;
+      color: var(--purple);
+      flex: 0 0 auto;
+      font-size: 0.76rem;
+      font-weight: 950;
+      padding: 6px 9px;
+    }
+
+    .bar {
+      background: #eceff7;
+      border-radius: 999px;
+      height: 8px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      background: linear-gradient(90deg, #7a4cff, var(--purple));
+      border-radius: inherit;
+      display: block;
+      height: 100%;
+    }
+
+    .profile-toolbar {
+      align-items: center;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start;
+      padding: 14px 16px 12px;
+    }
+
+    .profile-toolbar-label {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 950;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .segmented {
+      background: #f7f8fd;
+      border: 1px solid #e8ebf7;
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.78);
+      display: inline-flex;
+      gap: 4px;
+      max-width: 100%;
+      padding: 5px;
+      width: fit-content;
+    }
+
+    .segment {
+      border-radius: 999px;
+      color: #6f7594;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 0.86rem;
+      font-weight: 780;
+      justify-content: center;
+      line-height: 1;
+      min-height: 36px;
+      padding: 10px 17px;
+      white-space: nowrap;
+    }
+
+    .segment.active {
+      background: var(--purple-soft);
+      color: var(--purple);
+      box-shadow: 0 1px 0 rgba(91, 61, 245, 0.08);
+    }
+
+    .wire-notes {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      display: grid;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 760;
+      margin-top: 16px;
+      padding-top: 13px;
+    }
+
+    .wire-notes span::before {
+      color: var(--purple);
+      content: "• ";
+      font-weight: 950;
+    }
+
+    .mobile-preview-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 375px;
+      margin-top: 18px;
+    }
+
+    .mobile-shell {
+      background: rgba(255, 255, 255, 0.54);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 12px;
+    }
+
+    .mobile-inner {
+      background: linear-gradient(180deg, #fbfaff 0%, #f4f2fb 100%);
+      border: 1px solid #e4e6f4;
+      border-radius: 24px;
+      max-height: 720px;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .mobile-demo-title {
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+    }
+
+    .mobile-inner .folder-tabs {
+      display: grid;
+      gap: 5px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin: 0 0 -1px 0;
+      max-width: 100%;
+    }
+
+    .mobile-inner .folder-tab {
+      border-radius: 12px 12px 0 0;
+      font-size: 0.78rem;
+      min-height: 34px;
+      padding: 9px 8px 8px;
+      white-space: normal;
+    }
+
+    .mobile-inner .folder-tab.active {
+      min-height: 38px;
+      padding-top: 10px;
+    }
+
+    .mobile-inner .folder-panel {
+      border-radius: 0 0 18px 18px;
+    }
+
+    .mobile-inner .panel-title-row {
+      padding: 13px;
+    }
+
+    .mobile-inner .round-head,
+    .mobile-inner .data-head {
+      display: none;
+    }
+
+    .mobile-inner .round-row {
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      grid-template-columns: 1fr auto;
+      margin: 10px 12px;
+      min-height: auto;
+      padding: 12px;
+    }
+
+    .mobile-inner .round-row > * { min-width: 0; }
+
+    .mobile-inner .result-cell {
+      align-items: flex-end;
+      flex-direction: column;
+      gap: 5px;
+      grid-column: 2;
+      grid-row: 1 / span 3;
+      text-align: right;
+    }
+
+    .mobile-inner .opponent,
+    .mobile-inner .round-row span {
+      white-space: normal;
+    }
+
+    .mobile-inner .link {
+      grid-column: 1 / -1;
+      margin-top: 2px;
+    }
+
+    .mobile-inner .profile-toolbar {
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 12px;
+    }
+
+    .mobile-inner .segmented {
+      width: fit-content;
+    }
+
+    .mobile-inner .data-row {
+      grid-template-columns: minmax(110px, 1fr) 44px 58px 58px;
+      padding: 9px 12px;
+    }
+
+    .mobile-inner .data-row span:nth-child(n+5),
+    .mobile-inner .data-head span:nth-child(n+5) {
+      display: none;
+    }
+
+    @media (max-width: 760px) {
+      main { padding: 24px 14px 56px; }
+      .page-head,
+      .module-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .page-note { white-space: normal; }
+      .module { padding: 14px; }
+
+      .folder-tabs {
+        display: grid;
+        gap: 5px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 0 0 -1px;
+        max-width: 100%;
+      }
+
+      .folder-tab {
+        border-radius: 12px 12px 0 0;
+        font-size: 0.78rem;
+        min-height: 34px;
+        padding: 9px 8px 8px;
+        white-space: normal;
+      }
+
+      .folder-tab.active {
+        min-height: 38px;
+        padding-top: 10px;
+      }
+
+      .folder-panel { border-radius: 0 0 18px 18px; }
+
+      .round-head,
+      .data-head { display: none; }
+
+      .round-row {
+        align-items: start;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        grid-template-columns: 1fr auto;
+        margin: 10px 12px;
+        min-height: auto;
+        padding: 12px;
+      }
+
+      .round-row > * { min-width: 0; }
+      .result-cell {
+        align-items: flex-end;
+        flex-direction: column;
+        gap: 5px;
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        text-align: right;
+      }
+
+      .opponent,
+      .round-row span { white-space: normal; }
+      .link { grid-column: 1 / -1; margin-top: 2px; }
+
+      .profile-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .data-row {
+        grid-template-columns: minmax(110px, 1fr) 44px 58px 58px;
+        padding: 9px 12px;
+      }
+
+      .data-row span:nth-child(n+5),
+      .data-head span:nth-child(n+5) {
+        display: none;
+      }
+
+      .mobile-preview-grid { grid-template-columns: 1fr; }
+      .mobile-shell { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Review-only UI system</div>
+        <h1>Folder Toggle System</h1>
+      </div>
+      <div class="page-note">Standalone wireframe · no app logic</div>
+    </header>
+
+    <section class="module">
+      <div class="module-head">
+        <div>
+          <h2>Component Idea</h2>
+          <p>Folder tabs attach directly to the table or visual they control. The active tab reads as the front sheet of the module; inactive tabs sit slightly recessed.</p>
+        </div>
+      </div>
+      <div class="usage-note">
+        <strong>Use folder tabs for module-level views:</strong> Season by Round grade/team, Milestone view, and Player Profile Career Breakdown dimension.
+        <strong>Keep pill controls for discipline or metric switches:</strong> Batting / Bowling / Fielding and similar smaller in-card controls.
+      </div>
+    </section>
+
+    <section class="module" aria-label="Season Overview folder tab example">
+      <div class="module-head">
+        <div>
+          <div class="eyebrow">A. Season Overview</div>
+          <h2>Season by Round 🗓️</h2>
+          <p>Grade/team tabs become the top edge of the results visual instead of a floating selector.</p>
+        </div>
+      </div>
+
+      <div class="folder-shell">
+        <nav class="folder-tabs" aria-label="Season by Round grade tabs">
+          <span class="folder-tab">1s</span>
+          <span class="folder-tab">2s</span>
+          <span class="folder-tab active">3s</span>
+          <span class="folder-tab">4s</span>
+        </nav>
+        <div class="folder-panel">
+          <div class="panel-title-row">
+            <h3>3s - B Grade - John Adams Shield</h3>
+            <span class="record-pill">8W - 5L</span>
+          </div>
+          <div class="table-scroll">
+            <div class="round-row round-head">
+              <span>Round</span><span>Opponent</span><span>Result</span><span>Best Batter</span><span>Best Bowler</span><span>Scorecard</span>
+            </div>
+            <div class="round-row">
+              <strong>R15</strong>
+              <span class="opponent">vs Fairfield Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 83 runs</span></span>
+              <span>Nikhil 62</span>
+              <span>Wajhi 3-40</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R14</strong>
+              <span class="opponent">vs Royal Park Reds Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 186 runs</span></span>
+              <span>Siddhesh 50</span>
+              <span>Wajhi 3-1</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R13</strong>
+              <span class="opponent">vs Reservoir Cobras Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 5 wickets</span></span>
+              <span>Jai 58</span>
+              <span>Abcin 3-28</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R12</strong>
+              <span class="opponent">vs Donath Cricket Club</span>
+              <span class="result-cell"><b class="result-pill draw">Draw</b><span>points shared</span></span>
+              <span>Armaan 102*</span>
+              <span>—</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R11</strong>
+              <span class="opponent">vs Bellfield Cricket Club</span>
+              <span class="result-cell"><b class="result-pill win">Win</b><span>won by 3 wickets</span></span>
+              <span>Vinay 64*</span>
+              <span>Kartik 2-25</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+            <div class="round-row">
+              <strong>R10</strong>
+              <span class="opponent">vs Brunswick Cricket Club</span>
+              <span class="result-cell"><b class="result-pill loss">Loss</b><span>lost by 32 runs</span></span>
+              <span>Kalpesh 39*</span>
+              <span>Shandil 2-18</span>
+              <a class="link" href="#">View scorecard ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wire-notes">
+        <span>Desktop tabs sit in one line across the card edge and only consume their content width.</span>
+        <span>Mobile tabs become compact rectangular folder tabs in a two-column grid for 1s/2s/3s/4s.</span>
+        <span>The results area still uses latest-first rows with internal scroll after the first few rounds.</span>
+      </div>
+    </section>
+
+    <section class="module" aria-label="Milestone folder tab example">
+      <div class="module-head">
+        <div>
+          <div class="eyebrow">B. Milestone</div>
+          <h2>Milestone page</h2>
+          <p>The main page view selector becomes part of the content module instead of floating between the hero and the card.</p>
+        </div>
+      </div>
+
+      <div class="folder-shell">
+        <nav class="folder-tabs" aria-label="Milestone view tabs">
+          <span class="folder-tab active">Upcoming</span>
+          <span class="folder-tab">Achieved</span>
+          <span class="folder-tab">Exclusive Club</span>
+        </nav>
+        <div class="folder-panel">
+          <div class="panel-title-row">
+            <div>
+              <h3>Milestone Watchlist 📍</h3>
+              <p style="color: var(--muted); font-size: 0.84rem; font-weight: 760; margin-top: 4px;">Active players approaching major club milestones.</p>
+            </div>
+          </div>
+          <div class="milestone-list">
+            <article class="milestone-card">
+              <div class="milestone-meta">
+                <div>
+                  <h4>Feroz Hassan</h4>
+                  <p>197 / 200 matches</p>
+                </div>
+                <span class="distance-pill">3 away</span>
+              </div>
+              <div class="bar"><span style="width: 98.5%"></span></div>
+            </article>
+            <article class="milestone-card">
+              <div class="milestone-meta">
+                <div>
+                  <h4>Shivnyl Naidu</h4>
+                  <p>196 / 200 matches</p>
+                </div>
+                <span class="distance-pill">4 away</span>
+              </div>
+              <div class="bar"><span style="width: 98%"></span></div>
+            </article>
+            <article class="milestone-card">
+              <div class="milestone-meta">
+                <div>
+                  <h4>Sandeep Gill</h4>
+                  <p>91 / 100 matches</p>
+                </div>
+                <span class="distance-pill">9 away</span>
+              </div>
+              <div class="bar"><span style="width: 91%"></span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="wire-notes">
+        <span>Upcoming, Achieved, and Exclusive Club behave like content views in one Milestone folder.</span>
+        <span>The selected tab owns the content beneath it; no separate page-level toggle is shown.</span>
+      </div>
+    </section>
+
+    <section class="module" aria-label="Player Profile folder tab example">
+      <div class="module-head">
+        <div>
+          <div class="eyebrow">C. Player Profile</div>
+          <h2>Career Breakdown 🧭</h2>
+          <p>Dimension tabs become attached folder tabs. Batting / Bowling / Fielding remains the existing pill control and moves inside the card on the left.</p>
+        </div>
+      </div>
+
+      <div class="folder-shell">
+        <nav class="folder-tabs" aria-label="Career Breakdown dimension tabs">
+          <span class="folder-tab active">Season</span>
+          <span class="folder-tab">Grade</span>
+          <span class="folder-tab">Opponent</span>
+          <span class="folder-tab">Ground</span>
+          <span class="folder-tab">Home/Away</span>
+        </nav>
+        <div class="folder-panel">
+          <div class="profile-toolbar">
+            <span class="profile-toolbar-label">Discipline</span>
+            <nav class="segmented" aria-label="Discipline toggle">
+              <span class="segment active">Batting</span>
+              <span class="segment">Bowling</span>
+              <span class="segment">Fielding</span>
+            </nav>
+          </div>
+          <div class="table-scroll">
+            <div class="data-row data-head">
+              <span>Season</span><span class="num">Inn</span><span class="num">Runs</span><span class="num">Avg</span><span class="num">Strike Rate</span><span class="num">HS</span><span class="num">30s</span><span class="num">50s</span><span class="num">100s</span>
+            </div>
+            <div class="data-row">
+              <strong>Winter 2026</strong><span class="num">2</span><span class="num">36</span><span class="num">18.00</span><span class="num">66.7%</span><span class="num">36</span><span class="num">1</span><span class="num">0</span><span class="num">0</span>
+            </div>
+            <div class="data-row">
+              <strong>Summer 2025/26</strong><span class="num">12</span><span class="num">93</span><span class="num">9.30</span><span class="num">24.2%</span><span class="num">22</span><span class="num">0</span><span class="num">0</span><span class="num">0</span>
+            </div>
+            <div class="data-row">
+              <strong>Winter 2025</strong><span class="num">7</span><span class="num">92</span><span class="num">13.14</span><span class="num">76.7%</span><span class="num">29</span><span class="num">0</span><span class="num">0</span><span class="num">0</span>
+            </div>
+            <div class="data-row">
+              <strong>Summer 2024/25</strong><span class="num">9</span><span class="num">215</span><span class="num">35.83</span><span class="num">36.8%</span><span class="num">53*</span><span class="num">1</span><span class="num">2</span><span class="num">0</span>
+            </div>
+            <div class="data-row">
+              <strong>Summer 2023/24</strong><span class="num">10</span><span class="num">116</span><span class="num">11.60</span><span class="num">N/A</span><span class="num">36</span><span class="num">2</span><span class="num">0</span><span class="num">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wire-notes">
+        <span>Season / Grade / Opponent / Ground / Home/Away get the folder treatment because they switch the whole table view.</span>
+        <span>Batting / Bowling / Fielding stays as the current pill control because it is a discipline filter inside the selected folder.</span>
+        <span>On mobile, dimension tabs wrap into compact two-column folder tabs; the discipline pill sits below them inside the card.</span>
+      </div>
+    </section>
+
+    <section class="module">
+      <div class="module-head">
+        <div>
+          <div class="eyebrow">Mobile behaviour</div>
+          <h2>Compact tab wrapping</h2>
+          <p>A narrow preview showing how folder tabs avoid the oversized capsule problem while staying attached to the visual.</p>
+        </div>
+      </div>
+
+      <div class="mobile-preview-grid">
+        <div>
+          <div class="usage-note">
+            <strong>Implementation idea:</strong> one shared folder-tab component with `selected_key`, `options`, compact labels, and a target content container.
+            Streamlit state can still be session-state based; this wireframe is visual only.
+          </div>
+          <div class="wire-notes">
+            <span>Folder tabs should not update URLs or behave like links in production.</span>
+            <span>Use two-column mobile wrapping for longer sets; use one row when there are only two or three short labels.</span>
+            <span>Keep table/card content immediately below the folder edge so the tabs feel physically connected.</span>
+          </div>
+        </div>
+
+        <div class="mobile-shell" aria-label="Mobile preview">
+          <div class="mobile-inner">
+            <h3 class="mobile-demo-title">Season by Round 🗓️</h3>
+            <div class="folder-shell">
+              <nav class="folder-tabs" aria-label="Mobile grade tabs">
+                <span class="folder-tab">1s</span>
+                <span class="folder-tab">2s</span>
+                <span class="folder-tab active">3s</span>
+                <span class="folder-tab">4s</span>
+              </nav>
+              <div class="folder-panel">
+                <div class="panel-title-row">
+                  <h3>3s - B Grade</h3>
+                  <span class="record-pill">8W - 5L</span>
+                </div>
+                <div class="round-row">
+                  <strong>R15</strong>
+                  <span class="opponent">vs Fairfield Cricket Club</span>
+                  <span class="result-cell"><b class="result-pill win">Win</b><span>won by 83 runs</span></span>
+                  <span>Batter: Nikhil 62</span>
+                  <span>Bowler: Wajhi 3-40</span>
+                  <a class="link" href="#">View scorecard ↗</a>
+                </div>
+                <div class="round-row">
+                  <strong>R14</strong>
+                  <span class="opponent">vs Royal Park Reds Cricket Club</span>
+                  <span class="result-cell"><b class="result-pill win">Win</b><span>won by 186 runs</span></span>
+                  <span>Batter: Siddhesh 50</span>
+                  <span>Bowler: Wajhi 3-1</span>
+                  <a class="link" href="#">View scorecard ↗</a>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="mobile-demo-title" style="margin-top: 22px;">Career Breakdown 🧭</h3>
+            <div class="folder-shell">
+              <nav class="folder-tabs" aria-label="Mobile career dimension tabs">
+                <span class="folder-tab active">Season</span>
+                <span class="folder-tab">Grade</span>
+                <span class="folder-tab">Opponent</span>
+                <span class="folder-tab">Ground</span>
+                <span class="folder-tab">Home/Away</span>
+              </nav>
+              <div class="folder-panel">
+                <div class="profile-toolbar">
+                  <span class="profile-toolbar-label">Discipline</span>
+                  <nav class="segmented" aria-label="Mobile discipline toggle">
+                    <span class="segment active">Batting</span>
+                    <span class="segment">Bowling</span>
+                    <span class="segment">Fielding</span>
+                  </nav>
+                </div>
+                <div class="data-row">
+                  <strong>Winter 2026</strong><span class="num">2</span><span class="num">36</span><span class="num">18.00</span>
+                </div>
+                <div class="data-row">
+                  <strong>Summer 2025/26</strong><span class="num">12</span><span class="num">93</span><span class="num">9.30</span>
+                </div>
+                <div class="data-row">
+                  <strong>Winter 2025</strong><span class="num">7</span><span class="num">92</span><span class="num">13.14</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
