@@ -90,6 +90,7 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Ground labels use the same shared normalization module as opponent labels so Player Profile ground breakdowns, favourite ground labels, and match-context venue labels display clean venue-level names.
 - Reviewed explicit merges include `J.C Donath Reserve (East)`, `J.C. Donath Reserve (Central)`, and `J.C. Donath Reserve (West)` -> `J.C. Donath Reserve`.
 - Reviewed explicit merge: `Chelsworth Park North` and `Chelsworth Park South` -> `Chelsworth Park`.
+- Reviewed explicit merge: `Shelley Park (Heidelberg Heights)` -> `Shelley Park`.
 - Initial punctuation is normalized for reviewed venues such as `C.H. Sullivan Memorial Park`, `H.L.T. Oulten Park`, `H.P. Zwar Park`, `T.W. Blake Park`, `J.E. Moore Park`, `I.W. Dole Reserve`, and `W. Ruthven VC Reserve`.
 - Reviewed venue-level cleanup strips obvious appended oval/surface suffixes from known venues, for example `C.H. Sullivan Memorial Park Oval #1 East` and `C.H. Sullivan Memorial Park #2 West` -> `C.H. Sullivan Memorial Park`.
 - Do not generally merge directional venue names unless Preet has reviewed and explicitly mapped them.

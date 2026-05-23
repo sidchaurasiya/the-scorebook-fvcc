@@ -133,7 +133,7 @@ Current production navigation pages:
 ## Ground Name Normalization Notes
 
 - The shared normalization helper also handles venue labels used by Player Profile ground breakdowns, favourite ground-style cards, and match-context displays.
-- Reviewed explicit merges: Donath Reserve East/Central/West variants -> `J.C. Donath Reserve`, and Chelsworth Park North/South -> `Chelsworth Park`.
+- Reviewed explicit merges: Donath Reserve East/Central/West variants -> `J.C. Donath Reserve`, Chelsworth Park North/South -> `Chelsworth Park`, and `Shelley Park (Heidelberg Heights)` -> `Shelley Park`.
 - Reviewed punctuation cleanups include `C.H. Sullivan Memorial Park`, `H.L.T. Oulten Park`, `H.P. Zwar Park`, `T.W. Blake Park`, `J.E. Moore Park`, `I.W. Dole Reserve`, and `W. Ruthven VC Reserve`.
 - Reviewed venue-level cleanup strips obvious appended oval/surface suffixes from known venues, for example `C.H. Sullivan Memorial Park Oval #1 East` and `C.H. Sullivan Memorial Park #2 West` -> `C.H. Sullivan Memorial Park`.
 - Do not automatically merge directional ground names unless explicitly reviewed; North/South/East/West can be different playing surfaces at some venues.
