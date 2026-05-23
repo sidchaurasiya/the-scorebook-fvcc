@@ -7,7 +7,7 @@ from typing import Any
 import pandas as pd
 
 from src.data.match_centre_ownership import add_club_match_ownership, is_selected_club_team_name
-from src.data.name_normalization import normalize_opponent_club_name
+from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 
 
 MILESTONES = [25, 50, 100, 150]
@@ -113,6 +113,7 @@ def add_match_context(
     output["team_name"] = output["home_team_name"].where(home_is_club, output["away_team_name"])
     output["opposition_team"] = output["away_team_name"].where(home_is_club, output["home_team_name"])
     output["opposition_team"] = output["opposition_team"].map(normalize_opponent_club_name)
+    output["venue_name"] = output["venue_name"].map(normalize_ground_name)
     if "season" not in output or output["season"].fillna("").astype(str).str.strip().eq("").all():
         season_by_match: dict[str, str] = {}
         for frame in frames:

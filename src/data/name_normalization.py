@@ -18,10 +18,11 @@ _OPPONENT_MAPPING_ROWS = [
     ("Bellfield 2nd XI", "Bellfield Cricket Club"),
     ("Bellfield CC 1st XI", "Bellfield Cricket Club"),
     ("Bellfield CC OD", "Bellfield Cricket Club"),
-    ("Bellfield Bulls CC 1st XI", "Bellfield Bulls Cricket Club"),
-    ("Bellfield Bulls CC 2nd XI", "Bellfield Bulls Cricket Club"),
-    ("Bellfield Bulls CC 3rd XI", "Bellfield Bulls Cricket Club"),
-    ("Bellfield Bulls CC 4th XI", "Bellfield Bulls Cricket Club"),
+    ("Bellfield Bulls Cricket Club", "Bellfield Cricket Club"),
+    ("Bellfield Bulls CC 1st XI", "Bellfield Cricket Club"),
+    ("Bellfield Bulls CC 2nd XI", "Bellfield Cricket Club"),
+    ("Bellfield Bulls CC 3rd XI", "Bellfield Cricket Club"),
+    ("Bellfield Bulls CC 4th XI", "Bellfield Cricket Club"),
     ("Bellfield Rocketz CC OD", "Bellfield Rocketz Cricket Club"),
     ("Brunswick", "Brunswick Cricket Club"),
     ("Bundoora Park", "Bundoora Park Cricket Club"),
@@ -44,11 +45,12 @@ _OPPONENT_MAPPING_ROWS = [
     ("Camrea Stingrays CC 1st XI", "Camrea Stingrays Cricket Club"),
     ("Camrea Stingrays CC 2nd XI", "Camrea Stingrays Cricket Club"),
     ("Chargers", "Chargers Cricket Club"),
-    ("Cobras", "Cobras Cricket Club"),
-    ("Cobras 3rd XI", "Cobras Cricket Club"),
-    ("Cobras 4th XI", "Cobras Cricket Club"),
-    ("Cobras 4's", "Cobras Cricket Club"),
-    ("Cobras Blue", "Cobras Cricket Club"),
+    ("Cobras Cricket Club", "Reservoir Cobras Cricket Club"),
+    ("Cobras", "Reservoir Cobras Cricket Club"),
+    ("Cobras 3rd XI", "Reservoir Cobras Cricket Club"),
+    ("Cobras 4th XI", "Reservoir Cobras Cricket Club"),
+    ("Cobras 4's", "Reservoir Cobras Cricket Club"),
+    ("Cobras Blue", "Reservoir Cobras Cricket Club"),
     ("Croxton Park", "Croxton Park Cricket Club"),
     ("Darebin Chargers", "Darebin Chargers Cricket Club"),
     ("Darebin Chargers 3rd XI", "Darebin Chargers Cricket Club"),
@@ -199,8 +201,9 @@ _OPPONENT_MAPPING_ROWS = [
     ("Strathewen", "Strathewen Cricket Club"),
     ("Strathewen 4's", "Strathewen Cricket Club"),
     ("Strathewen CC 1st XI", "Strathewen Cricket Club"),
-    ("Strathewen Cougars CC 1st XI", "Strathewen Cougars Cricket Club"),
-    ("Strathewen Cougars CC 1stXI", "Strathewen Cougars Cricket Club"),
+    ("Strathewen Cougars Cricket Club", "Strathewen Cricket Club"),
+    ("Strathewen Cougars CC 1st XI", "Strathewen Cricket Club"),
+    ("Strathewen Cougars CC 1stXI", "Strathewen Cricket Club"),
     ("Taipans", "Taipans Cricket Club"),
     ("Thomastown", "Thomastown Cricket Club"),
     ("Thomastown United", "Thomastown United Cricket Club"),
@@ -214,7 +217,8 @@ _OPPONENT_MAPPING_ROWS = [
     ("West Preston 3rd XI", "West Preston Cricket Club"),
     ("West Preston CC 1st XI", "West Preston Cricket Club"),
     ("West Preston CC 3rd XI", "West Preston Cricket Club"),
-    ("West Preston Sharks 2nd XI", "West Preston Sharks Cricket Club"),
+    ("West Preston Sharks Cricket Club", "West Preston Cricket Club"),
+    ("West Preston Sharks 2nd XI", "West Preston Cricket Club"),
     ("Wollert Rhinos CC 1st XI", "Wollert Rhinos Cricket Club"),
     ("Wollert Warriors Senior Men A", "Wollert Warriors Cricket Club"),
 ]
@@ -323,6 +327,10 @@ def normalize_ground_name(value: object, fallback: str = UNKNOWN_GROUND) -> str:
     mapped = _manual_ground_mapping(normalized)
     if mapped:
         return mapped
+    normalized = _strip_known_ground_surface_suffix(normalized)
+    mapped = _manual_ground_mapping(normalized)
+    if mapped:
+        return mapped
     return _collapse_spaces(normalized).strip() or fallback
 
 
@@ -353,6 +361,41 @@ def _normalize_initial_punctuation(value: str) -> str:
     text = re.sub(r"\b([A-Z])\.([A-Z])(?=\s)", r"\1.\2.", text)
     text = re.sub(r"\b([A-Z])\s+(Ruthven VC Reserve)\b", r"\1. \2", text)
     return _collapse_spaces(text)
+
+
+def _strip_known_ground_surface_suffix(value: str) -> str:
+    """Collapse reviewed venues with appended oval/surface labels to venue level."""
+
+    text = _collapse_spaces(value).strip(" -")
+    known_grounds = {
+        canonical
+        for _, canonical in _GROUND_MAPPING_ROWS
+        if canonical and canonical != UNKNOWN_GROUND
+    }
+    for ground in sorted(known_grounds, key=len, reverse=True):
+        prefix = f"{ground} "
+        if not text.casefold().startswith(prefix.casefold()):
+            continue
+        suffix = text[len(prefix) :].strip(" -")
+        if _looks_like_ground_surface_suffix(suffix):
+            return ground
+    return text
+
+
+def _looks_like_ground_surface_suffix(value: str) -> bool:
+    suffix = _collapse_spaces(value).strip(" -")
+    if not suffix:
+        return False
+    if not re.search(r"(?:\bOval\b|#|\b\d+\b)", suffix, flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.fullmatch(
+            r"(?:Oval\s*)?(?:#\s*)?\d+(?:\s*(?:North|South|East|West|Central|North East|North West|South East|South West))?"
+            r"|Oval\s+(?:North|South|East|West|Central|North East|North West|South East|South West)",
+            suffix,
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def _remove_team_suffixes(value: str) -> str:

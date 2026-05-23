@@ -80,8 +80,9 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Opponent labels now use a shared club-name normalization helper so Player Profile opponent breakdowns, favourite opponent labels, standout context, and match-context labels can converge on clean club-level names.
 - The helper maps bare names and `CC` variants to full `Cricket Club` names where reviewed, for example `Donath` -> `Donath Cricket Club`, `Holy Trinity` -> `Holy Trinity Cricket Club`, `Northern Socials` variants -> `Northern Socials Cricket Club`, and `Olympic Colts` variants -> `Olympic Colts Cricket Club`.
 - Reviewed Darebin variants including `Darebin Chargers`, `Darebin Chargers RP`, and `Darebin Chargers Red` now map to `Darebin Chargers Cricket Club`; keep `Darebin Northern Riders Cricket Club` separate.
+- Reviewed club merges now also map `West Preston Sharks Cricket Club` -> `West Preston Cricket Club`, `Strathewen Cougars Cricket Club` -> `Strathewen Cricket Club`, `Bellfield Bulls Cricket Club` -> `Bellfield Cricket Club`, and `Cobras Cricket Club` -> `Reservoir Cobras Cricket Club`.
 - `CC` should display as `Cricket Club`, repeated `Cricket Club` wording should be removed, and team suffixes such as `1st XI`, `2nd XI`, `OD`, `T20`, colours, and `#1/#2` should not leak into club-level opponent labels.
-- Do not over-merge similarly named clubs unless explicitly mapped. Keep distinct clubs such as Bellfield / Bellfield Bulls / Bellfield Rocketz, Darebin Chargers / Deccan Chargers, Lalor / Lalor Warriors, Reservoir Cobras / Reservoir Mayston, and Strathewen / Strathewen Cougars separate.
+- Do not over-merge similarly named clubs unless explicitly mapped. Keep distinct clubs such as Bellfield / Bellfield Rocketz, Darebin Chargers / Deccan Chargers, Lalor / Lalor Warriors, Reservoir Cobras / Reservoir Mayston, and Preston Footballers / Preston Baseballers / Preston Druids / Preston YCW District / Preston Himalayan separate.
 - Local review CSVs for raw versus normalized opponent and ground names live under ignored `data/processed/experimental/name_normalization_audit/` and must not be committed unless Preet explicitly approves.
 
 ## Current Ground Name Normalization
@@ -90,6 +91,7 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Reviewed explicit merges include `J.C Donath Reserve (East)`, `J.C. Donath Reserve (Central)`, and `J.C. Donath Reserve (West)` -> `J.C. Donath Reserve`.
 - Reviewed explicit merge: `Chelsworth Park North` and `Chelsworth Park South` -> `Chelsworth Park`.
 - Initial punctuation is normalized for reviewed venues such as `C.H. Sullivan Memorial Park`, `H.L.T. Oulten Park`, `H.P. Zwar Park`, `T.W. Blake Park`, `J.E. Moore Park`, `I.W. Dole Reserve`, and `W. Ruthven VC Reserve`.
+- Reviewed venue-level cleanup strips obvious appended oval/surface suffixes from known venues, for example `C.H. Sullivan Memorial Park Oval #1 East` and `C.H. Sullivan Memorial Park #2 West` -> `C.H. Sullivan Memorial Park`.
 - Do not generally merge directional venue names unless Preet has reviewed and explicitly mapped them.
 
 ## 2. Current App Pages / Navigation
