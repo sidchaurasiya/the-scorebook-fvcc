@@ -52,6 +52,8 @@ _OPPONENT_MAPPING_ROWS = [
     ("Croxton Park", "Croxton Park Cricket Club"),
     ("Darebin Chargers", "Darebin Chargers Cricket Club"),
     ("Darebin Chargers 3rd XI", "Darebin Chargers Cricket Club"),
+    ("Darebin Chargers RP", "Darebin Chargers Cricket Club"),
+    ("Darebin Chargers RP Cricket Club", "Darebin Chargers Cricket Club"),
     ("Darebin Chargers Red", "Darebin Chargers Cricket Club"),
     ("Darebin Northern Riders", "Darebin Northern Riders Cricket Club"),
     ("Darebin Northern Riders 2nd XI", "Darebin Northern Riders Cricket Club"),

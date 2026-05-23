@@ -79,6 +79,7 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 
 - Opponent labels now use a shared club-name normalization helper so Player Profile opponent breakdowns, favourite opponent labels, standout context, and match-context labels can converge on clean club-level names.
 - The helper maps bare names and `CC` variants to full `Cricket Club` names where reviewed, for example `Donath` -> `Donath Cricket Club`, `Holy Trinity` -> `Holy Trinity Cricket Club`, `Northern Socials` variants -> `Northern Socials Cricket Club`, and `Olympic Colts` variants -> `Olympic Colts Cricket Club`.
+- Reviewed Darebin variants including `Darebin Chargers`, `Darebin Chargers RP`, and `Darebin Chargers Red` now map to `Darebin Chargers Cricket Club`; keep `Darebin Northern Riders Cricket Club` separate.
 - `CC` should display as `Cricket Club`, repeated `Cricket Club` wording should be removed, and team suffixes such as `1st XI`, `2nd XI`, `OD`, `T20`, colours, and `#1/#2` should not leak into club-level opponent labels.
 - Do not over-merge similarly named clubs unless explicitly mapped. Keep distinct clubs such as Bellfield / Bellfield Bulls / Bellfield Rocketz, Darebin Chargers / Deccan Chargers, Lalor / Lalor Warriors, Reservoir Cobras / Reservoir Mayston, and Strathewen / Strathewen Cougars separate.
 - Local review CSVs for raw versus normalized opponent and ground names live under ignored `data/processed/experimental/name_normalization_audit/` and must not be committed unless Preet explicitly approves.

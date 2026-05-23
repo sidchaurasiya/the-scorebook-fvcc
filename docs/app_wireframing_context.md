@@ -125,6 +125,7 @@ Current production navigation pages:
 
 - The app now has a shared opponent club-name normalization helper for deploy-safe Player Profile summaries and visible match/opponent labels.
 - Bare reviewed names and `CC` variants should display as full club-level names, for example `Donath` -> `Donath Cricket Club`, `Holy Trinity` -> `Holy Trinity Cricket Club`, `Northern Socials` variants -> `Northern Socials Cricket Club`, and `Olympic Colts` variants -> `Olympic Colts Cricket Club`.
+- Reviewed Darebin variants including `Darebin Chargers`, `Darebin Chargers RP`, and `Darebin Chargers Red` now display as `Darebin Chargers Cricket Club`; keep `Darebin Northern Riders Cricket Club` separate.
 - Keep distinct similarly named clubs separate unless explicitly mapped: examples include Bellfield / Bellfield Bulls / Bellfield Rocketz, Darebin Chargers / Deccan Chargers, Preston Footballers / Preston Baseballers / Preston Druids / Preston YCW District / Preston Himalayan, and Strathewen / Strathewen Cougars.
 - The ignored audit folder `data/processed/experimental/name_normalization_audit/` is for Preet review of raw/normalized opponent and ground names and should stay out of commits.
 
