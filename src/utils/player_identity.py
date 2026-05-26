@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import shutil
+import unicodedata
 from difflib import SequenceMatcher
 from datetime import datetime
 from pathlib import Path
@@ -59,6 +60,22 @@ def clean_player_name(name: object) -> str:
     value = re.sub(r"[^\w\s]", " ", value)
     value = re.sub(r"\s+", " ", value)
     return value.strip()
+
+
+def normalize_player_name_for_strict_merge(name: object) -> str:
+    """Normalize only case, spacing, accents, and punctuation for safe merge review."""
+    value = "" if pd.isna(name) else str(name)
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(character for character in value if not unicodedata.combining(character))
+    value = value.strip().casefold()
+
+    characters: list[str] = []
+    for character in value:
+        if character.isalnum():
+            characters.append(character)
+        elif character.isspace() or unicodedata.category(character) == "Pd":
+            characters.append(" ")
+    return re.sub(r"\s+", " ", "".join(characters)).strip()
 
 
 def display_player_name(name: object) -> str:

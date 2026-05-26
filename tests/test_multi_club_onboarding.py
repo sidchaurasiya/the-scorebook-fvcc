@@ -5,9 +5,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pandas as pd
+
+from scripts.build_club_review_pack import build_strict_duplicate_merge_review
 from scripts import refresh_data
 from src.config.club_config import REPO_ROOT, allow_legacy_fallback, get_processed_path
 from src.utils import analytics
+from src.utils.player_identity import normalize_player_name_for_strict_merge
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,3 +76,49 @@ def test_ga4_noops_without_valid_measurement_id(monkeypatch) -> None:
 
     monkeypatch.setattr(analytics.components, "html", fail_if_called)
     analytics.track_event("page_view", {"page_name": "Hall of Fame"})
+
+
+def test_strict_merge_name_normalization() -> None:
+    assert normalize_player_name_for_strict_merge("D'Mello") == normalize_player_name_for_strict_merge("Dmello")
+    assert normalize_player_name_for_strict_merge("Faraz Khan") == normalize_player_name_for_strict_merge("FARAZ   KHAN")
+    assert normalize_player_name_for_strict_merge("Jean-Paul") == normalize_player_name_for_strict_merge("Jean Paul")
+    assert normalize_player_name_for_strict_merge("Gopi Krishna") != normalize_player_name_for_strict_merge("Gopi Krishna Inturi")
+
+
+def test_strict_merge_review_blocks_season_overlap() -> None:
+    frames = {
+        "batting": pd.DataFrame(
+            [
+                {"raw_player_id": "a", "raw_player_name": "Faraz Khan", "season": "Summer 2024/25", "battingAggregate": "10"},
+                {"raw_player_id": "b", "raw_player_name": "FARAZ KHAN", "season": "Summer 2024/25", "battingAggregate": "20"},
+            ]
+        ),
+        "bowling": pd.DataFrame(),
+        "fielding": pd.DataFrame(),
+    }
+
+    safe, manual = build_strict_duplicate_merge_review("test-club", frames)
+
+    assert safe.empty
+    assert manual["possible_reason"].str.contains("season overlap").any()
+    assert "Summer 2024/25" in set(manual["overlap_seasons"])
+
+
+def test_strict_merge_review_allows_no_overlap_exact_names() -> None:
+    frames = {
+        "batting": pd.DataFrame(
+            [
+                {"raw_player_id": "a", "raw_player_name": "Baurel D'Mello", "season": "Summer 2023/24", "battingAggregate": "10"},
+                {"raw_player_id": "b", "raw_player_name": "Baurel Dmello", "season": "Summer 2024/25", "battingAggregate": "20"},
+            ]
+        ),
+        "bowling": pd.DataFrame(),
+        "fielding": pd.DataFrame(),
+    }
+
+    safe, manual = build_strict_duplicate_merge_review("test-club", frames)
+
+    assert manual.empty
+    assert safe["candidate_group_id"].nunique() == 1
+    assert set(safe["raw_player_id"]) == {"a", "b"}
+    assert set(safe["confidence"]) == {"high"}

@@ -955,6 +955,10 @@ Positive-response onboarding update:
 - Starter mapping files are club-local and header-only. Do not copy FVCC aliases, team/grade mappings, opponent mappings, or ground mappings into other clubs.
 - Aggregate processed CSVs and `metadata.json` were written for each pilot club. Match-centre refresh/backfill was not run and still requires explicit approval per club.
 - Review packs exist under `data/processed/experimental/<club_id>/review_pack/`; keep them ignored unless Preet explicitly approves committing them.
+- Review packs now include `safe_auto_merge_candidates.csv` and `manual_duplicate_review_candidates.csv`. These are review-only duplicate-player proposals, not applied mapping changes.
+- Safe auto-merge proposals require strict-normalized exact names, no season overlap across batting/bowling/fielding rows, and no match overlap where match IDs are available. Strict normalization only handles case, spacing, accents, and punctuation/special characters; it does not fuzzy-match, reorder names, or drop middle names.
+- Same-season duplicate names, similar-but-not-exact names, initials/name-expansion differences, and uncertain cases remain manual review only.
+- Non-FVCC duplicate review uses each club's own aggregate processed data and club-local mapping paths. Do not use FVCC mappings for any pilot club.
 - Browser smoke passed for Hall of Fame, Season Overview, Milestone, and Player Profile for each pilot club, with clean empty states for unavailable scorecard/ball-by-ball sections.
 - GA4 remains shared through `GA4_MEASUREMENT_ID` unless a later config explicitly overrides it. Event parameters should include `club_id` and `club_name` as custom dimensions.
 
