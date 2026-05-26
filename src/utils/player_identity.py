@@ -9,6 +9,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from src.config.club_config import get_mapping_path
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
@@ -46,6 +47,10 @@ VALIDATION_COLUMNS = [
     "reviewed_by",
     "reviewed_at",
 ]
+
+
+def player_identity_path(filename: str | Path, club_id: str | None = None) -> Path:
+    return get_mapping_path(filename, club_id=club_id)
 
 
 def clean_player_name(name: object) -> str:
@@ -90,8 +95,8 @@ def make_player_slug(name_or_id: object) -> str:
     return value or "unknown_player"
 
 
-def load_player_aliases(path: str | Path = ALIASES_PATH) -> pd.DataFrame:
-    path = Path(path)
+def load_player_aliases(path: str | Path | None = None, *, club_id: str | None = None) -> pd.DataFrame:
+    path = Path(path) if path is not None else player_identity_path(ALIASES_PATH.name, club_id=club_id)
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         aliases = pd.DataFrame(columns=ALIAS_COLUMNS)
@@ -108,8 +113,8 @@ def load_player_aliases(path: str | Path = ALIASES_PATH) -> pd.DataFrame:
     return aliases
 
 
-def load_manual_player_merges(path: str | Path = MANUAL_MERGES_PATH) -> pd.DataFrame:
-    path = Path(path)
+def load_manual_player_merges(path: str | Path | None = None, *, club_id: str | None = None) -> pd.DataFrame:
+    path = Path(path) if path is not None else player_identity_path(MANUAL_MERGES_PATH.name, club_id=club_id)
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         manual = pd.DataFrame(columns=MANUAL_MERGE_COLUMNS)
@@ -126,15 +131,15 @@ def load_manual_player_merges(path: str | Path = MANUAL_MERGES_PATH) -> pd.DataF
     return manual
 
 
-def player_aliases_mtime(path: str | Path = ALIASES_PATH) -> float:
-    path = Path(path)
+def player_aliases_mtime(path: str | Path | None = None, *, club_id: str | None = None) -> float:
+    path = Path(path) if path is not None else player_identity_path(ALIASES_PATH.name, club_id=club_id)
     if not path.exists():
         load_player_aliases(path)
     return path.stat().st_mtime if path.exists() else 0.0
 
 
-def load_player_merge_validation(path: str | Path = VALIDATION_PATH) -> pd.DataFrame:
-    path = Path(path)
+def load_player_merge_validation(path: str | Path | None = None, *, club_id: str | None = None) -> pd.DataFrame:
+    path = Path(path) if path is not None else player_identity_path(VALIDATION_PATH.name, club_id=club_id)
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         validation = pd.DataFrame(columns=VALIDATION_COLUMNS)
@@ -230,8 +235,13 @@ def canonical_group_key(df: pd.DataFrame) -> pd.Series:
     return df["player_name"].fillna("").astype(str).str.strip().str.casefold()
 
 
-def generate_duplicate_audit(df: pd.DataFrame, path: str | Path = DUPLICATE_AUDIT_PATH) -> pd.DataFrame:
-    path = Path(path)
+def generate_duplicate_audit(
+    df: pd.DataFrame,
+    path: str | Path | None = None,
+    *,
+    club_id: str | None = None,
+) -> pd.DataFrame:
+    path = Path(path) if path is not None else player_identity_path(DUPLICATE_AUDIT_PATH.name, club_id=club_id)
     path.parent.mkdir(parents=True, exist_ok=True)
     profiles = build_raw_profile_summary(df)
     if len(profiles) < 2:
@@ -322,9 +332,11 @@ def build_raw_profile_summary(df: pd.DataFrame) -> pd.DataFrame:
 def summarise_player_identity_mapping(
     df: pd.DataFrame,
     aliases_df: pd.DataFrame | None = None,
-    path: str | Path = IDENTITY_SUMMARY_PATH,
+    path: str | Path | None = None,
+    *,
+    club_id: str | None = None,
 ) -> pd.DataFrame:
-    path = Path(path)
+    path = Path(path) if path is not None else player_identity_path(IDENTITY_SUMMARY_PATH.name, club_id=club_id)
     path.parent.mkdir(parents=True, exist_ok=True)
     mapped = apply_player_identity_mapping(df, aliases_df)
     raw_count = mapped[["raw_player_id", "raw_player_name"]].drop_duplicates().shape[0]
@@ -354,18 +366,27 @@ def join_unique_values(values: pd.Series) -> str:
     return ", ".join(labels)
 
 
-def ensure_identity_exports(df: pd.DataFrame, aliases_df: pd.DataFrame | None = None) -> dict[str, int]:
-    aliases_df = load_player_aliases() if aliases_df is None else aliases_df
-    duplicate_audit = generate_duplicate_audit(df)
-    summary = summarise_player_identity_mapping(df, aliases_df)
-    load_player_merge_validation()
+def ensure_identity_exports(
+    df: pd.DataFrame,
+    aliases_df: pd.DataFrame | None = None,
+    *,
+    club_id: str | None = None,
+) -> dict[str, int]:
+    aliases_df = load_player_aliases(club_id=club_id) if aliases_df is None else aliases_df
+    duplicate_audit = generate_duplicate_audit(df, club_id=club_id)
+    summary = summarise_player_identity_mapping(df, aliases_df, club_id=club_id)
+    load_player_merge_validation(club_id=club_id)
     return {
         "possible_duplicates": len(duplicate_audit),
         "summary_rows": len(summary),
     }
 
 
-def ensure_player_alias_mappings(source_df: pd.DataFrame | None = None) -> dict[str, int]:
+def ensure_player_alias_mappings(
+    source_df: pd.DataFrame | None = None,
+    *,
+    club_id: str | None = None,
+) -> dict[str, int]:
     """Append confirmed mappings without mutating raw PlayCricket data.
 
     Mapping priority is:
@@ -375,15 +396,16 @@ def ensure_player_alias_mappings(source_df: pd.DataFrame | None = None) -> dict[
 
     Conflicts are written to data/player_mapping_conflicts.csv and skipped.
     """
-    aliases = load_player_aliases()
-    manual = load_manual_player_merges()
-    audit = load_duplicate_audit()
+    aliases_path = player_identity_path(ALIASES_PATH.name, club_id=club_id)
+    aliases = load_player_aliases(aliases_path)
+    manual = load_manual_player_merges(club_id=club_id)
+    audit = load_duplicate_audit(club_id=club_id)
     candidates = []
     candidates.extend(manual_alias_candidates(manual, source_df))
     candidates.extend(auto_similarity_100_candidates(audit, source_df))
 
     if not candidates:
-        write_mapping_conflicts([])
+        write_mapping_conflicts([], club_id=club_id)
         return {"added": 0, "conflicts": 0, "manual_candidates": 0, "auto_candidates": 0}
 
     existing_rows = aliases.to_dict("records")
@@ -411,12 +433,12 @@ def ensure_player_alias_mappings(source_df: pd.DataFrame | None = None) -> dict[
         register_mapping(candidate, id_map, name_map, display_map)
 
     if added_rows:
-        backup_player_aliases()
+        backup_player_aliases(aliases_path)
         aliases = pd.concat([aliases, pd.DataFrame(added_rows)], ignore_index=True)
         aliases = aliases[ALIAS_COLUMNS].fillna("")
-        aliases.to_csv(ALIASES_PATH, index=False)
+        aliases.to_csv(aliases_path, index=False)
 
-    write_mapping_conflicts(conflicts)
+    write_mapping_conflicts(conflicts, club_id=club_id)
     return {
         "added": len(added_rows),
         "conflicts": len(conflicts),
@@ -425,8 +447,8 @@ def ensure_player_alias_mappings(source_df: pd.DataFrame | None = None) -> dict[
     }
 
 
-def load_duplicate_audit(path: str | Path = DUPLICATE_AUDIT_PATH) -> pd.DataFrame:
-    path = Path(path)
+def load_duplicate_audit(path: str | Path | None = None, *, club_id: str | None = None) -> pd.DataFrame:
+    path = Path(path) if path is not None else player_identity_path(DUPLICATE_AUDIT_PATH.name, club_id=club_id)
     if not path.exists():
         return pd.DataFrame()
     return pd.read_csv(path, dtype=str).fillna("")
@@ -632,21 +654,23 @@ def alias_exists(
     return False
 
 
-def backup_player_aliases() -> None:
+def backup_player_aliases(path: str | Path | None = None, *, club_id: str | None = None) -> None:
+    aliases_path = Path(path) if path is not None else player_identity_path(ALIASES_PATH.name, club_id=club_id)
     BACKUPS_DIR.mkdir(parents=True, exist_ok=True)
-    if ALIASES_PATH.exists():
+    if aliases_path.exists():
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        shutil.copy2(ALIASES_PATH, BACKUPS_DIR / f"player_aliases_{timestamp}.csv")
+        shutil.copy2(aliases_path, BACKUPS_DIR / f"{aliases_path.stem}_{timestamp}.csv")
 
 
-def write_mapping_conflicts(conflicts: list[dict[str, str]]) -> None:
-    MAPPING_CONFLICTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+def write_mapping_conflicts(conflicts: list[dict[str, str]], *, club_id: str | None = None) -> None:
+    path = player_identity_path(MAPPING_CONFLICTS_PATH.name, club_id=club_id)
+    path.parent.mkdir(parents=True, exist_ok=True)
     columns = [*ALIAS_COLUMNS, "conflict_reason"]
     frame = pd.DataFrame(conflicts)
     for column in columns:
         if column not in frame:
             frame[column] = ""
-    frame[columns].to_csv(MAPPING_CONFLICTS_PATH, index=False)
+    frame[columns].to_csv(path, index=False)
 
 
 def rebuild_canonical_processed_tables(
@@ -656,6 +680,8 @@ def rebuild_canonical_processed_tables(
         "all_seasons_fielding",
     ),
     processed_dir: str | Path = PROCESSED_DIR,
+    *,
+    club_id: str | None = None,
 ) -> dict[str, int]:
     """Persist canonical fields into processed CSVs only.
 
@@ -663,7 +689,7 @@ def rebuild_canonical_processed_tables(
     this function can be run again and the app also reapplies mappings at load
     time, so the workflow remains reversible.
     """
-    aliases = load_player_aliases()
+    aliases = load_player_aliases(club_id=club_id)
     processed_path = Path(processed_dir)
     row_counts: dict[str, int] = {}
     for table_name in table_names:

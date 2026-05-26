@@ -48,11 +48,15 @@ from src.data.playcricket_ingestion import (
     refresh_playcricket_backup,
 )
 from src.config.club_config import (
+    allow_legacy_fallback,
     get_club_name,
     get_club_short_name,
     get_hall_of_fame_path,
+    get_mapping_path,
+    get_processed_dir,
     get_processed_match_centre_dir,
     get_processed_path,
+    get_player_profile_path,
     get_season_overview_path,
     load_club_config,
 )
@@ -71,6 +75,7 @@ from src.utils.player_identity import (
     ensure_identity_exports,
     ensure_player_alias_mappings,
     get_player_profile_data,
+    player_identity_path,
     load_player_aliases,
     load_player_merge_validation,
     make_player_slug,
@@ -107,7 +112,7 @@ SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "b
 SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_batting_milestones_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_bowling_milestones_by_scope.csv"
 SEASON_OVERVIEW_SEASON_BY_ROUND_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "season_by_round_scorecards.csv"
-PLAYER_PROFILE_PROCESSED_ROOT = get_processed_path("player_profile")
+PLAYER_PROFILE_PROCESSED_ROOT = get_player_profile_path()
 PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "performance_breakdown_by_dimension.csv"
 PLAYER_PROFILE_BATTING_POSITION_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "batting_position_summary.csv"
 PLAYER_PROFILE_BOWLING_PHASE_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "bowling_phase_summary.csv"
@@ -5320,37 +5325,50 @@ def load_hall_of_fame_data(
     batting_raw = apply_team_grade_display_columns(batting_raw)
     bowling_raw = apply_team_grade_display_columns(bowling_raw)
     fielding_raw = apply_team_grade_display_columns(fielding_raw)
-    export_team_grade_display_audit([batting_raw, bowling_raw, fielding_raw])
+    if allow_legacy_fallback():
+        export_team_grade_display_audit(
+            [batting_raw, bowling_raw, fielding_raw],
+            path=get_mapping_path("team_grade_display_audit.csv"),
+        )
     log_hof_timing("apply canonical player and team-grade mapping", started_at)
 
-    started_at = time.perf_counter()
-    identity_source = pd.concat(
-        [
-            identity_export_frame(batting_raw, "batting"),
-            identity_export_frame(bowling_raw, "bowling"),
-            identity_export_frame(fielding_raw, "fielding"),
-        ],
-        ignore_index=True,
-    )
-    mapping_update = ensure_player_alias_mappings(identity_source)
-    if mapping_update["added"]:
-        rebuild_canonical_processed_tables()
-    aliases = load_player_aliases()
-    batting_raw = apply_player_identity_mapping(batting_raw, aliases)
-    bowling_raw = apply_player_identity_mapping(bowling_raw, aliases)
-    fielding_raw = apply_player_identity_mapping(fielding_raw, aliases)
-    identity_source = pd.concat(
-        [
-            identity_export_frame(batting_raw, "batting"),
-            identity_export_frame(bowling_raw, "bowling"),
-            identity_export_frame(fielding_raw, "fielding"),
-        ],
-        ignore_index=True,
-    )
-    identity_exports = ensure_identity_exports(identity_source, aliases)
-    identity_exports["mapping_rows_added"] = mapping_update["added"]
-    identity_exports["mapping_conflicts"] = mapping_update["conflicts"]
+    identity_exports = {
+        "possible_duplicates": 0,
+        "summary_rows": 0,
+        "mapping_rows_added": 0,
+        "mapping_conflicts": 0,
+    }
+    if allow_legacy_fallback():
+        started_at = time.perf_counter()
+        identity_source = pd.concat(
+            [
+                identity_export_frame(batting_raw, "batting"),
+                identity_export_frame(bowling_raw, "bowling"),
+                identity_export_frame(fielding_raw, "fielding"),
+            ],
+            ignore_index=True,
+        )
+        mapping_update = ensure_player_alias_mappings(identity_source)
+        if mapping_update["added"]:
+            rebuild_canonical_processed_tables(processed_dir=get_processed_dir())
+        aliases = load_player_aliases()
+        batting_raw = apply_player_identity_mapping(batting_raw, aliases)
+        bowling_raw = apply_player_identity_mapping(bowling_raw, aliases)
+        fielding_raw = apply_player_identity_mapping(fielding_raw, aliases)
+        identity_source = pd.concat(
+            [
+                identity_export_frame(batting_raw, "batting"),
+                identity_export_frame(bowling_raw, "bowling"),
+                identity_export_frame(fielding_raw, "fielding"),
+            ],
+            ignore_index=True,
+        )
+        identity_exports = ensure_identity_exports(identity_source, aliases)
+        identity_exports["mapping_rows_added"] = mapping_update["added"]
+        identity_exports["mapping_conflicts"] = mapping_update["conflicts"]
+        log_hof_timing("refresh runtime player identity exports", started_at)
 
+    started_at = time.perf_counter()
     batting = add_batting_display_columns(combine_player_rows(batting_raw, "batting"))
     bowling = combine_player_rows(bowling_raw, "bowling")
     fielding = add_display_stat_aliases(combine_player_rows(add_display_stat_aliases(fielding_raw), "fielding"))
@@ -6273,11 +6291,12 @@ def render_premiership_records() -> None:
 
 
 def premiership_wins_card_html(wins: pd.DataFrame) -> str:
+    club_short_name = html.escape(get_club_short_name())
     if wins.empty:
         return (
             '<div class="hof-card premiership-wall-card premiership-empty">'
-            '<div class="premiership-card-title">FVCC Premiership Wins</div>'
-            "<p>No verified FVCC premiership wins available yet.</p>"
+            f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
+            f"<p>No verified {club_short_name} premiership wins available yet.</p>"
             "</div>"
         )
     rows = wins.copy()
@@ -6287,7 +6306,7 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     row_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
-        '<div class="premiership-card-title">FVCC Premiership Wins</div>'
+        f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
         '<div class="premiership-card-scroll">'
         f"{row_html}"
         "</div>"
@@ -6298,7 +6317,7 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
 def premiership_win_row_html(row: pd.Series) -> str:
     season = safe_record_text(row.get("season"), "Unknown season")
     grade = clean_grade_label_for_record(row.get("grade_name"))
-    team = safe_record_text(row.get("fvcc_team_name"), "FVCC")
+    team = safe_record_text(row.get("fvcc_team_name"), get_club_short_name())
     opponent = clean_opponent_label(row.get("opponent_team_name"), "Opposition")
     captain = safe_record_text(row.get("captain_name"))
     result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
@@ -8233,13 +8252,14 @@ def render_career_milestone_cards(watchlist: pd.DataFrame, hall_of_fame_watch: p
         milestone_progress_group_html(watchlist, category)
         for category in ["Matches", "Runs", "Wickets", "Catches"]
     )
+    club_short_name = html.escape(get_club_short_name())
     render_milestone_view_selector("upcoming")
     with st.container(key="milestone_upcoming_panel"):
         st.markdown(
             (
                 '<div class="milestone-section-heading"><h2>Milestone Watchlist 📍</h2></div>'
                 '<div class="milestone-section-subtitle">'
-                "Showing active players only — players who have appeared for FVCC in the last 3 seasons."
+                f"Showing active players only — players who have appeared for {club_short_name} in the last 3 seasons."
                 "</div>"
                 f'<div class="milestone-watch-grid">{category_cards}</div>'
                 f"{hall_of_fame_watch_html(hall_of_fame_watch)}"
@@ -12977,8 +12997,9 @@ def build_player_merge_audit_data(data: dict[str, object]) -> dict[str, pd.DataF
 
 
 def read_duplicate_suggestions() -> pd.DataFrame:
-    if DUPLICATE_AUDIT_PATH.exists():
-        return pd.read_csv(DUPLICATE_AUDIT_PATH, dtype=str).fillna("")
+    path = player_identity_path(DUPLICATE_AUDIT_PATH.name)
+    if path.exists():
+        return pd.read_csv(path, dtype=str).fillna("")
     return pd.DataFrame()
 
 
@@ -13433,8 +13454,9 @@ def render_merge_audit_exports(
             st.success("Saved exports/player_merge_audit_detail.csv")
     with export_col_3:
         if st.button("Export duplicate suggestions", use_container_width=True):
-            suggestions.to_csv(DUPLICATE_AUDIT_PATH, index=False)
-            st.success("Saved data/player_duplicate_audit.csv")
+            path = player_identity_path(DUPLICATE_AUDIT_PATH.name)
+            suggestions.to_csv(path, index=False)
+            st.success(f"Saved {path}")
 
 
 def build_before_after_export(detail: pd.DataFrame, after: pd.DataFrame) -> pd.DataFrame:
@@ -13606,7 +13628,7 @@ def render_possible_duplicate_suggestions(suggestions: pd.DataFrame) -> None:
             "suggested_reason": "Suggested Reason",
         }
     )
-    output["Action Note"] = "Manual review only. Add to data/player_aliases.csv if confirmed."
+    output["Action Note"] = "Manual review only. Add to the active club player_aliases.csv if confirmed."
     with st.container(key="duplicate_suggestions_card"):
         st.dataframe(output, use_container_width=True, hide_index=True, height=520)
 

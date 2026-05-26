@@ -10,6 +10,8 @@ from typing import Any
 import streamlit as st
 import streamlit.components.v1 as components
 
+from src.config.club_config import get_active_club_id, get_club_name
+
 
 # Analytics are used to understand app usage. Do not track private user-entered
 # text, emails, phone numbers, or sensitive data.
@@ -58,13 +60,40 @@ def _clean_params(params: Mapping[str, Any] | None) -> dict[str, str | int | flo
     return output
 
 
+def default_event_params(params: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    """Return public, club-aware GA4 parameters for every Scorebook event."""
+    output: dict[str, Any] = {
+        "app_area": "scorebook",
+        "club_id": _safe_active_club_id(),
+        "club_name": _safe_club_name(),
+    }
+    output.update(dict(params or {}))
+    if "page_name" not in output and output.get("page_title"):
+        output["page_name"] = output["page_title"]
+    return output
+
+
+def _safe_active_club_id() -> str:
+    try:
+        return get_active_club_id()
+    except Exception:
+        return "unknown"
+
+
+def _safe_club_name() -> str:
+    try:
+        return get_club_name()
+    except Exception:
+        return "Unknown club"
+
+
 def _ga4_script(
     measurement_id: str,
     event_name: str | None = None,
     params: Mapping[str, Any] | None = None,
 ) -> str:
     event_name_json = json.dumps(_clean_event_name(event_name) if event_name else None)
-    params_json = json.dumps(_clean_params(params), sort_keys=True)
+    params_json = json.dumps(_clean_params(default_event_params(params)), sort_keys=True)
     measurement_id_json = json.dumps(measurement_id)
     return f"""
     <script>
@@ -147,7 +176,7 @@ def track_event_once(
     *,
     key: str | None = None,
 ) -> None:
-    cleaned_params = _clean_params(params)
+    cleaned_params = _clean_params(default_event_params(params))
     signature = key or f"{_clean_event_name(event_name)}:{json.dumps(cleaned_params, sort_keys=True)}"
     tracked = st.session_state.setdefault("_scorebook_ga4_events_once", {})
     if tracked.get(signature):
@@ -170,6 +199,7 @@ def track_page_view(page_slug: str, page_title: str | None = None) -> None:
         {
             "page_slug": cleaned_slug,
             "page_title": page_title_text,
+            "page_name": page_title_text,
             "page_path": f"?page={cleaned_slug}",
         },
     )
@@ -184,7 +214,7 @@ def ga4_link_onclick(event_name: str, params: Mapping[str, Any] | None = None) -
     script = (
         "if(window.gtag){window.gtag('event',"
         f"{json.dumps(cleaned_event)},"
-        f"{json.dumps(_clean_params(params), sort_keys=True)}"
+        f"{json.dumps(_clean_params(default_event_params(params)), sort_keys=True)}"
         ");}"
     )
     return f' onclick="{html.escape(script, quote=True)}"'

@@ -22,9 +22,11 @@ LEGACY_DATA_PATHS = {
     "processed_dir": "data/processed",
     "hall_of_fame_dir": "data/processed/hall_of_fame",
     "season_overview_dir": "data/processed/season_overview",
+    "player_profile_dir": "data/processed/player_profile",
     "raw_match_centre_dir": "data/raw/match_centre",
     "processed_match_centre_dir": "data/processed/match_centre",
     "experimental_dir": "data/processed/experimental",
+    "mapping_dir": "data",
 }
 
 
@@ -58,15 +60,20 @@ def get_club_short_name(club_id: str | None = None) -> str:
 
 
 def get_club_data_path(key: str, *parts: str | Path, club_id: str | None = None) -> Path:
-    data_config = load_club_config(club_id).get("data", {})
+    active_club_id = normalize_club_id(club_id or get_active_club_id())
+    config = load_club_config(active_club_id)
+    data_config = config.get("data", {})
     path_value = data_config.get(key, LEGACY_DATA_PATHS.get(key))
     if path_value is None:
-        raise KeyError(f"Data path '{key}' is not configured for club '{club_id or get_active_club_id()}'.")
+        raise KeyError(f"Data path '{key}' is not configured for club '{active_club_id}'.")
     path = Path(str(path_value))
     if not path.is_absolute():
         path = REPO_ROOT / path
     configured_path = path.joinpath(*parts)
     if not parts or configured_path.exists():
+        return configured_path
+
+    if not allow_legacy_fallback(active_club_id, config=config):
         return configured_path
 
     legacy_value = LEGACY_DATA_PATHS.get(key)
@@ -107,6 +114,14 @@ def get_season_overview_path(*parts: str | Path, club_id: str | None = None) -> 
     return get_club_data_path("season_overview_dir", *parts, club_id=club_id)
 
 
+def get_player_profile_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("player_profile_dir", club_id=club_id)
+
+
+def get_player_profile_path(*parts: str | Path, club_id: str | None = None) -> Path:
+    return get_club_data_path("player_profile_dir", *parts, club_id=club_id)
+
+
 def get_raw_match_centre_dir(club_id: str | None = None) -> Path:
     return get_club_data_path("raw_match_centre_dir", club_id=club_id)
 
@@ -119,8 +134,23 @@ def get_experimental_dir(club_id: str | None = None) -> Path:
     return get_club_data_path("experimental_dir", club_id=club_id)
 
 
+def get_mapping_dir(club_id: str | None = None) -> Path:
+    return get_club_data_path("mapping_dir", club_id=club_id)
+
+
 def get_mapping_path(filename: str | Path, club_id: str | None = None) -> Path:
-    return get_club_data_path("root_dir", filename, club_id=club_id)
+    return get_club_data_path("mapping_dir", filename, club_id=club_id)
+
+
+def allow_legacy_fallback(club_id: str | None = None, *, config: dict[str, Any] | None = None) -> bool:
+    active_club_id = normalize_club_id(club_id or get_active_club_id())
+    data_config = (config or load_club_config(active_club_id)).get("data", {})
+    value = data_config.get("allow_legacy_fallback")
+    if value is None:
+        return active_club_id == DEFAULT_CLUB_ID
+    if isinstance(value, str):
+        return value.strip().casefold() in {"1", "true", "yes", "on"}
+    return bool(value)
 
 
 def get_feature_flag(name: str, default: bool = False, club_id: str | None = None) -> bool:
@@ -222,6 +252,8 @@ def _load_minimal_yaml(text: str) -> dict[str, Any]:
 def _parse_scalar(value: str) -> Any:
     if value in {"null", "Null", "NULL", "~"}:
         return None
+    if value == "[]":
+        return []
     if value.casefold() == "true":
         return True
     if value.casefold() == "false":

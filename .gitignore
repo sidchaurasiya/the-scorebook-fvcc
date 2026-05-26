@@ -30,6 +30,7 @@ dist/
 cache/
 data/cache/
 data/backups/data_snapshot_*/
+data/backups/*.csv
 data/exports/
 data/debug_player_vs_peers.csv
 data/raw/playcricket_*.json
@@ -43,6 +44,11 @@ data/processed/ball_by_ball_sample/
 data/processed/match_centre_sample/
 data/processed/match_centre_pilot/
 data/processed/match_centre_summer_pilot/
+clubs/*/player_duplicate_audit.csv
+clubs/*/player_identity_summary.csv
+clubs/*/player_mapping_conflicts.csv
+clubs/*/player_merge_validation.csv
+clubs/*/team_grade_display_audit.csv
 tmp/
 temp/
 *.tmp

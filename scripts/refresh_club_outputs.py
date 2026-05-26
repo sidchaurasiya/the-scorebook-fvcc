@@ -18,7 +18,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_hall_of_fame_dir, get_processed_dir, get_season_overview_dir  # noqa: E402
+from src.config.club_config import get_hall_of_fame_dir, get_player_profile_dir, get_season_overview_dir  # noqa: E402
 
 
 DEPLOY_SAFE_STEPS = [
@@ -46,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
         [
             get_hall_of_fame_dir(club_id=club_id),
             get_season_overview_dir(club_id=club_id),
-            get_processed_dir(club_id=club_id) / "player_profile",
+            get_player_profile_dir(club_id=club_id),
         ],
     )
 

@@ -1,0 +1,48 @@
+club:
+  club_id: plenty
+  name: Plenty Cricket Club
+  short_name: PCC
+  display_name: Plenty Cricket Club
+  app_name: The Scorebook
+  playcricket_club_id: 1638cd53-8ad8-eb11-a7ad-2818780da0cc
+  default_page: hall-of-fame
+
+branding:
+  primary_colour: "#123C2F"
+  secondary_colour: "#F3D34A"
+  background_colour: "#F5F9F6"
+  accent_colour: "#2F7D5A"
+  logo_path: null
+
+contact:
+  creators:
+    - Siddhanth Chaurasiya
+    - Preet Kaur
+  feedback_email: siddhanthchaurasiya@gmail.com
+
+features:
+  show_experimental_match_centre_pages: false
+  season_overview_v2_enabled: false
+  hall_of_fame_enabled: true
+  season_overview_enabled: true
+  milestone_enabled: true
+  player_profile_enabled: true
+
+data:
+  root_dir: clubs/plenty/data
+  processed_dir: clubs/plenty/data/processed
+  hall_of_fame_dir: clubs/plenty/data/processed/hall_of_fame
+  season_overview_dir: clubs/plenty/data/processed/season_overview
+  player_profile_dir: clubs/plenty/data/processed/player_profile
+  raw_match_centre_dir: data/raw/match_centre/plenty
+  processed_match_centre_dir: data/processed/match_centre/plenty
+  experimental_dir: data/processed/experimental/plenty
+  mapping_dir: clubs/plenty
+  allow_legacy_fallback: false
+
+display:
+  default_season: latest
+  include_summer: true
+  include_winter: true
+  home_ground_keywords: []
+  grade_order: []

@@ -11,6 +11,7 @@ branding:
   primary_colour: "#6D4DFF"
   secondary_colour: "#9F2747"
   background_colour: "#F7F8FC"
+  accent_colour: "#6D4DFF"
   logo_path: null
 
 contact:
@@ -32,9 +33,12 @@ data:
   processed_dir: clubs/fvcc/data/processed
   hall_of_fame_dir: clubs/fvcc/data/processed/hall_of_fame
   season_overview_dir: clubs/fvcc/data/processed/season_overview
+  player_profile_dir: clubs/fvcc/data/processed/player_profile
   raw_match_centre_dir: data/raw/match_centre
   processed_match_centre_dir: data/processed/match_centre
   experimental_dir: data/processed/experimental
+  mapping_dir: data
+  allow_legacy_fallback: true
 
 display:
   default_season: latest
