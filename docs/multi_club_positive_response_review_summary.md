@@ -4,6 +4,21 @@ Source: existing review packs under `data/processed/experimental/<club_id>/revie
 
 No data fetch, match-centre refresh, or backfill was run for this summary. The duplicate candidate files are capped at 200 rows by the review-pack builder, so any club showing 200 candidates should be treated as "at cap" rather than "exactly 200 total duplicates". The safe auto-merge counts are review-only proposals: no `manual_player_merges.csv` files have been edited.
 
+## Post Match-Centre Backfill Update
+
+The six pilot clubs have now completed the controlled match-centre/backfill run and deploy-safe rebuild. The detailed run summary is in `docs/multi_club_match_centre_backfill_summary.md`.
+
+| club_id | completed scorecards | ball-by-ball matches | ball events | app smoke | current recommendation |
+| --- | ---: | ---: | ---: | --- | --- |
+| `southside-east-caulfield` | 893 | 195 | 74,758 | Passed | Safest client-preview candidate after a final grade-label pass |
+| `glen-waverley-hawks` | 3,475 | 698 | 241,113 | Passed | Review historical team/grade labels and duplicate candidates |
+| `ashwood` | 5,248 | 920 | 303,650 | Passed | Review team/grade mappings before client preview |
+| `plenty` | 3,214 | 503 | 200,539 | Passed | Review duplicate candidates and junior/team-grade labels |
+| `reynella` | 3,110 | 572 | 244,422 | Passed | Review safe duplicate groups and sponsor/junior/T20 labels |
+| `georges-river-district` | 2,604 | 295 | 155,573 | Passed | Highest manual-review risk; confirm identities and naming before preview |
+
+Review packs were regenerated after backfill and remain ignored under `data/processed/experimental/<club_id>/review_pack/`. Raw/full match-centre files remain ignored and uncommitted. Southside East Caulfield is the only pilot club with approved safe duplicate merges applied; the other pilot clubs still use review-only duplicate proposals.
+
 ## Decision Table
 
 | club_id | aggregate status | app smoke | duplicate risk | grade-label risk | recommended next step |

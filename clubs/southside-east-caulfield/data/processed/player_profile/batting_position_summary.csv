@@ -1,0 +1,1655 @@
+canonical_player_id,canonical_player_name,display_player_name,position_group,position_order,innings,runs,outs,average
+raw_00000000_0000_0000_0000_000000000001,********,********,Opener,1,1,12,1,12.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 3,3,1,50,0,
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 4,4,1,1,1,1.0
+raw_00000000_0000_0000_0000_000000000002,********,********,No. 4,4,2,80,1,80.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 5,5,1,13,1,13.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 6,6,2,5,1,5.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 7,7,1,9,1,9.0
+raw_8acd5d06_ea98_4c8b_9ddb_b74e794f645c,********,********,No. 7,7,1,1,1,1.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 9,9,1,2,0,
+raw_00000000_0000_0000_0000_000000000001,********,********,Tail,10,4,14,4,3.5
+raw_00000000_0000_0000_0000_000000000002,********,********,Tail,10,3,12,1,12.0
+raw_c9f63113_9374_46ce_bed8_b3ca85cc0c59,A Jones,A Jones,No. 3,3,1,0,1,0.0
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,Opener,1,55,1631,46,35.45652173913044
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,No. 3,3,17,289,16,18.0625
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,No. 4,4,16,446,13,34.30769230769231
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,No. 5,5,12,290,9,32.22222222222222
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,No. 6,6,9,70,7,10.0
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,No. 7,7,2,23,2,11.5
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,No. 9,9,2,28,2,14.0
+raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,Tail,10,3,30,3,10.0
+raw_783020cf_409e_4d98_9b14_200c3fcff343,Aarav Mehta,Aarav Mehta,No. 4,4,3,76,1,76.0
+raw_783020cf_409e_4d98_9b14_200c3fcff343,Aarav Mehta,Aarav Mehta,No. 5,5,2,39,1,39.0
+raw_ec71bb26_5ee0_4065_a54b_b550b2351cfc,Aashay Desai,Aashay Desai,No. 4,4,1,11,1,11.0
+raw_ec71bb26_5ee0_4065_a54b_b550b2351cfc,Aashay Desai,Aashay Desai,No. 5,5,2,53,2,26.5
+raw_ec71bb26_5ee0_4065_a54b_b550b2351cfc,Aashay Desai,Aashay Desai,No. 8,8,1,21,1,21.0
+raw_ec71bb26_5ee0_4065_a54b_b550b2351cfc,Aashay Desai,Aashay Desai,Tail,10,1,6,0,
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,Opener,1,16,240,16,15.0
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 3,3,5,114,5,22.8
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 4,4,9,343,8,42.875
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 5,5,12,190,11,17.272727272727273
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 6,6,13,328,12,27.333333333333332
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 7,7,10,142,10,14.2
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 8,8,2,7,2,3.5
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,No. 9,9,2,41,1,41.0
+raw_748d8392_cc1e_48e6_a9ef_d36fd58d26c1,Aatish Patel,Aatish Patel,Tail,10,2,24,1,24.0
+raw_193eda76_597c_4156_8ab9_b0924c5c91e1,Aayush Sharma,Aayush Sharma,No. 4,4,2,19,2,9.5
+raw_193eda76_597c_4156_8ab9_b0924c5c91e1,Aayush Sharma,Aayush Sharma,No. 7,7,2,0,2,0.0
+raw_193eda76_597c_4156_8ab9_b0924c5c91e1,Aayush Sharma,Aayush Sharma,No. 8,8,2,16,2,8.0
+raw_193eda76_597c_4156_8ab9_b0924c5c91e1,Aayush Sharma,Aayush Sharma,Tail,10,3,2,2,1.0
+raw_23654637_e67c_4acc_947f_83d793cd6c68,Abdul Chaudhary,Abdul Chaudhary,Opener,1,4,65,4,16.25
+raw_23654637_e67c_4acc_947f_83d793cd6c68,Abdul Chaudhary,Abdul Chaudhary,No. 4,4,1,13,1,13.0
+raw_1023dd7c_1368_4907_ae7c_8a412c125c80,Abhijeet Chauhan,Abhijeet Chauhan,No. 8,8,2,8,2,4.0
+raw_ee89d89f_146a_455a_90af_5e9bedf994ca,Abhishek Agrawal,Abhishek Agrawal,No. 6,6,1,0,0,
+raw_ee89d89f_146a_455a_90af_5e9bedf994ca,Abhishek Agrawal,Abhishek Agrawal,No. 7,7,3,1,3,0.3333333333333333
+raw_ee89d89f_146a_455a_90af_5e9bedf994ca,Abhishek Agrawal,Abhishek Agrawal,No. 9,9,1,0,1,0.0
+raw_2d170dd2_cea0_4cfe_a503_d6ed579b037b,Abhishek Raman,Abhishek Raman,No. 9,9,1,4,0,
+raw_de28452c_b55c_44cb_944a_1e75ab7e0798,Ahmed Omarjee,Ahmed Omarjee,Tail,10,1,0,0,
+raw_b11dac05_8519_4f53_a487_8a6435a5ce3a,Ahmed Saig,Ahmed Saig,No. 4,4,1,24,1,24.0
+raw_b11dac05_8519_4f53_a487_8a6435a5ce3a,Ahmed Saig,Ahmed Saig,No. 8,8,1,6,1,6.0
+raw_c003a1f7_1bbb_4069_a3ea_583cb981ae27,Ahsen Ali,Ahsen Ali,No. 3,3,1,0,1,0.0
+raw_c003a1f7_1bbb_4069_a3ea_583cb981ae27,Ahsen Ali,Ahsen Ali,No. 7,7,2,21,2,10.5
+raw_b5080a39_61ed_4828_ac4c_e955c204add2,Aisha Gupta,Aisha Gupta,Opener,1,2,4,2,2.0
+raw_daeac1c3_0134_48b9_9613_58c44f1473b3,Ajay Rodrigues,Ajay Rodrigues,Tail,10,1,0,1,0.0
+raw_6de91a9d_cbcf_42eb_9b0a_e1d10b4ace52,Ajay Shah,Ajay Shah,Opener,1,1,2,1,2.0
+raw_6de91a9d_cbcf_42eb_9b0a_e1d10b4ace52,Ajay Shah,Ajay Shah,No. 5,5,1,1,1,1.0
+raw_6de91a9d_cbcf_42eb_9b0a_e1d10b4ace52,Ajay Shah,Ajay Shah,No. 6,6,1,24,0,
+raw_6de91a9d_cbcf_42eb_9b0a_e1d10b4ace52,Ajay Shah,Ajay Shah,No. 7,7,2,44,2,22.0
+raw_6de91a9d_cbcf_42eb_9b0a_e1d10b4ace52,Ajay Shah,Ajay Shah,No. 8,8,2,39,2,19.5
+raw_6de91a9d_cbcf_42eb_9b0a_e1d10b4ace52,Ajay Shah,Ajay Shah,No. 9,9,1,0,1,0.0
+raw_b015cd74_0a67_4b69_b01f_6f5e4d4a0275,Akhil Khokher,Akhil Khokher,Opener,1,1,5,1,5.0
+raw_b015cd74_0a67_4b69_b01f_6f5e4d4a0275,Akhil Khokher,Akhil Khokher,No. 6,6,2,4,1,4.0
+raw_b015cd74_0a67_4b69_b01f_6f5e4d4a0275,Akhil Khokher,Akhil Khokher,No. 7,7,1,2,1,2.0
+raw_b015cd74_0a67_4b69_b01f_6f5e4d4a0275,Akhil Khokher,Akhil Khokher,No. 9,9,1,6,1,6.0
+raw_13fafa22_3667_403c_9c56_6f68ecbc6c11,Akshay Bhardwaj,Akshay Bhardwaj,No. 6,6,1,26,1,26.0
+raw_13fafa22_3667_403c_9c56_6f68ecbc6c11,Akshay Bhardwaj,Akshay Bhardwaj,Tail,10,1,2,1,2.0
+raw_37ea1fa3_b1c9_445d_aa90_2275b42931a7,Akshay Kurwa,Akshay Kurwa,No. 4,4,1,8,1,8.0
+raw_37ea1fa3_b1c9_445d_aa90_2275b42931a7,Akshay Kurwa,Akshay Kurwa,No. 6,6,4,108,2,54.0
+raw_37ea1fa3_b1c9_445d_aa90_2275b42931a7,Akshay Kurwa,Akshay Kurwa,No. 7,7,1,29,0,
+raw_37ea1fa3_b1c9_445d_aa90_2275b42931a7,Akshay Kurwa,Akshay Kurwa,No. 8,8,1,14,0,
+raw_27f85f17_0194_427f_8bc2_10ff69e3f064,Ali Malik,Ali Malik,No. 9,9,1,2,0,
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,No. 4,4,1,26,1,26.0
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,No. 5,5,1,4,1,4.0
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,No. 6,6,2,36,2,18.0
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,No. 7,7,1,11,1,11.0
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,No. 8,8,3,5,3,1.6666666666666667
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,No. 9,9,1,8,1,8.0
+raw_a76d9a91_901c_477d_a443_0d11401e6471,Amandeep Singh,Amandeep Singh,Tail,10,3,4,3,1.3333333333333333
+raw_48d3d647_d54e_4608_b034_08e36daa81f9,Amir Muakhertee,Amir Muakhertee,No. 6,6,1,0,1,0.0
+raw_48d3d647_d54e_4608_b034_08e36daa81f9,Amir Muakhertee,Amir Muakhertee,Tail,10,1,0,1,0.0
+raw_0a946604_1ad0_45d1_a350_5a5ef002b3ae,Amit Rulhan,Amit Rulhan,No. 4,4,1,11,1,11.0
+raw_0a946604_1ad0_45d1_a350_5a5ef002b3ae,Amit Rulhan,Amit Rulhan,Tail,10,1,6,0,
+raw_d7d61913_ce92_418e_9eca_06d2e0ca7938,Amoolya Nuthalapati,Amoolya Nuthalapati,Tail,10,2,0,1,0.0
+raw_e04ca97d_a37c_4ea9_b597_897d2bfd24f8,Ananya Gupta,Ananya Gupta,No. 6,6,1,12,1,12.0
+raw_cfef2ffe_4b5c_44cb_b6c1_a16ad678376c,Andrea Johannessen,Andrea Johannessen,No. 6,6,1,2,0,
+raw_cfef2ffe_4b5c_44cb_b6c1_a16ad678376c,Andrea Johannessen,Andrea Johannessen,No. 8,8,1,1,1,1.0
+raw_d9b369a3_dcdb_4793_80b2_1fa196ea4eef,Andrew Lord,Andrew Lord,No. 5,5,1,30,1,30.0
+raw_8d91ac34_660f_4d98_a0ee_e000e052f78f,Aniket Sagwal,Aniket Sagwal,No. 3,3,4,14,4,3.5
+raw_8d91ac34_660f_4d98_a0ee_e000e052f78f,Aniket Sagwal,Aniket Sagwal,No. 5,5,2,14,2,7.0
+raw_8d91ac34_660f_4d98_a0ee_e000e052f78f,Aniket Sagwal,Aniket Sagwal,No. 6,6,1,1,1,1.0
+raw_8d91ac34_660f_4d98_a0ee_e000e052f78f,Aniket Sagwal,Aniket Sagwal,No. 8,8,1,1,1,1.0
+raw_b446198f_e384_4302_ac66_543f00b01a60,Anirudh Chokhani,Anirudh Chokhani,Tail,10,3,4,3,1.3333333333333333
+raw_a7f43c86_0c81_4c34_864d_33d8624c9681,Anirudha Borade,Anirudha Borade,No. 9,9,2,13,2,6.5
+raw_a7f43c86_0c81_4c34_864d_33d8624c9681,Anirudha Borade,Anirudha Borade,Tail,10,8,41,5,8.2
+raw_8516cb96_525f_4d56_907a_5a2f03ff84f6,Anish Patel,Anish Patel,Opener,1,1,2,1,2.0
+raw_4b1f1eec_1cda_4467_a310_a536fa3a452f,Anisha Gupta,Anisha Gupta,No. 5,5,1,1,1,1.0
+raw_ea4bbea9_8a32_4073_a99f_e6c1195fb750,Ankit Beniwal,Ankit Beniwal,Opener,1,2,9,2,4.5
+raw_ea4bbea9_8a32_4073_a99f_e6c1195fb750,Ankit Beniwal,Ankit Beniwal,No. 3,3,11,253,11,23.0
+raw_ea4bbea9_8a32_4073_a99f_e6c1195fb750,Ankit Beniwal,Ankit Beniwal,No. 5,5,2,82,1,82.0
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,Opener,1,57,1132,57,19.859649122807017
+raw_4a54dc91_58bf_4bf3_bf3b_1564a0e99186,Ankit Patel,Ankit Patel,No. 3,3,1,0,1,0.0
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 3,3,5,136,5,27.2
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 4,4,9,90,9,10.0
+raw_4a54dc91_58bf_4bf3_bf3b_1564a0e99186,Ankit Patel,Ankit Patel,No. 5,5,1,8,1,8.0
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 5,5,5,56,4,14.0
+raw_4a54dc91_58bf_4bf3_bf3b_1564a0e99186,Ankit Patel,Ankit Patel,No. 6,6,1,0,1,0.0
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 6,6,3,75,2,37.5
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 7,7,5,127,4,31.75
+raw_4a54dc91_58bf_4bf3_bf3b_1564a0e99186,Ankit Patel,Ankit Patel,No. 8,8,2,13,2,6.5
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 8,8,3,19,2,9.5
+raw_fe4eec8e_7199_45fe_a2ec_3ee78e5efc9f,Ankit Patel,Ankit Patel,No. 9,9,1,32,1,32.0
+raw_4a54dc91_58bf_4bf3_bf3b_1564a0e99186,Ankit Patel,Ankit Patel,Tail,10,2,23,1,23.0
+raw_9a989602_6787_4449_ae83_b077a0a7b8be,Ankit Sadyan,Ankit Sadyan,No. 5,5,2,41,2,20.5
+raw_9a989602_6787_4449_ae83_b077a0a7b8be,Ankit Sadyan,Ankit Sadyan,No. 6,6,1,13,1,13.0
+raw_9a989602_6787_4449_ae83_b077a0a7b8be,Ankit Sadyan,Ankit Sadyan,No. 7,7,2,38,2,19.0
+raw_4c8e58a0_5539_48a1_91c3_9fc595449edf,Ankit Sisodia,Ankit Sisodia,No. 6,6,1,7,1,7.0
+raw_4c8e58a0_5539_48a1_91c3_9fc595449edf,Ankit Sisodia,Ankit Sisodia,No. 8,8,2,5,2,2.5
+raw_4c8e58a0_5539_48a1_91c3_9fc595449edf,Ankit Sisodia,Ankit Sisodia,No. 9,9,1,16,1,16.0
+raw_9df54e56_5d78_411c_a2b4_7a28e347fb6f,Ankitt Patel,Ankitt Patel,No. 4,4,2,15,2,7.5
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,Opener,1,1,4,1,4.0
+raw_9bb196f5_280a_49c3_b5c8_29c0eaa1d9f1,Ankur Sharma,Ankur Sharma,Opener,1,7,156,6,26.0
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 3,3,3,36,3,12.0
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 4,4,1,5,1,5.0
+raw_9bb196f5_280a_49c3_b5c8_29c0eaa1d9f1,Ankur Sharma,Ankur Sharma,No. 4,4,4,18,4,4.5
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 5,5,1,5,0,
+raw_9bb196f5_280a_49c3_b5c8_29c0eaa1d9f1,Ankur Sharma,Ankur Sharma,No. 5,5,1,114,1,114.0
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 6,6,4,43,3,14.333333333333334
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 7,7,1,0,1,0.0
+raw_9bb196f5_280a_49c3_b5c8_29c0eaa1d9f1,Ankur Sharma,Ankur Sharma,No. 7,7,1,62,1,62.0
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 8,8,4,21,3,7.0
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,No. 9,9,4,25,3,8.333333333333334
+raw_0c65c591_a278_462c_9fee_6133e5d697c0,Ankur Sharma,Ankur Sharma,Tail,10,20,108,14,7.714285714285714
+raw_65ed6893_d2bd_4c4f_aefd_88846726f548,Ankush Kadyan,Ankush Kadyan,Tail,10,1,4,1,4.0
+raw_6e832245_edb3_4cc0_842a_196479159f24,Ankush Sinhmar,Ankush Sinhmar,Opener,1,1,8,1,8.0
+raw_6e832245_edb3_4cc0_842a_196479159f24,Ankush Sinhmar,Ankush Sinhmar,No. 3,3,5,115,5,23.0
+raw_6e832245_edb3_4cc0_842a_196479159f24,Ankush Sinhmar,Ankush Sinhmar,No. 4,4,4,142,4,35.5
+raw_6e832245_edb3_4cc0_842a_196479159f24,Ankush Sinhmar,Ankush Sinhmar,No. 5,5,4,136,4,34.0
+raw_6e832245_edb3_4cc0_842a_196479159f24,Ankush Sinhmar,Ankush Sinhmar,No. 6,6,1,9,1,9.0
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,Opener,1,3,26,3,8.666666666666666
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 3,3,5,78,5,15.6
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 4,4,3,65,3,21.666666666666668
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 5,5,3,152,3,50.666666666666664
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 6,6,4,84,4,21.0
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 7,7,1,16,1,16.0
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 8,8,1,15,1,15.0
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,No. 9,9,1,5,1,5.0
+raw_eb215321_9c0a_419e_8140_89cb1de14975,Anmol Rattan,Anmol Rattan,Tail,10,4,12,2,6.0
+raw_edd9559e_3356_478e_a7f6_5acc95c0d2bd,Aon Hasnain,Aon Hasnain,Opener,1,1,7,1,7.0
+raw_edd9559e_3356_478e_a7f6_5acc95c0d2bd,Aon Hasnain,Aon Hasnain,No. 8,8,1,1,1,1.0
+raw_9177619b_e4ac_4cc3_9363_112e0af1e4f5,Arjun Patel,Arjun Patel,Opener,1,1,12,1,12.0
+raw_9177619b_e4ac_4cc3_9363_112e0af1e4f5,Arjun Patel,Arjun Patel,No. 5,5,3,28,3,9.333333333333334
+raw_9177619b_e4ac_4cc3_9363_112e0af1e4f5,Arjun Patel,Arjun Patel,No. 7,7,2,40,2,20.0
+raw_9177619b_e4ac_4cc3_9363_112e0af1e4f5,Arjun Patel,Arjun Patel,No. 8,8,1,10,0,
+raw_9177619b_e4ac_4cc3_9363_112e0af1e4f5,Arjun Patel,Arjun Patel,Tail,10,3,28,2,14.0
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 3,3,1,0,1,0.0
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 4,4,3,25,2,12.5
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 5,5,3,30,2,15.0
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 6,6,3,13,3,4.333333333333333
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 7,7,6,59,6,9.833333333333334
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 8,8,8,42,6,7.0
+raw_850b510e_c6e5_4bfd_959a_5492c979c829,Arpan Desai,Arpan Desai,No. 8,8,2,12,1,12.0
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,No. 9,9,8,86,6,14.333333333333334
+raw_850b510e_c6e5_4bfd_959a_5492c979c829,Arpan Desai,Arpan Desai,No. 9,9,5,71,3,23.666666666666668
+raw_7f7f27a9_7ba4_4d75_bc1b_a21fc622a903,Arpan Desai,Arpan Desai,Tail,10,26,122,17,7.176470588235294
+raw_850b510e_c6e5_4bfd_959a_5492c979c829,Arpan Desai,Arpan Desai,Tail,10,3,54,3,18.0
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,No. 4,4,1,1,1,1.0
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,No. 5,5,2,27,1,27.0
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,No. 6,6,2,13,2,6.5
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,No. 7,7,1,1,1,1.0
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,No. 8,8,1,0,1,0.0
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,No. 9,9,1,2,0,
+raw_342b0df7_f5d9_4dce_bb0d_591666c7e84c,Arya Patel,Arya Patel,Tail,10,1,0,1,0.0
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,Opener,1,9,89,8,11.125
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 3,3,2,25,2,12.5
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 4,4,1,5,1,5.0
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 5,5,5,45,5,9.0
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 6,6,12,141,11,12.818181818181818
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 7,7,11,118,8,14.75
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 8,8,12,81,10,8.1
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,No. 9,9,22,139,17,8.176470588235293
+raw_ffe3d38d_1e3b_40e9_b0d6_9a6eaee852ae,Arya Rajen Joshi,Arya Rajen Joshi,Tail,10,21,71,9,7.888888888888889
+raw_d6a95c1c_be34_44b6_b6fb_14a8e55ee722,Ashish Devani,Ashish Devani,Opener,1,3,88,2,44.0
+raw_d6a95c1c_be34_44b6_b6fb_14a8e55ee722,Ashish Devani,Ashish Devani,No. 3,3,2,8,2,4.0
+raw_d6a95c1c_be34_44b6_b6fb_14a8e55ee722,Ashish Devani,Ashish Devani,No. 4,4,1,7,1,7.0
+raw_d6a95c1c_be34_44b6_b6fb_14a8e55ee722,Ashish Devani,Ashish Devani,No. 6,6,1,16,1,16.0
+raw_d6a95c1c_be34_44b6_b6fb_14a8e55ee722,Ashish Devani,Ashish Devani,No. 7,7,1,4,1,4.0
+raw_8617790a_2277_44a2_8b5b_b286efe49650,Ashish Kumar,Ashish Kumar,Opener,1,6,111,6,18.5
+raw_8617790a_2277_44a2_8b5b_b286efe49650,Ashish Kumar,Ashish Kumar,No. 5,5,2,12,2,6.0
+raw_8617790a_2277_44a2_8b5b_b286efe49650,Ashish Kumar,Ashish Kumar,No. 6,6,2,14,2,7.0
+raw_8617790a_2277_44a2_8b5b_b286efe49650,Ashish Kumar,Ashish Kumar,No. 7,7,3,16,3,5.333333333333333
+raw_8617790a_2277_44a2_8b5b_b286efe49650,Ashish Kumar,Ashish Kumar,Tail,10,1,3,0,
+raw_11c391b8_f8e1_498f_b8fa_5c42ac3c8b3f,Ashish Parmar,Ashish Parmar,No. 9,9,2,1,2,0.5
+raw_11c391b8_f8e1_498f_b8fa_5c42ac3c8b3f,Ashish Parmar,Ashish Parmar,Tail,10,1,1,1,1.0
+raw_4c2e045f_b5ec_4b63_9fa7_098f08b832d0,Ashwin Sonale,Ashwin Sonale,No. 3,3,1,13,1,13.0
+raw_4c2e045f_b5ec_4b63_9fa7_098f08b832d0,Ashwin Sonale,Ashwin Sonale,No. 4,4,3,28,2,14.0
+raw_4c2e045f_b5ec_4b63_9fa7_098f08b832d0,Ashwin Sonale,Ashwin Sonale,No. 6,6,1,46,0,
+raw_4c2e045f_b5ec_4b63_9fa7_098f08b832d0,Ashwin Sonale,Ashwin Sonale,No. 8,8,4,15,2,7.5
+raw_4c2e045f_b5ec_4b63_9fa7_098f08b832d0,Ashwin Sonale,Ashwin Sonale,Tail,10,1,2,1,2.0
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,Opener,1,11,226,11,20.545454545454547
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,No. 3,3,16,382,11,34.72727272727273
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,No. 4,4,10,162,8,20.25
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,No. 5,5,3,26,3,8.666666666666666
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,No. 7,7,1,1,1,1.0
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,No. 9,9,3,20,2,10.0
+raw_46df9850_e902_4205_96d8_cb86abd09418,Atharva Naik,Atharva Naik,Tail,10,1,5,1,5.0
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,Opener,1,20,505,15,33.666666666666664
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 3,3,4,54,4,13.5
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 4,4,1,1,1,1.0
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 5,5,1,18,1,18.0
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 6,6,2,2,1,2.0
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 7,7,3,32,3,10.666666666666666
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 8,8,2,10,2,5.0
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,No. 9,9,1,3,1,3.0
+raw_26a0cecf_2606_4635_b503_39695bcb71fe,Axit Patel,Axit Patel,Tail,10,1,7,1,7.0
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,Opener,1,1,0,1,0.0
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,No. 4,4,3,7,3,2.3333333333333335
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,No. 5,5,4,74,3,24.666666666666668
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,No. 6,6,3,13,3,4.333333333333333
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,No. 7,7,3,14,3,4.666666666666667
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,No. 8,8,4,14,4,3.5
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,No. 9,9,2,21,1,21.0
+raw_20a654db_0f92_4650_b4cf_383e67e42dd4,Ayush Shah,Ayush Shah,Tail,10,1,0,1,0.0
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,Opener,1,33,806,30,26.866666666666667
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,No. 3,3,4,133,4,33.25
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,No. 5,5,1,2,1,2.0
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,No. 6,6,3,16,3,5.333333333333333
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,No. 7,7,2,26,1,26.0
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,No. 8,8,3,33,3,11.0
+raw_778540bb_e277_410e_a7ab_b0a3c32fd0b9,Ben Sutton,Ben Sutton,No. 9,9,2,6,1,6.0
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,Opener,1,2,56,2,28.0
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 3,3,7,219,6,36.5
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 4,4,12,414,12,34.5
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 5,5,23,524,23,22.782608695652176
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 6,6,24,418,21,19.904761904761905
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 7,7,10,186,8,23.25
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 8,8,8,146,7,20.857142857142858
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,No. 9,9,1,21,1,21.0
+raw_172357fa_5dd5_479b_9de6_7ea67fcb822d,Bhaumik Jani,Bhaumik Jani,Tail,10,1,32,1,32.0
+raw_b2055b5c_3e07_4c1c_9b11_efe4c53a7ba0,Bhavesh Thakkar,Bhavesh Thakkar,Tail,10,1,6,1,6.0
+raw_73417e8e_3112_4ac4_8d31_3b8a0d043600,Bhavik Desai,Bhavik Desai,No. 8,8,1,8,1,8.0
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,No. 4,4,12,244,12,20.333333333333332
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,No. 5,5,18,326,14,23.285714285714285
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,No. 6,6,15,271,11,24.636363636363637
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,No. 7,7,6,106,5,21.2
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,No. 8,8,5,44,4,11.0
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,No. 9,9,3,91,2,45.5
+raw_85369099_6de6_46f8_a367_83d892d0898e,Bhavin Gajjar,Bhavin Gajjar,Tail,10,1,30,0,
+raw_56def158_2196_4dbb_86f8_789154163cea,Bhavinkumar Patel,Bhavinkumar Patel,Opener,1,1,89,1,89.0
+raw_56def158_2196_4dbb_86f8_789154163cea,Bhavinkumar Patel,Bhavinkumar Patel,No. 3,3,3,214,3,71.33333333333333
+raw_56def158_2196_4dbb_86f8_789154163cea,Bhavinkumar Patel,Bhavinkumar Patel,No. 5,5,1,77,1,77.0
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 3,3,2,18,2,9.0
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 4,4,1,2,1,2.0
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 5,5,4,25,4,6.25
+raw_fcaa3886_3bb5_453b_a69f_93dce44f2a35,Bhumil Patel,Bhumil Patel,No. 5,5,1,51,0,
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 6,6,3,114,1,114.0
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 7,7,7,188,5,37.6
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 8,8,1,5,1,5.0
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,No. 9,9,1,23,0,
+raw_9a5194ee_2ffb_4b98_94f5_ebb1409e38d7,Bhumil Patel,Bhumil Patel,Tail,10,1,19,0,
+raw_60f6fe1a_b3ac_4c65_a898_0390e7f7877f,Bhupinder Chib,Bhupinder Chib,No. 7,7,1,29,1,29.0
+raw_5d56341f_84fc_414a_8c32_11691646f27f,Bikramjeet Singh,Bikramjeet Singh,Opener,1,1,96,1,96.0
+raw_5d56341f_84fc_414a_8c32_11691646f27f,Bikramjeet Singh,Bikramjeet Singh,No. 5,5,1,28,1,28.0
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,Opener,1,2,74,1,74.0
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,No. 3,3,3,48,2,24.0
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,No. 4,4,4,81,3,27.0
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,No. 5,5,2,43,1,43.0
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,No. 6,6,6,50,5,10.0
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,No. 7,7,2,26,0,
+raw_99d8fea6_465e_4f76_a80f_dadbfec39fa1,Brijesh Purohit,Brijesh Purohit,No. 8,8,1,4,1,4.0
+raw_bb503189_3c8b_4a91_b058_a33b69c6a23a,Byron Haast,Byron Haast,No. 7,7,1,7,1,7.0
+raw_bb503189_3c8b_4a91_b058_a33b69c6a23a,Byron Haast,Byron Haast,Tail,10,2,19,0,
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,Opener,1,1,1,1,1.0
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,No. 4,4,1,5,1,5.0
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,No. 5,5,1,0,1,0.0
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,No. 6,6,2,35,2,17.5
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,No. 7,7,2,15,2,7.5
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,No. 8,8,3,35,2,17.5
+raw_fa8c1938_fb56_4831_bf8f_bc423d05ca7a,Cameron Lee,Cameron Lee,No. 9,9,2,14,1,14.0
+raw_234d0143_5eac_410f_9c36_8a769f7a27f4,Carl King,Carl King,No. 3,3,1,6,1,6.0
+raw_234d0143_5eac_410f_9c36_8a769f7a27f4,Carl King,Carl King,No. 4,4,1,14,1,14.0
+raw_234d0143_5eac_410f_9c36_8a769f7a27f4,Carl King,Carl King,No. 8,8,1,7,0,
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,Opener,1,13,319,12,26.583333333333332
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 3,3,13,368,10,36.8
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 4,4,16,403,14,28.785714285714285
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 5,5,9,211,7,30.142857142857142
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 6,6,6,197,4,49.25
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 7,7,3,126,1,126.0
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 8,8,3,73,2,36.5
+raw_a753d433_4f7d_4bce_ad18_2dfa639ebdf8,Carlo Cappiello,Carlo Cappiello,No. 9,9,2,30,0,
+raw_a84574c5_59f0_450f_8c2c_1d6827c605f2,Chandra Saraf,Chandra Saraf,No. 4,4,1,2,1,2.0
+raw_a84574c5_59f0_450f_8c2c_1d6827c605f2,Chandra Saraf,Chandra Saraf,No. 7,7,1,8,1,8.0
+raw_a84574c5_59f0_450f_8c2c_1d6827c605f2,Chandra Saraf,Chandra Saraf,No. 8,8,2,14,2,7.0
+raw_a84574c5_59f0_450f_8c2c_1d6827c605f2,Chandra Saraf,Chandra Saraf,No. 9,9,1,44,1,44.0
+raw_cc290e2f_b1a8_4f8d_a58c_0691f5d02ad6,Chandrakanth Bodagala,Chandrakanth Bodagala,Opener,1,16,173,16,10.8125
+raw_cc290e2f_b1a8_4f8d_a58c_0691f5d02ad6,Chandrakanth Bodagala,Chandrakanth Bodagala,No. 3,3,3,21,3,7.0
+raw_cc290e2f_b1a8_4f8d_a58c_0691f5d02ad6,Chandrakanth Bodagala,Chandrakanth Bodagala,No. 4,4,3,28,3,9.333333333333334
+raw_cc290e2f_b1a8_4f8d_a58c_0691f5d02ad6,Chandrakanth Bodagala,Chandrakanth Bodagala,No. 7,7,1,1,1,1.0
+raw_cc290e2f_b1a8_4f8d_a58c_0691f5d02ad6,Chandrakanth Bodagala,Chandrakanth Bodagala,No. 8,8,1,0,1,0.0
+raw_b4e0c742_8a1a_42f6_b060_0b0064b853eb,Charlie Syme,Charlie Syme,No. 3,3,1,0,1,0.0
+raw_b4e0c742_8a1a_42f6_b060_0b0064b853eb,Charlie Syme,Charlie Syme,No. 6,6,1,27,1,27.0
+raw_b4e0c742_8a1a_42f6_b060_0b0064b853eb,Charlie Syme,Charlie Syme,No. 7,7,1,0,1,0.0
+raw_b4e0c742_8a1a_42f6_b060_0b0064b853eb,Charlie Syme,Charlie Syme,No. 9,9,1,0,1,0.0
+raw_b4e0c742_8a1a_42f6_b060_0b0064b853eb,Charlie Syme,Charlie Syme,Tail,10,1,0,1,0.0
+raw_78264a72_99e7_4972_a8c1_0e783aad2af8,Chetan Walia,Chetan Walia,Opener,1,1,5,1,5.0
+raw_78264a72_99e7_4972_a8c1_0e783aad2af8,Chetan Walia,Chetan Walia,No. 3,3,1,2,1,2.0
+raw_78264a72_99e7_4972_a8c1_0e783aad2af8,Chetan Walia,Chetan Walia,No. 7,7,1,0,0,
+raw_78264a72_99e7_4972_a8c1_0e783aad2af8,Chetan Walia,Chetan Walia,No. 9,9,1,0,0,
+raw_78264a72_99e7_4972_a8c1_0e783aad2af8,Chetan Walia,Chetan Walia,Tail,10,6,10,2,5.0
+raw_e52208d1_269d_4691_9fff_743e24422b61,Chintan Soni,Chintan Soni,No. 9,9,2,4,2,2.0
+raw_e52208d1_269d_4691_9fff_743e24422b61,Chintan Soni,Chintan Soni,Tail,10,1,0,1,0.0
+raw_1d387cc0_45e0_425c_9453_e91f01662897,Chirag Desai,Chirag Desai,No. 9,9,1,32,0,
+raw_1d387cc0_45e0_425c_9453_e91f01662897,Chirag Desai,Chirag Desai,Tail,10,3,12,1,12.0
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,Opener,1,2,45,2,22.5
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 3,3,3,82,2,41.0
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,No. 3,3,5,12,5,2.4
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 4,4,4,105,3,35.0
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,No. 4,4,18,287,17,16.88235294117647
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 5,5,14,404,11,36.72727272727273
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,No. 5,5,15,269,14,19.214285714285715
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 6,6,10,287,8,35.875
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,No. 6,6,7,36,6,6.0
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 7,7,6,127,3,42.333333333333336
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,No. 7,7,3,20,3,6.666666666666667
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 8,8,6,77,3,25.666666666666668
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,No. 9,9,3,52,3,17.333333333333332
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,No. 9,9,2,8,2,4.0
+raw_5d9a95fe_3b38_4830_9d53_57d5a2250aab,Chirag Patel,Chirag Patel,Tail,10,1,5,1,5.0
+raw_7272b990_4af6_4961_8860_b751522bf61a,Chirag Patel,Chirag Patel,Tail,10,1,6,0,
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,Opener,1,2,13,2,6.5
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,No. 3,3,3,29,3,9.666666666666666
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,No. 5,5,1,7,1,7.0
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,No. 6,6,3,19,3,6.333333333333333
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,No. 7,7,5,58,4,14.5
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,No. 8,8,8,47,7,6.714285714285714
+raw_aeb5fd25_b8fb_42ef_bee1_0f5a999bc335,Chirag Shah,Chirag Shah,No. 8,8,1,4,1,4.0
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,No. 9,9,9,87,7,12.428571428571429
+raw_aeb5fd25_b8fb_42ef_bee1_0f5a999bc335,Chirag Shah,Chirag Shah,No. 9,9,2,15,2,7.5
+raw_0fa12f82_0670_4f00_ac2e_f7a6c4c9feb5,Chirag Shah,Chirag Shah,Tail,10,7,68,3,22.666666666666668
+raw_aeb5fd25_b8fb_42ef_bee1_0f5a999bc335,Chirag Shah,Chirag Shah,Tail,10,6,10,5,2.0
+raw_ce5e825f_b7fb_4c41_9d5d_ea41b2236660,Chris Leeton,Chris Leeton,Tail,10,1,1,1,1.0
+raw_953bfc49_23fa_4427_8978_7305b372ea95,Chris Piplios,Chris Piplios,No. 4,4,1,41,0,
+raw_953bfc49_23fa_4427_8978_7305b372ea95,Chris Piplios,Chris Piplios,No. 6,6,6,143,6,23.833333333333332
+raw_953bfc49_23fa_4427_8978_7305b372ea95,Chris Piplios,Chris Piplios,No. 7,7,6,76,6,12.666666666666666
+raw_953bfc49_23fa_4427_8978_7305b372ea95,Chris Piplios,Chris Piplios,No. 8,8,4,74,3,24.666666666666668
+raw_953bfc49_23fa_4427_8978_7305b372ea95,Chris Piplios,Chris Piplios,No. 9,9,2,73,1,73.0
+raw_c680fed7_a68c_4194_962e_a947dcac67af,Chris Williams,Chris Williams,Tail,10,1,0,0,
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,Opener,1,2,2,1,2.0
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 3,3,3,19,2,9.5
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 4,4,1,6,0,
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 5,5,2,11,2,5.5
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 6,6,2,6,0,
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 7,7,1,4,1,4.0
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 8,8,4,27,4,6.75
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,No. 9,9,13,96,9,10.666666666666666
+raw_862f2852_f81c_4dae_be50_a7bc3136fecc,Christopher Jones,Christopher Jones,Tail,10,91,345,51,6.764705882352941
+raw_6b5ca896_e8dd_4df9_9c10_6a7cc41c6797,Craig Murphy,Craig Murphy,No. 4,4,1,8,1,8.0
+raw_a118bd9a_334b_47cb_ad35_425483c91555,Dallas Gray,Dallas Gray,No. 5,5,1,0,1,0.0
+raw_a118bd9a_334b_47cb_ad35_425483c91555,Dallas Gray,Dallas Gray,No. 9,9,1,1,1,1.0
+raw_a118bd9a_334b_47cb_ad35_425483c91555,Dallas Gray,Dallas Gray,Tail,10,6,48,6,8.0
+raw_bf8b118b_e569_4b7c_a0f5_42a7f3bb3653,Daniel Mccormack,Daniel Mccormack,No. 4,4,2,35,2,17.5
+raw_bf8b118b_e569_4b7c_a0f5_42a7f3bb3653,Daniel Mccormack,Daniel Mccormack,No. 5,5,3,32,3,10.666666666666666
+raw_bf8b118b_e569_4b7c_a0f5_42a7f3bb3653,Daniel Mccormack,Daniel Mccormack,No. 6,6,2,34,2,17.0
+raw_bf8b118b_e569_4b7c_a0f5_42a7f3bb3653,Daniel Mccormack,Daniel Mccormack,Tail,10,1,3,1,3.0
+raw_ab3c7a98_253d_494b_a47a_d6c67748795b,Daris Krogmann,Daris Krogmann,Opener,1,1,0,1,0.0
+raw_ab3c7a98_253d_494b_a47a_d6c67748795b,Daris Krogmann,Daris Krogmann,No. 3,3,6,118,5,23.6
+raw_ab3c7a98_253d_494b_a47a_d6c67748795b,Daris Krogmann,Daris Krogmann,No. 7,7,2,36,1,36.0
+raw_b2edcd52_be64_4496_84f0_6bfe9d3e0908,David Freudenstein,David Freudenstein,No. 7,7,1,4,1,4.0
+raw_b2edcd52_be64_4496_84f0_6bfe9d3e0908,David Freudenstein,David Freudenstein,No. 8,8,3,24,3,8.0
+raw_b2edcd52_be64_4496_84f0_6bfe9d3e0908,David Freudenstein,David Freudenstein,Tail,10,1,2,1,2.0
+raw_a7dfb9f9_7859_4bb0_84ad_734b4fb7c815,David Sheen,David Sheen,Tail,10,1,0,1,0.0
+raw_8929cf62_e82f_4d25_a676_ba059680f5ab,Deepak Bhatt,Deepak Bhatt,No. 4,4,1,22,1,22.0
+raw_8929cf62_e82f_4d25_a676_ba059680f5ab,Deepak Bhatt,Deepak Bhatt,No. 5,5,1,8,1,8.0
+raw_a37e0071_3c09_44e8_93f9_5c61262ee461,Deepak Gopalaraju,Deepak Gopalaraju,No. 3,3,1,1,1,1.0
+raw_ee430da2_e88b_4835_b321_70fc0a74cdc7,Deepak Gopalaraju,Deepak Gopalaraju,No. 4,4,1,9,1,9.0
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,Opener,1,1,2,0,
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,No. 5,5,4,53,3,17.666666666666668
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,No. 6,6,1,4,1,4.0
+raw_13515d5b_db63_4eae_bb33_04d6933eda72,Denis Shaw,Denis Shaw,No. 7,7,1,2,0,
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,No. 7,7,8,48,6,8.0
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,No. 8,8,12,89,7,12.714285714285714
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,No. 9,9,15,82,10,8.2
+raw_13515d5b_db63_4eae_bb33_04d6933eda72,Denis Shaw,Denis Shaw,Tail,10,19,39,9,4.333333333333333
+raw_d859083d_f531_4ea9_883d_8aec753421a1,Denis Shaw,Denis Shaw,Tail,10,78,327,32,10.21875
+raw_007a307c_83b8_487f_ba5c_08ac74abb914,Des Duarte,Des Duarte,No. 3,3,4,158,4,39.5
+raw_007a307c_83b8_487f_ba5c_08ac74abb914,Des Duarte,Des Duarte,No. 4,4,1,39,1,39.0
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,No. 3,3,1,1,1,1.0
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,No. 4,4,3,35,3,11.666666666666666
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,No. 6,6,1,2,1,2.0
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,No. 7,7,1,3,1,3.0
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,No. 8,8,9,105,7,15.0
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,No. 9,9,2,7,0,
+raw_d2632683_b020_4ef5_a137_85353c8e4f37,Dharmik Desai,Dharmik Desai,Tail,10,1,11,0,
+raw_3d382c03_4345_4b7a_bd63_11ae04365c97,Dhiraj Singh,Dhiraj Singh,Tail,10,1,0,1,0.0
+raw_c8b977b6_bbbc_4066_a7b5_7f29a3f3c58c,Digant Patel,Digant Patel,No. 6,6,1,2,1,2.0
+raw_c8b977b6_bbbc_4066_a7b5_7f29a3f3c58c,Digant Patel,Digant Patel,No. 8,8,1,0,1,0.0
+raw_c8b977b6_bbbc_4066_a7b5_7f29a3f3c58c,Digant Patel,Digant Patel,No. 9,9,1,5,1,5.0
+raw_c8b977b6_bbbc_4066_a7b5_7f29a3f3c58c,Digant Patel,Digant Patel,Tail,10,2,4,2,2.0
+raw_fa118566_ba7d_4642_b403_5c73ddcaf8d8,Dileep Duggineni,Dileep Duggineni,No. 7,7,2,0,2,0.0
+raw_a0a0e1ca_2ae8_4ce9_90a7_d28da3e64eb3,Dion Roberio,Dion Roberio,Opener,1,3,109,3,36.333333333333336
+raw_a0a0e1ca_2ae8_4ce9_90a7_d28da3e64eb3,Dion Roberio,Dion Roberio,No. 3,3,2,22,2,11.0
+raw_e4de010d_e3eb_492d_ae19_5a7d2b1884cb,Dipesh Gurung,Dipesh Gurung,Opener,1,1,4,1,4.0
+raw_e4de010d_e3eb_492d_ae19_5a7d2b1884cb,Dipesh Gurung,Dipesh Gurung,No. 8,8,2,15,2,7.5
+raw_e4de010d_e3eb_492d_ae19_5a7d2b1884cb,Dipesh Gurung,Dipesh Gurung,No. 9,9,1,3,1,3.0
+raw_e4de010d_e3eb_492d_ae19_5a7d2b1884cb,Dipesh Gurung,Dipesh Gurung,Tail,10,3,37,1,37.0
+raw_5b05c4c2_5fc6_4a11_a5d7_230000564633,Dixit Jain,Dixit Jain,No. 3,3,1,25,1,25.0
+raw_5b05c4c2_5fc6_4a11_a5d7_230000564633,Dixit Jain,Dixit Jain,No. 5,5,1,1,1,1.0
+raw_5b05c4c2_5fc6_4a11_a5d7_230000564633,Dixit Jain,Dixit Jain,No. 7,7,1,13,1,13.0
+raw_5b05c4c2_5fc6_4a11_a5d7_230000564633,Dixit Jain,Dixit Jain,No. 8,8,1,8,1,8.0
+raw_9d3e8727_4873_493d_b752_893f8595de9c,Dorian Detragiache,Dorian Detragiache,Tail,10,2,2,2,1.0
+raw_d0520f52_a51c_4c58_a483_4cb6872d282a,Falgun Patel,Falgun Patel,Opener,1,4,65,4,16.25
+raw_d0520f52_a51c_4c58_a483_4cb6872d282a,Falgun Patel,Falgun Patel,No. 3,3,1,22,1,22.0
+raw_d0520f52_a51c_4c58_a483_4cb6872d282a,Falgun Patel,Falgun Patel,No. 7,7,1,9,1,9.0
+raw_d0520f52_a51c_4c58_a483_4cb6872d282a,Falgun Patel,Falgun Patel,No. 9,9,1,17,1,17.0
+raw_c9f05aab_938f_4c35_8df1_b3045dfa4fbc,Falgun Patel,Falgun Patel,Tail,10,2,2,0,
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,Opener,1,13,270,12,22.5
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 3,3,7,164,5,32.8
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 3,3,18,333,17,19.58823529411765
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 4,4,4,181,3,60.333333333333336
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 4,4,18,341,15,22.733333333333334
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 5,5,8,161,7,23.0
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 5,5,18,422,15,28.133333333333333
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 6,6,1,22,1,22.0
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 6,6,16,255,15,17.0
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 7,7,4,102,3,34.0
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 7,7,15,219,9,24.333333333333332
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 8,8,2,26,2,13.0
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 8,8,11,63,8,7.875
+raw_a35da20e_c28f_4f6d_93c4_78115a031a79,Francis Bernard,Francis Bernard,No. 9,9,1,1,0,
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,No. 9,9,11,60,9,6.666666666666667
+raw_c3b79fa1_9960_4bc7_bc0d_d97074e16a5b,Francis Bernard,Francis Bernard,Tail,10,7,31,2,15.5
+raw_47f9b69e_4fc4_4a47_9ee7_3f2a46aecfb1,Francis O'Hanlon,Francis O'Hanlon,No. 6,6,1,0,1,0.0
+raw_47f9b69e_4fc4_4a47_9ee7_3f2a46aecfb1,Francis O'Hanlon,Francis O'Hanlon,No. 7,7,1,15,0,
+raw_47f9b69e_4fc4_4a47_9ee7_3f2a46aecfb1,Francis O'Hanlon,Francis O'Hanlon,No. 8,8,1,0,1,0.0
+raw_09e5fc80_a4a8_43c3_80f8_23a06f06fbbe,Gagan Singh,Gagan Singh,Tail,10,1,1,1,1.0
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,Opener,1,1,2,1,2.0
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,No. 4,4,2,48,2,24.0
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,No. 5,5,9,151,9,16.77777777777778
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,No. 6,6,2,22,2,11.0
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,No. 7,7,3,52,3,17.333333333333332
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,No. 8,8,5,40,4,10.0
+raw_4e86b179_be2a_4fe6_8b22_8cce665ffa6e,Gandharva Nagaraj,Gandharva Nagaraj,Tail,10,1,0,0,
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,Opener,1,14,232,14,16.571428571428573
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 3,3,7,175,7,25.0
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 4,4,5,42,5,8.4
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 5,5,3,28,3,9.333333333333334
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 6,6,2,19,2,9.5
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 7,7,1,2,1,2.0
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 8,8,3,31,2,15.5
+raw_48f97fa6_da6c_4451_87f6_6d4dde5ffcbb,Gandharva Nagaraja,Gandharva Nagaraja,No. 9,9,1,1,1,1.0
+raw_9b0cdfa1_24a8_45b0_88f8_57bd1eafed91,Gareth Williams,Gareth Williams,Opener,1,1,4,1,4.0
+raw_9b0cdfa1_24a8_45b0_88f8_57bd1eafed91,Gareth Williams,Gareth Williams,No. 3,3,1,5,1,5.0
+raw_9b0cdfa1_24a8_45b0_88f8_57bd1eafed91,Gareth Williams,Gareth Williams,No. 9,9,2,0,2,0.0
+raw_9b0cdfa1_24a8_45b0_88f8_57bd1eafed91,Gareth Williams,Gareth Williams,Tail,10,3,2,0,
+raw_4e2d7828_3586_4022_aca7_25ffaeb53a7d,Gaurav Bhardwaj,Gaurav Bhardwaj,No. 3,3,1,58,1,58.0
+raw_971cd09a_21d2_4fdc_b097_7d39986741b6,Gaurav Desai,Gaurav Desai,No. 4,4,1,15,1,15.0
+raw_971cd09a_21d2_4fdc_b097_7d39986741b6,Gaurav Desai,Gaurav Desai,No. 5,5,1,34,1,34.0
+raw_5a803a8d_ff87_41a2_9ed5_d512af06bb04,Geoff Bee,Geoff Bee,Opener,1,2,31,2,15.5
+raw_5a803a8d_ff87_41a2_9ed5_d512af06bb04,Geoff Bee,Geoff Bee,Tail,10,10,41,5,8.2
+raw_91154df8_7b9e_4c17_9af8_96790563800c,Giancarlo Cappiello,Giancarlo Cappiello,No. 4,4,1,14,1,14.0
+raw_91154df8_7b9e_4c17_9af8_96790563800c,Giancarlo Cappiello,Giancarlo Cappiello,No. 5,5,1,32,1,32.0
+raw_91154df8_7b9e_4c17_9af8_96790563800c,Giancarlo Cappiello,Giancarlo Cappiello,No. 6,6,2,46,2,23.0
+raw_91154df8_7b9e_4c17_9af8_96790563800c,Giancarlo Cappiello,Giancarlo Cappiello,No. 9,9,1,13,1,13.0
+raw_08cd176a_f50e_4f99_9b61_b95b05a889b3,Girish Doddaiah,Girish Doddaiah,Opener,1,3,52,2,26.0
+raw_08cd176a_f50e_4f99_9b61_b95b05a889b3,Girish Doddaiah,Girish Doddaiah,No. 3,3,1,0,1,0.0
+raw_08cd176a_f50e_4f99_9b61_b95b05a889b3,Girish Doddaiah,Girish Doddaiah,No. 7,7,1,10,1,10.0
+raw_08cd176a_f50e_4f99_9b61_b95b05a889b3,Girish Doddaiah,Girish Doddaiah,No. 8,8,2,22,2,11.0
+raw_08cd176a_f50e_4f99_9b61_b95b05a889b3,Girish Doddaiah,Girish Doddaiah,No. 9,9,2,24,2,12.0
+raw_c4b33293_46ba_47d1_a42e_7baa05f2057c,Gopal Hapani,Gopal Hapani,Tail,10,1,0,1,0.0
+raw_34721ead_c8d2_41b9_b706_327367d8db60,Greg Bradford,Greg Bradford,No. 3,3,1,4,1,4.0
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,Opener,1,65,1293,63,20.523809523809526
+raw_ca521198_9089_47b4_96d7_bdb260ebec7f,Hardiek Pattani,Hardiek Pattani,Opener,1,17,427,14,30.5
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 3,3,8,65,8,8.125
+raw_ca521198_9089_47b4_96d7_bdb260ebec7f,Hardiek Pattani,Hardiek Pattani,No. 3,3,3,86,2,43.0
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 4,4,1,3,1,3.0
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 5,5,5,31,5,6.2
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 6,6,4,87,3,29.0
+raw_ca521198_9089_47b4_96d7_bdb260ebec7f,Hardiek Pattani,Hardiek Pattani,No. 6,6,1,8,0,
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 7,7,3,13,3,4.333333333333333
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 8,8,3,12,3,4.0
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,No. 9,9,1,12,1,12.0
+raw_35bb467c_b1a2_412e_afee_0ca3101dff94,Hardiek Pattani,Hardiek Pattani,Tail,10,1,0,1,0.0
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,Opener,1,26,408,25,16.32
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 3,3,14,205,14,14.642857142857142
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 4,4,2,18,2,9.0
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 5,5,1,13,1,13.0
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 6,6,2,7,2,3.5
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 7,7,1,9,1,9.0
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 8,8,3,31,2,15.5
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,No. 9,9,3,17,3,5.666666666666667
+raw_69c4b08f_6559_4a4b_8752_9c4edeca9874,Hardik Kutchhi,Hardik Kutchhi,Tail,10,4,13,3,4.333333333333333
+raw_8c11c104_8c37_449c_b7d5_8b9b2b670067,Hari Prasad,Hari Prasad,No. 4,4,1,45,1,45.0
+raw_8c11c104_8c37_449c_b7d5_8b9b2b670067,Hari Prasad,Hari Prasad,No. 5,5,1,24,0,
+raw_8c11c104_8c37_449c_b7d5_8b9b2b670067,Hari Prasad,Hari Prasad,No. 9,9,2,28,1,28.0
+raw_f77f6506_09cd_411a_a7f6_7e098c751a8c,Hari Prasad Pathigiri,Hari Prasad Pathigiri,No. 4,4,1,26,1,26.0
+raw_f77f6506_09cd_411a_a7f6_7e098c751a8c,Hari Prasad Pathigiri,Hari Prasad Pathigiri,No. 8,8,3,19,1,19.0
+raw_f77f6506_09cd_411a_a7f6_7e098c751a8c,Hari Prasad Pathigiri,Hari Prasad Pathigiri,No. 9,9,4,59,3,19.666666666666668
+raw_f77f6506_09cd_411a_a7f6_7e098c751a8c,Hari Prasad Pathigiri,Hari Prasad Pathigiri,Tail,10,2,22,2,11.0
+raw_9ea90b6f_7006_407e_b052_6bedf57cb6b6,Hari Varma,Hari Varma,No. 6,6,1,1,0,
+raw_9ea90b6f_7006_407e_b052_6bedf57cb6b6,Hari Varma,Hari Varma,No. 7,7,1,2,1,2.0
+raw_9ea90b6f_7006_407e_b052_6bedf57cb6b6,Hari Varma,Hari Varma,No. 9,9,1,0,1,0.0
+raw_9ea90b6f_7006_407e_b052_6bedf57cb6b6,Hari Varma,Hari Varma,Tail,10,2,0,1,0.0
+raw_031c4639_abd0_44fb_a327_d21d949d7cf7,Harish Kashi,Harish Kashi,Opener,1,2,31,2,15.5
+raw_031c4639_abd0_44fb_a327_d21d949d7cf7,Harish Kashi,Harish Kashi,No. 3,3,1,0,1,0.0
+raw_031c4639_abd0_44fb_a327_d21d949d7cf7,Harish Kashi,Harish Kashi,Tail,10,2,15,1,15.0
+raw_1f32c5c7_2a68_4bfe_862e_058904bafaec,Harry Mody,Harry Mody,Opener,1,1,8,1,8.0
+raw_1f32c5c7_2a68_4bfe_862e_058904bafaec,Harry Mody,Harry Mody,No. 3,3,1,31,1,31.0
+raw_1f32c5c7_2a68_4bfe_862e_058904bafaec,Harry Mody,Harry Mody,No. 4,4,1,7,1,7.0
+raw_1f32c5c7_2a68_4bfe_862e_058904bafaec,Harry Mody,Harry Mody,No. 5,5,3,11,3,3.6666666666666665
+raw_1f32c5c7_2a68_4bfe_862e_058904bafaec,Harry Mody,Harry Mody,No. 9,9,2,9,1,9.0
+raw_1f32c5c7_2a68_4bfe_862e_058904bafaec,Harry Mody,Harry Mody,Tail,10,1,0,0,
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,Opener,1,3,32,3,10.666666666666666
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,No. 4,4,4,201,4,50.25
+raw_fe6c83a1_911a_42e3_95dc_3bb3c4176f12,Harsh Vaja,Harsh Vaja,No. 4,4,2,6,2,3.0
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,No. 5,5,8,100,6,16.666666666666668
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,No. 6,6,8,67,8,8.375
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,No. 7,7,3,8,3,2.6666666666666665
+raw_fe6c83a1_911a_42e3_95dc_3bb3c4176f12,Harsh Vaja,Harsh Vaja,No. 7,7,1,15,1,15.0
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,No. 8,8,5,35,4,8.75
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,No. 9,9,5,65,2,32.5
+raw_34a75b48_e19a_4dfc_bb1e_26082f4665f0,Harsh Vaja,Harsh Vaja,Tail,10,5,39,2,19.5
+raw_fe6c83a1_911a_42e3_95dc_3bb3c4176f12,Harsh Vaja,Harsh Vaja,Tail,10,1,5,1,5.0
+raw_23c928c7_fc53_47a5_9137_af0e78d8fc2a,Harshit Bhatia,Harshit Bhatia,Opener,1,1,6,1,6.0
+raw_23c928c7_fc53_47a5_9137_af0e78d8fc2a,Harshit Bhatia,Harshit Bhatia,No. 8,8,1,0,1,0.0
+raw_23c928c7_fc53_47a5_9137_af0e78d8fc2a,Harshit Bhatia,Harshit Bhatia,No. 9,9,1,5,1,5.0
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,Opener,1,1,16,1,16.0
+raw_6a543156_140b_48ca_bf1c_b7e3772e9b01,Hemant Chawda,Hemant Chawda,Opener,1,1,4,1,4.0
+raw_6a543156_140b_48ca_bf1c_b7e3772e9b01,Hemant Chawda,Hemant Chawda,No. 3,3,11,229,8,28.625
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,No. 4,4,1,8,1,8.0
+raw_6a543156_140b_48ca_bf1c_b7e3772e9b01,Hemant Chawda,Hemant Chawda,No. 4,4,7,92,6,15.333333333333334
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,No. 5,5,1,3,1,3.0
+raw_6a543156_140b_48ca_bf1c_b7e3772e9b01,Hemant Chawda,Hemant Chawda,No. 5,5,5,74,4,18.5
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,No. 6,6,2,19,2,9.5
+raw_6a543156_140b_48ca_bf1c_b7e3772e9b01,Hemant Chawda,Hemant Chawda,No. 6,6,6,60,6,10.0
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,No. 7,7,1,39,0,
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,No. 8,8,2,3,2,1.5
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,No. 9,9,3,18,3,6.0
+raw_150b0ae5_ad93_4e23_8951_d2db3b1cf85c,Hemant Chawda,Hemant Chawda,Tail,10,4,22,3,7.333333333333333
+raw_6a543156_140b_48ca_bf1c_b7e3772e9b01,Hemant Chawda,Hemant Chawda,Tail,10,1,4,1,4.0
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,Opener,1,9,97,9,10.777777777777779
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 3,3,3,42,3,14.0
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 4,4,2,23,1,23.0
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 5,5,3,53,3,17.666666666666668
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 6,6,7,46,7,6.571428571428571
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 7,7,2,21,1,21.0
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 8,8,1,0,1,0.0
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,No. 9,9,3,32,3,10.666666666666666
+raw_ce81c7fd_2626_4dcb_9dfe_764c2ca81133,Hemendra Solanki,Hemendra Solanki,Tail,10,1,15,0,
+raw_938dfd02_b89d_48ab_9ca9_6de62d4d6930,Hiran Gamage,Hiran Gamage,Opener,1,1,0,1,0.0
+raw_938dfd02_b89d_48ab_9ca9_6de62d4d6930,Hiran Gamage,Hiran Gamage,No. 5,5,1,7,1,7.0
+raw_938dfd02_b89d_48ab_9ca9_6de62d4d6930,Hiran Gamage,Hiran Gamage,No. 7,7,1,1,1,1.0
+raw_938dfd02_b89d_48ab_9ca9_6de62d4d6930,Hiran Gamage,Hiran Gamage,No. 9,9,1,27,0,
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,Opener,1,70,1469,65,22.6
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 3,3,9,142,9,15.777777777777779
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 4,4,5,88,5,17.6
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 5,5,4,40,4,10.0
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 6,6,5,43,4,10.75
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 7,7,10,120,10,12.0
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 8,8,12,107,8,13.375
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,No. 9,9,5,68,4,17.0
+raw_19efa8e3_4048_4f2d_95fa_8e6d8cce5a5e,Hiren Tandel,Hiren Tandel,Tail,10,9,73,1,73.0
+raw_f1162eb8_a1c7_4416_bf20_877a5b8b858e,Hiren Vadaliya,Hiren Vadaliya,No. 3,3,1,2,1,2.0
+raw_f1162eb8_a1c7_4416_bf20_877a5b8b858e,Hiren Vadaliya,Hiren Vadaliya,No. 6,6,1,4,1,4.0
+raw_f1162eb8_a1c7_4416_bf20_877a5b8b858e,Hiren Vadaliya,Hiren Vadaliya,No. 9,9,1,2,1,2.0
+raw_dfc21d57_9a72_43f0_92f8_6d18a2cf13d3,Hiten Raghani,Hiten Raghani,No. 4,4,1,0,1,0.0
+raw_dfc21d57_9a72_43f0_92f8_6d18a2cf13d3,Hiten Raghani,Hiten Raghani,No. 5,5,1,0,1,0.0
+raw_dfc21d57_9a72_43f0_92f8_6d18a2cf13d3,Hiten Raghani,Hiten Raghani,No. 8,8,2,9,2,4.5
+raw_dfc21d57_9a72_43f0_92f8_6d18a2cf13d3,Hiten Raghani,Hiten Raghani,Tail,10,3,15,2,7.5
+raw_eab56c86_02a7_4185_9aa8_979febae7dc7,Hitesh Khanna,Hitesh Khanna,No. 4,4,1,22,1,22.0
+raw_eab56c86_02a7_4185_9aa8_979febae7dc7,Hitesh Khanna,Hitesh Khanna,No. 5,5,3,6,3,2.0
+raw_eab56c86_02a7_4185_9aa8_979febae7dc7,Hitesh Khanna,Hitesh Khanna,No. 6,6,1,3,1,3.0
+raw_eab56c86_02a7_4185_9aa8_979febae7dc7,Hitesh Khanna,Hitesh Khanna,Tail,10,1,0,0,
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,Opener,1,1,9,1,9.0
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,No. 5,5,1,16,1,16.0
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,No. 6,6,1,9,1,9.0
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,No. 7,7,1,6,1,6.0
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,No. 8,8,1,8,1,8.0
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,No. 9,9,1,20,1,20.0
+raw_da24480e_b1fc_4995_a9bd_6407d44b9a38,Howard Culph,Howard Culph,Tail,10,3,41,1,41.0
+raw_b971936e_00ff_4a6b_8848_60813a614ce1,Hriday Raval,Hriday Raval,No. 6,6,1,4,1,4.0
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,No. 3,3,1,5,1,5.0
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,No. 5,5,6,76,5,15.2
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,No. 6,6,3,70,2,35.0
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,No. 7,7,6,147,5,29.4
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,No. 8,8,3,1,3,0.3333333333333333
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,No. 9,9,10,54,6,9.0
+raw_8b8bf7cf_c9b8_48c7_a445_012ff6f11f63,Ignesh Patel,Ignesh Patel,Tail,10,4,24,3,8.0
+raw_ab32e2ce_c8c1_4376_b8b5_7393cf68519a,Imraan Khan,Imraan Khan,No. 8,8,1,1,1,1.0
+raw_ab32e2ce_c8c1_4376_b8b5_7393cf68519a,Imraan Khan,Imraan Khan,No. 9,9,4,10,2,5.0
+raw_ab32e2ce_c8c1_4376_b8b5_7393cf68519a,Imraan Khan,Imraan Khan,Tail,10,4,10,2,5.0
+raw_e9b73fca_38df_495c_b734_35f92c696439,Ishan Darji,Ishan Darji,No. 9,9,1,4,1,4.0
+raw_1ef3250e_cc0a_4d33_9ec9_e438da804f7f,Ishan Gunawardena,Ishan Gunawardena,Opener,1,1,63,0,
+raw_c19e26be_6635_471f_b787_2db013a4e7cc,Ishesh Mehta,Ishesh Mehta,Opener,1,6,210,4,52.5
+raw_c19e26be_6635_471f_b787_2db013a4e7cc,Ishesh Mehta,Ishesh Mehta,No. 3,3,1,1,1,1.0
+raw_c19e26be_6635_471f_b787_2db013a4e7cc,Ishesh Mehta,Ishesh Mehta,No. 8,8,2,5,2,2.5
+raw_c19e26be_6635_471f_b787_2db013a4e7cc,Ishesh Mehta,Ishesh Mehta,Tail,10,1,1,1,1.0
+raw_e9d3eba5_368b_43a6_9209_866a8777f7bd,Janam Patel,Janam Patel,Opener,1,7,111,7,15.857142857142858
+raw_e9d3eba5_368b_43a6_9209_866a8777f7bd,Janam Patel,Janam Patel,No. 3,3,1,12,1,12.0
+raw_e9d3eba5_368b_43a6_9209_866a8777f7bd,Janam Patel,Janam Patel,No. 7,7,1,31,1,31.0
+raw_e9d3eba5_368b_43a6_9209_866a8777f7bd,Janam Patel,Janam Patel,Tail,10,3,25,2,12.5
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,Opener,1,5,71,5,14.2
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,No. 4,4,1,18,1,18.0
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,No. 5,5,1,0,1,0.0
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,No. 6,6,1,0,1,0.0
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,No. 8,8,1,3,1,3.0
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,No. 9,9,1,13,1,13.0
+raw_8cab889f_a046_4146_8f2c_e2b7be67f8d0,Jasbir Rana,Jasbir Rana,Tail,10,5,49,5,9.8
+raw_e16945e9_36e4_4643_9e45_216161ecdc27,Jason Pinto,Jason Pinto,No. 4,4,1,7,1,7.0
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,Opener,1,11,353,9,39.22222222222222
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 3,3,13,317,13,24.384615384615383
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 4,4,48,1570,41,38.292682926829265
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 5,5,21,579,14,41.357142857142854
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 6,6,18,628,11,57.09090909090909
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 7,7,5,304,4,76.0
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 8,8,4,102,1,102.0
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,No. 9,9,1,9,1,9.0
+raw_833a3d04_f3e3_463e_9c73_36fdc416545c,Jatin Bhatia,Jatin Bhatia,Tail,10,2,46,2,23.0
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,Opener,1,1,34,1,34.0
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 3,3,2,67,0,
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 4,4,35,779,29,26.862068965517242
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 5,5,28,999,24,41.625
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 6,6,38,982,31,31.677419354838708
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 7,7,26,427,25,17.08
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 8,8,9,87,8,10.875
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,No. 9,9,6,48,5,9.6
+raw_8aae1fa6_ccde_4e77_8bc0_a996ad996d9a,Jatin Dave,Jatin Dave,Tail,10,4,34,4,8.5
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,Opener,1,3,11,3,3.6666666666666665
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 3,3,8,121,8,15.125
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 4,4,4,76,4,19.0
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 5,5,4,25,4,6.25
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 6,6,2,34,2,17.0
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 7,7,10,77,9,8.555555555555555
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 8,8,12,130,12,10.833333333333334
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,No. 9,9,4,27,4,6.75
+raw_edfbda0e_b8e6_45fd_a67a_2f3beadfa943,Jay Joshi,Jay Joshi,Tail,10,4,35,4,8.75
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,Opener,1,1,8,1,8.0
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,No. 3,3,2,7,1,7.0
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,No. 4,4,6,225,6,37.5
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,No. 5,5,8,166,8,20.75
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,No. 6,6,4,97,3,32.333333333333336
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,No. 7,7,2,32,1,32.0
+raw_2030df8b_2d2e_4bd7_8ab7_b1071db7317d,Jay Patel,Jay Patel,No. 8,8,1,2,1,2.0
+raw_633b219e_cd53_4737_b38e_10ad9c568c83,Jay Soni,Jay Soni,No. 5,5,1,2,1,2.0
+raw_633b219e_cd53_4737_b38e_10ad9c568c83,Jay Soni,Jay Soni,No. 6,6,4,67,4,16.75
+raw_633b219e_cd53_4737_b38e_10ad9c568c83,Jay Soni,Jay Soni,No. 7,7,6,137,6,22.833333333333332
+raw_633b219e_cd53_4737_b38e_10ad9c568c83,Jay Soni,Jay Soni,No. 8,8,2,16,2,8.0
+raw_633b219e_cd53_4737_b38e_10ad9c568c83,Jay Soni,Jay Soni,No. 9,9,3,60,3,20.0
+raw_633b219e_cd53_4737_b38e_10ad9c568c83,Jay Soni,Jay Soni,Tail,10,1,20,0,
+raw_5f87cc2e_c192_4262_9f0b_452e2acba3c2,Jayendra Dhimmar,Jayendra Dhimmar,Opener,1,6,222,5,44.4
+raw_5f87cc2e_c192_4262_9f0b_452e2acba3c2,Jayendra Dhimmar,Jayendra Dhimmar,No. 3,3,7,186,7,26.571428571428573
+raw_5f87cc2e_c192_4262_9f0b_452e2acba3c2,Jayendra Dhimmar,Jayendra Dhimmar,No. 4,4,7,385,7,55.0
+raw_5f87cc2e_c192_4262_9f0b_452e2acba3c2,Jayendra Dhimmar,Jayendra Dhimmar,No. 5,5,5,79,5,15.8
+raw_5f87cc2e_c192_4262_9f0b_452e2acba3c2,Jayendra Dhimmar,Jayendra Dhimmar,No. 6,6,2,19,2,9.5
+raw_5f87cc2e_c192_4262_9f0b_452e2acba3c2,Jayendra Dhimmar,Jayendra Dhimmar,No. 7,7,4,125,4,31.25
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,Opener,1,1,11,1,11.0
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,No. 3,3,5,100,4,25.0
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,No. 4,4,2,1,2,0.5
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,No. 5,5,1,34,1,34.0
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,No. 7,7,1,50,1,50.0
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,No. 8,8,2,29,2,14.5
+raw_292c07e8_604d_4866_a70f_5349481e1076,Jayrajsinh Chudasma,Jayrajsinh Chudasma,No. 9,9,1,24,1,24.0
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,Opener,1,2,28,2,14.0
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,No. 4,4,3,50,3,16.666666666666668
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,No. 5,5,2,62,0,
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,No. 7,7,4,29,3,9.666666666666666
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,No. 8,8,1,46,1,46.0
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,No. 9,9,1,0,1,0.0
+raw_66ec73a7_b963_4358_b1e6_be16492b730f,Jenish Patel,Jenish Patel,Tail,10,3,24,1,24.0
+raw_6ee07799_f137_4020_80c0_1cc2645b1300,Jignesh Prajapati,Jignesh Prajapati,No. 3,3,1,8,1,8.0
+raw_db199ed7_9e8d_44d4_97bf_84cb7761544f,Jignesh Vekaria,Jignesh Vekaria,Opener,1,2,12,2,6.0
+raw_361e4c3f_0c71_4b70_964a_4a54c20b9c8f,Jignesh Vekaria,Jignesh Vekaria,No. 6,6,2,30,2,15.0
+raw_361e4c3f_0c71_4b70_964a_4a54c20b9c8f,Jignesh Vekaria,Jignesh Vekaria,No. 7,7,6,69,5,13.8
+raw_db199ed7_9e8d_44d4_97bf_84cb7761544f,Jignesh Vekaria,Jignesh Vekaria,No. 7,7,1,2,1,2.0
+raw_361e4c3f_0c71_4b70_964a_4a54c20b9c8f,Jignesh Vekaria,Jignesh Vekaria,No. 8,8,5,74,5,14.8
+raw_db199ed7_9e8d_44d4_97bf_84cb7761544f,Jignesh Vekaria,Jignesh Vekaria,No. 8,8,2,4,1,4.0
+raw_361e4c3f_0c71_4b70_964a_4a54c20b9c8f,Jignesh Vekaria,Jignesh Vekaria,No. 9,9,6,87,5,17.4
+raw_db199ed7_9e8d_44d4_97bf_84cb7761544f,Jignesh Vekaria,Jignesh Vekaria,No. 9,9,3,34,2,17.0
+raw_361e4c3f_0c71_4b70_964a_4a54c20b9c8f,Jignesh Vekaria,Jignesh Vekaria,Tail,10,5,44,5,8.8
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,Opener,1,1,0,1,0.0
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,No. 5,5,2,32,2,16.0
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,No. 6,6,3,29,3,9.666666666666666
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,No. 7,7,1,13,0,
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,No. 8,8,7,59,6,9.833333333333334
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,No. 9,9,11,110,8,13.75
+raw_c19c77b5_8421_4ae2_955e_c88087d0e1f1,Jinay Dedhia,Jinay Dedhia,Tail,10,7,32,4,8.0
+raw_7d7d7c8b_45ef_47a6_b0d6_e56719ef6dc4,Jitender Kumar,Jitender Kumar,No. 7,7,1,63,1,63.0
+raw_7d7d7c8b_45ef_47a6_b0d6_e56719ef6dc4,Jitender Kumar,Jitender Kumar,No. 8,8,3,8,3,2.6666666666666665
+raw_7d7d7c8b_45ef_47a6_b0d6_e56719ef6dc4,Jitender Kumar,Jitender Kumar,No. 9,9,1,23,1,23.0
+raw_ceffe9d0_b934_4709_aa64_10a232d221c5,Jitendra Sharma,Jitendra Sharma,No. 3,3,2,35,2,17.5
+raw_ceffe9d0_b934_4709_aa64_10a232d221c5,Jitendra Sharma,Jitendra Sharma,No. 4,4,1,31,1,31.0
+raw_ceffe9d0_b934_4709_aa64_10a232d221c5,Jitendra Sharma,Jitendra Sharma,No. 5,5,1,3,1,3.0
+raw_ceffe9d0_b934_4709_aa64_10a232d221c5,Jitendra Sharma,Jitendra Sharma,No. 8,8,1,44,1,44.0
+raw_ceffe9d0_b934_4709_aa64_10a232d221c5,Jitendra Sharma,Jitendra Sharma,Tail,10,4,5,2,2.5
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,Opener,1,5,86,5,17.2
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,No. 3,3,5,90,5,18.0
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,No. 4,4,4,36,4,9.0
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,No. 5,5,4,29,4,7.25
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,No. 6,6,5,74,5,14.8
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,No. 7,7,2,104,1,104.0
+raw_a4e95109_966b_43cf_a699_54d87295e3dd,Joe Agnos,Joe Agnos,No. 8,8,1,10,1,10.0
+raw_b67ea3c0_b6fb_4681_8947_f9005e3e6bf2,Joel Gilchrist,Joel Gilchrist,No. 6,6,1,3,1,3.0
+raw_b67ea3c0_b6fb_4681_8947_f9005e3e6bf2,Joel Gilchrist,Joel Gilchrist,No. 8,8,1,9,1,9.0
+raw_f0ae2e46_2935_4624_81f8_71d6cfc1e0c6,Joel Sutton,Joel Sutton,Opener,1,25,567,22,25.772727272727273
+raw_f0ae2e46_2935_4624_81f8_71d6cfc1e0c6,Joel Sutton,Joel Sutton,No. 3,3,2,34,2,17.0
+raw_f0ae2e46_2935_4624_81f8_71d6cfc1e0c6,Joel Sutton,Joel Sutton,No. 5,5,2,4,2,2.0
+raw_f0ae2e46_2935_4624_81f8_71d6cfc1e0c6,Joel Sutton,Joel Sutton,No. 6,6,2,22,2,11.0
+raw_f0ae2e46_2935_4624_81f8_71d6cfc1e0c6,Joel Sutton,Joel Sutton,No. 7,7,2,34,1,34.0
+raw_fa4fb4c7_ab44_47c0_9f93_fcb28d79605d,John Ballantine,John Ballantine,Opener,1,1,11,1,11.0
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 3,3,9,161,9,17.88888888888889
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 4,4,2,2,2,1.0
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 5,5,2,33,1,33.0
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 6,6,1,15,0,
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 7,7,2,38,2,19.0
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 8,8,1,15,1,15.0
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,No. 9,9,2,3,2,1.5
+raw_7ab33193_de9e_432e_ae7d_b075f6be7b98,John Cometti,John Cometti,Tail,10,6,16,2,8.0
+raw_51144b74_eaa2_4b46_8ea1_29848bcbd715,Jony Shah,Jony Shah,Tail,10,2,13,0,
+raw_5b0cd802_0dec_4a35_b582_aadaba2efbbe,Joseph Ryan,Joseph Ryan,Opener,1,19,452,17,26.58823529411765
+raw_5b0cd802_0dec_4a35_b582_aadaba2efbbe,Joseph Ryan,Joseph Ryan,No. 8,8,1,16,1,16.0
+raw_f32ee00a_4c08_4411_89f8_0267ed86dbef,Jude Nicholas,Jude Nicholas,No. 3,3,1,2,1,2.0
+raw_f32ee00a_4c08_4411_89f8_0267ed86dbef,Jude Nicholas,Jude Nicholas,No. 4,4,1,8,1,8.0
+raw_f32ee00a_4c08_4411_89f8_0267ed86dbef,Jude Nicholas,Jude Nicholas,No. 5,5,1,10,1,10.0
+raw_f32ee00a_4c08_4411_89f8_0267ed86dbef,Jude Nicholas,Jude Nicholas,No. 6,6,1,3,1,3.0
+raw_2e0e03be_f068_437d_82da_96433033f88e,Jumin Shaiju,Jumin Shaiju,Opener,1,1,33,1,33.0
+raw_475a388f_be9f_480c_9fef_74920a75f1a0,Justin Doery,Justin Doery,No. 3,3,5,80,5,16.0
+raw_475a388f_be9f_480c_9fef_74920a75f1a0,Justin Doery,Justin Doery,No. 6,6,1,17,1,17.0
+raw_475a388f_be9f_480c_9fef_74920a75f1a0,Justin Doery,Justin Doery,No. 8,8,4,32,3,10.666666666666666
+raw_475a388f_be9f_480c_9fef_74920a75f1a0,Justin Doery,Justin Doery,No. 9,9,1,13,1,13.0
+raw_475a388f_be9f_480c_9fef_74920a75f1a0,Justin Doery,Justin Doery,Tail,10,1,3,1,3.0
+raw_56a72301_5e7a_41e5_aed0_4092b88817ef,Kamlesh Tailor,Kamlesh Tailor,No. 6,6,1,7,1,7.0
+raw_56a72301_5e7a_41e5_aed0_4092b88817ef,Kamlesh Tailor,Kamlesh Tailor,No. 8,8,3,18,3,6.0
+raw_56a72301_5e7a_41e5_aed0_4092b88817ef,Kamlesh Tailor,Kamlesh Tailor,No. 9,9,1,42,0,
+raw_56a72301_5e7a_41e5_aed0_4092b88817ef,Kamlesh Tailor,Kamlesh Tailor,Tail,10,2,2,1,2.0
+raw_93743800_3191_45d3_b6d4_113bb4e3d03b,Karan Bedi,Karan Bedi,Opener,1,12,392,7,56.0
+raw_93743800_3191_45d3_b6d4_113bb4e3d03b,Karan Bedi,Karan Bedi,No. 3,3,3,44,3,14.666666666666666
+raw_93743800_3191_45d3_b6d4_113bb4e3d03b,Karan Bedi,Karan Bedi,No. 4,4,4,17,4,4.25
+raw_f0e67484_ad7f_4b25_9e61_5560aa07efe3,Karan Bedi,Karan Bedi,No. 4,4,1,0,1,0.0
+raw_93743800_3191_45d3_b6d4_113bb4e3d03b,Karan Bedi,Karan Bedi,No. 5,5,1,13,0,
+raw_f0e67484_ad7f_4b25_9e61_5560aa07efe3,Karan Bedi,Karan Bedi,No. 7,7,1,13,1,13.0
+raw_93743800_3191_45d3_b6d4_113bb4e3d03b,Karan Bedi,Karan Bedi,Tail,10,1,42,1,42.0
+raw_43de75c0_7c0e_4844_b029_910f8e3e156a,Karan Jamba,Karan Jamba,No. 5,5,2,19,2,9.5
+raw_43de75c0_7c0e_4844_b029_910f8e3e156a,Karan Jamba,Karan Jamba,No. 7,7,1,13,0,
+raw_3a46ea1a_6694_4958_8060_8c9602a1d311,Karan Patel,Karan Patel,Opener,1,9,185,9,20.555555555555557
+raw_3a46ea1a_6694_4958_8060_8c9602a1d311,Karan Patel,Karan Patel,No. 4,4,2,26,2,13.0
+raw_3a46ea1a_6694_4958_8060_8c9602a1d311,Karan Patel,Karan Patel,No. 6,6,1,35,1,35.0
+raw_3a46ea1a_6694_4958_8060_8c9602a1d311,Karan Patel,Karan Patel,No. 8,8,1,28,1,28.0
+raw_3a46ea1a_6694_4958_8060_8c9602a1d311,Karan Patel,Karan Patel,No. 9,9,3,39,1,39.0
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,Opener,1,6,63,6,10.5
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 3,3,14,253,12,21.083333333333332
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 4,4,7,154,5,30.8
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 5,5,6,75,5,15.0
+raw_a19ef21f_aeec_45c7_bb16_95b2e0fd3ca5,Kartar Singh,Kartar Singh,No. 5,5,1,52,0,
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 6,6,6,83,6,13.833333333333334
+raw_a19ef21f_aeec_45c7_bb16_95b2e0fd3ca5,Kartar Singh,Kartar Singh,No. 6,6,1,13,1,13.0
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 7,7,10,148,9,16.444444444444443
+raw_a19ef21f_aeec_45c7_bb16_95b2e0fd3ca5,Kartar Singh,Kartar Singh,No. 7,7,4,35,4,8.75
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 8,8,19,254,17,14.941176470588236
+raw_a19ef21f_aeec_45c7_bb16_95b2e0fd3ca5,Kartar Singh,Kartar Singh,No. 8,8,2,48,2,24.0
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,No. 9,9,18,275,15,18.333333333333332
+raw_a19ef21f_aeec_45c7_bb16_95b2e0fd3ca5,Kartar Singh,Kartar Singh,No. 9,9,2,33,2,16.5
+raw_95b9f502_f0cd_41b7_9bd1_68b3b271741f,Kartar Singh,Kartar Singh,Tail,10,10,65,8,8.125
+raw_f414d571_ea8f_4450_acf7_fc495d55eabf,Karthikeyan Rajeswaran,Karthikeyan Rajeswaran,No. 3,3,1,0,1,0.0
+raw_f414d571_ea8f_4450_acf7_fc495d55eabf,Karthikeyan Rajeswaran,Karthikeyan Rajeswaran,No. 4,4,1,8,0,
+raw_180d74ce_8dad_4581_924d_a8cefbe8ac1f,Kashish Arora,Kashish Arora,Opener,1,1,7,1,7.0
+raw_180d74ce_8dad_4581_924d_a8cefbe8ac1f,Kashish Arora,Kashish Arora,No. 3,3,1,27,1,27.0
+raw_180d74ce_8dad_4581_924d_a8cefbe8ac1f,Kashish Arora,Kashish Arora,No. 4,4,9,234,6,39.0
+raw_180d74ce_8dad_4581_924d_a8cefbe8ac1f,Kashish Arora,Kashish Arora,No. 5,5,3,50,2,25.0
+raw_180d74ce_8dad_4581_924d_a8cefbe8ac1f,Kashish Arora,Kashish Arora,No. 8,8,1,17,1,17.0
+raw_642870fb_2b75_4c4d_a990_ea0a232866c8,Keith White,Keith White,Opener,1,3,52,3,17.333333333333332
+raw_642870fb_2b75_4c4d_a990_ea0a232866c8,Keith White,Keith White,No. 3,3,16,285,12,23.75
+raw_642870fb_2b75_4c4d_a990_ea0a232866c8,Keith White,Keith White,No. 4,4,16,395,14,28.214285714285715
+raw_642870fb_2b75_4c4d_a990_ea0a232866c8,Keith White,Keith White,No. 5,5,3,48,3,16.0
+raw_642870fb_2b75_4c4d_a990_ea0a232866c8,Keith White,Keith White,No. 6,6,3,54,2,27.0
+raw_642870fb_2b75_4c4d_a990_ea0a232866c8,Keith White,Keith White,No. 8,8,1,44,0,
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,Opener,1,47,1023,41,24.951219512195124
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 3,3,7,50,7,7.142857142857143
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 4,4,6,68,6,11.333333333333334
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 5,5,1,11,1,11.0
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 6,6,11,251,9,27.88888888888889
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 7,7,17,226,15,15.066666666666666
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 8,8,11,115,8,14.375
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,No. 9,9,5,62,2,31.0
+raw_1e6d7af7_02d3_4cec_84f0_7fdcea903ea7,Ketan Khant,Ketan Khant,Tail,10,4,11,2,5.5
+raw_d4dae0eb_379a_40a7_ac82_b3cb5c1156b0,Keval Manek,Keval Manek,No. 6,6,1,1,1,1.0
+raw_d4dae0eb_379a_40a7_ac82_b3cb5c1156b0,Keval Manek,Keval Manek,No. 7,7,2,29,2,14.5
+raw_d4dae0eb_379a_40a7_ac82_b3cb5c1156b0,Keval Manek,Keval Manek,No. 8,8,1,13,1,13.0
+raw_d4dae0eb_379a_40a7_ac82_b3cb5c1156b0,Keval Manek,Keval Manek,Tail,10,1,4,0,
+raw_23bb7c9c_150e_493c_a6e8_4e3b4a41fc99,Keyur Patel,Keyur Patel,No. 8,8,1,7,1,7.0
+raw_328669d3_6be9_4e4c_a7cf_4938d3a468a4,Khurram Shahzad,Khurram Shahzad,Tail,10,2,3,1,3.0
+raw_ccba4567_e280_458e_9c35_766fda56fc44,Kirti Tiwari,Kirti Tiwari,No. 5,5,1,2,1,2.0
+raw_b2cf55f0_ba7c_429a_b8ab_792ddfbd1260,Kishore Kumar,Kishore Kumar,Tail,10,1,11,1,11.0
+raw_c7dde534_00d8_493d_a3c7_898664006787,Kitu Singh,Kitu Singh,Opener,1,1,14,1,14.0
+raw_c7dde534_00d8_493d_a3c7_898664006787,Kitu Singh,Kitu Singh,No. 3,3,1,5,1,5.0
+raw_c7dde534_00d8_493d_a3c7_898664006787,Kitu Singh,Kitu Singh,No. 6,6,1,2,1,2.0
+raw_5986c2b6_c3b8_418e_ad95_2affa898a68a,Koushik Arigela,Koushik Arigela,No. 4,4,1,0,0,
+raw_a4c7b4b6_8e2c_436d_b1b3_acc3ad0c0da0,Krishna Baldawa,Krishna Baldawa,Tail,10,1,0,0,
+raw_11f50c36_f349_44a2_a889_928bbf153e93,Krishna Kanugovi,Krishna Kanugovi,Tail,10,1,0,1,0.0
+raw_7a32e96b_708a_493e_ab19_d0c93d5dc178,Kristian Brown,Kristian Brown,No. 4,4,6,207,4,51.75
+raw_7a32e96b_708a_493e_ab19_d0c93d5dc178,Kristian Brown,Kristian Brown,No. 5,5,4,90,4,22.5
+raw_7a32e96b_708a_493e_ab19_d0c93d5dc178,Kristian Brown,Kristian Brown,No. 6,6,3,83,1,83.0
+raw_7a32e96b_708a_493e_ab19_d0c93d5dc178,Kristian Brown,Kristian Brown,No. 7,7,5,53,4,13.25
+raw_7a32e96b_708a_493e_ab19_d0c93d5dc178,Kristian Brown,Kristian Brown,No. 8,8,1,2,1,2.0
+raw_7a32e96b_708a_493e_ab19_d0c93d5dc178,Kristian Brown,Kristian Brown,No. 9,9,3,49,3,16.333333333333332
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,Opener,1,1,3,1,3.0
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,No. 3,3,1,9,1,9.0
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,No. 5,5,1,48,0,
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,No. 7,7,1,1,1,1.0
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,No. 8,8,1,0,1,0.0
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,No. 9,9,5,9,4,2.25
+raw_dc42a1a0_048a_4a87_a2e2_3d6b24058dd7,Krunal Desai,Krunal Desai,Tail,10,2,2,1,2.0
+raw_16274271_18aa_46be_9972_f69542d1d9fd,Krunal Shah,Krunal Shah,No. 4,4,5,78,5,15.6
+raw_db71de88_66ca_4f27_bce6_7a3c5736b5d1,Krunal Shah,Krunal Shah,No. 4,4,1,0,1,0.0
+raw_16274271_18aa_46be_9972_f69542d1d9fd,Krunal Shah,Krunal Shah,No. 5,5,1,0,1,0.0
+raw_db71de88_66ca_4f27_bce6_7a3c5736b5d1,Krunal Shah,Krunal Shah,No. 5,5,2,33,2,16.5
+raw_16274271_18aa_46be_9972_f69542d1d9fd,Krunal Shah,Krunal Shah,No. 7,7,1,8,1,8.0
+raw_db71de88_66ca_4f27_bce6_7a3c5736b5d1,Krunal Shah,Krunal Shah,No. 7,7,1,5,1,5.0
+raw_16274271_18aa_46be_9972_f69542d1d9fd,Krunal Shah,Krunal Shah,No. 8,8,1,37,0,
+raw_db71de88_66ca_4f27_bce6_7a3c5736b5d1,Krunal Shah,Krunal Shah,No. 8,8,5,81,4,20.25
+raw_16274271_18aa_46be_9972_f69542d1d9fd,Krunal Shah,Krunal Shah,No. 9,9,2,32,1,32.0
+raw_42f69783_742c_4162_8ecd_88c6ff2179f7,Ksitij Patil,Ksitij Patil,No. 8,8,1,7,1,7.0
+raw_e1381e46_6282_4409_b3b2_f255c92bf47c,Kunal Pandya,Kunal Pandya,Opener,1,1,4,1,4.0
+raw_e1381e46_6282_4409_b3b2_f255c92bf47c,Kunal Pandya,Kunal Pandya,No. 3,3,1,0,1,0.0
+raw_e1381e46_6282_4409_b3b2_f255c92bf47c,Kunal Pandya,Kunal Pandya,No. 6,6,1,1,1,1.0
+raw_e1381e46_6282_4409_b3b2_f255c92bf47c,Kunal Pandya,Kunal Pandya,No. 8,8,2,25,1,25.0
+raw_e1381e46_6282_4409_b3b2_f255c92bf47c,Kunal Pandya,Kunal Pandya,Tail,10,1,2,1,2.0
+raw_607e85ce_2333_462c_91aa_152da4a9e1eb,Kunal Patel,Kunal Patel,Opener,1,4,31,4,7.75
+raw_607e85ce_2333_462c_91aa_152da4a9e1eb,Kunal Patel,Kunal Patel,No. 3,3,3,52,3,17.333333333333332
+raw_607e85ce_2333_462c_91aa_152da4a9e1eb,Kunal Patel,Kunal Patel,No. 4,4,3,33,3,11.0
+raw_607e85ce_2333_462c_91aa_152da4a9e1eb,Kunal Patel,Kunal Patel,No. 5,5,1,0,1,0.0
+raw_607e85ce_2333_462c_91aa_152da4a9e1eb,Kunal Patel,Kunal Patel,No. 8,8,1,4,1,4.0
+raw_aff2dfe6_24a4_40a1_a4c6_ec32791a966d,Kunjan Gadhiya,Kunjan Gadhiya,No. 5,5,2,41,2,20.5
+raw_aff2dfe6_24a4_40a1_a4c6_ec32791a966d,Kunjan Gadhiya,Kunjan Gadhiya,No. 8,8,1,21,1,21.0
+raw_aff2dfe6_24a4_40a1_a4c6_ec32791a966d,Kunjan Gadhiya,Kunjan Gadhiya,Tail,10,1,25,1,25.0
+raw_dcac3fcd_7317_4201_8a59_48d1747e11d6,Lalita Jat,Lalita Jat,No. 9,9,1,1,0,
+raw_804737d0_662d_4c8f_b5f8_05c5cdcd6022,Lance Freeman,Lance Freeman,Opener,1,1,37,1,37.0
+raw_804737d0_662d_4c8f_b5f8_05c5cdcd6022,Lance Freeman,Lance Freeman,No. 3,3,2,24,2,12.0
+raw_804737d0_662d_4c8f_b5f8_05c5cdcd6022,Lance Freeman,Lance Freeman,No. 4,4,2,30,2,15.0
+raw_804737d0_662d_4c8f_b5f8_05c5cdcd6022,Lance Freeman,Lance Freeman,No. 6,6,1,7,1,7.0
+raw_804737d0_662d_4c8f_b5f8_05c5cdcd6022,Lance Freeman,Lance Freeman,No. 8,8,3,55,2,27.5
+raw_804737d0_662d_4c8f_b5f8_05c5cdcd6022,Lance Freeman,Lance Freeman,Tail,10,2,13,0,
+raw_390eca36_17c6_429a_b3d4_cb236c850a13,Lenny Volkov,Lenny Volkov,No. 4,4,1,19,1,19.0
+raw_390eca36_17c6_429a_b3d4_cb236c850a13,Lenny Volkov,Lenny Volkov,No. 5,5,1,14,1,14.0
+raw_390eca36_17c6_429a_b3d4_cb236c850a13,Lenny Volkov,Lenny Volkov,No. 6,6,3,14,2,7.0
+raw_390eca36_17c6_429a_b3d4_cb236c850a13,Lenny Volkov,Lenny Volkov,No. 7,7,3,4,3,1.3333333333333333
+raw_390eca36_17c6_429a_b3d4_cb236c850a13,Lenny Volkov,Lenny Volkov,No. 8,8,3,1,3,0.3333333333333333
+raw_390eca36_17c6_429a_b3d4_cb236c850a13,Lenny Volkov,Lenny Volkov,No. 9,9,2,9,0,
+raw_0998a1dc_e8e4_494b_ad3f_7bc2249e076b,Lester Lawless,Lester Lawless,No. 5,5,3,114,3,38.0
+raw_aade3445_4e2e_4526_87b0_8509a61ff766,Liam O'Shannessy,Liam O'Shannessy,No. 7,7,1,0,1,0.0
+raw_af8c0677_04df_4ac6_9404_e13bd78b7547,Luke Morton,Luke Morton,Opener,1,1,6,1,6.0
+raw_d7be140d_216a_4a63_98e2_35070cacf933,Luke Thompson,Luke Thompson,No. 3,3,1,1,1,1.0
+raw_d7be140d_216a_4a63_98e2_35070cacf933,Luke Thompson,Luke Thompson,No. 5,5,1,0,1,0.0
+raw_d7be140d_216a_4a63_98e2_35070cacf933,Luke Thompson,Luke Thompson,No. 7,7,1,1,1,1.0
+raw_d7be140d_216a_4a63_98e2_35070cacf933,Luke Thompson,Luke Thompson,No. 8,8,1,0,1,0.0
+raw_d7be140d_216a_4a63_98e2_35070cacf933,Luke Thompson,Luke Thompson,No. 9,9,1,8,1,8.0
+raw_d7be140d_216a_4a63_98e2_35070cacf933,Luke Thompson,Luke Thompson,Tail,10,2,3,2,1.5
+raw_3c0406af_bf97_4e15_853f_1ec278f81955,Maheer Sutaria,Maheer Sutaria,Opener,1,1,1,1,1.0
+raw_3c0406af_bf97_4e15_853f_1ec278f81955,Maheer Sutaria,Maheer Sutaria,No. 7,7,1,8,1,8.0
+raw_9f0231b8_42b3_4384_b030_7315807832c8,Manan Pandya,Manan Pandya,No. 3,3,1,18,1,18.0
+raw_66f8992d_61c3_469c_9c7b_49572c8a3634,Manan Sutaria,Manan Sutaria,Opener,1,6,128,5,25.6
+raw_b8841697_9d3a_4006_80e5_9df753f45038,Manan Sutaria,Manan Sutaria,Opener,1,6,81,5,16.2
+raw_b8841697_9d3a_4006_80e5_9df753f45038,Manan Sutaria,Manan Sutaria,No. 3,3,5,140,3,46.666666666666664
+raw_66f8992d_61c3_469c_9c7b_49572c8a3634,Manan Sutaria,Manan Sutaria,No. 4,4,4,83,4,20.75
+raw_b8841697_9d3a_4006_80e5_9df753f45038,Manan Sutaria,Manan Sutaria,No. 4,4,1,10,1,10.0
+raw_b8841697_9d3a_4006_80e5_9df753f45038,Manan Sutaria,Manan Sutaria,No. 5,5,2,4,2,2.0
+raw_66f8992d_61c3_469c_9c7b_49572c8a3634,Manan Sutaria,Manan Sutaria,No. 6,6,2,0,1,0.0
+raw_66f8992d_61c3_469c_9c7b_49572c8a3634,Manan Sutaria,Manan Sutaria,No. 7,7,1,4,0,
+raw_66f8992d_61c3_469c_9c7b_49572c8a3634,Manan Sutaria,Manan Sutaria,Tail,10,1,0,1,0.0
+raw_95db8cd5_260d_4a4a_9ee4_b8abf0cd6d77,Mandeep Bhoopalam,Mandeep Bhoopalam,No. 3,3,1,19,1,19.0
+raw_95db8cd5_260d_4a4a_9ee4_b8abf0cd6d77,Mandeep Bhoopalam,Mandeep Bhoopalam,No. 4,4,2,14,2,7.0
+raw_95db8cd5_260d_4a4a_9ee4_b8abf0cd6d77,Mandeep Bhoopalam,Mandeep Bhoopalam,No. 9,9,1,0,1,0.0
+raw_fe0fd852_b44b_4e0a_b6af_6d160a17a4d9,Mandeep Singh,Mandeep Singh,No. 5,5,5,150,3,50.0
+raw_fe0fd852_b44b_4e0a_b6af_6d160a17a4d9,Mandeep Singh,Mandeep Singh,No. 6,6,1,22,0,
+raw_fe0fd852_b44b_4e0a_b6af_6d160a17a4d9,Mandeep Singh,Mandeep Singh,No. 7,7,1,1,1,1.0
+raw_7d6a209d_f4bc_4f61_bda0_59c63b7642f6,Manoj Kumar,Manoj Kumar,No. 5,5,1,13,1,13.0
+raw_7d6a209d_f4bc_4f61_bda0_59c63b7642f6,Manoj Kumar,Manoj Kumar,No. 7,7,1,5,1,5.0
+raw_22fee814_47b6_4d8e_8f16_9746c6cdad81,Massimo Cappiello,Massimo Cappiello,Opener,1,1,1,1,1.0
+raw_9666424a_7257_4009_834b_5ff5e8911234,Massimo Cappiello,Massimo Cappiello,Opener,1,1,20,1,20.0
+raw_22fee814_47b6_4d8e_8f16_9746c6cdad81,Massimo Cappiello,Massimo Cappiello,No. 8,8,2,10,1,10.0
+raw_22fee814_47b6_4d8e_8f16_9746c6cdad81,Massimo Cappiello,Massimo Cappiello,No. 9,9,4,15,3,5.0
+raw_22fee814_47b6_4d8e_8f16_9746c6cdad81,Massimo Cappiello,Massimo Cappiello,Tail,10,3,14,1,14.0
+raw_b529e871_379c_4be9_abda_b40c13c6419b,Mathew Kunkel,Mathew Kunkel,No. 8,8,3,6,3,2.0
+raw_b529e871_379c_4be9_abda_b40c13c6419b,Mathew Kunkel,Mathew Kunkel,No. 9,9,3,4,2,2.0
+raw_b529e871_379c_4be9_abda_b40c13c6419b,Mathew Kunkel,Mathew Kunkel,Tail,10,2,9,2,4.5
+raw_2eb9fb1a_4156_4035_a12a_d442b52bda08,Matt Keyter,Matt Keyter,No. 5,5,2,37,2,18.5
+raw_2eb9fb1a_4156_4035_a12a_d442b52bda08,Matt Keyter,Matt Keyter,No. 7,7,3,17,2,8.5
+raw_2eb9fb1a_4156_4035_a12a_d442b52bda08,Matt Keyter,Matt Keyter,No. 8,8,1,7,1,7.0
+raw_2eb9fb1a_4156_4035_a12a_d442b52bda08,Matt Keyter,Matt Keyter,Tail,10,1,0,1,0.0
+raw_8b08264f_dea3_4e83_b6f3_3ad8a49926e0,Meet Thakker,Meet Thakker,No. 3,3,1,0,1,0.0
+raw_b1a4a4d4_5d19_4f08_b2ad_62f61ca97a0b,Mehul Patel,Mehul Patel,No. 9,9,1,8,1,8.0
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,Opener,1,2,6,1,6.0
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 3,3,8,217,7,31.0
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 4,4,7,177,6,29.5
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 5,5,12,215,12,17.916666666666668
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 6,6,18,640,13,49.23076923076923
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 7,7,21,540,17,31.764705882352942
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 8,8,10,187,9,20.77777777777778
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,No. 9,9,18,193,15,12.866666666666667
+raw_0ec7b30f_50ff_4069_83c1_32345cebcf02,Mehul Tandel,Mehul Tandel,Tail,10,6,43,5,8.6
+raw_fa5f9796_c4a5_422c_a713_d4b5e134177b,Mervyn King,Mervyn King,No. 4,4,1,28,1,28.0
+raw_fa5f9796_c4a5_422c_a713_d4b5e134177b,Mervyn King,Mervyn King,No. 5,5,1,4,1,4.0
+raw_98dc4e9b_0c2a_4a65_ab8e_06e8e94c214e,Michael Keane,Michael Keane,No. 7,7,1,8,1,8.0
+raw_08798034_3b3d_471c_b5cd_2abe7f346afb,Michael Mccormack,Michael Mccormack,Opener,1,1,8,1,8.0
+raw_08798034_3b3d_471c_b5cd_2abe7f346afb,Michael Mccormack,Michael Mccormack,No. 5,5,1,0,1,0.0
+raw_08798034_3b3d_471c_b5cd_2abe7f346afb,Michael Mccormack,Michael Mccormack,No. 6,6,1,13,1,13.0
+raw_08798034_3b3d_471c_b5cd_2abe7f346afb,Michael Mccormack,Michael Mccormack,No. 8,8,2,23,2,11.5
+raw_08798034_3b3d_471c_b5cd_2abe7f346afb,Michael Mccormack,Michael Mccormack,No. 9,9,6,93,1,93.0
+raw_e6d15b67_b14a_441a_9936_1ba4b31bcb45,Michael Mccormack,Michael Mccormack,No. 9,9,2,25,2,12.5
+raw_08798034_3b3d_471c_b5cd_2abe7f346afb,Michael Mccormack,Michael Mccormack,Tail,10,4,15,3,5.0
+raw_a638f50a_6e94_48a8_89e5_c2a7c16e44fe,Milind Bulsara,Milind Bulsara,No. 4,4,2,63,1,63.0
+raw_a638f50a_6e94_48a8_89e5_c2a7c16e44fe,Milind Bulsara,Milind Bulsara,No. 5,5,2,17,2,8.5
+raw_a638f50a_6e94_48a8_89e5_c2a7c16e44fe,Milind Bulsara,Milind Bulsara,No. 6,6,1,19,1,19.0
+raw_a638f50a_6e94_48a8_89e5_c2a7c16e44fe,Milind Bulsara,Milind Bulsara,No. 7,7,1,24,1,24.0
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,Opener,1,30,564,28,20.142857142857142
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 3,3,7,198,6,33.0
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 4,4,1,11,1,11.0
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 5,5,2,17,2,8.5
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 6,6,2,20,2,10.0
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 7,7,3,56,3,18.666666666666668
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 8,8,6,97,5,19.4
+raw_e12359e4_1004_4f05_b7c1_936232f7cb89,Mit Patel,Mit Patel,No. 9,9,2,41,2,20.5
+raw_ac08cc39_d9de_4af1_a8aa_8dde85d6caee,Mohamed Mohamed Rumy,Mohamed Mohamed Rumy,No. 5,5,1,12,1,12.0
+raw_69957460_ce88_48fe_acb1_f9821bee870d,Mohit Maifatia,Mohit Maifatia,No. 6,6,1,0,1,0.0
+raw_93e3058b_90da_4daf_88bd_8542e69b5e88,Mohitkumar Bhatt,Mohitkumar Bhatt,Tail,10,8,17,5,3.4
+raw_034758a7_0f98_4874_94bd_aaa6a8987164,Montu Sharma,Montu Sharma,No. 5,5,1,46,1,46.0
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,Opener,1,1,22,1,22.0
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,No. 5,5,1,5,1,5.0
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,No. 6,6,1,4,1,4.0
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,No. 7,7,1,25,1,25.0
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,No. 8,8,4,37,4,9.25
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,No. 9,9,2,8,2,4.0
+raw_6670d813_04f5_4a16_905c_ebce210a28f2,Moon Patel,Moon Patel,Tail,10,1,6,0,
+raw_8275aa8d_2a92_4d4c_a6ec_5e486ef7df4e,Mudit Mishra,Mudit Mishra,No. 6,6,1,32,0,
+raw_8275aa8d_2a92_4d4c_a6ec_5e486ef7df4e,Mudit Mishra,Mudit Mishra,No. 7,7,1,0,1,0.0
+raw_8275aa8d_2a92_4d4c_a6ec_5e486ef7df4e,Mudit Mishra,Mudit Mishra,No. 9,9,1,15,0,
+raw_dc8240e6_420d_46c3_90f2_869aa1babcd8,Muhammad Hasnain,Muhammad Hasnain,Tail,10,1,8,1,8.0
+raw_e1583981_92b6_4659_9fee_c7dec046cebc,Naga Nutakki,Naga Nutakki,Tail,10,1,3,1,3.0
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,Opener,1,2,6,2,3.0
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 3,3,6,123,5,24.6
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 4,4,13,329,11,29.90909090909091
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 5,5,3,29,2,14.5
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 6,6,7,55,5,11.0
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 7,7,15,121,12,10.083333333333334
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 8,8,12,106,8,13.25
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,No. 9,9,13,92,10,9.2
+raw_d898c134_016c_4fa3_b09a_9bc6a35a50a8,Nathan Benson,Nathan Benson,Tail,10,40,161,13,12.384615384615385
+raw_b3951f8b_0e32_4ad9_93b4_1a8797d56260,Nathan Vernon,Nathan Vernon,No. 4,4,1,36,1,36.0
+raw_b3951f8b_0e32_4ad9_93b4_1a8797d56260,Nathan Vernon,Nathan Vernon,No. 7,7,1,7,1,7.0
+raw_aefb4b5f_5cca_4529_95de_7b0940809b75,Navneet Singh,Navneet Singh,Opener,1,7,193,6,32.166666666666664
+raw_aefb4b5f_5cca_4529_95de_7b0940809b75,Navneet Singh,Navneet Singh,No. 3,3,1,4,1,4.0
+raw_faf9ac26_70fa_428a_b0ae_d630420fee0c,Nayankumar Sojitra,Nayankumar Sojitra,No. 6,6,2,22,1,22.0
+raw_faf9ac26_70fa_428a_b0ae_d630420fee0c,Nayankumar Sojitra,Nayankumar Sojitra,No. 7,7,2,18,1,18.0
+raw_faf9ac26_70fa_428a_b0ae_d630420fee0c,Nayankumar Sojitra,Nayankumar Sojitra,No. 8,8,2,10,2,5.0
+raw_faf9ac26_70fa_428a_b0ae_d630420fee0c,Nayankumar Sojitra,Nayankumar Sojitra,No. 9,9,5,9,4,2.25
+raw_faf9ac26_70fa_428a_b0ae_d630420fee0c,Nayankumar Sojitra,Nayankumar Sojitra,Tail,10,6,16,4,4.0
+raw_c803fc1a_a3e4_4879_835e_6de225cd3565,Neha Bhatt,Neha Bhatt,No. 7,7,1,1,1,1.0
+raw_2c8d8a53_7ea8_45d1_980c_21a16d8e8622,Neharika Yadav,Neharika Yadav,No. 6,6,1,1,1,1.0
+raw_61538c00_0f02_4fb6_b601_f4e073ab1252,Neil Wigley,Neil Wigley,No. 4,4,1,19,1,19.0
+raw_61538c00_0f02_4fb6_b601_f4e073ab1252,Neil Wigley,Neil Wigley,No. 5,5,3,16,3,5.333333333333333
+raw_61538c00_0f02_4fb6_b601_f4e073ab1252,Neil Wigley,Neil Wigley,No. 6,6,2,67,2,33.5
+raw_61538c00_0f02_4fb6_b601_f4e073ab1252,Neil Wigley,Neil Wigley,No. 7,7,2,50,2,25.0
+raw_61538c00_0f02_4fb6_b601_f4e073ab1252,Neil Wigley,Neil Wigley,No. 8,8,1,21,0,
+raw_61538c00_0f02_4fb6_b601_f4e073ab1252,Neil Wigley,Neil Wigley,Tail,10,1,0,1,0.0
+raw_50c828e5_0de3_4c13_8279_5bafc978a700,Nikhil Kumar,Nikhil Kumar,No. 8,8,2,18,2,9.0
+raw_50c828e5_0de3_4c13_8279_5bafc978a700,Nikhil Kumar,Nikhil Kumar,Tail,10,2,10,2,5.0
+raw_70144d2b_615d_498b_90f6_26e06b0e7c8a,Nikul Patel,Nikul Patel,No. 5,5,1,15,1,15.0
+raw_70144d2b_615d_498b_90f6_26e06b0e7c8a,Nikul Patel,Nikul Patel,No. 7,7,2,10,2,5.0
+raw_70144d2b_615d_498b_90f6_26e06b0e7c8a,Nikul Patel,Nikul Patel,No. 8,8,1,15,0,
+raw_70144d2b_615d_498b_90f6_26e06b0e7c8a,Nikul Patel,Nikul Patel,Tail,10,3,31,1,31.0
+raw_f812f27b_ccc4_4154_8298_421486a7b843,Ninaad Karve,Ninaad Karve,No. 3,3,1,13,1,13.0
+raw_f812f27b_ccc4_4154_8298_421486a7b843,Ninaad Karve,Ninaad Karve,No. 4,4,1,18,1,18.0
+raw_f812f27b_ccc4_4154_8298_421486a7b843,Ninaad Karve,Ninaad Karve,No. 5,5,3,87,2,43.5
+raw_f812f27b_ccc4_4154_8298_421486a7b843,Ninaad Karve,Ninaad Karve,No. 6,6,1,11,1,11.0
+raw_f812f27b_ccc4_4154_8298_421486a7b843,Ninaad Karve,Ninaad Karve,No. 7,7,2,84,2,42.0
+raw_f812f27b_ccc4_4154_8298_421486a7b843,Ninaad Karve,Ninaad Karve,No. 8,8,1,15,1,15.0
+raw_e5f21381_3f6a_487c_a06c_149f4be46e2d,Nipun Gaindhar,Nipun Gaindhar,Tail,10,2,15,2,7.5
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,Opener,1,15,232,15,15.466666666666667
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 3,3,11,233,10,23.3
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 4,4,10,102,9,11.333333333333334
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 5,5,8,74,7,10.571428571428571
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 6,6,6,31,6,5.166666666666667
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 7,7,14,64,12,5.333333333333333
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 8,8,19,129,11,11.727272727272727
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,No. 9,9,16,80,13,6.153846153846154
+raw_df45cadd_bf97_4476_9b45_d926c10b92f3,Niraj Patel,Niraj Patel,Tail,10,21,105,12,8.75
+raw_6e66396e_5649_4a3d_926a_f1c636dababc,Nirlep Patel,Nirlep Patel,Opener,1,7,224,4,56.0
+raw_6e66396e_5649_4a3d_926a_f1c636dababc,Nirlep Patel,Nirlep Patel,No. 3,3,6,57,6,9.5
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,No. 3,3,7,113,7,16.142857142857142
+raw_6e66396e_5649_4a3d_926a_f1c636dababc,Nirlep Patel,Nirlep Patel,No. 4,4,1,23,1,23.0
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,No. 4,4,2,33,1,33.0
+raw_6e66396e_5649_4a3d_926a_f1c636dababc,Nirlep Patel,Nirlep Patel,No. 5,5,1,31,1,31.0
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,No. 5,5,3,19,3,6.333333333333333
+raw_6e66396e_5649_4a3d_926a_f1c636dababc,Nirlep Patel,Nirlep Patel,No. 6,6,2,1,2,0.5
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,No. 6,6,1,15,0,
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,No. 7,7,1,0,1,0.0
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,No. 8,8,1,0,1,0.0
+raw_6e66396e_5649_4a3d_926a_f1c636dababc,Nirlep Patel,Nirlep Patel,No. 9,9,1,25,1,25.0
+raw_824d5fb6_1288_4485_992a_29fd6bdcbbed,Nirlep Patel,Nirlep Patel,Tail,10,1,12,1,12.0
+raw_65cc8a65_fb71_432c_9927_9f288eebbbcf,Nitesh Gupta,Nitesh Gupta,No. 6,6,1,11,1,11.0
+raw_458d4136_a5c9_4492_9e59_ef7ef872cc6f,Nitin Jain,Nitin Jain,No. 6,6,1,38,0,
+raw_458d4136_a5c9_4492_9e59_ef7ef872cc6f,Nitin Jain,Nitin Jain,No. 8,8,2,3,2,1.5
+raw_b819eac7_672a_414f_8e38_c0e64c8e880c,Nitul Patel,Nitul Patel,No. 5,5,1,2,1,2.0
+raw_b819eac7_672a_414f_8e38_c0e64c8e880c,Nitul Patel,Nitul Patel,No. 7,7,1,13,1,13.0
+raw_b819eac7_672a_414f_8e38_c0e64c8e880c,Nitul Patel,Nitul Patel,No. 8,8,1,14,1,14.0
+raw_b819eac7_672a_414f_8e38_c0e64c8e880c,Nitul Patel,Nitul Patel,No. 9,9,1,7,1,7.0
+raw_b819eac7_672a_414f_8e38_c0e64c8e880c,Nitul Patel,Nitul Patel,Tail,10,1,7,0,
+raw_b987beab_1cd8_456c_ae90_e0a4af757dde,Ocienne Farquharson,Ocienne Farquharson,No. 3,3,1,58,0,
+raw_14d19ea2_44d5_4bc8_bc28_a09ef4ecfed3,Omkar Sankpal,Omkar Sankpal,Tail,10,1,8,1,8.0
+raw_e8d2b449_a411_4649_9948_b6138929fd3d,Palak Patel,Palak Patel,Opener,1,9,98,9,10.88888888888889
+raw_e8d2b449_a411_4649_9948_b6138929fd3d,Palak Patel,Palak Patel,No. 4,4,1,2,1,2.0
+raw_e8d2b449_a411_4649_9948_b6138929fd3d,Palak Patel,Palak Patel,No. 7,7,5,29,5,5.8
+raw_e8d2b449_a411_4649_9948_b6138929fd3d,Palak Patel,Palak Patel,No. 8,8,3,9,2,4.5
+raw_e8d2b449_a411_4649_9948_b6138929fd3d,Palak Patel,Palak Patel,No. 9,9,4,48,2,24.0
+raw_e8d2b449_a411_4649_9948_b6138929fd3d,Palak Patel,Palak Patel,Tail,10,4,3,3,1.0
+raw_8758c11b_73ac_4a89_beaf_19136b8ec133,Pankaj Kumar,Pankaj Kumar,No. 7,7,1,0,1,0.0
+raw_8758c11b_73ac_4a89_beaf_19136b8ec133,Pankaj Kumar,Pankaj Kumar,No. 9,9,1,2,1,2.0
+raw_3cfe6bba_7497_4d11_b7b8_dbf8f43a6e49,Pankaj Singh,Pankaj Singh,No. 3,3,1,0,1,0.0
+raw_3cfe6bba_7497_4d11_b7b8_dbf8f43a6e49,Pankaj Singh,Pankaj Singh,No. 9,9,1,0,1,0.0
+raw_3cfe6bba_7497_4d11_b7b8_dbf8f43a6e49,Pankaj Singh,Pankaj Singh,Tail,10,2,18,1,18.0
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,No. 4,4,3,1,3,0.3333333333333333
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,No. 5,5,2,44,2,22.0
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,No. 6,6,8,53,7,7.571428571428571
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,No. 7,7,5,110,4,27.5
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,No. 8,8,6,63,5,12.6
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,No. 9,9,4,4,3,1.3333333333333333
+raw_cbd2b567_fe5c_459e_8621_824f47efc2b0,Pankaj Singh Jangid,Pankaj Singh Jangid,Tail,10,10,40,4,10.0
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,Opener,1,19,417,19,21.94736842105263
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 3,3,14,311,14,22.214285714285715
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 4,4,17,155,16,9.6875
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 5,5,9,241,9,26.77777777777778
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 6,6,6,123,6,20.5
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 7,7,4,15,4,3.75
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 8,8,2,31,2,15.5
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,No. 9,9,3,83,1,83.0
+raw_b29514d4_1225_4dc1_907b_3bc721c08b18,Param Patel,Param Patel,Tail,10,2,1,1,1.0
+raw_869b0fad_8f9f_4686_b25b_f75ffe6d4467,Param Singh,Param Singh,No. 8,8,1,38,0,
+raw_869b0fad_8f9f_4686_b25b_f75ffe6d4467,Param Singh,Param Singh,No. 9,9,1,9,0,
+raw_622509f4_3298_4d24_9601_908fd7e9bbbe,Paramesawara Naidu,Paramesawara Naidu,No. 3,3,1,69,1,69.0
+raw_622509f4_3298_4d24_9601_908fd7e9bbbe,Paramesawara Naidu,Paramesawara Naidu,No. 5,5,1,72,1,72.0
+raw_622509f4_3298_4d24_9601_908fd7e9bbbe,Paramesawara Naidu,Paramesawara Naidu,No. 7,7,1,2,1,2.0
+raw_622509f4_3298_4d24_9601_908fd7e9bbbe,Paramesawara Naidu,Paramesawara Naidu,No. 8,8,1,8,1,8.0
+raw_622509f4_3298_4d24_9601_908fd7e9bbbe,Paramesawara Naidu,Paramesawara Naidu,Tail,10,1,4,0,
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,Opener,1,15,297,13,22.846153846153847
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,No. 3,3,2,39,2,19.5
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,No. 4,4,1,0,1,0.0
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,No. 5,5,2,24,2,12.0
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,No. 6,6,3,49,2,24.5
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,No. 7,7,6,82,6,13.666666666666666
+raw_ee3164b8_dee2_4dc3_9064_5a9a80d80ac5,Paraskumar Korat,Paraskumar Korat,No. 8,8,4,78,1,78.0
+raw_31af0c72_5f0c_4ed8_bcf0_cf3d54dbe790,Paresh Engineer,Paresh Engineer,Tail,10,1,3,1,3.0
+raw_1bd91c30_a661_45c6_95a7_3828ce1e29be,Parvez Sharma,Parvez Sharma,No. 3,3,1,0,1,0.0
+raw_1bd91c30_a661_45c6_95a7_3828ce1e29be,Parvez Sharma,Parvez Sharma,No. 5,5,1,13,1,13.0
+raw_9aede1a7_5811_446b_872d_57ae321951f4,Patrick White,Patrick White,No. 6,6,1,0,1,0.0
+raw_9aede1a7_5811_446b_872d_57ae321951f4,Patrick White,Patrick White,No. 8,8,1,4,1,4.0
+raw_9aede1a7_5811_446b_872d_57ae321951f4,Patrick White,Patrick White,No. 9,9,1,15,1,15.0
+raw_9aede1a7_5811_446b_872d_57ae321951f4,Patrick White,Patrick White,Tail,10,3,4,3,1.3333333333333333
+raw_dc9c6cff_3d3f_4478_bfcf_60025e34bd42,Paul Giles,Paul Giles,Opener,1,4,59,4,14.75
+raw_ef915bdd_5a97_4a1b_8564_d2852e0a4e43,Paul Giles,Paul Giles,Opener,1,4,43,4,10.75
+raw_dc9c6cff_3d3f_4478_bfcf_60025e34bd42,Paul Giles,Paul Giles,No. 3,3,4,43,3,14.333333333333334
+raw_ef915bdd_5a97_4a1b_8564_d2852e0a4e43,Paul Giles,Paul Giles,No. 3,3,1,16,1,16.0
+raw_ef915bdd_5a97_4a1b_8564_d2852e0a4e43,Paul Giles,Paul Giles,No. 5,5,2,29,2,14.5
+raw_ef915bdd_5a97_4a1b_8564_d2852e0a4e43,Paul Giles,Paul Giles,No. 6,6,1,21,1,21.0
+raw_dc9c6cff_3d3f_4478_bfcf_60025e34bd42,Paul Giles,Paul Giles,No. 9,9,1,3,0,
+raw_ef915bdd_5a97_4a1b_8564_d2852e0a4e43,Paul Giles,Paul Giles,Tail,10,1,7,0,
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,Opener,1,30,463,30,15.433333333333334
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,No. 3,3,9,321,6,53.5
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,No. 4,4,1,29,1,29.0
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,No. 5,5,2,45,2,22.5
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,No. 7,7,1,18,1,18.0
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,No. 8,8,1,0,1,0.0
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,No. 9,9,2,17,1,17.0
+raw_86a744c5_7734_4c72_be00_91172dc04a84,Paul Sutton,Paul Sutton,Tail,10,1,0,1,0.0
+raw_bb8323b6_afb1_4297_abdb_3fb11b9dfb21,Piyush Khadela,Piyush Khadela,No. 4,4,2,14,2,7.0
+raw_bb8323b6_afb1_4297_abdb_3fb11b9dfb21,Piyush Khadela,Piyush Khadela,No. 5,5,1,22,0,
+raw_bb8323b6_afb1_4297_abdb_3fb11b9dfb21,Piyush Khadela,Piyush Khadela,No. 6,6,1,9,1,9.0
+raw_bb8323b6_afb1_4297_abdb_3fb11b9dfb21,Piyush Khadela,Piyush Khadela,No. 7,7,1,5,0,
+raw_bb8323b6_afb1_4297_abdb_3fb11b9dfb21,Piyush Khadela,Piyush Khadela,No. 8,8,2,20,1,20.0
+raw_e3bed986_e9f1_4036_a9da_b3f6d162eac1,Ponadiyan Vijayarengan,Ponadiyan Vijayarengan,Opener,1,2,38,2,19.0
+raw_e3bed986_e9f1_4036_a9da_b3f6d162eac1,Ponadiyan Vijayarengan,Ponadiyan Vijayarengan,No. 3,3,2,8,2,4.0
+raw_e3bed986_e9f1_4036_a9da_b3f6d162eac1,Ponadiyan Vijayarengan,Ponadiyan Vijayarengan,No. 9,9,1,2,1,2.0
+raw_a5420976_a9b4_4b7b_9255_8bb1afd2b354,Prachi Mungi,Prachi Mungi,No. 3,3,1,22,0,
+raw_a5420976_a9b4_4b7b_9255_8bb1afd2b354,Prachi Mungi,Prachi Mungi,No. 4,4,1,10,1,10.0
+raw_10f3280c_b114_474e_8bfa_5ca53946bed1,Pradeep Kakumanu,Pradeep Kakumanu,No. 3,3,1,2,1,2.0
+raw_10f3280c_b114_474e_8bfa_5ca53946bed1,Pradeep Kakumanu,Pradeep Kakumanu,No. 7,7,1,20,1,20.0
+raw_ca670b7b_0a96_4627_a0a0_b352a57349ff,Pragati Gaikwad,Pragati Gaikwad,No. 4,4,1,0,1,0.0
+raw_3753b989_356e_4619_a4c8_15536a8f6373,Pranav Chahwala,Pranav Chahwala,No. 5,5,1,14,1,14.0
+raw_3753b989_356e_4619_a4c8_15536a8f6373,Pranav Chahwala,Pranav Chahwala,No. 6,6,2,12,2,6.0
+raw_3753b989_356e_4619_a4c8_15536a8f6373,Pranav Chahwala,Pranav Chahwala,No. 8,8,1,10,0,
+raw_3753b989_356e_4619_a4c8_15536a8f6373,Pranav Chahwala,Pranav Chahwala,No. 9,9,3,32,3,10.666666666666666
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,Opener,1,23,319,21,15.19047619047619
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,No. 3,3,18,382,16,23.875
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,No. 4,4,6,97,6,16.166666666666668
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,No. 5,5,6,39,6,6.5
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,No. 6,6,5,63,4,15.75
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,No. 7,7,1,3,1,3.0
+raw_f578debf_a8f1_48fb_974d_a44d4b94dbe6,Pranav Sinha,Pranav Sinha,No. 8,8,3,30,2,15.0
+raw_05a2979d_0922_44e6_b9bd_a276d42dfe73,Pranav Vaghela,Pranav Vaghela,Opener,1,1,0,1,0.0
+raw_05a2979d_0922_44e6_b9bd_a276d42dfe73,Pranav Vaghela,Pranav Vaghela,No. 4,4,1,17,1,17.0
+raw_05a2979d_0922_44e6_b9bd_a276d42dfe73,Pranav Vaghela,Pranav Vaghela,No. 7,7,1,2,1,2.0
+raw_05a2979d_0922_44e6_b9bd_a276d42dfe73,Pranav Vaghela,Pranav Vaghela,No. 8,8,1,7,0,
+raw_05a2979d_0922_44e6_b9bd_a276d42dfe73,Pranav Vaghela,Pranav Vaghela,Tail,10,1,0,1,0.0
+raw_e8c1bb82_c4fd_4841_994c_9dfd6e401e0e,Pranit Kumar,Pranit Kumar,No. 9,9,1,3,1,3.0
+raw_e8c1bb82_c4fd_4841_994c_9dfd6e401e0e,Pranit Kumar,Pranit Kumar,Tail,10,2,18,1,18.0
+raw_09c35816_3aa9_4fff_9be3_f0e4c6fcf681,Prashant Raval,Prashant Raval,No. 5,5,1,1,1,1.0
+raw_634e4b3c_2ab3_4e2b_a15e_6c1d91203844,Prashant Raval,Prashant Raval,No. 5,5,1,0,1,0.0
+raw_09c35816_3aa9_4fff_9be3_f0e4c6fcf681,Prashant Raval,Prashant Raval,No. 8,8,2,2,1,2.0
+raw_634e4b3c_2ab3_4e2b_a15e_6c1d91203844,Prashant Raval,Prashant Raval,Tail,10,1,0,0,
+raw_a9650487_bfa3_4c7c_aad7_11c8bb2d4f34,Prateek Bhardwaj,Prateek Bhardwaj,Tail,10,1,2,1,2.0
+raw_979b621f_03e7_412f_9b77_09baf03e85cd,Prateek Namdeo,Prateek Namdeo,Opener,1,2,4,2,2.0
+raw_979b621f_03e7_412f_9b77_09baf03e85cd,Prateek Namdeo,Prateek Namdeo,No. 3,3,2,26,2,13.0
+raw_979b621f_03e7_412f_9b77_09baf03e85cd,Prateek Namdeo,Prateek Namdeo,No. 4,4,1,18,1,18.0
+raw_979b621f_03e7_412f_9b77_09baf03e85cd,Prateek Namdeo,Prateek Namdeo,No. 5,5,1,0,1,0.0
+raw_979b621f_03e7_412f_9b77_09baf03e85cd,Prateek Namdeo,Prateek Namdeo,No. 9,9,1,0,1,0.0
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,Opener,1,50,922,48,19.208333333333332
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 3,3,10,178,8,22.25
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 4,4,7,135,7,19.285714285714285
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 5,5,5,28,4,7.0
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 6,6,5,40,4,10.0
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 7,7,6,64,4,16.0
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 8,8,11,114,10,11.4
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,No. 9,9,5,15,4,3.75
+raw_6f368645_e3a2_4d64_859f_96bbe69e80b5,Prateek Sharma,Prateek Sharma,Tail,10,3,25,0,
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,Opener,1,2,9,2,4.5
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 3,3,4,82,4,20.5
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 4,4,9,111,9,12.333333333333334
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 5,5,9,178,7,25.428571428571427
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 6,6,8,220,6,36.666666666666664
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 7,7,9,136,6,22.666666666666668
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 8,8,6,29,5,5.8
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,No. 9,9,1,3,0,
+raw_e038ba7d_386b_46ef_99c6_4e92dfe7c75b,Pratikkumar Patel,Pratikkumar Patel,Tail,10,2,0,2,0.0
+raw_3671ec94_539e_47f0_91a3_5659e13877a3,Prem Kumar Venkataramani,Prem Kumar Venkataramani,Opener,1,1,20,1,20.0
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 3,3,2,6,2,3.0
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 4,4,1,27,1,27.0
+raw_3671ec94_539e_47f0_91a3_5659e13877a3,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 5,5,1,13,1,13.0
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 5,5,2,7,2,3.5
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 6,6,3,48,1,48.0
+raw_3671ec94_539e_47f0_91a3_5659e13877a3,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 8,8,1,12,1,12.0
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 8,8,2,25,2,12.5
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,No. 9,9,2,8,2,4.0
+raw_66f9a9ff_3e7f_449c_9892_7dcd840ab6f8,Prem Kumar Venkataramani,Prem Kumar Venkataramani,Tail,10,1,10,0,
+raw_9da2066c_2984_4d63_a254_5f148df5cf78,Pulkit Palta,Pulkit Palta,Opener,1,1,8,1,8.0
+raw_9da2066c_2984_4d63_a254_5f148df5cf78,Pulkit Palta,Pulkit Palta,No. 3,3,1,2,1,2.0
+raw_9da2066c_2984_4d63_a254_5f148df5cf78,Pulkit Palta,Pulkit Palta,Tail,10,3,3,2,1.5
+raw_8f37cccd_ddca_420a_a7ee_36af9ccfdb5c,Puneet Bhardwaj,Puneet Bhardwaj,Opener,1,2,51,2,25.5
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,Opener,1,106,3477,101,34.42574257425743
+raw_8f37cccd_ddca_420a_a7ee_36af9ccfdb5c,Puneet Bhardwaj,Puneet Bhardwaj,No. 3,3,12,362,11,32.90909090909091
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 3,3,8,222,8,27.75
+raw_8f37cccd_ddca_420a_a7ee_36af9ccfdb5c,Puneet Bhardwaj,Puneet Bhardwaj,No. 4,4,2,24,0,
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 4,4,12,137,11,12.454545454545455
+raw_8f37cccd_ddca_420a_a7ee_36af9ccfdb5c,Puneet Bhardwaj,Puneet Bhardwaj,No. 5,5,1,4,1,4.0
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 5,5,7,192,6,32.0
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 6,6,3,26,3,8.666666666666666
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 7,7,7,89,7,12.714285714285714
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 8,8,3,176,2,88.0
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,No. 9,9,2,5,2,2.5
+raw_c23277f9_cd5e_4682_84a5_660ebc7f1459,Puneet Bhardwaj,Puneet Bhardwaj,Tail,10,3,15,2,7.5
+raw_31b85503_b593_47b7_b26c_6b6bfb42dd09,Purav Patel,Purav Patel,No. 3,3,1,2,1,2.0
+raw_31b85503_b593_47b7_b26c_6b6bfb42dd09,Purav Patel,Purav Patel,No. 4,4,2,31,2,15.5
+raw_31b85503_b593_47b7_b26c_6b6bfb42dd09,Purav Patel,Purav Patel,No. 5,5,1,10,1,10.0
+raw_31b85503_b593_47b7_b26c_6b6bfb42dd09,Purav Patel,Purav Patel,No. 9,9,1,17,0,
+raw_30783e3b_7624_41de_8daf_1cc0f4e9fca3,Ragavendra Basantpurkar,Ragavendra Basantpurkar,Tail,10,2,0,1,0.0
+raw_64689dd4_33a9_495c_aa96_3b3a788a7c26,Raghunath Akella,Raghunath Akella,No. 3,3,1,4,1,4.0
+raw_bbe11fae_5959_4c70_adbf_07a6da89a57c,Raghuwinder Singh,Raghuwinder Singh,No. 7,7,2,10,2,5.0
+raw_bbe11fae_5959_4c70_adbf_07a6da89a57c,Raghuwinder Singh,Raghuwinder Singh,No. 8,8,1,4,0,
+raw_bbe11fae_5959_4c70_adbf_07a6da89a57c,Raghuwinder Singh,Raghuwinder Singh,No. 9,9,1,2,0,
+raw_54bb4cf5_b2d8_4009_bf46_218557fcbc23,Rahul Balhara,Rahul Balhara,Opener,1,1,0,1,0.0
+raw_54bb4cf5_b2d8_4009_bf46_218557fcbc23,Rahul Balhara,Rahul Balhara,No. 3,3,2,62,2,31.0
+raw_54bb4cf5_b2d8_4009_bf46_218557fcbc23,Rahul Balhara,Rahul Balhara,No. 4,4,1,69,1,69.0
+raw_9c26d0a3_137b_4ba6_810a_480e642e1bd8,Rahul Patel,Rahul Patel,Tail,10,1,5,1,5.0
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,Opener,1,7,103,6,17.166666666666668
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 3,3,37,961,32,30.03125
+raw_37cf440e_0875_47b4_b065_06bf6e4c29d0,Rajiv Chandla,Rajiv Chandla,No. 3,3,1,10,1,10.0
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 4,4,31,507,28,18.107142857142858
+raw_37cf440e_0875_47b4_b065_06bf6e4c29d0,Rajiv Chandla,Rajiv Chandla,No. 4,4,1,4,1,4.0
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 5,5,22,404,19,21.263157894736842
+raw_37cf440e_0875_47b4_b065_06bf6e4c29d0,Rajiv Chandla,Rajiv Chandla,No. 5,5,2,98,0,
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 6,6,7,183,6,30.5
+raw_37cf440e_0875_47b4_b065_06bf6e4c29d0,Rajiv Chandla,Rajiv Chandla,No. 6,6,3,40,2,20.0
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 7,7,8,101,8,12.625
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 8,8,5,91,5,18.2
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,No. 9,9,3,35,3,11.666666666666666
+raw_050dae63_cf92_48c7_b420_3d782dc1d61b,Rajiv Chandla,Rajiv Chandla,Tail,10,2,13,2,6.5
+raw_5760a72c_81e2_4a00_ab20_85d9f4812dcb,Rajranjan Parthipan,Rajranjan Parthipan,No. 7,7,1,2,1,2.0
+raw_7820c070_6256_470b_a460_2bfbee7eb0a5,Rakesh Thatipamula,Rakesh Thatipamula,No. 3,3,2,58,1,58.0
+raw_7820c070_6256_470b_a460_2bfbee7eb0a5,Rakesh Thatipamula,Rakesh Thatipamula,No. 5,5,1,6,1,6.0
+raw_7820c070_6256_470b_a460_2bfbee7eb0a5,Rakesh Thatipamula,Rakesh Thatipamula,No. 6,6,1,2,1,2.0
+raw_7820c070_6256_470b_a460_2bfbee7eb0a5,Rakesh Thatipamula,Rakesh Thatipamula,No. 7,7,4,74,3,24.666666666666668
+raw_7820c070_6256_470b_a460_2bfbee7eb0a5,Rakesh Thatipamula,Rakesh Thatipamula,No. 8,8,2,37,2,18.5
+raw_d97670f7_4beb_408b_b435_f26991769473,Ramakrishna Jasthi,Ramakrishna Jasthi,No. 5,5,1,81,0,
+raw_1dbee654_c820_4441_aeb8_2f022db287fe,Ranjeet Aulakh,Ranjeet Aulakh,Opener,1,1,22,1,22.0
+raw_e4caec2a_345e_4a30_9155_5f14da909c68,Ravi Shankar,Ravi Shankar,No. 3,3,1,0,1,0.0
+raw_c5855be9_ead7_4479_9d94_8c442293e2c3,Ravi Tallapalli,Ravi Tallapalli,No. 6,6,2,22,2,11.0
+raw_c5855be9_ead7_4479_9d94_8c442293e2c3,Ravi Tallapalli,Ravi Tallapalli,No. 7,7,2,4,2,2.0
+raw_c5855be9_ead7_4479_9d94_8c442293e2c3,Ravi Tallapalli,Ravi Tallapalli,No. 9,9,2,9,2,4.5
+raw_c5855be9_ead7_4479_9d94_8c442293e2c3,Ravi Tallapalli,Ravi Tallapalli,Tail,10,2,2,1,2.0
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,Opener,1,4,18,4,4.5
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 3,3,1,4,1,4.0
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 4,4,2,6,2,3.0
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 5,5,2,8,2,4.0
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 6,6,3,28,3,9.333333333333334
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 7,7,3,71,2,35.5
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 8,8,8,88,7,12.571428571428571
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,No. 9,9,10,45,8,5.625
+raw_488e41a3_fe2c_48a5_9309_d9379733bed5,Ravinder Verma,Ravinder Verma,Tail,10,11,76,5,15.2
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,Opener,1,48,871,46,18.934782608695652
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,No. 3,3,2,89,2,44.5
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,No. 4,4,1,53,1,53.0
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,No. 6,6,1,12,0,
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,No. 7,7,1,2,0,
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,No. 9,9,2,8,2,4.0
+raw_45c758b6_24a6_4bac_804d_03cfb3f8b2b5,Rhett Harris,Rhett Harris,Tail,10,2,14,2,7.0
+raw_e7801661_6372_4bb1_bb8f_e505eaa42e42,Ritika Srivathsan,Ritika Srivathsan,No. 4,4,1,1,1,1.0
+raw_2fb19b99_6cdd_4132_aeb5_93ac4b10490d,Rob Corrigan,Rob Corrigan,No. 6,6,1,20,1,20.0
+raw_2fb19b99_6cdd_4132_aeb5_93ac4b10490d,Rob Corrigan,Rob Corrigan,No. 7,7,1,37,0,
+raw_ddb7396f_eb76_4ded_b679_3068c067ea24,Robin Fernandes,Robin Fernandes,Opener,1,1,10,1,10.0
+raw_ddb7396f_eb76_4ded_b679_3068c067ea24,Robin Fernandes,Robin Fernandes,No. 3,3,2,37,2,18.5
+raw_ddb7396f_eb76_4ded_b679_3068c067ea24,Robin Fernandes,Robin Fernandes,No. 4,4,3,32,3,10.666666666666666
+raw_ddb7396f_eb76_4ded_b679_3068c067ea24,Robin Fernandes,Robin Fernandes,No. 5,5,4,46,4,11.5
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,No. 4,4,3,46,3,15.333333333333334
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,No. 5,5,1,0,1,0.0
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,No. 6,6,1,33,1,33.0
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,No. 7,7,1,24,1,24.0
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,No. 8,8,1,1,1,1.0
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,No. 9,9,1,17,1,17.0
+raw_f4229d03_48eb_45e8_b1bb_4322b3e6a632,Rohan Pandit,Rohan Pandit,Tail,10,1,15,0,
+raw_a9cbb4fc_a835_47a8_a21c_cf3ff9f3fdf9,Rohan Shinde,Rohan Shinde,No. 5,5,4,33,4,8.25
+raw_a9cbb4fc_a835_47a8_a21c_cf3ff9f3fdf9,Rohan Shinde,Rohan Shinde,No. 6,6,1,11,1,11.0
+raw_a9cbb4fc_a835_47a8_a21c_cf3ff9f3fdf9,Rohan Shinde,Rohan Shinde,No. 7,7,3,0,3,0.0
+raw_a9cbb4fc_a835_47a8_a21c_cf3ff9f3fdf9,Rohan Shinde,Rohan Shinde,No. 8,8,4,15,4,3.75
+raw_a9cbb4fc_a835_47a8_a21c_cf3ff9f3fdf9,Rohan Shinde,Rohan Shinde,No. 9,9,2,6,2,3.0
+raw_a9cbb4fc_a835_47a8_a21c_cf3ff9f3fdf9,Rohan Shinde,Rohan Shinde,Tail,10,1,2,1,2.0
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,Opener,1,1,0,1,0.0
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 3,3,13,140,13,10.76923076923077
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 4,4,31,507,28,18.107142857142858
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 5,5,22,292,20,14.6
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 6,6,11,216,11,19.636363636363637
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 7,7,10,144,7,20.571428571428573
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 8,8,5,23,5,4.6
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,No. 9,9,2,18,0,
+raw_88a8c15f_0987_40a7_acc3_64771c163669,Rohit Kumar M Chand,Rohit Kumar M Chand,Tail,10,1,0,1,0.0
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 3,3,2,30,2,15.0
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 4,4,2,33,1,33.0
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 5,5,3,52,3,17.333333333333332
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 6,6,6,55,6,9.166666666666666
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 7,7,2,11,1,11.0
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 8,8,5,46,4,11.5
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,No. 9,9,4,39,3,13.0
+raw_0627d0fb_50c0_4e0b_bdff_592d11132ad5,Rohit Kumar Pendyala Suryaprakash,Rohit Kumar Pendyala Suryaprakash,Tail,10,1,3,1,3.0
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,Opener,1,8,48,7,6.857142857142857
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 3,3,8,101,8,12.625
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 4,4,4,61,3,20.333333333333332
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 5,5,7,113,6,18.833333333333332
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 6,6,14,174,9,19.333333333333332
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 7,7,11,130,8,16.25
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 8,8,17,130,12,10.833333333333334
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,No. 9,9,21,132,14,9.428571428571429
+raw_6b5ea7ea_7ee0_4432_aad6_c9f99e89ecd9,Rohit Tiwari,Rohit Tiwari,Tail,10,38,171,18,9.5
+raw_f983d2d4_0d8c_4be8_82b7_f5cbaa793c28,Rohith G,Rohith G,No. 9,9,1,6,1,6.0
+raw_3da87741_47e3_4af2_bc92_3fbaab24e801,Romell Cleur,Romell Cleur,No. 6,6,1,8,1,8.0
+raw_06ed3d38_af3b_426c_aa24_64c9218dd89a,Romil Patel,Romil Patel,No. 3,3,1,0,1,0.0
+raw_06ed3d38_af3b_426c_aa24_64c9218dd89a,Romil Patel,Romil Patel,No. 4,4,1,10,0,
+raw_06ed3d38_af3b_426c_aa24_64c9218dd89a,Romil Patel,Romil Patel,No. 6,6,1,6,1,6.0
+raw_06ed3d38_af3b_426c_aa24_64c9218dd89a,Romil Patel,Romil Patel,No. 7,7,1,8,1,8.0
+raw_06ed3d38_af3b_426c_aa24_64c9218dd89a,Romil Patel,Romil Patel,No. 8,8,1,7,1,7.0
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,Opener,1,50,946,48,19.708333333333332
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 3,3,23,497,21,23.666666666666668
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 4,4,11,130,9,14.444444444444445
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 5,5,16,171,16,10.6875
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 6,6,14,190,13,14.615384615384615
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 7,7,18,185,12,15.416666666666666
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 8,8,14,188,10,18.8
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,No. 9,9,8,78,6,13.0
+raw_efc943f3_2085_4b69_b039_91eb9a62c153,Ronak Patel,Ronak Patel,Tail,10,8,111,4,27.75
+raw_0565ac3c_77be_4317_967b_cbb7c7311754,Rose Wilson,Rose Wilson,No. 7,7,1,19,0,
+raw_a73a707e_d86a_406f_be52_abec73b9cf83,Rubal Kalyan,Rubal Kalyan,Tail,10,5,10,4,2.5
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,Opener,1,2,34,2,17.0
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,No. 4,4,1,13,1,13.0
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,No. 6,6,1,21,1,21.0
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,No. 7,7,1,2,1,2.0
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,No. 8,8,2,0,2,0.0
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,No. 9,9,1,11,0,
+raw_e5c827a7_7cf0_46ba_a9fc_15791dec4db8,Rupesh Ramesh,Rupesh Ramesh,Tail,10,4,21,2,10.5
+raw_6edbc31b_5bdf_4614_9c51_2139b8cf419b,Rushank Arora,Rushank Arora,No. 5,5,2,40,2,20.0
+raw_6edbc31b_5bdf_4614_9c51_2139b8cf419b,Rushank Arora,Rushank Arora,No. 8,8,1,21,1,21.0
+raw_6edbc31b_5bdf_4614_9c51_2139b8cf419b,Rushank Arora,Rushank Arora,No. 9,9,3,48,3,16.0
+raw_43bc178f_04f9_482c_8657_e37f776f2649,Rushit Patel,Rushit Patel,Tail,10,1,0,1,0.0
+raw_a66b6d98_e39e_418a_9194_9b23ec6b8b71,Sachin Ahuja,Sachin Ahuja,Opener,1,1,0,1,0.0
+raw_a66b6d98_e39e_418a_9194_9b23ec6b8b71,Sachin Ahuja,Sachin Ahuja,No. 6,6,1,0,1,0.0
+raw_a66b6d98_e39e_418a_9194_9b23ec6b8b71,Sachin Ahuja,Sachin Ahuja,No. 8,8,1,5,1,5.0
+raw_adb1956c_3dc1_4df4_bca5_879d16118e33,Sachin Ahuja,Sachin Ahuja,No. 8,8,1,5,1,5.0
+raw_a66b6d98_e39e_418a_9194_9b23ec6b8b71,Sachin Ahuja,Sachin Ahuja,Tail,10,2,0,1,0.0
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,Opener,1,3,44,3,14.666666666666666
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 3,3,1,13,1,13.0
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 4,4,3,8,3,2.6666666666666665
+raw_39fd3c6f_84a6_466c_abe3_2f85c218c08d,Sagar Thakkar,Sagar Thakkar,No. 5,5,1,4,1,4.0
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 5,5,1,0,1,0.0
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 6,6,4,45,2,22.5
+raw_39fd3c6f_84a6_466c_abe3_2f85c218c08d,Sagar Thakkar,Sagar Thakkar,No. 7,7,1,9,1,9.0
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 7,7,5,60,5,12.0
+raw_39fd3c6f_84a6_466c_abe3_2f85c218c08d,Sagar Thakkar,Sagar Thakkar,No. 8,8,4,6,4,1.5
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 8,8,2,6,2,3.0
+raw_39fd3c6f_84a6_466c_abe3_2f85c218c08d,Sagar Thakkar,Sagar Thakkar,No. 9,9,4,51,3,17.0
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,No. 9,9,2,38,1,38.0
+raw_39fd3c6f_84a6_466c_abe3_2f85c218c08d,Sagar Thakkar,Sagar Thakkar,Tail,10,5,54,4,13.5
+raw_88b47c84_081f_4e49_a3a7_705073fe87ef,Sagar Thakkar,Sagar Thakkar,Tail,10,3,104,2,52.0
+raw_059036a5_bbb5_4d8a_83ea_014473bc9388,Sahil Balotra,Sahil Balotra,No. 3,3,1,0,1,0.0
+raw_715797ad_1500_4d98_bff4_4213b79eef7f,Sahil Garg,Sahil Garg,Opener,1,13,127,13,9.76923076923077
+raw_715797ad_1500_4d98_bff4_4213b79eef7f,Sahil Garg,Sahil Garg,No. 4,4,1,1,1,1.0
+raw_715797ad_1500_4d98_bff4_4213b79eef7f,Sahil Garg,Sahil Garg,No. 5,5,2,28,2,14.0
+raw_715797ad_1500_4d98_bff4_4213b79eef7f,Sahil Garg,Sahil Garg,No. 6,6,2,8,1,8.0
+raw_715797ad_1500_4d98_bff4_4213b79eef7f,Sahil Garg,Sahil Garg,No. 7,7,1,15,1,15.0
+raw_715797ad_1500_4d98_bff4_4213b79eef7f,Sahil Garg,Sahil Garg,Tail,10,1,0,1,0.0
+raw_aefdb225_68a5_4f16_b4ed_1d74f3162d06,Sajan Patel,Sajan Patel,No. 6,6,1,8,1,8.0
+raw_aefdb225_68a5_4f16_b4ed_1d74f3162d06,Sajan Patel,Sajan Patel,No. 7,7,1,1,1,1.0
+raw_aefdb225_68a5_4f16_b4ed_1d74f3162d06,Sajan Patel,Sajan Patel,No. 8,8,2,8,2,4.0
+raw_aefdb225_68a5_4f16_b4ed_1d74f3162d06,Sajan Patel,Sajan Patel,No. 9,9,4,64,3,21.333333333333332
+raw_aefdb225_68a5_4f16_b4ed_1d74f3162d06,Sajan Patel,Sajan Patel,Tail,10,29,64,14,4.571428571428571
+raw_a355c629_95da_4171_b812_819c0e585425,Sam Ottens,Sam Ottens,Opener,1,8,110,8,13.75
+raw_a355c629_95da_4171_b812_819c0e585425,Sam Ottens,Sam Ottens,No. 3,3,9,153,9,17.0
+raw_a355c629_95da_4171_b812_819c0e585425,Sam Ottens,Sam Ottens,No. 4,4,5,85,5,17.0
+raw_a355c629_95da_4171_b812_819c0e585425,Sam Ottens,Sam Ottens,No. 5,5,2,70,2,35.0
+raw_a355c629_95da_4171_b812_819c0e585425,Sam Ottens,Sam Ottens,No. 6,6,6,117,4,29.25
+raw_a0621042_fc53_4945_9a76_9a4d4ed9475d,Sameer Mayan,Sameer Mayan,Tail,10,2,4,2,2.0
+raw_0ad13fc6_e3d4_4c66_917a_e833689687b0,Sameer Shingala,Sameer Shingala,Opener,1,3,38,3,12.666666666666666
+raw_0ad13fc6_e3d4_4c66_917a_e833689687b0,Sameer Shingala,Sameer Shingala,No. 3,3,1,0,1,0.0
+raw_e82c42b5_bb31_4cea_9882_89160f396c20,Samuel Birkinshaw,Samuel Birkinshaw,Opener,1,1,0,1,0.0
+raw_e82c42b5_bb31_4cea_9882_89160f396c20,Samuel Birkinshaw,Samuel Birkinshaw,No. 7,7,2,76,0,
+raw_e82c42b5_bb31_4cea_9882_89160f396c20,Samuel Birkinshaw,Samuel Birkinshaw,No. 8,8,3,40,3,13.333333333333334
+raw_e82c42b5_bb31_4cea_9882_89160f396c20,Samuel Birkinshaw,Samuel Birkinshaw,Tail,10,2,25,0,
+raw_34a73b7c_44bc_4223_802b_6b0c499b86c5,Sandeep Atwal,Sandeep Atwal,No. 9,9,1,4,1,4.0
+raw_9e484da3_9774_4aad_8f68_59223605961d,Sandy Allamneni,Sandy Allamneni,No. 7,7,1,12,1,12.0
+raw_0734c6e7_6db5_459e_9638_e82e2fd388fc,Sanjay Handa,Sanjay Handa,No. 4,4,1,5,1,5.0
+raw_0734c6e7_6db5_459e_9638_e82e2fd388fc,Sanjay Handa,Sanjay Handa,No. 5,5,2,66,2,33.0
+raw_b0a451f8_c516_42bb_b73a_0fc890b39b36,Sarath Burra,Sarath Burra,No. 6,6,1,3,1,3.0
+raw_b0a451f8_c516_42bb_b73a_0fc890b39b36,Sarath Burra,Sarath Burra,No. 8,8,1,1,0,
+raw_b0a451f8_c516_42bb_b73a_0fc890b39b36,Sarath Burra,Sarath Burra,No. 9,9,1,1,1,1.0
+raw_aef54d69_8e84_4261_a714_e3be55172b1c,Sash Patel,Sash Patel,No. 6,6,3,30,3,10.0
+raw_aef54d69_8e84_4261_a714_e3be55172b1c,Sash Patel,Sash Patel,No. 7,7,1,12,0,
+raw_aef54d69_8e84_4261_a714_e3be55172b1c,Sash Patel,Sash Patel,Tail,10,3,1,1,1.0
+raw_b976bf29_fb35_4664_8376_3e700bd3c1ca,Sasha Danilovic,Sasha Danilovic,No. 4,4,3,67,3,22.333333333333332
+raw_b976bf29_fb35_4664_8376_3e700bd3c1ca,Sasha Danilovic,Sasha Danilovic,No. 5,5,4,32,4,8.0
+raw_b976bf29_fb35_4664_8376_3e700bd3c1ca,Sasha Danilovic,Sasha Danilovic,No. 7,7,1,22,0,
+raw_b976bf29_fb35_4664_8376_3e700bd3c1ca,Sasha Danilovic,Sasha Danilovic,No. 9,9,1,4,1,4.0
+raw_474b893d_3c0b_424d_8f0c_c64328ee381f,Satish Sridharan,Satish Sridharan,No. 3,3,1,2,1,2.0
+raw_294ee305_d579_404e_82cc_e0e8770f3c31,Saujal Bhandari,Saujal Bhandari,No. 7,7,1,20,1,20.0
+raw_294ee305_d579_404e_82cc_e0e8770f3c31,Saujal Bhandari,Saujal Bhandari,No. 9,9,1,2,1,2.0
+raw_294ee305_d579_404e_82cc_e0e8770f3c31,Saujal Bhandari,Saujal Bhandari,Tail,10,5,19,1,19.0
+raw_71557982_5b17_49e2_9907_ed0b31f3a35f,Saumya Dholia,Saumya Dholia,No. 7,7,1,24,1,24.0
+raw_71557982_5b17_49e2_9907_ed0b31f3a35f,Saumya Dholia,Saumya Dholia,No. 9,9,2,12,1,12.0
+raw_71557982_5b17_49e2_9907_ed0b31f3a35f,Saumya Dholia,Saumya Dholia,Tail,10,4,37,3,12.333333333333334
+raw_bc44ad80_028a_47bd_9982_a384e3b716a8,Saurabh Sawant,Saurabh Sawant,No. 7,7,1,15,1,15.0
+raw_bc44ad80_028a_47bd_9982_a384e3b716a8,Saurabh Sawant,Saurabh Sawant,Tail,10,8,15,2,7.5
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,Opener,1,5,22,5,4.4
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,No. 3,3,2,27,2,13.5
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,No. 4,4,1,12,0,
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,No. 5,5,2,6,1,6.0
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,No. 6,6,2,28,2,14.0
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,No. 8,8,1,10,0,
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,No. 9,9,1,1,1,1.0
+raw_19f1a998_171e_4c49_8d11_5add751c0c17,Saurabh Singh,Saurabh Singh,Tail,10,1,2,1,2.0
+raw_a59fa0d0_7562_4c65_9744_8b7a9ac536ad,Savir Madan,Savir Madan,No. 4,4,1,12,1,12.0
+raw_a59fa0d0_7562_4c65_9744_8b7a9ac536ad,Savir Madan,Savir Madan,No. 9,9,1,13,1,13.0
+raw_349192f7_292c_41b0_b8a8_152c9a2dd3be,Shail Dureja,Shail Dureja,No. 5,5,1,13,1,13.0
+raw_64bd081c_85ce_40c1_a039_2afb7ef4e43e,Shane Dodman,Shane Dodman,Opener,1,2,20,2,10.0
+raw_64bd081c_85ce_40c1_a039_2afb7ef4e43e,Shane Dodman,Shane Dodman,No. 3,3,5,53,5,10.6
+raw_64bd081c_85ce_40c1_a039_2afb7ef4e43e,Shane Dodman,Shane Dodman,No. 9,9,1,17,1,17.0
+raw_c990f496_8522_4bb3_9a16_72b574b4c6c7,Shane Kahadagamage,Shane Kahadagamage,No. 3,3,2,15,2,7.5
+raw_c990f496_8522_4bb3_9a16_72b574b4c6c7,Shane Kahadagamage,Shane Kahadagamage,No. 5,5,1,1,1,1.0
+raw_0637b9a7_3387_423c_adc4_5170f7aa3881,Shashank Mujumale,Shashank Mujumale,Opener,1,13,367,11,33.36363636363637
+raw_0637b9a7_3387_423c_adc4_5170f7aa3881,Shashank Mujumale,Shashank Mujumale,No. 5,5,1,3,1,3.0
+raw_42fdf540_c657_4321_8de0_fd275fdfc64a,Sherwin Lobo,Sherwin Lobo,No. 7,7,4,87,3,29.0
+raw_42fdf540_c657_4321_8de0_fd275fdfc64a,Sherwin Lobo,Sherwin Lobo,No. 8,8,2,21,2,10.5
+raw_42fdf540_c657_4321_8de0_fd275fdfc64a,Sherwin Lobo,Sherwin Lobo,No. 9,9,1,5,1,5.0
+raw_74226e1a_aee9_4773_909e_eac44eeba682,Shikhar Dhyani,Shikhar Dhyani,Opener,1,3,99,3,33.0
+raw_f9fcbb22_10e8_4fe1_bab8_b121b1e17d78,Shikhar Dhyani,Shikhar Dhyani,Opener,1,2,57,2,28.5
+raw_74226e1a_aee9_4773_909e_eac44eeba682,Shikhar Dhyani,Shikhar Dhyani,No. 3,3,6,135,5,27.0
+raw_74226e1a_aee9_4773_909e_eac44eeba682,Shikhar Dhyani,Shikhar Dhyani,No. 4,4,3,60,3,20.0
+raw_f9fcbb22_10e8_4fe1_bab8_b121b1e17d78,Shikhar Dhyani,Shikhar Dhyani,No. 4,4,1,14,1,14.0
+raw_74226e1a_aee9_4773_909e_eac44eeba682,Shikhar Dhyani,Shikhar Dhyani,No. 5,5,1,11,1,11.0
+raw_74226e1a_aee9_4773_909e_eac44eeba682,Shikhar Dhyani,Shikhar Dhyani,No. 6,6,2,20,2,10.0
+raw_f9fcbb22_10e8_4fe1_bab8_b121b1e17d78,Shikhar Dhyani,Shikhar Dhyani,No. 7,7,1,3,1,3.0
+raw_74226e1a_aee9_4773_909e_eac44eeba682,Shikhar Dhyani,Shikhar Dhyani,No. 8,8,1,22,0,
+raw_3b30f601_3320_4e69_86c3_c14309cf551f,Shilendra Singh,Shilendra Singh,No. 5,5,2,0,2,0.0
+raw_3b30f601_3320_4e69_86c3_c14309cf551f,Shilendra Singh,Shilendra Singh,No. 8,8,1,1,1,1.0
+raw_3b30f601_3320_4e69_86c3_c14309cf551f,Shilendra Singh,Shilendra Singh,No. 9,9,1,36,1,36.0
+raw_bcc0c44b_e9fa_457b_9bbe_e73d8da9014c,Shiven Khant,Shiven Khant,No. 6,6,2,19,2,9.5
+raw_bcc0c44b_e9fa_457b_9bbe_e73d8da9014c,Shiven Khant,Shiven Khant,No. 7,7,1,0,1,0.0
+raw_bcc0c44b_e9fa_457b_9bbe_e73d8da9014c,Shiven Khant,Shiven Khant,No. 8,8,5,15,4,3.75
+raw_bcc0c44b_e9fa_457b_9bbe_e73d8da9014c,Shiven Khant,Shiven Khant,No. 9,9,3,11,2,5.5
+raw_66b83a75_b49d_491d_8326_8c9cd9c4c188,Shiven Khant,Shiven Khant,Tail,10,1,1,0,
+raw_bcc0c44b_e9fa_457b_9bbe_e73d8da9014c,Shiven Khant,Shiven Khant,Tail,10,4,5,3,1.6666666666666667
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,Opener,1,4,81,3,27.0
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 3,3,6,33,6,5.5
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 4,4,3,2,3,0.6666666666666666
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 5,5,16,354,13,27.23076923076923
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 6,6,12,287,10,28.7
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 7,7,2,9,1,9.0
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 8,8,1,29,1,29.0
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,No. 9,9,1,3,1,3.0
+raw_00d1278c_3f7a_4d93_8611_8ed2174780bb,Shubham Sankpal,Shubham Sankpal,Tail,10,1,7,1,7.0
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,Opener,1,33,890,31,28.70967741935484
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,No. 3,3,4,56,4,14.0
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,No. 4,4,5,137,4,34.25
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,No. 6,6,2,21,2,10.5
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,No. 7,7,1,7,1,7.0
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,No. 8,8,2,27,2,13.5
+raw_8716c788_470f_4c9c_abe1_5b2d95664fd3,Shyam Kikani,Shyam Kikani,No. 9,9,2,23,0,
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,Opener,1,13,262,13,20.153846153846153
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 3,3,14,382,12,31.833333333333332
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 4,4,5,68,5,13.6
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 5,5,16,299,16,18.6875
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 6,6,20,424,20,21.2
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 7,7,17,341,15,22.733333333333334
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 8,8,7,143,4,35.75
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,No. 9,9,4,70,3,23.333333333333332
+raw_a957a90c_80fd_4fde_93f6_0d6fb5e9e5db,Siddarth Amin,Siddarth Amin,Tail,10,3,13,3,4.333333333333333
+raw_726f1f6b_bc66_4d01_9f73_689e493913f8,Siddh Dholia,Siddh Dholia,No. 9,9,1,0,1,0.0
+raw_f90a9189_948d_4fa9_bad2_acee9acf0936,Siddhant Tirodkar,Siddhant Tirodkar,Opener,1,12,500,9,55.55555555555556
+raw_f90a9189_948d_4fa9_bad2_acee9acf0936,Siddhant Tirodkar,Siddhant Tirodkar,No. 3,3,3,39,3,13.0
+raw_f90a9189_948d_4fa9_bad2_acee9acf0936,Siddhant Tirodkar,Siddhant Tirodkar,No. 6,6,3,10,2,5.0
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,Opener,1,1,23,1,23.0
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 3,3,2,34,2,17.0
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 4,4,4,37,4,9.25
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 5,5,6,109,5,21.8
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 6,6,10,213,8,26.625
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 7,7,6,87,6,14.5
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 8,8,1,6,1,6.0
+raw_0109dbdb_7e65_41b3_bda4_b4a414d636c0,Siddharth Amin,Siddharth Amin,No. 9,9,3,25,2,12.5
+raw_19e3db6b_1c2e_4eb3_b80b_f1d2f914498d,Siddharth Patel,Siddharth Patel,No. 5,5,1,21,1,21.0
+raw_19e3db6b_1c2e_4eb3_b80b_f1d2f914498d,Siddharth Patel,Siddharth Patel,Tail,10,2,1,2,0.5
+raw_ce38a18f_c5ea_4cee_ae1c_a4140effc853,Sidharth Chandel,Sidharth Chandel,Opener,1,12,273,10,27.3
+raw_ce38a18f_c5ea_4cee_ae1c_a4140effc853,Sidharth Chandel,Sidharth Chandel,No. 3,3,2,44,1,44.0
+raw_ce38a18f_c5ea_4cee_ae1c_a4140effc853,Sidharth Chandel,Sidharth Chandel,No. 4,4,10,259,10,25.9
+raw_ce38a18f_c5ea_4cee_ae1c_a4140effc853,Sidharth Chandel,Sidharth Chandel,No. 6,6,1,53,1,53.0
+raw_6ebe1d77_abfa_4369_a84b_99a55c57b4b4,Simran Singh,Simran Singh,Opener,1,1,2,1,2.0
+raw_6ebe1d77_abfa_4369_a84b_99a55c57b4b4,Simran Singh,Simran Singh,No. 4,4,2,9,1,9.0
+raw_448fc8e0_e54c_474f_b1a1_e71d4414a032,Skander Munir,Skander Munir,No. 3,3,1,27,1,27.0
+raw_448fc8e0_e54c_474f_b1a1_e71d4414a032,Skander Munir,Skander Munir,No. 4,4,4,100,4,25.0
+raw_448fc8e0_e54c_474f_b1a1_e71d4414a032,Skander Munir,Skander Munir,No. 5,5,7,400,5,80.0
+raw_448fc8e0_e54c_474f_b1a1_e71d4414a032,Skander Munir,Skander Munir,No. 6,6,2,40,2,20.0
+raw_448fc8e0_e54c_474f_b1a1_e71d4414a032,Skander Munir,Skander Munir,No. 7,7,5,179,4,44.75
+raw_f245d153_76c5_4486_847f_e6813e283875,Sohil Mahendru,Sohil Mahendru,Opener,1,8,75,8,9.375
+raw_f245d153_76c5_4486_847f_e6813e283875,Sohil Mahendru,Sohil Mahendru,No. 3,3,2,30,2,15.0
+raw_f245d153_76c5_4486_847f_e6813e283875,Sohil Mahendru,Sohil Mahendru,No. 6,6,1,34,1,34.0
+raw_f245d153_76c5_4486_847f_e6813e283875,Sohil Mahendru,Sohil Mahendru,No. 7,7,1,17,1,17.0
+raw_f245d153_76c5_4486_847f_e6813e283875,Sohil Mahendru,Sohil Mahendru,No. 9,9,2,22,2,11.0
+raw_dd1a0f07_31aa_4c23_9d62_daa2466e7065,Somesula Raidu,Somesula Raidu,Opener,1,1,7,1,7.0
+raw_dd1a0f07_31aa_4c23_9d62_daa2466e7065,Somesula Raidu,Somesula Raidu,No. 8,8,1,1,0,
+raw_dd1a0f07_31aa_4c23_9d62_daa2466e7065,Somesula Raidu,Somesula Raidu,Tail,10,5,17,2,8.5
+raw_ddf180bf_bbfd_4c01_b3fe_63d68a289c72,Sourabh Gour,Sourabh Gour,No. 4,4,1,15,0,
+raw_ddf180bf_bbfd_4c01_b3fe_63d68a289c72,Sourabh Gour,Sourabh Gour,No. 5,5,3,17,3,5.666666666666667
+raw_ddf180bf_bbfd_4c01_b3fe_63d68a289c72,Sourabh Gour,Sourabh Gour,No. 8,8,2,6,2,3.0
+raw_ddf180bf_bbfd_4c01_b3fe_63d68a289c72,Sourabh Gour,Sourabh Gour,No. 9,9,3,13,1,13.0
+raw_ddf180bf_bbfd_4c01_b3fe_63d68a289c72,Sourabh Gour,Sourabh Gour,Tail,10,5,16,4,4.0
+raw_65d2b16a_0b31_4dee_b2e5_b1e9fb15c6b1,Sourav Taneja,Sourav Taneja,Opener,1,18,553,15,36.86666666666667
+raw_65d2b16a_0b31_4dee_b2e5_b1e9fb15c6b1,Sourav Taneja,Sourav Taneja,No. 3,3,6,208,6,34.666666666666664
+raw_65d2b16a_0b31_4dee_b2e5_b1e9fb15c6b1,Sourav Taneja,Sourav Taneja,No. 6,6,1,17,1,17.0
+raw_65d2b16a_0b31_4dee_b2e5_b1e9fb15c6b1,Sourav Taneja,Sourav Taneja,No. 7,7,1,26,1,26.0
+raw_b9a23fb2_cc55_43c4_a470_d597fd47081b,Spandan Patel,Spandan Patel,No. 9,9,1,0,1,0.0
+raw_7d0618e9_1235_4cfe_b211_1a0467f0012e,Sreekanth Gajjala,Sreekanth Gajjala,No. 4,4,1,0,1,0.0
+raw_7d0618e9_1235_4cfe_b211_1a0467f0012e,Sreekanth Gajjala,Sreekanth Gajjala,No. 6,6,1,2,1,2.0
+raw_7d0618e9_1235_4cfe_b211_1a0467f0012e,Sreekanth Gajjala,Sreekanth Gajjala,No. 8,8,1,3,1,3.0
+raw_7d0618e9_1235_4cfe_b211_1a0467f0012e,Sreekanth Gajjala,Sreekanth Gajjala,No. 9,9,3,0,3,0.0
+raw_7d0618e9_1235_4cfe_b211_1a0467f0012e,Sreekanth Gajjala,Sreekanth Gajjala,Tail,10,12,27,7,3.857142857142857
+raw_e6dd350c_cbcc_4182_a4f0_16704886719e,Srinath Koppolu,Srinath Koppolu,No. 4,4,4,89,4,22.25
+raw_e6dd350c_cbcc_4182_a4f0_16704886719e,Srinath Koppolu,Srinath Koppolu,No. 5,5,2,41,2,20.5
+raw_e6dd350c_cbcc_4182_a4f0_16704886719e,Srinath Koppolu,Srinath Koppolu,No. 8,8,1,4,1,4.0
+raw_e6dd350c_cbcc_4182_a4f0_16704886719e,Srinath Koppolu,Srinath Koppolu,Tail,10,1,0,1,0.0
+raw_bb838ded_34f4_4ad3_87d2_813d31e0dfb4,Srinivasa Chinnareddy,Srinivasa Chinnareddy,No. 8,8,1,0,1,0.0
+raw_069344d8_471b_47c2_9551_102c33e0e3bb,Stephen Giles,Stephen Giles,No. 4,4,1,4,1,4.0
+raw_069344d8_471b_47c2_9551_102c33e0e3bb,Stephen Giles,Stephen Giles,No. 7,7,1,4,1,4.0
+raw_069344d8_471b_47c2_9551_102c33e0e3bb,Stephen Giles,Stephen Giles,No. 9,9,1,0,1,0.0
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,Opener,1,34,626,31,20.193548387096776
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 3,3,18,454,16,28.375
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 4,4,3,83,3,27.666666666666668
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 5,5,3,95,3,31.666666666666668
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 6,6,2,78,2,39.0
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 7,7,5,78,5,15.6
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 8,8,5,84,4,21.0
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,No. 9,9,1,0,1,0.0
+raw_e7cab03e_58ba_4d26_aa0a_3dc02a6b03b6,Stewart Burke,Stewart Burke,Tail,10,1,13,1,13.0
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,Opener,1,20,189,19,9.947368421052632
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,No. 4,4,3,23,2,11.5
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,No. 6,6,5,10,4,2.5
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,No. 7,7,3,40,2,20.0
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,No. 8,8,2,5,2,2.5
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,No. 9,9,3,9,3,3.0
+raw_42bbb316_0484_48c2_b3f2_8cce1910f7bc,Sujith Nagalmullage,Sujith Nagalmullage,Tail,10,5,8,2,4.0
+raw_7f618058_9572_4d18_89b4_62e52ba214ff,Sumeet Sharma,Sumeet Sharma,No. 5,5,1,0,1,0.0
+raw_7f618058_9572_4d18_89b4_62e52ba214ff,Sumeet Sharma,Sumeet Sharma,No. 6,6,1,31,0,
+raw_6d42b9c2_5cf0_4033_a8a3_f23ecfab5825,Sumeet Taya,Sumeet Taya,No. 3,3,2,185,2,92.5
+raw_6d42b9c2_5cf0_4033_a8a3_f23ecfab5825,Sumeet Taya,Sumeet Taya,No. 4,4,6,175,6,29.166666666666668
+raw_6d42b9c2_5cf0_4033_a8a3_f23ecfab5825,Sumeet Taya,Sumeet Taya,No. 6,6,1,7,1,7.0
+raw_6d42b9c2_5cf0_4033_a8a3_f23ecfab5825,Sumeet Taya,Sumeet Taya,No. 9,9,1,35,1,35.0
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,No. 4,4,2,51,2,25.5
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,No. 5,5,4,21,3,7.0
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,No. 6,6,3,20,3,6.666666666666667
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,No. 7,7,3,28,3,9.333333333333334
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,No. 8,8,5,22,5,4.4
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,No. 9,9,4,65,3,21.666666666666668
+raw_aedd359d_3b67_421f_9e35_516444ee0d55,Sumit Sharma,Sumit Sharma,Tail,10,2,5,1,5.0
+raw_a92dba88_6126_41a2_976e_5459e05b0ee2,Sumit Taya,Sumit Taya,No. 5,5,1,0,1,0.0
+raw_a92dba88_6126_41a2_976e_5459e05b0ee2,Sumit Taya,Sumit Taya,No. 6,6,1,0,1,0.0
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,Opener,1,3,65,2,32.5
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,No. 3,3,1,2,1,2.0
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,No. 5,5,4,13,4,3.25
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,No. 6,6,9,134,9,14.88888888888889
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,No. 7,7,15,264,10,26.4
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,No. 8,8,6,104,6,17.333333333333332
+raw_28f58657_e4ab_4183_a1b3_b26992863139,Sunil Ahlawat,Sunil Ahlawat,No. 9,9,7,90,5,18.0
+raw_579279f9_5de8_49c6_8f66_2dd4f6b35f06,Sunil Kemppi,Sunil Kemppi,Opener,1,1,5,1,5.0
+raw_579279f9_5de8_49c6_8f66_2dd4f6b35f06,Sunil Kemppi,Sunil Kemppi,No. 7,7,1,1,1,1.0
+raw_579279f9_5de8_49c6_8f66_2dd4f6b35f06,Sunil Kemppi,Sunil Kemppi,No. 9,9,1,0,1,0.0
+raw_579279f9_5de8_49c6_8f66_2dd4f6b35f06,Sunil Kemppi,Sunil Kemppi,Tail,10,3,16,1,16.0
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,No. 3,3,1,17,1,17.0
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,No. 5,5,1,13,1,13.0
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,No. 6,6,1,4,1,4.0
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,No. 7,7,3,8,3,2.6666666666666665
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,No. 8,8,4,35,2,17.5
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,No. 9,9,1,1,0,
+raw_e69e3a0c_fa78_4ba2_821c_524e43107de4,Surajreddy Kyatamwar,Surajreddy Kyatamwar,Tail,10,2,14,2,7.0
+raw_615cdf81_16e6_4916_8c93_e20e7956b211,Talha Minhas,Talha Minhas,Tail,10,2,10,1,10.0
+raw_35894b48_3b91_4cf5_840a_646728d49529,Tarak Patel,Tarak Patel,Opener,1,12,328,8,41.0
+raw_35894b48_3b91_4cf5_840a_646728d49529,Tarak Patel,Tarak Patel,No. 3,3,2,22,2,11.0
+raw_35894b48_3b91_4cf5_840a_646728d49529,Tarak Patel,Tarak Patel,No. 6,6,3,28,2,14.0
+raw_35894b48_3b91_4cf5_840a_646728d49529,Tarak Patel,Tarak Patel,No. 7,7,2,15,2,7.5
+raw_35894b48_3b91_4cf5_840a_646728d49529,Tarak Patel,Tarak Patel,No. 8,8,1,16,0,
+raw_35894b48_3b91_4cf5_840a_646728d49529,Tarak Patel,Tarak Patel,No. 9,9,2,23,1,23.0
+raw_09365d2a_a304_486b_9df8_1c2fd7d5a8af,Tej Gandhi,Tej Gandhi,No. 4,4,1,27,1,27.0
+raw_66d2ea92_de06_4416_ad0d_7244c49d358f,Tejas Trivedi,Tejas Trivedi,No. 7,7,2,7,2,3.5
+raw_e2e25d46_1b20_489f_ac5a_b391a749c886,Tejesh Reddy,Tejesh Reddy,No. 6,6,2,59,2,29.5
+raw_e2e25d46_1b20_489f_ac5a_b391a749c886,Tejesh Reddy,Tejesh Reddy,No. 7,7,2,12,2,6.0
+raw_e2e25d46_1b20_489f_ac5a_b391a749c886,Tejesh Reddy,Tejesh Reddy,No. 8,8,1,3,1,3.0
+raw_e2e25d46_1b20_489f_ac5a_b391a749c886,Tejesh Reddy,Tejesh Reddy,Tail,10,1,2,1,2.0
+raw_682b3d73_9332_4e32_bf37_c2214bd113f3,Tejinder Singh,Tejinder Singh,No. 9,9,1,4,1,4.0
+raw_fc4c4c7a_c9eb_44b7_ba65_797dcb0dc8b7,Thomas Charlton,Thomas Charlton,Opener,1,5,105,5,21.0
+raw_fc4c4c7a_c9eb_44b7_ba65_797dcb0dc8b7,Thomas Charlton,Thomas Charlton,No. 3,3,3,37,3,12.333333333333334
+raw_fc4c4c7a_c9eb_44b7_ba65_797dcb0dc8b7,Thomas Charlton,Thomas Charlton,No. 4,4,1,39,1,39.0
+raw_fc4c4c7a_c9eb_44b7_ba65_797dcb0dc8b7,Thomas Charlton,Thomas Charlton,No. 5,5,1,5,1,5.0
+raw_880fd7ad_b8df_4b80_ae41_72586544f52e,Tim Flicker,Tim Flicker,Opener,1,1,6,1,6.0
+raw_880fd7ad_b8df_4b80_ae41_72586544f52e,Tim Flicker,Tim Flicker,No. 3,3,2,14,2,7.0
+raw_880fd7ad_b8df_4b80_ae41_72586544f52e,Tim Flicker,Tim Flicker,No. 4,4,1,7,0,
+raw_880fd7ad_b8df_4b80_ae41_72586544f52e,Tim Flicker,Tim Flicker,Tail,10,3,7,3,2.3333333333333335
+raw_7a3de057_8803_4134_9ca6_a25988ff8f3d,Tom Dlabik,Tom Dlabik,No. 3,3,1,0,1,0.0
+raw_7a3de057_8803_4134_9ca6_a25988ff8f3d,Tom Dlabik,Tom Dlabik,No. 5,5,1,39,1,39.0
+raw_fb7c3f0c_25bc_46f8_b42c_f59673682c77,Tushar Bhatt,Tushar Bhatt,No. 6,6,1,2,1,2.0
+raw_fb7c3f0c_25bc_46f8_b42c_f59673682c77,Tushar Bhatt,Tushar Bhatt,Tail,10,1,0,0,
+raw_2c290990_1b74_4bfe_aae8_5fd2738533dd,Tushar Singh,Tushar Singh,No. 7,7,1,4,1,4.0
+raw_2c290990_1b74_4bfe_aae8_5fd2738533dd,Tushar Singh,Tushar Singh,No. 8,8,1,8,1,8.0
+raw_80aa941d_1a1e_43c2_9c62_ff10f3f0a722,Uma Mahesh,Uma Mahesh,Tail,10,1,0,1,0.0
+raw_00000000_0000_0000_0000_000000000001,Unknown Player_1,Unknown Player_1,No. 6,6,1,11,1,11.0
+raw_00000000_0000_0000_0000_000000000001,Unknown Player_1,Unknown Player_1,No. 8,8,2,17,2,8.5
+raw_00000000_0000_0000_0000_000000000002,Unknown Player_2,Unknown Player_2,No. 3,3,1,0,1,0.0
+raw_ddbc45b3_f078_444c_9630_69bc7662a14e,Urmit Shah,Urmit Shah,Opener,1,12,325,9,36.111111111111114
+raw_ddbc45b3_f078_444c_9630_69bc7662a14e,Urmit Shah,Urmit Shah,No. 3,3,1,5,1,5.0
+raw_ddbc45b3_f078_444c_9630_69bc7662a14e,Urmit Shah,Urmit Shah,No. 5,5,1,6,0,
+raw_ddbc45b3_f078_444c_9630_69bc7662a14e,Urmit Shah,Urmit Shah,No. 7,7,2,7,2,3.5
+raw_ddbc45b3_f078_444c_9630_69bc7662a14e,Urmit Shah,Urmit Shah,Tail,10,2,3,2,1.5
+raw_c40320ad_e070_47b5_8491_a598c5a1bf4f,Utkarsh Tripathi,Utkarsh Tripathi,No. 8,8,2,11,2,5.5
+raw_e04d96c0_a180_40fc_8c08_db05cd937d5a,Vaishnavi Gopalakrishnan,Vaishnavi Gopalakrishnan,Opener,1,2,23,2,11.5
+raw_1521ba45_bd2b_4a6b_8001_aa7ef9ab09e7,Valmik Patel,Valmik Patel,No. 9,9,1,3,1,3.0
+raw_1521ba45_bd2b_4a6b_8001_aa7ef9ab09e7,Valmik Patel,Valmik Patel,Tail,10,1,0,1,0.0
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,Opener,1,18,389,15,25.933333333333334
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 3,3,1,18,1,18.0
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 4,4,3,59,2,29.5
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 5,5,11,172,10,17.2
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 6,6,4,143,3,47.666666666666664
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 7,7,4,39,4,9.75
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 8,8,2,12,0,
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,No. 9,9,1,1,1,1.0
+raw_2ac4ee6e_bd06_43c7_af61_bcccedae1007,Vamsee Gujjalapudi,Vamsee Gujjalapudi,Tail,10,3,12,2,6.0
+raw_bf04d03d_780b_4521_a4ec_ce8230f724e7,Vamshi Addanki,Vamshi Addanki,No. 7,7,1,0,1,0.0
+raw_bf04d03d_780b_4521_a4ec_ce8230f724e7,Vamshi Addanki,Vamshi Addanki,Tail,10,1,0,1,0.0
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,Opener,1,5,243,5,48.6
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 3,3,9,193,8,24.125
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 4,4,15,443,14,31.642857142857142
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 5,5,20,551,18,30.61111111111111
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 6,6,31,729,26,28.03846153846154
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 7,7,20,341,16,21.3125
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 8,8,5,50,4,12.5
+raw_e8d1bf04_b369_44de_91fb_8d2b5def8bc4,Vatsan Vasu,Vatsan Vasu,No. 9,9,2,16,2,8.0
+raw_76abda7e_405a_4b27_b38e_5ac500a851cc,Veera Sagar Reddy,Veera Sagar Reddy,Opener,1,2,40,2,20.0
+raw_76abda7e_405a_4b27_b38e_5ac500a851cc,Veera Sagar Reddy,Veera Sagar Reddy,No. 3,3,1,4,1,4.0
+raw_76abda7e_405a_4b27_b38e_5ac500a851cc,Veera Sagar Reddy,Veera Sagar Reddy,No. 4,4,4,17,4,4.25
+raw_76abda7e_405a_4b27_b38e_5ac500a851cc,Veera Sagar Reddy,Veera Sagar Reddy,No. 5,5,2,26,2,13.0
+raw_45d712ba_5392_425d_b45d_939c35e3898c,Vijay Iyer,Vijay Iyer,No. 3,3,1,0,1,0.0
+raw_45d712ba_5392_425d_b45d_939c35e3898c,Vijay Iyer,Vijay Iyer,No. 6,6,2,21,2,10.5
+raw_45d712ba_5392_425d_b45d_939c35e3898c,Vijay Iyer,Vijay Iyer,No. 9,9,2,20,1,20.0
+raw_45d712ba_5392_425d_b45d_939c35e3898c,Vijay Iyer,Vijay Iyer,Tail,10,1,0,1,0.0
+raw_4c5ab26e_6abc_41c3_8589_65e28f8588a3,Vijayant Rana,Vijayant Rana,No. 4,4,3,49,3,16.333333333333332
+raw_4c5ab26e_6abc_41c3_8589_65e28f8588a3,Vijayant Rana,Vijayant Rana,No. 5,5,2,35,2,17.5
+raw_4c5ab26e_6abc_41c3_8589_65e28f8588a3,Vijayant Rana,Vijayant Rana,No. 7,7,2,7,1,7.0
+raw_4c5ab26e_6abc_41c3_8589_65e28f8588a3,Vijayant Rana,Vijayant Rana,No. 8,8,1,7,1,7.0
+raw_4c5ab26e_6abc_41c3_8589_65e28f8588a3,Vijayant Rana,Vijayant Rana,No. 9,9,3,11,3,3.6666666666666665
+raw_1cf20512_80f0_4736_a4c7_6dac2773cd6f,Vinay Kumar,Vinay Kumar,Opener,1,1,2,1,2.0
+raw_1cf20512_80f0_4736_a4c7_6dac2773cd6f,Vinay Kumar,Vinay Kumar,No. 3,3,1,6,1,6.0
+raw_1cf20512_80f0_4736_a4c7_6dac2773cd6f,Vinay Kumar,Vinay Kumar,No. 4,4,3,29,3,9.666666666666666
+raw_0760ac21_a576_4b81_9c88_703028e23399,Vinay Kumar,Vinay Kumar,No. 9,9,1,8,1,8.0
+raw_1cf20512_80f0_4736_a4c7_6dac2773cd6f,Vinay Kumar,Vinay Kumar,No. 9,9,1,8,1,8.0
+raw_1cf20512_80f0_4736_a4c7_6dac2773cd6f,Vinay Kumar,Vinay Kumar,Tail,10,1,1,0,
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,No. 3,3,3,33,3,11.0
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,No. 5,5,3,42,3,14.0
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,No. 6,6,3,25,2,12.5
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,No. 7,7,3,69,2,34.5
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,No. 8,8,3,27,2,13.5
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,No. 9,9,5,9,4,2.25
+raw_d3a9a9db_bb11_4783_8f68_aa73ae1237ea,Vineet Bhimani,Vineet Bhimani,Tail,10,5,70,2,35.0
+raw_9ba4900e_635a_4fb5_9695_cc43164f03d4,Vinod Natarajan,Vinod Natarajan,Tail,10,1,0,1,0.0
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,Opener,1,11,94,11,8.545454545454545
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 3,3,2,29,2,14.5
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 4,4,1,0,1,0.0
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 5,5,2,17,2,8.5
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 6,6,3,42,2,21.0
+raw_ae5424fd_1aeb_41b7_bcc2_05da1335d03b,Viral Gandhi,Viral Gandhi,No. 6,6,1,2,1,2.0
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 7,7,3,6,3,2.0
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 8,8,5,43,5,8.6
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,No. 9,9,3,9,3,3.0
+raw_ae5424fd_1aeb_41b7_bcc2_05da1335d03b,Viral Gandhi,Viral Gandhi,No. 9,9,1,2,1,2.0
+raw_3c6ed512_cdd2_4a71_b9d3_68f8fcb9b308,Viral Gandhi,Viral Gandhi,Tail,10,8,14,5,2.8
+raw_8b6ea475_c1c0_4c26_a15a_63bd19c8c614,Vishal Thakkar,Vishal Thakkar,No. 7,7,1,19,1,19.0
+raw_5fefa8ec_c7c4_42ce_9c9e_f29ec6dc4993,Vivek Raman,Vivek Raman,No. 3,3,1,21,1,21.0
+raw_5fefa8ec_c7c4_42ce_9c9e_f29ec6dc4993,Vivek Raman,Vivek Raman,No. 8,8,1,0,1,0.0
+raw_89e3537c_6161_4dfb_b71a_275f131eed9a,William Watson,William Watson,No. 5,5,1,68,0,
+raw_89e3537c_6161_4dfb_b71a_275f131eed9a,William Watson,William Watson,No. 6,6,2,15,2,7.5
+raw_89e3537c_6161_4dfb_b71a_275f131eed9a,William Watson,William Watson,No. 9,9,1,9,1,9.0
+raw_adbad547_4c24_426a_a70f_31f8c1426e2b,Yash Dassani,Yash Dassani,No. 5,5,1,2,1,2.0
+raw_6e45c498_5cf0_4ca7_8171_29d2b2d614b9,Yash Kakadiya,Yash Kakadiya,No. 7,7,1,5,0,
+raw_6e45c498_5cf0_4ca7_8171_29d2b2d614b9,Yash Kakadiya,Yash Kakadiya,No. 9,9,1,0,1,0.0
+raw_e4ec7cd9_71a6_49f0_8fed_2517ed08ec21,Yashkumar Patel,Yashkumar Patel,No. 8,8,1,22,1,22.0
+raw_812212a8_0849_4137_8326_10bbc8a4575b,Yashwant Chaudhary,Yashwant Chaudhary,Opener,1,4,120,4,30.0
+raw_812212a8_0849_4137_8326_10bbc8a4575b,Yashwant Chaudhary,Yashwant Chaudhary,No. 8,8,1,0,1,0.0
+raw_e707338a_79aa_46fb_9333_7146cf8b9164,Yeamin Jacky,Yeamin Jacky,No. 9,9,1,0,1,0.0
+raw_f2d1da8e_f4e3_4bdf_9639_e02b2cf35bc3,Yodhant Singh,Yodhant Singh,No. 8,8,1,4,1,4.0
+raw_f2d1da8e_f4e3_4bdf_9639_e02b2cf35bc3,Yodhant Singh,Yodhant Singh,No. 9,9,3,29,3,9.666666666666666
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,Opener,1,4,93,4,23.25
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,No. 4,4,1,0,1,0.0
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,No. 5,5,1,4,1,4.0
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,No. 6,6,2,39,0,
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,No. 7,7,4,53,3,17.666666666666668
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,No. 8,8,4,27,4,6.75
+raw_530b898d_e6f3_485a_b66c_aab3bb024e53,Yogesh Kumarr,Yogesh Kumarr,No. 9,9,3,52,2,26.0
+raw_a47e9f75_6340_4119_957d_6ef4454fe5b0,Yudhvir Yadav,Yudhvir Yadav,No. 8,8,1,0,1,0.0
+raw_a47e9f75_6340_4119_957d_6ef4454fe5b0,Yudhvir Yadav,Yudhvir Yadav,No. 9,9,1,0,1,0.0
+raw_a47e9f75_6340_4119_957d_6ef4454fe5b0,Yudhvir Yadav,Yudhvir Yadav,Tail,10,27,118,15,7.866666666666666
+raw_5a52cac2_9107_411b_b039_6b23169dbdb2,Yug Desai,Yug Desai,No. 6,6,1,19,1,19.0
+raw_69080504_f176_4fe2_9fac_3d75d3c6f7b7,Zain Ul Abidin,Zain Ul Abidin,Opener,1,1,6,1,6.0
+raw_69080504_f176_4fe2_9fac_3d75d3c6f7b7,Zain Ul Abidin,Zain Ul Abidin,No. 3,3,1,0,1,0.0
+raw_69080504_f176_4fe2_9fac_3d75d3c6f7b7,Zain Ul Abidin,Zain Ul Abidin,No. 7,7,2,0,2,0.0
+raw_69080504_f176_4fe2_9fac_3d75d3c6f7b7,Zain Ul Abidin,Zain Ul Abidin,No. 8,8,1,1,1,1.0
+raw_69080504_f176_4fe2_9fac_3d75d3c6f7b7,Zain Ul Abidin,Zain Ul Abidin,No. 9,9,1,21,0,
+raw_b049f2b7_85b0_4382_adfe_a607b621f8e8,Zia Khan,Zia Khan,No. 8,8,1,1,1,1.0
+raw_b049f2b7_85b0_4382_adfe_a607b621f8e8,Zia Khan,Zia Khan,No. 9,9,4,79,3,26.333333333333332
+raw_b049f2b7_85b0_4382_adfe_a607b621f8e8,Zia Khan,Zia Khan,Tail,10,5,22,2,11.0
+raw_b794d0a1_43f3_4183_bfb8_f23e2c15a54e,Zubin Patel,Zubin Patel,Opener,1,1,10,1,10.0
+raw_b794d0a1_43f3_4183_bfb8_f23e2c15a54e,Zubin Patel,Zubin Patel,No. 6,6,1,4,0,
+raw_b794d0a1_43f3_4183_bfb8_f23e2c15a54e,Zubin Patel,Zubin Patel,No. 8,8,1,13,1,13.0
