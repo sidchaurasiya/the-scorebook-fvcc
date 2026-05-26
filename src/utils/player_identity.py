@@ -180,12 +180,12 @@ def active_aliases(aliases_df: pd.DataFrame) -> pd.DataFrame:
 def apply_player_identity_mapping(
     df: pd.DataFrame,
     aliases_df: pd.DataFrame | None = None,
+    *,
+    manual_merges_df: pd.DataFrame | None = None,
+    club_id: str | None = None,
 ) -> pd.DataFrame:
     if df.empty or "player_name" not in df:
         return df.copy()
-
-    aliases_df = load_player_aliases() if aliases_df is None else aliases_df
-    aliases_df = active_aliases(aliases_df)
 
     output = df.copy()
     if "raw_player_id" not in output:
@@ -197,6 +197,13 @@ def apply_player_identity_mapping(
     output["raw_player_name"] = output["raw_player_name"].map(display_player_name)
     output["canonical_player_id"] = output.apply(default_canonical_id, axis=1)
     output["canonical_player_name"] = output["raw_player_name"]
+
+    aliases_df = load_player_aliases(club_id=club_id) if aliases_df is None else aliases_df.copy()
+    manual_merges_df = load_manual_player_merges(club_id=club_id) if manual_merges_df is None else manual_merges_df
+    manual_aliases = manual_alias_candidates(manual_merges_df, output)
+    if manual_aliases:
+        aliases_df = pd.concat([aliases_df, pd.DataFrame(manual_aliases)], ignore_index=True)
+    aliases_df = active_aliases(aliases_df)
 
     if aliases_df.empty:
         return output
@@ -716,7 +723,7 @@ def rebuild_canonical_processed_tables(
         frame = pd.read_csv(path)
         if frame.empty or "player_name" not in frame:
             continue
-        mapped = apply_player_identity_mapping(frame, aliases)
+        mapped = apply_player_identity_mapping(frame, aliases, club_id=club_id)
         mapped.to_csv(path, index=False)
         row_counts[table_name] = len(mapped)
     return row_counts

@@ -118,6 +118,11 @@ def main() -> int:
         action="store_true",
         help="After aggregate refresh, also run the current-season match-centre refresh and deploy-safe builders.",
     )
+    parser.add_argument(
+        "--local-only-identity-rebuild",
+        action="store_true",
+        help="Reapply club player/team mappings to existing processed aggregate CSVs without network requests.",
+    )
     args = parser.parse_args()
     club_id = resolve_club_id(args.club)
     club_config = load_club_config(club_id)
@@ -130,7 +135,8 @@ def main() -> int:
 
     print("The Scorebook PlayCricket refresh")
     print(f"Project: {ROOT}")
-    print(f"Mode: {'dry run plan' if args.dry_run else 'normal refresh'}")
+    mode = "dry run plan" if args.dry_run else "local-only identity rebuild" if args.local_only_identity_rebuild else "normal refresh"
+    print(f"Mode: {mode}")
     print_club_header("Club context", club_id)
     print()
 
@@ -145,6 +151,21 @@ def main() -> int:
         )
         print()
         print("Dry run complete. No network requests were made and no files were written.")
+        return 0
+
+    if args.local_only_identity_rebuild:
+        before = capture_snapshot(processed_output_dir)
+        print_snapshot("Current local data", before)
+        print("Local-only identity rebuild selected. No network requests will be made.")
+        identity_summary = rebuild_identity_and_audits(processed_output_dir, club_id=club_id)
+        after = capture_snapshot(processed_output_dir)
+        print()
+        print_snapshot("Rebuilt local data", after)
+        print_delta(before, after)
+        print()
+        print("Identity and audit rebuild")
+        for label, value in identity_summary.items():
+            print(f"- {label}: {value}")
         return 0
 
     before = capture_snapshot(processed_output_dir)
@@ -336,7 +357,7 @@ def rebuild_identity_and_audits(processed_dir: Path, *, club_id: str) -> dict[st
         mapping_update = {"added": 0, "conflicts": 0, "manual_candidates": 0, "auto_candidates": 0}
     canonical_counts = rebuild_canonical_processed_tables(processed_dir=processed_dir, club_id=club_id)
     aliases = load_player_aliases(club_id=club_id)
-    canonical_source = combined_processed_frames(apply_identity=True, aliases=aliases, processed_dir=processed_dir)
+    canonical_source = combined_processed_frames(apply_identity=True, aliases=aliases, processed_dir=processed_dir, club_id=club_id)
     identity_exports = ensure_identity_exports(canonical_source, aliases, club_id=club_id)
     audit_frames = [
         read_processed("all_seasons_batting", processed_dir=processed_dir),
@@ -422,13 +443,19 @@ def slugify(value: str) -> str:
     return text.strip("_") or "current_season"
 
 
-def combined_processed_frames(*, apply_identity: bool, processed_dir: Path, aliases: pd.DataFrame | None = None) -> pd.DataFrame:
+def combined_processed_frames(
+    *,
+    apply_identity: bool,
+    processed_dir: Path,
+    aliases: pd.DataFrame | None = None,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     frames = []
     for table in ("all_seasons_batting", "all_seasons_bowling", "all_seasons_fielding"):
         frame = read_processed(table, processed_dir=processed_dir)
         if frame.empty:
             continue
-        frames.append(apply_player_identity_mapping(frame, aliases) if apply_identity else frame)
+        frames.append(apply_player_identity_mapping(frame, aliases, club_id=club_id) if apply_identity else frame)
     return pd.concat(frames, ignore_index=True, sort=False) if frames else pd.DataFrame()
 
 
