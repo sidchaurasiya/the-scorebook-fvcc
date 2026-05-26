@@ -1810,3 +1810,26 @@ Hall of Fame, Season Overview, Milestone, and Player Profile render for each clu
 Experimental match-centre pages remain hidden. Do not expose Player DNA, Scorebook Lab, advanced match-centre, or other experimental pages for these clubs until verified club-specific match-centre and ball-by-ball coverage exists.
 
 Duplicate-player review for pilot clubs is conservative. The review pack may propose safe auto-merge candidates only when names match exactly after strict case/spacing/accent/punctuation normalization and there is no season overlap, plus no match overlap where match IDs exist. Fuzzy names, reordered names, initials/name expansions, and same-season same-name players must remain manual review cases. These proposals are not app-visible until a club-local mapping file is explicitly updated.
+
+## 22. Pilot Club Match-Centre Backfill State
+
+The six positive-response pilot clubs now have match-centre/backfill-derived deploy-safe summaries:
+
+- `southside-east-caulfield`
+- `glen-waverley-hawks`
+- `ashwood`
+- `plenty`
+- `reynella`
+- `georges-river-district`
+
+The backfill generated scorecard-derived Season by Round, Recent Form, Player Profile breakdowns, Hall of Fame scorecard records, and verified ball-by-ball fastest-innings/phase summaries where source coverage exists. Experimental match-centre pages remain hidden; the production app should continue to present the current main pages only.
+
+Design and product implications:
+
+- Treat scorecard-derived sections as available for all six pilot clubs, but expect uneven historical depth by club and season.
+- Treat ball-by-ball features as coverage-aware. Missing BBB coverage should be shown as `N/A`, a dash, or a polished empty state rather than zeroes.
+- Premiership/captain modules must stay empty unless verified club-specific data exists.
+- Southside East Caulfield is the cleanest client-preview candidate. Georges River District has the highest manual identity risk because the official PlayCricket identity is Georges River Cricket Club and the player history is large.
+- Before client-facing wireframes or previews, allow for team/grade mapping cleanup and duplicate-player review states in the product language.
+
+Detailed run counts live in `docs/multi_club_match_centre_backfill_summary.md`.

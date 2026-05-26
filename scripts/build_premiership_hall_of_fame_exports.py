@@ -26,6 +26,33 @@ from src.utils.player_identity import display_player_name
 
 OUTPUT_DIR = REPO_ROOT / "data" / "processed" / "hall_of_fame"
 OUTPUT_FILENAMES = ["premiership_wins.csv", "player_premierships.csv"]
+PREMIERSHIP_WINS_COLUMNS = [
+    "match_id",
+    "season",
+    "grade_name",
+    "round_name",
+    "match_date",
+    "fvcc_team_name",
+    "opponent_team_name",
+    "captain_name",
+    "result_text",
+    "result_margin_display",
+    "venue_name",
+    "scoreboard_url",
+    "confidence",
+    "detection_reason",
+]
+PLAYER_PREMIERSHIPS_COLUMNS = [
+    "canonical_player_name",
+    "display_player_name",
+    "premiership_count",
+    "seasons",
+    "grades",
+    "teams",
+    "latest_premiership_season",
+    "evidence_match_ids",
+    "confidence",
+]
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -61,10 +88,12 @@ def main(argv: list[str] | None = None) -> int:
     matches = read_csv(match_centre_dir / "all_matches.csv")
 
     if wins.empty:
-        raise SystemExit("No premiership win candidates found. Run scripts/explore_premierships.py first.")
-
-    wins_export = build_premiership_wins(wins, matches)
-    players_export = build_player_premierships(players, wins_export)
+        wins_export = empty_premiership_wins()
+        players_export = empty_player_premierships()
+        print("No premiership win candidates found. Writing empty deploy-safe premiership exports.")
+    else:
+        wins_export = build_premiership_wins(wins, matches)
+        players_export = build_player_premierships(players, wins_export)
 
     validate_exports(wins_export, players_export)
 
@@ -81,6 +110,14 @@ def read_csv(path: Path) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
     return pd.read_csv(path, dtype=str, keep_default_na=False)
+
+
+def empty_premiership_wins() -> pd.DataFrame:
+    return pd.DataFrame(columns=PREMIERSHIP_WINS_COLUMNS)
+
+
+def empty_player_premierships() -> pd.DataFrame:
+    return pd.DataFrame(columns=PLAYER_PREMIERSHIPS_COLUMNS)
 
 
 def build_premiership_wins(wins: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
@@ -108,28 +145,12 @@ def build_premiership_wins(wins: pd.DataFrame, matches: pd.DataFrame) -> pd.Data
     output["club_team_name"] = output.get("club_team_name", output.get("fvcc_team_name", "")).map(clean_text)
     output["fvcc_team_name"] = output["club_team_name"]
 
-    columns = [
-        "match_id",
-        "season",
-        "grade_name",
-        "round_name",
-        "match_date",
-        "fvcc_team_name",
-        "opponent_team_name",
-        "captain_name",
-        "result_text",
-        "result_margin_display",
-        "venue_name",
-        "scoreboard_url",
-        "confidence",
-        "detection_reason",
-    ]
-    for column in columns:
+    for column in PREMIERSHIP_WINS_COLUMNS:
         if column not in output:
             output[column] = ""
 
     return (
-        output[columns]
+        output[PREMIERSHIP_WINS_COLUMNS]
         .drop_duplicates("match_id")
         .sort_values(["season", "grade_name", "match_date"], na_position="last")
         .reset_index(drop=True)
@@ -138,19 +159,7 @@ def build_premiership_wins(wins: pd.DataFrame, matches: pd.DataFrame) -> pd.Data
 
 def build_player_premierships(players: pd.DataFrame, wins: pd.DataFrame) -> pd.DataFrame:
     if players.empty or wins.empty:
-        return pd.DataFrame(
-            columns=[
-                "canonical_player_name",
-                "display_player_name",
-                "premiership_count",
-                "seasons",
-                "grades",
-                "teams",
-                "latest_premiership_season",
-                "evidence_match_ids",
-                "confidence",
-            ]
-        )
+        return empty_player_premierships()
 
     valid_matches = set(wins["match_id"].astype(str))
     merged = players[players["match_id"].astype(str).isin(valid_matches)].copy()

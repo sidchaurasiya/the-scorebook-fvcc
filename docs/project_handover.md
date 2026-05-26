@@ -962,6 +962,19 @@ Positive-response onboarding update:
 - Browser smoke passed for Hall of Fame, Season Overview, Milestone, and Player Profile for each pilot club, with clean empty states for unavailable scorecard/ball-by-ball sections.
 - GA4 remains shared through `GA4_MEASUREMENT_ID` unless a later config explicitly overrides it. Event parameters should include `club_id` and `club_name` as custom dimensions.
 
+Pilot match-centre/backfill update:
+
+- Controlled match-centre/backfill completed for `southside-east-caulfield`, `glen-waverley-hawks`, `ashwood`, `plenty`, `reynella`, and `georges-river-district`.
+- Runtime deploy-safe outputs were regenerated under each club's `clubs/<club_id>/data/processed/` folders for Hall of Fame, Season Overview, and Player Profile.
+- Raw/full match-centre outputs remain ignored under `data/raw/match_centre/` and `data/processed/match_centre/`; regenerated review packs remain ignored under `data/processed/experimental/<club_id>/review_pack/`.
+- FVCC was not refreshed or backfilled during the pilot-club run. It was smoke-tested only as a regression check and passed.
+- All six pilot apps smoke-passed Hall of Fame, Season Overview, Season by Round, Milestone, Player Profile, and Recent Form with no FVCC data leakage, traceback, visible `NaN`/`None`, or internal IDs.
+- Verified ball-by-ball coverage now exists for every pilot club, but coverage is partial by source availability. Missing ball-by-ball metrics must continue to render as `N/A`, blank, or clean empty states, not fabricated `0.0`.
+- Pilot premiership exports are header-only where no verified premiership evidence exists; do not fabricate premiership or captain data.
+- Southside East Caulfield is the only non-FVCC pilot with approved safe duplicate merges applied. Duplicate proposals for the other pilot clubs remain review-only.
+- Next review focus before client previews: team/grade mappings for all clubs, duplicate-player review for non-Southside clubs, and manual identity/naming review for Georges River District / official Georges River Cricket Club.
+- Detailed counts and recommendations are in `docs/multi_club_match_centre_backfill_summary.md`.
+
 ## 18. Final Instructions For Future Codex Session
 
 Before making any future change:
