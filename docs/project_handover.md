@@ -881,6 +881,9 @@ Advanced analytics ideas:
 Important docs:
 
 - `docs/project_handover.md`
+- `docs/multi_club_scalability_plan.md`
+- `docs/analytics_tracking.md`
+- `docs/analytics_setup.md`
 - `docs/player_profile_tags_audit.md`
 - `docs/player_vs_peers_calculation_audit.md`
 
@@ -942,6 +945,18 @@ Future weekly order: aggregate refresh with `scripts/refresh_data.py --club fvcc
 Phase 4.5 validation: `scripts/refresh_club_outputs.py --club fvcc` ran from existing local inputs only, fetched no external data, and regenerated all deploy-safe summaries deterministically. All 19 club-specific Hall of Fame, Season Overview, and Player Profile CSVs matched their previous row counts and SHA-256 hashes, so no CSV changes were committed.
 
 Phase 6.5 deliberately leaves raw/full match-centre data in ignored legacy folders: `data/raw/match_centre/`, `data/processed/match_centre/`, and `data/processed/experimental/`. Production pages should continue to depend only on deploy-safe summaries under `clubs/<club_id>/data/processed/...`. Legacy `fvcc_*` column names may still appear in deploy-safe CSV schemas and UI code for compatibility, but new parser/exporter logic should use the neutral `club_*` fields first. Before a second club relies on match-centre features, review club-specific team ownership mappings and raw/generated folder scoping.
+
+Positive-response onboarding update:
+
+- Configured and aggregate-refreshed six pilot clubs: `reynella`, `ashwood`, `glen-waverley-hawks`, `plenty`, `georges-river-district`, and `southside-east-caulfield`.
+- Glen Waverley Hawks reused the existing local folder and was updated to the current structure.
+- Georges River District uses folder id `georges-river-district`; the official PlayCricket identity is Georges River Cricket Club.
+- Every non-FVCC pilot config has `allow_legacy_fallback: false`, `mapping_dir: clubs/<club_id>`, and all runtime processed output under `clubs/<club_id>/data/processed/`.
+- Starter mapping files are club-local and header-only. Do not copy FVCC aliases, team/grade mappings, opponent mappings, or ground mappings into other clubs.
+- Aggregate processed CSVs and `metadata.json` were written for each pilot club. Match-centre refresh/backfill was not run and still requires explicit approval per club.
+- Review packs exist under `data/processed/experimental/<club_id>/review_pack/`; keep them ignored unless Preet explicitly approves committing them.
+- Browser smoke passed for Hall of Fame, Season Overview, Milestone, and Player Profile for each pilot club, with clean empty states for unavailable scorecard/ball-by-ball sections.
+- GA4 remains shared through `GA4_MEASUREMENT_ID` unless a later config explicitly overrides it. Event parameters should include `club_id` and `club_name` as custom dimensions.
 
 ## 18. Final Instructions For Future Codex Session
 

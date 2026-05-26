@@ -13,7 +13,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from src.config.club_config import get_mapping_path, get_processed_path
+from src.config.club_config import get_data_root, get_processed_path
 from src.data.playcricket_public import (
     PLAYCRICKET_PUBLIC_BASE_URL,
     PlayCricketPublicError,
@@ -297,7 +297,7 @@ def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.Da
 
 
 def active_metadata_path() -> Path:
-    return get_mapping_path("metadata.json")
+    return get_data_root() / "metadata.json"
 
 
 def refresh_playcricket_backup(

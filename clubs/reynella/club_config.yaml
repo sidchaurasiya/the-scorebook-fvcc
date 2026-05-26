@@ -1,0 +1,48 @@
+club:
+  club_id: reynella
+  name: Reynella Cricket Club
+  short_name: RCC
+  display_name: Reynella Cricket Club
+  app_name: The Scorebook
+  playcricket_club_id: f2d283dc-87d8-eb11-a7ad-2818780da0cc
+  default_page: hall-of-fame
+
+branding:
+  primary_colour: "#153E75"
+  secondary_colour: "#F5C542"
+  background_colour: "#F7F9FC"
+  accent_colour: "#2B7FC3"
+  logo_path: null
+
+contact:
+  creators:
+    - Siddhanth Chaurasiya
+    - Preet Kaur
+  feedback_email: siddhanthchaurasiya@gmail.com
+
+features:
+  show_experimental_match_centre_pages: false
+  season_overview_v2_enabled: false
+  hall_of_fame_enabled: true
+  season_overview_enabled: true
+  milestone_enabled: true
+  player_profile_enabled: true
+
+data:
+  root_dir: clubs/reynella/data
+  processed_dir: clubs/reynella/data/processed
+  hall_of_fame_dir: clubs/reynella/data/processed/hall_of_fame
+  season_overview_dir: clubs/reynella/data/processed/season_overview
+  player_profile_dir: clubs/reynella/data/processed/player_profile
+  raw_match_centre_dir: data/raw/match_centre/reynella
+  processed_match_centre_dir: data/processed/match_centre/reynella
+  experimental_dir: data/processed/experimental/reynella
+  mapping_dir: clubs/reynella
+  allow_legacy_fallback: false
+
+display:
+  default_season: latest
+  include_summer: true
+  include_winter: true
+  home_ground_keywords: []
+  grade_order: []

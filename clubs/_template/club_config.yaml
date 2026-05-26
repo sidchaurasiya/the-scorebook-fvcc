@@ -11,6 +11,7 @@ branding:
   primary_colour: "#6D4DFF"
   secondary_colour: "#9F2747"
   background_colour: "#F7F8FC"
+  accent_colour: "#6D4DFF"
   logo_path: null
 
 contact:
@@ -31,9 +32,12 @@ data:
   processed_dir: clubs/your-club-id/data/processed
   hall_of_fame_dir: clubs/your-club-id/data/processed/hall_of_fame
   season_overview_dir: clubs/your-club-id/data/processed/season_overview
-  raw_match_centre_dir: clubs/your-club-id/data/raw/match_centre
-  processed_match_centre_dir: clubs/your-club-id/data/processed/match_centre
-  experimental_dir: clubs/your-club-id/data/processed/experimental
+  player_profile_dir: clubs/your-club-id/data/processed/player_profile
+  raw_match_centre_dir: data/raw/match_centre/your-club-id
+  processed_match_centre_dir: data/processed/match_centre/your-club-id
+  experimental_dir: data/processed/experimental/your-club-id
+  mapping_dir: clubs/your-club-id
+  allow_legacy_fallback: false
 
 display:
   default_season: latest

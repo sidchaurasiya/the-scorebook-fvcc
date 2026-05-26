@@ -1,0 +1,961 @@
+player_id,player_name,seasons_played,teams_played_for
+a590e886-4255-4f92-bff7-f6a81f6cf0af,Noah Lacorcia,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U10 | Plenty  U11 Mixed | White
+9816bdb8-8dea-4d09-bf7a-1049c795d2dd,Ethan Whittingham,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U10 | Plenty  U11 Mixed | Plenty  U13 Mixed | White
+0181e8be-c4c1-4241-a92c-8f5514930169,Sonny Keane,Summer 2024/25 | Summer 2025/26,Plenty  U10 | Plenty  U11 Mixed | Plenty  U13 Mixed
+4f4f4c2f-36bb-43ca-bc0f-0179de162de0,Zachary Flannery,Summer 2025/26,Plenty  U11 Mixed
+b20e676a-5612-4d90-af08-b48f579c4cf4,Yohan Kapoor,Summer 2025/26,Plenty  U11 Mixed
+39f3ca0b-9594-41ad-ab73-9be99cea6f31,Arjun Krishnan,Summer 2025/26,Plenty  U11 Mixed
+36ee7045-62e7-4c89-8973-af6c58dcdaae,Gavinjot Bhullar,Summer 2025/26,Plenty  U11 Mixed
+19ed1d58-1104-4649-ad93-abc7138993f7,Agamveer Uppal,Summer 2024/25 | Summer 2025/26,Plenty  U10 | Plenty  U11 Mixed
+7e3cb349-bc4e-441f-8440-0016bda92d94,Lawrence Bhattacharyya,Summer 2024/25 | Summer 2025/26,Plenty  U10 | Plenty  U11 Mixed | Plenty  U13 Mixed
+d8f740c1-2c02-422a-a28e-fef6e72bdca7,Yuvraj Singh,Summer 2024/25 | Summer 2025/26,Plenty  U10 | Plenty  U11 Mixed
+774079b0-30b8-4e5f-bb5a-fc6916aa4c0e,Henry Byrne,Summer 2025/26,Plenty  U11 Mixed
+95250e22-691c-426f-8640-33b9f073e527,Viaan Chaudhary,Summer 2025/26,Plenty  U11 Mixed
+55971bec-8818-4b1b-8430-eaffed4e752b,Ayansh Kapoor,Summer 2025/26,Plenty  U11 Mixed
+5f0e734a-9d60-4f5a-bc2e-ea8e0e4ba04c,Cillian Wenholz,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed | Red
+63bb99ea-70dd-4679-bfad-06b8192758f6,Thomas Killeen,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed | Red
+0590c3ff-8a71-4023-946c-039ac754769f,Cooper Galloway,Summer 2025/26,Plenty  U13 Mixed
+336b33fe-95fa-42ee-849f-cc3cd5855841,Levi Fenton,Summer 2025/26,Plenty  U13 Mixed
+cb628d36-6980-4266-9351-97dac9953903,KYANN NAVARATNE,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed | Red
+fef24396-2956-4fd2-9617-e7643863ab8d,Lachlan Weinberg,Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed
+9a226802-0a87-449d-83f7-b9bc5724b801,Matthew Wade,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed | Red
+545c3a8a-8fc9-4285-9764-1d03fd6a8ef9,Max Weinberg,Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed
+2044c3a9-0a2b-4317-b9a4-4587d857f858,Hemanshu Patel,Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed
+95ac01b6-9f8c-4894-845f-d3887fb60b4e,Mitansh patel,Summer 2025/26,Plenty  U13 Mixed
+02ebb84c-4674-4092-8d28-8c88bcdfe3d7,Arjun Sembey,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed | Red
+86e2d246-165f-40d3-ad58-110721cf7509,Akshar Soni,Summer 2024/25 | Summer 2025/26,Gold | Plenty  U13 Mixed
+cc538df9-982b-42f3-8310-ad60d4085c60,Tanveer kaur Mann,Summer 2025/26,Plenty  U13 Mixed
+b60981cb-afb1-4940-8ac3-37f07d1d0753,Lance Hodgson,Summer 2025/26,Plenty  U15 Mixed | Plenty 2nd XI | Plenty 3rd XI
+fd8d822f-b1b8-41ff-a4aa-06ef116827a0,Joel Strappazon,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Blue | Plenty  U15 Mixed | Plenty 3rd XI | Plenty 4th XI | White
+aa886fbe-3d25-4974-bc02-89abc1a48c24,Lachlan Head,Summer 2025/26,Plenty  U15 Mixed | Plenty 2nd XI | Plenty 3rd XI
+9be8abb6-893b-4ae6-99fe-eaf207dcce43,Hugo Weston,Summer 2020/21 | Summer 2022/23 | Summer 2025/26,Plenty  U15 Mixed | Plenty 3rd XI | U10 Red East | U12 Red East
+1d8ab3c4-8f41-43a6-a4e1-55ef0ce062a7,Chanupa Silva,Summer 2024/25 | Summer 2025/26,Blue | Plenty  U15 Mixed | Plenty 3rd XI
+28dc3080-2e19-49c0-ba00-bd6f410ddd20,Connor McGennisken,Summer 2024/25 | Summer 2025/26,Gold | Plenty  U15 Mixed | Plenty  U17 | Plenty 3rd XI
+6ce55a15-9faf-4e2c-b352-c5c7f43c1cf7,Sanuth Fernando,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Gold | Plenty  U15 Mixed | Red
+d1ec0d0a-9bff-413d-b831-96daad279437,Harry Koegler,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Blue | Plenty  U15 Mixed | Plenty 3rd XI | White
+74602756-b11d-4e84-9c98-78d83e2a3c2e,Kishen Akilan,Summer 2025/26,Plenty  U15 Mixed
+0d96ab5c-f700-4a89-8ee2-cd5359116133,********,Summer 2024/25 | Summer 2025/26,Gold | Plenty  U15 Mixed
+797d869c-0f5d-436c-8a54-ae12f97751a0,Hamish OHalloran,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Blue | Plenty  U15 Mixed | White
+35b48790-1efb-458b-8652-7052ecc21a99,Boston Gist,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Blue | Plenty  U15 Mixed | Plenty 4th XI | White
+3cc84989-f157-464f-af2c-8b811f7b796c,Max Lehner,Summer 2025/26,Plenty  U17
+af50e246-91e6-46b1-b315-1ec31b9bfde9,Declan Regan,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 | Plenty  U17 Mixed | Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club | Red
+6fed8c0f-7c23-4c3e-8ed1-74fa21371acb,Thomas Webb,Summer 2025/26,Plenty  U17 | Plenty  U17 Mixed | Plenty 2nd XI | Plenty 3rd XI
+a8dfb4d5-87ad-4595-a3f0-d494ef23eeea,Jack Edis,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 | Plenty  U17 Mixed | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Red
+0b76a883-cf1e-4e3d-8e94-b141b37b6145,Lucas Gouin,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 | Plenty  U17 Mixed | Plenty 3rd XI | Plenty 4th XI | Red
+0ac1c4a2-29f8-4b13-828b-ba625bc3e22a,Abhayveer Uppal,Summer 2025/26,Plenty  U17 | Plenty  U17 Mixed
+bd44220d-5837-432b-97d2-a8359486ccd6,Jake Tennent,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 | Plenty  U17 Mixed | Red
+dea1b91b-9fda-49d5-bc6a-cb02b5fd6308,Karman Mann,Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 | Plenty  U17 Mixed
+ff7d5858-a0a2-4cb2-ba94-651b3815b539,Ruben Page,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Blue | Plenty  U17 | Plenty  U17 Mixed | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | White
+f3f9cd50-73f4-4349-a7b3-c40156379012,Xavier Tsioulos,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 | Plenty  U17 Mixed | Plenty 3rd XI | Plenty 4th XI | White
+39138318-db2b-4616-bc48-b258e7e7047c,Hirusha Fernando,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 Mixed | Plenty 2nd XI | Plenty 3rd XI | White
+6de26c2e-7b5f-4530-b4ab-68bbf2c0057d,Anhad Kaushal,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Blue | Plenty  U17 Mixed | Plenty 4th XI | White
+eda6cf8c-fa15-45ad-b0bd-110f18e65c25,Bharat Chowdhary,Summer 2024/25 | Summer 2025/26,Plenty  U16 | Plenty  U17 Mixed
+78dad3f4-8f58-4dec-a4c3-325c841248ba,Brooklyn Menta,Summer 2025/26,Plenty  U9 Mixed
+44f82be3-74d4-4e17-9910-571336952b78,Zachary Hall,Summer 2025/26,Plenty  U9 Mixed
+588d8c0e-1ce9-4ff8-96bf-2716fd867171,Aston Menta,Summer 2025/26,Plenty  U9 Mixed
+0bf96555-0a26-4559-83ae-3f1e4f9a9eef,William Deligiorgis,Summer 2025/26,Plenty  U9 Mixed
+42042997-accf-40f3-9c57-dbfb1bb59d64,Jack Conlin,Summer 2025/26,Plenty  U9 Mixed
+34e786ba-b4bc-4a11-bb4e-497cb688ac6d,Jax Bunn,Summer 2025/26,Plenty  U9 Mixed
+b723ed0e-4460-4904-9dcd-73b95a7438b1,Kye Bunn,Summer 2025/26,Plenty  U9 Mixed
+b7195fd0-1c3e-4a2e-9b75-df20fc8ba886,Freddie Austin,Summer 2025/26,Plenty  U9 Mixed
+846557e9-25c7-49d2-9710-cc3ba235341b,Beau Stanley,Summer 2025/26,Plenty  U9 Mixed
+d4613ae1-1b64-470d-a921-b9558b959aaf,Jack Greig,Summer 2025/26,Plenty  U9 Mixed
+e25a015c-1474-4c55-ad0b-ebdc22068b89,Gordon Zull,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty Cricket Club
+2b9f68a6-9595-42f6-a4f9-377d224f4325,Jayden Bedford,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade | F2 Grade | North Region Senior T20 | ODC | Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+d3675df4-0413-40a7-8cb1-753e72be2215,Jake Bennett,Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty Cricket Club
+65741a60-b7a7-496f-8ed0-b8f937d044e9,Nathan Gardiner,Summer 2010/11 | Summer 2024/25 | Summer 2025/26,B Grade | Barclay Shield | Plenty 1st XI | Plenty Cricket Club
+b3c4eaba-199a-4ffe-a6da-9d54f99ec830,Harley Smith,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Money Shield | North Region Senior T20 | Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+99a612d9-6f84-40eb-83d8-099c95a2f602,Billy Goodwin,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty Cricket Club
+563e215c-3d7f-4253-967e-14ce01c8bef3,Riley Hillyear,Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+5f96135e-12fc-465f-aeb9-882da368029f,Kai Axton,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty Cricket Club | Red
+f08f5412-0f1a-4e99-a931-7d4d0b3adec1,Billy McKeown,Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty Cricket Club
+640abc9d-43ac-4178-849a-87a9eb7b0467,Shane Cullen,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+f2c38892-c74e-498f-a232-62fc6de5119d,Jayson Gardiner,Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+07420da5-ff9f-42c5-8d0f-eff723660a8d,Ethan Weir,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club
+ce9d516b-41ac-4902-9d43-32dc7cc2fa02,Daniel Stapelfeldt,Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+964146ec-c914-4378-a604-8c61cd24f0c1,Connor McEvoy,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Barclay Shield | C Grade | D Grade | F3 Grade | Money Shield | North Region Senior T20 | Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club | U14 Red | U16 Blue | U16 Teal
+e7669494-bc83-4eba-9283-708c5ce3d38e,Nick Strangwick,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty Cricket Club
+e7a36a48-d1d2-4a8f-a164-a7118fdc68db,James Plunkett,Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+23785c05-58b6-4cbc-8227-13fbe934ef81,Cade Norman,Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club
+fcf4d68f-5297-4cd5-87ba-5392781b952d,Graeme Pavey,Summer 2024/25 | Summer 2025/26,Plenty 2nd XI
+04266377-9f41-42e4-8b48-a04bdc49e03f,Shane Daly,Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Barclay Shield | C Grade | D Grade | F2 Grade | F3 Grade | G3 Grade | ODC | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+6e9ed27b-ef08-43ea-b1d5-ec5340b7f914,Matt Deligiorgis,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI
+4c64699e-3e56-4b06-b0f6-77b82dc656ce,Jake Goodwin,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club
+9f26e985-a01a-461b-aa5f-bfa31c765129,Paul Alexopoulos,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI
+0599f2bc-83c0-4ea8-8105-07851a4517c9,Hayden Weir,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club
+152b091c-db50-4de4-9ae9-e6a513397cad,Tom Weir,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+4b28accd-8dfc-4730-a150-53d134b632f0,Ryan Dubier,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+73019bc2-e1f2-45c5-ab61-c58633c52c09,Liam Gray,Summer 2023/24 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+16376460-0c9b-4a6c-b9fd-738639b03aef,Ned Welsh,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+9bc9be41-e938-4e58-b661-46941fd4afc6,Scott Keane,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 1st XI | Plenty 2nd XI
+e8de5c95-922e-4293-bfb6-431b8fb57065,Angus Regan,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+7972a3e0-88bd-4ec2-a190-e9c3213361c9,Cameron Head,Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI
+84cfa9c6-dccc-4e1e-ac2a-83adcc58b988,Fraser Commandeur,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club
+f670a53a-a0d7-4eb2-a3ed-9f3cfa52f0e8,Brodric Gray,Summer 2023/24 | Summer 2025/26,Plenty 2nd XI | Plenty 4th XI
+111bd086-c51b-441c-b952-33234782dc44,Jack Tilley,Summer 2024/25 | Summer 2025/26,Plenty 2nd XI | Plenty 3rd XI
+00fb5094-5af3-465a-b8a0-17eb81f6d87e,Pino Tino,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,C Grade | D Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | ODC | Plenty 3rd XI | Plenty 4th XI | Vets A
+dede5856-25a7-47ff-8ed2-010399aabf2e,Andy Page,Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 3rd XI | Plenty 4th XI | U12 Blue | U12 Red West
+e4c9af97-abb9-439a-a965-14b10d8f7b09,Jackson Gavin,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Barclay Shield | C Grade | D Grade | E Grade | Money Shield | North Region Senior T20 | ODC | Plenty 1st XI | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | U12 Blue | U12(1) Teal | U12(2) Teal | U14 White North | U14(2) Blue | U14(2) Teal | U16 (Saturday) Blue | U16 Blue | U16 Teal | U18 Blue
+a3b4e18d-adbe-4541-a210-e52bc00b0a9d,Leon Turner,Summer 2025/26,Plenty 3rd XI
+638c9622-84db-4ae7-bb33-805107653d0f,Dean Barnett,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,G2 Grade | G3 Grade | Plenty 3rd XI | Plenty 4th XI | U12 Red Nillumbik | U12 Teal | U12 White B | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1) | U16 Blue
+c2b061cf-8651-48c0-95c9-cd5b08886796,Colin McGennisken,Summer 2025/26,Plenty 3rd XI
+5c87649c-87ae-4cfa-be50-3ea3bb74b484,Nicholas Tsioulos,Summer 2024/25 | Summer 2025/26,Plenty 3rd XI | Plenty 4th XI
+3e2327c2-89c5-4b9b-a69d-94f72f951d2c,Daryl Collie,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Plenty 3rd XI | Plenty 4th XI
+7584d846-14d5-499e-a80c-f9ed72fcef02,Liam Banthorpe,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2017/18 | Summer 2018/19 | Summer 2021/22 | Summer 2024/25 | Summer 2025/26,B Grade | D Grade | F Grade | North Region Senior T20 | Plenty Cricket Club | U12 Blue | U14(1) Blue | U16 Blue | U18 (Friday) | U18 Blue
+e784b41a-fedd-4b13-8ee0-db071a1d6968,Liam Mallia,Summer 2025/26,Plenty Cricket Club
+f43762e5-05c0-4a7b-9af2-9aae74b2739a,Achyut Patel,Summer 2023/24 | Summer 2024/25,Blue | Plenty 3rd XI | Plenty 4th XI | Red
+6a1cfee0-a495-4baa-a683-7463f3e007b2,Harry Cardamone,Summer 2023/24 | Summer 2024/25,Blue | White
+717bab9a-63a4-4362-a53b-a832bcdc5276,Rahaan Gill,Summer 2023/24 | Summer 2024/25,Blue | White
+527b59fb-3e88-457b-9352-25555ac85363,Jay Patel,Summer 2024/25,Blue
+9646cf6f-dbca-4458-b8b9-dbc4b683ed9d,Jai Graetz,Summer 2024/25,Gold
+12ae8602-6c65-4fa2-b102-f5998ca5d97b,samarvir hira,Summer 2023/24 | Summer 2024/25,Plenty  U10 | White
+e3d5c32d-b749-42d0-ba56-b61c79823d60,Adam Jewell,Summer 2024/25,Plenty  U10
+2a2e142a-787d-453c-9de4-1a9cc18262ad,Gavinjot Singh Bhullar,Summer 2024/25,Plenty  U10
+fb115a57-b617-4707-b645-8205971b9bc9,Gurkirat Singh Dhillon,Summer 2024/25,Plenty  U10
+57e1d7a0-8c19-4784-b26f-d187bf5eb35c,Gurinder singh Dhillon,Summer 2024/25,Plenty  U10
+85b39ed3-c8fb-41ff-b31f-b4019471e24c,Hartej Bains,Summer 2024/25,Plenty  U10
+6ebfc9f0-c878-4def-9727-d5e7fdecc8f3,William Bishop,Summer 2023/24 | Summer 2024/25,Plenty  U16 | Red
+7e2b4432-b317-434d-af40-d8921eb2810a,Connor Carmody,Summer 2023/24 | Summer 2024/25,Plenty  U16 | Plenty 4th XI | Red
+c8baddb5-efa4-432f-863a-9333651b04bc,SAVAIN NAVARATNE,Summer 2023/24 | Summer 2024/25,Plenty  U16 | Red
+037ebb7a-fba0-4abd-95b8-e0cfe7133aca,Veer Bhanot,Summer 2023/24 | Summer 2024/25,Plenty  U16 | Plenty 4th XI | Red
+d5881a50-c84e-44fb-b306-c039129d1d89,EVMIN NAVARATNE,Summer 2023/24 | Summer 2024/25,Plenty  U16 | Red
+e56d16b9-5189-4420-a96b-17c1e1cdfe27,Snehath Perera,Summer 2023/24 | Summer 2024/25,Plenty  U16 | White
+540b9415-3694-4168-9f1c-26a36e87114e,Tanuj Namalge,Summer 2023/24 | Summer 2024/25,Plenty 1st XI | Plenty Cricket Club
+f9d85835-5a05-440d-a174-7d1762646f34,Mitch Elzink,Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25,Money Shield | North Region Senior T20 | Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+5a178001-65f7-4105-bb96-90a5dfa8bf5b,Mitch Johnson,Summer 2023/24 | Summer 2024/25,Plenty 1st XI | Plenty Cricket Club
+586c9925-19af-460a-bfb5-a14dd9a1e79b,Riley Gaylard,Summer 2023/24 | Summer 2024/25,Plenty 1st XI | Plenty Cricket Club
+700ec1d2-3374-4e95-a507-d165974d0b2b,James King,Summer 2023/24 | Summer 2024/25,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+b68d81b3-6db2-4e84-9d86-9539b16c0b6c,Owen Pisani,Summer 2023/24 | Summer 2024/25,Plenty 1st XI | Plenty 2nd XI | Plenty Cricket Club
+057f4268-c240-4fe5-8283-8ecd59dbd87a,Jesse King,Summer 2024/25,Plenty 1st XI
+ea1b9c84-c7b5-405d-9272-8bc39804ba6e,Steven Goodwin,Summer 2024/25,Plenty 1st XI | Plenty 2nd XI
+241924cd-2ce7-4a4a-9e52-e52d351f152b,David Love,Summer 2024/25,Plenty 2nd XI
+f73bfe67-2b37-4a83-9817-7ab061623bf3,Lachlan Pyers,Summer 2013/14 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25,D Grade | F2 Grade | G2 Grade | G3 Grade | Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI | Plenty Cricket Club | U12 Blue West | U12 Teal South | U14 Red | U14 White | U14 Yellow | U16 Teal | U16 White
+b04d9139-18ed-4f70-9a31-6ad1d341a5a0,Nicholas Curtin,Summer 2023/24 | Summer 2024/25,Plenty 2nd XI
+4a0f64e0-699d-43ac-ae72-5c84e684a717,Ben Cameron,Summer 2024/25,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+d9d6fe1b-24dd-4085-b04b-fbef058e7b53,Chris Alexopoulos,Summer 2023/24 | Summer 2024/25,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+3d61d3dc-b444-470e-9fe6-df9cf1b1a64d,Steven Giammario,Summer 2024/25,Plenty 3rd XI | Plenty 4th XI
+7b69648b-62e1-4cb0-943f-26a4b2f69bbc,Andrew King,Summer 2023/24 | Summer 2024/25,Plenty 1st XI | Plenty 3rd XI
+03c8bb0e-d92c-4a0f-b2d6-a6af4b20fbdf,Jake Frederiksen,Summer 2023/24 | Summer 2024/25,Plenty 3rd XI | Plenty 4th XI | Red
+6aa853b1-e08b-4cc8-85a0-3934f449a247,Taj Merrett - Collie,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25,D Grade | F2 Grade | G2 Grade | G3 Grade | Plenty 3rd XI | Plenty 4th XI | U12 Teal South | U14 Red | U14 White | U14 Yellow | U16 Teal | U16 White
+dc37eacf-d0ec-4fda-b5f1-a77209c4f6b3,Michael McConville,Summer 2023/24 | Summer 2024/25,Plenty 3rd XI | Plenty 4th XI
+e0861bfa-5727-41a6-818b-1202d366793e,Rob Edis,Summer 2023/24 | Summer 2024/25,Plenty 3rd XI | Plenty 4th XI
+946aa1bd-4fa7-458d-abd6-8191d259bde3,Jack Cordwell,Summer 2023/24 | Summer 2024/25,Plenty 3rd XI | Plenty 4th XI | Red
+1c17d26a-423a-4e70-8cc1-168395301cf7,Damien Cordwell,Summer 2024/25,Plenty 4th XI
+f6274a48-2a93-4f3a-8b90-672c35959db2,Dwayne Fowles,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25,C Grade | D Grade | E Grade | F Grade | F2 Grade | F3 Grade | G Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | ODC | ODC - Division 2 | Plenty 3rd XI | Plenty 4th XI | U12 (4) | U14 (2) | U14 (3) | U16 (2)
+715bacf2-533b-463e-bc5e-ee2c3a60bcb5,Grant Turner,Summer 2024/25,Plenty 4th XI
+b0ac780e-ba76-4ac4-8f46-de0749a0ca4c,Matthew Tino,Summer 2023/24 | Summer 2024/25,Plenty 3rd XI | Plenty 4th XI
+4cfdbe1d-d23c-4d4e-bfbf-2f8900f43ab7,Chalitha Chamoda,Summer 2023/24,Plenty 1st XI
+b54cc8ab-1f10-452c-9d7b-fd29336248a6,Luke Richardson,Summer 2023/24,Plenty 1st XI
+23ed21a5-42dc-4165-9a8f-5e0f423a486a,kasun tharaka weerasinghe bamunu arachchige don,Summer 2023/24,Plenty 1st XI | Plenty 2nd XI
+bce58a74-4992-485d-93b1-06a077ebfa76,Chris Barclay,Summer 2023/24,Plenty 1st XI | Plenty 2nd XI
+61d78fd2-9888-431e-b0e6-00584941b7f1,Riley Scott,Summer 2023/24,Plenty 1st XI | Plenty 2nd XI
+1b68b91d-325f-474b-ae5e-529aadfb43ad,James FitzGerald,Summer 2023/24,Plenty 2nd XI | Plenty 3rd XI | Red
+bf082a61-91d4-462b-bb11-bdc272db9636,Austin Welsh,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24,D Grade | F2 Grade | F3 Grade | G2 Grade | Money Shield | North Region Senior T20 | Plenty 2nd XI
+d4702799-7f29-4eb0-9c71-25dcc81e9d1d,Jack Burge,Summer 2023/24,Plenty 2nd XI | Plenty 3rd XI
+187ad90d-394d-4116-8680-fb1f67cacadd,Brayden Key,Summer 2023/24,Plenty 2nd XI | Plenty 3rd XI
+adea0c4c-6147-4c21-aa79-3b0dba1d5e78,Lachie Kerr,Summer 2023/24,Plenty 2nd XI | Plenty 3rd XI
+cb398776-7f4d-46a8-9d2b-04a4a42e8d51,Lucas Underwood,Summer 2023/24,Plenty 2nd XI | Plenty 3rd XI | Plenty 4th XI
+17971468-60c3-4495-853e-be35e35979fa,Brody Bell,Summer 2023/24,Plenty 3rd XI
+9005544b-85e2-4f0f-9905-163f55904c7a,Geoffrey King,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24,F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | Plenty 3rd XI
+536dc967-4841-4e41-a3b9-820db1fc95bf,Ashley Coles,Summer 2023/24,Plenty 3rd XI
+196880fd-bb5a-4132-af36-8e8c563301e9,Max Vita,Summer 2023/24,Plenty 4th XI | Red
+3bd62402-fde2-4998-bcd8-75e100a75226,Nicholas Osborne,Summer 2010/11 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24,C Grade | D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | North Region Senior T20 | ODC | Plenty 4th XI | U12 Development | U14 Teal North | U16 Blue | U16 Red
+9c441010-aee7-4718-bf7f-019519b0a96e,Matthew Barnett,Summer 2023/24,Plenty 4th XI | Red
+9c7f0d04-c0ab-454c-95b7-abfdee63d716,Lachlan Burge,Summer 2023/24,Plenty 4th XI
+5d96177c-c9d8-4860-b367-f17e1c669d9b,Mark Ostler,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24,G2 Grade | G3 Grade | Plenty 4th XI
+033e79fc-99ce-453f-9dfe-98f362a28960,Michael Vita,Summer 2023/24,Plenty 4th XI
+992a4b25-24ad-485a-bb7c-feb9c2995d8d,Andrew Frederiksen,Summer 2023/24,Red
+5e525780-b85d-4bdf-81f7-5c2911efbb86,Charlie Ostler,Summer 2023/24,Red
+9f2f9c67-7d37-47a5-b2c8-d49eecfa620b,Rahil Patel,Summer 2023/24,Red
+826c3384-9c63-487c-adf5-b49898c88ce3,Luca Lidgett,Summer 2023/24,Red | White
+e1065629-a197-48da-af0a-9e479b0a430a,Jacoby Brownley,Summer 2023/24,Red | White
+01b60341-95ec-4a57-ae54-98d1736af4ef,Levi Somanader,Summer 2023/24,Red | White
+b51ec763-bef7-4927-8f80-d4ccb3490dbe,James Guarino,Summer 2023/24,Red
+1c292536-3d98-4599-ae10-45cd1a43772d,Thomas Giles,Summer 2023/24,Red
+4952ec59-0ace-4b37-ae98-3faa759dbea2,Ben Hurdle,Summer 2023/24,Red
+98f3f823-f267-4269-86b0-277ed468b668,Felix Maurer,Summer 2023/24,Red
+0841539e-3273-4924-85ae-54ca0f6f5d87,Xavier Aylward,Summer 2023/24,Red
+de5dd7d3-ce11-4199-8145-dad505032c6f,Zahra Handy,Summer 2023/24,Red
+f18c2796-8f31-4e8f-a9fa-6254a25f778a,Cooper Ault,Summer 2023/24,Red
+5b3bd6b9-4521-4b92-95d9-b2ebc4a06890,Bivon Samaraweera,Summer 2023/24,Red
+72b852c7-009b-4877-823f-9cf69ff73287,Joravar Singh,Summer 2023/24,Red
+4b302d3b-eca6-40e3-acba-920a8c9723af,Mitchell Davidson,Summer 2023/24,White
+79cf63e2-a637-492a-a800-84a9cc8d5e76,Aaryan Chopra,Summer 2023/24,White
+6bd25ca7-efeb-41b7-93f0-2ee3231b8db3,Luke Lowe,Summer 2023/24,White
+21a002ef-0912-4f56-a753-72979c27d50b,Matt Deligiorgis,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Reserve | C Grade | D Grade | F3 Grade | G4 Grade | North Region Senior T20 | ODC - Division 2
+a37cabfd-8221-4e1d-a855-314b76bbc574,Nicholas Curtin,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2021/22 | Summer 2022/23,Barclay Reserve | Barclay Shield | C Grade | D Grade | North Region Senior T20 | ODC - Division 2
+78b84572-76a8-4512-a474-9375303c064d,Paul Alexopoulos,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,Barclay Shield | C Grade | D Grade | F3 Grade | Money Shield
+f90fc6ff-1889-4cd7-b93b-d46aef2bff77,Riley Scott,Summer 2009/10 | Summer 2010/11 | Summer 2022/23,D Grade | Money Shield | North Region Senior T20 | U14(1) Blue | U14(2) Teal
+5f42ae2c-824b-4343-af50-85eb4b7af029,Owen Pisani,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | G4 Grade | Money Shield | North Region Senior T20 | U12 Teal South | U12 White South | U12 White Teal | U14 Red | U14 Teal (1) | U14 White | U16 Blue | U16 Teal
+36852516-1572-49e3-891a-2073852d80f5,Andrew King,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | Money Shield | U12 Teal South | U12 White South | U12 White Teal | U14 Red | U14 White | U16 Blue | U16 Teal
+bfd04450-f1e3-47c2-a9ba-744402d7addc,James King,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,Barclay Shield | C Grade | D Grade | F2 Grade | F3 Grade | G3 Grade | G4 Grade | H Grade | Money Shield | North Region Senior T20 | U12 Teal | U14 Blue | U16 Blue | U16 Teal
+77623a2f-aa18-4c9a-9304-f78da9639c19,Ethan Weir,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,Barclay Shield | D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | Money Shield | North Region Senior T20 | U12 Teal South | U12 White Teal | U14 Red | U14 White | U16 Blue | U16 Teal
+07d426f0-cf57-4ee1-899e-de112a6f1591,Daniel Cocking,Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2011/12 | Summer 2012/13 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | H Grade | Money Shield | North Region Senior T20 | U14(1) Blue | U16 (1) Teal
+5b808b65-2207-4287-a27c-b11a823c0ed8,Max Taylor,Summer 2022/23,D Grade | Money Shield
+cebff6ce-cc3c-486b-b103-a71d496a54d6,Matthew Tino,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | U12 Teal South | U12 White South | U14 Blue | U14 Teal (1) | U16 Blue | U16 Red | U16 Teal
+8f46a2cd-b9b7-4269-8b30-182155dde844,Brayden Key,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | U12 Teal South | U12 White Teal | U14 Red | U14 White | U16 Blue | U16 Teal
+d1812e32-34df-4d43-9272-1e155324ee4a,Nicholas Strangwick,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | U12 White South | U12 White Teal | U14 Red | U14 White | U14 Yellow | U16 Teal | U16 White
+1a5027b7-8efb-478e-9a10-319154cf41ed,Shane Cullen,Summer 2002/03 | Summer 2003/04 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade | F3 Grade | Money Shield | North Region Senior T20 | ODC - Division 2 | U12 (2) | U12(1) Teal | U14 (3) | U16 (1) Teal
+08d459a3-1080-4e1b-bdd0-98b573a18201,Jake Goodwin,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | U12 Teal | U14 Blue | U14 Red | U14 Yellow | U16 Blue | U16 Teal
+4eabe7fa-8cc6-4d59-a62f-158001934c42,Ashley Coles,Summer 2017/18 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | Money Shield | North Region Senior T20
+09d44205-19f7-40f0-a1d8-285387b2520b,Jack Burge,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,Barclay Shield | C Grade | D Grade | F2 Grade | F3 Grade | G3 Grade | G4 Grade | H Grade | Money Shield | North Region Senior T20 | ODC | U12 Blue | U12 Blue West | U12 Teal | U12(2) Blue | U14 Blue | U14 Teal North | U14 White North | U14(2) Blue | U16 Blue | U16 Red
+43fd4026-8ca9-473a-81e0-c4f6874d2fcc,Kallum Volpe,Summer 2022/23,D Grade | F2 Grade | G2 Grade
+48304f90-5247-45b0-9541-66ea29085a3c,Christopher Barclay,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Shield | C Grade | D Grade | E Grade | F Grade | F2 Grade | G Grade | Money Shield | North Region Senior T20 | ODC | ODC - Division 2 | U12 Blue | U14(1) Blue | U16 (Saturday) Blue | U16(2) Blue | U18 (Friday)
+9a408951-0f8a-4fac-a300-2b1b344e5888,Cameron FitzGerald,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | U14 Blue | U14 Red | U14 Yellow | U16 Blue | U16 Teal
+4b8b0c11-c9dd-420f-849e-7d95f334682b,Michael McConville,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | U14 Red | U16 Blue | U16 Teal
+c94fdf74-cd62-4845-a0db-58dea56f7dd9,Ned Welsh,Summer 2022/23,D Grade | Money Shield | North Region Senior T20
+f851f620-72f1-44a9-86a9-bcd7b21169a9,Luke Richardson,Summer 2022/23,D Grade | Money Shield | North Region Senior T20
+261926ae-d34d-47a2-9776-0314b6762108,Steven Goodwin,Summer 2022/23,D Grade
+cfe9dd37-03f9-4832-9dca-439a1583b1ab,Kyle Ziedaitis,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Shield | C Grade | D Grade | E Grade | F2 Grade | F3 Grade | G2 Grade | Money Shield | North Region Senior T20 | U16 (Saturday) Blue | U18 (Friday)
+98bc610c-f338-4353-be92-b2c42350c539,Hayden Weir,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,C Grade | D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | North Region Senior T20 | U12 Teal | U14 Blue | U16 Blue | U16 Teal
+09c0d591-dea9-4130-b9a9-2e75811c8ab2,Angus Regan,Summer 2019/20 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade | G3 Grade | U14 Red | U14 Yellow
+159c5071-1705-4cea-87f2-4ebc8b66dd8d,Lucas Underwood,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,F2 Grade | G2 Grade | G3 Grade | U12 Yellow B | U14 Blue | U14 Red | U14 Yellow | U16 Teal
+b96fb83d-dfba-4ecd-9d16-fad77a134795,Ryan Dubier,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,D Grade | F2 Grade | G2 Grade
+81b0a4fe-e91b-4de3-af1e-f89ec050ddf4,Fraaser Commandeur,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,F2 Grade | G2 Grade | G3 Grade | U12 White Teal | U14 Red | U14 White | U14 Yellow | U16 Teal | U16 White
+91908618-57c4-455d-951f-65ef1f25bd3c,Tom Weir,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,C Grade | D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade
+eebb73ab-97c1-45b6-8879-0d411f698b93,Kai Axton,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade | U12 Blue | U12 White B | U12 Yellow B | U14 Teal (1) | U16 Blue | U16 White
+76185bac-5582-49f3-aa39-d686fe479ce9,Jayce Callegari,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,F2 Grade | G2 Grade | G3 Grade | U12 Blue | U14 Teal (1) | U16 Blue
+12ba1df4-9d35-4659-beb1-22a7b79faf5f,Dean Barnett,Summer 2022/23,G2 Grade
+8997a989-4699-4c27-8b15-8b8564cfa2ff,Aidan Burich,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade | U12 Teal | U12 Yellow | U14 Blue | U14 Red | U14 Yellow | U16 Blue | U16 Teal | U16 White
+b381dc1d-b09a-4f3d-81ee-9eb50ea84d23,Daryl Collie,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,F2 Grade | G2 Grade | G3 Grade
+0b158851-216a-4639-a0a9-0150a6c11d51,Kavisha Fernando,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade | U16 Teal | U16 White
+9fc42dce-5f59-4964-ab50-8a8255c7497d,Tony Burich,Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade
+5d628e80-083e-4e8e-96e2-ef7bc25bf35a,Jot Sidhu,Summer 2022/23,G2 Grade | U14 Blue
+045f59d5-2c59-42d7-b82a-9abdd076a6ee,Jack Edis,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade | U12 Blue | U12 Red B | U12 Red C | U12 Teal | U12 White B | U14 Blue | U14 Teal
+54523ce1-53c5-411f-9f11-8a6b7f07efce,Max Vita,Summer 2022/23,G2 Grade | U16 Blue
+bbb0dca5-597d-4526-a4ac-035df0fca500,Thomas Giles,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade | U12 Red Nillumbik | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1) | U16 Blue | U16 White
+0de5a010-f9fc-4e26-b9cc-840ba5d6b421,Abhayveer Uppal,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G2 Grade | U12 Blue | U12 Red B | U12 Red C | U12 White B | U14 Blue | U14 Teal
+868ff6e5-0573-40fd-8c90-cc1815416b7e,Michael Vita,Summer 2022/23,G2 Grade
+0600d38e-ace1-4a59-8d92-32088bc25454,Darren Axton,Summer 2021/22 | Summer 2022/23,G2 Grade | G3 Grade
+ee2acf84-6be8-4825-83c3-7cf7c7129716,Declan Regan,Summer 2021/22 | Summer 2022/23,G2 Grade | U14 Blue | U14 Teal
+7796132e-164e-4206-a7f2-c4f6f21b1a2a,Tanuj Rajarathna,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,Barclay Shield | Money Shield | North Region Senior T20
+1ec255e4-1205-46d9-a8e9-14bc48a991f9,Chalitha Prasad,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,Barclay Shield | Money Shield | North Region Senior T20
+d575c499-fdca-408a-aa44-4654d2e214a0,Gordon Zull,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Reserve | Barclay Shield | C Grade | E Grade | Money Shield | North Region Senior T20 | ODC | U16 (1) Blue
+9254f35d-3ff4-4c09-b20d-eab8f5a40c18,Mitch Johnson,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | Money Shield | North Region Senior T20 | U12 (2) | U12(1) Teal | U14 (2) | U14 (3) | U14(1) Blue | U16 (1) Blue | U16 (1) Teal
+32d8e330-230b-4585-98f2-f4bb1936366d,Steve Rice,Summer 2022/23,U10 Yellow East
+6876db68-3e72-47c0-9059-4569dced636d,Luca Lidgett,Summer 2022/23,U10 Yellow East
+044356b1-17bf-452c-9f09-f2ae609f521d,Mitchell Davidson,Summer 2022/23,U10 Yellow East
+08c64f30-803d-4f6b-99f9-4e4717fb52e4,Levi Somanader,Summer 2022/23,U10 Yellow East
+4a1bb680-bbd1-42dd-a441-84598cea5233,Jacoby Brownley,Summer 2022/23,U10 Yellow East
+95b5d48b-7786-4b3a-bd73-4320c1696017,Aaryan Chopra,Summer 2022/23,U10 Yellow East
+4300014f-ede8-43e2-a834-afa4d12844fa,AAYAAN ASWAL,Summer 2019/20 | Summer 2021/22 | Summer 2022/23,U10 (Level 1) - Red | U12 Blue | U12 Teal
+70c40582-b443-4d39-a7e2-ee200aacd129,Joel Strappazon,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Teal | U12 White Nillumbik | U14 Red - Nillumbik/Whittlesea
+6b156124-6c67-4000-a17d-f546ec4ccb06,Geeta Shukla,Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Teal
+5b0f0577-802e-40c6-a820-82f0912846ad,Hamish O'Halloran,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U10 (Level 1) - Red | U12 Blue | U12 Teal | U12 White Nillumbik
+b8ee0760-8bc5-49b4-8d54-b9f3ac9bf5bf,Andrew Frederiksen,Summer 2022/23,U12 Blue
+c079f2ca-4d82-4498-b534-c22d90c8f917,Anhad Kaushal,Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Red West
+5d8556de-9c0a-4ae4-ab70-0dd9b8de654f,Harry Cardamone,Summer 2022/23,U12 Blue
+32d9ecf5-45a2-4436-b9b3-7bf09281a737,Rahaan Gill,Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Teal
+13238947-4352-4b6f-8c89-907ffbd0b025,Charlie Ostler,Summer 2020/21 | Summer 2022/23,U10 Red East | U12 Blue | U12 White East
+2865a4a6-bb39-4acc-bb28-efb38a292972,Ashtan Sterjovski,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 Blue
+3a29e54b-8eb3-4569-9259-7e6ae973ef7e,Boston Gist,Summer 2022/23,U12 Blue
+8e0cf310-48de-40fd-b440-d6be3f96b1fa,Shreyan Prasad,Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Teal
+c92adc58-5e7c-4bf0-9267-2993d22a5af5,KYANN NAVARATNE,Summer 2021/22 | Summer 2022/23,U10 Red West | U12 Blue | U12 Red East
+98501a64-60a5-47b1-a600-91991e415040,Cillian Wenholz,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U10 Red East | U10 Red West | U10 Yellow West | U12 Red East
+d9b3b63e-e567-4a59-a9c0-8c7b5565a4d2,Zac Glembin,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 Red East
+4e0d9dc4-0292-41f7-af1d-0db278262a5e,Sanuth Fernando,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 Red East
+b685d024-488b-409d-b05f-f2a9489e8c8a,Harry Koegler,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U10 Red East | U10 Red West | U10 Yellow West | U12 Red East
+7ad1008f-8884-48c1-9517-7313bdbb78ae,Bivon Samaraweera,Summer 2022/23,U12 Red East
+182977af-26df-45f7-b49d-fd7b90ae3959,Luke Lowe,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 Red East
+3b6c8aac-254f-4f17-af3e-ab0c268930d4,Kane Masalski,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U10 Red East | U10 Red West | U12 Red East
+33f52e0b-0592-4ebc-aefe-a1fdb445405a,Matthew Wade,Summer 2021/22 | Summer 2022/23,U10 Red West | U12 Red East
+6ff0b212-6471-471a-b69d-0fa4afd8fe86,Tyler Hammon,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 Red East
+84b41635-c53f-4b35-bd5b-4bc328f6a733,Sophia Hrysoulakis,Summer 2022/23,U12 White East
+8f6317c9-6d82-4de5-80e5-8e349fb82af9,Thomas Killeen,Summer 2022/23,U12 White East
+3a858a9d-2011-4eef-b772-e45fdfe754c2,Henry Phelan,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 White East
+c787672e-184c-4580-90be-9b263aab6906,Oscar Hrysoulakis,Summer 2022/23,U12 White East
+0c613b42-1659-44f0-aa78-d4be42ea548b,Liba Ahmad,Summer 2022/23,U12 White East
+0b799603-52b0-4130-830c-a9a78db93630,Arjun Sembey,Summer 2022/23,U12 White East
+c4d4bbfc-c152-4936-b5bd-7bda8c5b2b9f,Daniel McIlroy,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 White East
+ca2e8513-6572-4771-a6af-199947775427,Leo Phelan,Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 White East
+ac4b5fbc-250f-4ef5-804e-a590bfc0fe80,Izzy Peters,Summer 2022/23,U12 White East
+b0972d19-4c70-49cd-9e1e-b44e8af75bdd,Ayendha Fernando,Summer 2020/21 | Summer 2022/23,U10 Red East | U12 White East
+a60be41c-c855-4416-82d2-ccfad418babb,Yohan Jees,Summer 2021/22 | Summer 2022/23,G3 Grade | U14 Blue | U14 Teal (1)
+be0fe2a1-bd1e-423b-9302-a4c5dab40824,Ethan Kent,Summer 2020/21 | Summer 2022/23,U12 Blue | U14 Blue
+b34f23a1-0c2e-4c3a-a6b6-d9ae004a3176,Will Masalski,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Red B | U12 Red C | U12 Teal | U12 White B | U14 Blue | U14 Teal
+625a666e-a10f-487d-8ebc-a5f7c646ba06,RIDHAM ATTRI,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Blue | U12 Red B | U12 Red C | U12 Teal | U12 White B | U14 Blue | U14 Teal | U14 Yellow
+cab02a18-8f06-4da9-9eec-ac1dbd124d74,********,Summer 2021/22 | Summer 2022/23,U14 Blue | U14 Teal
+a43eb5b6-d0df-40e2-9630-a952347327a3,********,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Blue | U14 Blue | U14 Teal
+bace019c-d268-47db-93f6-9170e604e89b,Lucas Gouin,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 White | U12 White Nillumbik | U14 Blue | U14 Teal
+d513abb8-8dd2-43eb-b123-2233461cef7d,Jayesh Patel,Summer 2021/22 | Summer 2022/23,U12 Red West | U14 White
+3ce2d97d-dea3-446c-a742-01da18c7f7e7,Jake Frederiksen,Summer 2021/22 | Summer 2022/23,U12 Teal | U14 White
+c96088ab-d4e3-4600-b91d-606fb713751e,William Bishop,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red Nillumbik | U14 Teal (1) | U14 White
+5fed5e32-f7da-48a2-bda6-f2f765c539d7,Xavier Aylward,Summer 2021/22 | Summer 2022/23,U12 Red West | U14 White
+f6366b19-7e2d-4dc3-a613-def9e3bef73d,********,Summer 2022/23,U14 White
+4ca6b196-8877-4f20-afff-501762c7aee2,Jake Tennent,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red Nillumbik | U12 Red West | U12 White | U14 White
+da19de8b-ef5f-4850-9ecb-a6a8ee085c17,Veer Bhanot,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red Nillumbik | U12 Red West | U14 White
+38159d00-0a5a-4629-a581-dea204e4f878,Savain Navaratne,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red B | U12 Red Nillumbik | U12 Red West | U12 White | U14 White
+845df6c0-05aa-4f5d-ada6-00c870530890,Zahra Handy,Summer 2021/22 | Summer 2022/23,U12 Red West | U14 White
+378621ae-b7cc-4763-8b9d-84c469dd5067,Snehath Perera,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red B | U12 Red C | U12 Red Nillumbik | U12 Red West | U14 White
+bdbf7532-cd08-4872-8f92-2a627b98a27b,Felix Maurer,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red Nillumbik | U12 Teal | U14 Red | U14 Teal (1) | U14 White | U16 White
+8a71c893-ed62-4ee1-8aa9-5aeca15fafee,Carolyn Tsioulos,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U10 Red East | U10 Yellow West | U12 Teal | U14 White
+7c5bcfae-c252-49c4-8d14-525457622320,Evmin Navaratne,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red B | U12 Red Nillumbik | U12 Red West | U12 White | U14 White
+4f11d120-6cbd-4b08-942b-d05f4afda86e,Bryce Coombe,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Teal | U12 Yellow | U14 Blue | U14 Red | U14 Yellow | U16 Blue | U16 Teal | U16 White
+76c52a75-6e78-40ff-acbd-7950cee19647,Jack McNiven,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2022/23,U12 Teal | U12 Yellow | U14 Blue | U14 Red | U14 Yellow | U16 Blue
+cbf6ebbe-23ea-4bbe-92ab-cbff15c8ee8f,Angus Regan,Summer 2017/18 | Summer 2018/19 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,G3 Grade | U12 Teal | U12 Yellow | U14 Blue | U16 Blue | U16 Teal
+f2ed3751-b210-47b8-8256-144a016a06e8,Tristan Sterjovski,Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U12 Red Nillumbik | U12 Teal | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1) | U16 Blue | U16 White
+436eedb5-abad-4205-8f56-2773987a9821,Noa Byrne,Summer 2020/21 | Summer 2021/22 | Summer 2022/23,U16 Blue | U16 White
+732ae0b6-d042-4433-ab6b-07d78ffa3358,Alan Strangwick,Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2012/13 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | G2 Grade | G3 Grade | H Grade | Vets A
+75cd8d43-95fc-4c9a-9fe0-89789c0fe641,Lachlan Burge,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Barclay Shield | C Grade | D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | North Region Senior T20 | ODC | ODC - Division 2 | U12 (3) Blue | U12 Blue | U14 White North | U14(2) Blue | U14(2) Teal | U16 Blue | U16 Teal
+8a50a003-f973-4a74-af06-34153701c964,Jared Osborne,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,C Grade | D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | ODC | Vets A
+8f7b412b-c750-4317-b5ea-31b4e7d2a13c,Glenn Regan,Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Barclay Shield | C Grade | D Grade | F2 Grade | F3 Grade | Money Shield
+c994d7f9-a0d6-419d-bf40-877624f446c2,Max Koegler,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,D Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | U12 Teal South | U12 White South | U14 Blue | U14 Teal (1) | U16 Blue | U16 Red | U16 Teal
+e541420a-f23c-4ab5-b5f3-632c2f97471b,Dale Robertson,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2021/22,F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | Money Shield
+20c22f4a-301d-4032-b70c-a41cde47abac,Nitin Chaudhary,Summer 2021/22,F2 Grade
+d9468811-8b53-470e-ba91-d8d431665de1,Ramneek Lamba,Summer 2020/21 | Summer 2021/22,F2 Grade | G3 Grade
+757ee46d-2564-463b-b54c-502148e45d09,Jack Tilley,Summer 2010/11 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,D Grade | F2 Grade | F3 Grade | G3 Grade | U12(2) Blue
+7d406bf4-7225-4515-9ce9-034ca07a0da2,Lucas Martin,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,F2 Grade | G3 Grade | U12 Teal | U12 White B | U12 Yellow | U14 Blue | U14 Red | U14 Yellow | U16 Teal
+86b805fa-f7de-46c8-8376-0f5de6383198,Nathan Pyers,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Barclay Shield | C Grade | D Grade | F2 Grade | F3 Grade | G3 Grade | G4 Grade | H Grade | North Region Senior T20 | U12 Blue West | U12 Development | U12 Teal | U14 Blue | U14 Teal North | U16 Blue | U16 Red
+ff38833b-e19f-4978-a16a-1fbdf91c46a4,Liam Robertson,Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2021/22,F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | U14 Blue | U14 Teal (1) | U16 Red | U16 Teal
+30eb063f-0937-4128-941e-0f67a25b6dc4,Craig Burge   Acc,Summer 2007/08 | Summer 2008/09 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,D Grade | F Grade | F2 Grade | F3 Grade | G2 Grade | G3 Grade | G4 Grade | H Grade | ODC | ODC - Division 2 | Vets A
+7f95208a-a551-46a9-a4dc-bf4ba558ca2e,Nick Alexopoulos,Summer 2018/19 | Summer 2019/20 | Summer 2021/22,F2 Grade | F3 Grade | G3 Grade
+dc420fed-cc42-4cb3-b5cd-3782292573c3,Chris Alexopoulos,Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,C Grade | D Grade | F2 Grade | F3 Grade | G3 Grade | G4 Grade
+7a23353c-82a6-4c1e-9229-829de9c68677,Cameron FitzGerald,Summer 2017/18 | Summer 2021/22,G3 Grade | U12 White B
+7a88ffc7-8d7d-4ad7-9d02-3d252a40669c,Chris Martin,Summer 2021/22,G3 Grade
+0abe6ffc-37ee-4f41-b8fc-e409b83e5345,Adam Kerr,Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,F3 Grade | G2 Grade | G3 Grade | G4 Grade
+52b1382a-9d8d-4fa8-a839-298592772a96,James Spinks,Summer 2006/07 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2021/22,B Grade | Barclay Shield | C Grade | D Grade | F Grade | G Grade | G3 Grade | G4 Grade | North Region Senior T20 | ODC | ODC - Division 2 | U12(2) Teal | U14(1) Blue | U16 (1) Blue | U16(2) Blue | U18 (Friday)
+dfac0f82-3fdc-4296-9deb-3021f3be38ad,Scott Keane,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | Money Shield | North Region Senior T20 | Vets A
+b6f3fcaa-b3b1-4495-8cf8-77b97b53f76b,Graeme Pavey,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | Money Shield | North Region Senior T20 | ODC | Vets A | Vets Blue
+579c8520-49fa-4d78-aa21-4e0322456556,Harrison Coventry,Summer 2020/21 | Summer 2021/22,U10 Red East | U10 Red West
+5b73e724-ad9e-495d-b4e5-cd607bf242c3,Sanuth Fernando,Summer 2021/22,U10 Red West
+f0811384-7f52-4dee-9b72-daecb2219e1d,Mehreen Dandiwal,Summer 2021/22,U10 Red West
+27b768f8-699a-476e-9a0d-2e78b0cfe0da,Shiv Attri,Summer 2021/22,U10 Red West
+b30f6231-f2c2-482c-9167-61c0c81a7fe9,Joel Parekkudiyil Bijoy,Summer 2021/22,U12 Red West
+35398983-dd4a-4f94-964e-b9d9b60d7508,Micah Hoare,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U10 (Level 1) - Red | U12 Teal | U12 White Nillumbik
+862560f0-a04c-492a-b825-b3171fd0f323,RYE HOARE,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U10 (Level 1) - Red | U12 Teal | U12 White Nillumbik
+b285c4f2-72d4-4af5-8f36-769dabdecb2b,Jai Gosain,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U10 (Level 1) - Red | U12 Teal | U12 White Nillumbik
+200b9167-52c0-4c6a-8ddb-05a652c0c430,Lucas Bartoli,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Blue | U12 Red B | U12 Red C | U12 Teal | U12 White B | U14 Teal
+89b61ce8-3642-4a61-a46d-81d745025cc0,James Walton,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Blue | U12 Red B | U12 White | U14 Teal
+68459273-d639-4692-803a-c431c688626c,Ryder Barrett,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Red B | U12 Red Nillumbik | U12 White | U14 Teal
+509d3b9c-419a-419f-b552-5296c2c04f70,Ben Finnin,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Blue | U12 Red B | U12 Red C | U12 White B | U14 Teal
+e6c87a5e-ea0f-471f-b9e1-52eac02cabbf,Ryan Porteous,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 White | U12 White Nillumbik | U14 Teal
+fee7bc7b-c65b-4120-9026-95ded9fe3625,Xavier Eastham,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Red Nillumbik | U12 Teal | U12 White B | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1)
+70539f5b-c708-44e0-a482-bf50d2b9d610,David Strappazon,Summer 2020/21 | Summer 2021/22,U12 Red Nillumbik | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1) | U16 White
+ebb962cb-b7cd-4947-9b4e-744a7101189e,Cameron Williams,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Red Nillumbik | U12 Teal | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1) | U16 White
+3a4a4d7c-2fff-415b-aa3e-5aad1bbf3d71,Joshua Berry,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Red Nillumbik | U12 Teal | U14 Red | U14 Red - Nillumbik/Whittlesea | U14 Teal (1)
+29b8cc72-de24-42b3-ab3e-6cc6a72045f3,Joshua Murray,Summer 2021/22,U14 Teal (1) | U16 White
+d8b73ad9-a7fd-4f4a-adf9-105a2b36b2ce,jude benjamin,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U14 Red | U14 Yellow | U16 Teal | U16 White
+828f05dd-cc68-4406-8e4c-3a480b73b8b8,Jesse Robb,Summer 2021/22,U16 Teal
+b58f26a1-7ef1-4ff8-86d6-39c57625533f,Zane Holmes,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Blue | U12 White B | U12 Yellow B | U14 Teal (1) | U14 Yellow | U16 Teal | U16 White
+f0f48b3a-ed77-4ee7-ac7d-bdedf92316ca,Ryan Chapman,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U12 Yellow | U14 Red | U14 Yellow | U16 Teal | U16 White
+b5a96c12-3eee-413d-85dd-66bd68d6ae4f,Andrew Sutherland,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,U14 Red | U14 Yellow | U16 Teal | U16 White
+906ec6f5-43b8-4198-8ba1-012df49dfd66,Liam Mallia,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2021/22,Barclay Shield | C Grade | D Grade | North Region Senior T20 | U12 Teal South | U12 White South | U14 Blue | U14 Teal (1) | U16 Blue | U16 Red | U16 Teal
+2a818b0f-81ad-44c8-81e4-1fd8a03d3a37,Jesse King,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2020/21,Barclay Shield | C Grade | D Grade | E Grade | ODC | ODC - Division 2 | U12 (3) Blue | U12 Blue | U14 Blue | U14 White North | U14(2) Blue | U14(2) Teal | U16 Blue | U16 Teal
+4a59561a-e9ce-45d8-af64-de38bded82eb,Charlie Love,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2020/21,Barclay Shield | D Grade | ODC | U12 Blue | U12 Blue West | U12 Development | U12 Teal | U12(2) Blue | U14 Blue | U14 Teal North | U16 Blue
+6e20db5a-5200-424b-83a5-69c2b9610bf8,Kenroy Peters,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,Barclay Shield | Money Shield | North Region Senior T20
+305ec486-4cb6-46ad-990a-92bd629ad163,Darcy Tobias,Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,Barclay Shield | C Grade | D Grade | F3 Grade | G3 Grade | Money Shield | North Region Senior T20
+39aa0686-a1dd-4e4d-87cb-fbdc7d16fed1,Karendeep Singh,Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2016/17 | Summer 2019/20 | Summer 2020/21,Barclay Shield | D Grade | North Region Senior T20 | ODC | U12 Teal | U14 Blue | U16 Blue
+c408cb2b-0547-402c-877c-9036bc58cdb1,Zachary Johns,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,C Grade | D Grade | F2 Grade | F3 Grade | G3 Grade | G4 Grade | H Grade | North Region Senior T20 | U14 Blue | U16 Blue | U16 Teal
+ab033f7b-82e2-4044-b0cb-9024cf56db51,Reuel Sharan,Summer 2019/20 | Summer 2020/21,D Grade | F2 Grade | F3 Grade
+8b6e51cd-a7bf-4dfa-8617-b91593237dc1,Harry Sparks,Summer 2020/21,D Grade | F2 Grade
+33c47c5b-5de4-41dd-9b4a-c376a02586c0,Michael Deligiorgis,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2011/12 | Summer 2020/21,Barclay Reserve | C Grade | D Grade | E Grade | ODC - Division 2 | U14 (2) | U14(1) Teal | U16 (1) Teal | U16 (2)
+5a099b8f-3f8b-4ce9-b3aa-ff5335cda680,Nathan Key,Summer 2019/20 | Summer 2020/21,F2 Grade | G2 Grade
+1a849bae-276d-446f-a23b-219a59f28738,Tanmay Arora,Summer 2020/21,G3 Grade
+025ac2cb-521e-4ba8-bce3-dfa101097200,Ralf Koegler,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | F Grade | F3 Grade | G3 Grade | G4 Grade | ODC - Division 2
+b31e882f-b55e-4244-99b1-1e29cab5a091,Alex Taylor,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,F3 Grade | G2 Grade | G3 Grade | G4 Grade | U12 Teal South | U12 White South | U14 Blue | U14 Teal (1) | U16 Blue | U16 Red | U16 Teal
+01edb1de-5845-4ef8-bfd6-c174c3ace019,David Pisani,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,G2 Grade | G3 Grade | G4 Grade
+358c85bb-5205-45a4-87de-ef0fde0a381e,Brendan Jones,Summer 2002/03 | Summer 2003/04 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,C Grade | E Grade | F3 Grade | G2 Grade | G3 Grade | H Grade | ODC
+018af846-1bf0-4015-a1e2-909164f90856,David Taylor,Summer 2018/19 | Summer 2019/20 | Summer 2020/21,F3 Grade | G2 Grade | G3 Grade
+04528b40-0a21-4f7d-a634-4e07aa269adb,Josh Koegler,Summer 2019/20 | Summer 2020/21,U10 Red East | U10 Yellow West
+876893f8-b8eb-4d53-96a5-fe5d9b8dd477,Levi Coles,Summer 2019/20 | Summer 2020/21,U10 Red East | U10 Yellow West
+8784f4dd-0911-40b4-9e83-8e43b92a5221,Stuart Gibson,Summer 2019/20 | Summer 2020/21,U10 Red East | U10 Yellow West
+666735b4-5419-4b5d-8e42-de32f0d6ba42,Thomas Price,Summer 2019/20 | Summer 2020/21,U10 (Level 1) - Red | U10 Red East | U12 White Nillumbik
+5c49b8ac-8b31-4e47-82c1-6a437f013aa8,hamish ferguson,Summer 2019/20 | Summer 2020/21,U12 Blue | U12 White
+392c4117-e265-42d7-87c4-579d7f0cc123,Tom Burgess,Summer 2020/21,U12 Red Nillumbik
+fb138b50-9f2a-4045-9792-c867af368741,Hugo Tozer,Summer 2019/20 | Summer 2020/21,U12 Red Nillumbik | U12 Teal
+9815fd5e-fd4d-4ff3-9d8a-d63323d317ee,Miles Tozer,Summer 2019/20 | Summer 2020/21,U12 Red Nillumbik | U14 Red | U14 Red - Nillumbik/Whittlesea
+9d9dba32-8b64-4557-af8d-00bd2c3a671e,Hayden Drinkwell,Summer 2020/21,U12 Red Nillumbik | U14 Red | U14 Red - Nillumbik/Whittlesea
+26457442-30b1-4a1b-94c9-c68937d90d3f,Ben Williams,Summer 2020/21,U12 Red Nillumbik | U14 Red | U14 Red - Nillumbik/Whittlesea
+552b6692-e6d6-4c4f-9ecd-2513e72d756c,rylee ratkovic,Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Red Nillumbik | U12 Teal | U12 White B | U14 Red | U14 Red - Nillumbik/Whittlesea
+3a84a134-2662-478f-a0dd-ec0d1473d25e,Aayaan Aswal,Summer 2020/21,U12 White Nillumbik
+cf98ac65-08d9-415b-a250-07e8df3c7937,Daniel Salvatore,Summer 2019/20 | Summer 2020/21,U12 White | U12 White Nillumbik
+b2ce68a8-0886-4fe4-bc04-10cf069d2aeb,Reece Hayden,Summer 2020/21,U14 Blue
+6fa21599-ec3a-409f-b3fa-58080f513866,Gus Godden,Summer 2019/20 | Summer 2020/21,U14 Blue | U14 Red | U14 Yellow
+b73e6bfc-0e25-4310-a027-a85b3b0d670c,Ryan Baynes,Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Teal | U14 Blue | U14 Red | U14 Yellow
+2e57dd5d-6e75-47a8-a940-d49b2c178fad,Archer Harvey,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Teal | U12 Yellow | U14 Blue | U14 Red | U14 Yellow
+c6d363de-47c7-4b0c-ae43-58329e48fe5e,Daiwik Rekhi,Summer 2019/20 | Summer 2020/21,U12 Blue | U14 Teal (1)
+94f917cd-5b1b-468f-862e-6ec8fd2ccba4,Jacob Davidson,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Blue | U12 White B | U12 Yellow B | U14 Teal (1) | U14 Yellow
+4b31dee5-3d89-4dfa-beb6-2532431a97e3,Toby Lafford,Summer 2020/21,U14 Teal (1)
+4fe18733-0741-4908-82cb-f515714c4bae,Adam Huybers,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Blue | U12 White B | U12 Yellow B | U14 Teal (1)
+44b03001-d879-4ac7-abc7-5eec06d6f58e,Kody Harrop,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Blue | U12 White B | U12 Yellow | U12 Yellow B | U14 Teal (1)
+a93afd07-6e91-4ac1-9d85-340960784c69,Jake Phillips,Summer 2020/21,U14 Teal (1)
+a674a32f-e27a-4525-b385-c1a9b295fef7,William Parker,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Blue | U12 White B | U12 Yellow B | U14 Teal (1)
+f7da7bbf-4490-484a-aea1-402ff9b1869a,Marcus Psaila,Summer 2020/21,U14 Teal (1)
+eb44b438-7508-4791-a201-172888a83cd1,Thomas Furlong,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21,U12 Teal | U12 White B | U14 Red | U14 Teal (1) | U14 Yellow
+87744a6b-3a88-429f-8001-54725962cf06,Mark Kovacevic,Summer 2020/21,U16 White
+b306ef58-471b-439e-b2fe-39535c316a5e,James Norman,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20,B Grade | Barclay Shield | C Grade | D Grade | Money Shield | North Region Senior T20 | ODC - Division 2 | U18 (Friday)
+cd1a57a5-9c5b-4bd0-9bd7-e1103e030d36,Aaron Walton,Summer 2019/20,F3 Grade
+f3060fa7-88dd-405b-8c47-9def90225e38,Luke Johnson,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20,B Grade | Barclay Shield | C Grade | D Grade | F Grade | F3 Grade | G Grade | G2 Grade | North Region Senior T20 | ODC | U12 Blue | U12(1) Teal | U12(2) Teal | U14 (3) | U14(1) Blue | U16 (Saturday) Blue | U16(2) Blue | U18 (Friday)
+57de7bf8-d8c8-438e-b42a-f993e63eca3e,Laurie Mallia,Summer 2019/20,G2 Grade
+f3ada63a-a99c-4e8f-ab9f-a3f6a997b296,Jesse Peatling,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2019/20,E Grade | G2 Grade | G4 Grade | H Grade | ODC | U12(2) Blue | U14 White North | U16 Blue | U16 Teal
+231b7cac-9a95-4871-94d1-1205165110f3,Puvindu Liyanage,Summer 2019/20,G2 Grade | U16 Blue | U16 Teal
+c5bd840c-f3e5-48ab-ace2-c99a3bdd2c1e,Benjamin Gleeson,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20,F3 Grade | G2 Grade | G3 Grade | G4 Grade | U12 Blue West | U12 Teal | U14 Blue | U14 Teal North | U16 Blue | U16 Red
+a1c570fc-72ed-46bb-b930-3571e2d0a1bb,Daniel Stokes,Summer 2019/20,U10 (Level 1) - Red
+458280f7-037c-45b7-85ab-394c92ec7c2d,Mitchell Davidson,Summer 2018/19 | Summer 2019/20,U10 (Level 1) - Red | U12 Blue | U12 Yellow B
+db902356-1e7a-4a16-8991-9dc82bc8f017,Clair Tatton-jones,Summer 2019/20,U10 (Level 1) - Red
+c9c374a4-e353-4eb4-b5bd-09d3c6e19330,Taj Luscombe,Summer 2019/20,U10 (Level 1) - Red
+4524ff4f-0fd7-4380-9115-e5b3a3817987,Ned Horton,Summer 2019/20,U10 Yellow West
+4523497a-fc1f-4648-8c96-718b771cf110,Archie Horton,Summer 2019/20,U10 Yellow West
+3b7a43d4-0746-488e-a1a0-6668f2549a8b,Jack Greenwood,Summer 2019/20,U10 Yellow West
+4517c728-dd95-4e7f-b25c-f581aa1e706f,Amandha Fernando,Summer 2019/20,U10 Yellow West
+ca5e789b-a4b7-44a7-9bdb-5610d26a9c3d,Carys Patmore,Summer 2019/20,U10 Yellow West
+870a88fe-669a-4fbc-8973-42419e1f7ad0,Emily Taylor,Summer 2019/20,U10 Yellow West
+da1b2b95-cd59-46c7-b82e-5b80e33ad98b,Evelyn McIlroy,Summer 2019/20,U10 Yellow West
+c68624dc-cbfd-439b-9e5a-c0bb3d723c98,benjamin campbell,Summer 2018/19 | Summer 2019/20,U12 Blue | U12 White B | U12 Yellow B
+502b1300-501d-42ec-936e-188dba9d98df,Matthew STOKES,Summer 2017/18 | Summer 2018/19 | Summer 2019/20,U12 Red B | U12 Red C | U12 White B | U12 Yellow B
+26d82da9-dc55-43c2-8d57-b103091e58fa,AADITYA SRIVASTAVA,Summer 2019/20,U12 Red B | U12 Red C
+144f3959-9982-42a0-ae45-b8545809e673,Ben Hurdle,Summer 2019/20,U12 Red B | U12 Red C
+1ab6d1ac-7450-4df6-b299-3dbeaa009040,Thomas Giles,Summer 2019/20,U12 Teal | U14 Red
+e97375ee-e7af-4f10-ae26-f0b7063c52f5,Tom Burgess,Summer 2019/20,U12 White
+251ca72e-5f48-49a4-946f-55512308369f,Kyan Luscombe,Summer 2019/20,U12 White
+d607fa63-0800-4e2c-bd7b-0f809c0c546d,Marie Todaro,Summer 2018/19 | Summer 2019/20,U14 Red | U14 Yellow
+e0da1a5e-ba87-4e2b-af78-8024c2e37343,Imogen Weir,Summer 2017/18 | Summer 2018/19 | Summer 2019/20,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2 | U14 Red | U14 Yellow
+02977a48-1214-42a9-81eb-e96dac6b95ff,Abbey Buckley,Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2 | U14 Red | U14 Yellow
+ebb45468-909c-4c00-9f9a-020c7f40ef00,reece Hayden,Summer 2019/20,U14 Red | U14 Yellow
+7b466bde-acf7-48b7-bff3-2eeabcb5716e,Aaron Cooray,Summer 2019/20,U16 Blue | U16 Teal
+dbbf36a6-61f1-48fa-966e-538f8ace54f5,Jack Sacchetta,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2017/18 | Summer 2018/19,Barclay Shield | D Grade | Money Shield | North Region Senior T20 | U12 Blue | U12(1) Teal | U12(2) Teal | U14 White North | U14(1) Blue | U14(2) Teal | U16 (Saturday) Blue | U16 Blue | U16 Teal
+14104bda-8121-48f2-ab90-11696893f109,Darren Connelley,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19,Barclay Reserve | Barclay Shield | Money Shield | North Region Senior T20 | ODC
+c2eaf862-9c93-4b7a-b48e-7162edb42fbf,Stefan Klepp,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19,Barclay Shield | C Grade | D Grade | E Grade | Money Shield | North Region Senior T20 | U12 Blue | U12(1) Teal | U12(2) Teal | U14 White North | U14(2) Blue | U14(2) Teal | U16 (Saturday) Blue | U16 Blue | U16 Teal
+2be7de43-aabc-4a9d-bbca-dc3c269bed9d,Nicholas Stevens,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2017/18 | Summer 2018/19,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade | F Grade | North Region Senior T20
+f464814c-0ef8-4010-98c2-44033ea018ce,Ben Cameron,Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2018/19,B Grade | Barclay Shield | C Grade | D Grade | E Grade | F3 Grade | G3 Grade | Money Shield | North Region Senior T20 | U18 (Friday)
+46e26d4d-dd7d-48e3-a927-99ba706793d6,Shem Quilliam,Summer 2016/17 | Summer 2017/18 | Summer 2018/19,C Grade | F3 Grade | G3 Grade
+835292cf-739c-4f11-9720-59c0c73a04ed,Will Carpenter,Summer 2018/19,C Grade | F3 Grade
+173e2125-7045-493e-b538-e6646087b005,Grant Pyers,Summer 2010/11 | Summer 2011/12 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19,F3 Grade | G3 Grade | G4 Grade | H Grade | Vets A
+48553f9e-df61-451d-8a9a-72d43d8abe64,Nicholas Ferrari,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2018/19,C Grade | F3 Grade | G3 Grade | H Grade | Money Shield | North Region Senior T20 | ODC
+bab90fb3-5e3a-4bfd-881a-d6fafca5de7c,Brad Quilliam,Summer 2018/19,F3 Grade
+e4557b64-95d2-47b3-b3b1-5d47298b57e7,Andy Harrop,Summer 2018/19,G3 Grade
+261c0ac5-b12d-4a37-b910-8ec3653085aa,Ishani Narendran,Summer 2018/19,Renegades Girls - DVCA Level 2
+b7bcf2cc-ae9b-4059-ac9b-bc5b60a6869f,Kelsea Bannan,Summer 2016/17 | Summer 2017/18 | Summer 2018/19,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2
+1775a55e-9f03-4ec0-997c-9886a982f6d3,Mikaela Bosco,Summer 2018/19,Renegades Girls - DVCA Level 2
+ff3e3752-a222-436f-9d2c-52ccc94f5228,Narendran Shan,Summer 2018/19,Renegades Girls - DVCA Level 2
+e3298147-b560-470f-b861-2dfcfd82119f,Jass Kiran Kaur,Summer 2018/19,Renegades Girls - DVCA Level 2
+0a8c9c5e-a842-4df0-91a5-40d306e132b0,Olivia Walkley,Summer 2018/19,Renegades Girls - DVCA Level 2
+eff1775d-cfc2-4184-a90b-36548731b9ef,James FitzGerald,Summer 2018/19,U12 Teal
+edb744f9-13fc-43da-a3f8-1700eaf576f7,Jack Stokes,Summer 2017/18 | Summer 2018/19,U12 Teal | U12 Yellow
+e1a4c010-ceb1-4f38-979e-912af4ede896,Isaac Jones,Summer 2018/19,U12 White B
+f8761511-f057-48ee-bee0-24c5bcf9e69f,Benjamin Stewart,Summer 2017/18 | Summer 2018/19,U12 White B | U12 Yellow B
+65ef2c98-d23b-4977-a605-893ba587d20d,Lachlan Kerr,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19,U12 White South | U12 White Teal | U14 Red | U14 White | U16 Teal
+89739a11-a60a-49cf-aa19-ad6d13a7e0e7,Indi Thompson,Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19,G4 Grade | U14 Blue | U14 Teal (1) | U14 Teal North | U16 Red | U16 Teal
+7563e0a9-7cf5-4fab-8b6b-cf29b07c9817,Louis Smith,Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | G Grade | H Grade | Money Shield | North Region Senior T20 | U12 (2) | U12 (3) | U14 (3) | U14(1) Blue | U16 (1) Teal | U16 (2)
+656df922-f8fe-47ba-9529-24052af2440d,Paul Hubber,Summer 2002/03 | Summer 2003/04 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18,B Grade | Barclay Shield | C Grade | D Grade | E Grade | Money Shield | North Region Senior T20 | ODC | Vets A
+2953d837-d0da-433f-8cd2-674dddd919d4,Kevin Hackart,Summer 2017/18,D Grade | F3 Grade
+8032601f-ce9e-4153-8e37-85ae92c25608,Abhay Sekhon,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18,D Grade | F3 Grade | G4 Grade | H Grade | U14 Blue | U16 Blue | U16 Teal
+a03ad926-cbbe-4790-bda8-5a4db988a75c,Daryl Buckley,Summer 2017/18,F3 Grade
+cfe9d8d1-df5f-49df-967a-bef3c3a12b86,Nitin Chaudhary,Summer 2017/18,F3 Grade | G4 Grade
+ba2cd234-2751-4924-85a8-22c205aa3f42,Logan Francey,Summer 2016/17 | Summer 2017/18,C Grade | F3 Grade | G3 Grade | G4 Grade
+ae7649b6-a190-4d0f-b9dd-1dfed96a0baa,Nicholas Scott,Summer 2016/17 | Summer 2017/18,C Grade | F3 Grade | G3 Grade | G4 Grade
+b915abb8-242b-4c47-bbcd-3eaee3297c3c,ranjith ravindran,Summer 2017/18,G4 Grade
+db10125f-94ed-4dd9-9764-4bdf8c54eca0,Makenzie Patterson,Summer 2016/17 | Summer 2017/18,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2
+03b87777-877c-46e1-9e0b-e74504969fde,Jacqueline Dickens,Summer 2016/17 | Summer 2017/18,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2
+cfbc5e53-6c3b-48fc-beff-0df80275919e,Mia Van Den Berg,Summer 2016/17 | Summer 2017/18,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2
+471c1666-943c-40cc-807c-798cc621f0bf,Holly Johns,Summer 2016/17 | Summer 2017/18,Renegades Girls - DVCA Level 1 | Renegades Girls - DVCA Level 2
+c624cbce-0d62-4835-b5f6-9f16ba322a5b,Oscar Muller,Summer 2017/18,U12 White B
+e63ba487-5a2c-4d6a-90ca-c73460f06cbe,Sebastian Marasco,Summer 2017/18,U12 Yellow
+0c2ee293-bb87-49a3-96e3-47f9ccbe1281,Liam Holmes,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18,U12 Teal South | U12 White South | U12 White Teal | U14 Red | U14 White
+61c29004-8ffb-4dd0-9aad-e4f2115df6a2,Jackson Key,Summer 2015/16 | Summer 2016/17 | Summer 2017/18,U12 Teal South | U12 White Teal | U14 Red | U14 White
+590f5b92-9e80-409c-9e26-1f1239aab63e,Mitchell Hecker,Summer 2015/16 | Summer 2016/17 | Summer 2017/18,U14 Blue | U14 Teal (1) | U14 Teal North | U16 Red
+374c2777-1adb-4a09-9832-475a38acedba,Nicholas Ross,Summer 2002/03 | Summer 2003/04 | Summer 2016/17 | Summer 2017/18,C Grade | E Grade | North Region Senior T20 | U14 (2) | U14(1) Teal
+76a2fba1-e551-4082-b0df-2f7e76c2a325,Liam Gray,Summer 2016/17,C Grade | G3 Grade | North Region Senior T20
+e74265a1-e8b0-4e0e-87d7-72969602e421,Matthew Millett,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | G Grade | G4 Grade | H Grade | North Region Senior T20 | ODC | U12 (4) | U14 (2) | U16 (2)
+bac0bf4b-d263-4f63-b518-4341570457eb,Richard Guldon,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2009/10 | Summer 2010/11 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,Barclay Reserve | Barclay Shield | C Grade | D Grade | Vets A | Vets Blue
+9a255c67-3b3c-4bb3-80e1-54c891a34f53,Robert Zull,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2016/17,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | F Grade | North Region Senior T20
+172d7e8b-eab6-4adb-a3b1-86ffecf6179d,Iain McDonald,Summer 2016/17,C Grade | Money Shield | North Region Senior T20
+5e08b958-2520-4569-8291-05c4fff54c6a,Evan Coventry,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2016/17,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade
+9309da6a-0b75-4275-b898-70bc5e67e62a,Aron Burns,Summer 2016/17,C Grade
+7d133023-11e0-4178-9f3b-8e597e6734a6,Ben Whitaker,Summer 2016/17,G3 Grade | G4 Grade
+cf8a728c-e21f-4aa4-b8fb-2ed500d0eb07,Craig Banthorpe,Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2010/11 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,C Grade | D Grade | F Grade | G3 Grade | H Grade | Vets A
+77625463-815e-4cd2-bf03-7be88bd0c02f,Jason Shaw,Summer 2014/15 | Summer 2015/16 | Summer 2016/17,G3 Grade | G4 Grade | H Grade | U14 Blue | U16 Blue | U16 Teal
+ff9ce74d-f55c-43ad-ba24-31675d5d3e85,Tyrone Britton,Summer 2014/15 | Summer 2015/16 | Summer 2016/17,G3 Grade | G4 Grade | H Grade | U18 Blue
+8e8c59cc-dcde-47c2-a60e-d97b8cac7174,Jack Cameron,Summer 2013/14 | Summer 2015/16 | Summer 2016/17,C Grade | E Grade | G3 Grade | H Grade
+fbf0a15b-0bc3-4c7c-956b-07e3885b424d,Rikki Juzwin,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2016/17,D Grade | E Grade | G3 Grade | G4 Grade | ODC | ODC - Division 2
+d1bcaa3c-f883-4374-9aff-657ab2a95ad6,Dean Parker,Summer 2016/17,G4 Grade
+d349417c-74d6-4fb4-873d-fc8af58ece84,Chris Shannon,Summer 2016/17,Money Shield | North Region Senior T20
+6440822d-ae56-4b58-9656-c052f21cecb2,Chelsea Dumbrell,Summer 2016/17,Renegades Girls - DVCA Level 2
+01a035a6-57a8-46ad-b5cc-18452f5d8faa,Joshua Fry,Summer 2014/15 | Summer 2015/16 | Summer 2016/17,U12 White South | U14 Blue | U14 Teal (1) | U14 Teal North
+d5168e42-9a49-4dd6-be76-6b8a07125702,Aiden Canik,Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,H Grade | U12 Blue West | U12 White South | U14 Blue | U14 Teal (1) | U14 Teal North
+bbc2f8fd-f54f-4c5d-933f-1e545510d824,Josh Burton,Summer 2010/11 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,U12 Blue West | U12 Development | U12 White South | U14 Blue | U14 Teal (1) | U14 Teal North
+d9c491e2-aa39-44aa-901b-eccb00f3e2b0,Harrison Peacock,Summer 2016/17,U14 Blue | U14 Teal (1)
+b74c92e1-3bc2-452a-8c88-b4ac6d8f05a9,Jackson Lyons,Summer 2015/16 | Summer 2016/17,U14 Blue | U14 Teal (1) | U14 Teal North
+4fc7d8ae-ced6-4115-bc4c-8ce1536fa0b9,Lucas Caserta,Summer 2015/16 | Summer 2016/17,U14 Blue | U14 Teal (1) | U14 Teal North
+5787dcef-59bb-4db3-80bd-747b4ff5d4d2,Joshua Simpson,Summer 2016/17,U14 Teal (1)
+9abea887-e9b8-40b4-91df-45870e6fe383,Lucas Taylor,Summer 2015/16 | Summer 2016/17,U12 Teal South | U14 White
+95b8bf3c-a371-42a5-8dfe-ce1c126ec8a5,Ryan Searle,Summer 2014/15 | Summer 2015/16 | Summer 2016/17,U14 Blue | U16 Blue | U16 Teal
+f8bf6d8a-8d01-481e-a76c-b25b438aaab9,Thomas Cuthbert,Summer 2016/17,U16 Blue
+81563e50-6259-445c-91ed-3fd8252f31c2,Matthew Moore,Summer 2011/12 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,U12 Teal | U14 Blue | U16 Blue | U16 Teal
+41654469-4b5f-48f5-b25f-c7902ae069f3,Samuel Plunkett,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,H Grade | U12 Blue | U12 Teal | U12(2) Blue | U14 Blue | U16 Blue | U16 Teal
+c8af6fae-07e0-427d-a2ee-b9e21c9ae1fc,Anthony Amalfi,Summer 2002/03 | Summer 2003/04 | Summer 2006/07 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17,Barclay Reserve | Barclay Shield | C Grade | North Region Senior T20 | Vets A
+65b3ec37-6238-4245-b277-0cbf22d31204,Steven Villani,Summer 2002/03 | Summer 2003/04 | Summer 2014/15 | Summer 2015/16,Barclay Reserve | Barclay Shield | C Grade | E Grade | North Region Senior T20 | U16 (1) Blue
+6c933a4e-4e92-44bc-80b3-e9ee53b0a908,Andrew Villani,Summer 2002/03 | Summer 2003/04 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,B Grade | Barclay Reserve | Barclay Shield | C Grade | North Region Senior T20
+cedfda37-25a0-4799-bc3a-e8ea3acc2cef,Dayne Smith,Summer 2002/03 | Summer 2003/04 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | H Grade | North Region Senior T20 | ODC | U12 (2) | U12 (3) | U12 (4) | U14 (3) | U16 (1) Teal
+11ed8769-ab9a-46ea-a046-0c4296111e98,Chris Villani,Summer 2002/03 | Summer 2003/04 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,Barclay Reserve | Barclay Shield | C Grade | North Region Senior T20
+f2bc6060-3f95-48f2-be1e-0ce99c598002,John Green,Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,Barclay Shield | North Region Senior T20
+b1a54374-1373-4608-b8a7-204563a7b308,Wayne Cullen,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,B Grade | C Grade | D Grade | E Grade | H Grade | North Region Senior T20 | ODC
+f5511a1f-db50-4d34-baa9-dde00fe77ad6,Michael Canik,Summer 2014/15 | Summer 2015/16,C Grade | H Grade | ODC | Vets A
+f973f4f0-e95b-404f-b509-1c45b5a6ebaf,Greg Wilson   Acc,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,B Grade | Barclay Shield | C Grade | E Grade | Vets A
+80baf64f-4356-4e1c-a343-7a129e69aaab,Clay Woolacott,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,C Grade | ODC | U12 Blue | U12(2) Blue | U14 Blue | U14 White North | U14(2) Blue | U16 Blue | U16 Teal
+6e35fb8e-b4a8-4b07-9dde-b3eb9eb2908f,Adam Carnell,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2012/13 | Summer 2013/14 | Summer 2015/16,Barclay Reserve | C Grade | D Grade | E Grade | G Grade | H Grade | U14(1) Blue | U16 (1) Blue | U16 (1) Teal | U16 (2)
+f3a09f03-3f31-4d93-8d9d-2a15c29a430e,Tim Fothergill,Summer 2002/03 | Summer 2003/04 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade | H Grade | ODC | ODC - Division 2 | U12 (2) | U12 (3) | U12 (4) | U14 (3) | U16 (1) Teal
+63a7308c-bf16-41b2-82db-faf65694a6a8,Umair Arif,Summer 2015/16,C Grade | H Grade
+0bc0c3a9-e066-46c7-9af5-402ceb39d822,Sam Gatt,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,C Grade | D Grade | E Grade | F Grade | H Grade | ODC | U14(1) Blue | U16 (2)
+832536ab-c13b-4058-a6f6-9ecbcf775771,Matthew Canik,Summer 2015/16,H Grade
+071ea416-a0e6-48ab-85c4-f111a6c3e250,Zane Darrington,Summer 2015/16,U12 Teal South
+f050131d-706d-445a-9630-a0d93c06e9c1,Hayden Briggs,Summer 2014/15 | Summer 2015/16,U12 Teal South | U12 White South
+304630ab-0fb8-49be-a359-ce7bcc382bbd,Nathan Wein,Summer 2015/16,U12 White Teal
+63a83c13-574c-4cb9-b679-8dac5155e5e1,William Brugliera,Summer 2015/16,U12 White Teal
+918bf797-51bc-4496-80df-7ac907ec6883,Morgan Cutler,Summer 2015/16,U14 Teal North
+1c7a65fb-629a-432c-b86d-c13ac13ae853,William Pinner,Summer 2013/14 | Summer 2014/15 | Summer 2015/16,E Grade | U12 White South | U14 Teal North
+a84d66b3-186e-4c76-b20f-61fda9199a3b,Matthew Johnson,Summer 2013/14 | Summer 2014/15 | Summer 2015/16,U14 Blue | U16 Teal
+288e42f6-b423-4438-9cb9-5ef0808bd9c3,James Wigginton,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,U12 Blue | U12(2) Blue | U14 Blue | U14 White North | U14(1) Blue | U16 Blue | U16 Teal
+1bd71dd3-939a-43be-b6cc-fd01c9f55ace,Kyle Taranto,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,ODC | U12 Blue | U12 Development | U12 Teal | U14 Blue | U14 White North | U16 Blue | U16 Teal
+6db7ee38-e395-4104-8ab0-6144df28deaf,Paul King,Summer 2005/06 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,E Grade | F Grade | ODC | ODC - Division 2 | Vets A
+121b6922-c040-48b5-ad58-f894f3f2e960,******** French,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,Vets A
+a5d8139b-6519-4c48-8cf9-6a2677aa490d,Adam Watkins,Summer 2015/16,Vets A
+2be4da87-ce4a-4588-b0df-236d690f6ff8,Ian Henning,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade | ODC | ODC - Division 2 | Vets A
+0c3f263f-e8ac-4d00-bcb1-03b6c16adf73,Luke Thomas,Summer 2015/16,Vets A
+0bfc82c8-d585-4d5c-9311-b5edd9e84a20,Ricardo Mendes,Summer 2015/16,Vets A
+a9753bac-dfad-4fde-9e59-088ea15033a6,Graeme Cullen,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2015/16,Barclay Reserve | C Grade | D Grade | E Grade | H Grade | ODC - Division 2 | Vets A | Vets Blue
+19c3c588-a3a0-45b9-bc6b-032b9cf8b84c,Mark Taranto,Summer 2012/13 | Summer 2015/16,D Grade | ODC | Vets A
+8cfe01a0-7c08-421c-b0c1-e30b4cdb0ec0,Daniel Sartori,Summer 2015/16,North Region Senior T20
+9dbc6500-fcd5-4bec-8a9b-3e3d607d4d3d,Luke Rosbrook,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2014/15,B Grade | Barclay Shield | North Region Senior T20
+8343264f-18aa-4916-b2a9-1f1b26b35eb8,Simon Brekke,Summer 2005/06 | Summer 2014/15,Barclay Reserve | C Grade | ODC
+115351c7-f0f3-45a2-aadd-d4c5ef669ce1,Alexander Chipper,Summer 2009/10 | Summer 2010/11 | Summer 2014/15,C Grade | F Grade | North Region Senior T20 | ODC | U16 (1) Blue | U16(2) Blue
+c7bc7f77-6093-41a4-a8a8-36dd5778abf6,Anthony Sims,Summer 2014/15,C Grade | ODC
+2561ebe8-6478-4f4e-845a-4483fa289b37,Darcy Davies,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,C Grade | E Grade | ODC | ODC - Division 2 | U12 Blue | U12(1) Teal | U12(2) Teal | U14 White North | U14(1) Blue | U14(2) Blue | U14(2) Teal | U16 Blue | U16 Teal
+3966d653-8b84-4c20-a554-8a78e4f7bea7,David Love,Summer 2002/03 | Summer 2003/04 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | North Region Senior T20 | ODC | ODC - Division 2 | Vets A
+f3e5fed7-e500-4b64-be85-5a5a66bbd6cb,Lachlan Pearson,Summer 2013/14 | Summer 2014/15,E Grade | ODC
+92ebbbeb-6ca9-411c-8431-feb3f64d516a,Joe Gilhooley,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,D Grade | ODC
+17391011-e875-4e45-b79b-c1ecd097586b,Brady Parke,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,Barclay Reserve | C Grade | D Grade | E Grade | G Grade | H Grade | ODC | ODC - Division 2 | U12 (2) | U12 Blue | U14 (2) | U14(1) Blue | U16 (2)
+d0044685-1e02-4c39-8b70-f3457e54d3c2,Mark Coombe,Summer 2013/14 | Summer 2014/15,Barclay Shield | North Region Senior T20 | ODC
+18a5914d-1d54-4ed6-9f4a-5826b62093e0,Nirvail Singh,Summer 2014/15,ODC | Vets A
+fcd43bbb-ce39-4d90-a0a5-b91f2127fe66,Alex Cotter,Summer 2002/03 | Summer 2003/04 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2014/15,B Grade | Barclay Reserve | C Grade | D Grade | G Grade | H Grade | ODC | ODC - Division 2 | U12 (2) | U12 (3) | U12 (4) | U16 (1) Teal | U16 (2)
+c7e70490-85e4-44cf-a90d-1b9e92a7c1ac,Jamie Doukas,Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2013/14 | Summer 2014/15,C Grade | D Grade | E Grade | F Grade | G Grade | ODC | ODC - Division 2 | U16 (2)
+0ba419f4-fb38-427d-94d7-03cd7ceaaf81,Christian Bettiol,Summer 2010/11 | Summer 2013/14 | Summer 2014/15,D Grade | ODC
+c0b8dd87-4faa-46ac-9796-cd9a1203d539,Naveen Dassanayake,Summer 2012/13 | Summer 2013/14 | Summer 2014/15,U12 Blue West | U12 Teal | U12 White South
+a9f322e2-6af5-4714-9dfb-e179c32047a3,Tom Horne,Summer 2013/14 | Summer 2014/15,U12 Blue West | U12 White South
+5075c415-a9aa-47a7-9351-16859145be21,Jacob Love,Summer 2014/15,U12 White South
+354a84c6-cdba-4085-987c-c65c93b8f577,Cameron Fernandes,Summer 2014/15,U16 Blue
+34d24217-89a1-4a36-8085-58d5fd68e9ef,Flynn Simsek,Summer 2014/15,U16 Blue
+fe7748ca-76bc-4a87-94c9-b9c5f059488c,James Dignum,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,U12 (3) Blue | U12 Blue | U14 White North | U14(2) Blue | U16 Blue | U16 Teal
+1fdbfd79-d7c3-489a-8d2e-2d1d89d1ee7e,Liam Ingram,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,D Grade | ODC | ODC - Division 2 | U12 Blue | U12(1) Teal | U12(2) Teal | U14 White North | U14(1) Blue | U14(2) Teal | U16 (Saturday) Blue | U16 Blue | U16 Teal | U18 Blue
+c36a055f-3817-449c-8a3a-acde1d3caa52,Zac Kayll,Summer 2012/13 | Summer 2013/14 | Summer 2014/15,D Grade | ODC | U16 Blue | U18 (Friday) | U18 Blue
+028736da-e215-4bf5-9814-7771e607043a,Charlie Dunbar,Summer 2010/11 | Summer 2014/15,U14(1) Blue | U18 Blue
+c6ddb8c8-9d0e-4083-b3a1-b1772b23733d,James Plunkett,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,D Grade | F Grade | ODC | ODC - Division 2 | U12 Blue | U14(1) Blue | U16 (Saturday) Blue | U16 Blue | U18 (Friday) | U18 Blue
+bcf6dea7-d636-491c-bc72-439c044bf8e3,Reid Brandt,Summer 2014/15,U18 Blue
+f5971b0c-643a-4cab-a871-97ffa504f0c7,Tom Simpson,Summer 2013/14 | Summer 2014/15,U18 (Friday) | U18 Blue
+6eb60368-91cf-4146-abf4-c33bd7d92c22,Jake Battye,Summer 2012/13 | Summer 2013/14 | Summer 2014/15,U16 Blue | U18 (Friday) | U18 Blue
+96a5906c-3bfa-47bc-854b-a78cda3bcacf,Daine Barker,Summer 2014/15,U18 Blue
+998afd1c-f9a6-402c-9495-18464e0cb799,Tyler Barnes,Summer 2014/15,U18 Blue
+b21fd9c2-e1eb-45d6-8c73-cb3817519b8b,Jacob Yeomans,Summer 2014/15,U18 Blue
+85d5f15d-caab-480e-8804-cf578fe0e0e7,Sam Harper,Summer 2014/15,U18 Blue
+d59d5423-822a-4bee-9718-0cdaa181062d,Nicholas Fletcher,Summer 2013/14 | Summer 2014/15,U18 (Friday) | U18 Blue
+2faeb019-fc57-4bf5-be4b-439a34b60701,Brad Perillo,Summer 2014/15,U18 Blue
+669e1a18-c3e8-48ae-880f-e11b9df2c6fa,Nicholas Jacobson,Summer 2012/13 | Summer 2013/14 | Summer 2014/15,D Grade | ODC | U16 Blue | U18 (Friday) | U18 Blue
+cc37310d-25df-440d-8b63-dc3c1f0279ae,Graeme Vimpani,Summer 2012/13 | Summer 2013/14 | Summer 2014/15,Vets A
+f89d8369-3df0-4445-8875-9c929b527602,Brad Bond,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,B Grade | Barclay Reserve | Barclay Shield | D Grade | E Grade | ODC | ODC - Division 2 | Vets A | Vets Blue
+d6c57d75-b638-42a6-b28b-d49f3a8b5db5,Mark Johnson,Summer 2002/03 | Summer 2003/04 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,B Grade | Barclay Shield | ODC - Division 2 | Vets A
+901c78d9-8cd9-446f-88e0-3d610091a7ba,Jeff Brown,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,D Grade | G Grade | Vets A
+bc027139-bed3-4041-b5f8-c066a5fb9864,Greg Wade,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,Barclay Reserve | C Grade | D Grade | E Grade | H Grade | Vets A
+717ff55b-77d8-43b0-9c2c-4c04c18c4e5a,Jacques Augustin,Summer 2014/15,North Region Senior T20
+7f51508a-631d-43c8-8f28-1cc05ab91b08,Nathan Byatt,Summer 2013/14,Barclay Shield | C Grade | E Grade
+a467a84d-872c-4336-be11-d34272f20b96,Mark Turnbull,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | ODC - Division 2 | Vets A
+d42b61ea-feb7-496f-9875-24b56b34f16c,James Ind,Summer 2013/14,C Grade | E Grade
+e548b3ed-e007-421c-8ba6-d2b3490d0b72,Chayse Turnbull,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,B Grade | C Grade | D Grade | F Grade | North Region Senior T20 | ODC | U16 (1) Blue | U18 (Friday)
+fcce49b9-b843-4657-9afa-5cf1988cb7d9,Timothy Fitzpatrick,Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,B Grade | Barclay Reserve | C Grade | D Grade | E Grade | F Grade | H Grade | ODC | U16 (2)
+33f84692-0da3-416c-86bc-bcb0d437ce54,Zane Treloar,Summer 2013/14,E Grade | ODC | U18 (Friday)
+6c752160-2218-4b99-b6cf-29f61fc4ad0e,Tom Rogers,Summer 2013/14,E Grade | ODC
+bba09dde-5b14-43e4-9864-db5346ed5e74,Gary Cameron,Summer 2013/14,E Grade
+287abc80-e365-44f9-b38b-dbcc15015fc3,David Pinner,Summer 2013/14,E Grade | ODC
+f8849c03-467c-4773-ae01-d3b7201a511f,Michael Jones,Summer 2005/06 | Summer 2011/12 | Summer 2013/14,Barclay Reserve | C Grade | E Grade | ODC - Division 2 | Vets A
+06d4ed23-1c41-4db7-a2bb-f77d7b1773be,Tim Woods,Summer 2010/11 | Summer 2011/12 | Summer 2013/14,B Grade | D Grade | ODC | ODC - Division 2
+a496bed1-1587-46a1-a204-cad9654c704e,Jesse Howell,Summer 2013/14,ODC
+4f1f2517-d4c8-4acb-bb5e-9fefd6b3a606,Jack Cullen,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,ODC | U12(1) Teal | U12(2) Teal | U14 White North | U14(2) Blue | U16 (Saturday) Blue | U16 Blue | U16 Teal
+b24d8441-0957-44bf-ae71-252b80ba578e,Dominic Potter,Summer 2010/11 | Summer 2013/14,D Grade | ODC
+0d9cb292-3e0c-4bcd-9d1e-dafbba9b3920,Graeme Hall,Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,ODC | U12 Blue | U14 Blue | U14 White North
+21693c70-1cb9-4606-8181-dca29f2f76ad,Ian Hall,Summer 2012/13 | Summer 2013/14,ODC
+dd86e20e-026a-47b5-84bf-5218ef095b7f,James Mefflin,Summer 2011/12 | Summer 2012/13 | Summer 2013/14,U12 Blue West | U12 Teal
+0b2e3d43-0f24-4c1b-96e7-e2485f59c4c0,Samuel Bullock,Summer 2013/14,U12 Blue West
+1402c2b5-4da4-4241-85e7-3059afd3725f,Michael Foster,Summer 2010/11 | Summer 2013/14,U12 Blue West | U12 Development
+ad2ee54a-7eb7-4a1d-866d-a3ba184dc2df,Bailey Harbord,Summer 2013/14,U12 Blue West
+b1bf8b69-745c-4d42-88ab-d50c92031c8e,Xavier Jackson,Summer 2013/14,U12 Blue West
+6b778fc9-65e3-4d41-bd99-0663760b808e,Vincent Delaney,Summer 2013/14,U14 Blue
+d7afca52-5884-4c78-8cc3-3f9053f3d526,Chris Donaldson,Summer 2013/14,U14 Blue
+4456581b-829d-4b1c-af70-e60d4b8f6717,Bryn Francis,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2013/14,U12 (3) Blue | U12 Blue | U14 White North | U16 Teal
+562e4373-61d2-4a71-a12c-b249892773f7,Lachlan Cotter,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,U12 (3) Blue | U12 Blue | U12(2) Teal | U14 White North | U14(2) Teal | U16 Teal
+0948f162-5480-4c2f-bf3b-f21af9d1cfe6,Jackson Keays,Summer 2013/14,U18 (Friday)
+a28b0d01-11f0-4984-b187-47621fe7feb0,Rohitdeep Singh,Summer 2012/13 | Summer 2013/14,D Grade | ODC | U16 Blue | U18 (Friday)
+356a97c0-f15a-4e7e-9a3e-1830a4da68e5,Beau Lemin,Summer 2013/14,U18 (Friday)
+47e59ec0-1e10-4b7b-8b4e-ce25a3ad4d01,Stuart Dower,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,D Grade | ODC - Division 2 | U12 Blue | U12(2) Teal | U14(1) Blue | U14(2) Blue | U14(2) Teal | U16 (Saturday) Blue | U16 Blue | U18 (Friday)
+a1d1555f-ee88-4cdd-8aa3-173737fde910,Robert Cocking,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14,C Grade | D Grade | H Grade | Vets A
+72e1bcc5-deb0-4fdb-ac04-d3266deb19a7,Sean Deer,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13,B Grade | D Grade | F Grade | G Grade | ODC - Division 2 | U14(1) Blue | U16 (1) Blue | U16(2) Blue | U18 (Friday)
+27b873a5-86be-447e-a629-0fa03ef4d720,Simon Salpigtidis,Summer 2012/13,Barclay Shield
+ba0130a1-8547-4e25-999e-94c721bfab12,Trent Wellington,Summer 2012/13,Barclay Shield | North Region Senior T20
+d454d385-ec0e-4544-a54d-ec249beeebde,Christopher Salvatore,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13,Barclay Shield | North Region Senior T20
+18533e8d-fb1d-43eb-97e7-51c61f09d2d9,Chad Monkhouse,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2011/12 | Summer 2012/13,B Grade | Barclay Reserve | Barclay Shield | C Grade | North Region Senior T20
+ac41f575-c8d9-470b-99fa-e1d98a06e331,Matthew Trounce,Summer 2012/13,D Grade | ODC
+45c1c735-f87c-4400-aeef-fd71360ea8fa,Tjaart Duvenage,Summer 2011/12 | Summer 2012/13,D Grade
+908bebd7-6f17-402d-849d-6d2d904b7f22,Michael Busse,Summer 2012/13,D Grade
+9f9c50ba-0303-4761-a960-0d8d87dc67de,Mark Hardy,Summer 2012/13,D Grade | ODC
+00b5c175-c040-477e-b19f-5314bd6aac51,Adam Procida,Summer 2012/13,D Grade
+fab543e0-0822-4d59-97f8-c38d8750e991,Jake Pohl,Summer 2012/13,D Grade
+e9eda27a-5817-46d7-95c5-529f7d90f6e3,Matthew Pullen,Summer 2012/13,D Grade
+80141e3a-edf4-4c83-95c2-5d982a5f6ab9,Glenn Costello,Summer 2012/13,ODC
+22fbcc6e-f12e-4c33-90e2-2f43eb13f2b4,Paul Oden,Summer 2012/13,ODC
+43740870-60a3-43c0-bfee-33bd5414dff9,Heath Appleton,Summer 2012/13,ODC
+0d9d2324-6e80-4510-9c79-67f3b4b452e0,Mitchell Greenwood,Summer 2012/13,ODC
+e2a621e8-73f3-4ce1-b51a-b10498db757a,Matthew Stephens,Summer 2010/11 | Summer 2011/12 | Summer 2012/13,ODC | U12 Blue | U12(2) Blue | U14 White North | U14(2) Blue | U16 (Saturday) Blue
+144ce381-b6cb-48a1-aa52-2b2c5e33238b,Taylor Stephens,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13,ODC | ODC - Division 2 | U12 Blue | U12(2) Teal | U14(1) Blue | U14(2) Teal | U16 (Saturday) Blue
+1f0ef465-b646-48c7-8936-3c88b89fa927,Anthony Daminato,Summer 2010/11 | Summer 2011/12 | Summer 2012/13,U12 Blue | U12 Teal | U12(2) Blue
+e8362f89-8d8e-4569-9c85-9f3d82be22cd,Kobe Brandt,Summer 2011/12 | Summer 2012/13,U12 Teal
+74628daa-ad1d-4865-853c-308b0d5cf161,Jaylon Smith,Summer 2012/13,U12 Teal
+91987349-6eac-4408-b1ac-db7d482c80a3,Ethan Luke,Summer 2012/13,U12 Teal
+93bdff2b-2c39-4f38-8507-250dc00aaf2b,Kyle Johnson,Summer 2011/12 | Summer 2012/13,U12 Blue | U12 Teal
+739cd100-661f-41f1-8259-0d659c2ba1b9,Tom Brugliera,Summer 2012/13,U14 White North
+028c0b3c-6bc0-4591-857a-32d54a10ef0d,Michael Smith,Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13,D Grade | ODC - Division 2 | Vets A
+30d31a15-ea0c-4fd5-9681-0aefb2cd3a23,Tait Forster,Summer 2011/12,B Grade | D Grade
+a5a8a6d9-bb12-4865-8394-48ec6ff787bb,Matthew McMahon,Summer 2009/10 | Summer 2010/11 | Summer 2011/12,B Grade | D Grade | F Grade | ODC - Division 2 | U16 (1) Blue | U16(2) Blue | U18 (Friday)
+146f57bb-2a6b-4b96-9dcb-1faca8a8ce1f,James Love,Summer 2002/03 | Summer 2003/04 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,B Grade | Barclay Reserve | Barclay Shield | C Grade | D Grade | North Region Senior T20 | U12 (2) | U12 (3)
+9653357e-b53f-44bc-b297-8d6a904e2306,John Sacchetta,Summer 2010/11 | Summer 2011/12,D Grade | Vets A
+8aa5141d-60ce-4a7e-a08b-ad1bf71afb94,Brent Redmond,Summer 2002/03 | Summer 2003/04 | Summer 2011/12,D Grade | ODC - Division 2 | U12 (2) | U12 Blue | U14 (2) | U14(1) Teal
+00f52378-aa20-4133-a593-0df5231e04d0,Jordan Brown,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,C Grade | D Grade | F Grade | G Grade | H Grade | ODC - Division 2 | U12 (4) | U14 (2) | U14 (3) | U16 (2)
+87bbca41-513a-4917-9c60-02fff109d16f,John Sacchetta,Summer 2011/12,D Grade
+1864e013-8897-4d14-a85b-25f332ffd815,Joel Millar,Summer 2011/12,D Grade
+f7528cdf-afbe-41fd-a046-5be0606db67f,Kynan Kett,Summer 2009/10 | Summer 2010/11 | Summer 2011/12,D Grade | ODC - Division 2 | U12 Blue | U12(1) Teal | U14 White North | U14(1) Blue
+d3d3e600-1f51-4567-b960-5024e0b2d99f,James McMahon,Summer 2003/04 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,B Grade | C Grade | D Grade | G Grade | ODC - Division 2 | U12 (2) | U16 (1) Blue | U16 (1) Teal
+f160831f-32d0-4db6-8abb-58ab5c5f5c8b,Josh Murphy,Summer 2002/03 | Summer 2003/04 | Summer 2010/11 | Summer 2011/12,D Grade | F Grade | ODC - Division 2 | U12 (3) | U12 (4) | U14 (2) | U14 (3)
+0b522c16-7935-4ae2-bfe7-f3513be9242c,Rick Davies,Summer 2008/09 | Summer 2010/11 | Summer 2011/12,D Grade | ODC - Division 2 | Vets A
+a6fbb565-2f66-43ff-9aba-554e2c4dec1b,Oliver McGillion,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,F Grade | ODC - Division 2 | U12 Blue | U14(1) Blue | U16 (Saturday) Blue
+ac5f9c53-8e72-4c86-9cf5-5857b55e1a54,Simon Crump,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,Barclay Reserve | Barclay Shield | C Grade | D Grade | F Grade | G Grade | ODC - Division 2
+3c510d17-5334-49f0-91cf-eb6cd4fe373b,Jason Kenny,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2011/12,D Grade | E Grade | ODC - Division 2
+fc95c156-3969-4020-ae59-badcb6e2039c,Jordan Byrne,Summer 2008/09 | Summer 2009/10 | Summer 2011/12,D Grade | G Grade | ODC - Division 2
+aa112a6c-12b5-4cfc-bdf7-335d1af49ecf,Jackson Davies,Summer 2010/11 | Summer 2011/12,U12 Blue
+47f2488c-247e-4497-ad34-29a447275dec,Matthew Beale,Summer 2011/12,U12 Blue
+ec436b07-37a5-4582-a58d-97ac6e730eac,Jonathan D'Angelo,Summer 2011/12,U12 Teal
+64ca9135-8525-4e76-8dcb-bfe7df1c36b9,Thomas Philp,Summer 2011/12,U12 Teal
+7cf4b404-bb27-437b-90dc-4384451fcb95,Mitchell De Waele,Summer 2011/12,U12 Teal
+32af5f34-7ee2-45e4-bd44-9d87a1b758d5,Mason Hosmer,Summer 2011/12,U12 Teal
+7e2b355e-19bc-43e2-bb64-6c54a1278041,Jake Angelovski,Summer 2011/12,U12 Teal
+1fe3f328-6f91-4de4-b184-32a332d6cc2e,Marcus Daminato,Summer 2009/10 | Summer 2010/11 | Summer 2011/12,U12(1) Teal | U14 White North | U14(1) Blue | U16 (Saturday) Blue
+be66ae7b-23b8-42bd-93d0-e6bdea33f8a5,Nicholas Lozanovski,Summer 2011/12,U14 White North
+cc2a6eaf-9bec-46d8-b709-1b04ba374acc,Jake Francis,Summer 2011/12,U16 (Saturday) Blue
+c803bf24-a908-4243-8297-e20c91271fc4,Lachlan Hubber,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,U12 Blue | U12(2) Teal | U14(1) Blue | U14(2) Teal | U16 (Saturday) Blue
+3e192014-1f51-4b09-882e-88fb9ed1d911,Brandon Robinson,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,U12(2) Teal | U14(1) Blue | U14(2) Blue | U14(2) Teal | U16 (Saturday) Blue
+5d32f1e6-af8d-4e97-87c8-2abd1efa3827,Tom Mawhinney,Summer 2009/10 | Summer 2010/11 | Summer 2011/12,U14(1) Blue | U14(2) Blue | U14(2) Teal | U16 (Saturday) Blue
+68e4cfe5-b75b-4105-bedd-6ff9eea18a97,Bradley Fox,Summer 2011/12,U18 (Friday)
+0595f34a-1a9d-4ab1-90d4-00b4f37e4308,Jacob Rockwell,Summer 2011/12,U18 (Friday)
+82f72dfe-f645-4030-a93a-6c53876840b6,Mackenzie Stanley,Summer 2011/12,U18 (Friday)
+df7028a1-58c2-40ea-addf-5be062d27f40,Jake Bennett,Summer 2011/12,U18 (Friday)
+bac9a7c5-fdbb-43ba-b6a1-93cbf67d0f85,Joshua Ward,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2011/12,Barclay Reserve | C Grade | D Grade | H Grade | U14 (2) | U14(1) Teal | U16 (1) Blue | U16 (1) Teal | U16 (2) | U18 (Friday)
+d277aaaf-a9f8-4490-8c12-86b75ed416ce,Joshua Hale,Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12,U14(1) Blue | U16 (1) Blue | U16(2) Blue | U18 (Friday)
+7f04cd08-c645-42d3-baf6-4184d80ea730,Joshua Cook,Summer 2011/12,U18 (Friday)
+bcb032a5-4475-49fb-820d-390b2d9ecf6c,Tim Dixon,Summer 2011/12,Vets A
+03d77a75-d06e-451c-b841-f058c708f781,Larry Davies,Summer 2011/12,Vets A
+1b8b72fa-9d5e-4658-80f1-507d57d087b7,Robert Solar,Summer 2010/11 | Summer 2011/12,Vets A
+8cdd1dc5-e8d7-42ef-af16-ebfc83864afb,Chris Dimitriou,Summer 2009/10 | Summer 2010/11,C Grade | D Grade
+602fec8e-ee88-4f79-a5e3-deb723e29334,Stephen Rose,Summer 2009/10 | Summer 2010/11,Barclay Reserve | C Grade | D Grade
+00ce8f91-aa53-48b4-aec8-3744073fefd4,Daniel Veal,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11,C Grade | D Grade | F Grade | G Grade | H Grade | U14 (2) | U14 (3) | U16 (2)
+59f8ffc9-0f3e-49f6-8a06-da06d4c0a7c6,Tom Harper,Summer 2008/09 | Summer 2009/10 | Summer 2010/11,D Grade | F Grade
+e578bee4-7704-4156-b92d-bb947409524a,Billy Parsons,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2010/11,Barclay Reserve | Barclay Shield | C Grade | F Grade
+3564699d-0d71-4f4f-8fdc-7ab54886f7d1,Ned Harper,Summer 2008/09 | Summer 2009/10 | Summer 2010/11,D Grade | F Grade
+463f5e00-2a0a-4b94-ab0c-3fd5e35ab4f8,Wayne Barclay,Summer 2003/04 | Summer 2006/07 | Summer 2008/09 | Summer 2010/11,Barclay Reserve | Barclay Shield | F Grade | Vets A
+fcb7f6c6-3cf0-4d55-9b52-27644350f78b,Callum Wilkin,Summer 2010/11,F Grade
+c07cd165-3545-411d-afca-65f50bbe7311,Tony McGillion,Summer 2010/11,F Grade
+ac4f103e-6380-4144-9be0-65d84df3922e,Nathan Robbins-Brown,Summer 2002/03 | Summer 2003/04 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11,C Grade | D Grade | F Grade | U12 (2) | U12 (3) | U12 (4) | U16 (1) Teal | U16 (2)
+7d7e82c5-d78f-4db9-9861-f41dc6c08ca6,Caillin Kett,Summer 2009/10 | Summer 2010/11,F Grade | U14(1) Blue | U16(2) Blue
+e315f241-880f-4434-9be9-5e1215fa4807,Tyler Costello,Summer 2008/09 | Summer 2009/10 | Summer 2010/11,U12 (3) Blue | U12 Blue | U12(2) Teal
+f58680cf-5d55-44de-b992-f439cbcba4e9,Keegan Hauth,Summer 2010/11,U12 Development
+cbb94d36-6341-4b6f-8ace-8a098a7f2386,Lachlan Arthur,Summer 2010/11,U12 Development
+e07589f8-acac-43dc-9c99-ad2f0b77756d,Gareth Hand,Summer 2010/11,U12 Development
+c6d85660-751d-4594-95d3-df339814082a,Kyal Thompson,Summer 2010/11,U12 Development
+62f13b52-463d-4ebd-b548-f79c6435a534,Jack Shields,Summer 2010/11,U12 Development
+228b2f98-e8f5-46b7-b1e2-0c4d9a93e4f5,Matthew Girdler,Summer 2010/11,U12 Development
+6d8e16a5-cb46-46bc-a397-bc3603f8d72d,Tyler Buckley,Summer 2010/11,U12(2) Blue
+5d095ccc-0e82-4010-b037-595ea5e97db5,Samuel Philp,Summer 2010/11,U12(2) Blue
+6bfd59cb-7db2-4d52-a3c0-c2b16283774a,Luke Hogg,Summer 2010/11,U12(2) Blue
+1277836d-aedc-4358-87f9-82e77dd23e13,Matthew Lendon,Summer 2008/09 | Summer 2009/10 | Summer 2010/11,U12(2) Teal | U14(2) Blue | U14(2) Teal
+3b360ea8-6cc5-4e5c-ac4d-b277e4f81175,Patrick O'Connor,Summer 2009/10 | Summer 2010/11,U12(1) Teal | U14(2) Blue | U14(2) Teal
+73da0fb0-3a51-4753-8195-e71a4a577e97,Mitch Harris,Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11,U12 (3) Blue | U12 Blue | U12(1) Teal | U12(2) Teal | U14(2) Blue | U14(2) Teal
+9ed2c64e-0d7d-49f2-9b86-5dfd9018f8cf,Callum Browning,Summer 2010/11,U14(2) Blue
+c4619b5b-dd8b-4ac1-a769-488db00dab42,Daniel O'Connor,Summer 2009/10 | Summer 2010/11,U12(1) Teal | U14(2) Blue | U14(2) Teal
+d485998f-2f1f-4604-977e-ed4b019a2c4b,Paddy Cullen,Summer 2010/11,U14(2) Blue
+60348980-8fe1-422d-b563-1f4f3d097100,Thomas Cooper,Summer 2009/10 | Summer 2010/11,U16 (1) Blue | U16(2) Blue
+08c7d575-5870-4f8e-9d26-53794929d545,Garrett Ludik,Summer 2010/11,U16(2) Blue
+d661c787-3053-4361-b465-17b204f00830,Matthew Egan,Summer 2008/09 | Summer 2009/10 | Summer 2010/11,G Grade | U14(1) Blue | U16 (1) Blue | U16(2) Blue
+a8d5b0dc-445b-4ad8-b94e-f946a1dd7680,Alexander Jardine,Summer 2010/11,U16(2) Blue
+f8c0b5cb-8618-4cce-8a0c-873e99d98be4,Michael McKeown,Summer 2010/11,Vets A
+693a7f57-8a47-442a-b6cf-bba42abb9d41,Craig Ingram,Summer 2010/11,Vets A
+59bd5f58-b7da-495a-bf78-cf9e93aeaf2f,Phillip McMahon,Summer 2010/11,Vets A
+4a857866-36a9-431b-8a12-6a17da16158d,Paul Millett,Summer 2008/09 | Summer 2009/10 | Summer 2010/11,D Grade | G Grade | Vets A
+c3daace5-4126-4e00-a128-e6e043c4862d,Robert Hoysted,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10,Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade
+9dbe7848-ef43-402b-a5c2-a670cb73291b,Jevon Kett,Summer 2008/09 | Summer 2009/10,Barclay Reserve | Barclay Shield | U16 (1) Teal
+950af82b-dded-42c4-9484-1b1546f7f69e,Kyle Turnbull,Summer 2009/10,C Grade | U16 (1) Blue
+1cd65b4e-9fde-4adb-a40e-a610f11c9b49,Mark Lendon,Summer 2008/09 | Summer 2009/10,C Grade | D Grade
+0f2fcbc9-c0ac-4633-98ad-07b3353e0d86,Julian Cross,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10,C Grade | D Grade | G Grade | H Grade | U12 (3) | U12(1) Teal | U14 (2) | U14 (3) | U14(1) Blue
+273acffe-2273-4d0f-92fa-940717d39e7b,William Helliar,Summer 2009/10,C Grade | D Grade
+b108803b-cfbd-40c1-8b2e-272b590cf085,Joel Donaldson,Summer 2008/09 | Summer 2009/10,Barclay Reserve | C Grade | U16 (1) Blue | U16 (1) Teal
+decf9fa2-5ee3-49c4-88ea-b58a8e582c80,Lachlan James Hillier,Summer 2009/10,C Grade
+1d5758f3-6dbb-4a50-bdcd-8a8255c94ec9,Tom Shaw,Summer 2009/10,D Grade
+f30c51a5-e83b-47b5-a5a7-bfce26cd8301,Jarrod Tilley,Summer 2009/10,D Grade
+a380edf3-81fb-435b-ae88-4454644ffec1,John Kreuzer,Summer 2009/10,D Grade
+46438e36-c3e7-4cce-9a86-981dc5e57a9f,Joel Caelli,Summer 2008/09 | Summer 2009/10,C Grade | D Grade
+a09fe010-8b84-441c-a0cc-6f16f795fe4c,Matthew Jessop,Summer 2008/09 | Summer 2009/10,D Grade | G Grade
+bb306501-f763-4df0-b426-d9461eb7094b,Matthew Brown,Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2009/10,Barclay Reserve | C Grade | D Grade
+1614235d-a758-4b9c-8849-13b5a4ce93bb,Steven Smith,Summer 2007/08 | Summer 2008/09 | Summer 2009/10,D Grade | G Grade | H Grade
+99034704-9afb-4f76-947d-58a946a57e2b,Chris Hunt,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10,Barclay Reserve | Barclay Shield | C Grade | D Grade | E Grade
+d67e92ad-8066-459a-95a8-4ece9829b7de,Myles Guldon,Summer 2002/03 | Summer 2003/04 | Summer 2009/10,D Grade | U12 (4) | U14 (2)
+8d234bdf-7482-4cf7-ad88-ec1221fab4a4,Jordan Baines,Summer 2009/10,D Grade
+dbc65de3-ffec-40cc-8242-b39c117cb419,Daniel Pavey,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10,C Grade | D Grade | H Grade | U12 (2) | U12(1) Teal | U14 (2) | U14(1) Blue | U16 (1) Teal | U16 (2)
+edeba06a-05da-467e-b2f0-770dc3c0656a,Paul Harrison,Summer 2009/10,D Grade
+fd4d0cf5-766d-4b5a-b902-df601db3bacb,Shane Young,Summer 2009/10,D Grade
+a36580e8-7275-40ca-938a-29cedb2de401,Joe Primerano,Summer 2009/10,U12 (3) Blue
+09af3fd8-2d07-4dd3-8fcd-ff5c6dcb9fd3,Nicholas Beale,Summer 2008/09 | Summer 2009/10,U12 (3) Blue | U12(2) Teal
+8072fcb0-4485-4e92-941f-57a8b0ffe37b,Daniel Rohrig,Summer 2008/09 | Summer 2009/10,U12 (3) Blue | U12(2) Teal
+29a9d33e-1183-46f3-94af-39677299430f,Adam McKenzie,Summer 2008/09 | Summer 2009/10,U12 (3) Blue | U12(2) Teal
+b62445d8-de4b-4ab0-9960-135eba71b018,Dion Mertzanidis,Summer 2008/09 | Summer 2009/10,U12 (3) Blue | U12(2) Teal
+d5e004e4-5d48-4b6e-ac7c-92a949502ed2,Cameron Donelly,Summer 2008/09 | Summer 2009/10,U12 (3) Blue | U12(2) Teal
+0e2e4a3f-4186-4b91-8793-5974e445dc79,Ronan Lewis,Summer 2009/10,U12 (3) Blue
+ae3f6f14-4864-4038-8db9-1b18d098f729,Mitchell Hall,Summer 2007/08 | Summer 2008/09 | Summer 2009/10,U12 Blue | U12(1) Teal | U12(2) Teal | U14(2) Teal
+87f1d752-1089-41a7-9aa9-0cfd82b111dc,Liam Belmore,Summer 2006/07 | Summer 2007/08 | Summer 2009/10,U12 Blue | U12(2) Teal | U14(1) Blue
+003a9cb0-6348-4c24-b314-65d53fee675a,Bailey Jordan,Summer 2009/10,U14(1) Blue
+b8f3b24c-6504-4378-afe4-044f498d6836,Riley Harris,Summer 2009/10,U14(1) Blue
+e26729eb-fbd7-451e-9960-99bec9df2f3c,Jai Davenport,Summer 2009/10,U14(1) Blue
+109f1291-7e74-411c-9e09-c4740b802628,Sam Parker,Summer 2009/10,U14(1) Blue | U14(2) Teal
+448910af-80f8-400a-927d-9fb6d255735e,Ben Abbatangelo,Summer 2006/07 | Summer 2007/08 | Summer 2008/09,Barclay Reserve | Barclay Shield | C Grade | D Grade | U16 (1) Teal
+8df5db2f-bf38-41aa-8b51-3c6d71c29b16,Brent Redmond,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09,Barclay Reserve | Barclay Shield | C Grade | U14(1) Blue | U16 (1) Teal
+009df121-a5c9-4c7e-8a16-2fd4e233d77b,Ryan Abbatangelo,Summer 2006/07 | Summer 2007/08 | Summer 2008/09,Barclay Reserve | C Grade | D Grade
+ec0dba12-216f-4d91-86c4-b33f10b4cba3,Dale Equid,Summer 2007/08 | Summer 2008/09,Barclay Reserve | C Grade | H Grade
+7a39fede-ab41-48b2-84d7-fd7951195ea1,Mitchell Buckley,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09,Barclay Reserve | C Grade | D Grade | E Grade | U16 (1) Teal | U16 (2)
+4edcd99a-2ccc-4b34-890a-38c3e3c77a10,Lachlan Watson,Summer 2005/06 | Summer 2006/07 | Summer 2008/09,C Grade | D Grade | U16 (2)
+a71a55fc-a53a-423b-8999-a2c2d33e59b3,Jayden Price,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09,Barclay Reserve | C Grade | D Grade | H Grade | U14 (2) | U14(1) Teal | U16 (1) Teal | U16 (2)
+8caaf68b-fed0-42ac-988c-3e56fe4d2a2f,Matthew Pollard,Summer 2008/09,C Grade
+c380cce1-1ab1-452e-9d97-a6fbd1fffd67,Andrew Wendt,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09,C Grade | D Grade | E Grade
+3954aac7-f986-49d1-949f-128fd6aa4d1a,Nicholas Cannamela,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09,Barclay Reserve | C Grade | D Grade | H Grade | U14 (2) | U14(1) Teal | U16 (1) Teal | U16 (2)
+2fd815ff-dcc6-4122-b972-4594f7480dff,Jack Baines,Summer 2002/03 | Summer 2003/04 | Summer 2008/09,D Grade | U12 Blue | U14(1) Teal
+b5e9abfc-a135-491d-8f7b-eeb51a08cf5d,Ben Hunt,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08 | Summer 2008/09,C Grade | D Grade | E Grade | H Grade
+48cd0659-768b-469e-a7cc-dcf6ee38db8d,Marcus Gleave,Summer 2002/03 | Summer 2003/04 | Summer 2008/09,D Grade | U14 (2) | U16 (1) Teal | U16 (2)
+da1495e5-fc5f-4a92-8c35-36408aef07e1,Kevin Cullen,Summer 2002/03 | Summer 2008/09,C Grade | D Grade | Vets Blue
+b05d98d4-0d84-4b59-8512-65e224aab37b,Adam Barclay,Summer 2008/09,G Grade
+0ceac9ab-b87a-4f7b-88c0-bbf80abadcdc,Ryan Hay,Summer 2008/09,G Grade
+36a71d66-0cac-4c04-9c3a-435ac028d858,Hayden Byrne,Summer 2008/09,G Grade
+054bf740-97c3-494c-a866-32435800fcea,Ben Cotter,Summer 2008/09,G Grade
+0506b7ba-812e-4879-a8c2-5dc435b5eb8d,Ano Doukas,Summer 2008/09,G Grade
+bc63abd5-3068-418c-9698-88c246fcabb9,Jim Cotter,Summer 2008/09,G Grade
+f3fc7e11-b884-4017-8085-567a052c115e,Trevor Fowles,Summer 2008/09,G Grade
+69c59427-55f3-44a7-ac71-e44ad59deb9c,Jonathan Tharapos,Summer 2008/09,G Grade | U14(1) Blue
+0dbb9fd3-7cf4-4eb9-9123-6b80b2be6cfc,Allan Brown,Summer 2008/09,G Grade
+75dfc25e-4aa6-4322-ba1d-9acd5f13ea58,Adam Bonnici,Summer 2007/08 | Summer 2008/09,U12 Blue | U12(2) Teal
+6c16f74c-5a69-4620-aad6-0827a673d3e1,Jacob Landy,Summer 2007/08 | Summer 2008/09,U12 Blue
+9f29228d-dd7d-4d06-8b0d-28102921c0f5,Cameron Aisbett,Summer 2007/08 | Summer 2008/09,U12 Blue | U12(2) Teal
+0839e55b-f3b6-4352-8cef-fd322687f034,David Brogno,Summer 2007/08 | Summer 2008/09,U12 Blue | U12(2) Teal
+6b3dd7d7-01ef-4712-a320-39dcd9db8e4b,Brayden Davies,Summer 2007/08 | Summer 2008/09,U12 Blue | U12(2) Teal
+255aee8f-7e6c-4865-aa1d-dbcf041474cf,Gino Dimacali,Summer 2007/08 | Summer 2008/09,U12 Blue | U12(2) Teal
+e84b5cfa-a9ea-4de6-a56c-a3b4976b4654,Marcus Brown,Summer 2008/09,U12(2) Teal
+a3e3acb0-a814-4482-95e4-04fad7a5086d,Leiden Dye,Summer 2008/09,U12(2) Teal
+3a91c3fb-908b-41ff-a2e7-3bc448a88ee7,Jamie Williams,Summer 2007/08 | Summer 2008/09,U12(2) Teal
+25b9def0-2be6-4a15-952c-43d584bd987c,Michael Gaggiano,Summer 2008/09,U12(2) Teal
+071cd843-4e38-4d3e-b525-f1dd6b48e620,Jayden Robbins-Brown,Summer 2006/07 | Summer 2008/09,U12(2) Teal | U14(1) Blue
+b5822592-95b6-452f-abcc-4f6a0e634f3f,Jake Miller,Summer 2008/09,U14(1) Blue
+5a0c0856-c8be-4234-ab9e-b7c9ab5b64be,Michael Byma,Summer 2006/07 | Summer 2008/09,U12(2) Teal | U14(1) Blue
+648581c2-b4cd-4d49-919d-ad1952783e72,Mitch Peck,Summer 2007/08 | Summer 2008/09,U12 Blue | U12(2) Teal | U14(1) Blue
+728d3f0d-b4e7-4e46-a9cf-3e917ea8a33c,Davin Mulready,Summer 2006/07 | Summer 2007/08,Barclay Reserve | C Grade | D Grade
+e6946038-d670-494c-9633-9d3756cdd946,Dale McDonald,Summer 2006/07 | Summer 2007/08,Barclay Reserve
+c1d25c3f-6024-4ab4-b244-4fc2cf62215b,Jarryd Devine,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,Barclay Reserve | C Grade | U14 (2) | U14(1) Teal | U16 (1) Teal
+635f80e2-6e3c-49ac-8431-8a8f50185b88,Christopher Kanilakis,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,C Grade | D Grade | E Grade | U16 (2)
+3569439b-1cb8-42a5-a8c3-4f4e727a83c1,Ashley Brown,Summer 2005/06 | Summer 2006/07 | Summer 2007/08,Barclay Reserve | C Grade | D Grade
+b1e666b5-0666-4477-bdeb-bcd6246090b4,Shaun Skiba,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,Barclay Reserve | C Grade | D Grade | E Grade | H Grade
+fb55d16a-db60-4d62-bbb1-237de4b1b5af,Christopher Kandilakis,Summer 2007/08,D Grade
+e08260e9-90cb-4791-8311-b50c828e62d2,Stuart Fraser,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,C Grade | D Grade | E Grade | H Grade
+35c40ad7-0266-462b-ae9d-a473011931fc,Daniel Bolzonello,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,D Grade | H Grade | U14 (2) | U14 (3) | U14(1) Teal | U16 (1) Teal | U16 (2)
+a6ff11b7-4c74-421a-9731-134b52d9237e,Jarryd Caruana,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08,D Grade | H Grade | U14 (2) | U16 (2)
+5ce499dc-7172-4a8a-bc56-53044a3053e6,Michael Fothergill,Summer 2007/08,H Grade
+a1e18176-b637-4157-9bc6-64d2ddbfb8d3,Andrew Wescott,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,H Grade | U12 (4) | U14 (2) | U14 (3) | U14(1) Blue | U16 (2)
+2baf0305-72e1-4799-b360-c3fa796ce1d1,Russell Tindale,Summer 2002/03 | Summer 2003/04 | Summer 2007/08,C Grade | E Grade | H Grade | Vets Blue
+1530eba8-7b8c-4656-9924-cb8b997ab137,Alex Love,Summer 2006/07 | Summer 2007/08,U12 Blue | U12(2) Teal
+f3bff0eb-064b-4e78-83e6-34d192879522,Tristan Jacques,Summer 2006/07 | Summer 2007/08,U12 Blue | U12(2) Teal
+8a5d9f53-f807-423c-834a-04f2f0bc4297,Pierce Kelsall,Summer 2006/07 | Summer 2007/08,U12 Blue | U12(2) Teal
+84ab0e7d-769c-4ddc-8e6a-40b384b30c88,Cameron Eyres,Summer 2006/07 | Summer 2007/08,U12 Blue | U12(2) Teal
+457baff8-2a32-43aa-adbf-3265344e5bc1,Jarrod O'Gorman,Summer 2007/08,U12 Blue
+0d8568f0-313f-47f4-b01e-ab3148bca5d5,Alexander Sutherland,Summer 2007/08,U12 Blue | U12(2) Teal
+0f1feac5-1a9f-4d58-9ab1-6ccb1a707dea,Nizam Awad,Summer 2007/08,U12(2) Teal
+9a16d67b-9708-4933-8530-cc948229fc5f,Hannah Jones,Summer 2007/08,U12(2) Teal
+58f36c58-e1c3-4984-a04b-ca159445b865,Josh McKay,Summer 2007/08,U12(2) Teal
+f79e06ac-43aa-4342-b93a-b80686a83efc,Ethan Simpson,Summer 2007/08,U12(2) Teal
+eeb8a11f-709f-4d7c-9adf-fa38d73123f9,Jake Warner,Summer 2007/08,U16 (2)
+d0420834-7151-44de-826a-49c3861ac070,Riley Beveridge,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2007/08,U12 (2) | U12 (3) | U12 (4) | U14 (3) | U16 (2)
+7a6f651c-2f69-492c-8e5c-e254ada7a89f,Ethan Miller,Summer 2003/04 | Summer 2005/06 | Summer 2007/08,U12 (2) | U14 (3) | U16 (2)
+04f4914c-b27d-4ec9-b16e-595e9e87e7ce,Michael Rivett,Summer 2005/06 | Summer 2007/08,U14 (3) | U16 (2)
+0310e394-79cb-43ba-adfb-81b618f4e534,Corey Davies,Summer 2007/08,U16 (2)
+79d4c68c-67f3-4432-9760-c3b98fd67aee,Bernie Rohrig,Summer 2003/04 | Summer 2005/06 | Summer 2006/07 | Summer 2007/08,U14 (2) | U14 (3) | U16 (2)
+dc82d15c-0fac-4828-980e-c9291972f395,Jack Henry,Summer 2007/08,U16 (2)
+2b9793cf-6f1d-4b91-abed-28c16b055410,Aaron Lowe,Summer 2005/06 | Summer 2006/07,Barclay Reserve | C Grade | E Grade
+eab30965-8224-451f-9586-a29bff6d4d46,Daniel Compton,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07,Barclay Reserve | Barclay Shield | C Grade | E Grade
+2ffea3ea-4c14-4fc6-8811-6fa6b5b38cd6,Kurt Vollenhoven,Summer 2005/06 | Summer 2006/07,Barclay Reserve | C Grade | E Grade
+85a34e6f-c885-4dea-a705-6186c812832c,Anthony Ford,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07,C Grade | D Grade | E Grade
+d2e13315-0847-4b93-be3a-146480dfd7b7,Matthew Coviello,Summer 2003/04 | Summer 2005/06 | Summer 2006/07,C Grade | D Grade | E Grade
+9e9df1c9-3d89-4024-b21a-ccf1c19dec70,Tom Whelan,Summer 2006/07,D Grade
+c565e86a-b125-4a16-bdc8-f53841f58860,James Delianis,Summer 2006/07,D Grade
+a43a71b2-453b-4432-84b7-91021693678b,Brennan Byma,Summer 2006/07,U12(2) Teal
+db528214-2c01-4d44-92f1-8340e1e54c30,Jayden Denke,Summer 2006/07,U12(2) Teal
+436acaa8-40fa-4476-b24d-96a7f9f8ccf2,Daniel Timos,Summer 2006/07,U12(2) Teal
+5d5b3263-8c0d-466f-8157-5843b63d31b3,Michael Reilly,Summer 2006/07,U12(2) Teal
+8a75c2fa-386f-4e81-ba4e-878325bf44fb,Ryan Hecker,Summer 2006/07,U12(2) Teal
+08932ffa-a447-4e0a-9cc9-4f5f6b7aebef,Liam Drapper,Summer 2006/07,U12(2) Teal
+458dd579-30cf-4f29-9386-c8f15b3446de,Lucas Shipsides,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07,U12 (2) | U12 (3) | U14 (2) | U14 (3) | U14(1) Blue | U16 (2)
+d9d1cae9-b848-4b2d-9173-bc34649b5d54,Benjamin Joyce,Summer 2003/04 | Summer 2005/06 | Summer 2006/07,U12(1) Teal | U14 (2) | U14 (3) | U16 (1) Teal | U16 (2)
+0cd81535-4cae-43f3-bdbb-a83cf3922047,Timothy O'Connor,Summer 2002/03 | Summer 2003/04 | Summer 2005/06 | Summer 2006/07,U12 (2) | U12 (3) | U14 (2) | U14 (3) | U14(1) Blue | U16 (2)
+d3f1749a-b379-4906-8160-35d8ab5c199c,Harley Turnbull,Summer 2006/07,U16 (2)
+89d50223-2ce4-4a12-baae-7a363e26303c,Robert Benjamin,Summer 2003/04 | Summer 2005/06 | Summer 2006/07,U14 (2) | U16 (2)
+9d492922-7fcf-46fe-b10c-3cc2afcf5ba5,Christopher Hussey,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,Barclay Reserve | Barclay Shield | C Grade
+4fadf408-5c00-4a3f-addc-dc0d087e7e6f,Stephen Wade,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,Barclay Reserve | C Grade
+206e6a8f-3039-4f89-83fa-eca3a64f0b37,Kyle Bedford,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,Barclay Reserve | C Grade | E Grade | U16 (1) Blue
+4fcbf50f-5740-4b71-8029-8c5425c4ca34,Mark White,Summer 2005/06,Barclay Reserve | C Grade | E Grade
+89ecec0e-3301-42e6-bd45-e04a68645afc,Nicholas Carnell,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,Barclay Reserve | Barclay Shield | C Grade | U16 (1) Blue
+cc526710-fa5d-4e5d-baa6-3d3058c29e8d,Paul Turner,Summer 2005/06,E Grade
+e058add8-85be-4924-bf58-6c6d9bb6a2ab,Leon Turner,Summer 2005/06,E Grade
+64ee980b-4bfc-4c3b-98a7-ffaba1e41796,Matthew Williamson,Summer 2002/03 | Summer 2005/06,C Grade | E Grade
+71636e5d-5cb1-4c65-bbac-807f4121595d,Brendan Skiba,Summer 2005/06,E Grade
+038135af-ca08-4972-9c72-1b7fc0a55244,Fabian Violato,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,E Grade | U14 (2) | U14(1) Teal | U16 (1) Teal | U16 (2)
+bd2cb728-632f-45dc-8390-d2fd80da70ea,Adam Tindale,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,E Grade | U16 (1) Blue | U16 (2)
+27981315-c80d-44b6-8f7d-9ace815fcb6a,Samuel Patrick,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,E Grade | U14 (2) | U16 (1) Blue | U16 (1) Teal | U16 (2)
+fa01e049-69a0-4d00-95bc-26d2f5a9c762,James Rossiter,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,C Grade | E Grade
+67b4f37e-d0a4-4453-9992-b29b7d3616bd,Adam Lindstrom,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,U12 (2) | U12 (3) | U12 Blue | U14 (3) | U14(1) Blue
+31aec261-9966-4141-bb7e-b1cf02493764,Jordan Lock,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,U12 (2) | U12 (3) | U12 (4) | U14 (3)
+231bf00f-3cf5-4c6c-a3a5-ff77db107101,Nik Martin,Summer 2003/04 | Summer 2005/06,U12 (2) | U14 (3)
+92492beb-b72a-4f56-9a78-b4b2f0668d13,Jack Findley,Summer 2005/06,U14 (3)
+8eefc12b-ab62-4e97-be4c-3f97714ed949,Jonathon Harris,Summer 2005/06,U14 (3)
+cefd0cad-9eb6-4811-aa8e-878700d9c388,Scott Conte,Summer 2003/04 | Summer 2005/06,U12 (2) | U14(1) Blue
+01c61629-e480-409d-a7be-082891f64688,Nicholas Riddle,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,U12 (2) | U12 Blue | U14(1) Blue
+308746fe-9389-4b67-a9dd-2848227890ea,Dane Robertson,Summer 2003/04 | Summer 2005/06,U12 (2) | U14(1) Blue
+4f54482b-0cdf-4861-9389-8f42feae6fc7,Brendan Gleave,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,U12 (3) | U12(1) Teal | U14 (2) | U14 (3) | U14(1) Blue | U16 (2)
+7bb370fc-81d1-4916-bad4-2c04e21b6edd,Liam Bedford,Summer 2003/04 | Summer 2005/06,U14 (2) | U14(1) Blue
+9df0960b-26dd-4283-8780-50b62a300e26,Ryan Yeo,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,U12 (2) | U12 (3) | U12 (4) | U14 (2) | U14(1) Blue
+f739afbc-1343-4cb4-b5dc-1413954668f3,Josh Griffiths,Summer 2003/04 | Summer 2005/06,U14(1) Blue | U16 (1) Teal
+41f07b0d-2240-4342-872a-78213ebe2008,James Neil,Summer 2002/03 | Summer 2003/04 | Summer 2005/06,U12 (2) | U12 Blue | U14 (2) | U14(1) Blue | U16 (1) Teal | U16 (2)
+e4b347f5-084c-45ce-b999-41ccf8acf4f1,Stephen Papargiris,Summer 2003/04 | Summer 2005/06,U16 (1) Teal | U16 (2)
+ec414a46-580c-48b6-904f-4c407ec8e105,Luke D'Sylva,Summer 2003/04 | Summer 2005/06,U14(1) Blue | U16 (2)
+758d4d4d-5bc0-40bb-8815-50d42df180f3,Ashley Broadway,Summer 2005/06,U16 (2)
+af5e189c-6873-4567-abef-a786361fbd31,Jack Edwards,Summer 2002/03 | Summer 2005/06,U12 (2) | U12 Blue | U16 (2)
+ce13ad7d-3ec8-49ba-a040-b37542a59b1e,James Seymour,Summer 2005/06,U16 (2)
+34145084-fb8e-45fd-be2c-35cddd4a55ef,Harpreet Sra,Summer 2002/03 | Summer 2003/04,Barclay Reserve | Barclay Shield
+4bf04d3b-37d7-40f0-8fe6-048d4a6f9e54,Ross Goddard,Summer 2002/03 | Summer 2003/04,Barclay Reserve | Barclay Shield | C Grade
+916f8394-85e6-4fa3-9158-d91b44e291c1,Dale O'Donnell,Summer 2002/03 | Summer 2003/04,Barclay Reserve | C Grade | E Grade | U14(1) Blue | U16 (1) Blue | U16 (1) Teal | U16 (2)
+f9558013-9953-4c26-9c76-32a469438827,Rustem Upton,Summer 2002/03 | Summer 2003/04,Barclay Reserve | C Grade
+63250420-4b4d-4c2c-80d7-59cd56e81fd9,Jedd McQueen,Summer 2002/03 | Summer 2003/04,Barclay Reserve | C Grade | E Grade | U14(1) Blue | U16 (1) Blue | U16 (1) Teal
+cda0b045-bced-4dd5-bfd6-f5a0adc9be3e,Daniel Hussey,Summer 2003/04,Barclay Reserve
+bbfcff3d-bcdb-4003-a42e-1411451a26d7,Craig Trinder,Summer 2002/03 | Summer 2003/04,Barclay Shield | C Grade
+276effdd-a8b7-48c3-a48a-b7ad3205b54c,Donald Milne,Summer 2003/04,C Grade
+79bf36fd-38f3-4371-ab40-0d4d728acdb6,Marius Wauchope,Summer 2003/04,C Grade | E Grade
+aecee701-5482-492f-acd0-98471bd77322,Gregg Godwill,Summer 2002/03 | Summer 2003/04,C Grade | E Grade
+d3efade3-8de7-4541-8d6b-2934f5a185c5,Sajid Nazir,Summer 2003/04,C Grade | E Grade
+2972ed63-ef93-4d56-8767-f1e97fd8e868,Drew Monkhouse,Summer 2002/03 | Summer 2003/04,C Grade | E Grade
+daf6b4f1-bd31-4bb0-b253-3b566c842d94,Nicholas Lavars,Summer 2003/04,C Grade
+66c5ce05-3d2c-40ab-9905-09d7b911407c,Robert James,Summer 2002/03 | Summer 2003/04,C Grade | E Grade | Vets Blue
+3bccbc2f-3653-453e-8cfa-650c8e835666,Luke Poppelock,Summer 2003/04,C Grade | U16 (1) Blue | U16 (2)
+d885c872-f223-4374-9f3c-7ee4300cfa63,Tim Bongetti,Summer 2002/03 | Summer 2003/04,C Grade | E Grade | U14(1) Blue | U16 (1) Blue | U16 (1) Teal | U16 (2)
+19cfcee9-c36a-4912-bebe-174422e37eb1,Rohan Belmore,Summer 2002/03 | Summer 2003/04,Barclay Reserve | C Grade | E Grade
+38968864-e385-44a8-a0e3-8297e4592a1c,Andrew Kent,Summer 2002/03 | Summer 2003/04,Barclay Shield | C Grade | E Grade
+464402fb-e314-47d3-9e4f-4c5abe6f5666,Rob Coulter,Summer 2002/03 | Summer 2003/04,C Grade | E Grade
+cc0f0572-b300-4a2a-8667-9baff6373c17,James Burrell,Summer 2002/03 | Summer 2003/04,E Grade | Vets Blue
+2fcb0cb8-910e-478b-9649-5ab0e710f11a,Heath Newell,Summer 2003/04,E Grade
+0839c59e-f6ba-4fc3-ba6e-7da2c42b70b8,Justin Banbury,Summer 2002/03 | Summer 2003/04,E Grade | U14(1) Blue | U16 (1) Blue | U16 (2)
+6faa4002-269e-4379-b87a-58a1f522e86f,Andrew Starkey,Summer 2003/04,E Grade
+75e50f72-e197-4184-9136-c7377cf3d020,Allen O'Donnell,Summer 2003/04,E Grade | Vets Blue
+52e927a1-797a-4a94-9362-ff1403ef08c8,Daniel Cookson,Summer 2003/04,U12 (2) | U12 (3) | U14 (3)
+a430e7c9-7192-4779-b4ba-12dccc10fe56,Nathan Batchelor,Summer 2003/04,U12 (2)
+bfa6a784-2640-454b-b7f6-d84d60e831f2,Nathan Stanogias,Summer 2003/04,U12 (2) | U12 (3)
+36c6c49c-76b6-4b60-b7aa-32ca417bd34e,Jarrod Millett,Summer 2003/04,U12 (2) | U12 (3)
+a0a4a530-3fd9-470e-b74b-c2e9c45a063f,Tim Wilson,Summer 2002/03 | Summer 2003/04,U12 (2) | U12 (3) | U12 (4) | U14 (3)
+62368d6b-f9ab-4aa0-834a-df8b473aeda2,Jack Power,Summer 2003/04,U12 (2) | U12 (3)
+edf45215-ed39-4b66-8816-04ab0c681c9c,James Murphy,Summer 2003/04,U12 (2)
+95b2bdf1-61e4-4f1b-bda0-12fdcef7fdf5,Damon Price,Summer 2002/03 | Summer 2003/04,U12 (2) | U12 (3)
+4662ccc7-defc-4daa-8957-64de23654200,Josh Campbell,Summer 2002/03 | Summer 2003/04,U12 (3) | U12 (4)
+326d80b8-3968-411b-8d9a-5bfff2424073,Taylor Veal,Summer 2002/03 | Summer 2003/04,U12 (3) | U12(1) Teal | U14 (3)
+8df8d132-3849-4afb-8650-283ca3ba087e,Liam Bedford,Summer 2002/03 | Summer 2003/04,U12 (2) | U12 Blue | U12(1) Teal | U14 (3) | U16 (1) Blue
+0259cd86-602a-4dfb-8b5e-dd947fd071be,Zak Pavlidis,Summer 2003/04,U12(1) Teal
+c7a4e5e7-8962-4fbc-81f2-611f343f9b23,Dylan Forster,Summer 2003/04,U12(1) Teal | U14 (2)
+83ba8877-d001-4c12-a34c-990a885b9f71,Christopher Lacny,Summer 2003/04,U12(1) Teal
+7686976a-387b-4cfa-aa37-f71de2f04d1d,Michael Sacchetta,Summer 2002/03 | Summer 2003/04,U12 (2) | U12 Blue | U14 (2)
+45cc38eb-7f46-4805-9ee1-e0c74f5eea65,Luke D'Sylva,Summer 2002/03 | Summer 2003/04,U12 (2) | U12 Blue | U14 (2)
+e46e0ac1-4367-49c5-bb4d-d0205d132c92,Jackson Dunstan,Summer 2002/03 | Summer 2003/04,U12 (2) | U12 Blue | U14 (2)
+080ac7c2-bb54-41e2-9b25-92322331e4cb,Mitchell Pearce,Summer 2002/03 | Summer 2003/04,U12 Blue | U14 (2) | U14(1) Blue | U14(1) Teal
+09d8c0b0-94f7-4856-839e-6257a5141f35,Scott Garro,Summer 2003/04,U14 (2)
+cb762d6d-2fdd-4274-a616-517866694975,Hugo Bishop,Summer 2002/03 | Summer 2003/04,U14 (2)
+22370e68-d6d0-4753-88a1-5a5b78793de8,Kogulan Sabaratnan,Summer 2003/04,U14 (2)
+812a0d07-cd5c-449c-b118-04428073ce31,Kirk Leonard,Summer 2002/03 | Summer 2003/04,U14 (2) | U14 (3)
+994d2a24-8b0f-49ac-a057-fe481164820e,Ryan Brown,Summer 2003/04,U14 (2)
+8b45c65d-2104-4e70-bf8b-cf223592d8a2,Alana Cross,Summer 2002/03 | Summer 2003/04,U12 (3) | U14 (2) | U14 (3) | U14(1) Teal | U16 (2)
+70fbad7c-4ee8-4d49-bd06-42baf7469b5f,Tom Wallace,Summer 2003/04,U14 (3) | U16 (2)
+b7e917f7-eeb4-4c68-a0a4-79cff693121a,Josh Griffiths,Summer 2002/03 | Summer 2003/04,U12 Blue | U14(1) Teal
+03398df0-c1e6-4680-b680-77e0a2e80c01,Peter Gargan,Summer 2002/03 | Summer 2003/04,U14 (2) | U14(1) Teal
+1dce8b67-3cbf-43f9-9a23-e8922fd30f94,Phillip Charles,Summer 2002/03 | Summer 2003/04,U14 (2) | U14(1) Teal
+d5446855-cd82-4c5d-8b76-a21a7b00ad82,Jayden Veal,Summer 2002/03 | Summer 2003/04,U14 (2) | U14(1) Teal
+23864258-fffa-47a3-8550-e060739a15b7,Joshua Riddle,Summer 2002/03 | Summer 2003/04,U14(1) Blue | U16 (1) Blue | U16 (1) Teal
+359e55bd-8785-41ef-bc49-a0a285533d41,Alexander Sacchetta,Summer 2002/03 | Summer 2003/04,U16 (1) Blue
+46e225d1-b003-4c23-b527-d800507a937b,Blake Papangelou,Summer 2002/03 | Summer 2003/04,U14(1) Blue | U16 (1) Blue | U16 (1) Teal
+8e465dd4-1531-4702-9b24-2f1a69317a0c,Joshua Pollard,Summer 2002/03 | Summer 2003/04,U14(1) Blue | U16 (1) Blue | U16 (1) Teal
+ef8c5d60-b8a2-46c1-a21a-4fbbe5c70971,James Gilliland,Summer 2003/04,U16 (1) Blue | U16 (1) Teal
+c107005b-bc2e-4093-8125-db598b97c64f,Joshua Gargan,Summer 2003/04,U16 (1) Blue | U16 (2)
+99df772b-ed7e-4bf2-bfd7-861831c3e8b4,Alex Adams,Summer 2002/03 | Summer 2003/04,U14 (2) | U16 (1) Blue | U16 (2)
+9cea2cde-0557-42d5-8480-d75ab0d023e8,Anthony Hooper,Summer 2002/03 | Summer 2003/04,U14 (2) | U16 (1) Blue | U16 (2)
+c32770a8-ad28-48bd-843a-719d318af26d,Harry Whybrow,Summer 2002/03 | Summer 2003/04,U14(1) Blue | U16 (1) Blue | U16 (1) Teal | U16 (2)
+f94d07fd-a779-46d6-a2ec-a24bb6c80b6c,Andrew Hughes,Summer 2002/03 | Summer 2003/04,U14(1) Blue | U16 (1) Teal | U16 (2)
+3fdfbbe6-4328-4088-b667-585ac511de46,Elyse Villani,Summer 2002/03 | Summer 2003/04,U14(1) Blue | U16 (1) Teal | U16 (2)
+27ee55e0-6ff3-4431-84a7-a7cc7f03f058,Luke Hagg,Summer 2003/04,U16 (2)
+e7908afc-62d6-4b6b-acbc-75cab20f4778,Daniel Lopresti,Summer 2003/04,U16 (2)
+0ac32818-fa56-4d34-b66f-3cfc9f3d3aaa,Matthew Bosco,Summer 2002/03 | Summer 2003/04,U16 (1) Blue | U16 (2)
+633d17a0-14ea-441b-94e9-fd30a92b43f7,Matt Spagnolo,Summer 2003/04,U16 (2)
+82124ffc-a79d-4c78-a9d8-5ea9a373e23a,Robert Underwood,Summer 2002/03 | Summer 2003/04,U14 (2) | U16 (2)
+9c80b374-e671-4566-9756-bf0fba7356ff,Russell Thomas,Summer 2003/04,Vets Blue
+55a2c15f-058b-4743-8b85-34d2843d9344,Scott Geer,Summer 2003/04,Vets Blue
+0e6ab546-0b83-436d-839c-e2a923417003,Wayne McDonald,Summer 2003/04,Vets Blue
+90cc4d2a-d000-4c6a-9218-9ca96e42e2ae,Gerard Sleeman,Summer 2002/03 | Summer 2003/04,Vets Blue
+ce7912ed-d9e1-4907-8375-b2550380ff30,Adrian Morrissey,Summer 2003/04,Vets Blue
+0ddce250-6d3d-4d6e-9041-a83a97c41a72,Mark Ross,Summer 2002/03 | Summer 2003/04,Vets Blue
+d5068c2e-778c-4c14-b917-ce123d595f97,Stephen Banbury,Summer 2003/04,Vets Blue
+53ed3a5d-3911-4895-a7b9-f9409ed0edc7,Peter Hannan  Acc,Summer 2003/04,Vets Blue
+d338c3b0-a693-41fb-a3c7-0f4c7dabc338,Rob Cameron,Summer 2002/03 | Summer 2003/04,Vets Blue
+0f1497d5-3a4b-4202-9a31-acd0ac772988,Maxwell Caithness,Summer 2002/03 | Summer 2003/04,Vets Blue
+cdb34726-0ca1-4b39-8fba-fa557d7e1257,Ian Kent,Summer 2002/03 | Summer 2003/04,Vets Blue
+c7ec4c5f-c90f-4033-9ab2-1252f0617122,Ron Bongetti,Summer 2002/03 | Summer 2003/04,E Grade | Vets Blue
+7d484de8-a762-4766-acd9-44312de0f0e3,Adrian Black,Summer 2003/04,Vets Blue
+92300f1d-c5f8-427a-a553-deb8ef95926e,Mark Stewart,Summer 2002/03 | Summer 2003/04,Vets Blue
+c306fb29-7de6-4c25-b507-178cd17b1696,Paul Fisher,Summer 2002/03 | Summer 2003/04,Vets Blue
+f4b14bc0-19ab-47ba-8a01-e5778ad69135,Michael Ormsby,Summer 2002/03,Barclay Reserve | C Grade
+37a560b1-66d6-4e5a-816d-e5d676a79a44,Matthew Sleeman,Summer 2002/03,Barclay Reserve | C Grade | E Grade
+1b547723-c878-44e0-a5b2-b9e53e3947a1,Leigh Gilbert,Summer 2002/03,Barclay Reserve | C Grade | E Grade
+2c7f6a63-9721-4696-a12f-43d44ecf610d,Mark Sleeman,Summer 2002/03,Barclay Reserve | C Grade
+d1e1ec4c-3853-47a4-96cf-c66a617ccc32,Scott Couling,Summer 2002/03,C Grade | E Grade | U16 (1) Blue
+1c6a7676-a07a-4590-9b87-5be71a3b41f4,Ryan Burrell,Summer 2002/03,E Grade
+5c6d2f9d-a21d-4390-b335-2b3ed074a950,Matthew Kent,Summer 2002/03,E Grade
+60c2d283-470e-4b64-aa4f-4f3fde54704e,Paul Colbert,Summer 2002/03,E Grade | U16 (1) Blue
+b582a585-7718-4abe-9714-f36cf42c8eae,Lachlan McQuilken,Summer 2002/03,E Grade | U16 (1) Blue
+12d2b643-66e2-465a-9c3f-4d44afe91cd9,Shane Johnstone,Summer 2002/03,E Grade
+b4d8259c-7964-4fa7-94f1-f9d45d129435,Matt Bongetti,Summer 2002/03,E Grade | U16 (1) Blue
+01a751ad-6cd4-4368-8219-82e1d9aa7f87,Daniel Offer,Summer 2002/03,U12 (2) | U12 Blue
+994a5744-815d-4be6-8928-1dd5c79a5ff3,Brent Ryan,Summer 2002/03,U12 (2) | U12 Blue
+b15635b2-a0e7-468f-b3ea-fee12499d630,Sam Horner,Summer 2002/03,U12 (2) | U12 Blue
+528a0eba-51b3-4d08-9f51-cb5e874a231b,Travis Miller,Summer 2002/03,U12 (2) | U12 Blue
+9a488b70-3192-4379-9ada-d7c2cb37f5eb,Ryan Pingree,Summer 2002/03,U12 (2) | U12 Blue
+d87fd077-030f-4aac-a204-8ad7449a36c0,Matthew Roper,Summer 2002/03,U12 (2) | U12 Blue
+b64e9240-719a-4ea8-8b6f-b08350331ce9,Michael Bacskos,Summer 2002/03,U12 (2) | U12 Blue
+88912c7e-8905-454e-8f83-122dffdbcc62,Michael Amy,Summer 2002/03,U12 (2) | U12 (4)
+30705fa0-92d9-47fe-bd99-2dcfa20f5ff6,Joel Amy,Summer 2002/03,U12 (2) | U12 (4)
+f4e1ddf7-6a3a-477d-b4f4-dccb9d2292ad,Anthony Balos,Summer 2002/03,U12 (2) | U12 Blue
+ffda4c79-f9d5-44ae-962f-0ff8af2991c8,Evan Raif,Summer 2002/03,U12 (3)
+7b18820a-f3d4-4af4-b914-5e5cba0effcb,Andrew Griffiths,Summer 2002/03,U12 (4)
+3dac608a-527d-4484-ab01-55cd8e2a94df,Brenton Aisbett,Summer 2002/03,U12 (4)
+4452917a-0037-4a32-b849-449151683e03,Clint Johnston,Summer 2002/03,U14 (2)
+941b2494-1ff8-49aa-aaf5-df64b122b146,Kayne Jenner,Summer 2002/03,U14 (2)
+24da7547-d40f-46f4-bf4b-eef36ee444f6,Robert Anderson,Summer 2002/03,U14 (2)
+b63985dd-d15b-487f-b5e4-d0f9abccc26d,Jesse Simmons,Summer 2002/03,U14 (2)
+2d8a357d-4991-4002-b4f6-45e55a493b3c,Christopher Falvo,Summer 2002/03,U14 (2)
+138770b9-85f7-483e-9a83-1dc57b44562e,Justyn Smyth,Summer 2002/03,U14 (2)
+431d1e7d-f3fa-4170-bb36-e90086ff5094,Braden Waddell,Summer 2002/03,U16 (1) Blue
+11b937c0-a451-4460-afa5-8ccb2b22d18d,Michael Shields,Summer 2002/03,U16 (1) Blue
+06120859-9186-488b-a39f-8100a5401913,Andrew Brennan,Summer 2002/03,U16 (1) Blue
+4e776aaa-1b74-4edd-bff6-372b6f045a44,Michael Evans,Summer 2002/03,U16 (1) Blue
+b06f29f1-5924-4735-96ea-dc382009c980,James Paparousis,Summer 2002/03,U16 (1) Blue
+253658ab-1067-4122-8e1f-c364c6e35511,Hayden Dillon,Summer 2002/03,U16 (1) Blue
+598ba971-8aca-44a6-8258-626d4f94a940,Gary Compton,Summer 2002/03,Vets Blue
+469d34c9-c034-4fb4-ad4a-4710ac37e9ce,Andrew Watson,Summer 2002/03,Vets Blue
+c12ba33e-a227-44c8-83e5-9348f59cf5b2,Barry Cavigan,Summer 2002/03,Vets Blue
+76d62956-7f91-4dc3-9d4c-65155d22b8d5,John Couling,Summer 2002/03,Vets Blue

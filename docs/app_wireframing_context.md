@@ -1,8 +1,8 @@
 # The Scorebook / FVCC App Wireframing Context
 
-Last updated: 2026-05-13
+Last updated: 2026-05-26
 
-This document is a detailed product, design, data, and technical context pack for wireframing The Scorebook / FVCC app with ChatGPT or another design partner. It complements `docs/project_handover.md` and records the current `main` branch shape after the hidden Season Overview v2, Hall of Fame v2, and Player Profile v2 preview pages were added.
+This document is a detailed product, design, data, and technical context pack for wireframing The Scorebook multi-club app with ChatGPT or another design partner. It complements `docs/project_handover.md` and records the current branch shape after the hidden Season Overview v2, Hall of Fame v2, and Player Profile v2 preview pages were added and the first positive-response pilot clubs were configured.
 
 Use this as the single brief when asking ChatGPT to design page flows, refine cards, propose dashboards, or identify gaps. The current code remains the final source of truth when this document and implementation disagree.
 
@@ -1793,3 +1793,18 @@ Before making future app changes:
 8. Run the app locally on port `8502`.
 9. Commit locally after verification.
 10. Do not push until Preet confirms.
+
+## 21. Pilot Club App State
+
+The current main app experience has been smoke-tested with aggregate data for these club configs:
+
+- `reynella`
+- `ashwood`
+- `glen-waverley-hawks`
+- `plenty`
+- `georges-river-district`
+- `southside-east-caulfield`
+
+Hall of Fame, Season Overview, Milestone, and Player Profile render for each club with club-local processed data and no FVCC fallback. Aggregate-only pages may show clean empty states for scorecard-derived, fastest-innings, premiership, recent-form, or ball-by-ball sections until match-centre refresh/backfill is explicitly approved and reviewed.
+
+Experimental match-centre pages remain hidden. Do not expose Player DNA, Scorebook Lab, advanced match-centre, or other experimental pages for these clubs until verified club-specific match-centre and ball-by-ball coverage exists.

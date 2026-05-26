@@ -5,6 +5,7 @@ This script is intentionally local-data-first:
 - It keeps existing raw JSON backups.
 - It refreshes the live/current season from PlayCricket.
 - It rebuilds processed CSVs, canonical player fields, and team/grade audits.
+- It runs aggregate data only unless --with-current-match-centre is passed.
 """
 
 from __future__ import annotations
@@ -40,10 +41,13 @@ from src.data.playcricket_ingestion import (  # noqa: E402
 )
 from scripts.club_refresh_utils import print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import (  # noqa: E402
+    allow_legacy_fallback,
     get_data_root,
     get_hall_of_fame_dir,
+    get_mapping_path,
     get_processed_dir,
     get_processed_match_centre_dir,
+    get_player_profile_dir,
     get_season_overview_dir,
     load_club_config,
 )
@@ -109,6 +113,11 @@ def main() -> int:
         default=None,
         help="Optional development/testing limit for number of seasons fetched.",
     )
+    parser.add_argument(
+        "--with-current-match-centre",
+        action="store_true",
+        help="After aggregate refresh, also run the current-season match-centre refresh and deploy-safe builders.",
+    )
     args = parser.parse_args()
     club_id = resolve_club_id(args.club)
     club_config = load_club_config(club_id)
@@ -170,8 +179,14 @@ def main() -> int:
     )
     print_refresh_summary(summary)
 
-    identity_summary = rebuild_identity_and_audits(processed_output_dir)
-    match_centre_summary = refresh_current_match_centre_summaries(current_ids, club_id=club_id, processed_dir=processed_output_dir)
+    identity_summary = rebuild_identity_and_audits(processed_output_dir, club_id=club_id)
+    if args.with_current_match_centre:
+        match_centre_summary = refresh_current_match_centre_summaries(current_ids, club_id=club_id, processed_dir=processed_output_dir)
+    else:
+        match_centre_summary = {
+            "current scopes refreshed": 0,
+            "detail exports rebuilt": "skipped; pass --with-current-match-centre to run match-centre refresh",
+        }
     after = capture_snapshot(processed_output_dir)
 
     print()
@@ -220,11 +235,11 @@ def print_refresh_plan(
         [
             get_hall_of_fame_dir(club_id=club_id),
             get_season_overview_dir(club_id=club_id),
-            get_processed_dir(club_id=club_id) / "player_profile",
+            get_player_profile_dir(club_id=club_id),
         ],
     )
     commands = [
-        "scripts/refresh_match_centre_data.py (legacy ignored match-centre scope output)",
+        f"scripts/refresh_data.py --club {club_id} --with-current-match-centre (optional current match-centre scope)",
         f"scripts/build_season_overview_detail_exports.py --club {club_id}",
         f"scripts/build_player_profile_insight_exports.py --club {club_id}",
         f"scripts/build_hall_of_fame_detail_exports.py --club {club_id}",
@@ -313,20 +328,23 @@ def create_timestamped_backup(*, processed_dir: Path, raw_dir: Path, metadata_pa
     return target
 
 
-def rebuild_identity_and_audits(processed_dir: Path) -> dict[str, object]:
+def rebuild_identity_and_audits(processed_dir: Path, *, club_id: str) -> dict[str, object]:
     source = combined_processed_frames(apply_identity=False, processed_dir=processed_dir)
-    mapping_update = ensure_player_alias_mappings(source)
-    canonical_counts = rebuild_canonical_processed_tables(processed_dir=processed_dir)
-    aliases = load_player_aliases()
+    if allow_legacy_fallback(club_id):
+        mapping_update = ensure_player_alias_mappings(source, club_id=club_id)
+    else:
+        mapping_update = {"added": 0, "conflicts": 0, "manual_candidates": 0, "auto_candidates": 0}
+    canonical_counts = rebuild_canonical_processed_tables(processed_dir=processed_dir, club_id=club_id)
+    aliases = load_player_aliases(club_id=club_id)
     canonical_source = combined_processed_frames(apply_identity=True, aliases=aliases, processed_dir=processed_dir)
-    identity_exports = ensure_identity_exports(canonical_source, aliases)
+    identity_exports = ensure_identity_exports(canonical_source, aliases, club_id=club_id)
     audit_frames = [
         read_processed("all_seasons_batting", processed_dir=processed_dir),
         read_processed("all_seasons_bowling", processed_dir=processed_dir),
         read_processed("all_seasons_fielding", processed_dir=processed_dir),
         read_processed("teams", processed_dir=processed_dir),
     ]
-    export_team_grade_display_audit(audit_frames)
+    export_team_grade_display_audit(audit_frames, path=get_mapping_path("team_grade_display_audit.csv", club_id=club_id))
     return {
         "mapping rows added": mapping_update.get("added", 0),
         "mapping conflicts": mapping_update.get("conflicts", 0),
@@ -356,6 +374,8 @@ def refresh_current_match_centre_summaries(current_season_ids: set[str], *, club
             str(ROOT / "scripts" / "refresh_match_centre_data.py"),
             "--season-id",
             str(season_id),
+            "--club",
+            club_id,
             "--output-scope-name",
             scope_name,
             "--sleep-seconds",

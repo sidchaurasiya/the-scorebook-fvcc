@@ -1,6 +1,6 @@
 # GA4 Analytics Setup
 
-The Scorebook supports optional Google Analytics 4 tracking. If no GA4 measurement ID is configured, analytics stays off and the app runs normally.
+The Scorebook supports optional Google Analytics 4 tracking. If no GA4 measurement ID is configured, analytics stays off and the app runs normally. Multi-club event policy lives in `docs/analytics_tracking.md`.
 
 ## Create a GA4 Property
 
@@ -37,6 +37,8 @@ Do not commit local secrets.
 - `playcricket_scorecard_click`: PlayCricket scorecard link clicked where the link is rendered in app HTML.
 
 Tracked parameters are intentionally lightweight: page slug/title, public player slug/name, selected season/team labels, public PlayCricket match ID, and section name.
+
+Across clubs, events are enriched with `app_area=scorebook`, `club_id`, and `club_name`. Use the same GA4 measurement ID for every pilot club unless a future club-specific override is explicitly introduced.
 
 ## Privacy Notes
 

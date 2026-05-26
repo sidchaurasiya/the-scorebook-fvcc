@@ -106,3 +106,24 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 
 - Decide between one deployment per club, one runtime selected by `CLUB_ID`, or a multi-club selector.
 - Keep routing, GA4, and page availability consistent with the chosen deployment model.
+
+## Phase 11: Positive-Response Pilot Club Onboarding
+
+- Added aggregate-ready club setups for Reynella, Ashwood, Glen Waverley Hawks, Plenty, Georges River District, and Southside East Caulfield.
+- Glen Waverley Hawks reused the existing `clubs/glen-waverley-hawks/` folder and was updated in place rather than duplicated.
+- The approved Georges River folder is `clubs/georges-river-district/`; the official PlayCricket page identifies the club as Georges River Cricket Club.
+- Every new non-FVCC club uses `allow_legacy_fallback: false`, `mapping_dir: clubs/<club_id>`, and runtime processed output paths under `clubs/<club_id>/data/processed/`.
+- Starter mapping files were created with headers only: `player_aliases.csv`, `manual_player_merges.csv`, `opponent_mappings.csv`, `ground_mappings.csv`, and `team_grade_mappings.csv`.
+- Aggregate refreshes completed for all six clubs. Match-centre refresh/backfill was not run and remains pending explicit per-club approval.
+- Review packs were generated under ignored paths: `data/processed/experimental/<club_id>/review_pack/`. They are QA artifacts and should not be committed unless explicitly approved.
+- The normal production app smoke-passed for Hall of Fame, Season Overview, Milestone, and Player Profile across all six clubs. Experimental match-centre pages remain hidden behind `SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False`.
+- GA4 remains shared by default through `GA4_MEASUREMENT_ID`; events are enriched with `app_area=scorebook`, `club_id`, `club_name`, page context, and relevant public player/season/team labels.
+
+| club_id | Official PlayCricket name | PlayCricket club ID | Seasons | Players | Batting rows | Bowling rows | Fielding rows | Latest season |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `reynella` | Reynella Cricket Club | `f2d283dc-87d8-eb11-a7ad-2818780da0cc` | 20 | 1075 | 5297 | 5297 | 5297 | Summer 2025/26 |
+| `ashwood` | Ashwood Cricket Club | `71d83cbe-87d8-eb11-a7ad-2818780da0cc` | 68 | 1201 | 4735 | 4735 | 4735 | Summer 2025/26 |
+| `glen-waverley-hawks` | Glen Waverley Hawks Cricket Club | `50f7f1e3-86d8-eb11-a7ad-2818780da0cc` | 36 | 1288 | 5669 | 5669 | 5669 | Summer 2026/27 |
+| `plenty` | Plenty Cricket Club | `1638cd53-8ad8-eb11-a7ad-2818780da0cc` | 28 | 960 | 4495 | 4495 | 4495 | Summer 2025/26 |
+| `georges-river-district` | Georges River Cricket Club | `a115d93f-87d8-eb11-a7ad-2818780da0cc` | 71 | 1650 | 7789 | 7789 | 7789 | Summer 2025/26 |
+| `southside-east-caulfield` | Southside East Caulfield Cricket Club | `65e9ec99-87d8-eb11-a7ad-2818780da0cc` | 47 | 463 | 1819 | 1819 | 1819 | Winter 2026 |

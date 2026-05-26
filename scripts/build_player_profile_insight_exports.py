@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
 
 from scripts import build_season_overview_detail_exports as season_exports  # noqa: E402
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_processed_dir, get_processed_match_centre_dir, get_raw_match_centre_dir  # noqa: E402
+from src.config.club_config import get_player_profile_dir, get_processed_match_centre_dir, get_raw_match_centre_dir  # noqa: E402
 from src.data.name_normalization import normalize_opponent_club_name, normalize_ground_name as shared_normalize_ground_name  # noqa: E402
 from src.ui import layout  # noqa: E402
 
@@ -62,7 +62,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     club_id = resolve_club_id(args.club)
-    output_dir = OUTPUT_DIR if args.legacy_output else get_processed_dir(club_id=club_id) / "player_profile"
+    output_dir = OUTPUT_DIR if args.legacy_output else get_player_profile_dir(club_id=club_id)
     output_paths = [output_dir / filename for filename in OUTPUT_FILENAMES]
 
     print_club_header("Player Profile deploy-safe insight export builder", club_id)
