@@ -96,6 +96,10 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 
 - Produce QA reports for player identity, team/grade labels, opponent names, ground names, missing scorecards, ball-by-ball coverage, and deploy-safe summary freshness.
 - Require review before a new club is considered production-ready.
+- Duplicate-player review includes a conservative safe auto-merge proposal only. `normalize_player_name_for_strict_merge()` normalizes case, spacing, accents, and punctuation/special characters without reordering names, dropping middle names, or fuzzy matching.
+- A safe auto-merge candidate requires exact strict-normalized names, no season overlap across batting/bowling/fielding rows, and no match overlap where match IDs exist. Punctuation-only differences such as `D'Mello`/`Dmello` can qualify only when those overlap checks pass.
+- Similar names, reordered names, initials/name expansion differences, and any same-season duplicate remain manual review only.
+- Review-pack outputs `safe_auto_merge_candidates.csv` and `manual_duplicate_review_candidates.csv` stay under ignored `data/processed/experimental/<club_id>/review_pack/` paths and do not mutate club mappings.
 
 ## Phase 9: Add Per-Club Deploy-Safe Summaries
 
@@ -116,6 +120,7 @@ The long-term direction is one shared Scorebook codebase that can serve many cri
 - Starter mapping files were created with headers only: `player_aliases.csv`, `manual_player_merges.csv`, `opponent_mappings.csv`, `ground_mappings.csv`, and `team_grade_mappings.csv`.
 - Aggregate refreshes completed for all six clubs. Match-centre refresh/backfill was not run and remains pending explicit per-club approval.
 - Review packs were generated under ignored paths: `data/processed/experimental/<club_id>/review_pack/`. They are QA artifacts and should not be committed unless explicitly approved.
+- Safe duplicate merge review files were added to those review packs. They are proposals only; no non-FVCC club uses FVCC mappings, and no `manual_player_merges.csv` files are changed unless an explicit future apply step is approved.
 - The normal production app smoke-passed for Hall of Fame, Season Overview, Milestone, and Player Profile across all six clubs. Experimental match-centre pages remain hidden behind `SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False`.
 - GA4 remains shared by default through `GA4_MEASUREMENT_ID`; events are enriched with `app_area=scorebook`, `club_id`, `club_name`, page context, and relevant public player/season/team labels.
 

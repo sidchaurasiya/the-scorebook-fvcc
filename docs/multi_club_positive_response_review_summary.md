@@ -2,18 +2,18 @@
 
 Source: existing review packs under `data/processed/experimental/<club_id>/review_pack/`.
 
-No data fetch, match-centre refresh, or backfill was run for this summary. The duplicate candidate files are capped at 200 rows by the review-pack builder, so any club showing 200 candidates should be treated as "at cap" rather than "exactly 200 total duplicates".
+No data fetch, match-centre refresh, or backfill was run for this summary. The duplicate candidate files are capped at 200 rows by the review-pack builder, so any club showing 200 candidates should be treated as "at cap" rather than "exactly 200 total duplicates". The safe auto-merge counts are review-only proposals: no `manual_player_merges.csv` files have been edited.
 
 ## Decision Table
 
 | club_id | aggregate status | app smoke | duplicate risk | grade-label risk | recommended next step |
 | --- | --- | --- | --- | --- | --- |
-| `reynella` | Refreshed, aggregate-only | Passed | High, 200 capped candidates and 48 masked-name rows | High, 116 labels with sponsor, junior, T20, and association variants | Review duplicate players first, then team/grades before match-centre |
-| `ashwood` | Refreshed, aggregate-only | Passed | High, 200 capped candidates and 36 masked-name rows | High, 152 labels with legacy ESCA, LOC, 1s/2s/3s, junior, and women variants | Review team/grades first, then duplicate players |
-| `glen-waverley-hawks` | Refreshed, aggregate-only | Passed | High, 200 capped candidates and 16 masked-name rows | High, 120 labels including historical grade names and obvious label typos | Review team/grades first, then duplicate players |
-| `plenty` | Refreshed, aggregate-only | Passed | High, 200 capped candidates and 20 masked-name rows | Medium-high, 104 labels with many junior age-group variants | Review duplicate players first, then team/grades |
-| `georges-river-district` | Refreshed, aggregate-only | Passed | Highest, 200 capped candidates across 3300 player identities | Medium, 43 labels but spans grade, masters, classics, vintage, and regional cricket | Needs manual confirmation and duplicate review before match-centre |
-| `southside-east-caulfield` | Refreshed, aggregate-only | Passed | Medium-high, 200 capped candidates but smallest player pool and 4 masked-name rows | Low-medium, 20 labels | Safest candidate after a light duplicate and grade-label pass |
+| `reynella` | Refreshed, aggregate-only | Passed | High, 111 safe review-only groups and 12 manual groups | High, 116 labels with sponsor, junior, T20, and association variants | Review safe merges, then blocked overlaps and team/grades |
+| `ashwood` | Refreshed, aggregate-only | Passed | High, 95 safe review-only groups and 12 manual groups | High, 152 labels with legacy ESCA, LOC, 1s/2s/3s, junior, and women variants | Review team/grades first, then safe/blocked duplicate groups |
+| `glen-waverley-hawks` | Refreshed, aggregate-only | Passed | High, 54 safe review-only groups and 17 manual groups | High, 120 labels including historical grade names and obvious label typos | Review team/grades first, then safe/blocked duplicate groups |
+| `plenty` | Refreshed, aggregate-only | Passed | High, 84 safe review-only groups and 11 manual groups | Medium-high, 104 labels with many junior age-group variants | Review safe duplicate groups, then junior/team-grade labels |
+| `georges-river-district` | Refreshed, aggregate-only | Passed | Highest, 74 safe review-only groups and 11 manual groups across 3300 player identities | Medium, 43 labels but spans grade, masters, classics, vintage, and regional cricket | Needs manual confirmation and duplicate review before match-centre |
+| `southside-east-caulfield` | Refreshed, aggregate-only | Passed | Medium-high, 26 safe review-only groups and 14 manual groups | Low-medium, 20 labels | Safest candidate after reviewing safe/blocked duplicate groups |
 
 ## Reynella
 
@@ -25,10 +25,12 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 - Top 10 wicket takers: Cameron Pannach 476; Daniel Rabbett 323; Matt Hehner 280; Damien Pimlott 253; Jonathon Hague 234; Jamie Caddy 213; Sam Tugwell 208; Michael Cload 176; Adam Ellis 171; Mark Walters 167.
 - Top 10 catches: Richard Gabb 209; Scott Trenorden 108; Matthew Aston 106; Jordan Wright 103; Brett Julian 100; Matt Hehner 90; Paul Radbourne 81; Nathan Turner 73; Andrew Semple 71; Joshua Niederer 68.
 - Likely duplicate player candidates: 200 capped candidates. Examples are same-normalised-name pairs such as Aadi Vaghela, Aarav A Patel, Aarav Gupta, Aarhan Ehtiram Siddique, Aaron Maddigan, Aaron Nowell, Aaron Robertson, and Aaron Tsokanos.
+- Strict safe auto-merge review: 111 safe groups / 225 profile rows. Examples: Adam Ellis split between 2008/09-2021/22 and 2022/23-2025/26; Aidan Richardson split between 2015/16-2021/22 and 2022/23-2024/25; Aidan Secomb split between 2016/17-2021/22 and 2022/23.
+- Blocked duplicate review: 12 manual groups / 27 profile rows; 9 groups are blocked by season overlap. Examples: Brett Julian overlaps in Summer 2022/23; Colin Rowston overlaps across 2014/15-2018/19; Daivik Kumar overlaps in Summer 2022/23.
 - Weird player names or casing issues: 48 masked `********` rows with blank normalised names. No all-caps or all-lowercase pattern was detected in the review sample.
 - Empty or suspicious files: aggregate-only placeholder files are header-only for `all_seasons_matches.csv`, `all_seasons_scorecard_batting.csv`, `all_seasons_scorecard_bowling.csv`, and `all_seasons_scorecard_fielding.csv`. This is expected before scorecard or match-centre work.
 - Aggregate-only app looked safe: yes. Hall of Fame, Season Overview, Milestone, and Player Profile smoke-passed with clean empty states where scorecard-derived data is absent.
-- Recommendation: review duplicate players first, then clean team/grade display labels before approving match-centre/backfill.
+- Recommendation: review safe auto-merge proposals first, then blocked same-season overlap groups, then clean team/grade display labels before approving match-centre/backfill.
 
 ## Ashwood
 
@@ -40,6 +42,8 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 - Top 10 wicket takers: Timothy Pape 244; Matthew Clayton 227; Cameron Flint 222; O Effendi 207; Thomas Kinnane 206; Daniel Curnow 169; Darren Sheean 156; Shane Dissanayake 141; Dale Wilkinson 131; Jack Von Fersen 130.
 - Top 10 catches: James Morrey 119; Jason Read 104; Anthony Edmonds 101; Mark Edmonds 101; Trevor Shepherd 90; Dale Healy 88; Adam Rolfe 87; Daniel Curnow 74; Ari Morton 68; Jonathan Cook 67.
 - Likely duplicate player candidates: 200 capped candidates. Examples are same-normalised-name pairs such as A Bohnenkamp, A Gould, A Marshall, A Mudiyanselage Abesekara, A Nicholson, A Phelan, A Prabari, and A Pustola.
+- Strict safe auto-merge review: 95 safe groups / 191 profile rows. Examples: Aadithya Pai split between 2020/21 and 2021/22-2022/23; Aaryan Panchal split between 2021/22-2022/23 and 2023/24-2025/26; Aidan Morton split between 2021/22-2022/23 and 2023/24-2025/26.
+- Blocked duplicate review: 12 manual groups / 25 profile rows; 5 groups are blocked by season overlap. Examples: Daksh Sharma overlaps in Summer 2023/24; Dale Healy overlaps across 2019/20-2021/22; Jasmeet Singh overlaps in Summer 2021/22.
 - Weird player names or casing issues: 36 masked `********` rows with blank normalised names. No all-caps or all-lowercase pattern was detected in the review sample.
 - Empty or suspicious files: aggregate-only placeholder files are header-only for matches and scorecard batting/bowling/fielding. This is expected before scorecard or match-centre work.
 - Aggregate-only app looked safe: yes. The four main pages smoke-passed with no FVCC leakage, traceback, `NaN`, `None`, or internal IDs.
@@ -55,6 +59,8 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 - Top 10 wicket takers: Matthew Briginshaw 414; Nathan Bungey 363; Luke Galle 334; Arun Chelvan 330; Stuart Wynd 312; Chris Perkins 303; Patrick Eldridge 259; Shane Vanin 256; Ivan Greaves 235; Michael Armstrong 232.
 - Top 10 catches: Chris George 215; Brett Powell 183; Glen Mahoney 180; Cameron Hocart 139; Glen Powell 117; Michael Brennan 117; James Anderson 114; Nathan Bungey 104; Grant Haye 99; Chris Briginshaw 95.
 - Likely duplicate player candidates: 200 capped candidates. Examples are same-normalised-name pairs such as A Aruna, A Blake, A Bourrilhan, A Chester, A Clarke, A Dekel, A Harrold, and A Henly.
+- Strict safe auto-merge review: 54 safe groups / 108 profile rows. Examples: Aaditya Sharma split between 2022/23 and 2023/24-2025/26; Aansh Pandya split between 2018/19-2022/23 and 2023/24-2025/26; Ahilan Sivakumaran split with a standalone 2019/20 profile.
+- Blocked duplicate review: 17 manual groups / 36 profile rows; 15 groups are blocked by season overlap. Examples: Ashton Scott overlaps in 2016/17-2017/18; Krish Agrawal overlaps in 2019/20; Martin Fleming overlaps across several historical seasons.
 - Weird player names or casing issues: 16 masked `********` rows with blank normalised names. No all-caps or all-lowercase pattern was detected in the review sample.
 - Empty or suspicious files: aggregate-only placeholder files are header-only for matches and scorecard batting/bowling/fielding. This is expected before scorecard or match-centre work.
 - Aggregate-only app looked safe: yes. This existing pilot folder smoke-passed after being updated to the current structure.
@@ -70,6 +76,8 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 - Top 10 wicket takers: Paul Hubber 338; Shane Cullen 293; Mark Turnbull 258; Daniel Cocking 236; Dayne Smith 163; Christopher Barclay 157; Mitch Johnson 151; Dwayne Fowles 149; Andrew Villani 138; Luke Rosbrook 137.
 - Top 10 catches: Matt Deligiorgis 133; Scott Keane 133; Ralf Koegler 92; Chris Alexopoulos 90; Mark Johnson 87; Gordon Zull 74; Jack Sacchetta 64; Owen Pisani 62; Mitch Johnson 58; Jayden Bedford 53.
 - Likely duplicate player candidates: 200 capped candidates. Examples include masked-name rows and same-normalised-name pairs such as Aaditya Srivastava, Aaron Cooray, Aaron Lowe, Aaron Walton, Aaryan Chopra, and `******** French`.
+- Strict safe auto-merge review: 84 safe groups / 171 profile rows. Examples: Aaryan Chopra split between 2022/23 and 2023/24; Aayaan Aswal split around 2020/21; Abhayveer Uppal split between 2018/19-2022/23 and 2025/26.
+- Blocked duplicate review: 11 manual groups / 23 profile rows; 9 groups are blocked by season overlap. Examples: Angus Regan overlaps in 2021/22-2022/23; Brent Redmond overlaps in 2003/04; Cameron Fitzgerald overlaps in 2021/22.
 - Weird player names or casing issues: 20 masked rows, including `********` and `******** French`; 16 rows have blank normalised names. No all-caps or all-lowercase pattern was detected in the review sample.
 - Empty or suspicious files: aggregate-only placeholder files are header-only for matches and scorecard batting/bowling/fielding. This is expected before scorecard or match-centre work.
 - Aggregate-only app looked safe: yes. Main pages smoke-passed with club-specific data and clean empty states.
@@ -85,6 +93,8 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 - Top 10 wicket takers: Paul Thomas 608; Dave Jiffkins 495; Daniel Yates 491; Gavin Scott 439; Jeff Woods 379; Trevor Davies 367; Phil Gibson 357; Benjamin Vella 310; Ben Saunders 263; Harjit Singh 263.
 - Top 10 catches: Meville Fernando 311; Ryan Croom 221; Benjamin Churcher 154; Gavin Scott 143; Bruce Whitehouse 130; Peter Remfrey 124; Alex Economou 112; Andrew Mcguiness 107; Curtis Cheney 103; Jason Lill 101.
 - Likely duplicate player candidates: 200 capped candidates. Examples are same-normalised-name pairs such as A Harrison, A Hartley, A Murphy, A O'Connor, A Young, Aadil Shariff, Aamir Chaudhry, and Aaron Greening.
+- Strict safe auto-merge review: 74 safe groups / 149 profile rows. Examples: Adam Scott split between 2015/16-2018/19 and 2024/25-2025/26; Aidan Wood split between 2021/22 and 2022/23; Alan Wright split between 2018/19-2021/22 and 2023/24.
+- Blocked duplicate review: 11 manual groups / 24 profile rows; 6 groups are blocked by season overlap. Examples: Peter Francis overlaps in 2012/13; Peter Thomas overlaps in 2016/17; Peter Trajkovski overlaps in 1983/84.
 - Weird player names or casing issues: 36 masked `********` rows with blank normalised names. No all-caps or all-lowercase pattern was detected in the review sample.
 - Empty or suspicious files: aggregate-only placeholder files are header-only for matches and scorecard batting/bowling/fielding. This is expected before scorecard or match-centre work.
 - Aggregate-only app looked safe: yes. Main app smoke passed. The official PlayCricket identity is Georges River Cricket Club while the onboarding target uses Georges River District, so keep this naming note visible during review.
@@ -100,6 +110,8 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 - Top 10 wicket takers: Puneet Bhardwaj 260; Kartar Singh 259; Christopher Jones 226; Rajiv Chandla 190; Rohit Tiwari 164; Bhaumik Jani 142; Denis Shaw 133; Vatsan Vasu 129; Mehul Tandel 125; Siddarth Amin 118.
 - Top 10 catches: Hiren Tandel 97; Nathan Benson 86; Rohit Tiwari 78; Aamir Rana 60; Jatin Bhatia 58; Ronak Patel 50; Bhaumik Jani 48; Aatish Patel 42; Francis Bernard 40; Vatsan Vasu 40.
 - Likely duplicate player candidates: 200 capped candidates. Examples are same-normalised-name pairs such as A Jones, Aamir Rana, Aarav Mehta, Aashay Desai, Aatish Patel, Aayush Sharma, Abdul Chaudhary, and Abhijeet Chauhan.
+- Strict safe auto-merge review: 26 safe groups / 52 profile rows. Examples: Arpan Desai split between 2015/16-2022/23 and 2024/25; Deepak Gopalaraju split between 2008/09 and 2009/10; Denis Shaw split between 2006/07-2022/23 and 2023/24-2025/26.
+- Blocked duplicate review: 14 manual groups / 28 profile rows; 9 groups are blocked by season overlap. Examples: Ankit Patel overlaps in 2018/19; Ankur Sharma overlaps in 2012/13-2013/14; Bhumil Patel overlaps in 2019/20.
 - Weird player names or casing issues: 4 masked `********` rows with blank normalised names. No all-caps or all-lowercase pattern was detected in the review sample.
 - Empty or suspicious files: aggregate-only placeholder files are header-only for matches and scorecard batting/bowling/fielding. This is expected before scorecard or match-centre work.
 - Aggregate-only app looked safe: yes. Main pages smoke-passed and the data shape is the simplest among the six clubs.
@@ -107,12 +119,12 @@ No data fetch, match-centre refresh, or backfill was run for this summary. The d
 
 ## Recommended Manual Review Order
 
-1. Georges River District: highest identity risk and largest player pool; confirm naming context and review duplicate candidates first.
-2. Ashwood: highest grade-label count; review grade mappings before match-centre.
-3. Glen Waverley Hawks: review historical labels and typo-like grade values before match-centre.
-4. Reynella: review duplicate players first, then sponsor/junior/T20 grade labels.
-5. Plenty: review masked duplicate candidates and junior age-grade labels.
-6. Southside East Caulfield: likely safest next match-centre candidate after light review.
+1. Georges River District: highest identity risk and largest player pool; confirm naming context and review safe/blocked duplicate groups first.
+2. Ashwood: highest grade-label count; review grade mappings and safe/blocked duplicate groups before match-centre.
+3. Glen Waverley Hawks: review historical labels, typo-like grade values, and high same-season-overlap count.
+4. Reynella: review the largest safe auto-merge set, then sponsor/junior/T20 grade labels.
+5. Plenty: review masked duplicate candidates, safe groups, and junior age-grade labels.
+6. Southside East Caulfield: likely safest next match-centre candidate after light safe/blocked duplicate review.
 
 ## Clubs That Look Safest For Match-Centre Next
 

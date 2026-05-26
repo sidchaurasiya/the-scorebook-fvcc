@@ -1808,3 +1808,5 @@ The current main app experience has been smoke-tested with aggregate data for th
 Hall of Fame, Season Overview, Milestone, and Player Profile render for each club with club-local processed data and no FVCC fallback. Aggregate-only pages may show clean empty states for scorecard-derived, fastest-innings, premiership, recent-form, or ball-by-ball sections until match-centre refresh/backfill is explicitly approved and reviewed.
 
 Experimental match-centre pages remain hidden. Do not expose Player DNA, Scorebook Lab, advanced match-centre, or other experimental pages for these clubs until verified club-specific match-centre and ball-by-ball coverage exists.
+
+Duplicate-player review for pilot clubs is conservative. The review pack may propose safe auto-merge candidates only when names match exactly after strict case/spacing/accent/punctuation normalization and there is no season overlap, plus no match overlap where match IDs exist. Fuzzy names, reordered names, initials/name expansions, and same-season same-name players must remain manual review cases. These proposals are not app-visible until a club-local mapping file is explicitly updated.
