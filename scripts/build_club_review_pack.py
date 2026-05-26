@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import itertools
 import re
+import subprocess
 import sys
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -22,7 +23,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.club_refresh_utils import print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_club_name, get_experimental_dir, get_processed_dir  # noqa: E402
+from src.config.club_config import get_club_name, get_experimental_dir, get_mapping_path, get_processed_dir  # noqa: E402
 from src.utils.player_identity import display_player_name, normalize_player_name_for_strict_merge  # noqa: E402
 from src.utils.team_grade import apply_team_grade_display_columns  # noqa: E402
 
@@ -67,13 +68,26 @@ MANUAL_DUPLICATE_REVIEW_COLUMNS = [
     "review_notes",
 ]
 
+MANUAL_PLAYER_MERGE_COLUMNS = [
+    "canonical_player_name",
+    "raw_player_name",
+    "raw_player_id",
+    "notes",
+]
+
 MATCH_ID_COLUMNS = ["match_id", "matchId", "fixture_id", "fixtureId", "scorecard_match_id"]
+COMMON_REVIEW_SURNAMES = {"singh", "patel", "sharma", "thomas", "khan", "kumar"}
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build an ignored review pack from club aggregate data.")
     parser.add_argument("--club", required=True, help="Club config id.")
     parser.add_argument("--dry-run", action="store_true", help="Print resolved inputs/outputs without writing files.")
+    parser.add_argument(
+        "--apply-safe-auto-merges",
+        action="store_true",
+        help="Append strict safe auto-merge candidates to this club's manual_player_merges.csv.",
+    )
     return parser.parse_args(argv)
 
 
@@ -96,18 +110,24 @@ def main(argv: list[str] | None = None) -> int:
     print_club_header("Club aggregate review pack builder", club_id)
     print_paths("Inputs", [processed_dir / filename for filename in AGGREGATE_FILES.values()])
     print_outputs("Outputs", output_paths)
-    if args.dry_run:
+    if args.dry_run and not args.apply_safe_auto_merges:
         print("Dry run complete. No files were written.")
         return 0
 
     frames = {name: read_csv(processed_dir / filename) for name, filename in AGGREGATE_FILES.items()}
-    output_dir.mkdir(parents=True, exist_ok=True)
+    if not args.dry_run:
+        output_dir.mkdir(parents=True, exist_ok=True)
 
     seasons_audit = build_seasons_audit(frames["seasons"])
     team_grade_audit = build_team_grade_audit(frames["teams"])
     player_name_audit = build_player_name_audit(frames)
     duplicate_candidates = build_duplicate_candidates(player_name_audit)
     safe_auto_merge_candidates, manual_duplicate_review_candidates = build_strict_duplicate_merge_review(club_id, frames)
+    if args.apply_safe_auto_merges:
+        apply_safe_auto_merges(club_id, safe_auto_merge_candidates, dry_run=args.dry_run)
+        if args.dry_run:
+            print("Dry run complete. No files were written.")
+            return 0
     top_players_preview = build_top_players_preview(frames)
     warnings = build_warnings(frames, duplicate_candidates, top_players_preview)
     summary = build_summary(
@@ -133,6 +153,247 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"Review pack written: {output_dir}")
     return 0
+
+
+def apply_safe_auto_merges(club_id: str, candidates: pd.DataFrame, *, dry_run: bool = False) -> None:
+    if club_id == "fvcc":
+        raise SystemExit("Refusing to apply safe auto-merges to FVCC from this onboarding helper.")
+    if not dry_run:
+        require_clean_git_tree()
+    if candidates.empty:
+        print("No safe auto-merge candidates found. Nothing to apply.")
+        return
+
+    validated = validated_safe_auto_merge_groups(candidates)
+    rows_to_add = proposed_manual_merge_rows(validated)
+    mapping_path = get_mapping_path("manual_player_merges.csv", club_id=club_id)
+    existing = read_manual_player_merges(mapping_path)
+    new_rows = dedupe_manual_merge_rows(rows_to_add, existing)
+
+    print()
+    print("Safe auto-merge application preview")
+    print(f"- Club: {club_id}")
+    print(f"- Candidate groups validated: {len(validated)}")
+    print(f"- Candidate rows validated: {len(rows_to_add)}")
+    print(f"- Existing manual merge rows: {len(existing)}")
+    print(f"- New rows to append: {len(new_rows)}")
+    suspicious = [(group_id, flags) for group_id, group in validated if (flags := suspicious_safe_group_flags(group))]
+    if suspicious:
+        print("- Suspicious-but-strict-safe groups included after validation:")
+        for group_id, flags in suspicious:
+            group = dict(validated)[group_id]
+            canonical_name = str(group.iloc[0].get("proposed_canonical_name", "")).strip()
+            print(f"  - {group_id}: {canonical_name} ({', '.join(flags)})")
+    else:
+        print("- Suspicious-but-strict-safe groups included after validation: none")
+    for row in new_rows:
+        print(
+            "  ADD "
+            f"canonical={row['canonical_player_name']} "
+            f"raw={row['raw_player_name']} "
+            f"raw_id={row['raw_player_id']} "
+            f"notes={row['notes']}"
+        )
+
+    if dry_run:
+        return
+    if not new_rows:
+        print("No new manual merge rows were needed.")
+        return
+
+    output = pd.concat([existing, pd.DataFrame(new_rows)], ignore_index=True)
+    output = output[MANUAL_PLAYER_MERGE_COLUMNS].fillna("")
+    mapping_path.parent.mkdir(parents=True, exist_ok=True)
+    output.to_csv(mapping_path, index=False)
+    print(f"Manual merge rows written: {mapping_path}")
+
+
+def require_clean_git_tree() -> None:
+    result = subprocess.run(
+        ["git", "status", "--porcelain"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    dirty = result.stdout.strip()
+    if dirty:
+        raise SystemExit(
+            "Refusing to apply safe auto-merges because the working tree is not clean:\n"
+            f"{dirty}\n"
+            "Commit or clear unrelated changes first."
+        )
+
+
+def validated_safe_auto_merge_groups(candidates: pd.DataFrame) -> list[tuple[str, pd.DataFrame]]:
+    required = set(SAFE_AUTO_MERGE_COLUMNS)
+    missing = sorted(required - set(candidates.columns))
+    if missing:
+        raise SystemExit(f"Safe auto-merge candidate file is missing columns: {', '.join(missing)}")
+
+    validated: list[tuple[str, pd.DataFrame]] = []
+    for group_id, group in candidates.groupby("candidate_group_id", sort=True):
+        group = group.copy()
+        if len(group) < 2:
+            raise SystemExit(f"Safe group {group_id} has fewer than two profiles.")
+        raw_names = [display_player_name(value) for value in group["raw_player_name"].fillna("").astype(str)]
+        normalized_names = {normalize_player_name_for_strict_merge(name) for name in raw_names}
+        normalized_columns = set(group["normalized_strict_name"].fillna("").astype(str).str.strip())
+        if len(normalized_names) != 1 or normalized_names != normalized_columns:
+            raise SystemExit(f"Safe group {group_id} failed strict normalized-name validation.")
+        case_keys = {case_insensitive_name_key(name) for name in raw_names}
+        punctuation_keys = {punctuation_insensitive_name_key(name) for name in raw_names}
+        if len(case_keys) != 1 and len(punctuation_keys) != 1:
+            raise SystemExit(f"Safe group {group_id} is not an exact/case or punctuation-only match.")
+        overlap_seasons = overlapping_seasons_from_candidate_rows(group)
+        if overlap_seasons:
+            raise SystemExit(f"Safe group {group_id} has season overlap: {join_values(overlap_seasons)}")
+        validated.append((str(group_id), group))
+    return validated
+
+
+def proposed_manual_merge_rows(validated_groups: list[tuple[str, pd.DataFrame]]) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for group_id, group in validated_groups:
+        canonical_name = display_player_name(group.iloc[0].get("proposed_canonical_name", ""))
+        reason = str(group.iloc[0].get("reason", "")).strip()
+        for _, item in group.iterrows():
+            rows.append(
+                {
+                    "canonical_player_name": canonical_name,
+                    "raw_player_name": display_player_name(item.get("raw_player_name", "")),
+                    "raw_player_id": str(item.get("raw_player_id", "")).strip(),
+                    "notes": f"safe auto-merge {group_id}: {reason}",
+                }
+            )
+    return rows
+
+
+def read_manual_player_merges(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        return pd.DataFrame(columns=MANUAL_PLAYER_MERGE_COLUMNS)
+    try:
+        rows = pd.read_csv(path, dtype=str, keep_default_na=False)
+    except (OSError, pd.errors.ParserError):
+        raise SystemExit(f"Could not read manual player merges file: {path}")
+    for column in MANUAL_PLAYER_MERGE_COLUMNS:
+        if column not in rows:
+            rows[column] = ""
+    return rows[MANUAL_PLAYER_MERGE_COLUMNS].fillna("")
+
+
+def dedupe_manual_merge_rows(rows: list[dict[str, str]], existing: pd.DataFrame) -> list[dict[str, str]]:
+    seen = {
+        (
+            case_insensitive_name_key(row.get("canonical_player_name", "")),
+            str(row.get("raw_player_id", "")).strip(),
+            case_insensitive_name_key(row.get("raw_player_name", "")),
+        )
+        for row in existing.to_dict("records")
+    }
+    output: list[dict[str, str]] = []
+    for row in rows:
+        key = (
+            case_insensitive_name_key(row.get("canonical_player_name", "")),
+            str(row.get("raw_player_id", "")).strip(),
+            case_insensitive_name_key(row.get("raw_player_name", "")),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        output.append(row)
+    return output
+
+
+def overlapping_seasons_from_candidate_rows(group: pd.DataFrame) -> set[str]:
+    season_sets = [split_values(value) for value in group["seasons_seen"].fillna("").astype(str)]
+    overlap: set[str] = set()
+    for left, right in itertools.combinations(season_sets, 2):
+        overlap.update(left & right)
+    return overlap
+
+
+def split_values(value: object) -> set[str]:
+    return {part.strip() for part in str(value or "").split("|") if part.strip()}
+
+
+def punctuation_insensitive_name_key(name: object) -> str:
+    return re.sub(r"[^a-z0-9]+", "", str(name or "").casefold())
+
+
+def suspicious_safe_group_flags(group: pd.DataFrame) -> list[str]:
+    flags: list[str] = []
+    runs = numeric_column_sum(group, "total_runs")
+    wickets = numeric_column_sum(group, "total_wickets")
+    catches = numeric_column_sum(group, "total_catches")
+    match_row_proxy = 0
+    for _, row in group.iterrows():
+        match_row_proxy += max(
+            int(numeric_value(row.get("batting_rows"))),
+            int(numeric_value(row.get("bowling_rows"))),
+            int(numeric_value(row.get("fielding_rows"))),
+            int(numeric_value(row.get("matches_seen_count"))),
+        )
+    if len(group) > 3:
+        flags.append(">3 profiles")
+    high_stats = runs >= 3000 or wickets >= 150 or catches >= 80 or match_row_proxy >= 40
+    if high_stats:
+        flags.append("high stats")
+    raw_names = [display_player_name(value) for value in group["raw_player_name"].fillna("").astype(str)]
+    if any(has_initial_like_token(name) for name in raw_names):
+        flags.append("initial-like token")
+    if len({first_middle_tokens(name) for name in raw_names}) > 1:
+        flags.append("first/middle variation")
+    surname = last_token(str(group.iloc[0].get("proposed_canonical_name", "")))
+    if surname in COMMON_REVIEW_SURNAMES:
+        flags.append("common surname")
+    if adjacent_season_handoff(group) and (high_stats or len(group) > 2 or surname in COMMON_REVIEW_SURNAMES):
+        flags.append("adjacent handoff caution")
+    return flags
+
+
+def numeric_column_sum(frame: pd.DataFrame, column: str) -> int:
+    if column not in frame:
+        return 0
+    return int(pd.to_numeric(frame[column], errors="coerce").fillna(0).sum())
+
+
+def name_tokens(name: object) -> list[str]:
+    return re.findall(r"[A-Za-z0-9]+", str(name or "").casefold())
+
+
+def has_initial_like_token(name: object) -> bool:
+    tokens = name_tokens(name)
+    return any(len(token) <= 1 for token in (tokens[:-1] or tokens[:1]))
+
+
+def first_middle_tokens(name: object) -> tuple[str, ...]:
+    tokens = name_tokens(name)
+    return tuple(tokens[:-1])
+
+
+def last_token(name: object) -> str:
+    tokens = name_tokens(name)
+    return tokens[-1] if tokens else ""
+
+
+def adjacent_season_handoff(group: pd.DataFrame) -> bool:
+    ranges: list[tuple[int, int]] = []
+    for value in group["seasons_seen"].fillna("").astype(str):
+        years = [season_start_year(season) for season in split_values(value)]
+        clean_years = [year for year in years if year is not None]
+        if clean_years:
+            ranges.append((min(clean_years), max(clean_years)))
+    ranges.sort()
+    return any(right[0] - left[1] == 1 for left, right in itertools.combinations(ranges, 2))
+
+
+def season_start_year(season: str) -> int | None:
+    match = re.search(r"(\d{4})/(\d{2})", season)
+    if match:
+        return int(match.group(1))
+    match = re.search(r"(\d{4})", season)
+    return int(match.group(1)) if match else None
 
 
 def read_csv(path: Path) -> pd.DataFrame:
@@ -240,6 +501,7 @@ def build_strict_duplicate_merge_review(club_id: str, frames: dict[str, pd.DataF
     if not profiles:
         return pd.DataFrame(columns=SAFE_AUTO_MERGE_COLUMNS), pd.DataFrame(columns=MANUAL_DUPLICATE_REVIEW_COLUMNS)
 
+    confirmed_merges = read_manual_player_merges(get_mapping_path("manual_player_merges.csv", club_id=club_id))
     groups: dict[str, list[dict[str, object]]] = {}
     for profile in profiles:
         groups.setdefault(str(profile["normalized_strict_name"]), []).append(profile)
@@ -251,6 +513,8 @@ def build_strict_duplicate_merge_review(club_id: str, frames: dict[str, pd.DataF
 
     for normalized_name, group_profiles in sorted(groups.items()):
         if not normalized_name or len(group_profiles) < 2:
+            continue
+        if group_already_confirmed(group_profiles, confirmed_merges):
             continue
         overlap_seasons = overlapping_values(group_profiles, "seasons_seen")
         overlap_matches = overlapping_values(group_profiles, "match_ids_seen")
@@ -334,6 +598,30 @@ def build_raw_player_profiles(frames: dict[str, pd.DataFrame]) -> list[dict[str,
                 profile["total_catches"] += fielding_catches(row)
 
     return sorted(profiles.values(), key=lambda item: (str(item["normalized_strict_name"]), str(item["raw_player_name"]), str(item["raw_player_id"])))
+
+
+def group_already_confirmed(group_profiles: list[dict[str, object]], manual_merges: pd.DataFrame) -> bool:
+    if manual_merges.empty:
+        return False
+    canonical_sets = [confirmed_canonical_names(profile, manual_merges) for profile in group_profiles]
+    if any(not names for names in canonical_sets):
+        return False
+    return bool(set.intersection(*canonical_sets))
+
+
+def confirmed_canonical_names(profile: dict[str, object], manual_merges: pd.DataFrame) -> set[str]:
+    raw_id = str(profile.get("raw_player_id", "")).strip()
+    raw_name = case_insensitive_name_key(profile.get("raw_player_name", ""))
+    matches = pd.Series(False, index=manual_merges.index)
+    if raw_id:
+        matches = matches | manual_merges["raw_player_id"].fillna("").astype(str).str.strip().eq(raw_id)
+    if raw_name:
+        matches = matches | manual_merges["raw_player_name"].fillna("").astype(str).map(case_insensitive_name_key).eq(raw_name)
+    return {
+        case_insensitive_name_key(value)
+        for value in manual_merges.loc[matches, "canonical_player_name"].fillna("").astype(str)
+        if str(value).strip()
+    }
 
 
 def build_fuzzy_manual_review_rows(
