@@ -49,6 +49,8 @@ from src.data.playcricket_ingestion import (
 )
 from src.config.club_config import (
     allow_legacy_fallback,
+    get_active_club_id,
+    get_branding_value,
     get_club_name,
     get_club_short_name,
     get_hall_of_fame_path,
@@ -297,7 +299,20 @@ def resolve_current_page_from_query() -> str:
 
 
 def nav_href(slug: str) -> str:
-    return f"?page={quote(slug, safe='')}"
+    return app_relative_url({"page": slug})
+
+
+def app_relative_url(params: dict[str, object], fragment: object | None = None) -> str:
+    query = "&".join(
+        f"{quote(str(key), safe='')}={quote(str(value), safe='')}"
+        for key, value in params.items()
+        if str(value or "").strip()
+    )
+    if not query:
+        return ""
+    url = f"./?{query}"
+    fragment_text = re.sub(r"[\r\n#]+", " ", str(fragment or "")).strip()
+    return f"{url}#{fragment_text}" if fragment_text else url
 
 
 def render_sidebar_nav_link(label: str, slug: str, current_page: str) -> str:
@@ -321,14 +336,12 @@ def player_profile_url(player_id: object, player_name: object | None = None) -> 
     player_id_text = str(player_id or "").strip()
     player_name_text = str(player_name or "").strip()
     if player_id_text:
-        url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player_id={quote(player_id_text, safe='')}"
+        params = {"page": PLAYER_PROFILE_QUERY_PAGE, "player_id": player_id_text}
     elif player_name_text:
-        url = f"?page={PLAYER_PROFILE_QUERY_PAGE}&player={quote(player_name_text, safe='')}"
+        params = {"page": PLAYER_PROFILE_QUERY_PAGE, "player": player_name_text}
     else:
         return ""
-    if player_name_text:
-        url = f"{url}#{player_name_text}"
-    return url
+    return app_relative_url(params, player_name_text)
 
 
 def player_profile_link_html(player_id: object, player_name: object, class_name: str = "player-profile-link") -> str:
@@ -347,7 +360,7 @@ def season_overview_url(season: object) -> str:
     season_text = safe_season_label(season)
     if not season_text:
         return ""
-    return f"?page={SEASON_OVERVIEW_QUERY_PAGE}&season={quote(season_text, safe='')}#{season_text}"
+    return app_relative_url({"page": SEASON_OVERVIEW_QUERY_PAGE, "season": season_text}, season_text)
 
 
 def season_overview_link_html(season: object, class_name: str = "season-overview-link") -> str:
@@ -527,6 +540,19 @@ def link_season_columns(table: pd.DataFrame, columns: list[str] | None = None) -
         if column in output:
             output[column] = output[column].map(lambda value: season_overview_url(value) or value)
     return output
+
+
+def active_club_colour(key: str, fallback: str) -> str:
+    value = str(get_branding_value(key, fallback) or fallback).strip()
+    return value if re.fullmatch(r"#[0-9a-fA-F]{6}", value) else fallback
+
+
+def active_chart_primary_colour() -> str:
+    return active_club_colour("primary_colour", "#6D4DFF")
+
+
+def active_chart_secondary_colour() -> str:
+    return active_club_colour("secondary_colour", "#10B981")
 
 
 def add_missing_canonical_player_ids(table: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
@@ -831,14 +857,18 @@ def render_data_source_panel(
         season_col, team_col = st.columns([0.9, 1.35], gap="large")
         with season_col:
             st.markdown('<div class="simple-filter-label">Select season</div>', unsafe_allow_html=True)
+            if selected_season_key not in st.session_state:
+                st.session_state[selected_season_key] = seasons[current_season_index]
             selected_season = st.selectbox(
                 "Season",
                 seasons,
-                index=current_season_index,
+                index=None,
                 format_func=lambda season: season["name"],
                 label_visibility="collapsed",
                 key=selected_season_key,
             )
+            if selected_season is None:
+                selected_season = seasons[current_season_index]
             selected_season_name_for_url = str(selected_season.get("name", "") or "").strip()
             if selected_season_name_for_url and query_param_value("season") != selected_season_name_for_url:
                 st.query_params["season"] = selected_season_name_for_url
@@ -5673,7 +5703,7 @@ def build_match_centre_win_rates() -> pd.DataFrame:
             ].copy()
         if rows.empty:
             continue
-        rows = apply_player_identity_mapping(rows)
+        rows = apply_player_identity_mapping(rows, club_id=get_active_club_id())
         rows["player_key"] = player_keys(rows)
         name_source = rows["canonical_player_name"] if "canonical_player_name" in rows else rows["player_name"]
         rows["player_name_key"] = name_source.map(player_name_match_key)
@@ -6463,6 +6493,7 @@ def player_premiership_leaders_card_html(
 
 def player_premiership_row_html(rank: int, row: pd.Series) -> str:
     player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
+    player_id = player_id_from_row(row)
     count = safe_record_int(row.get("premiership_count")) or 0
     details = linked_premiership_seasons(row.get("seasons"))
     value = f"{count} premiership{'s' if count != 1 else ''}"
@@ -6470,7 +6501,7 @@ def player_premiership_row_html(rank: int, row: pd.Series) -> str:
         '<div class="performance-row premiership-player-row">'
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
-        f'<strong>{player_profile_link_html("", player)}</strong>'
+        f'<strong>{player_profile_link_html(player_id, player)}</strong>'
         f'<span>{details}</span>'
         '</div>'
         f'<div class="performance-value">{html.escape(value)}</div>'
@@ -10828,9 +10859,9 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
     )
     columns = st.columns(2)
     with columns[0]:
-        render_peer_comparison_card("Batting", comparison.get("batting", []), "#6D4DFF")
+        render_peer_comparison_card("Batting", comparison.get("batting", []), active_chart_primary_colour())
     with columns[1]:
-        render_peer_comparison_card("Bowling", comparison.get("bowling", []), "#10B981")
+        render_peer_comparison_card("Bowling", comparison.get("bowling", []), active_chart_secondary_colour())
 
 
 @st.cache_data(show_spinner=False)
@@ -11305,7 +11336,10 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
         return
     render_section_heading("Season Trends 📈")
     chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=True)
-    specs = [("Runs by Season", "Runs", "#6D4DFF"), ("Wickets by Season", "Wickets", "#10B981")]
+    specs = [
+        ("Runs by Season", "Runs", active_chart_primary_colour()),
+        ("Wickets by Season", "Wickets", active_chart_secondary_colour()),
+    ]
     for index in range(0, len(specs), 2):
         columns = st.columns(2)
         for column, (title, metric, color) in zip(columns, specs[index : index + 2]):
@@ -11444,8 +11478,8 @@ def render_player_average_trends(chart_data: pd.DataFrame) -> None:
     average_data = pd.DataFrame(rows).sort_values("Season", key=lambda series: series.map(profile_season_sort_key))
     columns = st.columns(2)
     for column, metric, title, color, key in [
-        (columns[0], "Batting average", "Batting Average by Season", "#6D4DFF", "profile_chart_batting_average"),
-        (columns[1], "Bowling average", "Bowling Average by Season", "#10B981", "profile_chart_bowling_average"),
+        (columns[0], "Batting average", "Batting Average by Season", active_chart_primary_colour(), "profile_chart_batting_average"),
+        (columns[1], "Bowling average", "Bowling Average by Season", active_chart_secondary_colour(), "profile_chart_bowling_average"),
     ]:
         metric_data = average_data[average_data["Metric"] == metric].copy()
         if metric_data.empty:
@@ -11569,7 +11603,7 @@ def player_profile_section_url(player_id: object, **params: str) -> str:
         if existing:
             query[key] = existing
     query.update({key: str(value) for key, value in params.items() if str(value or "").strip()})
-    return "?" + "&".join(f"{quote(key, safe='')}={quote(value, safe='')}" for key, value in query.items() if value)
+    return app_relative_url(query)
 
 
 def render_profile_segmented_links(

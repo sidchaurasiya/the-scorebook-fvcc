@@ -89,7 +89,8 @@ FVCC Hall of Fame, Season Overview, and Player Profile loaded with FVCC branding
 Carry these caveats into the private preview:
 
 - 14 manual duplicate groups remain.
-- Premierships are clean-empty until verified evidence is approved.
+- Premiership wins are populated from 5 verified local completed Grand Final scorecards; captain fields remain blank until verified.
+- Player premiership participation is inferred from winning-team scorecard participation and should be reviewed by the club.
 - Opponent and ground mappings are conservative starter mappings.
 - External PlayCricket scorecard links were URL-shape checked, not fully opened during this pass.
 - Final human mobile/narrow visual review is recommended before sharing beyond the first private reviewer group.
@@ -124,7 +125,7 @@ After the private deployment is live:
 
 1. Confirm the deployed app URL opens with Southside branding.
 2. Confirm the sidebar shows `SECCC`, not FVCC.
-3. Open Hall of Fame and verify the clean premiership empty state.
+3. Open Hall of Fame and verify the Southside premiership wins render with scorecard links and blank captain fields.
 4. Open Detailed Records and spot-check Win % and 30s for top players.
 5. Open Season Overview and Season by Round.
 6. Open Milestone.
@@ -137,4 +138,3 @@ After the private deployment is live:
 ## Deployment Readiness
 
 Ready to push for a private deployment test after explicit approval. Do not merge to `main` and do not push until approved.
-
