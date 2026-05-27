@@ -12,7 +12,7 @@ This report uses existing local processed/deploy-safe outputs, ignored review pa
 
 | club_id | readiness classification | app smoke | duplicate risk | team/grade risk | opponent/ground risk | BBB coverage | premiership status | recommended next action |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `southside-east-caulfield` | Preview-ready after light mapping review | Passed | Medium: approved safe merges applied; 14 manual groups remain | Low-medium: 20 labels | Medium: starter opponent/ground mappings | 195 matches / 74,758 balls | No verified evidence; header-only exports | Light grade/opponent/ground review, then preview first |
+| `southside-east-caulfield` | Preview-ready after final visual review | Passed | Medium: approved safe merges applied; 14 manual groups remain | Low-medium: 20 labels | Medium: starter opponent/ground mappings | 195 matches / 74,758 balls | No verified evidence; clean empty state | Final private visual review, then preview first |
 | `glen-waverley-hawks` | Needs team/grade cleanup first | Passed | High: 54 safe groups, 17 manual groups | High: 120 historical/variant labels | Medium-high: starter opponent/ground mappings | 698 matches / 241,113 balls | No verified evidence; header-only exports | Clean historical grade labels, then duplicate review |
 | `ashwood` | Needs team/grade cleanup first | Passed | High: 95 safe groups, 12 manual groups | Highest: 152 labels | Medium-high: starter opponent/ground mappings | 920 matches / 303,650 balls | No verified evidence; header-only exports | Clean team/grade labels before client preview |
 | `plenty` | Needs duplicate review first | Passed | High: 84 safe groups, 11 manual groups | Medium-high: 104 labels | Medium-high: starter opponent/ground mappings | 503 matches / 200,539 balls | No verified evidence; header-only exports | Review duplicate candidates, then junior/grade labels |
@@ -40,6 +40,31 @@ Recommended preview order:
 - Premiership exports are header-only for all six pilot clubs because no verified premiership evidence exists. No premiership or captain data is fabricated.
 - Review packs remain ignored under `data/processed/experimental/<club_id>/review_pack/`.
 
+## Post-Fix Validation
+
+Follow-up run date: 2026-05-27.
+
+Root causes fixed:
+
+- HOF Detailed Records Win % no longer uses an FVCC-only result-text check. Win-rate exports now classify the active club side from local match-centre rows.
+- Scorecard-derived 30s now use club-local player identity mappings, so Southside's approved safe merges flow into `player_scorecard_milestones.csv`.
+- Runtime theme CSS now reads active club branding colours and overrides the main sidebar, tab, link/button, progress, and section accents. FVCC keeps its configured purple defaults.
+
+| club_id | HOF Win % status | 30s status | premiership status | link status | club colour/theme status | preview readiness |
+| --- | --- | --- | --- | --- | --- | --- |
+| `southside-east-caulfield` | Fixed; Puneet Bhardwaj 88 wins from 167 result matches, 52.7% | Fixed; Puneet Bhardwaj 26 scorecard 30s | No verified rows; clean empty state | Player/season/scorecard links shaped correctly in smoke | Southside blue/red applied | Preview-ready after final visual review |
+| `glen-waverley-hawks` | Fixed; Glen Mahoney 133/228, 58.3% | Fixed; Glen Mahoney 47 | No verified rows; clean empty state | Links shaped correctly in smoke | Hawks green/gold applied | Needs team/grade cleanup first |
+| `ashwood` | Fixed; Mark Edmonds 127/302, 42.1% | Fixed; Mark Edmonds 55 | No verified rows; clean empty state | Links shaped correctly in smoke | Ashwood green/gold applied | Needs team/grade cleanup first |
+| `plenty` | Fixed; Mitch Johnson 136/233, 58.4% | Fixed; Mitch Johnson 43 | No verified rows; clean empty state | Links shaped correctly in smoke | Plenty green/gold applied | Needs duplicate review first |
+| `reynella` | Fixed; Richard Gabb 27/41, 65.9% | Fixed; Richard Gabb 8 | No verified rows; clean empty state | Links shaped correctly in smoke | Reynella blue/gold applied | Needs duplicate review first |
+| `georges-river-district` | Fixed; Kevin Croom 9/17, 52.9% | Fixed; Kevin Croom 31 | No verified rows; clean empty state | Links shaped correctly in smoke | Georges River blue/gold applied | Needs duplicate review first |
+
+Southside polish notes:
+
+- No Southside mapping files were changed. The visible team/grade labels are readable, and there were no obviously safe opponent/ground mappings to add from the current review pack.
+- Southside still has 14 manual duplicate groups; they are blocked by same-season overlap and were not applied.
+- Southside is safe for a first private preview after one final visual pass, with premierships disclosed as pending verified finals evidence.
+
 Expected deploy-safe file set per club:
 
 - Hall of Fame: `fastest_batting_milestones.csv`, `player_bbb_batting_rates.csv`, `player_bowling_milestones.csv`, `player_premierships.csv`, `player_scorecard_milestones.csv`, `player_win_rates.csv`, `premiership_wins.csv`, `scorecard_record_links.csv`.
@@ -48,7 +73,7 @@ Expected deploy-safe file set per club:
 
 ## Southside East Caulfield
 
-Readiness: Preview-ready after light mapping review.
+Readiness: Preview-ready after final visual review.
 
 - Scorecards parsed: 893.
 - Ball-by-ball: 195 matches, 74,758 ball events.
@@ -56,7 +81,7 @@ Readiness: Preview-ready after light mapping review.
 - Review pack: `data/processed/experimental/southside-east-caulfield/review_pack/`.
 - App smoke: passed. Player Profile smoke used `puneet_bhardwaj`; scorecard links were present.
 - Scorecard-derived sections: Season by Round 893 rows; Recent Form 7,045 batting rows and 4,683 bowling rows; scorecard record links 11,751 rows across 728 linked matches.
-- Ball-by-ball sections: fastest batting milestones 415 rows; player BBB batting rates 178 rows; bowling phase summary 442 rows.
+- Ball-by-ball sections: fastest batting milestones 415 rows; player BBB batting rates 162 rows; bowling phase summary 418 rows.
 - Premiership evidence: none verified; `premiership_wins.csv` and `player_premierships.csv` are header-only.
 
 Top 5 run scorers:
@@ -95,7 +120,7 @@ Risk notes:
 - Team/grade label risk: low-medium. There are 20 display labels, mostly manageable senior/winter/summer labels.
 - Opponent/ground naming risk: medium because opponent and ground mapping files are still starter/header-only.
 - Obvious UI issues: none observed.
-- Obvious data trust issues: no validation errors; the main remaining issue is mapping polish, not runtime stability.
+- Obvious data trust issues: HOF Win % and scorecard 30s are fixed; premierships remain intentionally empty until verified finals evidence exists. The remaining issue is final visual review, not runtime stability.
 
 ## Glen Waverley Hawks
 

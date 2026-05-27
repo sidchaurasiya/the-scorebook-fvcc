@@ -189,7 +189,7 @@ def prepare_scorecard_rows(rows: pd.DataFrame, matches: pd.DataFrame, club_id: s
     output = filter_club_team_rows(rows, club_id=club_id)
     output = output.merge(match_context(matches, club_id=club_id), on="match_id", how="left", suffixes=("", "_match"))
     output = fill_context_from_team(output, club_id=club_id)
-    output = layout.prepare_match_centre_identity_rows(output)
+    output = layout.prepare_match_centre_identity_rows(output, club_id=club_id)
     output["player_key"] = layout.player_keys(output)
     return output
 
@@ -402,8 +402,8 @@ def build_season_by_round(frames: dict[str, pd.DataFrame], club_id: str | None =
                 matches.loc[missing, column] = matches.loc[missing, context_column]
             matches = matches.drop(columns=[context_column])
 
-    batting = layout.add_missing_canonical_player_ids(frames["batting"])
-    bowling = layout.filter_real_scorecard_bowling_rows(layout.add_missing_canonical_player_ids(frames["bowling"]))
+    batting = layout.add_missing_canonical_player_ids(frames["batting"], club_id=club_id)
+    bowling = layout.filter_real_scorecard_bowling_rows(layout.add_missing_canonical_player_ids(frames["bowling"], club_id=club_id))
     best_batters = layout.best_batters_by_match(batting, matches, frames.get("innings", pd.DataFrame()))
     best_bowlers = layout.best_bowlers_by_match(bowling, matches, frames.get("innings", pd.DataFrame()))
     premiership_match_ids = layout.season_round_premiership_match_ids()
