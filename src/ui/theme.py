@@ -7398,6 +7398,10 @@ def active_club_theme_css() -> str:
     background = safe_hex_colour(get_branding_value("background_colour", "#F7F8FC"), "#F7F8FC")
     link = primary
     highlight = tint_hex(accent, 0.86)
+    primary_soft = tint_hex(primary, 0.90)
+    secondary_soft = tint_hex(secondary, 0.88)
+    sidebar_bg = darken_hex(primary, 0.24)
+    sidebar_active = primary
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
     secondary_rgb = hex_to_rgb(secondary)
@@ -7413,6 +7417,10 @@ def active_club_theme_css() -> str:
             --club-bg: {background};
             --club-link: {link};
             --club-highlight: {highlight};
+            --club-primary-soft: {primary_soft};
+            --club-secondary-soft: {secondary_soft};
+            --club-sidebar-bg: {sidebar_bg};
+            --club-sidebar-active: {sidebar_active};
             --club-primary-rgb: {primary_rgb};
             --club-accent-rgb: {accent_rgb};
             --club-secondary-rgb: {secondary_rgb};
@@ -7432,12 +7440,48 @@ def active_club_theme_css() -> str:
             background:
                 radial-gradient(circle at 18% 0%, rgba(var(--club-accent-rgb), 0.38), transparent 14rem),
                 radial-gradient(circle at 80% 42%, rgba(var(--club-secondary-rgb), 0.16), transparent 12rem),
-                linear-gradient(180deg, {primary} 0%, {darken_hex(primary, 0.42)} 100%) !important;
+                linear-gradient(180deg, var(--club-primary) 0%, var(--club-sidebar-bg) 100%) !important;
         }}
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
-            background: linear-gradient(135deg, var(--club-accent), var(--club-primary)) !important;
+            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-accent)) !important;
             box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+        }}
+
+        section[data-testid="stSidebar"] .side-nav-item,
+        section[data-testid="stSidebar"] .side-nav-item span,
+        section[data-testid="stSidebar"] .side-footer,
+        section[data-testid="stSidebar"] .side-footer *,
+        section[data-testid="stSidebar"] label[data-baseweb="radio"],
+        section[data-testid="stSidebar"] label[data-baseweb="radio"] * {{
+            color: rgba(255, 255, 255, 0.86) !important;
+        }}
+
+        section[data-testid="stSidebar"] .side-nav-item.active,
+        section[data-testid="stSidebar"] .side-nav-item.active *,
+        section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked),
+        section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) * {{
+            color: #ffffff !important;
+        }}
+
+        section[data-testid="stSidebar"] .side-nav-item.active {{
+            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-accent)) !important;
+            box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+        }}
+
+        section[data-testid="stSidebar"] .side-nav-item:not(.active):hover,
+        section[data-testid="stSidebar"] .side-nav-item:not(.active):focus-visible {{
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #ffffff !important;
+        }}
+
+        section[data-testid="stSidebar"] a,
+        section[data-testid="stSidebar"] a:visited {{
+            color: rgba(255, 255, 255, 0.90) !important;
+        }}
+
+        section[data-testid="stSidebar"] a:hover {{
+            color: #ffffff !important;
         }}
 
         div[data-testid="stTabs"] button[aria-selected="true"],
@@ -7454,6 +7498,10 @@ def active_club_theme_css() -> str:
         a.season-overview-link:visited,
         a.scorecard-link,
         a.scorecard-link:visited,
+        a.season-round-scorecard-link,
+        a.season-round-scorecard-link:visited,
+        a.full-link,
+        a.full-link:visited,
         .stDataFrame a,
         div[data-testid="stDataFrame"] a,
         div[data-testid="stMetricValue"] {{
@@ -7463,8 +7511,33 @@ def active_club_theme_css() -> str:
         a:hover,
         a.player-profile-link:hover,
         a.season-overview-link:hover,
-        a.scorecard-link:hover {{
+        a.scorecard-link:hover,
+        a.season-round-scorecard-link:hover,
+        a.full-link:hover {{
             color: var(--club-accent) !important;
+        }}
+
+        .club-label,
+        .page-subtitle strong,
+        .premiership-season,
+        .premiership-season a,
+        .hof-card a.player-profile-link,
+        .hof-card a.season-overview-link,
+        .hof-card a.scorecard-link,
+        .performance-player a.player-profile-link,
+        .progress-name a.player-profile-link,
+        .premiership-link a.scorecard-link,
+        .season-round-scorecard a.season-round-scorecard-link,
+        .season-overview-link,
+        .player-profile-link {{
+            color: var(--club-link) !important;
+        }}
+
+        .mobile-nav-link.active,
+        div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
+            background: var(--club-highlight) !important;
+            border-color: rgba(var(--club-primary-rgb), 0.22) !important;
+            color: var(--club-primary) !important;
         }}
 
         a:focus-visible,
@@ -7558,6 +7631,19 @@ def active_club_theme_css() -> str:
         .profile-season-summary-card::before,
         .season-v2-card::before {{
             background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+        }}
+
+        div[data-testid="stTabs"] [role="tablist"],
+        .profile-segmented,
+        .milestone-segmented {{
+            background: var(--club-primary-soft) !important;
+            border-color: rgba(var(--club-primary-rgb), 0.18) !important;
+        }}
+
+        .premiership-wall-card,
+        .hof-card,
+        .record-card {{
+            border-color: rgba(var(--club-primary-rgb), 0.16) !important;
         }}
         </style>
     """

@@ -383,7 +383,7 @@ def build_season_by_round(frames: dict[str, pd.DataFrame], club_id: str | None =
         return pd.DataFrame()
 
     context = match_context(matches, club_id=club_id)
-    matches = ensure_club_ownership_columns(layout.build_match_archive_frame(matches))
+    matches = ensure_club_ownership_columns(layout.build_match_archive_frame(matches, club_id=club_id))
     if not context.empty:
         matches = matches.merge(
             context[["match_id", "season_id", "season"]].drop_duplicates("match_id"),

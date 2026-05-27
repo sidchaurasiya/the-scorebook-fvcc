@@ -9,6 +9,7 @@ files instead of ignored experimental audit outputs.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -20,7 +21,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from scripts.club_refresh_utils import add_club_args, get_club_team_ids, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_club_name, get_club_short_name, get_experimental_dir, get_hall_of_fame_dir, get_processed_match_centre_dir  # noqa: E402
+from src.config.club_config import get_club_name, get_club_short_name, get_experimental_dir, get_hall_of_fame_dir, get_processed_match_centre_dir, get_raw_match_centre_dir  # noqa: E402
 from src.utils.player_identity import apply_player_identity_mapping, display_player_name
 
 
@@ -69,6 +70,7 @@ def main(argv: list[str] | None = None) -> int:
     club_id = resolve_club_id(args.club)
     exploration_dir = get_experimental_dir(club_id=club_id) / "premiership_exploration"
     match_centre_dir = get_processed_match_centre_dir(club_id=club_id) / "all_available"
+    raw_match_centre_dir = get_raw_match_centre_dir(club_id=club_id) / "all_available"
     output_dir = OUTPUT_DIR if args.legacy_output else get_hall_of_fame_dir(club_id=club_id)
     output_paths = [output_dir / filename for filename in OUTPUT_FILENAMES]
 
@@ -91,7 +93,7 @@ def main(argv: list[str] | None = None) -> int:
     matches = read_csv(match_centre_dir / "all_matches.csv")
 
     if wins.empty:
-        wins_export = build_local_grand_final_premiership_wins(matches, club_id=club_id)
+        wins_export = build_local_grand_final_premiership_wins(matches, club_id=club_id, raw_match_centre_dir=raw_match_centre_dir)
         players_export = build_local_player_premierships(match_centre_dir, wins_export, club_id=club_id)
         if wins_export.empty:
             print("No verified premiership wins found. Writing empty deploy-safe premiership exports.")
@@ -163,7 +165,11 @@ def build_premiership_wins(wins: pd.DataFrame, matches: pd.DataFrame) -> pd.Data
     )
 
 
-def build_local_grand_final_premiership_wins(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+def build_local_grand_final_premiership_wins(
+    matches: pd.DataFrame,
+    club_id: str | None = None,
+    raw_match_centre_dir: Path | None = None,
+) -> pd.DataFrame:
     if matches.empty or "match_id" not in matches:
         return empty_premiership_wins()
 
@@ -184,6 +190,11 @@ def build_local_grand_final_premiership_wins(matches: pd.DataFrame, club_id: str
         if not names_match(normalize_team_name(winner), normalize_team_name(club_team_name)):
             continue
 
+        captain_name = extract_winning_team_captain(
+            raw_match_centre_dir,
+            match_id=clean_text(row.get("match_id")),
+            club_team_id=club_team_id,
+        )
         records.append(
             {
                 "match_id": clean_text(row.get("match_id")),
@@ -195,7 +206,7 @@ def build_local_grand_final_premiership_wins(matches: pd.DataFrame, club_id: str
                 "club_team_name": club_team_name,
                 "fvcc_team_name": club_team_name,
                 "opponent_team_name": opponent_team_name,
-                "captain_name": "",
+                "captain_name": captain_name,
                 "result_text": clean_text(row.get("result_text")),
                 "result_margin_display": result_margin_display(pd.Series({"result_text": row.get("result_text"), "club_team_name": club_team_name})),
                 "venue_name": clean_text(row.get("venue_name")),
@@ -212,6 +223,37 @@ def build_local_grand_final_premiership_wins(matches: pd.DataFrame, club_id: str
         if column not in output:
             output[column] = ""
     return output[PREMIERSHIP_WINS_COLUMNS].sort_values(["season", "grade_name", "match_date"], na_position="last").reset_index(drop=True)
+
+
+def extract_winning_team_captain(raw_match_centre_dir: Path | None, *, match_id: str, club_team_id: str) -> str:
+    if not raw_match_centre_dir or not match_id or not club_team_id:
+        return ""
+    path = raw_match_centre_dir / f"match={match_id}__scorecard.json"
+    if not path.exists():
+        return ""
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8")).get("payload", {})
+    except (OSError, json.JSONDecodeError):
+        return ""
+    for team in payload.get("teams") or []:
+        if clean_text(team.get("id")) != club_team_id:
+            continue
+        captain = captain_from_players(team.get("players") or [])
+        if captain:
+            return captain
+    return ""
+
+
+def captain_from_players(players: list[dict[str, object]]) -> str:
+    for player in players:
+        roles = player.get("roles") or []
+        role_labels = [clean_text(role).casefold() for role in roles if clean_text(role)]
+        if any(role == "captain" for role in role_labels):
+            return display_or_blank(player.get("name"))
+        name = clean_text(player.get("name"))
+        if re.search(r"\(\s*c\s*\)\s*$", name, flags=re.IGNORECASE):
+            return display_or_blank(re.sub(r"\(\s*c\s*\)\s*$", "", name, flags=re.IGNORECASE).strip())
+    return ""
 
 
 def build_local_player_premierships(match_centre_dir: Path, wins: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:

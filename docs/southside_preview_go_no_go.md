@@ -68,3 +68,17 @@ We have prepared a private preview of The Scorebook for Southside East Caulfield
 ## Recommended Next Action
 
 Proceed with a private deployment test for Southside East Caulfield only. Share the link with a small reviewer group, ask them to verify player identity and historical labels, then review the remaining 14 duplicate groups and any opponent/ground naming feedback before a broader client preview.
+
+## May 27 Follow-Up
+
+Preview status remains: Go with caveats.
+
+The second UAT pass resolved the club-visible issues raised from localhost:
+
+- Verified premiership captains now appear where the winning scorecard exposes a Captain role: Vatsan Vasu, Aamir Rana, Pranav Sinha, and Christopher Jones. One E Grade premiership remains without a captain because the local payload did not provide one.
+- Southside branding is applied more consistently across sidebar states, links, tabs, progress bars, Hall of Fame, Season Overview, Milestone, and Player Profile surfaces.
+- Winter 2026 women’s Season by Round rows now show Caroline Springs Cricket Club as opponent instead of Southside.
+- Hall of Fame includes a Men/Women toggle and filters leaders, performances, records, detailed tables, fastest innings, and premierships by the selected group where data can be classified.
+- HOF player links, season links, and scorecard links remained valid in local smoke.
+
+Private preview can proceed after one final human visual pass on the deployed URL.

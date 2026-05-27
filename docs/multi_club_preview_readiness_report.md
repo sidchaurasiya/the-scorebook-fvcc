@@ -378,3 +378,16 @@ Risk notes:
 - Opponent/ground naming risk: medium-high because mappings are still starter/header-only.
 - Obvious UI issues: none observed after retry with a recent-form-covered player.
 - Obvious data trust issues: no validation errors, but naming/identity review should happen before sharing links.
+
+## Southside Follow-Up Validation - May 27, 2026
+
+Southside East Caulfield remains the recommended first private preview candidate.
+
+Follow-up status: Preview-ready after final visual review.
+
+- Premierships: 5 verified Southside Grand Final wins still render. Captain roles are now extracted from the verified winning-team scorecard payload where available: Vatsan Vasu, Aamir Rana, Pranav Sinha, and Christopher Jones. One E Grade row remains without captain evidence and is intentionally blank.
+- Theming: remaining FVCC/purple accents in shared sidebar/link/tab/progress styles were replaced with active club variables. Southside now uses its configured blue/accent palette across Hall of Fame, Season Overview, Milestone, and Player Profile; FVCC keeps its purple default.
+- Season Overview: Winter 2026 women’s rows now use fetched team ownership and show Caroline Springs Cricket Club as opponent, not Southside.
+- Hall of Fame: Men/Women toggle added and verified. Women’s view shows classified women’s records and clean empty states where sections have no women’s data.
+- Links: HOF player, season, and scorecard links remained valid in local smoke.
+- Remaining caveats: 14 manual duplicate groups remain, opponent/ground mappings are still conservative starter mappings, and a final human mobile/narrow visual pass is still recommended.

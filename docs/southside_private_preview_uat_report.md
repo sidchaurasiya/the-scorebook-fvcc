@@ -87,3 +87,26 @@ CLUB_ID=fvcc SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false ./.venv-app/bin/streamli
 ## Recommendation
 
 Proceed with a private deployment test for Southside East Caulfield only. Share as a data-quality preview, ask reviewers to focus on player identity, premiership participation, opponent/ground labels, and any grade naming concerns before wider release.
+
+## Follow-Up UAT Fixes - May 27, 2026
+
+Status: Go with caveats after the second Southside UAT pass.
+
+Additional fixes verified:
+
+- Premiership captain extraction now reads the verified winning-team scorecard roles from existing local scorecard JSON. Captains shown where evidence exists: Vatsan Vasu for the 2013/14 Pullen Shield, Aamir Rana for 2023/24 G Grade, Pranav Sinha for 2025/26 K Grade, and Christopher Jones for 2025/26 M Grade. The 2025/26 E Grade row remains blank because no captain role was present locally.
+- The Hall of Fame now has a top-level Men/Women toggle. Men is the default, Women shows the women’s Winter 2026 records, and the toggle does not alter the URL or leave the page.
+- Season Overview Winter 2026 now resolves the women’s opponent from the fetched team id. The women’s rows show Caroline Springs Cricket Club rather than Southside as the opponent.
+- Remaining hard-coded purple link/sidebar accents were replaced with active club variables. Southside uses the configured blue/accent colours, and sidebar active/inactive states remain readable.
+- Premiership cache invalidation was corrected so regenerated captain fields appear immediately after deploy-safe output rebuilds.
+
+Regression checks:
+
+- Southside HOF Men/Women, premiership captain display, HOF links, scorecard links, and Season Overview women’s opponent passed local smoke on port 8508.
+- FVCC HOF smoke passed on port 8502 with FVCC primary purple preserved and no traceback.
+
+Remaining caveats:
+
+- Fourteen manual duplicate groups remain.
+- The 2025/26 E Grade premiership still shows no captain because the local scorecard payload did not expose a captain role for the Southside team.
+- Women’s Hall of Fame currently reflects available classified women’s scorecard/aggregate rows only; sparse sections show clean empty states.
