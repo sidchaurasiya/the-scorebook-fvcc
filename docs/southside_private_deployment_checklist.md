@@ -3,7 +3,7 @@
 Date: 2026-05-27
 Target branch: `onboarding/multi-club-positive-responses`
 Target club: `southside-east-caulfield`
-Baseline commit: `9864950 Prepare Southside private preview review`
+Deployment-readiness commit: `cd8c42e Polish club theming and navigation links` or newer
 
 ## Purpose
 
@@ -63,18 +63,21 @@ Checks passed:
 
 - Hall of Fame loaded.
 - Detailed Records loaded.
-- Premierships showed the clean empty state.
+- Men/Women Hall of Fame toggle loaded and switched cleanly.
+- Premierships showed verified local Grand Final wins with captains where available.
 - All-Time Leaders and Record Holders loaded.
 - Season Overview loaded.
 - Season by Round loaded.
+- Season Overview player links were present and routed to Player Profile.
 - Milestone loaded.
-- Player Profile loaded for Puneet Bhardwaj.
+- Player Profile loaded from Hall of Fame player links.
 - Recent Form loaded.
 - Player DNA and bowling phase sections loaded from available verified coverage.
 - PlayCricket scorecard link hrefs were present and shaped correctly.
+- Southside colours were active across page variables and visible UI accents.
 - No FVCC text/data appeared in Southside pages.
 - No traceback, missing-file error, visible `NaN`, visible `None`, or raw GUID text was seen.
-- Narrow viewport spot check loaded Hall of Fame without traceback.
+- Narrow/mobile visual review is still recommended as a final human check before wider sharing.
 
 FVCC regression smoke passed separately with:
 
@@ -82,14 +85,17 @@ FVCC regression smoke passed separately with:
 CLUB_ID=fvcc SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false ./.venv-app/bin/streamlit run app.py --server.port 8502
 ```
 
-FVCC Hall of Fame, Season Overview, and Player Profile loaded with FVCC branding and no traceback.
+FVCC Hall of Fame, Season Overview, Milestone, and Player Profile loaded with FVCC branding and no traceback.
+
+Optional Glen Waverley Hawks spot smoke passed on port `8505`; club colour variables loaded from its config and no FVCC or Southside data/text appeared.
 
 ## Known Caveats
 
 Carry these caveats into the private preview:
 
 - 14 manual duplicate groups remain.
-- Premiership wins are populated from 5 verified local completed Grand Final scorecards; captain fields remain blank until verified.
+- Premiership wins are populated from 5 verified local completed Grand Final scorecards.
+- Premiership captain fields are populated where the winning scorecard team list has a verified `(c)` marker; one E Grade premiership captain remains blank because no local captain role was available.
 - Player premiership participation is inferred from winning-team scorecard participation and should be reviewed by the club.
 - Opponent and ground mappings are conservative starter mappings.
 - External PlayCricket scorecard links were URL-shape checked, not fully opened during this pass.
@@ -125,7 +131,7 @@ After the private deployment is live:
 
 1. Confirm the deployed app URL opens with Southside branding.
 2. Confirm the sidebar shows `SECCC`, not FVCC.
-3. Open Hall of Fame and verify the Southside premiership wins render with scorecard links and blank captain fields.
+3. Open Hall of Fame and verify the Southside premiership wins render with scorecard links and captains where available.
 4. Open Detailed Records and spot-check Win % and 30s for top players.
 5. Open Season Overview and Season by Round.
 6. Open Milestone.
@@ -134,6 +140,7 @@ After the private deployment is live:
 9. Confirm scorecard links point to PlayCricket match URLs.
 10. Confirm no traceback, `NaN`, `None`, raw GUIDs, or FVCC data/text appears.
 11. Confirm GA4 receives club-aware events if `GA4_MEASUREMENT_ID` is configured.
+12. Confirm experimental pages remain hidden.
 
 ## Deployment Readiness
 
