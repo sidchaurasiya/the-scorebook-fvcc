@@ -105,9 +105,9 @@ def inject_theme() -> None:
         }
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {
-            background: linear-gradient(135deg, #6b3cff, #5630d7);
+            background: linear-gradient(135deg, var(--club-primary, #6b3cff), var(--club-accent, #5630d7));
             border-color: rgba(255, 255, 255, 0.13);
-            box-shadow: 0 16px 34px rgba(99, 64, 255, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+            box-shadow: 0 16px 34px rgba(var(--club-primary-rgb, 99, 64, 255), 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.16);
             color: #ffffff !important;
         }
 
@@ -185,9 +185,10 @@ def inject_theme() -> None:
         }
 
         div[data-testid="stTabs"] button[aria-selected="true"] {
-            background: #F0EDFF;
-            color: var(--pitch);
+            background: linear-gradient(135deg, var(--club-primary, var(--pitch)), var(--club-accent, var(--pitch-2)));
+            color: #ffffff;
             border-bottom-color: transparent;
+            box-shadow: 0 10px 24px rgba(var(--club-primary-rgb, 91, 75, 235), 0.20);
         }
 
         div[data-testid="stTabs"] [role="tablist"] {
@@ -730,8 +731,8 @@ def inject_theme() -> None:
         }
 
         .side-nav-item.active {
-            background: linear-gradient(135deg, #6b3cff, #5630d7);
-            box-shadow: 0 16px 34px rgba(99, 64, 255, 0.46);
+            background: linear-gradient(135deg, var(--club-primary, #6b3cff), var(--club-accent, #5630d7));
+            box-shadow: 0 16px 34px rgba(var(--club-primary-rgb, 99, 64, 255), 0.38);
             color: #ffffff !important;
         }
 
@@ -798,7 +799,7 @@ def inject_theme() -> None:
         }
 
         .club-label {
-            color: #5B3DF5;
+            color: var(--club-primary, #5B3DF5);
             font-size: clamp(1.5rem, 1.75vw, 1.75rem);
             font-weight: 800;
             letter-spacing: 0;
@@ -836,7 +837,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.hall-of-fame-page) .club-label {
-            color: #5B3DF5;
+            color: var(--club-primary, #5B3DF5);
             font-weight: 800;
             margin: 0 0 8px;
         }
@@ -4896,7 +4897,7 @@ def inject_theme() -> None:
         }
 
         .record-value {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             font-size: 1.38rem;
             font-weight: 950;
             margin-top: 8px;
@@ -4992,14 +4993,14 @@ def inject_theme() -> None:
 
         .milestone-segment:hover,
         .milestone-segment:focus-visible {
-            background: #f1edff;
-            color: #4b37d8 !important;
+            background: var(--club-primary-soft, #f1edff);
+            color: var(--club-primary, #4b37d8) !important;
         }
 
         .milestone-segment.active {
-            background: linear-gradient(180deg, #f1edff 0%, #e8e1ff 100%);
-            box-shadow: inset 0 0 0 1px rgba(75, 55, 216, 0.08);
-            color: #4b37d8 !important;
+            background: linear-gradient(135deg, var(--club-primary, #4b37d8), var(--club-accent, #6d4dff));
+            box-shadow: 0 10px 24px rgba(var(--club-primary-rgb, 75, 55, 216), 0.18);
+            color: #ffffff !important;
         }
 
         .milestone-view-panel,
@@ -7450,11 +7451,19 @@ def active_club_theme_css() -> str:
 
         section[data-testid="stSidebar"] .side-nav-item,
         section[data-testid="stSidebar"] .side-nav-item span,
+        section[data-testid="stSidebar"] .side-title,
+        section[data-testid="stSidebar"] .side-shield,
         section[data-testid="stSidebar"] .side-footer,
         section[data-testid="stSidebar"] .side-footer *,
         section[data-testid="stSidebar"] label[data-baseweb="radio"],
         section[data-testid="stSidebar"] label[data-baseweb="radio"] * {{
             color: rgba(255, 255, 255, 0.86) !important;
+        }}
+
+        section[data-testid="stSidebar"] .side-nav-item:not(.active),
+        section[data-testid="stSidebar"] .side-nav-item:not(.active) * {{
+            color: rgba(255, 255, 255, 0.76) !important;
+            opacity: 1 !important;
         }}
 
         section[data-testid="stSidebar"] .side-nav-item.active,
@@ -7480,14 +7489,30 @@ def active_club_theme_css() -> str:
             color: rgba(255, 255, 255, 0.90) !important;
         }}
 
+        section[data-testid="stSidebar"] .side-footer-contact a,
+        section[data-testid="stSidebar"] .side-footer-contact a:visited {{
+            color: rgba(255, 255, 255, 0.94) !important;
+            font-weight: 700 !important;
+        }}
+
         section[data-testid="stSidebar"] a:hover {{
             color: #ffffff !important;
         }}
 
+        div[data-testid="stTabs"] button {{
+            color: rgba(8, 10, 63, 0.68) !important;
+        }}
+
         div[data-testid="stTabs"] button[aria-selected="true"],
         .profile-segment.active {{
-            background: var(--club-highlight) !important;
-            color: var(--club-primary) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.22) !important;
+        }}
+
+        div[data-testid="stTabs"] button[aria-selected="true"] *,
+        .profile-segment.active * {{
+            color: #ffffff !important;
         }}
 
         a,
@@ -7535,9 +7560,9 @@ def active_club_theme_css() -> str:
 
         .mobile-nav-link.active,
         div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
-            background: var(--club-highlight) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
             border-color: rgba(var(--club-primary-rgb), 0.22) !important;
-            color: var(--club-primary) !important;
+            color: #ffffff !important;
         }}
 
         a:focus-visible,
@@ -7620,9 +7645,9 @@ def active_club_theme_css() -> str:
         .folder-tab.active,
         .folder-tab[aria-selected="true"],
         .profile-segment.active {{
-            background: var(--club-highlight) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
             border-color: rgba(var(--club-accent-rgb), 0.38) !important;
-            color: var(--club-primary) !important;
+            color: #ffffff !important;
             box-shadow: 0 12px 28px rgba(var(--club-primary-rgb), 0.12) !important;
         }}
 
@@ -7633,11 +7658,108 @@ def active_club_theme_css() -> str:
             background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
         }}
 
+        .record-value,
+        .hof-v2-record-value,
+        .hof-v2-season-score,
+        .hof-v2-rank,
+        .hof-v2-record-nav a.active,
+        .hof-v2-trust-chip,
+        .hof-v2-trophy-year a,
+        .best-season-primary,
+        .premiership-player-row .performance-value,
+        .premiership-player-row .performance-player span a.season-overview-link,
+        .premiership-player-row .performance-player span a.season-overview-link:visited,
+        .milestone-away,
+        .milestone-progress-top span:not(.milestone-row-badge),
+        .milestone-group-title,
+        .player-v2-progress-card strong,
+        .player-v2-progress-value,
+        .player-v2-kicker,
+        .player-v2-marker-label,
+        .player-v2-summary-value,
+        .profile-phase-value,
+        .season-v2-highlight-value {{
+            color: var(--club-primary) !important;
+        }}
+
+        .milestone-segment.active,
+        .player-v2-marker.player,
+        .player-marker,
+        .impact-marker,
+        .peer-marker,
+        .profile-best-dot {{
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            color: #ffffff !important;
+        }}
+
         div[data-testid="stTabs"] [role="tablist"],
         .profile-segmented,
         .milestone-segmented {{
             background: var(--club-primary-soft) !important;
             border-color: rgba(var(--club-primary-rgb), 0.18) !important;
+        }}
+
+        div.st-key-hof_team_group_filter_control div[data-testid="stSegmentedControl"],
+        div.st-key-hof_team_group_filter_control [data-testid="stButtonGroup"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] {{
+            background: var(--club-primary-soft) !important;
+            border: 1px solid rgba(var(--club-primary-rgb), 0.18) !important;
+            border-radius: 999px !important;
+            display: inline-flex !important;
+            gap: 4px !important;
+            padding: 5px !important;
+            width: fit-content !important;
+        }}
+
+        div.st-key-hof_team_group_filter_control {{
+            margin: 14px 0 28px !important;
+        }}
+
+        div.st-key-hof_team_group_filter_control button[data-testid^="stBaseButton-segmented_control"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid^="stBaseButton-segmented_control"] {{
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 999px !important;
+            color: rgba(8, 10, 63, 0.68) !important;
+            font-weight: 800 !important;
+            min-height: 38px !important;
+            padding: 8px 16px !important;
+        }}
+
+        div.st-key-hof_team_group_filter_control button[data-testid="stBaseButton-segmented_controlActive"],
+        div.st-key-hof_team_group_filter_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        div.st-key-hof_team_group_filter_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[kind="primary"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[kind="primary"] {{
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.18) !important;
+            color: #ffffff !important;
+        }}
+
+        div.st-key-hof_team_group_filter_control button[data-testid^="stBaseButton-segmented_control"] *,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"] *,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"] *,
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid^="stBaseButton-segmented_control"] * {{
+            color: inherit !important;
+        }}
+
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_folder_tabs {{
+            margin-top: 12px !important;
+            margin-bottom: -1px !important;
         }}
 
         .premiership-wall-card,

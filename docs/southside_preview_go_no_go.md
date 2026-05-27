@@ -82,3 +82,21 @@ The second UAT pass resolved the club-visible issues raised from localhost:
 - HOF player links, season links, and scorecard links remained valid in local smoke.
 
 Private preview can proceed after one final human visual pass on the deployed URL.
+
+## May 27 Final Polish
+
+Preview status remains: Go with caveats.
+
+This pass tightened the last visible preview issues before a private deployment test:
+
+- Discipline pill toggles now have a clear active state with active club colours and high-contrast selected labels.
+- Hall of Fame Men/Women uses the same pill-toggle style as Batting/Bowling/Fielding.
+- HOF Detailed Records player links and Debut/Latest Season links are clickable again.
+- Season Overview Detailed Stats player links are clickable again, and Season by Round best batter/bowler names link when existing local data can safely resolve a canonical Southside player id.
+- Visible purple accents were further replaced with active club variables so Southside reads as blue/accent branded rather than copied FVCC styling.
+- Sidebar active/inactive colours, shield text, creator credit, and feedback email were improved for readability.
+- Milestone page spacing between the club label and tab controls was refined.
+
+Remaining caveats are unchanged: 14 manual duplicate groups remain, opponent/ground mappings are conservative, and the final private deployment should still receive a human mobile/narrow visual check.
+
+Local smoke after this pass confirmed Southside HOF, Season Overview, Player Profile, and Milestone on port 8508; FVCC HOF regression on port 8502; and an optional Glen Waverley Hawks HOF colour smoke on port 8505. The branch remains suitable for a private Southside deployment test after final deployed visual review.

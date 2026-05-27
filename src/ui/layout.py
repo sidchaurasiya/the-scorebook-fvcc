@@ -1580,6 +1580,7 @@ def build_season_round_rows(
         return []
 
     option_lookup = season_round_team_option_lookup(dashboard_data)
+    player_lookup = season_round_player_lookup(dashboard_data)
     rows = []
     for _, match in rows_frame.iterrows():
         match_id = str(match.get("match_id", "") or "").strip()
@@ -1606,7 +1607,9 @@ def build_season_round_rows(
                 "result_class": result_class,
                 "result_text": f"{result_text} 🏆" if is_premiership and result_class == "win" else result_text,
                 "best_batter": safe_record_text(match.get("best_batter"), "—"),
+                "best_batter_html": season_round_performer_html(match.get("best_batter"), player_lookup),
                 "best_bowler": safe_record_text(match.get("best_bowler"), "—"),
+                "best_bowler_html": season_round_performer_html(match.get("best_bowler"), player_lookup),
                 "scorecard": scorecard_link_html(
                     match_id,
                     label="View scorecard ↗",
@@ -1627,6 +1630,38 @@ def build_season_round_rows(
         ),
         reverse=True,
     )
+
+
+def season_round_player_lookup(dashboard_data: dict[str, object]) -> list[tuple[str, str]]:
+    players: dict[str, tuple[str, str]] = {}
+    for key in ["batting", "bowling", "fielding", "team_batting", "team_bowling"]:
+        frame = dashboard_data.get(key)
+        if not isinstance(frame, pd.DataFrame) or frame.empty or "player_name" not in frame:
+            continue
+        enriched = add_missing_canonical_player_ids(frame)
+        for _, row in enriched.iterrows():
+            player_name = safe_record_text(row.get("player_name"), "")
+            player_id = player_id_from_row(row)
+            if not player_name or not player_id:
+                continue
+            players.setdefault(player_name.casefold(), (player_name, player_id))
+    return sorted(players.values(), key=lambda item: len(item[0]), reverse=True)
+
+
+def season_round_performer_html(value: object, player_lookup: list[tuple[str, str]]) -> str:
+    text = safe_record_text(value, "—")
+    if text == "—":
+        return html.escape(text)
+    normalized = text.casefold()
+    for player_name, player_id in player_lookup:
+        name_key = player_name.casefold()
+        if not normalized.startswith(name_key):
+            continue
+        suffix = text[len(player_name) :]
+        if suffix and not suffix[0].isspace() and suffix[0] not in {"*", "(", ",", "-"}:
+            continue
+        return f'{player_profile_link_html(player_id, player_name, "season-round-player-link")}{html.escape(suffix)}'
+    return html.escape(text)
 
 
 def match_source_contains_team(value: object, team_ids: set[str]) -> bool:
@@ -1767,8 +1802,8 @@ def season_round_row_html(row: dict[str, object], show_grade_column: bool = Fals
         f'<b class="season-result-pill {html.escape(str(row.get("result_class") or "none"))}">{html.escape(str(row.get("result_label") or "No Result"))}</b>'
         f'<span>{html.escape(str(row.get("result_text") or "no result"))}</span>'
         '</span>'
-        f'<span class="season-round-performer"><span class="mobile-label">Batter: </span>{html.escape(str(row.get("best_batter") or "—"))}</span>'
-        f'<span class="season-round-performer"><span class="mobile-label">Bowler: </span>{html.escape(str(row.get("best_bowler") or "—"))}</span>'
+        f'<span class="season-round-performer"><span class="mobile-label">Batter: </span>{row.get("best_batter_html") or html.escape(str(row.get("best_batter") or "—"))}</span>'
+        f'<span class="season-round-performer"><span class="mobile-label">Bowler: </span>{row.get("best_bowler_html") or html.escape(str(row.get("best_bowler") or "—"))}</span>'
         f'<span class="season-round-scorecard">{scorecard}</span>'
         '</div>'
     )
@@ -4225,12 +4260,12 @@ def render_hall_of_fame_team_group_filter(data: dict[str, object]) -> str | None
     options = hall_of_fame_team_group_options(data)
     if len(options) <= 1:
         return options[0][0] if options else None
-    selected = render_folder_tab_widget(
+    render_profile_segmented_widget(
         "Hall of Fame team group",
         options,
         key="hof_team_group_filter",
-        control_key="hof_team_group_filter_folder_tabs",
     )
+    selected = str(st.session_state.get("hof_team_group_filter", options[0][0]) or options[0][0]).casefold()
     return selected if selected in dict(options) else options[0][0]
 
 
@@ -7933,6 +7968,9 @@ def apply_hof_table_sorting(table: pd.DataFrame, table_type: str) -> pd.DataFram
 
 def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", key_prefix).strip("-") or "hof-detail-table"
+    link_colour = active_club_colour("primary_colour", "#6D4DFF")
+    accent_colour = active_club_colour("accent_colour", link_colour)
+    primary_soft = active_club_colour("background_colour", "#F7F7FC")
     columns = table.columns.tolist()
     header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
         f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
@@ -7958,8 +7996,9 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         --hof-ink: #080a3f;
         --hof-muted: #686f95;
         --hof-grid: #dfe3ee;
-        --hof-soft: #f7f7fc;
-        --hof-link: #6d3df7;
+        --hof-soft: {html.escape(primary_soft)};
+        --hof-link: {html.escape(link_colour)};
+        --hof-link-hover: {html.escape(accent_colour)};
       }}
       html, body {{
         margin: 0;
@@ -8047,12 +8086,12 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         background: #fbfbfe;
       }}
       .hof-detail-sortable a {{
-        color: #0072ce;
+        color: var(--hof-link);
         text-decoration: none;
         font-weight: 650;
       }}
       .hof-detail-sortable a:hover {{
-        color: var(--hof-link);
+        color: var(--hof-link-hover);
         text-decoration: underline;
       }}
       .hof-detail-sortable tr:hover td {{
@@ -8132,38 +8171,17 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
           const href = link.getAttribute("href");
           if (!href) return;
           link.setAttribute("href", resolveInternalHref(href));
-          link.setAttribute("target", "_blank");
-          link.setAttribute("rel", "noopener noreferrer");
+          link.setAttribute("target", "_top");
         }});
         table.addEventListener("click", event => {{
           const link = event.target.closest('a[data-hof-internal-link="1"]');
           if (!link) return;
           const href = link.getAttribute("href");
           if (!href) return;
-          let opened = null;
-          try {{
-            opened = window.parent.open(href, "_blank");
-          }} catch (error) {{}}
-          if (opened) {{
-            event.preventDefault();
-            return;
-          }}
-          try {{
-            const parentDocument = window.parent.document;
-            const parentLink = parentDocument.createElement("a");
-            parentLink.href = href;
-            parentLink.target = "_blank";
-            parentLink.rel = "noopener noreferrer";
-            parentLink.style.display = "none";
-            parentDocument.body.appendChild(parentLink);
-            parentLink.click();
-            setTimeout(() => parentLink.remove(), 0);
-            event.preventDefault();
-            return;
-          }} catch (error) {{}}
           try {{
             window.parent.location.href = href;
             event.preventDefault();
+            return;
           }} catch (error) {{}}
         }});
         headers.forEach(header => {{
@@ -8212,12 +8230,17 @@ def hof_detail_link_cell(value: object, display_pattern: str) -> str:
         return "N/A"
     text = str(value).strip()
     label = link_display_label(text)
-    if text.startswith("?"):
+    if is_app_internal_url(text):
         return (
-            f'<a href="{html.escape(text, quote=True)}" target="_blank" rel="noopener noreferrer" data-hof-internal-link="1">'
+            f'<a href="{html.escape(text, quote=True)}" target="_top" data-hof-internal-link="1">'
             f"{html.escape(label or text)}</a>"
         )
     return html.escape(label or text)
+
+
+def is_app_internal_url(text: object) -> bool:
+    value = str(text or "").strip()
+    return value.startswith("?") or value.startswith("./?") or value.startswith("/?")
 
 
 def hof_detail_sort_value(column: str, value: object) -> tuple[str, bool]:
@@ -15630,6 +15653,9 @@ def render_full_stats_table(
 
 def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_id: str) -> str:
     safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "season-detail-table"
+    link_colour = active_club_colour("primary_colour", "#0072CE")
+    accent_colour = active_club_colour("accent_colour", link_colour)
+    soft_colour = active_club_colour("background_colour", "#F7F8FC")
     columns = table.columns.tolist()
     colgroup = "".join(
         f'<col class="{season_detail_column_class(column)}">'
@@ -15666,6 +15692,9 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
     <style>
       html, body {{
         background: transparent;
+        --season-detail-link: {html.escape(link_colour)};
+        --season-detail-link-hover: {html.escape(accent_colour)};
+        --season-detail-soft: {html.escape(soft_colour)};
         color-scheme: light;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         margin: 0;
@@ -15774,7 +15803,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         box-shadow: 4px 0 8px rgba(8, 10, 63, 0.08);
       }}
       .season-detail-table .season-col-player a {{
-        color: #0072ce;
+        color: var(--season-detail-link);
         display: block;
         font-weight: 700;
         line-height: 1.13;
@@ -15785,14 +15814,14 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         word-break: normal;
       }}
       .season-detail-table .season-col-player a:hover {{
-        color: #5b3df5;
+        color: var(--season-detail-link-hover);
         text-decoration: underline;
       }}
       .season-detail-table tr:nth-child(even) td {{
         background: #fbfcff;
       }}
       .season-detail-table tr:hover td {{
-        background: #f7f5ff;
+        background: var(--season-detail-soft);
       }}
       .season-detail-empty {{
         color: #7a819f;
@@ -15987,7 +16016,7 @@ def season_detail_player_link_cell(value: object) -> str:
         return "N/A"
     text = str(value).strip()
     label = link_display_label(text)
-    if text.startswith("?"):
+    if is_app_internal_url(text):
         return (
             f'<a href="{html.escape(text, quote=True)}" data-season-detail-link="1" target="_top" '
             f'title="Open Player Profile for {html.escape(label or text, quote=True)}">'
