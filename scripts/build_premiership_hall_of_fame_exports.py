@@ -19,9 +19,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_experimental_dir, get_hall_of_fame_dir, get_processed_match_centre_dir  # noqa: E402
-from src.utils.player_identity import display_player_name
+from scripts.club_refresh_utils import add_club_args, get_club_team_ids, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
+from src.config.club_config import get_club_name, get_club_short_name, get_experimental_dir, get_hall_of_fame_dir, get_processed_match_centre_dir  # noqa: E402
+from src.utils.player_identity import apply_player_identity_mapping, display_player_name
 
 
 OUTPUT_DIR = REPO_ROOT / "data" / "processed" / "hall_of_fame"
@@ -32,6 +32,8 @@ PREMIERSHIP_WINS_COLUMNS = [
     "grade_name",
     "round_name",
     "match_date",
+    "club_team_id",
+    "club_team_name",
     "fvcc_team_name",
     "opponent_team_name",
     "captain_name",
@@ -43,6 +45,7 @@ PREMIERSHIP_WINS_COLUMNS = [
     "detection_reason",
 ]
 PLAYER_PREMIERSHIPS_COLUMNS = [
+    "canonical_player_id",
     "canonical_player_name",
     "display_player_name",
     "premiership_count",
@@ -88,9 +91,12 @@ def main(argv: list[str] | None = None) -> int:
     matches = read_csv(match_centre_dir / "all_matches.csv")
 
     if wins.empty:
-        wins_export = empty_premiership_wins()
-        players_export = empty_player_premierships()
-        print("No premiership win candidates found. Writing empty deploy-safe premiership exports.")
+        wins_export = build_local_grand_final_premiership_wins(matches, club_id=club_id)
+        players_export = build_local_player_premierships(match_centre_dir, wins_export, club_id=club_id)
+        if wins_export.empty:
+            print("No verified premiership wins found. Writing empty deploy-safe premiership exports.")
+        else:
+            print("Built premiership wins from local completed Grand Final match-centre rows.")
     else:
         wins_export = build_premiership_wins(wins, matches)
         players_export = build_player_premierships(players, wins_export)
@@ -157,6 +163,121 @@ def build_premiership_wins(wins: pd.DataFrame, matches: pd.DataFrame) -> pd.Data
     )
 
 
+def build_local_grand_final_premiership_wins(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+    if matches.empty or "match_id" not in matches:
+        return empty_premiership_wins()
+
+    club_team_ids = get_club_team_ids(club_id)
+    club_tokens = club_name_tokens(club_id)
+    records: list[dict[str, object]] = []
+    for _, row in matches.iterrows():
+        round_name = clean_text(row.get("round_name"))
+        if "grand final" not in normalize_team_name(round_name):
+            continue
+        if not is_completed_match(row):
+            continue
+
+        club_team_id, club_team_name, opponent_team_name = selected_club_team(row, club_team_ids, club_tokens)
+        if not club_team_name:
+            continue
+        winner = winner_name_from_result(row.get("result_text"))
+        if not names_match(normalize_team_name(winner), normalize_team_name(club_team_name)):
+            continue
+
+        records.append(
+            {
+                "match_id": clean_text(row.get("match_id")),
+                "season": clean_text(row.get("season")),
+                "grade_name": clean_text(row.get("grade_name")),
+                "round_name": round_name,
+                "match_date": clean_text(row.get("last_match_day") or row.get("first_match_day")),
+                "club_team_id": club_team_id,
+                "club_team_name": club_team_name,
+                "fvcc_team_name": club_team_name,
+                "opponent_team_name": opponent_team_name,
+                "captain_name": "",
+                "result_text": clean_text(row.get("result_text")),
+                "result_margin_display": result_margin_display(pd.Series({"result_text": row.get("result_text"), "club_team_name": club_team_name})),
+                "venue_name": clean_text(row.get("venue_name")),
+                "scoreboard_url": playcricket_scorecard_url(row.get("match_id")),
+                "confidence": "high",
+                "detection_reason": "completed Grand Final result names active club as winner",
+            }
+        )
+
+    if not records:
+        return empty_premiership_wins()
+    output = pd.DataFrame(records).drop_duplicates("match_id")
+    for column in PREMIERSHIP_WINS_COLUMNS:
+        if column not in output:
+            output[column] = ""
+    return output[PREMIERSHIP_WINS_COLUMNS].sort_values(["season", "grade_name", "match_date"], na_position="last").reset_index(drop=True)
+
+
+def build_local_player_premierships(match_centre_dir: Path, wins: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+    if wins.empty or "match_id" not in wins:
+        return empty_player_premierships()
+
+    participant_frames = []
+    for filename in ["all_scorecard_batting.csv", "all_scorecard_bowling.csv", "all_scorecard_fielding.csv"]:
+        frame = read_csv(match_centre_dir / filename)
+        if frame.empty or not {"match_id", "team_id", "participant_id", "player_name"}.issubset(frame.columns):
+            continue
+        participant_frames.append(frame[["match_id", "team_id", "participant_id", "player_name"]].copy())
+    if not participant_frames:
+        return empty_player_premierships()
+
+    win_context = wins[["match_id", "club_team_id", "season", "grade_name", "fvcc_team_name", "confidence"]].copy()
+    participants = pd.concat(participant_frames, ignore_index=True, sort=False)
+    participants["match_id"] = participants["match_id"].astype(str)
+    participants["team_id"] = participants["team_id"].astype(str)
+    win_context["match_id"] = win_context["match_id"].astype(str)
+    win_context["club_team_id"] = win_context["club_team_id"].astype(str)
+    rows = participants.merge(win_context, on="match_id", how="inner")
+    rows = rows[rows["team_id"] == rows["club_team_id"]].copy()
+    if rows.empty:
+        return empty_player_premierships()
+
+    rows = rows.rename(columns={"participant_id": "raw_player_id", "player_name": "raw_player_name"})
+    rows["player_name"] = rows["raw_player_name"]
+    rows = apply_player_identity_mapping(rows, club_id=club_id)
+    rows["display_player_name"] = rows["canonical_player_name"].map(display_or_blank)
+    rows = rows.drop_duplicates(["canonical_player_id", "match_id"])
+
+    records: list[dict[str, object]] = []
+    for (player_id, player_name, display_name), group in rows.groupby(
+        ["canonical_player_id", "canonical_player_name", "display_player_name"],
+        dropna=False,
+    ):
+        if not clean_text(display_name):
+            continue
+        unique_matches = sorted(group["match_id"].dropna().astype(str).unique())
+        seasons = sorted(group["season"].dropna().astype(str).unique(), key=season_sort_key)
+        records.append(
+            {
+                "canonical_player_id": clean_text(player_id),
+                "canonical_player_name": clean_text(player_name),
+                "display_player_name": display_or_blank(display_name),
+                "premiership_count": len(unique_matches),
+                "seasons": ", ".join(seasons),
+                "grades": join_unique(group["grade_name"]),
+                "teams": join_unique(group["fvcc_team_name"]),
+                "latest_premiership_season": seasons[-1] if seasons else "",
+                "evidence_match_ids": ", ".join(unique_matches),
+                "confidence": combine_confidence(group.get("confidence", pd.Series(dtype=str))),
+            }
+        )
+
+    output = pd.DataFrame(records)
+    if output.empty:
+        return empty_player_premierships()
+    return output.sort_values(
+        ["premiership_count", "latest_premiership_season", "display_player_name"],
+        ascending=[False, False, True],
+        key=lambda series: series.map(season_sort_key) if series.name == "latest_premiership_season" else series,
+    )[PLAYER_PREMIERSHIPS_COLUMNS].reset_index(drop=True)
+
+
 def build_player_premierships(players: pd.DataFrame, wins: pd.DataFrame) -> pd.DataFrame:
     if players.empty or wins.empty:
         return empty_player_premierships()
@@ -176,6 +297,7 @@ def build_player_premierships(players: pd.DataFrame, wins: pd.DataFrame) -> pd.D
         latest = seasons[-1] if seasons else ""
         records.append(
             {
+                "canonical_player_id": "",
                 "canonical_player_name": player_name,
                 "display_player_name": player_name,
                 "premiership_count": len(unique_matches),
@@ -190,7 +312,7 @@ def build_player_premierships(players: pd.DataFrame, wins: pd.DataFrame) -> pd.D
 
     output = pd.DataFrame(records)
     if output.empty:
-        return output
+        return empty_player_premierships()
     return output.sort_values(
         ["premiership_count", "latest_premiership_season", "display_player_name"],
         ascending=[False, False, True],
@@ -218,6 +340,71 @@ def validate_exports(wins: pd.DataFrame, players: pd.DataFrame) -> None:
     ]
     if bad_urls:
         raise SystemExit(f"Unexpected scoreboard URL format: {bad_urls[:3]}")
+
+
+def is_completed_match(row: pd.Series) -> bool:
+    status = normalize_team_name(row.get("status"))
+    if status and "complete" in status:
+        return True
+    status_id = clean_text(row.get("status_id"))
+    return status_id in {"3", "completed"}
+
+
+def selected_club_team(row: pd.Series, club_team_ids: set[str], club_tokens: set[str]) -> tuple[str, str, str]:
+    home_id = clean_text(row.get("home_team_id"))
+    away_id = clean_text(row.get("away_team_id"))
+    home_name = clean_text(row.get("home_team_name"))
+    away_name = clean_text(row.get("away_team_name"))
+    source_ids = split_ids(row.get("source_team_ids"))
+    selected_ids = source_ids or club_team_ids
+    home_is_club = bool(home_id and home_id in selected_ids)
+    away_is_club = bool(away_id and away_id in selected_ids)
+
+    if not home_is_club and not away_is_club:
+        home_key = normalize_team_name(home_name)
+        away_key = normalize_team_name(away_name)
+        home_is_club = bool(home_key and any(names_match(home_key, token) for token in club_tokens))
+        away_is_club = bool(away_key and any(names_match(away_key, token) for token in club_tokens))
+
+    if home_is_club and not away_is_club:
+        return home_id, home_name, away_name
+    if away_is_club and not home_is_club:
+        return away_id, away_name, home_name
+    return "", "", ""
+
+
+def winner_name_from_result(result_text: object) -> str:
+    match = re.match(r"^(?P<winner>.+?)\s+won(?:\s|$)", clean_text(result_text), flags=re.IGNORECASE)
+    return clean_text(match.group("winner")) if match else ""
+
+
+def club_name_tokens(club_id: str | None = None) -> set[str]:
+    values = {get_club_name(club_id), get_club_short_name(club_id)}
+    tokens: set[str] = set()
+    for value in values:
+        normalized = normalize_team_name(value)
+        if normalized:
+            tokens.add(normalized)
+            tokens.add(re.sub(r"\b(cricket|club|cc)\b", "", normalized).strip())
+    return {token for token in tokens if token}
+
+
+def names_match(left: str, right: str) -> bool:
+    if not left or not right:
+        return False
+    return left == right or left.startswith(f"{right} ") or right.startswith(f"{left} ")
+
+
+def normalize_team_name(value: object) -> str:
+    text = clean_text(value).casefold()
+    text = text.replace("&", " and ")
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"\b(cricket club|cc)\b", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def split_ids(value: object) -> set[str]:
+    return {part.strip() for part in re.split(r"[|,]", clean_text(value)) if part.strip()}
 
 
 def result_margin_display(row: pd.Series) -> str:

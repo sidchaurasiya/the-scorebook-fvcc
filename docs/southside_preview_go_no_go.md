@@ -2,20 +2,20 @@
 
 Date: 2026-05-27
 Branch: `onboarding/multi-club-positive-responses`
-Baseline commit: `9bc5555 Fix multi-club HOF metrics and theming`
+Baseline commit: `1bed61a Add Southside private deployment checklist`
 
 ## Preview Status
 
 **Go with caveats.**
 
-Southside East Caulfield is suitable for a first private preview deployment test. The app loads the current main experience with Southside club branding, club-specific data, fixed Hall of Fame win-rate and 30s metrics, scorecard-backed recent form, and clean empty states where verified evidence is not yet available.
+Southside East Caulfield is suitable for a first private preview deployment test. The app loads the current main experience with Southside club branding, club-specific data, fixed Hall of Fame win-rate and 30s metrics, scorecard-backed recent form, and verified local Grand Final premiership wins.
 
 This should be shared as a private data-quality preview, not a public launch. A small reviewer group should focus on player identity, opponent/ground naming, and premiership evidence before wider release.
 
 ## Exact Local Command
 
 ```bash
-CLUB_ID=southside-east-caulfield ./.venv-app/bin/streamlit run app.py --server.port 8508
+CLUB_ID=southside-east-caulfield SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false ./.venv-app/bin/streamlit run app.py --server.port 8508
 ```
 
 ## Top 10 Checks
@@ -24,7 +24,7 @@ CLUB_ID=southside-east-caulfield ./.venv-app/bin/streamlit run app.py --server.p
 2. Detailed Records source files are populated: `player_win_rates.csv` has 420 rows and `player_scorecard_milestones.csv` has 406 rows.
 3. Win % is plausible after the multi-club fix: Puneet Bhardwaj shows 88 wins from 167 result matches, 52.7%.
 4. Scorecard 30s are plausible after applying Southside-safe duplicate merges: Puneet Bhardwaj has 26 scorecard innings from 30 to 49.
-5. Premierships render as a clean empty state: "Premiership records are being prepared from verified finals scorecards."
+5. Premierships render with 5 verified Grand Final wins and scorecard links from existing local match-centre data; captain fields remain blank until verified.
 6. All-Time Leaders, Iconic Performances, Fastest Innings, Record Holders, and Detailed Records rendered without traceback, `NaN`, `None`, visible raw GUIDs, or broken layout in the desktop smoke.
 7. Season Overview and Season by Round loaded using Southside scorecard data, with 893 season-by-round scorecard rows available.
 8. Milestone loaded after Streamlit completed the heavier page build, including upcoming milestones and Hall of Fame watch cards.
@@ -40,7 +40,7 @@ CLUB_ID=southside-east-caulfield ./.venv-app/bin/streamlit run app.py --server.p
 | Fastest innings | Available from verified ball-by-ball-derived milestones: 415 Hall of Fame fastest milestone rows |
 | Recent form | 7,045 batting rows and 4,683 bowling rows |
 | Scorecard links | 11,751 Hall of Fame scorecard record links; visible link hrefs use PlayCricket match URLs with `?tab=scorecard` |
-| Premierships | No verified rows yet; section intentionally remains clean-empty |
+| Premierships | 5 verified completed Grand Final wins; 48 player-premiership rows inferred from winning-team scorecard participation |
 | Remaining manual duplicate groups | 14 manual duplicate groups remain in the Southside review pack |
 
 ## Link And Tracking Checks
@@ -54,7 +54,8 @@ CLUB_ID=southside-east-caulfield ./.venv-app/bin/streamlit run app.py --server.p
 ## Known Caveats
 
 - Fourteen manual duplicate groups remain. None were applied in this pass.
-- Premiership records are not populated because no verified premiership evidence has been accepted for Southside yet.
+- Premiership captain fields remain blank because no verified captain data was present locally.
+- Player premiership participation is inferred from scorecard participation for the winning club team and should be reviewed by the club.
 - Opponent and ground mappings are still conservative starter mappings, so some labels may read exactly as PlayCricket supplied them.
 - External PlayCricket scorecard pages were not opened during smoke; only app-rendered link targets were inspected.
 - Basic desktop and scroll smoke passed. A final human mobile/narrow visual review is still recommended before sharing beyond a small private group.
@@ -62,9 +63,8 @@ CLUB_ID=southside-east-caulfield ./.venv-app/bin/streamlit run app.py --server.p
 
 ## Suggested Club Wording
 
-We have prepared a private preview of The Scorebook for Southside East Caulfield Cricket Club. It includes Hall of Fame records, season views, player profiles, recent form, and scorecard-linked highlights from verified PlayCricket data. A few areas, including premiership records and some historical name, opponent, and ground clean-up, are still being reviewed, so please treat this as a private data-quality preview rather than a public launch.
+We have prepared a private preview of The Scorebook for Southside East Caulfield Cricket Club. It includes Hall of Fame records, verified Grand Final premiership wins, season views, player profiles, recent form, and scorecard-linked highlights from verified PlayCricket data. A few areas, including player identity review and some historical opponent and ground clean-up, are still being reviewed, so please treat this as a private data-quality preview rather than a public launch.
 
 ## Recommended Next Action
 
 Proceed with a private deployment test for Southside East Caulfield only. Share the link with a small reviewer group, ask them to verify player identity and historical labels, then review the remaining 14 duplicate groups and any opponent/ground naming feedback before a broader client preview.
-

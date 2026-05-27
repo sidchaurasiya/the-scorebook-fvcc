@@ -7396,9 +7396,12 @@ def active_club_theme_css() -> str:
     secondary = safe_hex_colour(get_branding_value("secondary_colour", "#7C5CFF"), "#7C5CFF")
     accent = safe_hex_colour(get_branding_value("accent_colour", primary), primary)
     background = safe_hex_colour(get_branding_value("background_colour", "#F7F8FC"), "#F7F8FC")
+    link = primary
+    highlight = tint_hex(accent, 0.86)
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
     secondary_rgb = hex_to_rgb(secondary)
+    highlight_rgb = hex_to_rgb(highlight)
     sidebar_shadow = rgba(primary_rgb, 0.34)
     active_shadow = rgba(primary_rgb, 0.32)
     return f"""
@@ -7408,9 +7411,12 @@ def active_club_theme_css() -> str:
             --club-secondary: {secondary};
             --club-accent: {accent};
             --club-bg: {background};
+            --club-link: {link};
+            --club-highlight: {highlight};
             --club-primary-rgb: {primary_rgb};
             --club-accent-rgb: {accent_rgb};
             --club-secondary-rgb: {secondary_rgb};
+            --club-highlight-rgb: {highlight_rgb};
             --pitch: var(--club-primary);
             --pitch-2: var(--club-accent);
             --surface-soft: var(--club-bg);
@@ -7436,8 +7442,56 @@ def active_club_theme_css() -> str:
 
         div[data-testid="stTabs"] button[aria-selected="true"],
         .profile-segment.active {{
-            background: rgba(var(--club-accent-rgb), 0.12) !important;
+            background: var(--club-highlight) !important;
             color: var(--club-primary) !important;
+        }}
+
+        a,
+        a:visited,
+        a.player-profile-link,
+        a.player-profile-link:visited,
+        a.season-overview-link,
+        a.season-overview-link:visited,
+        a.scorecard-link,
+        a.scorecard-link:visited,
+        .stDataFrame a,
+        div[data-testid="stDataFrame"] a,
+        div[data-testid="stMetricValue"] {{
+            color: var(--club-link) !important;
+        }}
+
+        a:hover,
+        a.player-profile-link:hover,
+        a.season-overview-link:hover,
+        a.scorecard-link:hover {{
+            color: var(--club-accent) !important;
+        }}
+
+        a:focus-visible,
+        a.scorecard-link:focus-visible {{
+            outline-color: rgba(var(--club-accent-rgb), 0.44) !important;
+        }}
+
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button,
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button * {{
+            color: var(--club-link) !important;
+        }}
+
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover,
+        div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover * {{
+            color: var(--club-accent) !important;
+        }}
+
+        .stButton > button[kind="primary"],
+        .stDownloadButton > button[kind="primary"] {{
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            border-color: var(--club-primary) !important;
+        }}
+
+        .stButton > button:focus-visible,
+        .stDownloadButton > button:focus-visible {{
+            box-shadow: 0 0 0 0.2rem rgba(var(--club-accent-rgb), 0.22) !important;
+            border-color: var(--club-accent) !important;
         }}
 
         div[data-testid="stMetricValue"],
@@ -7465,7 +7519,44 @@ def active_club_theme_css() -> str:
         .fingerprint-bar,
         .hof-leader-progress,
         .leader-progress-fill,
-        .scorebook-progress-fill {{
+        .scorebook-progress-fill,
+        .progress-track div,
+        .peer-fill,
+        .player-v2-progress-track span,
+        .milestone-progress-card .progress-track div,
+        .hof-progress-row .progress-track div {{
+            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+        }}
+
+        .team-leader-card::before,
+        .kpi-icon.purple,
+        .pill.purple,
+        .score-dot.purple,
+        .legend-dot.current {{
+            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+        }}
+
+        .profile-segment:hover,
+        .profile-segment:focus-visible,
+        .folder-tab:hover,
+        .folder-tab:focus-visible {{
+            border-color: rgba(var(--club-accent-rgb), 0.34) !important;
+            color: var(--club-primary) !important;
+        }}
+
+        .folder-tab.active,
+        .folder-tab[aria-selected="true"],
+        .profile-segment.active {{
+            background: var(--club-highlight) !important;
+            border-color: rgba(var(--club-accent-rgb), 0.38) !important;
+            color: var(--club-primary) !important;
+            box-shadow: 0 12px 28px rgba(var(--club-primary-rgb), 0.12) !important;
+        }}
+
+        .hof-card::before,
+        .record-card::before,
+        .profile-season-summary-card::before,
+        .season-v2-card::before {{
             background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
         }}
         </style>
@@ -7493,6 +7584,13 @@ def darken_hex(value: str, amount: float) -> str:
     channels = [int(clean[index:index + 2], 16) for index in (0, 2, 4)]
     darkened = [max(0, min(255, round(channel * (1 - amount)))) for channel in channels]
     return "#" + "".join(f"{channel:02X}" for channel in darkened)
+
+
+def tint_hex(value: str, amount: float) -> str:
+    clean = value.lstrip("#")
+    channels = [int(clean[index:index + 2], 16) for index in (0, 2, 4)]
+    tinted = [max(0, min(255, round(channel + (255 - channel) * amount))) for channel in channels]
+    return "#" + "".join(f"{channel:02X}" for channel in tinted)
 
 
 def render_hero(
