@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import html
+import re
 
 import streamlit as st
+
+from src.config.club_config import get_branding_value
 
 
 def inject_theme() -> None:
@@ -7385,6 +7388,111 @@ def inject_theme() -> None:
         """,
         unsafe_allow_html=True,
     )
+    st.markdown(active_club_theme_css(), unsafe_allow_html=True)
+
+
+def active_club_theme_css() -> str:
+    primary = safe_hex_colour(get_branding_value("primary_colour", "#5B4BEB"), "#5B4BEB")
+    secondary = safe_hex_colour(get_branding_value("secondary_colour", "#7C5CFF"), "#7C5CFF")
+    accent = safe_hex_colour(get_branding_value("accent_colour", primary), primary)
+    background = safe_hex_colour(get_branding_value("background_colour", "#F7F8FC"), "#F7F8FC")
+    primary_rgb = hex_to_rgb(primary)
+    accent_rgb = hex_to_rgb(accent)
+    secondary_rgb = hex_to_rgb(secondary)
+    sidebar_shadow = rgba(primary_rgb, 0.34)
+    active_shadow = rgba(primary_rgb, 0.32)
+    return f"""
+        <style>
+        :root {{
+            --club-primary: {primary};
+            --club-secondary: {secondary};
+            --club-accent: {accent};
+            --club-bg: {background};
+            --club-primary-rgb: {primary_rgb};
+            --club-accent-rgb: {accent_rgb};
+            --club-secondary-rgb: {secondary_rgb};
+            --pitch: var(--club-primary);
+            --pitch-2: var(--club-accent);
+            --surface-soft: var(--club-bg);
+        }}
+
+        .stApp {{
+            background:
+                radial-gradient(circle at top right, rgba(var(--club-accent-rgb), 0.09), transparent 32rem),
+                var(--club-bg);
+        }}
+
+        section[data-testid="stSidebar"] {{
+            background:
+                radial-gradient(circle at 18% 0%, rgba(var(--club-accent-rgb), 0.38), transparent 14rem),
+                radial-gradient(circle at 80% 42%, rgba(var(--club-secondary-rgb), 0.16), transparent 12rem),
+                linear-gradient(180deg, {primary} 0%, {darken_hex(primary, 0.42)} 100%) !important;
+        }}
+
+        section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
+            background: linear-gradient(135deg, var(--club-accent), var(--club-primary)) !important;
+            box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+        }}
+
+        div[data-testid="stTabs"] button[aria-selected="true"],
+        .profile-segment.active {{
+            background: rgba(var(--club-accent-rgb), 0.12) !important;
+            color: var(--club-primary) !important;
+        }}
+
+        div[data-testid="stMetricValue"],
+        .profile-intelligence-intro span,
+        .fingerprint-player-pct,
+        .profile-best-badge,
+        .mobile-info-icon {{
+            color: var(--club-primary) !important;
+        }}
+
+        .cv-hero {{
+            background:
+                linear-gradient(135deg, {primary} 0%, {accent} 100%),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 54px) !important;
+            box-shadow: 0 22px 52px {sidebar_shadow} !important;
+        }}
+
+        .cv-callout,
+        .season-detail-card,
+        .profile-intelligence-card {{
+            border-color: rgba(var(--club-accent-rgb), 0.28) !important;
+        }}
+
+        .position-track div,
+        .fingerprint-bar,
+        .hof-leader-progress,
+        .leader-progress-fill,
+        .scorebook-progress-fill {{
+            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+        }}
+        </style>
+    """
+
+
+def safe_hex_colour(value: object, fallback: str) -> str:
+    text = str(value or "").strip()
+    if re.fullmatch(r"#[0-9a-fA-F]{6}", text):
+        return text.upper()
+    return fallback
+
+
+def hex_to_rgb(value: str) -> str:
+    clean = value.lstrip("#")
+    return f"{int(clean[0:2], 16)}, {int(clean[2:4], 16)}, {int(clean[4:6], 16)}"
+
+
+def rgba(rgb: str, alpha: float) -> str:
+    return f"rgba({rgb}, {alpha:.2f})"
+
+
+def darken_hex(value: str, amount: float) -> str:
+    clean = value.lstrip("#")
+    channels = [int(clean[index:index + 2], 16) for index in (0, 2, 4)]
+    darkened = [max(0, min(255, round(channel * (1 - amount)))) for channel in channels]
+    return "#" + "".join(f"{channel:02X}" for channel in darkened)
 
 
 def render_hero(

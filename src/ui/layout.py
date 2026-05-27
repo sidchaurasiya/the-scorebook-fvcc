@@ -529,7 +529,7 @@ def link_season_columns(table: pd.DataFrame, columns: list[str] | None = None) -
     return output
 
 
-def add_missing_canonical_player_ids(table: pd.DataFrame) -> pd.DataFrame:
+def add_missing_canonical_player_ids(table: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     if table.empty or "canonical_player_id" in table:
         return table
     name_column = "canonical_player_name" if "canonical_player_name" in table else "player_name"
@@ -545,7 +545,7 @@ def add_missing_canonical_player_ids(table: pd.DataFrame) -> pd.DataFrame:
             output["raw_player_id"] = output["player_id"]
     if "raw_player_name" not in output:
         output["raw_player_name"] = output[name_column]
-    output = apply_player_identity_mapping(output, load_player_aliases())
+    output = apply_player_identity_mapping(output, club_id=club_id)
     return output
 
 
@@ -5659,7 +5659,7 @@ def build_match_centre_win_rates() -> pd.DataFrame:
                 if part.strip() and part.strip().casefold() not in {"nan", "none"}
             }
             fvcc_team_ids_by_match[str(row.get("match_id"))] = ids
-    result_lookup = matches.set_index(matches["match_id"].astype(str))["result_text"].fillna("").astype(str).to_dict()
+    result_lookup = club_match_result_outcomes(matches)
     frames = []
     for filename in ["all_scorecard_batting.csv", "all_scorecard_bowling.csv", "all_scorecard_fielding.csv"]:
         frame = read_match_centre_csv(scope / filename)
@@ -5673,7 +5673,7 @@ def build_match_centre_win_rates() -> pd.DataFrame:
             ].copy()
         if rows.empty:
             continue
-        rows = apply_player_identity_mapping(rows, load_player_aliases())
+        rows = apply_player_identity_mapping(rows)
         rows["player_key"] = player_keys(rows)
         name_source = rows["canonical_player_name"] if "canonical_player_name" in rows else rows["player_name"]
         rows["player_name_key"] = name_source.map(player_name_match_key)
@@ -5681,8 +5681,11 @@ def build_match_centre_win_rates() -> pd.DataFrame:
     if not frames:
         return pd.DataFrame(columns=["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"])
     appearances = pd.concat(frames, ignore_index=True).dropna(subset=["player_key", "match_id"]).drop_duplicates(["player_key", "match_id"])
-    appearances["result_text"] = appearances["match_id"].map(result_lookup).fillna("")
-    appearances["win"] = appearances["result_text"].str.contains("fiji victorian", case=False, na=False)
+    appearances["win"] = appearances["match_id"].map(result_lookup)
+    appearances = appearances[appearances["win"].notna()].copy()
+    if appearances.empty:
+        return pd.DataFrame(columns=["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"])
+    appearances["win"] = appearances["win"].astype(bool)
     grouped = appearances.groupby("player_key", as_index=False).agg(
         **{
             "player_name_key": ("player_name_key", "first"),
@@ -5951,10 +5954,90 @@ def match_centre_fvcc_team_ids(matches: pd.DataFrame) -> dict[str, set[str]]:
         for _, row in matches.iterrows():
             team_ids_by_match[str(row.get("match_id"))] = {
                 part.strip()
-                for part in str(row.get("source_team_ids", "")).split(",")
+                for part in re.split(r"[|,]", str(row.get("source_team_ids", "")))
                 if part.strip() and part.strip().casefold() not in {"nan", "none"}
             }
     return team_ids_by_match
+
+
+def club_match_result_outcomes(matches: pd.DataFrame) -> dict[str, object]:
+    if matches.empty or "match_id" not in matches:
+        return {}
+    team_ids_by_match = match_centre_fvcc_team_ids(matches)
+    outcomes: dict[str, object] = {}
+    for _, row in matches.iterrows():
+        match_id = str(row.get("match_id") or "").strip()
+        if not match_id:
+            continue
+        club_name, opponent_name = active_match_team_names(row, team_ids_by_match.get(match_id, set()))
+        outcomes[match_id] = classify_active_club_result(row.get("result_text"), club_name, opponent_name)
+    return outcomes
+
+
+def active_match_team_names(row: pd.Series, club_team_ids: set[str]) -> tuple[str, str]:
+    home_id = str(row.get("home_team_id") or "").strip()
+    away_id = str(row.get("away_team_id") or "").strip()
+    home_name = str(row.get("home_team_name") or "").strip()
+    away_name = str(row.get("away_team_name") or "").strip()
+    home_is_club = bool(home_id and home_id in club_team_ids)
+    away_is_club = bool(away_id and away_id in club_team_ids)
+    if not home_is_club and not away_is_club:
+        club_tokens = normalized_active_club_name_tokens()
+        home_key = normalize_result_team_name(home_name)
+        away_key = normalize_result_team_name(away_name)
+        home_is_club = any(result_team_names_match(home_key, token) for token in club_tokens)
+        away_is_club = any(result_team_names_match(away_key, token) for token in club_tokens)
+    if home_is_club and not away_is_club:
+        return home_name, away_name
+    if away_is_club and not home_is_club:
+        return away_name, home_name
+    return "", ""
+
+
+def classify_active_club_result(result_text: object, club_name: str, opponent_name: str) -> object:
+    result = str(result_text or "").strip()
+    result_key = normalize_result_team_name(result)
+    if not result_key or result_key in {"result pending", "pending"}:
+        return pd.NA
+    if any(token in result_key for token in ["abandoned", "cancelled", "canceled", "no result"]):
+        return pd.NA
+    if any(token in result_key for token in ["match drawn", "drawn", "match tied", "tied"]):
+        return False if club_name else pd.NA
+    winner_match = re.match(r"^(?P<winner>.+?)\s+won(?:\s|$)", result, flags=re.IGNORECASE)
+    if not winner_match:
+        return pd.NA
+    winner = normalize_result_team_name(winner_match.group("winner"))
+    if result_team_names_match(winner, normalize_result_team_name(club_name)):
+        return True
+    if result_team_names_match(winner, normalize_result_team_name(opponent_name)):
+        return False
+    if any(result_team_names_match(winner, token) for token in normalized_active_club_name_tokens()):
+        return True
+    return pd.NA
+
+
+def normalized_active_club_name_tokens() -> set[str]:
+    values = {get_club_name(), get_club_short_name()}
+    tokens: set[str] = set()
+    for value in values:
+        normalized = normalize_result_team_name(value)
+        if normalized:
+            tokens.add(normalized)
+            tokens.add(re.sub(r"\b(cricket|club|cc)\b", "", normalized).strip())
+    return {token for token in tokens if token}
+
+
+def normalize_result_team_name(value: object) -> str:
+    text = str(value or "").strip().casefold().replace("&", " and ")
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"\b(cricket club|cc)\b", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def result_team_names_match(left: str, right: str) -> bool:
+    if not left or not right:
+        return False
+    return left == right or left.startswith(f"{right} ") or right.startswith(f"{left} ")
 
 
 def filter_match_centre_fvcc_rows(rows: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
@@ -5968,17 +6051,20 @@ def filter_match_centre_fvcc_rows(rows: pd.DataFrame, matches: pd.DataFrame) -> 
             output.apply(lambda row: str(row.get("team_id")) in team_ids_by_match.get(str(row.get("match_id")), set()), axis=1)
         ].copy()
     elif "team_name" in output:
-        output = output[output["team_name"].fillna("").astype(str).str.contains("Fiji Victorian", case=False, na=False)].copy()
+        club_tokens = normalized_active_club_name_tokens()
+        output = output[
+            output["team_name"].map(lambda value: any(result_team_names_match(normalize_result_team_name(value), token) for token in club_tokens))
+        ].copy()
     return output
 
 
-def prepare_match_centre_identity_rows(rows: pd.DataFrame) -> pd.DataFrame:
+def prepare_match_centre_identity_rows(rows: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     output = rows.copy()
     if "participant_id" in output:
         output["raw_player_id"] = output["participant_id"]
     if "player_name" in output:
         output["raw_player_name"] = output["player_name"]
-    return apply_player_identity_mapping(output, load_player_aliases())
+    return apply_player_identity_mapping(output, club_id=club_id)
 
 
 def scorecard_dedupe(rows: pd.DataFrame, columns: list[str]) -> pd.DataFrame:

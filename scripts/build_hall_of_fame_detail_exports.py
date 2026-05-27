@@ -9,6 +9,7 @@ production app depend on ignored match-centre folders at runtime.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -21,7 +22,7 @@ if str(ROOT) not in sys.path:
 
 from scripts import build_player_profile_insight_exports as profile_exports  # noqa: E402
 from scripts.club_refresh_utils import add_club_args, get_club_team_ids, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_club_name, get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
+from src.config.club_config import get_club_name, get_club_short_name, get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
 from src.ui import layout  # noqa: E402
 
@@ -75,7 +76,7 @@ def main(argv: list[str] | None = None) -> int:
     balls = profile_exports.prepare_ball_rows(frames, club_id=club_id)
 
     outputs = {
-        "player_win_rates.csv": build_player_win_rates(frames["matches"], batting, bowling, fielding),
+        "player_win_rates.csv": build_player_win_rates(frames["matches"], batting, bowling, fielding, club_id=club_id),
         "player_bbb_batting_rates.csv": build_player_bbb_batting_rates(batting, balls),
         "player_scorecard_milestones.csv": build_player_scorecard_milestones(batting),
         "player_bowling_milestones.csv": build_player_bowling_milestones(bowling),
@@ -96,12 +97,13 @@ def build_player_win_rates(
     batting: pd.DataFrame,
     bowling: pd.DataFrame,
     fielding: pd.DataFrame,
+    club_id: str | None = None,
 ) -> pd.DataFrame:
     if matches.empty:
         return pd.DataFrame()
     match_lookup = matches.copy()
     match_lookup["match_id"] = match_lookup["match_id"].astype(str)
-    result_by_match = match_lookup.set_index("match_id")["result_text"].fillna("").astype(str).to_dict()
+    result_by_match = club_result_outcomes(match_lookup, club_id=club_id)
     parts = []
     for frame in [batting, bowling, fielding]:
         if frame.empty or "match_id" not in frame:
@@ -112,7 +114,24 @@ def build_player_win_rates(
     if not parts:
         return pd.DataFrame()
     appearances = pd.concat(parts, ignore_index=True, sort=False).drop_duplicates(["canonical_player_id", "match_id"])
-    appearances["win"] = appearances["match_id"].map(result_by_match).fillna("").str.contains("fiji victorian", case=False, na=False)
+    appearances["win"] = appearances["match_id"].map(result_by_match)
+    appearances = appearances[appearances["win"].notna()].copy()
+    if appearances.empty:
+        return pd.DataFrame(
+            columns=[
+                "player_key",
+                "canonical_player_id",
+                "canonical_player_name",
+                "display_player_name",
+                "player_name_key",
+                "matches_with_result",
+                "wins",
+                "losses",
+                "win_pct",
+                "source_coverage_note",
+            ]
+        )
+    appearances["win"] = appearances["win"].astype(bool)
     grouped = appearances.groupby(["canonical_player_id", "canonical_player_name", "display_player_name"], dropna=False, as_index=False).agg(
         matches_with_result=("match_id", "nunique"),
         wins=("win", "sum"),
@@ -136,6 +155,114 @@ def build_player_win_rates(
             "source_coverage_note",
         ]
     ].sort_values("display_player_name")
+
+
+def club_result_outcomes(matches: pd.DataFrame, club_id: str | None = None) -> dict[str, object]:
+    """Return match_id -> selected-club win/loss outcome for attributable results.
+
+    The PlayCricket result text names the winning side, so the safest club-aware
+    interpretation is to compare that winner to the club side identified by the
+    match row's fetched team ids. Pending or ambiguous rows are left as missing.
+    """
+    if matches.empty or "match_id" not in matches:
+        return {}
+    club_team_ids = get_club_team_ids(club_id)
+    club_tokens = club_name_tokens(club_id)
+    outcomes: dict[str, object] = {}
+    for _, row in matches.iterrows():
+        match_id = clean_text(row.get("match_id"))
+        if not match_id:
+            continue
+        outcomes[match_id] = classify_club_result(row, club_team_ids=club_team_ids, club_tokens=club_tokens)
+    return outcomes
+
+
+def classify_club_result(row: pd.Series, *, club_team_ids: set[str], club_tokens: set[str]) -> object:
+    result_text = clean_text(row.get("result_text"))
+    result_key = normalize_team_name(result_text)
+    if not result_key or result_key in {"result pending", "pending"}:
+        return pd.NA
+    if any(token in result_key for token in ["abandoned", "cancelled", "canceled", "no result"]):
+        return pd.NA
+    club_name, opponent_name = selected_and_opponent_team_names(row, club_team_ids=club_team_ids, club_tokens=club_tokens)
+    if any(token in result_key for token in ["match drawn", "drawn", "match tied", " tied"]):
+        return False if club_name else pd.NA
+
+    winner = winner_name_from_result(result_text)
+    if not winner:
+        return pd.NA
+    winner_key = normalize_team_name(winner)
+    club_key = normalize_team_name(club_name)
+    opponent_key = normalize_team_name(opponent_name)
+    if club_key and names_match(winner_key, club_key):
+        return True
+    if opponent_key and names_match(winner_key, opponent_key):
+        return False
+    if club_tokens and any(names_match(winner_key, token) for token in club_tokens):
+        return True
+    return pd.NA
+
+
+def selected_and_opponent_team_names(row: pd.Series, *, club_team_ids: set[str], club_tokens: set[str]) -> tuple[str, str]:
+    home_id = clean_text(row.get("home_team_id"))
+    away_id = clean_text(row.get("away_team_id"))
+    home_name = clean_text(row.get("home_team_name"))
+    away_name = clean_text(row.get("away_team_name"))
+    source_ids = split_ids(row.get("source_team_ids"))
+    selected_ids = source_ids or club_team_ids
+    home_is_club = bool(home_id and home_id in selected_ids)
+    away_is_club = bool(away_id and away_id in selected_ids)
+    if not home_is_club and not away_is_club:
+        home_key = normalize_team_name(home_name)
+        away_key = normalize_team_name(away_name)
+        home_is_club = bool(home_key and any(names_match(home_key, token) for token in club_tokens))
+        away_is_club = bool(away_key and any(names_match(away_key, token) for token in club_tokens))
+    if home_is_club and not away_is_club:
+        return home_name, away_name
+    if away_is_club and not home_is_club:
+        return away_name, home_name
+    return "", ""
+
+
+def winner_name_from_result(result_text: str) -> str:
+    match = re.match(r"^(?P<winner>.+?)\s+won(?:\s|$)", result_text.strip(), flags=re.IGNORECASE)
+    return clean_text(match.group("winner")) if match else ""
+
+
+def club_name_tokens(club_id: str | None = None) -> set[str]:
+    values = {get_club_name(club_id), get_club_short_name(club_id)}
+    tokens: set[str] = set()
+    for value in values:
+        normalized = normalize_team_name(value)
+        if normalized:
+            tokens.add(normalized)
+            tokens.add(re.sub(r"\b(cricket|club|cc)\b", "", normalized).strip())
+    return {token for token in tokens if token}
+
+
+def names_match(left: str, right: str) -> bool:
+    if not left or not right:
+        return False
+    return left == right or left.startswith(f"{right} ") or right.startswith(f"{left} ")
+
+
+def normalize_team_name(value: object) -> str:
+    text = clean_text(value).casefold()
+    text = text.replace("&", " and ")
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"\b(cricket club|cc)\b", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def split_ids(value: object) -> set[str]:
+    return {part.strip() for part in re.split(r"[|,]", clean_text(value)) if part.strip()}
+
+
+def clean_text(value: object) -> str:
+    if value is None or pd.isna(value):
+        return ""
+    text = str(value).strip()
+    return "" if text.casefold() in {"", "nan", "none", "nat"} else text
 
 
 def build_player_bbb_batting_rates(batting: pd.DataFrame, balls: pd.DataFrame) -> pd.DataFrame:

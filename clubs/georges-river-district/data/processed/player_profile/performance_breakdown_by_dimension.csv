@@ -1,5 +1,4 @@
 canonical_player_id,canonical_player_name,display_player_name,breakdown_label,innings,runs,outs,high_score,high_score_sort,high_score_not_out_sort,thirties,fifties,hundreds,ducks,fours,sixes,bat_avg,bbb_runs,bbb_balls_faced,strike_rate,dimension,dimension_order,discipline,matches,balls_bowled,runs_against,wickets,bbi,three_wicket_innings,five_wicket_innings,bowl_avg,bowl_sr,eco,catches,stumpings,run_outs,dismissals
-deepak_sharma,Deepak Sharma,Deepak Sharma,Summer 2011/12,15.0,82.0,12.0,28,28.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,6.833333333333333,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2022/23,12.0,152.0,9.0,61,61.0,1.0,0.0,1.0,0.0,3.0,17.0,0.0,16.88888888888889,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2023/24,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,7.0,0.0,Season,0,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2024/25,6.0,62.0,5.0,48*,48.0,1.0,1.0,0.0,0.0,2.0,6.0,2.0,12.4,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -529,6 +528,7 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2009/1
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2010/11,10.0,241.0,10.0,74,74.0,0.0,1.0,2.0,0.0,1.0,24.0,0.0,24.1,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2011/12,9.0,130.0,7.0,38*,38.0,1.0,1.0,0.0,0.0,1.0,15.0,0.0,18.571428571428573,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2013/14,12.0,164.0,11.0,45,45.0,1.0,1.0,0.0,0.0,1.0,14.0,0.0,14.909090909090908,,,,Season,0,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Summer 2011/12,15.0,82.0,12.0,28,28.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,6.833333333333333,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Summer 2004/05,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Summer 2008/09,5.0,74.0,3.0,45*,45.0,1.0,1.0,0.0,0.0,2.0,4.0,1.0,24.666666666666668,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Summer 2009/10,11.0,176.0,9.0,82*,82.0,1.0,0.0,1.0,0.0,2.0,16.0,6.0,19.555555555555557,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -2699,7 +2699,6 @@ raw_ff14c3f2_e3e2_4bf0_9710_1b58f1618d7b,Dean Elliott,Dean Elliott,Summer 2025/2
 raw_ffbc736f_35ea_42fa_a3ff_ee64f86189f0,Muhammad Tanzeel Ur Rehman,Muhammad Tanzeel Ur Rehman,Summer 2024/25,2.0,3.0,2.0,3,3.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.5,3.0,34.0,8.823529411764707,Season,0,Batting,,,,,,,,,,,,,,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Summer 2016/17,8.0,43.0,6.0,18,18.0,1.0,0.0,0.0,0.0,2.0,4.0,0.0,7.166666666666667,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Summer 2021/22,10.0,85.0,9.0,38,38.0,1.0,1.0,0.0,0.0,2.0,8.0,0.0,9.444444444444445,,,,Season,0,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Summer 2011/12,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2022/23,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,66.0,21.0,43.0,41/0,0.0,1.0,0.4883720930232558,1.5348837209302326,1.9090909090909092,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2024/25,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,36.0,15.0,0.0,0/15,0.0,0.0,,,2.5,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2025/26,,,,,,,,,,,,,,,,,Season,0,Bowling,8.0,291.0,233.0,10.0,4/22,2.0,0.0,23.3,29.1,4.804123711340206,,,,
@@ -3118,6 +3117,7 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2009/1
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2010/11,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,30.0,9.0,2.0,2/9,0.0,0.0,4.5,15.0,1.8,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2011/12,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,24.0,11.0,0.0,0/1,0.0,0.0,,,2.75,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2013/14,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,34.0,27.0,1.0,1/10,0.0,0.0,27.0,34.0,4.764705882352941,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Summer 2011/12,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Summer 2008/09,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,162.0,88.0,2.0,1/22,0.0,0.0,44.0,81.0,3.259259259259259,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Summer 2009/10,,,,,,,,,,,,,,,,,Season,0,Bowling,10.0,558.0,286.0,13.0,3/28,2.0,0.0,22.0,42.92307692307692,3.075268817204301,,,,
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,Summer 2008/09,,,,,,,,,,,,,,,,,Season,0,Bowling,14.0,842.0,461.0,25.0,4/18,3.0,0.0,18.44,33.68,3.2850356294536818,,,,
@@ -4734,7 +4734,6 @@ raw_ff14c3f2_e3e2_4bf0_9710_1b58f1618d7b,Dean Elliott,Dean Elliott,Summer 2025/2
 raw_ffbc736f_35ea_42fa_a3ff_ee64f86189f0,Muhammad Tanzeel Ur Rehman,Muhammad Tanzeel Ur Rehman,Summer 2024/25,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,114.0,65.0,2.0,2/34,0.0,0.0,32.5,57.0,3.4210526315789473,,,,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Summer 2016/17,,,,,,,,,,,,,,,,,Season,0,Bowling,8.0,354.0,192.0,7.0,2/11,0.0,0.0,27.428571428571427,50.57142857142857,3.2542372881355934,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Summer 2021/22,,,,,,,,,,,,,,,,,Season,0,Bowling,10.0,360.0,218.0,10.0,3/32,1.0,0.0,21.8,36.0,3.6333333333333333,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Summer 2011/12,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,6.0,8.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2022/23,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2024/25,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Summer 2025/26,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
@@ -5151,6 +5150,7 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2005/0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2009/10,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,1.0,0.0,6.0,7.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2010/11,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Summer 2011/12,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Summer 2011/12,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,6.0,8.0
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Summer 2004/05,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Summer 2008/09,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Summer 2009/10,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
@@ -6861,8 +6861,6 @@ raw_ff14c3f2_e3e2_4bf0_9710_1b58f1618d7b,Dean Elliott,Dean Elliott,Summer 2025/2
 raw_ffbc736f_35ea_42fa_a3ff_ee64f86189f0,Muhammad Tanzeel Ur Rehman,Muhammad Tanzeel Ur Rehman,Summer 2024/25,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Summer 2016/17,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Summer 2021/22,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,5.0,0.0,2.0,7.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Fourth Grade,1.0,2.0,0.0,2*,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Grade,1,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Tim Creer Cup A Division,14.0,80.0,12.0,28,28.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,6.666666666666667,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Chappelow Cup,3.0,37.0,3.0,34,34.0,0.0,1.0,0.0,0.0,1.0,1.0,4.0,12.333333333333334,37.0,60.0,61.666666666666664,Grade,1,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Classics,2.0,19.0,2.0,19,19.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,9.5,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Classics FOXS,1.0,20.0,1.0,20,20.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,20.0,20.0,41.0,48.78048780487805,Grade,1,Batting,,,,,,,,,,,,,,
@@ -7382,6 +7380,8 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Metropolitan 
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Third Grade,10.0,142.0,9.0,39,39.0,1.0,2.0,0.0,0.0,1.0,18.0,0.0,15.777777777777779,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Tim Creer Cup,7.0,93.0,4.0,46,46.0,1.0,1.0,0.0,0.0,1.0,7.0,0.0,23.25,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Tim Creer Cup A Division,28.0,566.0,28.0,93,93.0,0.0,2.0,3.0,0.0,1.0,39.0,3.0,20.214285714285715,,,,Grade,1,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Fourth Grade,1.0,2.0,0.0,2*,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Grade,1,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Tim Creer Cup A Division,14.0,80.0,12.0,28,28.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,6.666666666666667,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Tim Creer Cup,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,First Grade,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Fourth Grade,6.0,110.0,4.0,45*,45.0,1.0,1.0,0.0,0.0,1.0,6.0,1.0,27.5,,,,Grade,1,Batting,,,,,,,,,,,,,,
@@ -9467,7 +9467,6 @@ raw_ffbc736f_35ea_42fa_a3ff_ee64f86189f0,Muhammad Tanzeel Ur Rehman,Muhammad Tan
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Metropolitan Cup,6.0,11.0,4.0,9,9.0,1.0,0.0,0.0,0.0,2.0,0.0,0.0,2.75,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Tim Creer Cup A Division,2.0,32.0,2.0,18,18.0,0.0,0.0,0.0,0.0,0.0,4.0,0.0,16.0,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Fifth Grade,10.0,85.0,9.0,38,38.0,1.0,1.0,0.0,0.0,2.0,8.0,0.0,9.444444444444445,,,,Grade,1,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Chappelow Cup,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,60.0,58.0,1.0,1/12,0.0,0.0,58.0,60.0,5.8,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Classics FOXS,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,45.0,22.0,4.0,4/22,1.0,0.0,5.5,11.25,2.933333333333333,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Fifth Grade The Tim Creer Cup,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,150.0,138.0,4.0,3/49,1.0,0.0,34.5,37.5,5.52,,,,
@@ -9865,6 +9864,7 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Fourth Grade,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Third Grade,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,18.0,10.0,0.0,0/10,0.0,0.0,,,3.3333333333333335,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Tim Creer Cup,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,7.0,7.0,1.0,1/7,0.0,0.0,7.0,7.0,6.0,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Bowling,8.0,256.0,151.0,8.0,2/9,0.0,0.0,18.875,32.0,3.5390625,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Fourth Grade,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,276.0,117.0,3.0,2/19,0.0,0.0,39.0,92.0,2.5434782608695654,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Frank Gray Shield,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,120.0,90.0,4.0,3/33,1.0,0.0,22.5,30.0,4.5,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Metropolitan Cup,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,78.0,26.0,2.0,1/13,0.0,0.0,13.0,39.0,2.0,,,,
@@ -11395,7 +11395,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Fourth Gr
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Metropolitan Cup,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,204.0,116.0,1.0,1/22,0.0,0.0,116.0,204.0,3.411764705882353,,,,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,84.0,52.0,2.0,1/25,0.0,0.0,26.0,42.0,3.7142857142857144,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Fifth Grade,,,,,,,,,,,,,,,,,Grade,1,Bowling,10.0,360.0,218.0,10.0,3/32,1.0,0.0,21.8,36.0,3.6333333333333333,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,2.0,0.0,6.0,8.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Chappelow Cup,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Classics,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Classics FOXS,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -11754,6 +11753,7 @@ raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Sydney Master
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Fourth Grade,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Third Grade,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,6.0,7.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,2.0,0.0,6.0,8.0
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Tim Creer Cup,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Fourth Grade,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Frank Gray Shield,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -13121,18 +13121,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Fourth Gr
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Metropolitan Cup,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Tim Creer Cup A Division,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Fifth Grade,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,5.0,0.0,2.0,7.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Auburn Cricket Club,2.0,8.0,2.0,5,5.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,4.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Balmain Inner Sydney Cricket Club,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Georges River Sharks Cricket Club,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,9.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Georges River Stingrays Cricket Club,1.0,5.0,0.0,5*,5.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Lane Cove Cricket Club,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Lindfield Gold Cricket Club,2.0,16.0,2.0,11,11.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,8.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Macquarie University Cricket Club,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Nth West Sydney Cricket Club,1.0,7.0,1.0,7,7.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,7.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,South Sydney Cricket Club,1.0,28.0,1.0,28,28.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,28.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Strathfield Cricket Club,1.0,2.0,0.0,2*,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,University of NSW Cricket Club,2.0,5.0,2.0,5,5.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,2.5,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Warringah Cricket Club,1.0,0.0,0.0,0*,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Auburn Gold Cricket Club,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,7.0,0.0,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Castle Hill RSL Classics 1 Cricket Club,1.0,20.0,1.0,20,20.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,20.0,20.0,41.0,48.78048780487805,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Cyclones 60's Vintage Cricket Club,1.0,48.0,0.0,48*,48.0,1.0,1.0,0.0,0.0,0.0,5.0,2.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -15250,6 +15238,18 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Strathfield C
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Sydney Cricket Club,2.0,12.0,2.0,12,12.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,6.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Uni NSW Cricket Club,1.0,45.0,1.0,45,45.0,0.0,1.0,0.0,0.0,0.0,6.0,0.0,45.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Warringah Cricket Club,6.0,106.0,6.0,39,39.0,0.0,2.0,0.0,0.0,0.0,11.0,1.0,17.666666666666668,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Auburn Cricket Club,2.0,8.0,2.0,5,5.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,4.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Balmain Inner Sydney Cricket Club,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Georges River Sharks Cricket Club,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,9.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Georges River Stingrays Cricket Club,1.0,5.0,0.0,5*,5.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Lane Cove Cricket Club,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Lindfield Gold Cricket Club,2.0,16.0,2.0,11,11.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,8.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Macquarie University Cricket Club,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Nth West Sydney Cricket Club,1.0,7.0,1.0,7,7.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,7.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,South Sydney Cricket Club,1.0,28.0,1.0,28,28.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,28.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Strathfield Cricket Club,1.0,2.0,0.0,2*,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,University of NSW Cricket Club,2.0,5.0,2.0,5,5.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,2.5,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Warringah Cricket Club,1.0,0.0,0.0,0*,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Lindfield Cricket Club,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Auburn Cricket Club,1.0,13.0,0.0,13*,13.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Blacktown Cricket Club,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,9.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -23541,10 +23541,6 @@ raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichan
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,North West Sydney Cricket Club,1.0,4.0,1.0,4,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Roseville Cricket Club,1.0,2.0,1.0,2,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Strathfield Cricket Club,1.0,5.0,1.0,5,5.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5.0,,,,Opponent,2,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Auburn Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,13.0,2.0,2.0,2/2,0.0,0.0,1.0,6.5,0.9230769230769231,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Balmain Inner Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,6.0,4.0,0.0,0/4,0.0,0.0,,,4.0,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Lane Cove Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,41.0,0.0,0/41,0.0,0.0,,,8.2,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,University of NSW Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,18.0,20.0,0.0,0/20,0.0,0.0,,,6.666666666666667,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Burwood Briars Maroon Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,12.0,1.0,1/12,0.0,0.0,12.0,30.0,2.4,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Castle Hill RSL Classics 1 Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,45.0,22.0,4.0,4/22,1.0,0.0,5.5,11.25,2.933333333333333,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Cyclones 60s Vintage Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,12.0,17.0,0.0,0/17,0.0,0.0,,,8.5,,,,
@@ -25030,6 +25026,10 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Lindfield Cri
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Lindfield Gold Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,84.0,41.0,3.0,2/9,0.0,0.0,13.666666666666666,28.0,2.9285714285714284,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,North West Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,3.0,55.0,36.0,2.0,1/7,0.0,0.0,18.0,27.5,3.9272727272727272,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Southern Districts Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,6.0,1.0,0.0,0/1,0.0,0.0,,,1.0,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Auburn Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,13.0,2.0,2.0,2/2,0.0,0.0,1.0,6.5,0.9230769230769231,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Balmain Inner Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,6.0,4.0,0.0,0/4,0.0,0.0,,,4.0,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Lane Cove Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,41.0,0.0,0/41,0.0,0.0,,,8.2,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,University of NSW Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,18.0,20.0,0.0,0/20,0.0,0.0,,,6.666666666666667,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Auburn Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,48.0,33.0,3.0,3/33,1.0,0.0,11.0,16.0,4.125,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Blacktown Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,48.0,13.0,1.0,1/13,0.0,0.0,13.0,48.0,1.625,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Burwood Briars Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,3.0,120.0,75.0,1.0,1/22,0.0,0.0,75.0,120.0,3.75,,,,
@@ -30845,11 +30845,6 @@ raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichan
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,North West Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,4.0,0.0,0/4,0.0,0.0,,,1.0,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Roseville Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,31.0,0.0,0/31,0.0,0.0,,,7.75,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Strathfield Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,48.0,32.0,3.0,3/32,1.0,0.0,10.666666666666666,16.0,4.0,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Auburn Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Balmain Inner Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Georges River Stingrays Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,University of NSW Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Warringah Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Balmain South Sydney 1st Grade Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Castle Hill RSL Classics 1 Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Mt Pritchard Southern Districts 1st Grade Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -31793,6 +31788,11 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Lindfield Cri
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,North West Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,South Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Southern Districts Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Auburn Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Balmain Inner Sydney Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Georges River Stingrays Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,University of NSW Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Warringah Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Lindfield Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Auburn Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Lindfield Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -35571,7 +35571,6 @@ raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichan
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Lindfield Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Mt Pritchard-Southern Districts Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Roseville Cricket Club,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Unknown ground,15.0,82.0,12.0,28,28.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,6.833333333333333,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Bark Huts Reserve,2.0,36.0,1.0,25*,25.0,1.0,0.0,0.0,0.0,0.0,3.0,0.0,36.0,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Bexley Oval,3.0,129.0,2.0,61,61.0,1.0,1.0,1.0,0.0,0.0,15.0,2.0,64.5,20.0,41.0,48.78048780487805,Ground,3,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Bland Oval (Turf),10.0,116.0,9.0,55,55.0,1.0,1.0,1.0,0.0,4.0,4.0,10.0,12.88888888888889,89.0,99.0,89.8989898989899,Ground,3,Batting,,,,,,,,,,,,,,
@@ -36403,6 +36402,7 @@ raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Oakville Oval
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Rawson Oval Mosman,1.0,4.0,1.0,4,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Roseville Park (turf),1.0,6.0,1.0,6,6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.0,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Unknown ground,68.0,1203.0,62.0,93,93.0,1.0,8.0,5.0,0.0,6.0,99.0,4.0,19.403225806451612,,,,Ground,3,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Unknown ground,15.0,82.0,12.0,28,28.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,6.833333333333333,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Unknown ground,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Unknown ground,16.0,250.0,12.0,82*,82.0,1.0,1.0,1.0,0.0,4.0,20.0,7.0,20.833333333333332,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,Airey Park,2.0,1.0,1.0,1,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,Ground,3,Batting,,,,,,,,,,,,,,
@@ -39968,7 +39968,6 @@ raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichan
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Rothwell Park,1.0,13.0,1.0,13,13.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,13.0,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Tantallon Oval,1.0,6.0,0.0,6*,6.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Unknown ground,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Ground,3,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Bexley Oval,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,45.0,22.0,4.0,4/22,1.0,0.0,5.5,11.25,2.933333333333333,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Bland Oval (Turf),,,,,,,,,,,,,,,,,Ground,3,Bowling,8.0,252.0,187.0,47.0,41/0,1.0,1.0,3.978723404255319,5.361702127659575,4.4523809523809526,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Lance Hutchinson Oval,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,36.0,15.0,1.0,1/15,0.0,0.0,15.0,36.0,2.5,,,,
@@ -40549,6 +40548,7 @@ raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Roseville Cha
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Roseville Park (turf),,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,12.0,14.0,1.0,1/14,0.0,0.0,14.0,12.0,7.0,,,,
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,24.0,9.0,1.0,1/9,0.0,0.0,9.0,24.0,2.25,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Bowling,11.0,287.0,169.0,9.0,2/9,0.0,0.0,18.77777777777778,31.88888888888889,3.533101045296167,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Bowling,14.0,720.0,374.0,15.0,3/28,2.0,0.0,24.933333333333334,48.0,3.1166666666666667,,,,
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,Airey Park,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,256.0,104.0,9.0,4/64,2.0,0.0,11.555555555555555,28.444444444444443,2.4375,,,,
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,Alan Davidson Oval,,,,,,,,,,,,,,,,,Ground,3,Bowling,3.0,294.0,107.0,9.0,3/16,2.0,0.0,11.88888888888889,32.666666666666664,2.183673469387755,,,,
@@ -43088,7 +43088,6 @@ raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichan
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Rothwell Park,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,36.0,17.0,0.0,0/17,0.0,0.0,,,2.8333333333333335,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Tantallon Oval,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,18.0,8.0,0.0,0/8,0.0,0.0,,,2.6666666666666665,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,48.0,35.0,0.0,0/35,0.0,0.0,,,4.375,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,6.0,8.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Alan Davidson Oval,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Bexley Oval,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Bland Oval (Turf),,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
@@ -43476,6 +43475,7 @@ raw_2bd5e7ec_3862_4a72_b2a8_5b1c7c4da11f,Daniel Mcvey,Daniel Mcvey,Unknown groun
 raw_2c29dd28_5480_446a_9998_9b1c06decdcf,Michael Sharkey,Michael Sharkey,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,6.0,0.0,1.0,7.0
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Jackson Park,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,5.0,0.0,6.0,11.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,6.0,8.0
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Unknown ground,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,Bexley Oval,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,9.0,0.0,1.0,10.0
@@ -45122,8 +45122,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Unknown g
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Bland Oval (Turf),,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Lance Hutchinson Oval,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Rothwell Park,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Away,7.0,42.0,6.0,28,28.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,7.0,,,,H/A,4,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Home,8.0,40.0,6.0,11,11.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,6.666666666666667,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Away,12.0,82.0,11.0,25*,25.0,1.0,0.0,0.0,0.0,1.0,7.0,0.0,7.454545454545454,21.0,35.0,60.0,H/A,4,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Home,14.0,267.0,11.0,61,61.0,1.0,2.0,2.0,0.0,5.0,22.0,12.0,24.272727272727273,109.0,140.0,77.85714285714286,H/A,4,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,Unknown Player_2,Unknown Player_2,Home,1.0,0.0,0.0,0*,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,H/A,4,Batting,,,,,,,,,,,,,,
@@ -45492,6 +45490,8 @@ raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Away,7.0,50.0
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Home,8.0,66.0,6.0,23,23.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,11.0,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Away,42.0,640.0,37.0,93,93.0,1.0,5.0,2.0,0.0,4.0,39.0,0.0,17.2972972972973,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Home,26.0,563.0,25.0,74,74.0,1.0,3.0,3.0,0.0,2.0,60.0,4.0,22.52,,,,H/A,4,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Away,7.0,42.0,6.0,28,28.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,7.0,,,,H/A,4,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Home,8.0,40.0,6.0,11,11.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,6.666666666666667,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Away,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Away,9.0,73.0,8.0,45*,45.0,1.0,1.0,0.0,0.0,4.0,3.0,0.0,9.125,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Home,7.0,177.0,4.0,82*,82.0,1.0,0.0,1.0,0.0,0.0,17.0,7.0,44.25,,,,H/A,4,Batting,,,,,,,,,,,,,,
@@ -47026,8 +47026,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Away,4.0,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Home,4.0,19.0,2.0,18,18.0,1.0,0.0,0.0,0.0,1.0,2.0,0.0,9.5,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Away,3.0,19.0,2.0,13,13.0,1.0,0.0,0.0,0.0,1.0,2.0,0.0,9.5,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Home,7.0,66.0,7.0,38,38.0,0.0,1.0,0.0,0.0,1.0,6.0,0.0,9.428571428571429,,,,H/A,4,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,3.0,49.0,47.0,2.0,2/2,0.0,0.0,23.5,24.5,5.755102040816326,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,18.0,20.0,0.0,0/20,0.0,0.0,,,6.666666666666667,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,3.0,108.0,94.0,4.0,3/49,1.0,0.0,23.5,27.0,5.222222222222222,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,9.0,285.0,175.0,49.0,41/0,1.0,1.0,3.5714285714285716,5.816326530612245,3.6842105263157894,,,,
 raw_00000000_0000_0000_0000_000000000002,********,********,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,2.0,36.0,23.0,0.0,0/4,0.0,0.0,,,3.8333333333333335,,,,
@@ -47311,6 +47309,8 @@ raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Away,,,,,,,,,
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,11.0,236.0,181.0,10.0,2/5,0.0,0.0,18.1,23.6,4.601694915254237,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,85.0,50.0,3.0,2/15,0.0,0.0,16.666666666666668,28.333333333333332,3.5294117647058822,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,6.0,202.0,119.0,6.0,2/9,0.0,0.0,19.833333333333332,33.666666666666664,3.5346534653465347,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,3.0,49.0,47.0,2.0,2/2,0.0,0.0,23.5,24.5,5.755102040816326,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,18.0,20.0,0.0,0/20,0.0,0.0,,,6.666666666666667,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,6.0,378.0,215.0,6.0,2/19,0.0,0.0,35.833333333333336,63.0,3.4126984126984126,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,8.0,342.0,159.0,9.0,3/28,2.0,0.0,17.666666666666668,38.0,2.789473684210526,,,,
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,126.0,8209.0,4575.0,245.0,6/34,26.0,6.0,18.6734693877551,33.50612244897959,3.3438908515044465,,,,
@@ -48529,8 +48529,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Away,,,,,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,4.0,114.0,80.0,2.0,1/22,0.0,0.0,40.0,57.0,4.2105263157894735,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Away,,,,,,,,,,,,,,,,,H/A,4,Bowling,3.0,102.0,60.0,0.0,0/8,0.0,0.0,,,3.5294117647058822,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Home,,,,,,,,,,,,,,,,,H/A,4,Bowling,7.0,258.0,158.0,10.0,3/32,1.0,0.0,15.8,25.8,3.6744186046511627,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,2.0,0.0,2.0,4.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,0.0,0.0,4.0,4.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
 raw_00000000_0000_0000_0000_000000000002,********,********,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
@@ -48797,6 +48795,8 @@ raw_2c29dd28_5480_446a_9998_9b1c06decdcf,Michael Sharkey,Michael Sharkey,Home,,,
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,2.0,0.0,2.0,4.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,3.0,0.0,4.0,7.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,2.0,0.0,2.0,4.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,0.0,0.0,4.0,4.0
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -49917,9 +49917,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Away,,,,,
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Away,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,0.0,0.0,2.0,2.0
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Home,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Clay Finnemore,3.0,15.0,2.0,5*,5.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,7.5,,,,Captain,5,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Kevin Croom,1.0,2.0,0.0,2*,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Captain,5,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Peter Bugeia,11.0,65.0,10.0,28,28.0,1.0,0.0,0.0,0.0,2.0,0.0,0.0,6.5,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,********,2.0,36.0,1.0,25*,25.0,1.0,0.0,0.0,0.0,0.0,3.0,0.0,36.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Angus O'Rourke,1.0,15.0,1.0,15,15.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,15.0,15.0,10.0,150.0,Captain,5,Batting,,,,,,,,,,,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,David Newham,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
@@ -50844,6 +50841,9 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Sean Bugeia,1
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Simon Jasper,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,9.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Todd Heslehurst,1.0,16.0,1.0,16,16.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,16.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Trent Power,1.0,0.0,0.0,0*,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Captain,5,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Clay Finnemore,3.0,15.0,2.0,5*,5.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,7.5,,,,Captain,5,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Kevin Croom,1.0,2.0,0.0,2*,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,,Captain,5,Batting,,,,,,,,,,,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Peter Bugeia,11.0,65.0,10.0,28,28.0,1.0,0.0,0.0,0.0,2.0,0.0,0.0,6.5,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Peter Lanham,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Ali Ali,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,9.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Dave Jiffkins,2.0,11.0,2.0,11,11.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,5.5,,,,Captain,5,Batting,,,,,,,,,,,,,,
@@ -54513,7 +54513,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Peter Bug
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Robert Harnett,1.0,14.0,1.0,14,14.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,14.0,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Karthic Nagarajan,7.0,68.0,6.0,38,38.0,1.0,1.0,0.0,0.0,1.0,6.0,0.0,11.333333333333334,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Satheesh Ravichandran,2.0,17.0,2.0,9,9.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,8.5,,,,Captain,5,Batting,,,,,,,,,,,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Peter Bugeia,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Bagath Singh,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,30.0,12.0,1.0,1/12,0.0,0.0,12.0,30.0,2.4,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,David Newham,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,18.0,4.0,2.0,2/4,0.0,0.0,2.0,9.0,1.3333333333333333,,,,
 raw_00000000_0000_0000_0000_000000000001,********,********,Kevin Croom,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,36.0,0.0,41.0,41/0,0.0,1.0,0.0,0.8780487804878049,0.0,,,,
@@ -55174,6 +55173,7 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Kevin Croom,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Peter Lanham,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,7.0,7.0,1.0,1/7,0.0,0.0,7.0,7.0,6.0,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Simon Jasper,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,16.0,10.0,1.0,1/10,0.0,0.0,10.0,16.0,3.75,,,,
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Todd Heslehurst,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,18.0,17.0,0.0,0/17,0.0,0.0,,,5.666666666666667,,,,
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Peter Bugeia,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,67.0,67.0,2.0,2/2,0.0,0.0,33.5,33.5,6.0,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Ali Ali,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,48.0,13.0,1.0,1/13,0.0,0.0,13.0,48.0,1.625,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Dave Jiffkins,,,,,,,,,,,,,,,,,Captain,5,Bowling,3.0,186.0,104.0,5.0,3/28,1.0,0.0,20.8,37.2,3.3548387096774195,,,,
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Joshua Loy,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,30.0,13.0,1.0,1/13,0.0,0.0,13.0,30.0,2.6,,,,
@@ -57731,8 +57731,6 @@ raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Peter Bug
 raw_ffc3cf48_afea_4f96_bfd3_696c6e390013,Blake Worsfold,Blake Worsfold,Robert Harnett,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,48.0,25.0,1.0,1/25,0.0,0.0,25.0,48.0,3.125,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Karthic Nagarajan,,,,,,,,,,,,,,,,,Captain,5,Bowling,7.0,240.0,165.0,4.0,3/32,1.0,0.0,41.25,60.0,4.125,,,,
 raw_ffe128ea_81bd_4656_b7be_64ce77651d46,Satheesh Ravichandran,Satheesh Ravichandran,Satheesh Ravichandran,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,90.0,46.0,4.0,2/18,0.0,0.0,11.5,22.5,3.066666666666667,,,,
-deepak_sharma,Deepak Sharma,Deepak Sharma,Clay Finnemore,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,2.0,3.0
-deepak_sharma,Deepak Sharma,Deepak Sharma,Peter Bugeia,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,4.0,5.0
 raw_00000000_0000_0000_0000_000000000001,********,********,David Newham,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Nicholas Stevens,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_00000000_0000_0000_0000_000000000001,********,********,Nick Condylios,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -58243,6 +58241,8 @@ raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Dave Jiffkins
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Jake Matuzic,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,6.0,7.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Mick Pitt,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,Paul Thomas,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Clay Finnemore,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,2.0,3.0
+raw_2d820f2c_149a_4b6d_9b20_2776b5534106,Deepak Sharma,Deepak Sharma,Peter Bugeia,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,4.0,5.0
 raw_2dd277a5_28a8_4dec_bf20_4fb177db135e,Tom Leake,Tom Leake,Peter Lanham,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Kevin Croom,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,Ryan Croom,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
