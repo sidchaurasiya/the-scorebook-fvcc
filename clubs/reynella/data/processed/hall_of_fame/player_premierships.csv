@@ -1,1 +1,89 @@
-canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+canonical_player_id,canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+raw_9d677ffb_16c5_4b5c_8480_d1176510f0db,Peter Jameson,Peter Jameson,4,"Summer 2007/08, Summer 2008/09, Summer 2014/15, Summer 2016/17","A3 Grade, B2 Grade, ISC Teamwear LO Division 4, B1 Grade",Reynella,Summer 2016/17,"1a77c5bc-3848-4180-a0b9-ea12185d708b, 482e6154-6523-494a-807c-6ac8f80072e5, 8de807a5-e259-4b54-b9a7-e7cab16b025e, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_98bc2f3b_30cf_4b6d_b441_87e94b2361f0,Daniel Rabbett,Daniel Rabbett,3,"Summer 2012/13, Summer 2014/15, Summer 2016/17","A3 Grade, Sportscentre A2 Grade, B1 Grade",Reynella,Summer 2016/17,"1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_ed1c49de_6316_47fb_a63a_81073b111740,Jordan Wright,Jordan Wright,3,"Summer 2008/09, Summer 2014/15, Summer 2016/17","A3 Grade, Sportscentre A2 Grade, B1 Grade",Reynella,Summer 2016/17,"1a77c5bc-3848-4180-a0b9-ea12185d708b, cbd5794b-7217-42ce-835a-e0fc7c319dc0, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_761f2f46_806e_4d87_87ee_d2c30ef3f65c,Matthew Aston,Matthew Aston,3,"Summer 2012/13, Summer 2014/15, Summer 2016/17","A3 Grade, Sportscentre A2 Grade, B1 Grade",Reynella,Summer 2016/17,"1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_f4ab7447_2fd2_4736_a2a1_2c7b18f54f41,Andrew Semple,Andrew Semple,3,"Summer 2007/08, Summer 2011/12, Summer 2014/15","ISC Teamwear LO Division 4, B2 Grade",Reynella,Summer 2014/15,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 482e6154-6523-494a-807c-6ac8f80072e5, 8de807a5-e259-4b54-b9a7-e7cab16b025e",high
+raw_82c6d3f9_dd61_4a13_82cc_fcf7c0e0a8f7,John Hopkins,John Hopkins,3,"Summer 2008/09, Summer 2012/13, Summer 2014/15","A3 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"1a77c5bc-3848-4180-a0b9-ea12185d708b, 1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+raw_fc5f7e63_b1e4_4ff4_a7cf_12691de14abb,Luke Byrne,Luke Byrne,3,"Summer 2011/12, Summer 2012/13, Summer 2014/15","ISC Teamwear LO Division 4, B2 Grade",Reynella,Summer 2014/15,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 3db4f68e-863f-4587-8b89-b1d3d3df32df, 8de807a5-e259-4b54-b9a7-e7cab16b025e",high
+raw_205e8fd2_2a71_4bb7_af36_80deca0a9b8a,Matt Hehner,Matt Hehner,3,"Summer 2007/08, Summer 2008/09, Summer 2014/15","A3 Grade, B2 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"1a77c5bc-3848-4180-a0b9-ea12185d708b, 482e6154-6523-494a-807c-6ac8f80072e5, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+raw_0ee061a9_b7b8_4379_ab58_185e759869d2,Richard Gabb,Richard Gabb,3,"Summer 2011/12, Summer 2012/13, Summer 2014/15","ISC Teamwear LO Division 4, A3 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+raw_f5cdcaed_ff90_498a_aa43_4b738b4a634d,Brett Julian,Brett Julian,2,"Summer 2007/08, Summer 2016/17","B2 Grade, B1 Grade",Reynella,Summer 2016/17,"482e6154-6523-494a-807c-6ac8f80072e5, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_ea025590_55a4_42cc_90d8_08a406c61cc4,Kaine Hopkins,Kaine Hopkins,2,"Summer 2012/13, Summer 2016/17","B2 Grade, B1 Grade",Reynella,Summer 2016/17,"3db4f68e-863f-4587-8b89-b1d3d3df32df, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_f4404c43_09f8_408c_a0c1_edd82a589504,Nathan Turner,Nathan Turner,2,"Summer 2007/08, Summer 2016/17","B2 Grade, B1 Grade",Reynella,Summer 2016/17,"482e6154-6523-494a-807c-6ac8f80072e5, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_2de79133_f18d_4f54_a440_3f1fe0cc72f9,Paul Radbourne,Paul Radbourne,2,"Summer 2008/09, Summer 2016/17","A3 Grade, B1 Grade",Reynella,Summer 2016/17,"1a77c5bc-3848-4180-a0b9-ea12185d708b, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_6406c8f9_7d05_42ad_b348_b3f74a87b29e,Scott Trenorden,Scott Trenorden,2,"Summer 2007/08, Summer 2016/17","B2 Grade, B1 Grade",Reynella,Summer 2016/17,"482e6154-6523-494a-807c-6ac8f80072e5, ceed987b-30fc-475e-9132-7a6144eb44c5",high
+raw_1a69b5d8_da3a_4162_b50b_61a08660d572,Cameron Pannach,Cameron Pannach,2,"Summer 2012/13, Summer 2014/15","A3 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+raw_c1994347_91e2_4dbd_b7b7_bb61de32518b,Daniel Joy,Daniel Joy,2,"Summer 2011/12, Summer 2014/15",ISC Teamwear LO Division 4,Reynella,Summer 2014/15,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 8de807a5-e259-4b54-b9a7-e7cab16b025e",high
+raw_53240ccc_820f_4a76_94a6_d512e07b503f,Marcus Williams,Marcus Williams,2,"Summer 2012/13, Summer 2014/15","A3 Grade, ISC Teamwear LO Division 4",Reynella,Summer 2014/15,"1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, 8de807a5-e259-4b54-b9a7-e7cab16b025e",high
+raw_613ff757_823d_470c_9a90_e316a8b7ca53,Mark Nankervis,Mark Nankervis,2,"Summer 2012/13, Summer 2014/15","A3 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+raw_6de263a3_256a_48eb_9957_5fc29f9c982f,Robert Colville,Robert Colville,2,"Summer 2012/13, Summer 2014/15","A3 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+raw_1540437c_7d5f_4916_bebb_13a43096322c,Sam Tugwell,Sam Tugwell,2,"Summer 2012/13, Summer 2014/15","B2 Grade, Sportscentre A2 Grade",Reynella,Summer 2014/15,"3db4f68e-863f-4587-8b89-b1d3d3df32df, cbd5794b-7217-42ce-835a-e0fc7c319dc0",high
+wayne_copley,Wayne Copley,Wayne Copley,2,"Summer 2012/13, Summer 2014/15","B2 Grade, ISC Teamwear LO Division 4",Reynella,Summer 2014/15,"3db4f68e-863f-4587-8b89-b1d3d3df32df, 8de807a5-e259-4b54-b9a7-e7cab16b025e",high
+raw_e9fdafeb_e5f4_43e8_b4b6_6a508dda73f4,Damien Pimlott,Damien Pimlott,2,"Summer 2008/09, Summer 2012/13",A3 Grade,Reynella,Summer 2012/13,"1a77c5bc-3848-4180-a0b9-ea12185d708b, 1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3",high
+raw_9666f7ba_1f30_435c_9fc3_a0a6cafc6389,Steve Routledge,Steve Routledge,2,"Summer 2011/12, Summer 2012/13","ISC Teamwear LO Division 4, B2 Grade",Reynella,Summer 2012/13,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 3db4f68e-863f-4587-8b89-b1d3d3df32df",high
+raw_6fc5bf6c_5304_4522_8bf7_2a99bf9c49b9,Ian Inwood,Ian Inwood,2,"Summer 2008/09, Summer 2011/12","ISC Teamwear LO Division 4, A3 Grade",Reynella,Summer 2011/12,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 1a77c5bc-3848-4180-a0b9-ea12185d708b",high
+raw_10a9c7ed_c41a_4c95_a027_636ee2122ed0,Keiren Fitzgerald,Keiren Fitzgerald,2,"Summer 2008/09, Summer 2011/12","ISC Teamwear LO Division 4, A3 Grade",Reynella,Summer 2011/12,"05ae1fcd-01b0-4175-893f-37b9011cc4e0, 1a77c5bc-3848-4180-a0b9-ea12185d708b",high
+aidan_richardson,Aidan Richardson,Aidan Richardson,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+brock_carlisle,Brock Carlisle,Brock Carlisle,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+raw_2220f59a_9c50_4a6b_83d0_0988d12f920d,Daniel O'Loughlin,Daniel O'Loughlin,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+felix_lilith_spring,Felix Lilith-Spring,Felix Lilith-Spring,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+flynn_maher,Flynn Maher,Flynn Maher,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+harrison_glatter,Harrison Glatter,Harrison Glatter,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+harry_tonkin,Harry Tonkin,Harry Tonkin,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+raw_91acefac_f204_4d47_81ba_a8e3a5883683,Isaac Ritter,Isaac Ritter,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+raw_d6f59fa9_3de7_446c_b927_ff629e0de942,Jake Walford,Jake Walford,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+jayden_hower,Jayden Hower,Jayden Hower,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+max_tonkin,Max Tonkin,Max Tonkin,1,Summer 2020/21,Under 14 South Division 2,Reynella (2) Riley,Summer 2020/21,41526958-751c-4091-a082-eaf6938e0628,high
+ashleigh_carey,Ashleigh Carey,Ashleigh Carey,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_f7b5d072_df3b_4c2b_a9be_d2c74850f62d,Brooke Mullen,Brooke Mullen,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_8b9d583e_24dd_41cd_8300_d1e447de2a0d,Emily Archer,Emily Archer,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_e5e24a6e_f1c0_4fa6_93c8_d9ecf92c0035,Glenys Gabb,Glenys Gabb,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_9112f6b1_ab92_4058_a89f_0096008547a8,Hallie Charlton,Hallie Charlton,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+jo_cooke,Jo Cooke,Jo Cooke,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_575f1ed8_c79d_41ac_9deb_0aa64c03281f,Karley Egan,Karley Egan,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_b2dbdd66_815c_4e85_85e7_7758057c255f,Katrina Vlachos,Katrina Vlachos,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_2c466c78_9334_49eb_adc3_b76e7dbcc9ca,Kristy Rochow,Kristy Rochow,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_e0729413_5ab1_45fe_b07d_97a29adf5541,Samantha Gilbertson,Samantha Gilbertson,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_40b4a8bf_b0c6_4412_a099_e9216ada17f6,Skye Venables,Skye Venables,1,Summer 2018/19,Womens 1st Grade 2019,Reynella,Summer 2018/19,da741544-58c6-4052-9f1b-17874345b283,high
+raw_b4156dbf_b538_4a28_924e_7eee4915ec7e,Ben Ryan,Ben Ryan,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_ab958602_5754_4bb1_838b_ae216f23e08b,Jake Slizankiewicz,Jake Slizankiewicz,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+jake_thyssen,Jake Thyssen,Jake Thyssen,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_6b908b4e_1d1a_4919_bea7_378e450b935d,Jonathon Hague,Jonathon Hague,1,Summer 2016/17,B1 Grade,Reynella,Summer 2016/17,ceed987b-30fc-475e-9132-7a6144eb44c5,high
+raw_2d74415e_3504_4fd6_9752_5535c4ea7d3e,Kane Marshall,Kane Marshall,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_157217ce_79a1_4fc3_b6f6_2b5f7054ef6b,Kevin Perera,Kevin Perera,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_626481e8_3b15_42b4_8c6f_d04e817ae9ad,Kyle Pengilly,Kyle Pengilly,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_f6f283ef_2791_40a6_92d7_fdae1b86370b,Lachlan Inthavong,Lachlan Inthavong,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_c4a3ce6c_b770_455e_9ce4_3dcd465eee50,Matthew Rohrlach,Matthew Rohrlach,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_6e289914_014c_4594_806b_4ffe96ff56f3,Nathan Rohrlach,Nathan Rohrlach,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_c06b8050_c916_4036_b9cb_f137a7b26469,Prayag Namath,Prayag Namath,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_76a991b3_b313_41ac_8388_e9565996dd4b,Sam Ridgwell,Sam Ridgwell,1,Summer 2016/17,B1 Grade,Reynella,Summer 2016/17,ceed987b-30fc-475e-9132-7a6144eb44c5,high
+raw_f3820284_4472_4217_b379_d8da7b212239,Shenan Perera,Shenan Perera,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+tanner_kenny,Tanner Kenny,Tanner Kenny,1,Summer 2016/17,Under 15 South Division 2,Reynella,Summer 2016/17,9c2ca915-f12e-42d7-b9f1-222771e91b85,high
+raw_75666e54_c9f4_48df_9b3b_36ee4d030b85,Aaron Robertson,Aaron Robertson,1,Summer 2014/15,ISC Teamwear LO Division 4,Reynella,Summer 2014/15,8de807a5-e259-4b54-b9a7-e7cab16b025e,high
+raw_223fa03d_3d9f_427f_bcb8_cbabfaa65791,Ben Staggs,Ben Staggs,1,Summer 2014/15,ISC Teamwear LO Division 4,Reynella,Summer 2014/15,8de807a5-e259-4b54-b9a7-e7cab16b025e,high
+raw_05ecaede_d979_4b30_94fa_8738bef6faf4,Greg Harriss,Greg Harriss,1,Summer 2014/15,ISC Teamwear LO Division 4,Reynella,Summer 2014/15,8de807a5-e259-4b54-b9a7-e7cab16b025e,high
+raw_1f98caad_f899_4edd_ab1d_4a5b9c3272c1,Jamie Caddy,Jamie Caddy,1,Summer 2014/15,ISC Teamwear LO Division 4,Reynella,Summer 2014/15,8de807a5-e259-4b54-b9a7-e7cab16b025e,high
+raw_f89db413_fbae_44bf_b75b_10896b2ef2c4,Jase Brodyk,Jase Brodyk,1,Summer 2014/15,ISC Teamwear LO Division 4,Reynella,Summer 2014/15,8de807a5-e259-4b54-b9a7-e7cab16b025e,high
+leigh_kuerschner,Leigh Kuerschner,Leigh Kuerschner,1,Summer 2014/15,Sportscentre A2 Grade,Reynella,Summer 2014/15,cbd5794b-7217-42ce-835a-e0fc7c319dc0,high
+raw_5e5a9be8_969f_4e0b_8aab_225f42282da9,Mark Walters,Mark Walters,1,Summer 2014/15,ISC Teamwear LO Division 4,Reynella,Summer 2014/15,8de807a5-e259-4b54-b9a7-e7cab16b025e,high
+raw_e3c4ef92_9283_49d3_a007_730905ad5796,Adam Ellis,Adam Ellis,1,Summer 2012/13,B2 Grade,Reynella,Summer 2012/13,3db4f68e-863f-4587-8b89-b1d3d3df32df,high
+ashley_mack,Ashley Mack,Ashley Mack,1,Summer 2012/13,B2 Grade,Reynella,Summer 2012/13,3db4f68e-863f-4587-8b89-b1d3d3df32df,high
+raw_49a37245_3bc1_4745_98c3_bed774f7edac,Bradley Dewaal,Bradley Dewaal,1,Summer 2012/13,B2 Grade,Reynella,Summer 2012/13,3db4f68e-863f-4587-8b89-b1d3d3df32df,high
+raw_e06a2bd9_1aed_4fd2_b50f_980102ab4a5d,Josh Rudd,Josh Rudd,1,Summer 2012/13,A3 Grade,Reynella,Summer 2012/13,1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3,high
+raw_3e84f700_4996_45f9_8d4f_afab3dd35bda,Mathew Pimlott,Mathew Pimlott,1,Summer 2012/13,B2 Grade,Reynella,Summer 2012/13,3db4f68e-863f-4587-8b89-b1d3d3df32df,high
+raw_cae88e85_7ea5_4ced_8f99_113f228d9e4d,Michael Shaw,Michael Shaw,1,Summer 2012/13,B2 Grade,Reynella,Summer 2012/13,3db4f68e-863f-4587-8b89-b1d3d3df32df,high
+raw_607112f1_ee81_40bc_bc5d_e08e18d309b5,Rhys Allard,Rhys Allard,1,Summer 2012/13,A3 Grade,Reynella,Summer 2012/13,1be0315c-27d5-4d70-9f3b-86d2f5dfd9b3,high
+raw_a9dba5a7_bbcc_4748_a268_91410f098fbd,Stewart Mcinnes,Stewart Mcinnes,1,Summer 2012/13,B2 Grade,Reynella,Summer 2012/13,3db4f68e-863f-4587-8b89-b1d3d3df32df,high
+raw_80bb7a2c_81a0_45ca_8727_9cb84f257474,Grant Francis,Grant Francis,1,Summer 2011/12,ISC Teamwear LO Division 4,Reynella,Summer 2011/12,05ae1fcd-01b0-4175-893f-37b9011cc4e0,high
+raw_5652e2e6_ff6f_4793_843b_b1a2ecc31505,Jack Carter,Jack Carter,1,Summer 2011/12,ISC Teamwear LO Division 4,Reynella,Summer 2011/12,05ae1fcd-01b0-4175-893f-37b9011cc4e0,high
+raw_fe41f5b4_1697_4c34_bbd4_5875c0ecc862,Michael Humphrey,Michael Humphrey,1,Summer 2011/12,ISC Teamwear LO Division 4,Reynella,Summer 2011/12,05ae1fcd-01b0-4175-893f-37b9011cc4e0,high
+raw_f6c1d19f_11be_482c_8867_5444c7dade09,Michael Maney,Michael Maney,1,Summer 2011/12,ISC Teamwear LO Division 4,Reynella,Summer 2011/12,05ae1fcd-01b0-4175-893f-37b9011cc4e0,high
+raw_3158f368_9763_4acb_b74b_d4d60e785223,Andrew Shaw,Andrew Shaw,1,Summer 2008/09,A3 Grade,Reynella,Summer 2008/09,1a77c5bc-3848-4180-a0b9-ea12185d708b,high
+raw_427720ca_acbd_4e70_9ea1_ab061c431036,Callan Semple,Callan Semple,1,Summer 2008/09,A3 Grade,Reynella,Summer 2008/09,1a77c5bc-3848-4180-a0b9-ea12185d708b,high
+raw_d809552e_17cb_4c21_8b73_229073a9e9ce,Shaun Dewaal,Shaun Dewaal,1,Summer 2008/09,A3 Grade,Reynella,Summer 2008/09,1a77c5bc-3848-4180-a0b9-ea12185d708b,high
+raw_010e034a_ef4e_4ae8_9bbf_cee7128ffda4,Brayden Lobow,Brayden Lobow,1,Summer 2007/08,B2 Grade,Reynella,Summer 2007/08,482e6154-6523-494a-807c-6ac8f80072e5,high
+raw_2312a7de_30b8_4017_aa94_d84a6fc419c8,Brett Roberts,Brett Roberts,1,Summer 2007/08,B2 Grade,Reynella,Summer 2007/08,482e6154-6523-494a-807c-6ac8f80072e5,high
+jason_jennings,Jason Jennings,Jason Jennings,1,Summer 2007/08,B2 Grade,Reynella,Summer 2007/08,482e6154-6523-494a-807c-6ac8f80072e5,high
+raw_bee16feb_c4ef_4751_aef2_a65fcf9ab6f4,Kieron Fitzgerald,Kieron Fitzgerald,1,Summer 2007/08,B2 Grade,Reynella,Summer 2007/08,482e6154-6523-494a-807c-6ac8f80072e5,high
+raw_718a4e03_e8e1_492b_b3bd_beee1b9de2ff,Steve Hiern,Steve Hiern,1,Summer 2007/08,B2 Grade,Reynella,Summer 2007/08,482e6154-6523-494a-807c-6ac8f80072e5,high

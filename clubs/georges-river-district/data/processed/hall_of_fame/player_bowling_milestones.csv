@@ -1,14 +1,14 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,three_wicket_innings,five_wicket_innings,ten_wicket_matches,bbi,bbi_wickets_sort,bbi_runs_sort
 raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,2,1,1,41/0,41,0
-raw_90196315_0c93_4f37_a44d_1f4f963aa015,raw_90196315_0c93_4f37_a44d_1f4f963aa015,********,********,1,0,0,3/26,3,26
-raw_8c4d9fb6_0061_44bb_9300_c1f54636eee2,raw_8c4d9fb6_0061_44bb_9300_c1f54636eee2,********,********,0,0,0,2/25,2,25
 raw_d4a6a1eb_7d61_4d79_8959_16d99efb4dee,raw_d4a6a1eb_7d61_4d79_8959_16d99efb4dee,********,********,0,0,0,1/4,1,4
-raw_bc791950_7f70_4d30_83e9_15a982c0bfe7,raw_bc791950_7f70_4d30_83e9_15a982c0bfe7,********,********,8,1,0,5/16,5,16
 raw_ec214c4a_a69b_49b8_a1f7_5e41ee81e12b,raw_ec214c4a_a69b_49b8_a1f7_5e41ee81e12b,********,********,2,0,0,4/37,4,37
-raw_f5091c31_a4cc_4608_b3fb_7755f1d77ce1,raw_f5091c31_a4cc_4608_b3fb_7755f1d77ce1,********,********,0,0,0,1/0,1,0
 raw_f01efa50_c69e_4d03_90e3_5ce18a37f6a1,raw_f01efa50_c69e_4d03_90e3_5ce18a37f6a1,********,********,3,0,0,4/29,4,29
+raw_8c4d9fb6_0061_44bb_9300_c1f54636eee2,raw_8c4d9fb6_0061_44bb_9300_c1f54636eee2,********,********,0,0,0,2/25,2,25
 raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,0,0,0,2/21,2,21
 raw_00000000_0000_0000_0000_000000000003,raw_00000000_0000_0000_0000_000000000003,********,********,1,0,0,3/13,3,13
+raw_90196315_0c93_4f37_a44d_1f4f963aa015,raw_90196315_0c93_4f37_a44d_1f4f963aa015,********,********,1,0,0,3/26,3,26
+raw_f5091c31_a4cc_4608_b3fb_7755f1d77ce1,raw_f5091c31_a4cc_4608_b3fb_7755f1d77ce1,********,********,0,0,0,1/0,1,0
+raw_bc791950_7f70_4d30_83e9_15a982c0bfe7,raw_bc791950_7f70_4d30_83e9_15a982c0bfe7,********,********,8,1,0,5/16,5,16
 raw_283baa42_cf3c_4d19_bd1f_5861a7738ad8,raw_283baa42_cf3c_4d19_bd1f_5861a7738ad8,********,********,0,0,0,1/40,1,40
 raw_06e9b44f_37a4_4d46_9b6a_3ea2cd1725f1,raw_06e9b44f_37a4_4d46_9b6a_3ea2cd1725f1,Aadil Shariff,Aadil Shariff,0,0,0,2/14,2,14
 raw_4b6b5d65_6229_4099_96a1_e28ca83febd0,raw_4b6b5d65_6229_4099_96a1_e28ca83febd0,Aamir Chaudhry,Aamir Chaudhry,2,0,0,3/5,3,5
@@ -20,15 +20,13 @@ raw_f235b6c2_84b0_4c9a_ada9_1f06c4a210d3,raw_f235b6c2_84b0_4c9a_ada9_1f06c4a210d
 raw_b664360e_4c8c_413e_8c84_0fb1532c5c22,raw_b664360e_4c8c_413e_8c84_0fb1532c5c22,Abhinav Goswami,Abhinav Goswami,3,0,0,4/2,4,2
 raw_ddfca0c2_efe8_4359_967e_516d6717eed9,raw_ddfca0c2_efe8_4359_967e_516d6717eed9,Adam Carrall,Adam Carrall,26,7,0,7/26,7,26
 raw_ce8a7015_cbf1_4275_9a11_6ce58d288b94,raw_ce8a7015_cbf1_4275_9a11_6ce58d288b94,Adam Finlayson,Adam Finlayson,0,0,0,2/17,2,17
-raw_a4c05fc0_3942_4e13_82a6_a76a2d21676e,raw_a4c05fc0_3942_4e13_82a6_a76a2d21676e,Adam Scott,Adam Scott,3,0,0,3/7,3,7
-raw_119115cb_ab94_4b5a_b10f_f1420f85f4f6,raw_119115cb_ab94_4b5a_b10f_f1420f85f4f6,Adam Scott,Adam Scott,4,0,0,3/4,3,4
+adam_scott,adam_scott,Adam Scott,Adam Scott,7,0,0,3/4,3,4
 raw_3bede9a1_9979_4f2c_8d33_2fb5af821444,raw_3bede9a1_9979_4f2c_8d33_2fb5af821444,Adam Wilson,Adam Wilson,9,0,0,4/10,4,10
 raw_810a7da4_ff40_43f9_8fc9_3cbb6723ad0b,raw_810a7da4_ff40_43f9_8fc9_3cbb6723ad0b,Adeel Shah,Adeel Shah,2,0,0,3/47,3,47
 raw_169537d6_21b0_4a38_9f4f_26a533d211f3,raw_169537d6_21b0_4a38_9f4f_26a533d211f3,Adil Mohammed,Adil Mohammed,0,1,0,5/34,5,34
 raw_f2e6d299_b9b2_4a11_a472_b3f45ea2b8ba,raw_f2e6d299_b9b2_4a11_a472_b3f45ea2b8ba,Ahmed Bajouri,Ahmed Bajouri,0,0,0,0/16,0,16
 raw_0677b72d_b1b1_433e_803b_7b79cb5c5ef9,raw_0677b72d_b1b1_433e_803b_7b79cb5c5ef9,Aidan Simmons,Aidan Simmons,1,0,0,3/30,3,30
-raw_c7a78524_df42_45b2_bae7_6f8628544ef8,raw_c7a78524_df42_45b2_bae7_6f8628544ef8,Aidan Wood,Aidan Wood,1,0,0,3/41,3,41
-raw_fd2e049e_715b_424e_bb2e_ad643aee710f,raw_fd2e049e_715b_424e_bb2e_ad643aee710f,Aidan Wood,Aidan Wood,0,0,0,2/14,2,14
+aidan_wood,aidan_wood,Aidan Wood,Aidan Wood,1,0,0,3/41,3,41
 raw_4319d7a2_cc65_45d7_9e9f_02715be54bae,raw_4319d7a2_cc65_45d7_9e9f_02715be54bae,Ajaya Lama,Ajaya Lama,0,0,0,1/11,1,11
 raw_e401f488_b86e_4591_b42c_e8c4bb674f32,raw_e401f488_b86e_4591_b42c_e8c4bb674f32,Akash Padavala,Akash Padavala,0,1,0,5/39,5,39
 raw_19be25af_a00f_4eda_9d1d_2a89079db6b7,raw_19be25af_a00f_4eda_9d1d_2a89079db6b7,Alan Willmore,Alan Willmore,10,1,0,5/29,5,29
@@ -44,8 +42,7 @@ raw_9e509bb6_93eb_4e5d_9e20_e22096bd8867,raw_9e509bb6_93eb_4e5d_9e20_e22096bd886
 raw_01db8ab0_be17_48ff_b7b9_ab2de5b0a283,raw_01db8ab0_be17_48ff_b7b9_ab2de5b0a283,Alex Wall,Alex Wall,3,0,0,4/30,4,30
 raw_69d4ddc3_0ee2_4f5e_b3ba_021d9f5ef08e,raw_69d4ddc3_0ee2_4f5e_b3ba_021d9f5ef08e,Alexander Cutajar,Alexander Cutajar,0,1,0,7/44,7,44
 raw_d9d180b1_1c20_4f9c_96e5_10e6ae5124ea,raw_d9d180b1_1c20_4f9c_96e5_10e6ae5124ea,Alexander Lauchlan,Alexander Lauchlan,0,0,0,2/20,2,20
-raw_cec7663a_f059_4bad_9ed4_f83b432d4a49,raw_cec7663a_f059_4bad_9ed4_f83b432d4a49,Alexander Ristevski,Alexander Ristevski,0,0,0,2/25,2,25
-raw_0fdc6581_0f7d_4a53_b5d3_c06e91b851e1,raw_0fdc6581_0f7d_4a53_b5d3_c06e91b851e1,Alexander Ristevski,Alexander Ristevski,0,0,0,1/20,1,20
+alexander_ristevski,alexander_ristevski,Alexander Ristevski,Alexander Ristevski,0,0,0,2/25,2,25
 raw_7b7af497_6bbc_41d7_83a5_301de3fb3f95,raw_7b7af497_6bbc_41d7_83a5_301de3fb3f95,Ali Ali,Ali Ali,32,4,0,7/48,7,48
 raw_1548ffef_fccb_4b7b_8955_adf2c7dc1d9e,raw_1548ffef_fccb_4b7b_8955_adf2c7dc1d9e,Ali Ali,Ali Ali,10,1,0,5/13,5,13
 raw_9ec177af_c212_4895_a9ac_47fdbafd4da4,raw_9ec177af_c212_4895_a9ac_47fdbafd4da4,Ali Syed,Ali Syed,0,0,0,1/10,1,10
@@ -61,8 +58,7 @@ raw_a6d79aa4_7582_4526_a4b4_d032dc09f724,raw_a6d79aa4_7582_4526_a4b4_d032dc09f72
 raw_49d9d9ba_49e8_4482_8253_7251b1a44b59,raw_49d9d9ba_49e8_4482_8253_7251b1a44b59,Andrew Ellis,Andrew Ellis,4,1,0,5/16,5,16
 raw_e72f3d46_a03a_495e_ba16_046e8e04f03f,raw_e72f3d46_a03a_495e_ba16_046e8e04f03f,Andrew Gardner,Andrew Gardner,0,0,0,1/28,1,28
 raw_906cdca0_4b6f_4eb2_9851_0313c46d7773,raw_906cdca0_4b6f_4eb2_9851_0313c46d7773,Andrew Gilchrist,Andrew Gilchrist,7,1,0,5/38,5,38
-raw_d2c09c94_afae_4ed8_accc_410685e06cd0,raw_d2c09c94_afae_4ed8_accc_410685e06cd0,Andrew Gunaratnam,Andrew Gunaratnam,2,0,0,4/38,4,38
-raw_8f797024_6b78_479f_a9c0_615790d9a38b,raw_8f797024_6b78_479f_a9c0_615790d9a38b,Andrew Gunaratnam,Andrew Gunaratnam,3,0,0,4/33,4,33
+andrew_gunaratnam,andrew_gunaratnam,Andrew Gunaratnam,Andrew Gunaratnam,5,0,0,4/33,4,33
 raw_810f89e4_451f_4368_abaa_7f00449ddae4,raw_810f89e4_451f_4368_abaa_7f00449ddae4,Andrew Julian,Andrew Julian,0,0,0,1/11,1,11
 raw_661e358d_9ddc_4b27_9eac_c02f25a13530,raw_661e358d_9ddc_4b27_9eac_c02f25a13530,Andrew Mcguiness,Andrew Mcguiness,1,0,0,3/33,3,33
 raw_83cb5a40_6abb_4f89_9906_a0e78e25c7f2,raw_83cb5a40_6abb_4f89_9906_a0e78e25c7f2,Andrew Merriman,Andrew Merriman,0,0,0,0/25,0,25
@@ -71,8 +67,7 @@ raw_bcdd214b_f467_4c7d_91d6_4b17d7dd42fb,raw_bcdd214b_f467_4c7d_91d6_4b17d7dd42f
 raw_6c00e3ea_afe1_4510_aeb0_04ec13576a7e,raw_6c00e3ea_afe1_4510_aeb0_04ec13576a7e,Angus O'Rourke,Angus O'Rourke,9,5,0,7/77,7,77
 raw_40f92a11_6086_4d10_916c_9e3ad67006d5,raw_40f92a11_6086_4d10_916c_9e3ad67006d5,Anil Amatya,Anil Amatya,0,0,0,0/13,0,13
 raw_bbca80f9_52ad_4968_b22d_df74bfd617fd,raw_bbca80f9_52ad_4968_b22d_df74bfd617fd,Anthony Campey,Anthony Campey,1,0,0,4/17,4,17
-raw_6513b681_a053_4c3b_bd71_112d79be507e,raw_6513b681_a053_4c3b_bd71_112d79be507e,Anthony Murphy,Anthony Murphy,1,0,0,3/29,3,29
-raw_0ce57f19_6515_433a_aedd_fc3b0a28a663,raw_0ce57f19_6515_433a_aedd_fc3b0a28a663,Anthony Murphy,Anthony Murphy,8,2,0,6/25,6,25
+anthony_murphy,anthony_murphy,Anthony Murphy,Anthony Murphy,9,2,0,6/25,6,25
 raw_50773913_957b_4e58_8d91_d962458ccba0,raw_50773913_957b_4e58_8d91_d962458ccba0,Anthony Ward,Anthony Ward,9,2,0,9/22,9,22
 raw_65d2779e_7dbd_4138_96ba_7f420efe304f,raw_65d2779e_7dbd_4138_96ba_7f420efe304f,Aravendhan Muthiah,Aravendhan Muthiah,0,0,0,0/20,0,20
 raw_1f7bbff9_cba7_4289_82c3_a88c00179e8e,raw_1f7bbff9_cba7_4289_82c3_a88c00179e8e,Arif Khan,Arif Khan,0,0,0,0/12,0,12
@@ -102,8 +97,7 @@ raw_b655c3f0_ea0f_4a95_b3b6_0a44debd0f48,raw_b655c3f0_ea0f_4a95_b3b6_0a44debd0f4
 raw_eb7150c0_987c_4672_9206_3d564a430449,raw_eb7150c0_987c_4672_9206_3d564a430449,Ben Percey,Ben Percey,0,0,0,2/13,2,13
 raw_e47734af_3dfb_45ac_bf58_4c5ce9597c25,raw_e47734af_3dfb_45ac_bf58_4c5ce9597c25,Ben Pullen,Ben Pullen,3,1,0,5/30,5,30
 raw_632f6261_fe2d_42de_b2e6_611786607348,raw_632f6261_fe2d_42de_b2e6_611786607348,Ben Saunders,Ben Saunders,34,8,1,8/51,8,51
-raw_69b055bf_246f_4864_84f0_a58918300c36,raw_69b055bf_246f_4864_84f0_a58918300c36,Ben Watkinson,Ben Watkinson,0,0,0,1/19,1,19
-raw_f8fedaf1_4f73_4244_acac_6d947ba37e63,raw_f8fedaf1_4f73_4244_acac_6d947ba37e63,Ben Watkinson,Ben Watkinson,3,0,0,3/6,3,6
+ben_watkinson,ben_watkinson,Ben Watkinson,Ben Watkinson,3,0,0,3/6,3,6
 raw_7add3db7_b5f3_4f98_a65a_6bd88edbdf15,raw_7add3db7_b5f3_4f98_a65a_6bd88edbdf15,Benjamin Hutchinson,Benjamin Hutchinson,0,0,0,2/13,2,13
 raw_304f705f_480f_4eb2_86e0_67cf0a7421ac,raw_304f705f_480f_4eb2_86e0_67cf0a7421ac,Benjamin Montedoro,Benjamin Montedoro,0,0,0,1/12,1,12
 raw_6c3ecf6a_8269_4752_96b8_719673f12be7,raw_6c3ecf6a_8269_4752_96b8_719673f12be7,Benjamin Vella,Benjamin Vella,27,13,2,9/44,9,44
@@ -123,7 +117,7 @@ raw_533c7a21_687e_42dd_9df8_949facae600f,raw_533c7a21_687e_42dd_9df8_949facae600
 raw_b4260b0d_fcd9_49e6_90fc_8fe1e69c7b6e,raw_b4260b0d_fcd9_49e6_90fc_8fe1e69c7b6e,Bradley Uglow,Bradley Uglow,0,0,0,0/11,0,11
 raw_1754024e_1138_412c_8bc4_55ac9202fa46,raw_1754024e_1138_412c_8bc4_55ac9202fa46,Brayden Miller,Brayden Miller,0,0,0,0/18,0,18
 raw_c9f4647d_3cfd_4df3_aaeb_362d86291ff3,raw_c9f4647d_3cfd_4df3_aaeb_362d86291ff3,Brendan Cole,Brendan Cole,0,0,0,2/29,2,29
-raw_a8bfe6e6_81bd_4865_ae17_f93c76fcabeb,raw_a8bfe6e6_81bd_4865_ae17_f93c76fcabeb,Brendan Dodd,Brendan Dodd,1,0,0,3/23,3,23
+brendan_dodd,brendan_dodd,Brendan Dodd,Brendan Dodd,1,0,0,3/23,3,23
 raw_ecb3679c_db26_4a6f_840c_86a3af16db52,raw_ecb3679c_db26_4a6f_840c_86a3af16db52,Brendan Napier,Brendan Napier,16,1,0,5/36,5,36
 raw_09a9605f_4212_494f_af7b_20ba87e3e46a,raw_09a9605f_4212_494f_af7b_20ba87e3e46a,Brendan Newton,Brendan Newton,2,2,0,5/15,5,15
 raw_723580a6_401c_412f_939d_ac9dc00da4e9,raw_723580a6_401c_412f_939d_ac9dc00da4e9,Brendan Scott,Brendan Scott,0,0,0,2/0,2,0
@@ -136,8 +130,7 @@ raw_121cd2f8_9db5_4964_a972_827607423ab2,raw_121cd2f8_9db5_4964_a972_827607423ab
 raw_41504e3c_e18b_4b26_8c67_1d84661a19d3,raw_41504e3c_e18b_4b26_8c67_1d84661a19d3,Brett Palmer,Brett Palmer,5,0,0,4/20,4,20
 raw_2a1b7624_e6c2_452e_9698_eaa66f724431,raw_2a1b7624_e6c2_452e_9698_eaa66f724431,Brett Rousettly,Brett Rousettly,0,0,0,0/15,0,15
 raw_4ee6ea17_bce0_40c9_a14f_fffa387947e7,raw_4ee6ea17_bce0_40c9_a14f_fffa387947e7,Brett Roussetly,Brett Roussetly,0,0,0,0/26,0,26
-raw_a8373452_32cc_452b_9901_bb5052139c51,raw_a8373452_32cc_452b_9901_bb5052139c51,Brett Wood,Brett Wood,2,0,0,3/28,3,28
-raw_6fe4cf94_3018_445c_9f24_14bb49299f9d,raw_6fe4cf94_3018_445c_9f24_14bb49299f9d,Brett Wood,Brett Wood,0,0,0,2/10,2,10
+brett_wood,brett_wood,Brett Wood,Brett Wood,2,0,0,3/28,3,28
 raw_67391af2_e6a4_4d33_9972_5e37be40a1ec,raw_67391af2_e6a4_4d33_9972_5e37be40a1ec,Brian Somerville,Brian Somerville,2,1,0,5/65,5,65
 raw_99486be5_af73_4908_9b8f_fe7d645d292d,raw_99486be5_af73_4908_9b8f_fe7d645d292d,Brock Goninan,Brock Goninan,1,0,0,4/11,4,11
 raw_7f02a15e_6850_4eaf_95e8_e900835d96b7,raw_7f02a15e_6850_4eaf_95e8_e900835d96b7,Brodey Castle,Brodey Castle,0,0,0,1/0,1,0
@@ -157,8 +150,7 @@ raw_df0c485a_bccc_4571_aa22_7f44702ec212,raw_df0c485a_bccc_4571_aa22_7f44702ec21
 raw_13373845_cf66_438e_a326_829bc8a8779f,raw_13373845_cf66_438e_a326_829bc8a8779f,Chas Viner,Chas Viner,0,0,0,1/10,1,10
 raw_72848eec_a68b_4792_8321_020885b6d99e,raw_72848eec_a68b_4792_8321_020885b6d99e,Chris Alexander,Chris Alexander,0,0,0,2/14,2,14
 raw_f661b641_aadd_4e05_881d_ef26434fc983,raw_f661b641_aadd_4e05_881d_ef26434fc983,Chris Bailey,Chris Bailey,0,0,0,1/15,1,15
-raw_7e431483_3f5e_4bfd_8f6d_f72d23cfbccc,raw_7e431483_3f5e_4bfd_8f6d_f72d23cfbccc,Chris Benjamin,Chris Benjamin,0,0,0,1/9,1,9
-raw_ed7cfabe_85ec_4caf_a670_8605612c4644,raw_ed7cfabe_85ec_4caf_a670_8605612c4644,Chris Benjamin,Chris Benjamin,0,0,0,0/4,0,4
+chris_benjamin,chris_benjamin,Chris Benjamin,Chris Benjamin,0,0,0,1/9,1,9
 raw_645b9b27_97c1_484b_8f2c_0af97ca19994,raw_645b9b27_97c1_484b_8f2c_0af97ca19994,Chris Feggans,Chris Feggans,0,0,0,0/11,0,11
 raw_78deb21e_352b_4627_aac8_9c85e3d14393,raw_78deb21e_352b_4627_aac8_9c85e3d14393,Chris Ford,Chris Ford,0,0,0,1/38,1,38
 raw_f70d02cb_0e98_41d0_9777_b0a0833a5c3c,raw_f70d02cb_0e98_41d0_9777_b0a0833a5c3c,Chris Hobart,Chris Hobart,0,0,0,1/18,1,18
@@ -182,12 +174,10 @@ raw_1f491e6f_1d4a_4ea0_a09a_e5075a0b130b,raw_1f491e6f_1d4a_4ea0_a09a_e5075a0b130
 raw_268d5383_e3a8_4f2c_b189_b1bdd30080f5,raw_268d5383_e3a8_4f2c_b189_b1bdd30080f5,Cooper Kostopoulos,Cooper Kostopoulos,2,2,0,5/13,5,13
 raw_931c3ac4_3f85_43b1_afc6_40356d21ceb1,raw_931c3ac4_3f85_43b1_afc6_40356d21ceb1,Corey Peacock,Corey Peacock,2,1,0,5/23,5,23
 raw_18ea57c7_df15_488d_a02d_909101f5c7b8,raw_18ea57c7_df15_488d_a02d_909101f5c7b8,Craig Butler,Craig Butler,0,0,0,1/11,1,11
-raw_896dbddd_4489_4baf_92ee_f7f8f08ee5f9,raw_896dbddd_4489_4baf_92ee_f7f8f08ee5f9,Craig Matthews,Craig Matthews,0,0,0,1/19,1,19
-raw_051674b5_c1d8_48f9_a6e1_ade29ebe4291,raw_051674b5_c1d8_48f9_a6e1_ade29ebe4291,Craig Matthews,Craig Matthews,4,1,0,6/20,6,20
-raw_99161523_6119_40e0_85e6_fe249ce3b238,raw_99161523_6119_40e0_85e6_fe249ce3b238,Craig Tilley,Craig Tilley,0,0,0,2/27,2,27
-raw_9eb06d5e_f394_4859_a547_4bb344a90afa,raw_9eb06d5e_f394_4859_a547_4bb344a90afa,Craig Tilley,Craig Tilley,1,0,0,3/16,3,16
-raw_db0ccde6_0c49_4430_ae43_2a22edf4f12c,raw_db0ccde6_0c49_4430_ae43_2a22edf4f12c,Curtis Cheney,Curtis Cheney,0,0,0,1/22,1,22
+craig_matthews,craig_matthews,Craig Matthews,Craig Matthews,4,1,0,6/20,6,20
+craig_tilley,craig_tilley,Craig Tilley,Craig Tilley,1,0,0,3/16,3,16
 raw_095bbe27_a8c1_4a08_8813_e11fd023c509,raw_095bbe27_a8c1_4a08_8813_e11fd023c509,Curtis Cheney,Curtis Cheney,0,0,0,1/14,1,14
+raw_db0ccde6_0c49_4430_ae43_2a22edf4f12c,raw_db0ccde6_0c49_4430_ae43_2a22edf4f12c,Curtis Cheney,Curtis Cheney,0,0,0,1/22,1,22
 raw_b0607e2d_546f_4c37_9970_eef98e90004c,raw_b0607e2d_546f_4c37_9970_eef98e90004c,D Wadhawana,D Wadhawana,0,0,0,1/27,1,27
 raw_99f93b52_2e63_41b3_a743_e21501712e74,raw_99f93b52_2e63_41b3_a743_e21501712e74,Daanyal Saeed,Daanyal Saeed,0,0,0,1/33,1,33
 raw_fcba408a_01a1_46b7_9f8b_fe4eaa2639e8,raw_fcba408a_01a1_46b7_9f8b_fe4eaa2639e8,Dale Bates,Dale Bates,1,0,0,3/33,3,33
@@ -206,14 +196,12 @@ raw_b2d1d0b0_d343_4411_aaa7_aedaeb583304,raw_b2d1d0b0_d343_4411_aaa7_aedaeb58330
 raw_5cff4c8e_0dac_4112_abfe_6952d1645ef2,raw_5cff4c8e_0dac_4112_abfe_6952d1645ef2,Daniel Marshall,Daniel Marshall,1,0,0,3/19,3,19
 raw_2bd5e7ec_3862_4a72_b2a8_5b1c7c4da11f,raw_2bd5e7ec_3862_4a72_b2a8_5b1c7c4da11f,Daniel Mcvey,Daniel Mcvey,0,0,0,2/11,2,11
 raw_c704dfec_a2be_42fa_bf70_d63d8bfebfe6,raw_c704dfec_a2be_42fa_bf70_d63d8bfebfe6,Daniel Milgate,Daniel Milgate,10,0,0,4/21,4,21
-raw_9557ad88_edf3_431f_af34_81e41c02515d,raw_9557ad88_edf3_431f_af34_81e41c02515d,Daniel Milliken,Daniel Milliken,0,0,0,0/1,0,1
-raw_47b6227c_0362_464e_a5eb_786629117ae9,raw_47b6227c_0362_464e_a5eb_786629117ae9,Daniel Milliken,Daniel Milliken,0,0,0,2/4,2,4
+daniel_milliken,daniel_milliken,Daniel Milliken,Daniel Milliken,0,0,0,2/4,2,4
 raw_384ef572_0d68_4b2e_9ef7_49ca69487460,raw_384ef572_0d68_4b2e_9ef7_49ca69487460,Daniel O'Neill,Daniel O'Neill,3,0,0,4/58,4,58
 raw_b2b5c910_b5f6_4085_a775_8ac7dda5646e,raw_b2b5c910_b5f6_4085_a775_8ac7dda5646e,Daniel Rapson,Daniel Rapson,3,0,0,4/23,4,23
 raw_1a3f438e_205b_49f5_86ef_47dd8e56e8d4,raw_1a3f438e_205b_49f5_86ef_47dd8e56e8d4,Daniel Sciacca,Daniel Sciacca,0,0,0,1/5,1,5
 raw_435df29d_2939_4b16_a4b7_37f1727c1cca,raw_435df29d_2939_4b16_a4b7_37f1727c1cca,Daniel Strange,Daniel Strange,7,3,0,6/27,6,27
-raw_f2269dba_0c23_4f84_9ac1_5d9a40ec8b12,raw_f2269dba_0c23_4f84_9ac1_5d9a40ec8b12,Daniel Walsh,Daniel Walsh,0,0,0,2/19,2,19
-raw_bae4cf09_bbbc_46c2_ae29_223bef27137c,raw_bae4cf09_bbbc_46c2_ae29_223bef27137c,Daniel Walsh,Daniel Walsh,1,0,0,3/20,3,20
+daniel_walsh,daniel_walsh,Daniel Walsh,Daniel Walsh,1,0,0,3/20,3,20
 raw_67c5c2ef_7472_452e_b316_e05fe3f6103c,raw_67c5c2ef_7472_452e_b316_e05fe3f6103c,Daniel Ward,Daniel Ward,0,0,0,2/43,2,43
 raw_9420e624_b8c3_44ff_9d8f_f71848323376,raw_9420e624_b8c3_44ff_9d8f_f71848323376,Daniel Westley,Daniel Westley,0,0,0,1/8,1,8
 raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,raw_2ddc846e_5bc6_4882_a42e_a648c92c0adc,Daniel Yates,Daniel Yates,57,13,1,6/34,6,34
@@ -227,8 +215,7 @@ raw_b393020b_fce9_4f44_9707_4adcecaf8285,raw_b393020b_fce9_4f44_9707_4adcecaf828
 raw_efe50c0e_d62a_4c1f_915e_234784741575,raw_efe50c0e_d62a_4c1f_915e_234784741575,Dave Jiffkins,Dave Jiffkins,57,16,1,7/36,7,36
 raw_79c98c4b_8916_4def_8c15_243471d35d58,raw_79c98c4b_8916_4def_8c15_243471d35d58,David Cousley,David Cousley,2,1,0,5/56,5,56
 raw_bd081c81_5060_414b_91ca_29d2ab0f507b,raw_bd081c81_5060_414b_91ca_29d2ab0f507b,David Horton,David Horton,0,0,0,2/33,2,33
-raw_ad375ccf_bf59_4e28_9af9_778758291357,raw_ad375ccf_bf59_4e28_9af9_778758291357,David Massey,David Massey,0,0,0,2/13,2,13
-raw_7b00cc5f_de22_4200_ac87_4926ad77eda8,raw_7b00cc5f_de22_4200_ac87_4926ad77eda8,David Massey,David Massey,2,0,0,3/17,3,17
+david_massey,david_massey,David Massey,David Massey,2,0,0,3/17,3,17
 raw_a3653f13_3ae7_48db_aa7b_a0bc07850025,raw_a3653f13_3ae7_48db_aa7b_a0bc07850025,David Michell,David Michell,0,0,0,1/14,1,14
 raw_5897640b_a17c_49e2_a064_fb75e2e494dc,raw_5897640b_a17c_49e2_a064_fb75e2e494dc,David Newham,David Newham,3,0,0,4/26,4,26
 raw_f9a2dc79_73f4_46a2_9c4d_9ed27e67512c,raw_f9a2dc79_73f4_46a2_9c4d_9ed27e67512c,David Stanton,David Stanton,1,0,0,3/19,3,19
@@ -245,8 +232,7 @@ raw_c8fd996a_c5c9_4cb2_9ce8_24494df3324f,raw_c8fd996a_c5c9_4cb2_9ce8_24494df3324
 raw_bf7712e1_726d_46b2_8f30_053159c80c09,raw_bf7712e1_726d_46b2_8f30_053159c80c09,Durairaj Shanmugam,Durairaj Shanmugam,1,0,0,4/32,4,32
 raw_22b67063_452a_4130_aee4_3d00763c9d9a,raw_22b67063_452a_4130_aee4_3d00763c9d9a,Dylan Casey,Dylan Casey,0,0,0,2/8,2,8
 raw_4ef0b983_3664_409d_ba87_f42afd49b996,raw_4ef0b983_3664_409d_ba87_f42afd49b996,Dylan Davies,Dylan Davies,0,0,0,0/0,0,0
-raw_d2dd2b33_c1ce_43ce_91f0_609c56ff38e3,raw_d2dd2b33_c1ce_43ce_91f0_609c56ff38e3,Dylan Devoy Paino,Dylan Devoy Paino,0,0,0,2/21,2,21
-raw_f9167a02_3744_4a6c_a908_04b676814ee2,raw_f9167a02_3744_4a6c_a908_04b676814ee2,Dylan Devoy Paino,Dylan Devoy Paino,1,0,0,3/11,3,11
+dylan_devoy_paino,dylan_devoy_paino,Dylan Devoy Paino,Dylan Devoy Paino,1,0,0,3/11,3,11
 raw_d1c343ae_d225_44db_864b_86ce159a2ff4,raw_d1c343ae_d225_44db_864b_86ce159a2ff4,Dylan Minehan,Dylan Minehan,0,0,0,0/4,0,4
 raw_0ee3d6bc_4351_459a_a67e_ce70f8edae5c,raw_0ee3d6bc_4351_459a_a67e_ce70f8edae5c,Edward Gray,Edward Gray,0,0,0,0/10,0,10
 raw_24481979_2e30_488f_bd94_b4d2a85c3ca3,raw_24481979_2e30_488f_bd94_b4d2a85c3ca3,Edward Zamprogno,Edward Zamprogno,1,0,0,3/18,3,18
@@ -256,8 +242,7 @@ raw_e4e3b7f1_e7ee_4ba8_9604_31e6e4baecdf,raw_e4e3b7f1_e7ee_4ba8_9604_31e6e4baecd
 raw_31b6e571_e643_4375_ac45_e276f12f634c,raw_31b6e571_e643_4375_ac45_e276f12f634c,Eric Serra,Eric Serra,0,0,0,0/17,0,17
 raw_b7079b71_441c_45ee_a8c7_a106efdd8ddb,raw_b7079b71_441c_45ee_a8c7_a106efdd8ddb,Ernest Ng,Ernest Ng,0,0,0,0/23,0,23
 raw_a905a8d5_480a_4761_837b_ad112d23a78d,raw_a905a8d5_480a_4761_837b_ad112d23a78d,Evan Hoskin,Evan Hoskin,0,0,0,2/7,2,7
-raw_c3e68fe8_5fa9_4e92_a9c8_bf2bbe061ce2,raw_c3e68fe8_5fa9_4e92_a9c8_bf2bbe061ce2,Fabian Heaton,Fabian Heaton,0,0,0,2/14,2,14
-raw_44b86ccc_04b3_4cf1_bd72_65790cb09f2e,raw_44b86ccc_04b3_4cf1_bd72_65790cb09f2e,Fabian Heaton,Fabian Heaton,0,0,0,2/28,2,28
+fabian_heaton,fabian_heaton,Fabian Heaton,Fabian Heaton,0,0,0,2/14,2,14
 raw_70fa9020_80da_4307_8bc1_e3e7d2c651ab,raw_70fa9020_80da_4307_8bc1_e3e7d2c651ab,Fahad Tabani,Fahad Tabani,0,0,0,0/3,0,3
 raw_04680d76_fff8_412a_9a82_4fd8b85a97ec,raw_04680d76_fff8_412a_9a82_4fd8b85a97ec,Faisal Mehmood,Faisal Mehmood,0,0,0,2/12,2,12
 raw_631b3cd1_093d_4d23_bfe8_91b11b5a6e72,raw_631b3cd1_093d_4d23_bfe8_91b11b5a6e72,Farhad Hamid,Farhad Hamid,2,0,0,4/24,4,24
@@ -276,11 +261,10 @@ raw_f18c28af_4ea0_480f_bfb1_6bb37218db22,raw_f18c28af_4ea0_480f_bfb1_6bb37218db2
 raw_293b2119_b62c_4a4d_9dd5_312a2b76c6db,raw_293b2119_b62c_4a4d_9dd5_312a2b76c6db,Gavin Dennett,Gavin Dennett,0,0,0,1/32,1,32
 raw_7391bf6d_a73c_4d74_a922_f02693f3c501,raw_7391bf6d_a73c_4d74_a922_f02693f3c501,Gavin Scott,Gavin Scott,26,8,1,6/25,6,25
 raw_fb356767_b621_40bc_a287_20c2dbeb0b99,raw_fb356767_b621_40bc_a287_20c2dbeb0b99,Geoff Dale,Geoff Dale,1,0,0,3/86,3,86
-raw_70fd91bf_d3e5_4507_9fd1_0a5f32eb6f29,raw_70fd91bf_d3e5_4507_9fd1_0a5f32eb6f29,Geoff Mcqueen,Geoff Mcqueen,1,0,0,3/25,3,25
-raw_ce652280_65fe_468a_a54b_ea9a65330717,raw_ce652280_65fe_468a_a54b_ea9a65330717,Geoff Mcqueen,Geoff Mcqueen,2,0,0,4/29,4,29
+geoff_mcqueen,geoff_mcqueen,Geoff Mcqueen,Geoff Mcqueen,3,0,0,4/29,4,29
 raw_5d2d1ec8_fdd6_43b4_b658_efe7cdaf32db,raw_5d2d1ec8_fdd6_43b4_b658_efe7cdaf32db,George Baldock,George Baldock,1,0,0,3/54,3,54
-raw_ad642123_4780_4920_9ac0_d7ab920b5adf,raw_ad642123_4780_4920_9ac0_d7ab920b5adf,George Hodgson,George Hodgson,2,0,0,3/9,3,9
 raw_913ae372_b1cd_4249_9623_964b9d86aad7,raw_913ae372_b1cd_4249_9623_964b9d86aad7,George Hodgson,George Hodgson,0,0,0,2/12,2,12
+raw_ad642123_4780_4920_9ac0_d7ab920b5adf,raw_ad642123_4780_4920_9ac0_d7ab920b5adf,George Hodgson,George Hodgson,2,0,0,3/9,3,9
 raw_ee97de76_0728_40db_857d_d297d5e72efe,raw_ee97de76_0728_40db_857d_d297d5e72efe,George Hodgson,George Hodgson,1,0,0,3/12,3,12
 raw_ea3f998d_5309_4ecf_90fe_b8506a4029e0,raw_ea3f998d_5309_4ecf_90fe_b8506a4029e0,George Kazakonis,George Kazakonis,1,0,0,4/25,4,25
 raw_f85398f9_05a8_47ca_b033_f3be7e0675f6,raw_f85398f9_05a8_47ca_b033_f3be7e0675f6,George Sacco,George Sacco,0,0,0,2/25,2,25
@@ -307,8 +291,7 @@ raw_b08f0fec_92c8_4170_b959_f22163aabfc5,raw_b08f0fec_92c8_4170_b959_f22163aabfc
 raw_2fa515e5_c401_46ac_b628_4d527a6ae5a1,raw_2fa515e5_c401_46ac_b628_4d527a6ae5a1,Harris Anagnostou,Harris Anagnostou,1,0,0,3/21,3,21
 raw_4c3e2d95_26f5_406d_b5e1_9d9e383eab66,raw_4c3e2d95_26f5_406d_b5e1_9d9e383eab66,Harrison Brown,Harrison Brown,4,0,0,4/21,4,21
 raw_511df2c1_51a1_4adf_903a_c18e73d1df97,raw_511df2c1_51a1_4adf_903a_c18e73d1df97,Harrison Finn,Harrison Finn,2,0,0,3/10,3,10
-raw_3679b42f_abbb_4f4c_af5f_4763abcbc06f,raw_3679b42f_abbb_4f4c_af5f_4763abcbc06f,Harrison Morton,Harrison Morton,6,0,0,4/31,4,31
-raw_d5b49f54_d1ab_4fc8_9d2d_e33e8699ae62,raw_d5b49f54_d1ab_4fc8_9d2d_e33e8699ae62,Harrison Morton,Harrison Morton,0,0,0,2/32,2,32
+harrison_morton,harrison_morton,Harrison Morton,Harrison Morton,6,0,0,4/31,4,31
 raw_e8d7c311_ee01_40c6_9fd1_fcd543863ae7,raw_e8d7c311_ee01_40c6_9fd1_fcd543863ae7,Harry Clegg,Harry Clegg,0,0,0,2/79,2,79
 raw_615a4321_adf3_4656_a14f_68c5bc4f470c,raw_615a4321_adf3_4656_a14f_68c5bc4f470c,Harry Rich,Harry Rich,0,0,0,2/23,2,23
 raw_25f253db_3562_4122_9144_7bf40d1aa86d,raw_25f253db_3562_4122_9144_7bf40d1aa86d,Harsha Krishna,Harsha Krishna,0,0,0,2/25,2,25
@@ -334,8 +317,7 @@ raw_dd844232_9c71_4c9a_a4b5_700ab2df6d9b,raw_dd844232_9c71_4c9a_a4b5_700ab2df6d9
 raw_8e4d4f7a_0bdb_4392_b976_c7e1706440c2,raw_8e4d4f7a_0bdb_4392_b976_c7e1706440c2,Jai Kumar,Jai Kumar,0,0,0,2/6,2,6
 raw_c2a63c8a_8f56_4dd5_b338_eaaad7ed6408,raw_c2a63c8a_8f56_4dd5_b338_eaaad7ed6408,Jake Matuzic,Jake Matuzic,0,0,0,0/10,0,10
 raw_992bfe67_54d7_4bad_8e85_a95aa2d1578d,raw_992bfe67_54d7_4bad_8e85_a95aa2d1578d,Jake Wilson,Jake Wilson,12,3,0,6/21,6,21
-raw_9e871281_b0f0_4c6d_826c_fdbbf59bd302,raw_9e871281_b0f0_4c6d_826c_fdbbf59bd302,Jakob Lindberg,Jakob Lindberg,4,0,0,4/21,4,21
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,5,0,0,4/7,4,7
+jakob_lindberg,jakob_lindberg,Jakob Lindberg,Jakob Lindberg,9,0,0,4/7,4,7
 raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,raw_2ddb162a_1df4_4fb3_8890_6722ccde9e41,James Andrews,James Andrews,2,0,0,3/28,3,28
 raw_a03ad435_6a31_4e08_a0cd_010d8aa4ae92,raw_a03ad435_6a31_4e08_a0cd_010d8aa4ae92,James Brown,James Brown,3,0,0,3/11,3,11
 raw_7d1cec06_9752_4bec_8cae_17c14a62f8d0,raw_7d1cec06_9752_4bec_8cae_17c14a62f8d0,James Christian,James Christian,0,0,0,0/26,0,26
@@ -345,8 +327,7 @@ raw_c45e28de_1e50_4573_ad98_c27872c7851a,raw_c45e28de_1e50_4573_ad98_c27872c7851
 raw_4d91e01b_28c5_460b_b75d_793593e1b871,raw_4d91e01b_28c5_460b_b75d_793593e1b871,James Horn,James Horn,2,0,0,3/9,3,9
 raw_cf1c0dd3_e048_4c61_a31b_d17614e9b45c,raw_cf1c0dd3_e048_4c61_a31b_d17614e9b45c,James Kirkness,James Kirkness,0,0,0,2/39,2,39
 raw_25da68ed_3624_4334_ab9a_a3bc908a3926,raw_25da68ed_3624_4334_ab9a_a3bc908a3926,James Stirton,James Stirton,0,0,0,2/17,2,17
-raw_9741f1c7_04a2_4aff_950c_fcbb4eb061a9,raw_9741f1c7_04a2_4aff_950c_fcbb4eb061a9,James Toogood,James Toogood,4,1,0,5/27,5,27
-raw_08722e04_ab58_4817_a6e0_b971fb4234da,raw_08722e04_ab58_4817_a6e0_b971fb4234da,James Toogood,James Toogood,0,0,0,0/9,0,9
+james_toogood,james_toogood,James Toogood,James Toogood,4,1,0,5/27,5,27
 raw_a1dcac4c_4d19_4ff2_92a3_119047e5c88d,raw_a1dcac4c_4d19_4ff2_92a3_119047e5c88d,James Whitney,James Whitney,0,0,0,1/9,1,9
 raw_613a126e_321d_44a1_af5a_0eaa3724bb4b,raw_613a126e_321d_44a1_af5a_0eaa3724bb4b,James Widerstrom,James Widerstrom,1,0,0,3/21,3,21
 raw_97868a36_4b5f_41f3_aa99_2c5460471699,raw_97868a36_4b5f_41f3_aa99_2c5460471699,Jared Ball,Jared Ball,0,0,0,0/11,0,11
@@ -362,8 +343,7 @@ raw_9f9883d5_e74f_4eaa_b5bd_eb55e5c2a44a,raw_9f9883d5_e74f_4eaa_b5bd_eb55e5c2a44
 raw_2c999b41_cb60_4bde_ae96_fd159b003166,raw_2c999b41_cb60_4bde_ae96_fd159b003166,Jason Seaman,Jason Seaman,0,0,0,2/3,2,3
 raw_b8696c69_d7c9_472b_a68c_57d6ee7c3132,raw_b8696c69_d7c9_472b_a68c_57d6ee7c3132,Jason Stone,Jason Stone,0,0,0,2/28,2,28
 raw_0f435336_9b66_4b09_b05c_b00bda298e4e,raw_0f435336_9b66_4b09_b05c_b00bda298e4e,Jason Tyra,Jason Tyra,0,0,0,1/46,1,46
-raw_d0df5ab6_3699_4042_b6e9_4a123061fef9,raw_d0df5ab6_3699_4042_b6e9_4a123061fef9,Jason Wilton,Jason Wilton,4,2,0,5/8,5,8
-raw_d25d4702_45e3_4070_bd7e_ca1e6d3327ed,raw_d25d4702_45e3_4070_bd7e_ca1e6d3327ed,Jason Wilton,Jason Wilton,3,0,0,4/15,4,15
+jason_wilton,jason_wilton,Jason Wilton,Jason Wilton,7,2,0,5/8,5,8
 raw_46a0e262_b274_46a3_ba4f_d7f1f438f19b,raw_46a0e262_b274_46a3_ba4f_d7f1f438f19b,Jaswinder Gill,Jaswinder Gill,0,0,0,0/6,0,6
 raw_68e5a411_2aac_4fc1_b023_7dbeddf0459b,raw_68e5a411_2aac_4fc1_b023_7dbeddf0459b,Javed Aslam,Javed Aslam,1,0,0,3/19,3,19
 raw_b29b6252_e96c_45f8_9bc7_2d3b017cf0b2,raw_b29b6252_e96c_45f8_9bc7_2d3b017cf0b2,Jawaad Karim,Jawaad Karim,1,1,0,5/30,5,30
@@ -381,15 +361,13 @@ raw_1341e3fd_42d0_44c4_929f_3a6863b38ad5,raw_1341e3fd_42d0_44c4_929f_3a6863b38ad
 raw_4a99ef73_0c30_44eb_8196_b300ed303c55,raw_4a99ef73_0c30_44eb_8196_b300ed303c55,Joe Maskell,Joe Maskell,1,0,0,4/6,4,6
 raw_d568d335_a5a0_4b3f_bd90_40ec638ee5b9,raw_d568d335_a5a0_4b3f_bd90_40ec638ee5b9,Joe Zappia,Joe Zappia,1,0,0,3/9,3,9
 raw_ce786642_4468_436b_933f_8384a76f25da,raw_ce786642_4468_436b_933f_8384a76f25da,Joel Abraham,Joel Abraham,0,0,0,2/60,2,60
-raw_354bbca7_52e8_480a_9cd9_cfaac2d5ec10,raw_354bbca7_52e8_480a_9cd9_cfaac2d5ec10,Joel Murphy,Joel Murphy,4,0,0,4/17,4,17
-raw_efd421c6_58ec_40e9_9521_431e407f87a8,raw_efd421c6_58ec_40e9_9521_431e407f87a8,Joel Murphy,Joel Murphy,0,0,0,1/4,1,4
+joel_murphy,joel_murphy,Joel Murphy,Joel Murphy,4,0,0,4/17,4,17
 raw_3748f9bc_c663_48e3_aef8_f041b189e983,raw_3748f9bc_c663_48e3_aef8_f041b189e983,John Adamson,John Adamson,0,0,0,2/20,2,20
 raw_46dd3e21_e3d1_445d_b561_50c5fa91224f,raw_46dd3e21_e3d1_445d_b561_50c5fa91224f,John Dooley,John Dooley,0,0,0,1/36,1,36
 raw_f82749bd_98ef_445c_a13a_a815984b3aad,raw_f82749bd_98ef_445c_a13a_a815984b3aad,John Eden,John Eden,1,0,0,3/44,3,44
 raw_ec3fe06f_ccbf_4b46_b82d_58382024e3ba,raw_ec3fe06f_ccbf_4b46_b82d_58382024e3ba,John Hayes,John Hayes,0,0,0,0/24,0,24
 raw_4ef6742b_b9cc_4343_941b_9c076fd2b4e0,raw_4ef6742b_b9cc_4343_941b_9c076fd2b4e0,John Mckee,John Mckee,0,0,0,0/14,0,14
-raw_32b4fdc3_e0d2_478b_af69_bdae4e06fabc,raw_32b4fdc3_e0d2_478b_af69_bdae4e06fabc,John Mesar,John Mesar,0,0,0,2/21,2,21
-raw_c0dfd115_fd72_447e_9ddc_3cdef29d9574,raw_c0dfd115_fd72_447e_9ddc_3cdef29d9574,John Mesar,John Mesar,0,0,0,2/35,2,35
+john_mesar,john_mesar,John Mesar,John Mesar,0,0,0,2/21,2,21
 raw_44a5bfcd_73a4_438e_bec5_dd403a214354,raw_44a5bfcd_73a4_438e_bec5_dd403a214354,John Parker,John Parker,0,0,0,2/11,2,11
 raw_85100d83_d7df_49c3_8154_6850f15357f1,raw_85100d83_d7df_49c3_8154_6850f15357f1,John Short,John Short,13,0,0,4/12,4,12
 raw_5604b60e_31d6_49ef_9f10_0ac3488a8e8d,raw_5604b60e_31d6_49ef_9f10_0ac3488a8e8d,Johnny Konstas,Johnny Konstas,0,0,0,1/17,1,17
@@ -425,8 +403,8 @@ raw_62a520e3_d264_420e_978b_aa882998ad4b,raw_62a520e3_d264_420e_978b_aa882998ad4
 raw_5b5f6c13_a0eb_415b_9f26_20292f1bc6a6,raw_5b5f6c13_a0eb_415b_9f26_20292f1bc6a6,Ketan Patel,Ketan Patel,9,3,0,5/5,5,5
 raw_83550bb9_9aed_4d4b_aa9a_641aff51c707,raw_83550bb9_9aed_4d4b_aa9a_641aff51c707,Ketan Patel,Ketan Patel,10,2,0,6/39,6,39
 raw_4982aa18_d3bd_406f_a9a4_3af6e1db1ebf,raw_4982aa18_d3bd_406f_a9a4_3af6e1db1ebf,Kevin Brooks,Kevin Brooks,0,0,0,0/6,0,6
-raw_e5da5ce8_bfcc_45db_9f44_6faf07672372,raw_e5da5ce8_bfcc_45db_9f44_6faf07672372,Kevin Croom,Kevin Croom,0,0,0,0/10,0,10
 raw_4b70542d_1486_4636_8ea3_2a1aec5a94af,raw_4b70542d_1486_4636_8ea3_2a1aec5a94af,Kevin Croom,Kevin Croom,0,0,0,1/5,1,5
+raw_e5da5ce8_bfcc_45db_9f44_6faf07672372,raw_e5da5ce8_bfcc_45db_9f44_6faf07672372,Kevin Croom,Kevin Croom,0,0,0,0/10,0,10
 raw_e8beae34_8d48_453c_9bcb_1bb932070162,raw_e8beae34_8d48_453c_9bcb_1bb932070162,Kevin Iffland,Kevin Iffland,1,0,0,3/9,3,9
 raw_462b4cc2_092b_4538_87e6_81f911dd72c0,raw_462b4cc2_092b_4538_87e6_81f911dd72c0,Kevin Malana,Kevin Malana,0,0,0,1/13,1,13
 raw_20ac1d9a_214d_440e_8303_8d61fa7418ae,raw_20ac1d9a_214d_440e_8303_8d61fa7418ae,Kieran Mantle,Kieran Mantle,0,0,0,1/12,1,12
@@ -439,13 +417,11 @@ raw_1e82c146_34db_44a6_8f53_69d7512fdd9b,raw_1e82c146_34db_44a6_8f53_69d7512fdd9
 raw_e5f16306_9a2f_4f79_a8e3_2f8c2e83ec1d,raw_e5f16306_9a2f_4f79_a8e3_2f8c2e83ec1d,Kurt Chalker,Kurt Chalker,0,0,0,0/0,0,0
 raw_69935bbe_fe0e_46d7_b05e_c7ed6d135327,raw_69935bbe_fe0e_46d7_b05e_c7ed6d135327,Lachlan Ball,Lachlan Ball,0,0,0,1/12,1,12
 raw_d92f59c0_7cac_4ce6_b274_b4c806c48707,raw_d92f59c0_7cac_4ce6_b274_b4c806c48707,Lachlan Cartwright,Lachlan Cartwright,0,0,0,0/4,0,4
-raw_44804280_c99c_41f8_be80_e239d28d4655,raw_44804280_c99c_41f8_be80_e239d28d4655,Lachlan Cheney,Lachlan Cheney,0,0,0,0/8,0,8
+lachlan_cheney,lachlan_cheney,Lachlan Cheney,Lachlan Cheney,0,0,0,0/8,0,8
 raw_cc794746_8b7f_4451_98f3_b3bcea78873d,raw_cc794746_8b7f_4451_98f3_b3bcea78873d,Lachlan Hunt,Lachlan Hunt,1,0,0,4/27,4,27
 raw_fe7c7c1d_a13a_4900_adee_1709e9c2a2b8,raw_fe7c7c1d_a13a_4900_adee_1709e9c2a2b8,Lachlan Orr,Lachlan Orr,2,0,0,4/9,4,9
-raw_dfd501f2_0b76_48d7_b6ac_ced5c8c1189a,raw_dfd501f2_0b76_48d7_b6ac_ced5c8c1189a,Lachlan Willmore,Lachlan Willmore,0,0,0,1/18,1,18
-raw_34a7ad27_a5c0_4873_bd62_db0775943259,raw_34a7ad27_a5c0_4873_bd62_db0775943259,Lachlan Willmore,Lachlan Willmore,3,0,0,3/13,3,13
-raw_b89f82b1_39bb_4fd5_8186_fa3d53da8413,raw_b89f82b1_39bb_4fd5_8186_fa3d53da8413,Laurie Turner,Laurie Turner,2,0,0,3/16,3,16
-raw_09563f57_4291_423c_9602_44c9c27e168b,raw_09563f57_4291_423c_9602_44c9c27e168b,Laurie Turner,Laurie Turner,0,0,0,2/9,2,9
+lachlan_willmore,lachlan_willmore,Lachlan Willmore,Lachlan Willmore,3,0,0,3/13,3,13
+laurie_turner,laurie_turner,Laurie Turner,Laurie Turner,2,0,0,3/16,3,16
 raw_8f177f26_0ca3_47d5_9f6a_9575a657dafd,raw_8f177f26_0ca3_47d5_9f6a_9575a657dafd,Lawrence Markham,Lawrence Markham,0,0,0,2/31,2,31
 raw_22341803_fc0f_4751_856f_b8d4827de6fb,raw_22341803_fc0f_4751_856f_b8d4827de6fb,Lee Aitchison,Lee Aitchison,0,0,0,1/25,1,25
 raw_a457232e_917a_40d2_b942_fc4dac16d0ad,raw_a457232e_917a_40d2_b942_fc4dac16d0ad,Lee Brooks,Lee Brooks,0,0,0,1/6,1,6
@@ -456,11 +432,9 @@ raw_999b0179_5ca2_4749_808e_8920f4933df5,raw_999b0179_5ca2_4749_808e_8920f4933df
 raw_dae6133a_c498_4cfa_8ab4_5ed305f6376d,raw_dae6133a_c498_4cfa_8ab4_5ed305f6376d,Liam Aggett,Liam Aggett,16,1,0,6/35,6,35
 raw_19942eb5_b41a_47ab_9967_6dadc27c2e07,raw_19942eb5_b41a_47ab_9967_6dadc27c2e07,Liam Baker,Liam Baker,5,0,0,4/11,4,11
 raw_e2ed1332_22f3_41aa_a373_d28266ddb892,raw_e2ed1332_22f3_41aa_a373_d28266ddb892,Liam Bissett,Liam Bissett,2,0,0,3/30,3,30
-raw_16f06b8b_0f9a_4cf2_be98_705121ec8b63,raw_16f06b8b_0f9a_4cf2_be98_705121ec8b63,Liam Griffiths,Liam Griffiths,2,0,0,3/23,3,23
-raw_700ecb9a_ec9b_452d_8ea8_afa99d5d3bb7,raw_700ecb9a_ec9b_452d_8ea8_afa99d5d3bb7,Liam Griffiths,Liam Griffiths,0,0,0,1/9,1,9
+liam_griffiths,liam_griffiths,Liam Griffiths,Liam Griffiths,2,0,0,3/23,3,23
 raw_63cb926d_0c44_4d0e_bea9_46250d310db8,raw_63cb926d_0c44_4d0e_bea9_46250d310db8,Liam Sparke,Liam Sparke,6,1,0,6/45,6,45
-raw_534187ab_9e06_4988_92c7_38e196d6b2c2,raw_534187ab_9e06_4988_92c7_38e196d6b2c2,Lindsay Le Bas,Lindsay Le Bas,2,0,0,4/19,4,19
-raw_38d7f881_052f_4c08_bb28_d68f74881b51,raw_38d7f881_052f_4c08_bb28_d68f74881b51,Lindsay Le Bas,Lindsay Le Bas,1,1,0,7/15,7,15
+lindsay_le_bas,lindsay_le_bas,Lindsay Le Bas,Lindsay Le Bas,3,1,0,7/15,7,15
 raw_83acf534_02b0_48a2_8861_af5ebc95d891,raw_83acf534_02b0_48a2_8861_af5ebc95d891,Lliam Ferrier,Lliam Ferrier,0,0,0,0/15,0,15
 raw_091b8138_6aa8_46b8_a4c8_8f61c903e07c,raw_091b8138_6aa8_46b8_a4c8_8f61c903e07c,Lloyd Smith,Lloyd Smith,2,0,0,3/36,3,36
 raw_31306670_48f9_4fc3_9f5e_cda835b44710,raw_31306670_48f9_4fc3_9f5e_cda835b44710,Logan Peddie,Logan Peddie,1,0,0,3/64,3,64
@@ -499,7 +473,7 @@ raw_821c681e_ea7c_40c7_8021_c6836cba084b,raw_821c681e_ea7c_40c7_8021_c6836cba084
 raw_00a94e57_9767_4f8f_9f62_e8d5f7f161e2,raw_00a94e57_9767_4f8f_9f62_e8d5f7f161e2,Marichamy Arumugam,Marichamy Arumugam,8,1,0,5/10,5,10
 raw_177ffe8f_d249_40e2_930c_9dd943b90b9d,raw_177ffe8f_d249_40e2_930c_9dd943b90b9d,Mark Badovinac,Mark Badovinac,2,0,0,3/29,3,29
 raw_4134386c_e658_445c_9846_adc87217a1bc,raw_4134386c_e658_445c_9846_adc87217a1bc,Mark Boyle,Mark Boyle,0,0,0,1/12,1,12
-raw_c46f8fe8_5b28_40c6_a50e_b54c9718bf5d,raw_c46f8fe8_5b28_40c6_a50e_b54c9718bf5d,Mark Butler,Mark Butler,0,0,0,2/9,2,9
+mark_butler,mark_butler,Mark Butler,Mark Butler,0,0,0,2/9,2,9
 raw_972eda83_381c_4626_9844_2195f88dd1d1,raw_972eda83_381c_4626_9844_2195f88dd1d1,Mark Dedes,Mark Dedes,1,0,0,3/45,3,45
 raw_887690a3_f083_4935_8e99_c999eb1d1927,raw_887690a3_f083_4935_8e99_c999eb1d1927,Mark Devine,Mark Devine,0,0,0,2/14,2,14
 raw_4f63219e_f846_4003_9ddf_bcb9bc78725a,raw_4f63219e_f846_4003_9ddf_bcb9bc78725a,Mark Jeffrey,Mark Jeffrey,6,1,0,5/20,5,20
@@ -518,8 +492,7 @@ raw_974f8895_f768_4f7f_a502_97fcc6f628e7,raw_974f8895_f768_4f7f_a502_97fcc6f628e
 raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,raw_2d21aa94_482e_4f0e_8a7a_5e48f538ca3b,Matthew Beer,Matthew Beer,0,0,0,2/9,2,9
 raw_4e2a55e0_c92c_4035_9f66_170963aa0d78,raw_4e2a55e0_c92c_4035_9f66_170963aa0d78,Matthew Dedes,Matthew Dedes,2,0,0,3/12,3,12
 raw_734dfe3e_20a3_41ff_b93c_5acdd4614b3d,raw_734dfe3e_20a3_41ff_b93c_5acdd4614b3d,Matthew Fleming,Matthew Fleming,0,0,0,0/5,0,5
-raw_e8e7002c_8d5e_4a29_ad3d_337b432a816f,raw_e8e7002c_8d5e_4a29_ad3d_337b432a816f,Matthew Hoggett,Matthew Hoggett,1,0,0,4/25,4,25
-raw_af10c16d_a50a_430f_b962_072f30380e8f,raw_af10c16d_a50a_430f_b962_072f30380e8f,Matthew Hoggett,Matthew Hoggett,0,0,0,0/23,0,23
+matthew_hoggett,matthew_hoggett,Matthew Hoggett,Matthew Hoggett,1,0,0,4/25,4,25
 raw_b2f0c5ec_e838_41cf_8fc0_83124a2532fb,raw_b2f0c5ec_e838_41cf_8fc0_83124a2532fb,Matthew Iemma,Matthew Iemma,0,0,0,1/6,1,6
 raw_c2c743e3_1a31_437a_8da5_29d145fef3ad,raw_c2c743e3_1a31_437a_8da5_29d145fef3ad,Matthew Johns,Matthew Johns,0,0,0,0/15,0,15
 raw_5b1e35c8_b3e6_4baf_813a_e892d5b9f660,raw_5b1e35c8_b3e6_4baf_813a_e892d5b9f660,Matthew Mccallum,Matthew Mccallum,0,0,0,0/9,0,9
@@ -562,8 +535,7 @@ raw_b91cdc31_705c_420e_8c9c_2fae3290b743,raw_b91cdc31_705c_420e_8c9c_2fae3290b74
 raw_d196b35e_f1a5_4773_9b2c_ab0dfe503122,raw_d196b35e_f1a5_4773_9b2c_ab0dfe503122,Minol Jayawardana,Minol Jayawardana,0,0,0,1/4,1,4
 raw_28e2ed7d_b610_463a_a981_d147fb8f887f,raw_28e2ed7d_b610_463a_a981_d147fb8f887f,Mitch Eady,Mitch Eady,0,0,0,1/35,1,35
 raw_c2bd6e3c_8b7c_4766_b602_b93b73f8a701,raw_c2bd6e3c_8b7c_4766_b602_b93b73f8a701,Mitchell Baker,Mitchell Baker,0,0,0,2/29,2,29
-raw_940e31fb_8fb8_42af_bfc5_771884272098,raw_940e31fb_8fb8_42af_bfc5_771884272098,Mitchell Betts,Mitchell Betts,12,5,0,6/30,6,30
-raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,Mitchell Betts,Mitchell Betts,5,0,0,4/27,4,27
+mitchell_betts,mitchell_betts,Mitchell Betts,Mitchell Betts,17,5,0,6/30,6,30
 raw_e62e80e0_8bef_44c5_a897_b7e3ed520176,raw_e62e80e0_8bef_44c5_a897_b7e3ed520176,Mitchell Gray,Mitchell Gray,1,0,0,4/5,4,5
 raw_dec135d4_7cb8_4ddd_8620_cd203752f682,raw_dec135d4_7cb8_4ddd_8620_cd203752f682,Mitchell Mack,Mitchell Mack,5,0,0,4/47,4,47
 raw_b4ae662e_2607_44e4_b808_73584db3a643,raw_b4ae662e_2607_44e4_b808_73584db3a643,Mitchell Wickham,Mitchell Wickham,0,0,0,0/15,0,15
@@ -585,8 +557,7 @@ raw_864da9ab_b90c_418f_8562_619a1de45550,raw_864da9ab_b90c_418f_8562_619a1de4555
 raw_d189cf60_3d49_437c_a59c_6ad36854b2d6,raw_d189cf60_3d49_437c_a59c_6ad36854b2d6,Muhammad Sulaman Fayyaz,Muhammad Sulaman Fayyaz,1,3,0,6/34,6,34
 raw_ffbc736f_35ea_42fa_a3ff_ee64f86189f0,raw_ffbc736f_35ea_42fa_a3ff_ee64f86189f0,Muhammad Tanzeel Ur Rehman,Muhammad Tanzeel Ur Rehman,0,0,0,2/34,2,34
 raw_ad592482_7e01_405d_92b1_0939a44aa42f,raw_ad592482_7e01_405d_92b1_0939a44aa42f,Muhammad Waqas,Muhammad Waqas,0,0,0,2/19,2,19
-raw_3cd29556_21d8_47fc_a13f_ebaf532246fa,raw_3cd29556_21d8_47fc_a13f_ebaf532246fa,Muhammad Zeeshan,Muhammad Zeeshan,0,0,0,1/11,1,11
-raw_4b8f0b5c_fb22_4de0_badb_e9a0970e2f68,raw_4b8f0b5c_fb22_4de0_badb_e9a0970e2f68,Muhammad Zeeshan,Muhammad Zeeshan,1,0,0,3/28,3,28
+muhammad_zeeshan,muhammad_zeeshan,Muhammad Zeeshan,Muhammad Zeeshan,1,0,0,3/28,3,28
 raw_b7532a97_d8a1_41f7_be6b_02b2ebc21753,raw_b7532a97_d8a1_41f7_be6b_02b2ebc21753,Muhammed Raza,Muhammed Raza,0,0,0,1/3,1,3
 raw_7b127243_f3d3_4f6b_a2d8_fe4cee3feecb,raw_7b127243_f3d3_4f6b_a2d8_fe4cee3feecb,Muhammed Waheed,Muhammed Waheed,2,0,0,4/21,4,21
 raw_a300eceb_143a_4b7c_9377_566c018fa904,raw_a300eceb_143a_4b7c_9377_566c018fa904,Mukundhan Duraisamy,Mukundhan Duraisamy,0,0,0,2/5,2,5
@@ -606,16 +577,13 @@ raw_2e0b3aee_9cea_410c_9561_e80587f59257,raw_2e0b3aee_9cea_410c_9561_e80587f5925
 raw_f773ae82_1d53_4702_b5c9_7cbbe4ef11e4,raw_f773ae82_1d53_4702_b5c9_7cbbe4ef11e4,Navaraj Karki,Navaraj Karki,0,0,0,0/13,0,13
 raw_a0d0a352_bd2d_4532_b218_68d4feb527b8,raw_a0d0a352_bd2d_4532_b218_68d4feb527b8,Naveed Aslam,Naveed Aslam,1,0,0,3/31,3,31
 raw_84f4470a_6f35_4729_b7f6_4aa44daaefde,raw_84f4470a_6f35_4729_b7f6_4aa44daaefde,Neel Shah,Neel Shah,16,2,0,6/26,6,26
-raw_857f0b77_49de_43bc_a5a5_079f0a24530b,raw_857f0b77_49de_43bc_a5a5_079f0a24530b,Neil Karpin,Neil Karpin,1,0,0,3/16,3,16
-raw_4b4774fe_c7e5_417b_9343_dfa687cb098a,raw_4b4774fe_c7e5_417b_9343_dfa687cb098a,Neil Karpin,Neil Karpin,1,1,0,5/19,5,19
-raw_f1b5000b_5024_4330_b9fe_95953c7c49a6,raw_f1b5000b_5024_4330_b9fe_95953c7c49a6,Nelson Howard,Nelson Howard,1,0,0,3/25,3,25
-raw_aef7a940_da6f_4d7a_8a77_2545348804ab,raw_aef7a940_da6f_4d7a_8a77_2545348804ab,Nelson Howard,Nelson Howard,2,0,0,3/21,3,21
+neil_karpin,neil_karpin,Neil Karpin,Neil Karpin,2,1,0,5/19,5,19
+nelson_howard,nelson_howard,Nelson Howard,Nelson Howard,3,0,0,3/21,3,21
 raw_b0488e58_3c65_4788_ac4f_43efd4a90b82,raw_b0488e58_3c65_4788_ac4f_43efd4a90b82,Nicholas Blanda,Nicholas Blanda,0,0,0,0/1,0,1
 raw_911b3202_acc3_48a1_a0e1_52ddefcde146,raw_911b3202_acc3_48a1_a0e1_52ddefcde146,Nicholas Henriques,Nicholas Henriques,13,0,0,4/17,4,17
 raw_747a90fd_77b2_495c_98f2_7b1562ecd823,raw_747a90fd_77b2_495c_98f2_7b1562ecd823,Nicholas Mayer,Nicholas Mayer,0,0,0,0/26,0,26
 raw_b4a04d8b_e0fc_4077_96bb_3849c19b4a76,raw_b4a04d8b_e0fc_4077_96bb_3849c19b4a76,Nicholas Robertson,Nicholas Robertson,7,0,0,4/49,4,49
-raw_b5f720df_4048_46e0_bba5_30766aa5a9da,raw_b5f720df_4048_46e0_bba5_30766aa5a9da,Nicholas Stevens,Nicholas Stevens,0,0,0,2/34,2,34
-raw_116f30da_d64c_42aa_8ddf_f0f5daf5d933,raw_116f30da_d64c_42aa_8ddf_f0f5daf5d933,Nicholas Stevens,Nicholas Stevens,0,0,0,1/19,1,19
+nicholas_stevens,nicholas_stevens,Nicholas Stevens,Nicholas Stevens,0,0,0,2/34,2,34
 raw_c8b9306b_094a_4fdd_a346_526a7e5c80b7,raw_c8b9306b_094a_4fdd_a346_526a7e5c80b7,Nicholas Whitlock,Nicholas Whitlock,0,0,0,0/10,0,10
 raw_45c079e9_6815_485e_bbd0_fd2320b8a63a,raw_45c079e9_6815_485e_bbd0_fd2320b8a63a,Nick Condylios,Nick Condylios,0,0,0,0/0,0,0
 raw_b7400c02_8916_49de_8e01_4e1184a959ab,raw_b7400c02_8916_49de_8e01_4e1184a959ab,Nick Parry,Nick Parry,0,0,0,2/13,2,13
@@ -630,8 +598,8 @@ raw_5a890c31_4f28_4300_9b72_3c807c2a297e,raw_5a890c31_4f28_4300_9b72_3c807c2a297
 raw_5cb51751_232f_45dc_8b14_f05858ea8f1c,raw_5cb51751_232f_45dc_8b14_f05858ea8f1c,Patrick Brown,Patrick Brown,0,0,0,1/14,1,14
 raw_9e5adfe2_0f25_4cb0_be8a_dcbcb51465b5,raw_9e5adfe2_0f25_4cb0_be8a_dcbcb51465b5,Patrick Duffy,Patrick Duffy,0,0,0,2/36,2,36
 raw_9a164296_6a9c_45dd_88e5_f16682cb4f5f,raw_9a164296_6a9c_45dd_88e5_f16682cb4f5f,Patrick Forrester,Patrick Forrester,0,0,0,2/27,2,27
-raw_c1f2e2bb_d889_4548_85c2_9d75972438da,raw_c1f2e2bb_d889_4548_85c2_9d75972438da,Patrick Kennedy,Patrick Kennedy,27,4,0,5/9,5,9
 raw_277b3f6e_5f5b_4e7e_99d5_421e735eab4c,raw_277b3f6e_5f5b_4e7e_99d5_421e735eab4c,Patrick Kennedy,Patrick Kennedy,1,0,0,3/58,3,58
+raw_c1f2e2bb_d889_4548_85c2_9d75972438da,raw_c1f2e2bb_d889_4548_85c2_9d75972438da,Patrick Kennedy,Patrick Kennedy,27,4,0,5/9,5,9
 raw_4564cac3_5534_4685_ae3d_fd9cb03a5dbf,raw_4564cac3_5534_4685_ae3d_fd9cb03a5dbf,Paul Decelis,Paul Decelis,1,0,0,3/11,3,11
 raw_6692f38b_79b8_40a4_af32_fd859dc47b5d,raw_6692f38b_79b8_40a4_af32_fd859dc47b5d,Paul Doran,Paul Doran,0,0,0,0/12,0,12
 raw_95e1f36f_faa6_49bf_9472_47e69c882294,raw_95e1f36f_faa6_49bf_9472_47e69c882294,Paul Francis,Paul Francis,0,0,0,2/9,2,9
@@ -648,8 +616,7 @@ raw_6b4060c7_ae30_4aec_86aa_f02f01d30ca0,raw_6b4060c7_ae30_4aec_86aa_f02f01d30ca
 raw_55f89430_1548_4c51_85c4_91e79efb5455,raw_55f89430_1548_4c51_85c4_91e79efb5455,Peter Francis,Peter Francis,0,0,0,1/36,1,36
 raw_574eddf7_29de_4436_9261_581fb5728abd,raw_574eddf7_29de_4436_9261_581fb5728abd,Peter Galluzzo,Peter Galluzzo,0,0,0,2/20,2,20
 raw_556bcf46_a4a7_4613_9ff8_8ddf306d9e4e,raw_556bcf46_a4a7_4613_9ff8_8ddf306d9e4e,Peter Remfrey,Peter Remfrey,1,0,0,3/11,3,11
-raw_3542a0e2_fdac_4242_a4fb_1d0e301c4af5,raw_3542a0e2_fdac_4242_a4fb_1d0e301c4af5,Peter Ristevski,Peter Ristevski,0,0,0,1/5,1,5
-raw_ee83babb_44d1_44d4_8a06_20389e10a56b,raw_ee83babb_44d1_44d4_8a06_20389e10a56b,Peter Ristevski,Peter Ristevski,0,0,0,0/9,0,9
+peter_ristevski,peter_ristevski,Peter Ristevski,Peter Ristevski,0,0,0,1/5,1,5
 raw_4e22700d_f2c4_4183_b5ed_a3dc450c1bbb,raw_4e22700d_f2c4_4183_b5ed_a3dc450c1bbb,Peter Thomas,Peter Thomas,0,0,0,2/13,2,13
 raw_8b12ce2d_6314_4628_bb8c_cf588e53323c,raw_8b12ce2d_6314_4628_bb8c_cf588e53323c,Phil Bray,Phil Bray,0,1,0,5/12,5,12
 raw_43c4a309_a14c_41af_a21b_04df835bc58e,raw_43c4a309_a14c_41af_a21b_04df835bc58e,Phil Hamer,Phil Hamer,1,0,0,4/27,4,27
@@ -688,8 +655,7 @@ raw_682c38b0_32a2_44af_9e84_c8972cff3da5,raw_682c38b0_32a2_44af_9e84_c8972cff3da
 raw_f2060a95_e646_4716_8b6c_10c62047d2a6,raw_f2060a95_e646_4716_8b6c_10c62047d2a6,Robert Harnett,Robert Harnett,1,0,0,3/25,3,25
 raw_b107e4db_b871_4bbb_bb03_e3d27674c1fc,raw_b107e4db_b871_4bbb_bb03_e3d27674c1fc,Robert Henriques,Robert Henriques,0,0,0,2/24,2,24
 raw_e5315da0_b35c_4f84_abd6_d987589b6cf6,raw_e5315da0_b35c_4f84_abd6_d987589b6cf6,Robert Henriques,Robert Henriques,13,3,0,6/55,6,55
-raw_07e842ed_b16f_419b_8373_f12f29a1d3f1,raw_07e842ed_b16f_419b_8373_f12f29a1d3f1,Robert Liley,Robert Liley,2,0,0,3/36,3,36
-raw_fed354bf_92c0_4069_ad03_c0e987690111,raw_fed354bf_92c0_4069_ad03_c0e987690111,Robert Liley,Robert Liley,0,0,0,1/14,1,14
+robert_liley,robert_liley,Robert Liley,Robert Liley,2,0,0,3/36,3,36
 raw_e15f4ace_767c_4f5a_a3c3_b8e955caa788,raw_e15f4ace_767c_4f5a_a3c3_b8e955caa788,Robert Southwell,Robert Southwell,0,0,0,1/2,1,2
 raw_0f5465ea_af01_4f51_a06d_ee17d86f8d8d,raw_0f5465ea_af01_4f51_a06d_ee17d86f8d8d,Robert Stares,Robert Stares,9,3,0,5/9,5,9
 raw_11c6c7bf_a3c2_4efe_a79d_099678667c12,raw_11c6c7bf_a3c2_4efe_a79d_099678667c12,Robert Stares,Robert Stares,0,0,0,2/29,2,29
@@ -733,10 +699,10 @@ raw_ffe128ea_81bd_4656_b7be_64ce77651d46,raw_ffe128ea_81bd_4656_b7be_64ce77651d4
 raw_0a7c5a37_d1e9_4bef_8d5c_fa3ecdd820d3,raw_0a7c5a37_d1e9_4bef_8d5c_fa3ecdd820d3,Sathish Kumar Santhosh,Sathish Kumar Santhosh,1,0,0,3/1,3,1
 raw_ae1c98e1_2717_4f88_b021_183f2c3fc20b,raw_ae1c98e1_2717_4f88_b021_183f2c3fc20b,Satish Babu,Satish Babu,0,0,0,1/8,1,8
 raw_0f12f520_0674_44d5_8af4_1d784f763f83,raw_0f12f520_0674_44d5_8af4_1d784f763f83,Sattar Abdul,Sattar Abdul,0,0,0,1/25,1,25
-raw_4688e476_bbae_4d63_9e9d_9860671da5b0,raw_4688e476_bbae_4d63_9e9d_9860671da5b0,Scott Aitchison,Scott Aitchison,4,0,0,3/24,3,24
+scott_aitchison,scott_aitchison,Scott Aitchison,Scott Aitchison,4,0,0,3/24,3,24
 raw_a45d7a81_2b5c_4e54_b947_ab7de32d89e7,raw_a45d7a81_2b5c_4e54_b947_ab7de32d89e7,Scott Cullum,Scott Cullum,0,0,0,1/3,1,3
 raw_cc077d57_88c5_4a03_aa50_a7f1403a2bba,raw_cc077d57_88c5_4a03_aa50_a7f1403a2bba,Scott Dominish,Scott Dominish,0,0,0,2/45,2,45
-raw_096ad2b5_d4a3_4c38_816b_14048f2f1dbb,raw_096ad2b5_d4a3_4c38_816b_14048f2f1dbb,Scott Sigmond,Scott Sigmond,1,1,0,5/25,5,25
+scott_sigmond,scott_sigmond,Scott Sigmond,Scott Sigmond,1,1,0,5/25,5,25
 raw_7d31e520_50c4_4b1b_8c0b_b6cf872ea2e6,raw_7d31e520_50c4_4b1b_8c0b_b6cf872ea2e6,Scott Wilson,Scott Wilson,0,0,0,2/60,2,60
 raw_ee99ece4_01b2_48d8_ab4c_99ada9d48d5e,raw_ee99ece4_01b2_48d8_ab4c_99ada9d48d5e,Scott Woods,Scott Woods,12,3,1,6/26,6,26
 raw_dc019636_7bd6_440d_83e8_95eb5da0776a,raw_dc019636_7bd6_440d_83e8_95eb5da0776a,Sean Bowen,Sean Bowen,0,0,0,1/8,1,8
@@ -765,11 +731,9 @@ raw_1eca613e_1381_4cf0_b59f_95452a0a662b,raw_1eca613e_1381_4cf0_b59f_95452a0a662
 raw_ca499952_1935_4c41_a3af_d104b79183c9,raw_ca499952_1935_4c41_a3af_d104b79183c9,Siddha Nadheswaran,Siddha Nadheswaran,0,0,0,0/9,0,9
 raw_0ce742e0_1d10_46fa_8263_b48085fa16f8,raw_0ce742e0_1d10_46fa_8263_b48085fa16f8,Simon Galluzzo,Simon Galluzzo,0,0,0,0/14,0,14
 raw_ad305f5b_d8ec_45de_9cee_27e823cfedbd,raw_ad305f5b_d8ec_45de_9cee_27e823cfedbd,Simon Jasper,Simon Jasper,8,1,0,5/20,5,20
-raw_c479950c_7bd1_4b70_981b_628f7673135b,raw_c479950c_7bd1_4b70_981b_628f7673135b,Simon Marvello,Simon Marvello,1,1,1,6/13,6,13
-raw_317d53a1_c885_4ac9_8ec3_e7cd21d11e01,raw_317d53a1_c885_4ac9_8ec3_e7cd21d11e01,Simon Marvello,Simon Marvello,9,1,0,5/35,5,35
+simon_marvello,simon_marvello,Simon Marvello,Simon Marvello,10,2,1,6/13,6,13
 raw_203fad8c_60b9_4e37_85bd_f3fd50e3034d,raw_203fad8c_60b9_4e37_85bd_f3fd50e3034d,Simran Azad,Simran Azad,0,0,0,2/9,2,9
-raw_bd6ccefb_0e59_4d98_b45d_0a116b508971,raw_bd6ccefb_0e59_4d98_b45d_0a116b508971,Sohail Sarwar,Sohail Sarwar,1,0,0,3/16,3,16
-raw_06e3e3be_fb2a_486a_b4c4_73b366ecec51,raw_06e3e3be_fb2a_486a_b4c4_73b366ecec51,Sohail Sarwar,Sohail Sarwar,1,0,0,3/18,3,18
+sohail_sarwar,sohail_sarwar,Sohail Sarwar,Sohail Sarwar,2,0,0,3/16,3,16
 raw_e31bfad2_1415_4a2c_9341_a290286b568d,raw_e31bfad2_1415_4a2c_9341_a290286b568d,Sohan Kumar,Sohan Kumar,0,0,0,2/39,2,39
 raw_6e369552_a237_4156_8523_c905dab418e6,raw_6e369552_a237_4156_8523_c905dab418e6,Spencer Kleemann,Spencer Kleemann,2,0,0,3/35,3,35
 raw_1ec00759_3db7_41ab_8108_0b057fa90dae,raw_1ec00759_3db7_41ab_8108_0b057fa90dae,Sreejith Hariharan,Sreejith Hariharan,0,0,0,1/12,1,12
@@ -781,13 +745,11 @@ raw_1ed58d14_2206_4c6c_bec3_c0dcc9c9e69b,raw_1ed58d14_2206_4c6c_bec3_c0dcc9c9e69
 raw_06e80063_a8f8_4dc2_a8db_6a09aba020fd,raw_06e80063_a8f8_4dc2_a8db_6a09aba020fd,Stephen Dunn,Stephen Dunn,4,1,0,5/28,5,28
 raw_003ae245_d16c_43c1_b51e_7f80a5abc9b2,raw_003ae245_d16c_43c1_b51e_7f80a5abc9b2,Steve Heuschkel,Steve Heuschkel,0,0,0,0/42,0,42
 raw_87d57931_0db5_43d8_887d_607ed5fb3b67,raw_87d57931_0db5_43d8_887d_607ed5fb3b67,Steve Hillier,Steve Hillier,0,0,0,0/34,0,34
-raw_46606445_4a5a_47af_ab37_f00884c7efed,raw_46606445_4a5a_47af_ab37_f00884c7efed,Steve Lucas,Steve Lucas,2,1,0,5/32,5,32
-raw_bc7584c0_5485_484c_b5b6_cebf311c3404,raw_bc7584c0_5485_484c_b5b6_cebf311c3404,Steve Lucas,Steve Lucas,1,0,0,3/24,3,24
+steve_lucas,steve_lucas,Steve Lucas,Steve Lucas,3,1,0,5/32,5,32
 raw_d5fffe36_e74a_45b2_b771_dee5f08699a8,raw_d5fffe36_e74a_45b2_b771_dee5f08699a8,Steve Milliken,Steve Milliken,0,0,0,2/16,2,16
 raw_9d32ccbe_f95e_4a2a_9bb4_c207f8c3c16d,raw_9d32ccbe_f95e_4a2a_9bb4_c207f8c3c16d,Steven Green,Steven Green,1,0,0,3/7,3,7
 raw_87cd773e_e1e2_4346_93b9_cf7a00631009,raw_87cd773e_e1e2_4346_93b9_cf7a00631009,Steven Hartas,Steven Hartas,0,0,0,2/10,2,10
-raw_ede1f93f_f37d_4428_bc38_67d051fbcc33,raw_ede1f93f_f37d_4428_bc38_67d051fbcc33,Steven Jones,Steven Jones,0,0,0,2/26,2,26
-raw_31be0dbd_ab18_4451_af72_aec9dd6ded49,raw_31be0dbd_ab18_4451_af72_aec9dd6ded49,Steven Jones,Steven Jones,0,0,0,2/17,2,17
+steven_jones,steven_jones,Steven Jones,Steven Jones,0,0,0,2/17,2,17
 raw_e6af3425_1d8f_4e9f_a5b4_c51b09cc4e1c,raw_e6af3425_1d8f_4e9f_a5b4_c51b09cc4e1c,Stuart Aley,Stuart Aley,3,0,0,3/16,3,16
 raw_00e706c1_4347_4617_aeeb_2aa3d817b912,raw_00e706c1_4347_4617_aeeb_2aa3d817b912,Sudan Khanal,Sudan Khanal,0,0,0,0/15,0,15
 raw_dfa5088d_87ad_4b77_b09a_1f0a9af0d7d9,raw_dfa5088d_87ad_4b77_b09a_1f0a9af0d7d9,Sufyan Alam,Sufyan Alam,0,0,0,0/14,0,14
@@ -824,10 +786,8 @@ raw_5b94c5a0_77b4_4684_bfcf_56d77262a91f,raw_5b94c5a0_77b4_4684_bfcf_56d77262a91
 raw_c2515380_97fc_4f44_8cd3_d2a8ab3aa867,raw_c2515380_97fc_4f44_8cd3_d2a8ab3aa867,Timothy Sherwin,Timothy Sherwin,9,0,0,4/11,4,11
 raw_adaedb8a_0185_41a5_8571_4778d0b1d463,raw_adaedb8a_0185_41a5_8571_4778d0b1d463,Tj Dayal,Tj Dayal,1,0,0,4/21,4,21
 raw_415bc751_563f_45d5_886b_f4da23ed4237,raw_415bc751_563f_45d5_886b_f4da23ed4237,To Be Confirmed,To Be Confirmed,0,0,0,0/3,0,3
-raw_346ab035_beec_46e8_9262_b3060b7bee33,raw_346ab035_beec_46e8_9262_b3060b7bee33,Toby Mackenzie,Toby Mackenzie,0,0,0,1/22,1,22
-raw_e4da583d_1089_4208_b334_ab81d7af1228,raw_e4da583d_1089_4208_b334_ab81d7af1228,Toby Mackenzie,Toby Mackenzie,1,1,0,5/14,5,14
-raw_671ebe4d_b33d_44b7_9176_f4db3e72a9f4,raw_671ebe4d_b33d_44b7_9176_f4db3e72a9f4,Todd Heslehurst,Todd Heslehurst,5,3,0,5/13,5,13
-raw_4253bd29_3d73_4b6a_b3c3_988c6c8b099a,raw_4253bd29_3d73_4b6a_b3c3_988c6c8b099a,Todd Heslehurst,Todd Heslehurst,0,0,0,1/36,1,36
+toby_mackenzie,toby_mackenzie,Toby Mackenzie,Toby Mackenzie,1,1,0,5/14,5,14
+todd_heslehurst,todd_heslehurst,Todd Heslehurst,Todd Heslehurst,5,3,0,5/13,5,13
 raw_c97eac6c_4c47_4b41_bb56_fe79b9617ab3,raw_c97eac6c_4c47_4b41_bb56_fe79b9617ab3,Todd O'Keefe,Todd O'Keefe,0,0,0,2/16,2,16
 raw_ac74393d_3d85_468e_b1cb_133b1b377fb5,raw_ac74393d_3d85_468e_b1cb_133b1b377fb5,Tom Eden,Tom Eden,0,0,0,1/13,1,13
 raw_c44f0aef_9d24_48ec_8a27_5aadc204666f,raw_c44f0aef_9d24_48ec_8a27_5aadc204666f,Tom Jackson,Tom Jackson,1,0,0,3/37,3,37
@@ -842,7 +802,7 @@ raw_01f0fe13_26a0_4335_9db1_678e6075c539,raw_01f0fe13_26a0_4335_9db1_678e6075c53
 raw_d246cafb_806c_48b3_b1a0_44e4e8a09c81,raw_d246cafb_806c_48b3_b1a0_44e4e8a09c81,Trevor Whittall,Trevor Whittall,0,0,0,1/5,1,5
 raw_946d00c5_a80b_4ec3_a3e5_4c93b8b6ee44,raw_946d00c5_a80b_4ec3_a3e5_4c93b8b6ee44,Tristan Reid,Tristan Reid,1,0,0,3/21,3,21
 raw_6e5ef366_197b_485e_b2d1_cc03cdf119c7,raw_6e5ef366_197b_485e_b2d1_cc03cdf119c7,Tyler Cussen,Tyler Cussen,4,0,0,4/11,4,11
-raw_dadf3527_8ffc_4260_8fe3_bca505182b66,raw_dadf3527_8ffc_4260_8fe3_bca505182b66,Tyler Hull,Tyler Hull,0,0,0,1/32,1,32
+tyler_hull,tyler_hull,Tyler Hull,Tyler Hull,0,0,0,1/32,1,32
 raw_434b52d7_1fdc_4e9e_91c4_6b9341563b3a,raw_434b52d7_1fdc_4e9e_91c4_6b9341563b3a,Tyler Massey,Tyler Massey,7,0,0,4/16,4,16
 raw_e0edb835_e989_4441_81fa_065021d1530e,raw_e0edb835_e989_4441_81fa_065021d1530e,Ujjwal Kumar,Ujjwal Kumar,0,0,0,2/6,2,6
 raw_656c26e5_aaf4_4639_86b7_86bf539775ec,raw_656c26e5_aaf4_4639_86b7_86bf539775ec,Venkateswara Reddy Avula,Venkateswara Reddy Avula,1,0,0,3/27,3,27

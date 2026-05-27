@@ -45,8 +45,8 @@ raw_ddfca0c2_efe8_4359_967e_516d6717eed9,Adam Carrall,Adam Carrall,Two Day,New B
 raw_ddfca0c2_efe8_4359_967e_516d6717eed9,Adam Carrall,Adam Carrall,Two Day,Older Ball,2,40,0,23,33,4,1,6.4,,3.45,,82.5,10.0
 raw_ce8a7015_cbf1_4275_9a11_6ce58d288b94,Adam Finlayson,Adam Finlayson,One Day,Middle,2,102,3,86,65,12,7,17.0,28.666666666666668,5.0588235294117645,34.0,63.72549019607843,11.764705882352942
 raw_ce8a7015_cbf1_4275_9a11_6ce58d288b94,Adam Finlayson,Adam Finlayson,One Day,Death,3,24,0,38,9,6,3,4.0,,9.5,,37.5,25.0
-raw_119115cb_ab94_4b5a_b10f_f1420f85f4f6,Adam Scott,Adam Scott,One Day,Middle,2,6,0,4,5,1,1,1.0,,4.0,,83.33333333333333,16.666666666666668
-raw_119115cb_ab94_4b5a_b10f_f1420f85f4f6,Adam Scott,Adam Scott,One Day,Death,3,30,2,35,14,3,1,5.0,17.5,7.0,15.0,46.666666666666664,10.0
+adam_scott,Adam Scott,Adam Scott,One Day,Middle,2,6,0,4,5,1,1,1.0,,4.0,,83.33333333333333,16.666666666666668
+adam_scott,Adam Scott,Adam Scott,One Day,Death,3,30,2,35,14,3,1,5.0,17.5,7.0,15.0,46.666666666666664,10.0
 raw_0677b72d_b1b1_433e_803b_7b79cb5c5ef9,Aidan Simmons,Aidan Simmons,One Day,Opening,1,6,0,4,5,1,1,1.0,,4.0,,83.33333333333333,16.666666666666668
 raw_0677b72d_b1b1_433e_803b_7b79cb5c5ef9,Aidan Simmons,Aidan Simmons,One Day,Middle,2,36,1,32,21,5,1,6.0,32.0,5.333333333333333,36.0,58.333333333333336,13.88888888888889
 raw_0677b72d_b1b1_433e_803b_7b79cb5c5ef9,Aidan Simmons,Aidan Simmons,One Day,Death,3,18,0,38,7,7,1,3.0,,12.666666666666666,,38.888888888888886,38.888888888888886
@@ -58,9 +58,9 @@ raw_d9d180b1_1c20_4f9c_96e5_10e6ae5124ea,Alexander Lauchlan,Alexander Lauchlan,O
 raw_d9d180b1_1c20_4f9c_96e5_10e6ae5124ea,Alexander Lauchlan,Alexander Lauchlan,One Day,Death,3,54,3,43,35,5,1,9.0,14.333333333333334,4.777777777777778,18.0,64.81481481481481,9.25925925925926
 raw_d9d180b1_1c20_4f9c_96e5_10e6ae5124ea,Alexander Lauchlan,Alexander Lauchlan,Two Day,New Ball,1,42,0,19,32,1,2,7.0,,2.7142857142857144,,76.19047619047619,2.380952380952381
 raw_d9d180b1_1c20_4f9c_96e5_10e6ae5124ea,Alexander Lauchlan,Alexander Lauchlan,Two Day,Older Ball,2,49,0,52,26,5,2,8.1,,6.36734693877551,,53.06122448979592,10.204081632653061
-raw_cec7663a_f059_4bad_9ed4_f83b432d4a49,Alexander Ristevski,Alexander Ristevski,One Day,Middle,2,42,1,33,30,4,3,7.0,33.0,4.714285714285714,42.0,71.42857142857143,9.523809523809524
-raw_cec7663a_f059_4bad_9ed4_f83b432d4a49,Alexander Ristevski,Alexander Ristevski,Two Day,New Ball,1,24,0,5,19,0,2,4.0,,1.25,,79.16666666666667,0.0
-raw_cec7663a_f059_4bad_9ed4_f83b432d4a49,Alexander Ristevski,Alexander Ristevski,Two Day,Older Ball,2,18,0,6,16,1,2,3.0,,2.0,,88.88888888888889,5.555555555555555
+alexander_ristevski,Alexander Ristevski,Alexander Ristevski,One Day,Middle,2,42,1,33,30,4,3,7.0,33.0,4.714285714285714,42.0,71.42857142857143,9.523809523809524
+alexander_ristevski,Alexander Ristevski,Alexander Ristevski,Two Day,New Ball,1,24,0,5,19,0,2,4.0,,1.25,,79.16666666666667,0.0
+alexander_ristevski,Alexander Ristevski,Alexander Ristevski,Two Day,Older Ball,2,18,0,6,16,1,2,3.0,,2.0,,88.88888888888889,5.555555555555555
 raw_1548ffef_fccb_4b7b_8955_adf2c7dc1d9e,Ali Ali,Ali Ali,One Day,Opening,1,18,2,3,16,0,2,3.0,1.5,1.0,9.0,88.88888888888889,0.0
 raw_7b7af497_6bbc_41d7_83a5_301de3fb3f95,Ali Ali,Ali Ali,One Day,Opening,1,24,0,18,18,3,2,4.0,,4.5,,75.0,12.5
 raw_1548ffef_fccb_4b7b_8955_adf2c7dc1d9e,Ali Ali,Ali Ali,One Day,Middle,2,228,7,145,151,16,8,38.0,20.714285714285715,3.8157894736842106,32.57142857142857,66.2280701754386,7.017543859649122
@@ -78,12 +78,10 @@ raw_cfe3d18b_0867_44e7_8493_c620a02152f0,Andrew Balding,Andrew Balding,One Day,M
 raw_cfe3d18b_0867_44e7_8493_c620a02152f0,Andrew Balding,Andrew Balding,One Day,Death,3,24,0,11,17,0,1,4.0,,2.75,,70.83333333333333,0.0
 raw_cfe3d18b_0867_44e7_8493_c620a02152f0,Andrew Balding,Andrew Balding,Two Day,New Ball,1,48,0,21,36,2,1,8.0,,2.625,,75.0,4.166666666666667
 raw_cfe3d18b_0867_44e7_8493_c620a02152f0,Andrew Balding,Andrew Balding,Two Day,Older Ball,2,42,0,25,31,2,1,7.0,,3.5714285714285716,,73.80952380952381,4.761904761904762
-raw_8f797024_6b78_479f_a9c0_615790d9a38b,Andrew Gunaratnam,Andrew Gunaratnam,One Day,Opening,1,72,6,53,52,7,3,12.0,8.833333333333334,4.416666666666667,12.0,72.22222222222223,9.722222222222221
-raw_d2c09c94_afae_4ed8_accc_410685e06cd0,Andrew Gunaratnam,Andrew Gunaratnam,One Day,Opening,1,30,3,14,21,1,1,5.0,4.666666666666667,2.8,10.0,70.0,3.3333333333333335
-raw_8f797024_6b78_479f_a9c0_615790d9a38b,Andrew Gunaratnam,Andrew Gunaratnam,One Day,Middle,2,106,2,73,74,12,4,17.4,36.5,4.132075471698113,53.0,69.81132075471699,11.320754716981131
-raw_d2c09c94_afae_4ed8_accc_410685e06cd0,Andrew Gunaratnam,Andrew Gunaratnam,One Day,Middle,2,6,0,0,6,0,1,1.0,,0.0,,100.0,0.0
-raw_8f797024_6b78_479f_a9c0_615790d9a38b,Andrew Gunaratnam,Andrew Gunaratnam,Two Day,New Ball,1,42,1,32,29,4,3,7.0,32.0,4.571428571428571,42.0,69.04761904761905,9.523809523809524
-raw_8f797024_6b78_479f_a9c0_615790d9a38b,Andrew Gunaratnam,Andrew Gunaratnam,Two Day,Older Ball,2,79,0,43,58,5,4,13.1,,3.2658227848101267,,73.41772151898734,6.329113924050633
+andrew_gunaratnam,Andrew Gunaratnam,Andrew Gunaratnam,One Day,Opening,1,102,9,67,73,8,4,17.0,7.444444444444445,3.9411764705882355,11.333333333333334,71.56862745098039,7.8431372549019605
+andrew_gunaratnam,Andrew Gunaratnam,Andrew Gunaratnam,One Day,Middle,2,112,2,73,80,12,5,18.4,36.5,3.9107142857142856,56.0,71.42857142857143,10.714285714285714
+andrew_gunaratnam,Andrew Gunaratnam,Andrew Gunaratnam,Two Day,New Ball,1,42,1,32,29,4,3,7.0,32.0,4.571428571428571,42.0,69.04761904761905,9.523809523809524
+andrew_gunaratnam,Andrew Gunaratnam,Andrew Gunaratnam,Two Day,Older Ball,2,79,0,43,58,5,4,13.1,,3.2658227848101267,,73.41772151898734,6.329113924050633
 raw_6c00e3ea_afe1_4510_aeb0_04ec13576a7e,Angus O'Rourke,Angus O'Rourke,One Day,Middle,2,262,9,128,178,8,8,43.4,14.222222222222221,2.931297709923664,29.11111111111111,67.93893129770993,3.053435114503817
 raw_6c00e3ea_afe1_4510_aeb0_04ec13576a7e,Angus O'Rourke,Angus O'Rourke,One Day,Death,3,69,4,35,48,3,4,11.3,8.75,3.0434782608695654,17.25,69.56521739130434,4.3478260869565215
 raw_6c00e3ea_afe1_4510_aeb0_04ec13576a7e,Angus O'Rourke,Angus O'Rourke,Two Day,New Ball,1,138,4,77,101,11,8,23.0,19.25,3.347826086956522,34.5,73.18840579710145,7.971014492753623
@@ -91,9 +89,9 @@ raw_6c00e3ea_afe1_4510_aeb0_04ec13576a7e,Angus O'Rourke,Angus O'Rourke,Two Day,O
 raw_bbca80f9_52ad_4968_b22d_df74bfd617fd,Anthony Campey,Anthony Campey,One Day,Opening,1,318,10,253,212,35,11,53.0,25.3,4.773584905660377,31.8,66.66666666666667,11.0062893081761
 raw_bbca80f9_52ad_4968_b22d_df74bfd617fd,Anthony Campey,Anthony Campey,One Day,Middle,2,100,4,73,73,12,8,16.4,18.25,4.38,25.0,73.0,12.0
 raw_bbca80f9_52ad_4968_b22d_df74bfd617fd,Anthony Campey,Anthony Campey,One Day,Death,3,66,2,60,33,6,5,11.0,30.0,5.454545454545454,33.0,50.0,9.090909090909092
-raw_6513b681_a053_4c3b_bd71_112d79be507e,Anthony Murphy,Anthony Murphy,One Day,Opening,1,207,7,110,154,12,7,34.3,15.714285714285714,3.1884057971014492,29.571428571428573,74.39613526570048,5.797101449275362
-raw_6513b681_a053_4c3b_bd71_112d79be507e,Anthony Murphy,Anthony Murphy,One Day,Middle,2,48,1,32,31,3,5,8.0,32.0,4.0,48.0,64.58333333333333,6.25
-raw_6513b681_a053_4c3b_bd71_112d79be507e,Anthony Murphy,Anthony Murphy,One Day,Death,3,47,3,27,32,3,4,7.5,9.0,3.4468085106382977,15.666666666666666,68.08510638297872,6.382978723404255
+anthony_murphy,Anthony Murphy,Anthony Murphy,One Day,Opening,1,207,7,110,154,12,7,34.3,15.714285714285714,3.1884057971014492,29.571428571428573,74.39613526570048,5.797101449275362
+anthony_murphy,Anthony Murphy,Anthony Murphy,One Day,Middle,2,48,1,32,31,3,5,8.0,32.0,4.0,48.0,64.58333333333333,6.25
+anthony_murphy,Anthony Murphy,Anthony Murphy,One Day,Death,3,47,3,27,32,3,4,7.5,9.0,3.4468085106382977,15.666666666666666,68.08510638297872,6.382978723404255
 raw_65d2779e_7dbd_4138_96ba_7f420efe304f,Aravendhan Muthiah,Aravendhan Muthiah,One Day,Middle,2,36,0,39,14,4,2,6.0,,6.5,,38.888888888888886,11.11111111111111
 raw_1f7bbff9_cba7_4289_82c3_a88c00179e8e,Arif Khan,Arif Khan,One Day,Middle,2,24,0,9,18,0,1,4.0,,2.25,,75.0,0.0
 raw_ac5d4980_a312_4b31_be36_36be2eb435e5,Arsalan Ahmad,Arsalan Ahmad,One Day,Opening,1,294,14,126,228,10,10,49.0,9.0,2.5714285714285716,21.0,77.55102040816327,3.401360544217687
@@ -227,16 +225,16 @@ raw_c8fd996a_c5c9_4cb2_9ce8_24494df3324f,Dinesh Kumar Velsam,Dinesh Kumar Velsam
 raw_c8fd996a_c5c9_4cb2_9ce8_24494df3324f,Dinesh Kumar Velsam,Dinesh Kumar Velsam,One Day,Middle,2,48,1,32,35,5,4,8.0,32.0,4.0,48.0,72.91666666666667,10.416666666666666
 raw_c8fd996a_c5c9_4cb2_9ce8_24494df3324f,Dinesh Kumar Velsam,Dinesh Kumar Velsam,One Day,Death,3,90,1,87,42,7,7,15.0,87.0,5.8,90.0,46.666666666666664,7.777777777777778
 raw_bf7712e1_726d_46b2_8f30_053159c80c09,Durairaj Shanmugam,Durairaj Shanmugam,Two Day,Older Ball,2,37,0,14,32,3,2,6.1,,2.27027027027027,,86.48648648648648,8.108108108108109
-raw_f9167a02_3744_4a6c_a908_04b676814ee2,Dylan Devoy Paino,Dylan Devoy Paino,One Day,Death,3,18,0,31,4,4,1,3.0,,10.333333333333334,,22.22222222222222,22.22222222222222
-raw_d2dd2b33_c1ce_43ce_91f0_609c56ff38e3,Dylan Devoy Paino,Dylan Devoy Paino,Two Day,New Ball,1,108,2,52,80,6,4,18.0,26.0,2.888888888888889,54.0,74.07407407407408,5.555555555555555
-raw_d2dd2b33_c1ce_43ce_91f0_609c56ff38e3,Dylan Devoy Paino,Dylan Devoy Paino,Two Day,Older Ball,2,102,2,54,73,5,4,17.0,27.0,3.176470588235294,51.0,71.56862745098039,4.901960784313726
+dylan_devoy_paino,Dylan Devoy Paino,Dylan Devoy Paino,One Day,Death,3,18,0,31,4,4,1,3.0,,10.333333333333334,,22.22222222222222,22.22222222222222
+dylan_devoy_paino,Dylan Devoy Paino,Dylan Devoy Paino,Two Day,New Ball,1,108,2,52,80,6,4,18.0,26.0,2.888888888888889,54.0,74.07407407407408,5.555555555555555
+dylan_devoy_paino,Dylan Devoy Paino,Dylan Devoy Paino,Two Day,Older Ball,2,102,2,54,73,5,4,17.0,27.0,3.176470588235294,51.0,71.56862745098039,4.901960784313726
 raw_07442576_0020_4cd3_8e56_ee5254af5430,Elliott Johnson,Elliott Johnson,One Day,Middle,2,18,2,2,16,0,1,3.0,1.0,0.6666666666666666,9.0,88.88888888888889,0.0
 raw_07442576_0020_4cd3_8e56_ee5254af5430,Elliott Johnson,Elliott Johnson,One Day,Death,3,4,1,4,3,1,1,0.4,4.0,6.0,4.0,75.0,25.0
 raw_07442576_0020_4cd3_8e56_ee5254af5430,Elliott Johnson,Elliott Johnson,Two Day,New Ball,1,72,0,66,46,11,5,12.0,,5.5,,63.888888888888886,15.277777777777779
 raw_07442576_0020_4cd3_8e56_ee5254af5430,Elliott Johnson,Elliott Johnson,Two Day,Older Ball,2,409,13,256,272,28,7,68.1,19.692307692307693,3.7555012224938875,31.46153846153846,66.50366748166259,6.845965770171149
 raw_a905a8d5_480a_4761_837b_ad112d23a78d,Evan Hoskin,Evan Hoskin,Two Day,Older Ball,2,66,3,52,42,8,2,11.0,17.333333333333332,4.7272727272727275,22.0,63.63636363636363,12.121212121212121
-raw_44b86ccc_04b3_4cf1_bd72_65790cb09f2e,Fabian Heaton,Fabian Heaton,One Day,Middle,2,48,2,33,30,3,2,8.0,16.5,4.125,24.0,62.5,6.25
-raw_44b86ccc_04b3_4cf1_bd72_65790cb09f2e,Fabian Heaton,Fabian Heaton,One Day,Death,3,18,0,17,9,2,2,3.0,,5.666666666666667,,50.0,11.11111111111111
+fabian_heaton,Fabian Heaton,Fabian Heaton,One Day,Middle,2,48,2,33,30,3,2,8.0,16.5,4.125,24.0,62.5,6.25
+fabian_heaton,Fabian Heaton,Fabian Heaton,One Day,Death,3,18,0,17,9,2,2,3.0,,5.666666666666667,,50.0,11.11111111111111
 raw_d84fe81d_2329_4bfa_b19e_165a1370add5,Francis Weeding,Francis Weeding,One Day,Opening,1,66,2,45,48,6,3,11.0,22.5,4.090909090909091,33.0,72.72727272727273,9.090909090909092
 raw_d84fe81d_2329_4bfa_b19e_165a1370add5,Francis Weeding,Francis Weeding,One Day,Middle,2,24,1,4,22,0,1,4.0,4.0,1.0,24.0,91.66666666666667,0.0
 raw_d84fe81d_2329_4bfa_b19e_165a1370add5,Francis Weeding,Francis Weeding,One Day,Death,3,29,1,44,9,6,3,4.5,44.0,9.10344827586207,29.0,31.03448275862069,20.689655172413794
@@ -289,8 +287,8 @@ raw_2fa515e5_c401_46ac_b628_4d527a6ae5a1,Harris Anagnostou,Harris Anagnostou,One
 raw_2fa515e5_c401_46ac_b628_4d527a6ae5a1,Harris Anagnostou,Harris Anagnostou,One Day,Death,3,30,3,56,12,9,2,5.0,18.666666666666668,11.2,10.0,40.0,30.0
 raw_2fa515e5_c401_46ac_b628_4d527a6ae5a1,Harris Anagnostou,Harris Anagnostou,Two Day,New Ball,1,12,0,3,10,0,1,2.0,,1.5,,83.33333333333333,0.0
 raw_2fa515e5_c401_46ac_b628_4d527a6ae5a1,Harris Anagnostou,Harris Anagnostou,Two Day,Older Ball,2,121,5,95,79,12,4,20.1,19.0,4.710743801652892,24.2,65.2892561983471,9.917355371900827
-raw_3679b42f_abbb_4f4c_af5f_4763abcbc06f,Harrison Morton,Harrison Morton,Two Day,New Ball,1,12,0,9,8,1,1,2.0,,4.5,,66.66666666666667,8.333333333333334
-raw_3679b42f_abbb_4f4c_af5f_4763abcbc06f,Harrison Morton,Harrison Morton,Two Day,Older Ball,2,25,0,22,18,4,1,4.1,,5.28,,72.0,16.0
+harrison_morton,Harrison Morton,Harrison Morton,Two Day,New Ball,1,12,0,9,8,1,1,2.0,,4.5,,66.66666666666667,8.333333333333334
+harrison_morton,Harrison Morton,Harrison Morton,Two Day,Older Ball,2,25,0,22,18,4,1,4.1,,5.28,,72.0,16.0
 raw_615a4321_adf3_4656_a14f_68c5bc4f470c,Harry Rich,Harry Rich,One Day,Middle,2,12,0,11,6,1,1,2.0,,5.5,,50.0,8.333333333333334
 raw_615a4321_adf3_4656_a14f_68c5bc4f470c,Harry Rich,Harry Rich,Two Day,Older Ball,2,24,1,19,17,4,1,4.0,19.0,4.75,24.0,70.83333333333333,16.666666666666668
 raw_f92211a8_1a05_4557_86a2_256c9b19a4fb,Hayden Mewburn,Hayden Mewburn,One Day,Opening,1,30,1,43,14,7,1,5.0,43.0,8.6,30.0,46.666666666666664,23.333333333333332
@@ -311,18 +309,17 @@ raw_992bfe67_54d7_4bad_8e85_a95aa2d1578d,Jake Wilson,Jake Wilson,One Day,Middle,
 raw_992bfe67_54d7_4bad_8e85_a95aa2d1578d,Jake Wilson,Jake Wilson,One Day,Death,3,58,7,39,32,2,4,9.4,5.571428571428571,4.0344827586206895,8.285714285714286,55.172413793103445,3.4482758620689653
 raw_992bfe67_54d7_4bad_8e85_a95aa2d1578d,Jake Wilson,Jake Wilson,Two Day,New Ball,1,552,23,164,472,19,11,92.0,7.130434782608695,1.7826086956521738,24.0,85.5072463768116,3.4420289855072466
 raw_992bfe67_54d7_4bad_8e85_a95aa2d1578d,Jake Wilson,Jake Wilson,Two Day,Older Ball,2,486,9,179,404,21,11,81.0,19.88888888888889,2.2098765432098766,54.0,83.1275720164609,4.320987654320987
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,One Day,Opening,1,12,1,14,9,3,1,2.0,14.0,7.0,12.0,75.0,25.0
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,One Day,Middle,2,403,6,298,250,35,12,67.1,49.666666666666664,4.4367245657568235,67.16666666666667,62.03473945409429,8.6848635235732
-raw_9e871281_b0f0_4c6d_826c_fdbbf59bd302,Jakob Lindberg,Jakob Lindberg,One Day,Middle,2,24,1,15,15,2,1,4.0,15.0,3.75,24.0,62.5,8.333333333333334
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,One Day,Death,3,85,1,79,47,10,6,14.1,79.0,5.576470588235294,85.0,55.294117647058826,11.764705882352942
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,T20,Middle,2,126,7,102,63,9,7,21.0,14.571428571428571,4.857142857142857,18.0,50.0,7.142857142857143
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,T20,Death,3,24,1,27,7,2,3,4.0,27.0,6.75,24.0,29.166666666666668,8.333333333333334
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,Two Day,New Ball,1,12,1,11,8,2,1,2.0,11.0,5.5,12.0,66.66666666666667,16.666666666666668
-raw_5b6b7309_f549_429e_b0ef_9741e3332dbc,Jakob Lindberg,Jakob Lindberg,Two Day,Older Ball,2,753,14,414,544,48,13,125.3,29.571428571428573,3.298804780876494,53.785714285714285,72.24435590969456,6.374501992031872
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,One Day,Opening,1,12,1,14,9,3,1,2.0,14.0,7.0,12.0,75.0,25.0
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,One Day,Middle,2,427,7,313,265,37,13,71.1,44.714285714285715,4.398126463700234,61.0,62.06088992974239,8.665105386416862
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,One Day,Death,3,85,1,79,47,10,6,14.1,79.0,5.576470588235294,85.0,55.294117647058826,11.764705882352942
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,T20,Middle,2,126,7,102,63,9,7,21.0,14.571428571428571,4.857142857142857,18.0,50.0,7.142857142857143
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,T20,Death,3,24,1,27,7,2,3,4.0,27.0,6.75,24.0,29.166666666666668,8.333333333333334
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,Two Day,New Ball,1,12,1,11,8,2,1,2.0,11.0,5.5,12.0,66.66666666666667,16.666666666666668
+jakob_lindberg,Jakob Lindberg,Jakob Lindberg,Two Day,Older Ball,2,753,14,414,544,48,13,125.3,29.571428571428573,3.298804780876494,53.785714285714285,72.24435590969456,6.374501992031872
 raw_a03ad435_6a31_4e08_a0cd_010d8aa4ae92,James Brown,James Brown,One Day,Middle,2,8,0,10,5,1,1,1.2,,7.5,,62.5,12.5
 raw_c45e28de_1e50_4573_ad98_c27872c7851a,James Hawksworth,James Hawksworth,Two Day,Older Ball,2,12,0,10,6,1,1,2.0,,5.0,,50.0,8.333333333333334
-raw_9741f1c7_04a2_4aff_950c_fcbb4eb061a9,James Toogood,James Toogood,One Day,Middle,2,25,1,14,17,1,1,4.1,14.0,3.36,25.0,68.0,4.0
-raw_9741f1c7_04a2_4aff_950c_fcbb4eb061a9,James Toogood,James Toogood,One Day,Death,3,5,0,4,3,0,1,0.5,,4.8,,60.0,0.0
+james_toogood,James Toogood,James Toogood,One Day,Middle,2,25,1,14,17,1,1,4.1,14.0,3.36,25.0,68.0,4.0
+james_toogood,James Toogood,James Toogood,One Day,Death,3,5,0,4,3,0,1,0.5,,4.8,,60.0,0.0
 raw_a3046146_3c40_441a_a508_499ed53d54d9,Jason Bowler,Jason Bowler,One Day,Middle,2,18,0,5,13,0,1,3.0,,1.6666666666666667,,72.22222222222223,0.0
 raw_a3046146_3c40_441a_a508_499ed53d54d9,Jason Bowler,Jason Bowler,One Day,Death,3,90,6,63,47,5,3,15.0,10.5,4.2,15.0,52.22222222222222,5.555555555555555
 raw_a3046146_3c40_441a_a508_499ed53d54d9,Jason Bowler,Jason Bowler,Two Day,New Ball,1,42,0,1,41,0,1,7.0,,0.14285714285714285,,97.61904761904762,0.0
@@ -350,9 +347,8 @@ raw_45e8c49d_1d5a_47dc_8671_a2e6e6cd3f8b,Jihad Ykmour,Jihad Ykmour,One Day,Openi
 raw_45e8c49d_1d5a_47dc_8671_a2e6e6cd3f8b,Jihad Ykmour,Jihad Ykmour,One Day,Middle,2,3,0,12,0,3,1,0.3,,24.0,,0.0,100.0
 raw_df2bdfac_2b7e_47bc_88ce_7d55f4943244,Jim Arsovski,Jim Arsovski,One Day,Middle,2,36,3,14,26,1,1,6.0,4.666666666666667,2.3333333333333335,12.0,72.22222222222223,2.7777777777777777
 raw_df2bdfac_2b7e_47bc_88ce_7d55f4943244,Jim Arsovski,Jim Arsovski,One Day,Death,3,26,1,15,17,1,2,4.2,15.0,3.4615384615384617,26.0,65.38461538461539,3.8461538461538463
-raw_354bbca7_52e8_480a_9cd9_cfaac2d5ec10,Joel Murphy,Joel Murphy,One Day,Middle,2,12,0,14,7,2,1,2.0,,7.0,,58.333333333333336,16.666666666666668
-raw_354bbca7_52e8_480a_9cd9_cfaac2d5ec10,Joel Murphy,Joel Murphy,Two Day,Older Ball,2,61,1,42,43,4,1,10.1,42.0,4.131147540983607,61.0,70.49180327868852,6.557377049180328
-raw_efd421c6_58ec_40e9_9521_431e407f87a8,Joel Murphy,Joel Murphy,Two Day,Older Ball,2,42,0,44,25,7,3,7.0,,6.285714285714286,,59.523809523809526,16.666666666666668
+joel_murphy,Joel Murphy,Joel Murphy,One Day,Middle,2,12,0,14,7,2,1,2.0,,7.0,,58.333333333333336,16.666666666666668
+joel_murphy,Joel Murphy,Joel Murphy,Two Day,Older Ball,2,103,1,86,68,11,4,17.1,86.0,5.009708737864078,103.0,66.01941747572816,10.679611650485437
 raw_ec3fe06f_ccbf_4b46_b82d_58382024e3ba,John Hayes,John Hayes,One Day,Middle,2,20,0,20,10,2,1,3.2,,6.0,,50.0,10.0
 raw_ca0f5bf7_9b5a_43d0_bd4b_6f42496d8908,Jose Villa,Jose Villa,One Day,Opening,1,6,1,2,5,0,1,1.0,2.0,2.0,6.0,83.33333333333333,0.0
 raw_ca0f5bf7_9b5a_43d0_bd4b_6f42496d8908,Jose Villa,Jose Villa,One Day,Middle,2,24,1,23,12,3,3,4.0,23.0,5.75,24.0,50.0,12.5
@@ -398,11 +394,11 @@ raw_cd6abaee_9331_4ce3_b970_3e1512d8c5b8,Krishnasamy Kasthuri,Krishnasamy Kasthu
 raw_cd6abaee_9331_4ce3_b970_3e1512d8c5b8,Krishnasamy Kasthuri,Krishnasamy Kasthuri,One Day,Death,3,145,6,75,94,5,7,24.1,12.5,3.103448275862069,24.166666666666668,64.82758620689656,3.4482758620689653
 raw_1e82c146_34db_44a6_8f53_69d7512fdd9b,Kunal Arora,Kunal Arora,One Day,Opening,1,6,0,1,5,0,1,1.0,,1.0,,83.33333333333333,0.0
 raw_1e82c146_34db_44a6_8f53_69d7512fdd9b,Kunal Arora,Kunal Arora,One Day,Middle,2,12,0,7,9,1,1,2.0,,3.5,,75.0,8.333333333333334
-raw_44804280_c99c_41f8_be80_e239d28d4655,Lachlan Cheney,Lachlan Cheney,Two Day,Older Ball,2,30,0,24,18,3,2,5.0,,4.8,,60.0,10.0
-raw_dfd501f2_0b76_48d7_b6ac_ced5c8c1189a,Lachlan Willmore,Lachlan Willmore,Two Day,New Ball,1,102,3,74,71,10,2,17.0,24.666666666666668,4.352941176470588,34.0,69.6078431372549,9.803921568627452
-raw_b89f82b1_39bb_4fd5_8186_fa3d53da8413,Laurie Turner,Laurie Turner,One Day,Opening,1,48,1,34,33,5,2,8.0,34.0,4.25,48.0,68.75,10.416666666666666
-raw_b89f82b1_39bb_4fd5_8186_fa3d53da8413,Laurie Turner,Laurie Turner,One Day,Middle,2,30,3,24,19,3,2,5.0,8.0,4.8,10.0,63.333333333333336,10.0
-raw_b89f82b1_39bb_4fd5_8186_fa3d53da8413,Laurie Turner,Laurie Turner,One Day,Death,3,6,0,1,5,0,1,1.0,,1.0,,83.33333333333333,0.0
+lachlan_cheney,Lachlan Cheney,Lachlan Cheney,Two Day,Older Ball,2,30,0,24,18,3,2,5.0,,4.8,,60.0,10.0
+lachlan_willmore,Lachlan Willmore,Lachlan Willmore,Two Day,New Ball,1,102,3,74,71,10,2,17.0,24.666666666666668,4.352941176470588,34.0,69.6078431372549,9.803921568627452
+laurie_turner,Laurie Turner,Laurie Turner,One Day,Opening,1,48,1,34,33,5,2,8.0,34.0,4.25,48.0,68.75,10.416666666666666
+laurie_turner,Laurie Turner,Laurie Turner,One Day,Middle,2,30,3,24,19,3,2,5.0,8.0,4.8,10.0,63.333333333333336,10.0
+laurie_turner,Laurie Turner,Laurie Turner,One Day,Death,3,6,0,1,5,0,1,1.0,,1.0,,83.33333333333333,0.0
 raw_8edd439a_c016_40f1_a234_eba92732a260,Leroy Maurer,Leroy Maurer,One Day,Opening,1,12,3,2,11,0,1,2.0,0.6666666666666666,1.0,4.0,91.66666666666667,0.0
 raw_8edd439a_c016_40f1_a234_eba92732a260,Leroy Maurer,Leroy Maurer,One Day,Middle,2,186,7,87,137,7,5,31.0,12.428571428571429,2.806451612903226,26.571428571428573,73.65591397849462,3.763440860215054
 raw_8edd439a_c016_40f1_a234_eba92732a260,Leroy Maurer,Leroy Maurer,One Day,Death,3,73,2,56,44,7,4,12.1,28.0,4.602739726027397,36.5,60.273972602739725,9.58904109589041
@@ -472,7 +468,7 @@ raw_acde23d2_d5e4_420f_9d56_ec026d5a6ac5,Mark Loreggia,Mark Loreggia,Two Day,Old
 raw_3668e2d5_35a3_48ac_abd7_f301fb90a83d,Mathew Gilmour,Mathew Gilmour,One Day,Opening,1,6,1,14,2,3,1,1.0,14.0,14.0,6.0,33.333333333333336,50.0
 raw_ca83eb1e_3e17_4fe6_8f0d_51007df13f23,Matt Ellis,Matt Ellis,One Day,Middle,2,16,0,19,8,3,1,2.4,,7.125,,50.0,18.75
 raw_ca83eb1e_3e17_4fe6_8f0d_51007df13f23,Matt Ellis,Matt Ellis,Two Day,Older Ball,2,30,0,3,27,0,1,5.0,,0.6,,90.0,0.0
-raw_af10c16d_a50a_430f_b962_072f30380e8f,Matthew Hoggett,Matthew Hoggett,Two Day,Older Ball,2,12,0,22,5,4,1,2.0,,11.0,,41.666666666666664,33.333333333333336
+matthew_hoggett,Matthew Hoggett,Matthew Hoggett,Two Day,Older Ball,2,12,0,22,5,4,1,2.0,,11.0,,41.666666666666664,33.333333333333336
 raw_52e37bed_68d6_4171_9eff_c168651a1043,Matthew Peacock,Matthew Peacock,One Day,Opening,1,30,2,6,27,1,1,5.0,3.0,1.2,15.0,90.0,3.3333333333333335
 raw_52e37bed_68d6_4171_9eff_c168651a1043,Matthew Peacock,Matthew Peacock,One Day,Middle,2,18,0,8,14,1,1,3.0,,2.6666666666666665,,77.77777777777777,5.555555555555555
 raw_85d03801_4151_468a_8aeb_8ce195204587,Matthew Stanton,Matthew Stanton,Two Day,New Ball,1,12,0,12,7,0,1,2.0,,6.0,,58.333333333333336,0.0
@@ -501,16 +497,11 @@ raw_580f8847_b9d8_40a1_8d26_94552992b056,Michael Snell,Michael Snell,One Day,Mid
 raw_580f8847_b9d8_40a1_8d26_94552992b056,Michael Snell,Michael Snell,One Day,Death,3,6,0,4,5,1,1,1.0,,4.0,,83.33333333333333,16.666666666666668
 raw_b91cdc31_705c_420e_8c9c_2fae3290b743,Mike Magoulias,Mike Magoulias,One Day,Opening,1,18,0,9,14,1,1,3.0,,3.0,,77.77777777777777,5.555555555555555
 raw_b91cdc31_705c_420e_8c9c_2fae3290b743,Mike Magoulias,Mike Magoulias,One Day,Death,3,30,2,51,12,9,1,5.0,25.5,10.2,15.0,40.0,30.0
-raw_940e31fb_8fb8_42af_bfc5_771884272098,Mitchell Betts,Mitchell Betts,One Day,Opening,1,161,3,94,115,8,6,26.5,31.333333333333332,3.5031055900621118,53.666666666666664,71.42857142857143,4.968944099378882
-raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,Mitchell Betts,Mitchell Betts,One Day,Opening,1,30,1,18,21,2,1,5.0,18.0,3.6,30.0,70.0,6.666666666666667
-raw_940e31fb_8fb8_42af_bfc5_771884272098,Mitchell Betts,Mitchell Betts,One Day,Middle,2,204,8,115,149,14,7,34.0,14.375,3.3823529411764706,25.5,73.03921568627452,6.862745098039215
-raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,Mitchell Betts,Mitchell Betts,One Day,Middle,2,18,0,20,11,2,1,3.0,,6.666666666666667,,61.111111111111114,11.11111111111111
-raw_940e31fb_8fb8_42af_bfc5_771884272098,Mitchell Betts,Mitchell Betts,One Day,Death,3,84,2,76,46,9,5,14.0,38.0,5.428571428571429,42.0,54.76190476190476,10.714285714285714
-raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,Mitchell Betts,Mitchell Betts,One Day,Death,3,12,1,13,4,1,1,2.0,13.0,6.5,12.0,33.333333333333336,8.333333333333334
-raw_940e31fb_8fb8_42af_bfc5_771884272098,Mitchell Betts,Mitchell Betts,Two Day,New Ball,1,96,0,70,69,11,4,16.0,,4.375,,71.875,11.458333333333334
-raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,Mitchell Betts,Mitchell Betts,Two Day,New Ball,1,48,0,13,41,1,1,8.0,,1.625,,85.41666666666667,2.0833333333333335
-raw_940e31fb_8fb8_42af_bfc5_771884272098,Mitchell Betts,Mitchell Betts,Two Day,Older Ball,2,138,8,65,104,7,3,23.0,8.125,2.8260869565217392,17.25,75.3623188405797,5.072463768115942
-raw_e0cb97d3_e63a_46a2_ad4c_c41449547be1,Mitchell Betts,Mitchell Betts,Two Day,Older Ball,2,65,1,20,51,0,1,10.5,20.0,1.8461538461538463,65.0,78.46153846153847,0.0
+mitchell_betts,Mitchell Betts,Mitchell Betts,One Day,Opening,1,191,4,112,136,10,7,31.5,28.0,3.518324607329843,47.75,71.20418848167539,5.2356020942408374
+mitchell_betts,Mitchell Betts,Mitchell Betts,One Day,Middle,2,222,8,135,160,16,8,37.0,16.875,3.6486486486486487,27.75,72.07207207207207,7.207207207207207
+mitchell_betts,Mitchell Betts,Mitchell Betts,One Day,Death,3,96,3,89,50,10,6,16.0,29.666666666666668,5.5625,32.0,52.083333333333336,10.416666666666666
+mitchell_betts,Mitchell Betts,Mitchell Betts,Two Day,New Ball,1,144,0,83,110,12,5,24.0,,3.4583333333333335,,76.38888888888889,8.333333333333334
+mitchell_betts,Mitchell Betts,Mitchell Betts,Two Day,Older Ball,2,203,9,85,155,7,4,33.5,9.444444444444445,2.5123152709359604,22.555555555555557,76.35467980295566,3.4482758620689653
 raw_0642fdef_a847_47b6_b1c5_8d28abf32c09,Mohammad Ishaque,Mohammad Ishaque,One Day,Middle,2,24,2,14,13,1,2,4.0,7.0,3.5,12.0,54.166666666666664,4.166666666666667
 raw_0642fdef_a847_47b6_b1c5_8d28abf32c09,Mohammad Ishaque,Mohammad Ishaque,One Day,Death,3,23,3,13,16,1,2,3.5,4.333333333333333,3.391304347826087,7.666666666666667,69.56521739130434,4.3478260869565215
 raw_5bb45db2_46e1_4ad9_9870_ad33f0bc6d1a,Mohammed Ismail,Mohammed Ismail,One Day,Opening,1,66,0,18,58,2,3,11.0,,1.6363636363636365,,87.87878787878788,3.0303030303030303
@@ -582,9 +573,9 @@ raw_4564cac3_5534_4685_ae3d_fd9cb03a5dbf,Paul Decelis,Paul Decelis,One Day,Middl
 raw_4564cac3_5534_4685_ae3d_fd9cb03a5dbf,Paul Decelis,Paul Decelis,One Day,Death,3,55,2,63,21,7,6,9.1,31.5,6.872727272727273,27.5,38.18181818181818,12.727272727272727
 raw_3739cf66_3af2_4905_b0f6_aa565e4381e8,Peter Burden,Peter Burden,One Day,Opening,1,9,0,5,4,0,1,1.3,,3.3333333333333335,,44.44444444444444,0.0
 raw_3739cf66_3af2_4905_b0f6_aa565e4381e8,Peter Burden,Peter Burden,One Day,Middle,2,12,1,13,6,2,1,2.0,13.0,6.5,12.0,50.0,16.666666666666668
-raw_3542a0e2_fdac_4242_a4fb_1d0e301c4af5,Peter Ristevski,Peter Ristevski,One Day,Middle,2,66,0,70,39,12,3,11.0,,6.363636363636363,,59.09090909090909,18.181818181818183
-raw_3542a0e2_fdac_4242_a4fb_1d0e301c4af5,Peter Ristevski,Peter Ristevski,One Day,Death,3,6,1,5,3,0,1,1.0,5.0,5.0,6.0,50.0,0.0
-raw_3542a0e2_fdac_4242_a4fb_1d0e301c4af5,Peter Ristevski,Peter Ristevski,Two Day,Older Ball,2,6,0,8,4,2,1,1.0,,8.0,,66.66666666666667,33.333333333333336
+peter_ristevski,Peter Ristevski,Peter Ristevski,One Day,Middle,2,66,0,70,39,12,3,11.0,,6.363636363636363,,59.09090909090909,18.181818181818183
+peter_ristevski,Peter Ristevski,Peter Ristevski,One Day,Death,3,6,1,5,3,0,1,1.0,5.0,5.0,6.0,50.0,0.0
+peter_ristevski,Peter Ristevski,Peter Ristevski,Two Day,Older Ball,2,6,0,8,4,2,1,1.0,,8.0,,66.66666666666667,33.333333333333336
 raw_66d89d20_5e9e_4436_857e_c906be3bb2ee,Phil Tarbox,Phil Tarbox,One Day,Middle,2,12,0,11,5,1,1,2.0,,5.5,,41.666666666666664,8.333333333333334
 raw_943b9e78_44c9_4be4_afa2_693816cc3c09,Prabhu Murali,Prabhu Murali,One Day,Middle,2,18,0,15,10,2,1,3.0,,5.0,,55.55555555555556,11.11111111111111
 raw_1778b784_eb3e_4c03_bcaa_696b984048fb,Prabhu Saruvamalai,Prabhu Saruvamalai,One Day,Opening,1,24,0,9,19,0,1,4.0,,2.25,,79.16666666666667,0.0
@@ -634,8 +625,8 @@ raw_e5315da0_b35c_4f84_abd6_d987589b6cf6,Robert Henriques,Robert Henriques,One D
 raw_b107e4db_b871_4bbb_bb03_e3d27674c1fc,Robert Henriques,Robert Henriques,Two Day,New Ball,1,60,2,27,45,3,3,10.0,13.5,2.7,30.0,75.0,5.0
 raw_b107e4db_b871_4bbb_bb03_e3d27674c1fc,Robert Henriques,Robert Henriques,Two Day,Older Ball,2,263,3,109,203,10,6,43.5,36.333333333333336,2.4866920152091256,87.66666666666667,77.18631178707224,3.802281368821293
 raw_e5315da0_b35c_4f84_abd6_d987589b6cf6,Robert Henriques,Robert Henriques,Two Day,Older Ball,2,96,0,40,74,3,2,16.0,,2.5,,77.08333333333333,3.125
-raw_07e842ed_b16f_419b_8373_f12f29a1d3f1,Robert Liley,Robert Liley,One Day,Middle,2,18,0,6,12,0,1,3.0,,2.0,,66.66666666666667,0.0
-raw_07e842ed_b16f_419b_8373_f12f29a1d3f1,Robert Liley,Robert Liley,Two Day,Older Ball,2,12,0,12,4,1,1,2.0,,6.0,,33.333333333333336,8.333333333333334
+robert_liley,Robert Liley,Robert Liley,One Day,Middle,2,18,0,6,12,0,1,3.0,,2.0,,66.66666666666667,0.0
+robert_liley,Robert Liley,Robert Liley,Two Day,Older Ball,2,12,0,12,4,1,1,2.0,,6.0,,33.333333333333336,8.333333333333334
 raw_11c6c7bf_a3c2_4efe_a79d_099678667c12,Robert Stares,Robert Stares,One Day,Middle,2,84,2,52,57,6,3,14.0,26.0,3.7142857142857144,42.0,67.85714285714286,7.142857142857143
 raw_11c6c7bf_a3c2_4efe_a79d_099678667c12,Robert Stares,Robert Stares,One Day,Death,3,6,0,5,3,0,1,1.0,,5.0,,50.0,0.0
 raw_9c85e1e1_1577_4d41_b4f3_fb5c23cd0065,Rohan Metry,Rohan Metry,Two Day,Older Ball,2,54,0,25,46,3,1,9.0,,2.7777777777777777,,85.18518518518519,5.555555555555555
@@ -663,9 +654,9 @@ raw_0a7c5a37_d1e9_4bef_8d5c_fa3ecdd820d3,Sathish Kumar Santhosh,Sathish Kumar Sa
 raw_0f12f520_0674_44d5_8af4_1d784f763f83,Sattar Abdul,Sattar Abdul,One Day,Middle,2,32,1,38,18,5,1,5.2,38.0,7.125,32.0,56.25,15.625
 raw_0f12f520_0674_44d5_8af4_1d784f763f83,Sattar Abdul,Sattar Abdul,Two Day,New Ball,1,25,0,5,23,1,1,4.1,,1.2,,92.0,4.0
 raw_0f12f520_0674_44d5_8af4_1d784f763f83,Sattar Abdul,Sattar Abdul,Two Day,Older Ball,2,24,1,12,17,1,1,4.0,12.0,3.0,24.0,70.83333333333333,4.166666666666667
-raw_096ad2b5_d4a3_4c38_816b_14048f2f1dbb,Scott Sigmond,Scott Sigmond,One Day,Opening,1,12,0,8,7,1,1,2.0,,4.0,,58.333333333333336,8.333333333333334
-raw_096ad2b5_d4a3_4c38_816b_14048f2f1dbb,Scott Sigmond,Scott Sigmond,One Day,Middle,2,18,0,8,13,0,1,3.0,,2.6666666666666665,,72.22222222222223,0.0
-raw_096ad2b5_d4a3_4c38_816b_14048f2f1dbb,Scott Sigmond,Scott Sigmond,One Day,Death,3,8,1,3,6,0,1,1.2,3.0,2.25,8.0,75.0,0.0
+scott_sigmond,Scott Sigmond,Scott Sigmond,One Day,Opening,1,12,0,8,7,1,1,2.0,,4.0,,58.333333333333336,8.333333333333334
+scott_sigmond,Scott Sigmond,Scott Sigmond,One Day,Middle,2,18,0,8,13,0,1,3.0,,2.6666666666666665,,72.22222222222223,0.0
+scott_sigmond,Scott Sigmond,Scott Sigmond,One Day,Death,3,8,1,3,6,0,1,1.2,3.0,2.25,8.0,75.0,0.0
 raw_8f83f71f_d8ea_47a7_86ce_c53f5e0d3275,Sean Dean,Sean Dean,Two Day,New Ball,1,47,0,12,39,0,1,7.5,,1.5319148936170213,,82.97872340425532,0.0
 raw_8f83f71f_d8ea_47a7_86ce_c53f5e0d3275,Sean Dean,Sean Dean,Two Day,Older Ball,2,23,1,5,18,0,1,3.5,5.0,1.3043478260869565,23.0,78.26086956521739,0.0
 raw_b4c97b7a_15e6_402a_b93c_c59a37a5b524,Shahzaib Cheema,Shahzaib Cheema,One Day,Middle,2,6,0,4,4,0,1,1.0,,4.0,,66.66666666666667,0.0
@@ -681,13 +672,11 @@ raw_cc679e95_97e4_403c_bc80_bc8ce3c3cf22,Shannon Lane,Shannon Lane,One Day,Middl
 raw_1eca613e_1381_4cf0_b59f_95452a0a662b,Shreyas Zagade,Shreyas Zagade,One Day,Middle,2,24,0,16,15,1,1,4.0,,4.0,,62.5,4.166666666666667
 raw_1eca613e_1381_4cf0_b59f_95452a0a662b,Shreyas Zagade,Shreyas Zagade,Two Day,Older Ball,2,2,0,0,2,0,1,0.2,,0.0,,100.0,0.0
 raw_ca499952_1935_4c41_a3af_d104b79183c9,Siddha Nadheswaran,Siddha Nadheswaran,One Day,Middle,2,6,0,7,2,1,1,1.0,,7.0,,33.333333333333336,16.666666666666668
-raw_c479950c_7bd1_4b70_981b_628f7673135b,Simon Marvello,Simon Marvello,Two Day,New Ball,1,78,6,27,62,2,1,13.0,4.5,2.076923076923077,13.0,79.48717948717949,2.5641025641025643
-raw_317d53a1_c885_4ac9_8ec3_e7cd21d11e01,Simon Marvello,Simon Marvello,Two Day,Older Ball,2,96,0,41,71,3,1,16.0,,2.5625,,73.95833333333333,3.125
-raw_c479950c_7bd1_4b70_981b_628f7673135b,Simon Marvello,Simon Marvello,Two Day,Older Ball,2,78,4,30,63,4,1,13.0,7.5,2.3076923076923075,19.5,80.76923076923077,5.128205128205129
-raw_06e3e3be_fb2a_486a_b4c4_73b366ecec51,Sohail Sarwar,Sohail Sarwar,One Day,Opening,1,84,1,56,52,4,5,14.0,56.0,4.0,84.0,61.904761904761905,4.761904761904762
-raw_06e3e3be_fb2a_486a_b4c4_73b366ecec51,Sohail Sarwar,Sohail Sarwar,One Day,Middle,2,90,5,53,61,5,6,15.0,10.6,3.533333333333333,18.0,67.77777777777777,5.555555555555555
-raw_bd6ccefb_0e59_4d98_b45d_0a116b508971,Sohail Sarwar,Sohail Sarwar,One Day,Middle,2,24,1,21,16,4,1,4.0,21.0,5.25,24.0,66.66666666666667,16.666666666666668
-raw_06e3e3be_fb2a_486a_b4c4_73b366ecec51,Sohail Sarwar,Sohail Sarwar,One Day,Death,3,30,1,30,18,4,2,5.0,30.0,6.0,30.0,60.0,13.333333333333334
+simon_marvello,Simon Marvello,Simon Marvello,Two Day,New Ball,1,78,6,27,62,2,1,13.0,4.5,2.076923076923077,13.0,79.48717948717949,2.5641025641025643
+simon_marvello,Simon Marvello,Simon Marvello,Two Day,Older Ball,2,174,4,71,134,7,2,29.0,17.75,2.4482758620689653,43.5,77.01149425287356,4.022988505747127
+sohail_sarwar,Sohail Sarwar,Sohail Sarwar,One Day,Opening,1,84,1,56,52,4,5,14.0,56.0,4.0,84.0,61.904761904761905,4.761904761904762
+sohail_sarwar,Sohail Sarwar,Sohail Sarwar,One Day,Middle,2,114,6,74,77,9,7,19.0,12.333333333333334,3.8947368421052633,19.0,67.54385964912281,7.894736842105263
+sohail_sarwar,Sohail Sarwar,Sohail Sarwar,One Day,Death,3,30,1,30,18,4,2,5.0,30.0,6.0,30.0,60.0,13.333333333333334
 raw_6e369552_a237_4156_8523_c905dab418e6,Spencer Kleemann,Spencer Kleemann,One Day,Opening,1,126,3,106,81,15,6,21.0,35.333333333333336,5.0476190476190474,42.0,64.28571428571429,11.904761904761905
 raw_6e369552_a237_4156_8523_c905dab418e6,Spencer Kleemann,Spencer Kleemann,One Day,Middle,2,36,2,29,26,5,3,6.0,14.5,4.833333333333333,18.0,72.22222222222223,13.88888888888889
 raw_6e369552_a237_4156_8523_c905dab418e6,Spencer Kleemann,Spencer Kleemann,One Day,Death,3,72,2,75,36,8,4,12.0,37.5,6.25,36.0,50.0,11.11111111111111
@@ -733,13 +722,11 @@ raw_a9e4967f_8e70_4c87_9343_8bf9b5ecd203,Thomas Reaney,Thomas Reaney,One Day,Mid
 raw_db9330ac_94ac_4049_9f31_6b8a05afd84b,Tim Mannion,Tim Mannion,Two Day,New Ball,1,48,0,36,30,5,1,8.0,,4.5,,62.5,10.416666666666666
 raw_db9330ac_94ac_4049_9f31_6b8a05afd84b,Tim Mannion,Tim Mannion,Two Day,Older Ball,2,71,4,30,58,3,1,11.5,7.5,2.535211267605634,17.75,81.69014084507042,4.225352112676056
 raw_c2515380_97fc_4f44_8cd3_d2a8ab3aa867,Timothy Sherwin,Timothy Sherwin,One Day,Opening,1,18,0,6,15,1,1,3.0,,2.0,,83.33333333333333,5.555555555555555
-raw_e4da583d_1089_4208_b334_ab81d7af1228,Toby Mackenzie,Toby Mackenzie,One Day,Opening,1,30,0,20,22,3,1,5.0,,4.0,,73.33333333333333,10.0
-raw_e4da583d_1089_4208_b334_ab81d7af1228,Toby Mackenzie,Toby Mackenzie,One Day,Middle,2,6,0,0,6,0,1,1.0,,0.0,,100.0,0.0
-raw_4253bd29_3d73_4b6a_b3c3_988c6c8b099a,Todd Heslehurst,Todd Heslehurst,One Day,Opening,1,6,0,14,2,2,1,1.0,,14.0,,33.333333333333336,33.333333333333336
-raw_671ebe4d_b33d_44b7_9176_f4db3e72a9f4,Todd Heslehurst,Todd Heslehurst,One Day,Opening,1,30,1,14,23,2,1,5.0,14.0,2.8,30.0,76.66666666666667,6.666666666666667
-raw_4253bd29_3d73_4b6a_b3c3_988c6c8b099a,Todd Heslehurst,Todd Heslehurst,One Day,Middle,2,48,1,39,35,6,2,8.0,39.0,4.875,48.0,72.91666666666667,12.5
-raw_671ebe4d_b33d_44b7_9176_f4db3e72a9f4,Todd Heslehurst,Todd Heslehurst,One Day,Middle,2,30,1,17,23,3,1,5.0,17.0,3.4,30.0,76.66666666666667,10.0
-raw_4253bd29_3d73_4b6a_b3c3_988c6c8b099a,Todd Heslehurst,Todd Heslehurst,One Day,Death,3,6,0,7,1,0,1,1.0,,7.0,,16.666666666666668,0.0
+toby_mackenzie,Toby Mackenzie,Toby Mackenzie,One Day,Opening,1,30,0,20,22,3,1,5.0,,4.0,,73.33333333333333,10.0
+toby_mackenzie,Toby Mackenzie,Toby Mackenzie,One Day,Middle,2,6,0,0,6,0,1,1.0,,0.0,,100.0,0.0
+todd_heslehurst,Todd Heslehurst,Todd Heslehurst,One Day,Opening,1,36,1,28,25,4,2,6.0,28.0,4.666666666666667,36.0,69.44444444444444,11.11111111111111
+todd_heslehurst,Todd Heslehurst,Todd Heslehurst,One Day,Middle,2,78,2,56,58,9,3,13.0,28.0,4.3076923076923075,39.0,74.35897435897436,11.538461538461538
+todd_heslehurst,Todd Heslehurst,Todd Heslehurst,One Day,Death,3,6,0,7,1,0,1,1.0,,7.0,,16.666666666666668,0.0
 raw_c4cf24bf_f442_4526_a792_f9b082abe672,Tom Jeffrey,Tom Jeffrey,One Day,Opening,1,24,0,15,17,2,1,4.0,,3.75,,70.83333333333333,8.333333333333334
 raw_c4cf24bf_f442_4526_a792_f9b082abe672,Tom Jeffrey,Tom Jeffrey,One Day,Middle,2,54,2,19,43,2,2,9.0,9.5,2.111111111111111,27.0,79.62962962962963,3.7037037037037037
 raw_c4cf24bf_f442_4526_a792_f9b082abe672,Tom Jeffrey,Tom Jeffrey,One Day,Death,3,36,0,30,21,3,2,6.0,,5.0,,58.333333333333336,8.333333333333334

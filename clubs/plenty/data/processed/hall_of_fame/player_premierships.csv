@@ -1,1 +1,285 @@
-canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+canonical_player_id,canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+raw_b6f3fcaa_b3b1_4495_8cf8_77b97b53f76b,Graeme Pavey,Graeme Pavey,6,"Summer 2003/04, Summer 2009/10, Summer 2010/11, Summer 2012/13, Summer 2013/14, Summer 2014/15","Barclay Shield, Vets A",Plenty,Summer 2014/15,"21f74368-e3af-4ad2-9772-244d6037636b, 2b2b6529-b05c-46e1-99a1-1488c94444d4, 7882e957-b246-4503-80cb-4a70ca852387, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_d575c499_fdca_408a_aa44_4654d2e214a0,Gordon Zull,Gordon Zull,5,"Summer 2003/04, Summer 2009/10, Summer 2010/11, Summer 2017/18","U16 (1) Blue, Money Shield, Barclay Shield, Barclay Reserve","Plenty, Plenty Power",Summer 2017/18,"0fe8ac91-66b6-41bd-9f4c-129befade635, 1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, 21f74368-e3af-4ad2-9772-244d6037636b, 60f311dc-b462-4d57-86a4-40e542f6f2b8, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_9254f35d_3ff4_4c09_b20d_eab8f5a40c18,Mitch Johnson,Mitch Johnson,5,"Summer 2003/04, Summer 2008/09, Summer 2009/10, Summer 2017/18","Money Shield, U12(1) Teal, Barclay Shield, U16 (1) Blue, U16 (1) Teal","Plenty Power, Plenty",Summer 2017/18,"1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, 1cab292f-de64-46ac-8b89-5088aedeb4aa, b399df53-8343-44c7-8b14-ed2a690ce1d4, ec3445c5-5592-46fd-87f0-74b8720b979b, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_8a50a003_f973_4a74_af06_34153701c964,Jared Osborne,Jared Osborne,5,"Summer 2010/11, Summer 2012/13, Summer 2013/14, Summer 2014/15, Summer 2016/17","G3 Grade, Vets A","Plenty Power, Plenty",Summer 2016/17,"17f411f0-658b-4106-8bba-d8933f7a7600, 2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_c8af6fae_07e0_427d_a2ee_b9e21c9ae1fc,Anthony Amalfi,Anthony Amalfi,5,"Summer 2003/04, Summer 2010/11, Summer 2012/13, Summer 2013/14, Summer 2014/15","Vets A, Barclay Shield",Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 7882e957-b246-4503-80cb-4a70ca852387, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_f89d8369_3df0_4445_8875_9c929b527602,Brad Bond,Brad Bond,5,"Summer 2003/04, Summer 2010/11, Summer 2012/13, Summer 2013/14, Summer 2014/15","Vets A, Barclay Shield",Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 7882e957-b246-4503-80cb-4a70ca852387, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+david_love,David Love,David Love,5,"Summer 2003/04, Summer 2007/08, Summer 2009/10, Summer 2010/11, Summer 2014/15","Barclay Shield, C Grade, Vets A",Plenty,Summer 2014/15,"21f74368-e3af-4ad2-9772-244d6037636b, 6709e0b8-6486-4ab8-8b3a-8bf309434143, 7882e957-b246-4503-80cb-4a70ca852387, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_d6c57d75_b638_42a6_b28b_d49f3a8b5db5,Mark Johnson,Mark Johnson,5,"Summer 2003/04, Summer 2009/10, Summer 2010/11, Summer 2013/14, Summer 2014/15","Vets A, Barclay Shield",Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 7882e957-b246-4503-80cb-4a70ca852387, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_07d426f0_cf57_4ee1_899e_de112a6f1591,Daniel Cocking,Daniel Cocking,4,"Summer 2008/09, Summer 2009/10, Summer 2017/18, Summer 2022/23","Money Shield, Barclay Shield, D Grade, U16 (1) Teal","Plenty Power, Plenty",Summer 2022/23,"1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, b399df53-8343-44c7-8b14-ed2a690ce1d4, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_656df922_f8fe_47ba_9529_24052af2440d,Paul Hubber,Paul Hubber,4,"Summer 2003/04, Summer 2009/10, Summer 2010/11, Summer 2017/18","Barclay Shield, D Grade","Plenty, Plenty Power",Summer 2017/18,"21f74368-e3af-4ad2-9772-244d6037636b, 7882e957-b246-4503-80cb-4a70ca852387, b399df53-8343-44c7-8b14-ed2a690ce1d4, f0a65cc9-0efb-428e-a7e5-8838aa429127",high
+raw_121b6922_c040_48b5_ad58_f894f3f2e960,******** French,******** French,4,"Summer 2010/11, Summer 2012/13, Summer 2013/14, Summer 2014/15",Vets A,Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_2be4da87_ce4a_4588_b0df_236d690f6ff8,Ian Henning,Ian Henning,4,"Summer 2003/04, Summer 2007/08, Summer 2010/11, Summer 2014/15","Vets A, Barclay Reserve, C Grade",Plenty,Summer 2014/15,"4f788882-2354-4821-9524-f3b873f38fca, 60f311dc-b462-4d57-86a4-40e542f6f2b8, 6709e0b8-6486-4ab8-8b3a-8bf309434143, 9a7ca025-6c54-4f9a-b669-5a0e191c3124",high
+raw_901c78d9_8cd9_446f_88e0_3d610091a7ba,Jeff Brown,Jeff Brown,4,"Summer 2010/11, Summer 2012/13, Summer 2013/14, Summer 2014/15",Vets A,Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_bac0bf4b_d263_4f63_b518_4341570457eb,Richard Guldon,Richard Guldon,4,"Summer 2003/04, Summer 2012/13, Summer 2013/14, Summer 2014/15","Vets A, Barclay Reserve",Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 60f311dc-b462-4d57-86a4-40e542f6f2b8, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_bc027139_bed3_4041_b5f8_c066a5fb9864,Greg Wade,Greg Wade,4,"Summer 2003/04, Summer 2010/11, Summer 2012/13, Summer 2013/14","Vets A, Barclay Reserve",Plenty,Summer 2013/14,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4f788882-2354-4821-9524-f3b873f38fca, 60f311dc-b462-4d57-86a4-40e542f6f2b8, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+ethan_weir,Ethan Weir,Ethan Weir,3,"Summer 2015/16, Summer 2017/18, Summer 2023/24","U12 White Teal, C Grade, U14 Red","Plenty, Plenty 2nd XI, Plenty Power",Summer 2023/24,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 065d0622-ec8d-4fee-b23e-ef74572a54c4, 46934cde-5140-4ed3-8602-72fc7e4d9cd8",high
+raw_e4c9af97_abb9_439a_a965_14b10d8f7b09,Jackson Gavin,Jackson Gavin,3,"Summer 2017/18, Summer 2022/23, Summer 2023/24","C Grade, Money Shield, D Grade","Plenty 2nd XI, Plenty Power, Plenty",Summer 2023/24,"065d0622-ec8d-4fee-b23e-ef74572a54c4, 1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+james_king,James King,James King,3,"Summer 2016/17, Summer 2017/18, Summer 2023/24","C Grade, G3 Grade, D Grade","Plenty 2nd XI, Plenty Power",Summer 2023/24,"065d0622-ec8d-4fee-b23e-ef74572a54c4, 17f411f0-658b-4106-8bba-d8933f7a7600, f0a65cc9-0efb-428e-a7e5-8838aa429127",high
+andrew_king,Andrew King,Andrew King,3,"Summer 2015/16, Summer 2017/18, Summer 2022/23","U12 White Teal, U14 Red, D Grade","Plenty, Plenty Power",Summer 2022/23,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+raw_a37cabfd_8221_4e1d_a855_314b76bbc574,Nicholas Curtin,Nicholas Curtin,3,"Summer 2009/10, Summer 2010/11, Summer 2022/23","Barclay Shield, D Grade",Plenty,Summer 2022/23,"21f74368-e3af-4ad2-9772-244d6037636b, b399df53-8343-44c7-8b14-ed2a690ce1d4, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+raw_5f42ae2c_824b_4343_af50_85eb4b7af029,Owen Pisani,Owen Pisani,3,"Summer 2015/16, Summer 2017/18, Summer 2022/23","U12 White Teal, U14 Red, D Grade","Plenty, Plenty Power",Summer 2022/23,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+raw_44b03001_d879_4ac7_abc7_5eec06d6f58e,Kody Harrop,Kody Harrop,3,"Summer 2017/18, Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow, U12 Yellow B","Plenty, Plenty Cricket Club",Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, a44a40c4-5c52-4866-8162-8197d6a09193, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+raw_14104bda_8121_48f2_ab90_11696893f109,Darren Connelley,Darren Connelley,3,"Summer 2009/10, Summer 2010/11, Summer 2017/18","Money Shield, Barclay Shield","Plenty Power, Plenty",Summer 2017/18,"1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, 21f74368-e3af-4ad2-9772-244d6037636b, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_7563e0a9_7cf5_4fab_8b6b_cf29b07c9817,Louis Smith,Louis Smith,3,"Summer 2003/04, Summer 2008/09, Summer 2017/18","U12 (2), Money Shield, U16 (1) Teal","Plenty, Plenty Power",Summer 2017/18,"022b9b24-6cce-43b7-8612-b9032b4bf589, 1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_1a5027b7_8efb_478e_9a10_319154cf41ed,Shane Cullen,Shane Cullen,3,"Summer 2003/04, Summer 2008/09, Summer 2017/18","U12(1) Teal, D Grade, U16 (1) Teal","Plenty, Plenty Power",Summer 2017/18,"1cab292f-de64-46ac-8b89-5088aedeb4aa, f0a65cc9-0efb-428e-a7e5-8838aa429127, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_cc37310d_25df_440d_8b63_dc3c1f0279ae,Graeme Vimpani,Graeme Vimpani,3,"Summer 2012/13, Summer 2013/14, Summer 2014/15",Vets A,Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 9a7ca025-6c54-4f9a-b669-5a0e191c3124, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_6db7ee38_e395_4104_8ab0_6144df28deaf,Paul King,Paul King,3,"Summer 2005/06, Summer 2013/14, Summer 2014/15","Vets A, E Grade",Plenty,Summer 2014/15,"2b2b6529-b05c-46e1-99a1-1488c94444d4, 4931e4e6-7aca-487b-ace3-e233d741ed55, 9a7ca025-6c54-4f9a-b669-5a0e191c3124",high
+raw_146f57bb_2a6b_4b96_9dcb_1faca8a8ce1f,James Love,James Love,3,"Summer 2002/03, Summer 2003/04, Summer 2010/11","U12 (3), Barclay Shield, U12 (2)",Plenty,Summer 2010/11,"11731b70-a86e-4435-901d-97ebce08cf9b, 21f74368-e3af-4ad2-9772-244d6037636b, 8bf63848-eaa8-44bf-897d-05f7c6a967e7",high
+raw_d3d3e600_1f51_4567_b960_5024e0b2d99f,James Mcmahon,James Mcmahon,3,"Summer 2003/04, Summer 2008/09, Summer 2009/10","U12 (2), U16 (1) Blue, U16 (1) Teal",Plenty,Summer 2009/10,"022b9b24-6cce-43b7-8612-b9032b4bf589, ec3445c5-5592-46fd-87f0-74b8720b979b, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_31aec261_9966_4141_bb7e_b1cf02493764,Jordan Lock,Jordan Lock,3,"Summer 2002/03, Summer 2003/04, Summer 2005/06","U12 (3), U12 (2), U14 (3)",Plenty,Summer 2005/06,"11731b70-a86e-4435-901d-97ebce08cf9b, 8bf63848-eaa8-44bf-897d-05f7c6a967e7, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_458dd579_30cf_4f29_9386_c8f15b3446de,Lucas Shipsides,Lucas Shipsides,3,"Summer 2002/03, Summer 2003/04, Summer 2005/06","U12 (3), U12 (2), U14 (3)",Plenty,Summer 2005/06,"11731b70-a86e-4435-901d-97ebce08cf9b, 8bf63848-eaa8-44bf-897d-05f7c6a967e7, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_d0420834_7151_44de_826a_49c3861ac070,Riley Beveridge,Riley Beveridge,3,"Summer 2002/03, Summer 2003/04, Summer 2005/06","U12 (3), U12 (2), U14 (3)",Plenty,Summer 2005/06,"11731b70-a86e-4435-901d-97ebce08cf9b, 8bf63848-eaa8-44bf-897d-05f7c6a967e7, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_bf082a61_91d4_462b_bb11_bdc272db9636,Austin Welsh,Austin Welsh,2,"Summer 2022/23, Summer 2023/24","C Grade, D Grade","Plenty 2nd XI, Plenty",Summer 2023/24,"065d0622-ec8d-4fee-b23e-ef74572a54c4, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+evmin_navaratne,Evmin Navaratne,Evmin Navaratne,2,"Summer 2021/22, Summer 2023/24","U14 White, U12 Red West","Plenty U14 Mixed Red, Plenty 1",Summer 2023/24,"15d66028-7fca-4c74-a85f-7749d6d7c0cb, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+jake_tennent,Jake Tennent,Jake Tennent,2,"Summer 2021/22, Summer 2023/24","U14 White, U12 Red West","Plenty U14 Mixed Red, Plenty 1",Summer 2023/24,"15d66028-7fca-4c74-a85f-7749d6d7c0cb, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+raw_2b9f68a6_9595_42f6_a4f9_377d224f4325,Jayden Bedford,Jayden Bedford,2,"Summer 2022/23, Summer 2023/24","C Grade, D Grade","Plenty 2nd XI, Plenty",Summer 2023/24,"065d0622-ec8d-4fee-b23e-ef74572a54c4, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+riley_scott,Riley Scott,Riley Scott,2,"Summer 2022/23, Summer 2023/24","C Grade, D Grade","Plenty 2nd XI, Plenty",Summer 2023/24,"065d0622-ec8d-4fee-b23e-ef74572a54c4, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+savain_navaratne,Savain Navaratne,Savain Navaratne,2,"Summer 2021/22, Summer 2023/24","U14 White, U12 Red West","Plenty U14 Mixed Red, Plenty 1",Summer 2023/24,"15d66028-7fca-4c74-a85f-7749d6d7c0cb, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+veer_bhanot,Veer Bhanot,Veer Bhanot,2,"Summer 2021/22, Summer 2023/24","U14 White, U12 Red West","Plenty U14 Mixed Red, Plenty 1",Summer 2023/24,"15d66028-7fca-4c74-a85f-7749d6d7c0cb, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+xavier_aylward,Xavier Aylward,Xavier Aylward,2,"Summer 2021/22, Summer 2023/24","U14 White, U12 Red West","Plenty U14 Mixed Red, Plenty 1",Summer 2023/24,"15d66028-7fca-4c74-a85f-7749d6d7c0cb, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+zahra_handy,Zahra Handy,Zahra Handy,2,"Summer 2021/22, Summer 2023/24","U14 White, U12 Red West","Plenty U14 Mixed Red, Plenty 1",Summer 2023/24,"15d66028-7fca-4c74-a85f-7749d6d7c0cb, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+raw_964146ec_c914_4378_a604_8c61cd24f0c1,Connor Mcevoy,Connor Mcevoy,2,"Summer 2017/18, Summer 2022/23","U14 Red, D Grade","Plenty Power, Plenty",Summer 2022/23,"46934cde-5140-4ed3-8602-72fc7e4d9cd8, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+raw_21a002ef_0912_4f56_a753_72979c27d50b,Matt Deligiorgis,Matt Deligiorgis,2,"Summer 2007/08, Summer 2022/23","C Grade, D Grade",Plenty,Summer 2022/23,"6709e0b8-6486-4ab8-8b3a-8bf309434143, d3886941-ae50-4a8d-a2da-00dfdc0f7a4e",high
+snehath_perera,Snehath Perera,Snehath Perera,2,"Summer 2019/20, Summer 2021/22","U12 Red C, U12 Red West","Plenty, Plenty 1",Summer 2021/22,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, e55c49b9-dc1e-486c-bc98-f2c9708cad9e",high
+abhayveer_uppal,Abhayveer Uppal,Abhayveer Uppal,2,"Summer 2018/19, Summer 2019/20","U12 Red C, U12 White B",Plenty,Summer 2019/20,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, 775c18eb-4b89-4f03-8469-d4a5d85c92cd",high
+raw_4fe18733_0741_4908_82cb_f515714c4bae,Adam Huybers,Adam Huybers,2,"Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow B",Plenty,Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+raw_8997a989_4699_4c27_8b15_8b8564cfa2ff,Aidan Burich,Aidan Burich,2,"Summer 2017/18, Summer 2019/20","U14 Red, U12 Yellow","Plenty 2, Plenty Cricket Club",Summer 2019/20,"1641977c-b61e-4e7e-b66a-08b5d7c17413, a44a40c4-5c52-4866-8162-8197d6a09193",high
+raw_2e57dd5d_6e75_47a8_a940_d49b2c178fad,Archer Harvey,Archer Harvey,2,"Summer 2017/18, Summer 2019/20","U14 Red, U12 Yellow","Plenty 2, Plenty Cricket Club",Summer 2019/20,"1641977c-b61e-4e7e-b66a-08b5d7c17413, a44a40c4-5c52-4866-8162-8197d6a09193",high
+raw_509d3b9c_419a_419f_b552_5296c2c04f70,Ben Finnin,Ben Finnin,2,"Summer 2018/19, Summer 2019/20","U12 Red C, U12 White B",Plenty,Summer 2019/20,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, 775c18eb-4b89-4f03-8469-d4a5d85c92cd",high
+raw_c68624dc_cbfd_439b_9e5a_c0bb3d723c98,Benjamin Campbell,Benjamin Campbell,2,"Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow B",Plenty,Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+raw_4f11d120_6cbd_4b08_942b_d05f4afda86e,Bryce Coombe,Bryce Coombe,2,"Summer 2017/18, Summer 2019/20","U14 Red, U12 Yellow","Plenty 2, Plenty Cricket Club",Summer 2019/20,"1641977c-b61e-4e7e-b66a-08b5d7c17413, a44a40c4-5c52-4866-8162-8197d6a09193",high
+jack_edis,Jack Edis,Jack Edis,2,"Summer 2018/19, Summer 2019/20","U12 Red C, U12 White B",Plenty,Summer 2019/20,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, 775c18eb-4b89-4f03-8469-d4a5d85c92cd",high
+raw_76c52a75_6e78_40ff_acbd_7950cee19647,Jack Mcniven,Jack Mcniven,2,"Summer 2017/18, Summer 2019/20","U14 Red, U12 Yellow","Plenty 2, Plenty Cricket Club",Summer 2019/20,"1641977c-b61e-4e7e-b66a-08b5d7c17413, a44a40c4-5c52-4866-8162-8197d6a09193",high
+raw_94f917cd_5b1b_468f_862e_6ec8fd2ccba4,Jacob Davidson,Jacob Davidson,2,"Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow B",Plenty,Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+kai_axton,Kai Axton,Kai Axton,2,"Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow B",Plenty,Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+raw_200b9167_52c0_4c6a_8ddb_05a652c0c430,Lucas Bartoli,Lucas Bartoli,2,"Summer 2018/19, Summer 2019/20","U12 Red C, U12 White B",Plenty,Summer 2019/20,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, 775c18eb-4b89-4f03-8469-d4a5d85c92cd",high
+raw_7d406bf4_7225_4515_9ce9_034ca07a0da2,Lucas Martin,Lucas Martin,2,"Summer 2017/18, Summer 2019/20","U14 Red, U12 Yellow","Plenty 2, Plenty Cricket Club",Summer 2019/20,"1641977c-b61e-4e7e-b66a-08b5d7c17413, a44a40c4-5c52-4866-8162-8197d6a09193",high
+lucas_underwood,Lucas Underwood,Lucas Underwood,2,"Summer 2018/19, Summer 2019/20","U14 Red, U12 Yellow B","Plenty 2, Plenty",Summer 2019/20,"1641977c-b61e-4e7e-b66a-08b5d7c17413, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+raw_625a666e_a10f_487d_8ebc_a5f7c646ba06,Ridham Attri,Ridham Attri,2,"Summer 2018/19, Summer 2019/20","U12 Red C, U12 White B",Plenty,Summer 2019/20,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, 775c18eb-4b89-4f03-8469-d4a5d85c92cd",high
+raw_b34f23a1_0c2e_4c3a_a6b6_d9ae004a3176,Will Masalski,Will Masalski,2,"Summer 2018/19, Summer 2019/20","U12 Red C, U12 White B",Plenty,Summer 2019/20,"3d8e8c8b-3ced-4175-9e28-b362b6044dea, 775c18eb-4b89-4f03-8469-d4a5d85c92cd",high
+raw_a674a32f_e27a_4525_b385_c1a9b295fef7,William Parker,William Parker,2,"Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow B",Plenty,Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+raw_b58f26a1_7ef1_4ff8_86d6_39c57625533f,Zane Holmes,Zane Holmes,2,"Summer 2018/19, Summer 2019/20","U12 Blue, U12 Yellow B",Plenty,Summer 2019/20,"078b1e08-01d6-439f-bdbb-62414e15a69e, e590a415-32d3-4d02-ab83-e135ef1c2a2d",high
+brayden_key,Brayden Key,Brayden Key,2,"Summer 2015/16, Summer 2017/18","U12 White Teal, U14 Red","Plenty, Plenty Power",Summer 2017/18,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8",high
+raw_48304f90_5247_45b0_9541_66ea29085a3c,Christopher Barclay,Christopher Barclay,2,"Summer 2013/14, Summer 2017/18","U18 (Friday), Money Shield","Plenty, Plenty Power",Summer 2017/18,"138352f3-6dc2-4fd3-b43d-988168ad9e48, 1a96d4e6-996c-4c56-9b53-4fe3eb8cf767",high
+raw_81b0a4fe_e91b_4de3_af1e_f89ec050ddf4,Fraaser Commandeur,Fraaser Commandeur,2,"Summer 2015/16, Summer 2017/18","U12 White Teal, U14 Red","Plenty, Plenty Power",Summer 2017/18,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8",high
+raw_dbbf36a6_61f1_48fa_966e_538f8ace54f5,Jack Sacchetta,Jack Sacchetta,2,"Summer 2010/11, Summer 2017/18","Money Shield, U12 Blue","Plenty Power, Plenty",Summer 2017/18,"1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, 660cf85a-ac7a-43af-9bc7-54139d84bc60",high
+raw_61c29004_8ffb_4dd0_9aad_e4f2115df6a2,Jackson Key,Jackson Key,2,"Summer 2015/16, Summer 2017/18","U12 White Teal, U14 Red","Plenty, Plenty Power",Summer 2017/18,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8",high
+raw_65ef2c98_d23b_4977_a605_893ba587d20d,Lachlan Kerr,Lachlan Kerr,2,"Summer 2015/16, Summer 2017/18","U12 White Teal, U14 Red","Plenty, Plenty Power",Summer 2017/18,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8",high
+raw_d1812e32_34df_4d43_9272_1e155324ee4a,Nicholas Strangwick,Nicholas Strangwick,2,"Summer 2015/16, Summer 2017/18","U12 White Teal, U14 Red","Plenty, Plenty Power",Summer 2017/18,"0656f735-a0c4-4968-a79b-d6f3d34a9465, 46934cde-5140-4ed3-8602-72fc7e4d9cd8",high
+raw_dfac0f82_3fdc_4296_9deb_3021f3be38ad,Scott Keane,Scott Keane,2,"Summer 2003/04, Summer 2017/18","Money Shield, Barclay Shield","Plenty Power, Plenty",Summer 2017/18,"1a96d4e6-996c-4c56-9b53-4fe3eb8cf767, 7882e957-b246-4503-80cb-4a70ca852387",high
+raw_c2eaf862_9c93_4b7a_b48e_7162edb42fbf,Stefan Klepp,Stefan Klepp,2,"Summer 2010/11, Summer 2017/18","U12 Blue, D Grade","Plenty, Plenty Power",Summer 2017/18,"660cf85a-ac7a-43af-9bc7-54139d84bc60, f0a65cc9-0efb-428e-a7e5-8838aa429127",high
+raw_f973f4f0_e95b_404f_b509_1c45b5a6ebaf,Greg Wilson Acc,Greg Wilson Acc,2,"Summer 2012/13, Summer 2013/14",Vets A,Plenty,Summer 2013/14,"2b2b6529-b05c-46e1-99a1-1488c94444d4, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_a467a84d_872c_4336_be11_d34272f20b96,Mark Turnbull,Mark Turnbull,2,"Summer 2010/11, Summer 2012/13",Vets A,Plenty,Summer 2012/13,"4f788882-2354-4821-9524-f3b873f38fca, a9a42d1c-879c-4f6f-84f3-912a4e1a049c",high
+raw_0d9cb292_3e0c_4bcd_9d1e_dafbba9b3920,Graeme Hall,Graeme Hall,2,"Summer 2010/11, Summer 2011/12",U12 Blue,Plenty,Summer 2011/12,"0581cabe-8fd2-40e3-a043-5ccf069bf13c, 660cf85a-ac7a-43af-9bc7-54139d84bc60",high
+raw_aa112a6c_12b5_4cfc_bdf7_335d1af49ecf,Jackson Davies,Jackson Davies,2,"Summer 2010/11, Summer 2011/12",U12 Blue,Plenty,Summer 2011/12,"0581cabe-8fd2-40e3-a043-5ccf069bf13c, 660cf85a-ac7a-43af-9bc7-54139d84bc60",high
+jesse_king,Jesse King,Jesse King,2,"Summer 2010/11, Summer 2011/12",U12 Blue,Plenty,Summer 2011/12,"0581cabe-8fd2-40e3-a043-5ccf069bf13c, 660cf85a-ac7a-43af-9bc7-54139d84bc60",high
+raw_6c933a4e_4e92_44bc_80b3_e9ee53b0a908,Andrew Villani,Andrew Villani,2,"Summer 2003/04, Summer 2010/11",Barclay Shield,Plenty,Summer 2010/11,"21f74368-e3af-4ad2-9772-244d6037636b, 7882e957-b246-4503-80cb-4a70ca852387",high
+raw_d454d385_ec0e_4544_a54d_ec249beeebde,Christopher Salvatore,Christopher Salvatore,2,"Summer 2009/10, Summer 2010/11",Barclay Shield,Plenty,Summer 2010/11,"21f74368-e3af-4ad2-9772-244d6037636b, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_9dbc6500_fcd5_4bec_8a9b_3e3d607d4d3d,Luke Rosbrook,Luke Rosbrook,2,"Summer 2009/10, Summer 2010/11",Barclay Shield,Plenty,Summer 2010/11,"21f74368-e3af-4ad2-9772-244d6037636b, b399df53-8343-44c7-8b14-ed2a690ce1d4",high
+raw_463f5e00_2a0a_4b94_ab0c_3fd5e35ab4f8,Wayne Barclay,Wayne Barclay,2,"Summer 2003/04, Summer 2010/11","Vets A, Barclay Shield",Plenty,Summer 2010/11,"4f788882-2354-4821-9524-f3b873f38fca, 7882e957-b246-4503-80cb-4a70ca852387",high
+raw_b108803b_cfbd_40c1_8b2e_272b590cf085,Joel Donaldson,Joel Donaldson,2,"Summer 2008/09, Summer 2009/10","U16 (1) Blue, U16 (1) Teal",Plenty,Summer 2009/10,"ec3445c5-5592-46fd-87f0-74b8720b979b, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_fcd43bbb_ce39_4d90_a0a5_b91f2127fe66,Alex Cotter,Alex Cotter,2,"Summer 2003/04, Summer 2008/09","U12 (2), U16 (1) Teal",Plenty,Summer 2008/09,"022b9b24-6cce-43b7-8612-b9032b4bf589, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_448910af_80f8_400a_927d_9fb6d255735e,Ben Abbatangelo,Ben Abbatangelo,2,"Summer 2007/08, Summer 2008/09","C Grade, U16 (1) Teal",Plenty,Summer 2008/09,"6709e0b8-6486-4ab8-8b3a-8bf309434143, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_cedfda37_25a0_4799_bc3a_e8ea3acc2cef,Dayne Smith,Dayne Smith,2,"Summer 2003/04, Summer 2008/09","U12 (2), U16 (1) Teal",Plenty,Summer 2008/09,"022b9b24-6cce-43b7-8612-b9032b4bf589, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_f3a09f03_3f31_4d93_8d9d_2a15c29a430e,Tim Fothergill,Tim Fothergill,2,"Summer 2003/04, Summer 2008/09","U12 (2), U16 (1) Teal",Plenty,Summer 2008/09,"022b9b24-6cce-43b7-8612-b9032b4bf589, f558094b-2fcf-4763-9ba3-e253442380b1",high
+raw_e578bee4_7704_4156_b92d_bb947409524a,Billy Parsons,Billy Parsons,2,"Summer 2003/04, Summer 2007/08","Barclay Reserve, C Grade",Plenty,Summer 2007/08,"60f311dc-b462-4d57-86a4-40e542f6f2b8, 6709e0b8-6486-4ab8-8b3a-8bf309434143",high
+raw_99034704_9afb_4f76_947d_58a946a57e2b,Chris Hunt,Chris Hunt,2,"Summer 2003/04, Summer 2007/08","Barclay Reserve, C Grade",Plenty,Summer 2007/08,"60f311dc-b462-4d57-86a4-40e542f6f2b8, 6709e0b8-6486-4ab8-8b3a-8bf309434143",high
+raw_6e35fb8e_b4a8_4b07_9dde_b3eb9eb2908f,Adam Carnell,Adam Carnell,2,"Summer 2002/03, Summer 2005/06","E Grade, U14(1) Blue",Plenty,Summer 2005/06,"4931e4e6-7aca-487b-ace3-e233d741ed55, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_67b4f37e_d0a4_4453_9992_b29b7d3616bd,Adam Lindstrom,Adam Lindstrom,2,"Summer 2003/04, Summer 2005/06","U12 (2), U14 (3)",Plenty,Summer 2005/06,"8bf63848-eaa8-44bf-897d-05f7c6a967e7, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_d9d1cae9_b848_4b2d_9173_bc34649b5d54,Benjamin Joyce,Benjamin Joyce,2,"Summer 2003/04, Summer 2005/06","U12(1) Teal, U14 (3)",Plenty,Summer 2005/06,"1cab292f-de64-46ac-8b89-5088aedeb4aa, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_7a6f651c_2f69_492c_8e5c_e254ada7a89f,Ethan Miller,Ethan Miller,2,"Summer 2003/04, Summer 2005/06","U12 (2), U14 (3)",Plenty,Summer 2005/06,"8bf63848-eaa8-44bf-897d-05f7c6a967e7, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_231bf00f_3cf5_4c6c_a3a5_ff77db107101,Nik Martin,Nik Martin,2,"Summer 2003/04, Summer 2005/06","U12 (2), U14 (3)",Plenty,Summer 2005/06,"8bf63848-eaa8-44bf-897d-05f7c6a967e7, a7966082-59f2-435d-a2db-f70a5dbc9e88",high
+raw_46e225d1_b003_4c23_b527_d800507a937b,Blake Papangelou,Blake Papangelou,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_4f54482b_0cdf_4861_9389_8f42feae6fc7,Brendan Gleave,Brendan Gleave,2,"Summer 2002/03, Summer 2003/04","U12 (3), U12(1) Teal",Plenty,Summer 2003/04,"11731b70-a86e-4435-901d-97ebce08cf9b, 1cab292f-de64-46ac-8b89-5088aedeb4aa",high
+raw_916f8394_85e6_4fa3_9158_d91b44e291c1,Dale O'Donnell,Dale O'Donnell,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_95b2bdf1_61e4_4f1b_bda0_12fdcef7fdf5,Damon Price,Damon Price,2,"Summer 2002/03, Summer 2003/04","U12 (2), U12 (3)",Plenty,Summer 2003/04,"022b9b24-6cce-43b7-8612-b9032b4bf589, 11731b70-a86e-4435-901d-97ebce08cf9b",high
+raw_63250420_4b4d_4c2c_80d7_59cd56e81fd9,Jedd Mcqueen,Jedd Mcqueen,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_8e465dd4_1531_4702_9b24_2f1a69317a0c,Joshua Pollard,Joshua Pollard,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_23864258_fffa_47a3_8550_e060739a15b7,Joshua Riddle,Joshua Riddle,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_0f2fcbc9_c0ac_4633_98ad_07b3353e0d86,Julian Cross,Julian Cross,2,"Summer 2002/03, Summer 2003/04","U12 (3), U12(1) Teal",Plenty,Summer 2003/04,"11731b70-a86e-4435-901d-97ebce08cf9b, 1cab292f-de64-46ac-8b89-5088aedeb4aa",high
+raw_0839c59e_f6ba_4fc3_ba6e_7da2c42b70b8,Justin Banbury,Justin Banbury,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_9df0960b_26dd_4283_8780_50b62a300e26,Ryan Yeo,Ryan Yeo,2,"Summer 2002/03, Summer 2003/04","U12 (3), U12 (2)",Plenty,Summer 2003/04,"11731b70-a86e-4435-901d-97ebce08cf9b, 8bf63848-eaa8-44bf-897d-05f7c6a967e7",high
+raw_65b3ec37_6238_4245_b277_0cbf22d31204,Steven Villani,Steven Villani,2,Summer 2003/04,"U16 (1) Blue, Barclay Reserve",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 60f311dc-b462-4d57-86a4-40e542f6f2b8",high
+raw_326d80b8_3968_411b_8d9a_5bfff2424073,Taylor Veal,Taylor Veal,2,"Summer 2002/03, Summer 2003/04","U12 (3), U12(1) Teal",Plenty,Summer 2003/04,"11731b70-a86e-4435-901d-97ebce08cf9b, 1cab292f-de64-46ac-8b89-5088aedeb4aa",high
+raw_d885c872_f223_4374_9f3c_7ee4300cfa63,Tim Bongetti,Tim Bongetti,2,"Summer 2002/03, Summer 2003/04","U16 (1) Blue, U14(1) Blue",Plenty,Summer 2003/04,"0fe8ac91-66b6-41bd-9f4c-129befade635, 86706f2c-a726-48a8-a75c-5b2553ece452",high
+raw_0cd81535_4cae_43f3_bdbb_a83cf3922047,Timothy O'Connor,Timothy O'Connor,2,"Summer 2002/03, Summer 2003/04","U12 (3), U12 (2)",Plenty,Summer 2003/04,"11731b70-a86e-4435-901d-97ebce08cf9b, 8bf63848-eaa8-44bf-897d-05f7c6a967e7",high
+raw_86e2d246_165f_40d3_ad58_110721cf7509,Akshar Soni,Akshar Soni,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+arjun_sembey,Arjun Sembey,Arjun Sembey,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+cillian_wenholz,Cillian Wenholz,Cillian Wenholz,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_0590c3ff_8a71_4023_946c_039ac754769f,Cooper Galloway,Cooper Galloway,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_9816bdb8_8dea_4d09_bf7a_1049c795d2dd,Ethan Whittingham,Ethan Whittingham,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_2044c3a9_0a2b_4317_b9a4_4587d857f858,Hemanshu Patel,Hemanshu Patel,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+kyann_navaratne,Kyann Navaratne,Kyann Navaratne,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_fef24396_2956_4fd2_9617_e7643863ab8d,Lachlan Weinberg,Lachlan Weinberg,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_336b33fe_95fa_42ee_849f_cc3cd5855841,Levi Fenton,Levi Fenton,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+matthew_wade,Matthew Wade,Matthew Wade,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_545c3a8a_8fc9_4285_9764_1d03fd6a8ef9,Max Weinberg,Max Weinberg,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_95ac01b6_9f8c_4894_845f_d3887fb60b4e,Mitansh Patel,Mitansh Patel,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_cc538df9_982b_42f3_8310_ad60d4085c60,Tanveer Kaur Mann,Tanveer Kaur Mann,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+thomas_killeen,Thomas Killeen,Thomas Killeen,1,Summer 2025/26,U13 East 2,Plenty U13 Mixed,Summer 2025/26,13a8039e-6219-4cf3-bbfe-092926cc5aa8,high
+raw_00000000_0000_0000_0000_000000000001,********,********,1,Summer 2023/24,U14 White,Plenty U14 Mixed Red,Summer 2023/24,15d66028-7fca-4c74-a85f-7749d6d7c0cb,high
+raw_f43762e5_05c0_4a7b_9af2_9aae74b2739a,Achyut Patel,Achyut Patel,1,Summer 2023/24,U14 White,Plenty U14 Mixed Red,Summer 2023/24,15d66028-7fca-4c74-a85f-7749d6d7c0cb,high
+bivon_samaraweera,Bivon Samaraweera,Bivon Samaraweera,1,Summer 2023/24,U14 White,Plenty U14 Mixed Red,Summer 2023/24,15d66028-7fca-4c74-a85f-7749d6d7c0cb,high
+raw_7e2b4432_b317_434d_af40_d8921eb2810a,Connor Carmody,Connor Carmody,1,Summer 2023/24,U14 White,Plenty U14 Mixed Red,Summer 2023/24,15d66028-7fca-4c74-a85f-7749d6d7c0cb,high
+jake_frederiksen,Jake Frederiksen,Jake Frederiksen,1,Summer 2023/24,U14 White,Plenty U14 Mixed Red,Summer 2023/24,15d66028-7fca-4c74-a85f-7749d6d7c0cb,high
+raw_72b852c7_009b_4877_823f_9cf69ff73287,Joravar Singh,Joravar Singh,1,Summer 2023/24,U14 White,Plenty U14 Mixed Red,Summer 2023/24,15d66028-7fca-4c74-a85f-7749d6d7c0cb,high
+raw_23ed21a5_42dc_4165_9a8f_5e0f423a486a,Kasun Tharaka Weerasinghe Bamunu Arachchige Don,Kasun Tharaka Weerasinghe Bamunu Arachchige Don,1,Summer 2023/24,C Grade,Plenty 2nd XI,Summer 2023/24,065d0622-ec8d-4fee-b23e-ef74572a54c4,high
+raw_6e9ed27b_ef08_43ea_b1d5_ec5340b7f914,Matt Deligiorgis,Matt Deligiorgis,1,Summer 2023/24,C Grade,Plenty 2nd XI,Summer 2023/24,065d0622-ec8d-4fee-b23e-ef74572a54c4,high
+raw_b04d9139_18ed_4f70_9a31_6ad1d341a5a0,Nicholas Curtin,Nicholas Curtin,1,Summer 2023/24,C Grade,Plenty 2nd XI,Summer 2023/24,065d0622-ec8d-4fee-b23e-ef74572a54c4,high
+raw_b68d81b3_6db2_4e84_9d86_9539b16c0b6c,Owen Pisani,Owen Pisani,1,Summer 2023/24,C Grade,Plenty 2nd XI,Summer 2023/24,065d0622-ec8d-4fee-b23e-ef74572a54c4,high
+raw_640abc9d_43ac_4178_849a_87a9eb7b0467,Shane Cullen,Shane Cullen,1,Summer 2023/24,C Grade,Plenty 2nd XI,Summer 2023/24,065d0622-ec8d-4fee-b23e-ef74572a54c4,high
+raw_5b808b65_2207_4287_a27c_b11a823c0ed8,Max Taylor,Max Taylor,1,Summer 2022/23,D Grade,Plenty,Summer 2022/23,d3886941-ae50-4a8d-a2da-00dfdc0f7a4e,high
+paul_alexopoulos,Paul Alexopoulos,Paul Alexopoulos,1,Summer 2022/23,D Grade,Plenty,Summer 2022/23,d3886941-ae50-4a8d-a2da-00dfdc0f7a4e,high
+raw_dede5856_25a7_47ff_8ed2_010399aabf2e,Andy Page,Andy Page,1,Summer 2021/22,U12 Red West,Plenty 1,Summer 2021/22,e55c49b9-dc1e-486c-bc98-f2c9708cad9e,high
+anhad_kaushal,Anhad Kaushal,Anhad Kaushal,1,Summer 2021/22,U12 Red West,Plenty 1,Summer 2021/22,e55c49b9-dc1e-486c-bc98-f2c9708cad9e,high
+raw_d513abb8_8dd2_43eb_b123_2233461cef7d,Jayesh Patel,Jayesh Patel,1,Summer 2021/22,U12 Red West,Plenty 1,Summer 2021/22,e55c49b9-dc1e-486c-bc98-f2c9708cad9e,high
+raw_b30f6231_f2c2_482c_9167_61c0c81a7fe9,Joel Parekkudiyil Bijoy,Joel Parekkudiyil Bijoy,1,Summer 2021/22,U12 Red West,Plenty 1,Summer 2021/22,e55c49b9-dc1e-486c-bc98-f2c9708cad9e,high
+raw_26d82da9_dc55_43c2_8d57_b103091e58fa,Aaditya Srivastava,Aaditya Srivastava,1,Summer 2019/20,U12 Red C,Plenty,Summer 2019/20,3d8e8c8b-3ced-4175-9e28-b362b6044dea,high
+raw_09c0d591_dea9_4130_b9a9_2e75811c8ab2,Angus Regan,Angus Regan,1,Summer 2019/20,U14 Red,Plenty 2,Summer 2019/20,1641977c-b61e-4e7e-b66a-08b5d7c17413,high
+ben_hurdle,Ben Hurdle,Ben Hurdle,1,Summer 2019/20,U12 Red C,Plenty,Summer 2019/20,3d8e8c8b-3ced-4175-9e28-b362b6044dea,high
+raw_9a408951_0f8a_4fac_a300_2b1b344e5888,Cameron Fitzgerald,Cameron Fitzgerald,1,Summer 2019/20,U14 Red,Plenty 2,Summer 2019/20,1641977c-b61e-4e7e-b66a-08b5d7c17413,high
+raw_c6d363de_47c7_4b0c_ae43_58329e48fe5e,Daiwik Rekhi,Daiwik Rekhi,1,Summer 2019/20,U12 Blue,Plenty,Summer 2019/20,078b1e08-01d6-439f-bdbb-62414e15a69e,high
+raw_6fa21599_ec3a_409f_b3fa_58080f513866,Gus Godden,Gus Godden,1,Summer 2019/20,U14 Red,Plenty 2,Summer 2019/20,1641977c-b61e-4e7e-b66a-08b5d7c17413,high
+jake_goodwin,Jake Goodwin,Jake Goodwin,1,Summer 2019/20,U14 Red,Plenty 2,Summer 2019/20,1641977c-b61e-4e7e-b66a-08b5d7c17413,high
+raw_76185bac_5582_49f3_aa39_d686fe479ce9,Jayce Callegari,Jayce Callegari,1,Summer 2019/20,U12 Blue,Plenty,Summer 2019/20,078b1e08-01d6-439f-bdbb-62414e15a69e,high
+raw_502b1300_501d_42ec_936e_188dba9d98df,Matthew Stokes,Matthew Stokes,1,Summer 2019/20,U12 Red C,Plenty,Summer 2019/20,3d8e8c8b-3ced-4175-9e28-b362b6044dea,high
+reece_hayden,Reece Hayden,Reece Hayden,1,Summer 2019/20,U14 Red,Plenty 2,Summer 2019/20,1641977c-b61e-4e7e-b66a-08b5d7c17413,high
+raw_b73e6bfc_0e25_4310_a027_a85b3b0d670c,Ryan Baynes,Ryan Baynes,1,Summer 2019/20,U14 Red,Plenty 2,Summer 2019/20,1641977c-b61e-4e7e-b66a-08b5d7c17413,high
+raw_f8761511_f057_48ee_bee0_24c5bcf9e69f,Benjamin Stewart,Benjamin Stewart,1,Summer 2018/19,U12 Yellow B,Plenty,Summer 2018/19,e590a415-32d3-4d02-ab83-e135ef1c2a2d,high
+raw_638c9622_84db_4ae7_bb33_805107653d0f,Dean Barnett,Dean Barnett,1,Summer 2018/19,U12 White B,Plenty,Summer 2018/19,775c18eb-4b89-4f03-8469-d4a5d85c92cd,high
+raw_e1a4c010_ceb1_4f38_979e_912af4ede896,Isaac Jones,Isaac Jones,1,Summer 2018/19,U12 White B,Plenty,Summer 2018/19,775c18eb-4b89-4f03-8469-d4a5d85c92cd,high
+raw_552b6692_e6d6_4c4f_9ecd_2513e72d756c,Rylee Ratkovic,Rylee Ratkovic,1,Summer 2018/19,U12 White B,Plenty,Summer 2018/19,775c18eb-4b89-4f03-8469-d4a5d85c92cd,high
+raw_fee7bc7b_c65b_4120_9026_95ded9fe3625,Xavier Eastham,Xavier Eastham,1,Summer 2018/19,U12 White B,Plenty,Summer 2018/19,775c18eb-4b89-4f03-8469-d4a5d85c92cd,high
+raw_cbf6ebbe_23ea_4bbe_92ab_cbff15c8ee8f,Angus Regan,Angus Regan,1,Summer 2017/18,U12 Yellow,Plenty Cricket Club,Summer 2017/18,a44a40c4-5c52-4866-8162-8197d6a09193,high
+ashley_coles,Ashley Coles,Ashley Coles,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+raw_305ec486_4cb6_46ad_990a_92bd629ad163,Darcy Tobias,Darcy Tobias,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+raw_8f7b412b_c750_4317_b5ea_31b4e7d2a13c,Glenn Regan,Glenn Regan,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+jack_burge,Jack Burge,Jack Burge,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+raw_edb744f9_13fc_43da_a3f8_1700eaf576f7,Jack Stokes,Jack Stokes,1,Summer 2017/18,U12 Yellow,Plenty Cricket Club,Summer 2017/18,a44a40c4-5c52-4866-8162-8197d6a09193,high
+raw_b306ef58_471b_439e_b2fe_39535c316a5e,James Norman,James Norman,1,Summer 2017/18,Money Shield,Plenty Power,Summer 2017/18,1a96d4e6-996c-4c56-9b53-4fe3eb8cf767,high
+raw_6e20db5a_5200_424b_83a5_69c2b9610bf8,Kenroy Peters,Kenroy Peters,1,Summer 2017/18,Money Shield,Plenty Power,Summer 2017/18,1a96d4e6-996c-4c56-9b53-4fe3eb8cf767,high
+raw_f73bfe67_2b37_4a83_9817_7ab061623bf3,Lachlan Pyers,Lachlan Pyers,1,Summer 2017/18,U14 Red,Plenty Power,Summer 2017/18,46934cde-5140-4ed3-8602-72fc7e4d9cd8,high
+raw_0c2ee293_bb87_49a3_96e3_47f9ccbe1281,Liam Holmes,Liam Holmes,1,Summer 2017/18,U14 Red,Plenty Power,Summer 2017/18,46934cde-5140-4ed3-8602-72fc7e4d9cd8,high
+liam_mallia,Liam Mallia,Liam Mallia,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+michael_mcconville,Michael Mcconville,Michael Mcconville,1,Summer 2017/18,U14 Red,Plenty Power,Summer 2017/18,46934cde-5140-4ed3-8602-72fc7e4d9cd8,high
+raw_2be7de43_aabc_4a9d_bbca_dc3c269bed9d,Nicholas Stevens,Nicholas Stevens,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+raw_f0f48b3a_ed77_4ee7_ac7d_bdedf92316ca,Ryan Chapman,Ryan Chapman,1,Summer 2017/18,U12 Yellow,Plenty Cricket Club,Summer 2017/18,a44a40c4-5c52-4866-8162-8197d6a09193,high
+raw_e63ba487_5a2c_4d6a_90ca_c73460f06cbe,Sebastian Marasco,Sebastian Marasco,1,Summer 2017/18,U12 Yellow,Plenty Cricket Club,Summer 2017/18,a44a40c4-5c52-4866-8162-8197d6a09193,high
+raw_04266377_9f41_42e4_8b48_a04bdc49e03f,Shane Daly,Shane Daly,1,Summer 2017/18,D Grade,Plenty Power,Summer 2017/18,f0a65cc9-0efb-428e-a7e5-8838aa429127,high
+raw_6aa853b1_e08b_4cc8_85a0_3934f449a247,Taj Merrett - Collie,Taj Merrett - Collie,1,Summer 2017/18,U14 Red,Plenty Power,Summer 2017/18,46934cde-5140-4ed3-8602-72fc7e4d9cd8,high
+raw_02977a48_1214_42a9_81eb_e96dac6b95ff,Abbey Buckley,Abbey Buckley,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_358c85bb_5205_45a4_87de_ef0fde0a381e,Brendan Jones,Brendan Jones,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_6440822d_ae56_4b58_9656_c052f21cecb2,Chelsea Dumbrell,Chelsea Dumbrell,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_dc420fed_cc42_4cb3_b5cd_3782292573c3,Chris Alexopoulos,Chris Alexopoulos,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_f6274a48_2a93_4f3a_8b90_672c35959db2,Dwayne Fowles,Dwayne Fowles,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_9005544b_85e2_4f0f_9905_163f55904c7a,Geoffrey King,Geoffrey King,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_471c1666_943c_40cc_807c_798cc621f0bf,Holly Johns,Holly Johns,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_03b87777_877c_46e1_9e0b_e74504969fde,Jacqueline Dickens,Jacqueline Dickens,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_b7bcf2cc_ae9b_4059_ac9b_bc5b60a6869f,Kelsea Bannan,Kelsea Bannan,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_ba2cd234_2751_4924_85a8_22c205aa3f42,Logan Francey,Logan Francey,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_db10125f_94ed_4dd9_9764_4bdf8c54eca0,Makenzie Patterson,Makenzie Patterson,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_cfbc5e53_6c3b_48fc_beff_0df80275919e,Mia Van Den Berg,Mia Van Den Berg,1,Summer 2016/17,Renegades Girls - DVCA Level 2,Plenty,Summer 2016/17,7737af3b-0499-415a-b206-50454b4735a8,high
+raw_ae7649b6_a190_4d0f_b9dd_1dfed96a0baa,Nicholas Scott,Nicholas Scott,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_00fb5094_5af3_465a_b8a0_17eb81f6d87e,Pino Tino,Pino Tino,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_46e26d4d_dd7d_48e3_a927_99ba706793d6,Shem Quilliam,Shem Quilliam,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_c408cb2b_0547_402c_877c_9036bc58cdb1,Zachary Johns,Zachary Johns,1,Summer 2016/17,G3 Grade,Plenty Power,Summer 2016/17,17f411f0-658b-4106-8bba-d8933f7a7600,high
+raw_304630ab_0fb8_49be_a359_ce7bcc382bbd,Nathan Wein,Nathan Wein,1,Summer 2015/16,U12 White Teal,Plenty,Summer 2015/16,0656f735-a0c4-4968-a79b-d6f3d34a9465,high
+raw_63a83c13_574c_4cb9_b679_8dac5155e5e1,William Brugliera,William Brugliera,1,Summer 2015/16,U12 White Teal,Plenty,Summer 2015/16,0656f735-a0c4-4968-a79b-d6f3d34a9465,high
+raw_cf8a728c_e21f_4aa4_b8fb_2ed500d0eb07,Craig Banthorpe,Craig Banthorpe,1,Summer 2014/15,Vets A,Plenty,Summer 2014/15,9a7ca025-6c54-4f9a-b669-5a0e191c3124,high
+raw_356a97c0_f15a_4e7e_9a3e_1830a4da68e5,Beau Lemin,Beau Lemin,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_0948f162_5480_4c2f_bf3b_f21af9d1cfe6,Jackson Keays,Jackson Keays,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_6eb60368_91cf_4146_abf4_c33bd7d92c22,Jake Battye,Jake Battye,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+james_plunkett,James Plunkett,James Plunkett,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_cfe9dd37_03f9_4832_9dca_439a1583b1ab,Kyle Ziedaitis,Kyle Ziedaitis,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_7584d846_14d5_499e_a80c_f9ed72fcef02,Liam Banthorpe,Liam Banthorpe,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_f3060fa7_88dd_405b_8c47_9def90225e38,Luke Johnson,Luke Johnson,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_d59d5423_822a_4bee_9718_0cdaa181062d,Nicholas Fletcher,Nicholas Fletcher,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_669e1a18_c3e8_48ae_880f_e11b9df2c6fa,Nicholas Jacobson,Nicholas Jacobson,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_a28b0d01_11f0_4984_b187_47621fe7feb0,Rohitdeep Singh,Rohitdeep Singh,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_47e59ec0_1e10_4b7b_8b4e_ce25a3ad4d01,Stuart Dower,Stuart Dower,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_f5971b0c_643a_4cab_a871_97ffa504f0c7,Tom Simpson,Tom Simpson,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_c36a055f_3817_449c_8a3a_acde1d3caa52,Zac Kayll,Zac Kayll,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_33f84692_0da3_416c_86bc_bcb0d437ce54,Zane Treloar,Zane Treloar,1,Summer 2013/14,U18 (Friday),Plenty,Summer 2013/14,138352f3-6dc2-4fd3-b43d-988168ad9e48,high
+raw_732ae0b6_d042_4433_ab6b_07d78ffa3358,Alan Strangwick,Alan Strangwick,1,Summer 2012/13,Vets A,Plenty,Summer 2012/13,a9a42d1c-879c-4f6f-84f3-912a4e1a049c,high
+raw_1f0ef465_b646_48c7_8936_3c88b89fa927,Anthony Daminato,Anthony Daminato,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_4a59561a_e9ce_45d8_af64_de38bded82eb,Charlie Love,Charlie Love,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_80baf64f_4356_4e1c_a343_7a129e69aaab,Clay Woolacott,Clay Woolacott,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_288e42f6_b423_4438_9cb9_5ef0808bd9c3,James Wigginton,James Wigginton,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_93bdff2b_2c39_4f38_8507_250dc00aaf2b,Kyle Johnson,Kyle Johnson,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_1bd71dd3_939a_43be_b6cc_fd01c9f55ace,Kyle Taranto,Kyle Taranto,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_47f2488c_247e_4497_ad34_29a447275dec,Matthew Beale,Matthew Beale,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_e2a621e8_73f3_4ce1_b51a_b10498db757a,Matthew Stephens,Matthew Stephens,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_41654469_4b5f_48f5_b25f_c7902ae069f3,Samuel Plunkett,Samuel Plunkett,1,Summer 2011/12,U12 Blue,Plenty,Summer 2011/12,0581cabe-8fd2-40e3-a043-5ccf069bf13c,high
+raw_4456581b_829d_4b1c_af70_e60d4b8f6717,Bryn Francis,Bryn Francis,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+raw_2561ebe8_6478_4f4e_845a_4483fa289b37,Darcy Davies,Darcy Davies,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+raw_5e08b958_2520_4569_8291_05c4fff54c6a,Evan Coventry,Evan Coventry,1,Summer 2010/11,Barclay Shield,Plenty,Summer 2010/11,21f74368-e3af-4ad2-9772-244d6037636b,high
+raw_173e2125_7045_493e_b538_e6646087b005,Grant Pyers,Grant Pyers,1,Summer 2010/11,Vets A,Plenty,Summer 2010/11,4f788882-2354-4821-9524-f3b873f38fca,high
+raw_fe7748ca_76bc_4a87_94c9_b9c5f059488c,James Dignum,James Dignum,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+raw_f7528cdf_afbe_41fd_a046_5be0606db67f,Kynan Kett,Kynan Kett,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+lachlan_burge,Lachlan Burge,Lachlan Burge,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+raw_562e4373_61d2_4a71_a12c_b249892773f7,Lachlan Cotter,Lachlan Cotter,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+raw_028c0b3c_6bc0_4591_857a_32d54a10ef0d,Michael Smith,Michael Smith,1,Summer 2010/11,Vets A,Plenty,Summer 2010/11,4f788882-2354-4821-9524-f3b873f38fca,high
+raw_e315f241_880f_4434_9be9_5e1215fa4807,Tyler Costello,Tyler Costello,1,Summer 2010/11,U12 Blue,Plenty,Summer 2010/11,660cf85a-ac7a-43af-9bc7-54139d84bc60,high
+raw_115351c7_f0f3_45a2_aadd_d4c5ef669ce1,Alexander Chipper,Alexander Chipper,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_e548b3ed_e007_421c_8ba6_d2b3490d0b72,Chayse Turnbull,Chayse Turnbull,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_52b1382a_9d8d_4fa8_a839_298592772a96,James Spinks,James Spinks,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_d277aaaf_a9f8_4490_8c12_86b75ed416ce,Joshua Hale,Joshua Hale,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_bac9a7c5_fdbb_43ba_b6a1_93cbf67d0f85,Joshua Ward,Joshua Ward,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_950af82b_dded_42c4_9484_1b1546f7f69e,Kyle Turnbull,Kyle Turnbull,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_d661c787_3053_4361_b465_17b204f00830,Matthew Egan,Matthew Egan,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_a5a8a6d9_bb12_4865_8394_48ec6ff787bb,Matthew Mcmahon,Matthew Mcmahon,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_72e1bcc5_deb0_4fdb_ac04_d3266deb19a7,Sean Deer,Sean Deer,1,Summer 2009/10,U16 (1) Blue,Plenty,Summer 2009/10,ec3445c5-5592-46fd-87f0-74b8720b979b,high
+raw_9dbe7848_ef43_402b_a5c2_a670cb73291b,Jevon Kett,Jevon Kett,1,Summer 2008/09,U16 (1) Teal,Plenty,Summer 2008/09,f558094b-2fcf-4763-9ba3-e253442380b1,high
+raw_ac4f103e_6380_4144_9be0_65d84df3922e,Nathan Robbins-Brown,Nathan Robbins-Brown,1,Summer 2008/09,U16 (1) Teal,Plenty,Summer 2008/09,f558094b-2fcf-4763-9ba3-e253442380b1,high
+raw_ec0dba12_216f_4d91_86c4_b33f10b4cba3,Dale Equid,Dale Equid,1,Summer 2007/08,C Grade,Plenty,Summer 2007/08,6709e0b8-6486-4ab8-8b3a-8bf309434143,high
+raw_c1d25c3f_6024_4ab4_b244_4fc2cf62215b,Jarryd Devine,Jarryd Devine,1,Summer 2007/08,C Grade,Plenty,Summer 2007/08,6709e0b8-6486-4ab8-8b3a-8bf309434143,high
+raw_33c47c5b_5de4_41dd_9b4a_c376a02586c0,Michael Deligiorgis,Michael Deligiorgis,1,Summer 2007/08,C Grade,Plenty,Summer 2007/08,6709e0b8-6486-4ab8-8b3a-8bf309434143,high
+raw_7a39fede_ab41_48b2_84d7_fd7951195ea1,Mitchell Buckley,Mitchell Buckley,1,Summer 2007/08,C Grade,Plenty,Summer 2007/08,6709e0b8-6486-4ab8-8b3a-8bf309434143,high
+raw_a1d1555f_ee88_4cdd_8aa3_173737fde910,Robert Cocking,Robert Cocking,1,Summer 2007/08,C Grade,Plenty,Summer 2007/08,6709e0b8-6486-4ab8-8b3a-8bf309434143,high
+raw_9a255c67_3b3c_4bb3_80e1_54c891a34f53,Robert Zull,Robert Zull,1,Summer 2007/08,C Grade,Plenty,Summer 2007/08,6709e0b8-6486-4ab8-8b3a-8bf309434143,high
+raw_c380cce1_1ab1_452e_9d97_a6fbd1fffd67,Andrew Wendt,Andrew Wendt,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_85a34e6f_c885_4dea_a705_6186c812832c,Anthony Ford,Anthony Ford,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_b5e9abfc_a135_491d_8f7b_eeb51a08cf5d,Ben Hunt,Ben Hunt,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_79d4c68c_67f3_4432_9760_c3b98fd67aee,Bernie Rohrig,Bernie Rohrig,1,Summer 2005/06,U14 (3),Plenty,Summer 2005/06,a7966082-59f2-435d-a2db-f70a5dbc9e88,high
+raw_00ce8f91_aa53_48b4_aec8_3744073fefd4,Daniel Veal,Daniel Veal,1,Summer 2005/06,U14 (3),Plenty,Summer 2005/06,a7966082-59f2-435d-a2db-f70a5dbc9e88,high
+raw_92492beb_b72a_4f56_9a78_b4b2f0668d13,Jack Findley,Jack Findley,1,Summer 2005/06,U14 (3),Plenty,Summer 2005/06,a7966082-59f2-435d-a2db-f70a5dbc9e88,high
+raw_fa01e049_69a0_4d00_95bc_26d2f5a9c762,James Rossiter,James Rossiter,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_3c510d17_5334_49f0_91cf_eb6cd4fe373b,Jason Kenny,Jason Kenny,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_8eefc12b_ab62_4e97_be4c_3f97714ed949,Jonathon Harris,Jonathon Harris,1,Summer 2005/06,U14 (3),Plenty,Summer 2005/06,a7966082-59f2-435d-a2db-f70a5dbc9e88,high
+raw_d2e13315_0847_4b93_be3a_146480dfd7b7,Matthew Coviello,Matthew Coviello,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_64ee980b_4bfc_4c3b_98a7_ffaba1e41796,Matthew Williamson,Matthew Williamson,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_04f4914c_b27d_4ec9_b16e_595e9e87e7ce,Michael Rivett,Michael Rivett,1,Summer 2005/06,U14 (3),Plenty,Summer 2005/06,a7966082-59f2-435d-a2db-f70a5dbc9e88,high
+raw_cc526710_fa5d_4e5d_baa6_3d3058c29e8d,Paul Turner,Paul Turner,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_b1e666b5_0666_4477_bdeb_bcd6246090b4,Shaun Skiba,Shaun Skiba,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_e08260e9_90cb_4791_8311_b50c828e62d2,Stuart Fraser,Stuart Fraser,1,Summer 2005/06,E Grade,Plenty,Summer 2005/06,4931e4e6-7aca-487b-ace3-e233d741ed55,high
+raw_359e55bd_8785_41ef_bc49_a0a285533d41,Alexander Sacchetta,Alexander Sacchetta,1,Summer 2003/04,U16 (1) Blue,Plenty,Summer 2003/04,0fe8ac91-66b6-41bd-9f4c-129befade635,high
+raw_11ed8769_ab9a_46ea_a046_0c4296111e98,Chris Villani,Chris Villani,1,Summer 2003/04,Barclay Shield,Plenty,Summer 2003/04,7882e957-b246-4503-80cb-4a70ca852387,high
+raw_9d492922_7fcf_46fe_b10c_3cc2afcf5ba5,Christopher Hussey,Christopher Hussey,1,Summer 2003/04,Barclay Reserve,Plenty,Summer 2003/04,60f311dc-b462-4d57-86a4-40e542f6f2b8,high
+raw_83ba8877_d001_4c12_a34c_990a885b9f71,Christopher Lacny,Christopher Lacny,1,Summer 2003/04,U12(1) Teal,Plenty,Summer 2003/04,1cab292f-de64-46ac-8b89-5088aedeb4aa,high
+raw_308746fe_9389_4b67_a9dd_2848227890ea,Dane Robertson,Dane Robertson,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,8bf63848-eaa8-44bf-897d-05f7c6a967e7,high
+raw_eab30965_8224_451f_9586_a29bff6d4d46,Daniel Compton,Daniel Compton,1,Summer 2003/04,Barclay Reserve,Plenty,Summer 2003/04,60f311dc-b462-4d57-86a4-40e542f6f2b8,high
+raw_52e927a1_797a_4a94_9362_ff1403ef08c8,Daniel Cookson,Daniel Cookson,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,022b9b24-6cce-43b7-8612-b9032b4bf589,high
+raw_dbc65de3_ffec_40cc_8242_b39c117cb419,Daniel Pavey,Daniel Pavey,1,Summer 2003/04,U12(1) Teal,Plenty,Summer 2003/04,1cab292f-de64-46ac-8b89-5088aedeb4aa,high
+raw_c7a4e5e7_8962_4fbc_81f2_611f343f9b23,Dylan Forster,Dylan Forster,1,Summer 2003/04,U12(1) Teal,Plenty,Summer 2003/04,1cab292f-de64-46ac-8b89-5088aedeb4aa,high
+raw_34145084_fb8e_45fd_be2c_35cddd4a55ef,Harpreet Sra,Harpreet Sra,1,Summer 2003/04,Barclay Shield,Plenty,Summer 2003/04,7882e957-b246-4503-80cb-4a70ca852387,high
+raw_ef8c5d60_b8a2_46c1_a21a_4fbbe5c70971,James Gilliland,James Gilliland,1,Summer 2003/04,U16 (1) Blue,Plenty,Summer 2003/04,0fe8ac91-66b6-41bd-9f4c-129befade635,high
+raw_edf45215_ed39_4b66_8816_04ab0c681c9c,James Murphy,James Murphy,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,022b9b24-6cce-43b7-8612-b9032b4bf589,high
+raw_36c6c49c_76b6_4b60_b7aa_32ca417bd34e,Jarrod Millett,Jarrod Millett,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,022b9b24-6cce-43b7-8612-b9032b4bf589,high
+raw_206e6a8f_3039_4f89_83fa_eca3a64f0b37,Kyle Bedford,Kyle Bedford,1,Summer 2003/04,U16 (1) Blue,Plenty,Summer 2003/04,0fe8ac91-66b6-41bd-9f4c-129befade635,high
+raw_8df8d132_3849_4afb_8650_283ca3ba087e,Liam Bedford,Liam Bedford,1,Summer 2003/04,U12(1) Teal,Plenty,Summer 2003/04,1cab292f-de64-46ac-8b89-5088aedeb4aa,high
+raw_a430e7c9_7192_4779_b4ba_12dccc10fe56,Nathan Batchelor,Nathan Batchelor,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,022b9b24-6cce-43b7-8612-b9032b4bf589,high
+raw_bfa6a784_2640_454b_b7f6_d84d60e831f2,Nathan Stanogias,Nathan Stanogias,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,022b9b24-6cce-43b7-8612-b9032b4bf589,high
+raw_01c61629_e480_409d_a7be_082891f64688,Nicholas Riddle,Nicholas Riddle,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,8bf63848-eaa8-44bf-897d-05f7c6a967e7,high
+raw_025ac2cb_521e_4ba8_bce3_dfa101097200,Ralf Koegler,Ralf Koegler,1,Summer 2003/04,Barclay Reserve,Plenty,Summer 2003/04,60f311dc-b462-4d57-86a4-40e542f6f2b8,high
+raw_c3daace5_4126_4e00_a128_e6e043c4862d,Robert Hoysted,Robert Hoysted,1,Summer 2003/04,Barclay Reserve,Plenty,Summer 2003/04,60f311dc-b462-4d57-86a4-40e542f6f2b8,high
+raw_4bf04d3b_37d7_40f0_8fe6_048d4a6f9e54,Ross Goddard,Ross Goddard,1,Summer 2003/04,Barclay Shield,Plenty,Summer 2003/04,7882e957-b246-4503-80cb-4a70ca852387,high
+raw_f9558013_9953_4c26_9c76_32a469438827,Rustem Upton,Rustem Upton,1,Summer 2003/04,Barclay Reserve,Plenty,Summer 2003/04,60f311dc-b462-4d57-86a4-40e542f6f2b8,high
+raw_cefd0cad_9eb6_4811_aa8e_878700d9c388,Scott Conte,Scott Conte,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,8bf63848-eaa8-44bf-897d-05f7c6a967e7,high
+raw_a0a4a530_3fd9_470e_b74b_c2e9c45a063f,Tim Wilson,Tim Wilson,1,Summer 2003/04,U12 (2),Plenty,Summer 2003/04,022b9b24-6cce-43b7-8612-b9032b4bf589,high
+raw_0259cd86_602a_4dfb_8b5e_dd947fd071be,Zak Pavlidis,Zak Pavlidis,1,Summer 2003/04,U12(1) Teal,Plenty,Summer 2003/04,1cab292f-de64-46ac-8b89-5088aedeb4aa,high
+raw_f94d07fd_a779_46d6_a2ec_a24bb6c80b6c,Andrew Hughes,Andrew Hughes,1,Summer 2002/03,U14(1) Blue,Plenty,Summer 2002/03,86706f2c-a726-48a8-a75c-5b2553ece452,high
+raw_3fdfbbe6_4328_4088_b667_585ac511de46,Elyse Villani,Elyse Villani,1,Summer 2002/03,U14(1) Blue,Plenty,Summer 2002/03,86706f2c-a726-48a8-a75c-5b2553ece452,high
+raw_ffda4c79_f9d5_44ae_962f_0ff8af2991c8,Evan Raif,Evan Raif,1,Summer 2002/03,U12 (3),Plenty,Summer 2002/03,11731b70-a86e-4435-901d-97ebce08cf9b,high
+raw_c32770a8_ad28_48bd_843a_719d318af26d,Harry Whybrow,Harry Whybrow,1,Summer 2002/03,U14(1) Blue,Plenty,Summer 2002/03,86706f2c-a726-48a8-a75c-5b2553ece452,high
