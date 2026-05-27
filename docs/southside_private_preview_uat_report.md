@@ -110,3 +110,32 @@ Remaining caveats:
 - Fourteen manual duplicate groups remain.
 - The 2025/26 E Grade premiership still shows no captain because the local scorecard payload did not expose a captain role for the Southside team.
 - Women’s Hall of Fame currently reflects available classified women’s scorecard/aggregate rows only; sparse sections show clean empty states.
+
+## Final Polish Pass - May 27, 2026
+
+Status: Go with caveats, pending final deployed visual review.
+
+Additional polish completed:
+
+- Batting/Bowling/Fielding pill toggles now use a stronger selected state with active club colours and white selected text, making the active discipline clear at a glance.
+- The Hall of Fame Men/Women control now uses the same pill-toggle treatment as the discipline toggles rather than the folder-tab style.
+- HOF Detailed Records player and season values are rendered as app-relative links again. Player links route to Player Profile and Debut/Latest Season links route to Season Overview under the active Southside context.
+- Season Overview player links were restored in iframe-rendered Detailed Stats tables, and Season by Round best batter/bowler values link where the existing local data can safely match the displayed name to an active-club canonical player id.
+- Remaining visible purple accents in shared UI surfaces were routed through active club theme variables. Southside uses its blue/accent palette while FVCC retains purple through its own config.
+- Sidebar active, inactive, shield, creator, and feedback-email colours were tightened for contrast and Southside branding.
+- Milestone folder-tab spacing was adjusted so the tabs sit more naturally between the club heading and milestone content.
+
+Validation focus for the next smoke:
+
+- Confirm HOF Detailed Records links for Puneet Bhardwaj, Jatin Bhatia, Jatin Dave, Hiren Tandel, and Sajan/Sajendra if present.
+- Confirm Season Overview Detailed Stats and Season by Round player links open the selected Southside Player Profile.
+- Confirm FVCC still keeps the purple theme and link behavior.
+
+Smoke results:
+
+- Southside HOF on port 8508 showed Southside-branded Men/Women and Batting/Bowling/Fielding pill states, no FVCC leakage, and visible premiership/player/season links.
+- Southside Season Overview on port 8508 showed linked Season by Round best batter/bowler names where canonical ids were resolvable, linked Detailed Stats player names, no FVCC leakage, and no `NaN`/`None` text.
+- Southside Player Profile opened directly from a Southside player route for Jatin Bhatia.
+- Southside Milestone loaded after the heavier page build with the adjusted heading/tab spacing and no FVCC leakage.
+- FVCC HOF on port 8502 retained its purple link/tab theme and loaded Detailed Records without Southside leakage.
+- Glen Waverley Hawks optional smoke on port 8505 used its configured green link colour and did not leak FVCC branding.
