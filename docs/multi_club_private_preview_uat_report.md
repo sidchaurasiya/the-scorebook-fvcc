@@ -106,6 +106,15 @@ Status: Preview-ready reference.
 - Runtime theme variables remained FVCC purple: primary/link/accent `#6D4DFF`.
 - No Southside or other pilot-club leakage was detected in FVCC smoke.
 
+## Fastest Innings Follow-Up - May 27, 2026
+
+- Fastest Innings records were rebuilt from existing local verified ball-by-ball data only; no fetch/backfill was run.
+- The milestone builder now treats source cumulative batter-run fields as advisory and uses per-delivery `runs_bat` progression unless the source cumulative data validates cleanly.
+- The previously suspicious fastest 50 rows were corrected: Plenty Geoffrey King from 6 to 52 balls, Reynella Cameron Pannach from 3 to 63 balls, and Georges River Christopher McArthur from 1 to 35 balls.
+- All seven target clubs now have zero deploy-safe fastest 50s below 9 balls and zero deploy-safe fastest 100s below 17 balls.
+- HOF Iconic Performances and Fastest Innings accents now use active club theme variables, so non-FVCC clubs should not inherit FVCC purple in those sections.
+- Full audit details are in `docs/multi_club_fastest_innings_audit.md`.
+
 ## Recommendation
 
 Southside remains the first private-preview candidate. The other five clubs are ready to keep in the deployment back pocket, but should receive one short human mapping review before a club-facing link is shared. Prioritise review in this order:
@@ -115,4 +124,3 @@ Southside remains the first private-preview candidate. The other five clubs are 
 3. Reynella: Men/Women toggle plus larger safe-merge volume.
 4. Georges River District: lower premiership volume but higher suspicious duplicate count.
 5. Plenty: high verified premiership volume and several Plenty/Plenty Valley mapping caveats.
-

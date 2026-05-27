@@ -975,6 +975,15 @@ Pilot match-centre/backfill update:
 - Next review focus before client previews: team/grade mappings for all clubs, duplicate-player review for non-Southside clubs, and manual identity/naming review for Georges River District / official Georges River Cricket Club.
 - Detailed counts and recommendations are in `docs/multi_club_match_centre_backfill_summary.md`.
 
+Fastest Innings validation update:
+
+- Fastest Innings is now explicitly verified-ball-by-ball only across the six pilot clubs and FVCC.
+- The milestone builder uses per-delivery batter runs unless source cumulative batter runs validate cleanly. This prevents false records from malformed source cumulative fields that jump to final scores early.
+- Deploy-safe fastest 50s below 9 balls and fastest 100s below 17 balls are excluded unless a trustworthy delivery sequence explicitly verifies them.
+- Known false-looking examples were corrected from local ball-by-ball data: Plenty Geoffrey King 52 balls, Reynella Cameron Pannach 63 balls, and Georges River Christopher McArthur 35 balls.
+- HOF Iconic Performances and Fastest Innings styling now uses active club colour variables, with FVCC retaining purple through its config.
+- Detailed audit notes are in `docs/multi_club_fastest_innings_audit.md`.
+
 ## 18. Final Instructions For Future Codex Session
 
 Before making any future change:

@@ -864,7 +864,7 @@ def inject_theme() -> None:
 
         .hof-v2-hero {
             background:
-                linear-gradient(135deg, rgba(8, 11, 63, 0.95), rgba(29, 22, 105, 0.94)),
+                linear-gradient(135deg, var(--club-primary, rgba(8, 11, 63, 0.95)), var(--club-accent, rgba(29, 22, 105, 0.94))),
                 radial-gradient(circle at 82% 24%, rgba(255, 245, 221, 0.25), transparent 24rem);
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 34px;
@@ -895,7 +895,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-eyebrow {
-            color: #d9d3ff;
+            color: rgba(255, 255, 255, 0.82);
             font-size: 0.82rem;
             font-weight: 900;
             letter-spacing: 0.12em;
@@ -914,7 +914,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-hero-copy {
-            color: #e7e5ff;
+            color: rgba(255, 255, 255, 0.86);
             font-size: clamp(1.02rem, 1.7vw, 1.26rem);
             font-weight: 650;
             line-height: 1.5;
@@ -968,7 +968,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-hero-stat span {
-            color: #d9d3ff;
+            color: rgba(255, 255, 255, 0.80);
             display: block;
             font-size: 0.84rem;
             font-weight: 780;
@@ -1000,8 +1000,8 @@ def inject_theme() -> None:
         }
 
         .hof-v2-record-nav a.active {
-            background: linear-gradient(180deg, #f1edff 0%, #e8e1ff 100%);
-            color: #4b37d8;
+            background: var(--club-primary-soft, #f1edff);
+            color: var(--club-primary, #4b37d8);
         }
 
         .hof-v2-section {
@@ -1039,7 +1039,7 @@ def inject_theme() -> None:
             background: #ffffff;
             border: 1px solid #e7e6f5;
             border-radius: 999px;
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             display: inline-flex;
             font-size: 0.78rem;
             font-weight: 900;
@@ -1165,10 +1165,10 @@ def inject_theme() -> None:
         }
 
         .hof-v2-subtle-link {
-            background: #f8f6ff;
-            border: 1px solid #e1ddff;
+            background: var(--club-primary-soft, #f8f6ff);
+            border: 1px solid rgba(var(--club-primary-rgb, 75, 55, 216), 0.20);
             border-radius: 999px;
-            color: #4b37d8 !important;
+            color: var(--club-link, #4b37d8) !important;
             display: inline-flex;
             font-size: 0.78rem;
             font-weight: 900;
@@ -1198,10 +1198,10 @@ def inject_theme() -> None:
 
         .hof-v2-rank {
             align-items: center;
-            background: #f1edff;
-            border: 1px solid #ded8ff;
+            background: var(--club-primary-soft, #f1edff);
+            border: 1px solid rgba(var(--club-primary-rgb, 75, 55, 216), 0.20);
             border-radius: 999px;
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             display: inline-flex;
             font-size: 0.8rem;
             font-weight: 950;
@@ -1236,12 +1236,12 @@ def inject_theme() -> None:
 
         .hof-v2-performance-hero {
             background:
-                linear-gradient(180deg, #ffffff 0%, #fbfaff 100%);
+                linear-gradient(180deg, #ffffff 0%, var(--club-bg, #fbfaff) 100%);
             min-height: 260px;
         }
 
         .hof-v2-performance-value {
-            color: var(--ink);
+            color: var(--club-primary, var(--ink));
             font-size: clamp(3.2rem, 8vw, 5.2rem);
             font-weight: 950;
             line-height: 0.9;
@@ -1260,13 +1260,13 @@ def inject_theme() -> None:
         .hof-v2-performance-player a,
         .hof-v2-record-player a,
         .hof-v2-season-card a {
-            color: #0068c9;
+            color: var(--club-link, #0068c9);
             text-decoration: none;
         }
 
         .hof-v2-fastest-panel {
             background:
-                linear-gradient(135deg, rgba(8, 11, 63, 0.96), rgba(45, 34, 128, 0.93));
+                linear-gradient(135deg, var(--club-primary, #080b3f), var(--club-accent, #2d2280));
             border-radius: 28px;
             box-shadow: 0 22px 52px rgba(23, 27, 77, 0.08);
             color: #ffffff;
@@ -1275,7 +1275,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-fastest-panel .hof-v2-kicker {
-            color: #d9d3ff;
+            color: rgba(255, 255, 255, 0.82);
             margin: 18px 0 12px;
         }
 
@@ -1304,7 +1304,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-race-row strong span {
-            color: #d9d3ff;
+            color: rgba(255, 255, 255, 0.74);
             display: block;
             font-size: 0.78rem;
             font-weight: 700;
@@ -1312,7 +1312,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-race-time {
-            color: #fff5dd;
+            color: var(--club-secondary-soft, #fff5dd);
             font-size: 0.9rem;
             font-weight: 950;
             white-space: nowrap;
@@ -1323,7 +1323,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-record-value {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             font-size: 1.8rem;
             font-weight: 950;
             line-height: 1;
@@ -1349,7 +1349,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-season-score {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             font-size: 2.2rem;
             font-weight: 950;
             line-height: 1;
@@ -2551,7 +2551,7 @@ def inject_theme() -> None:
 
         .premiership-season {
             align-items: center;
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             display: inline-flex;
             font-size: 1.05rem;
             font-weight: 950;
@@ -2624,7 +2624,7 @@ def inject_theme() -> None:
         }
 
         .premiership-player-row .performance-value {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
         }
 
         .premiership-player-row .performance-player span {
@@ -2637,7 +2637,7 @@ def inject_theme() -> None:
 
         .premiership-player-row .performance-player span a.season-overview-link,
         .premiership-player-row .performance-player span a.season-overview-link:visited {
-            color: #4b37d8 !important;
+            color: var(--club-link, #4b37d8) !important;
             font-weight: 850;
         }
 
@@ -3170,7 +3170,7 @@ def inject_theme() -> None:
         }
 
         .performance-value {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             font-size: 0.95rem;
             font-weight: 950;
             text-align: right;
@@ -3186,7 +3186,7 @@ def inject_theme() -> None:
 
         .best-season-card {
             background:
-                radial-gradient(circle at 100% 0%, rgba(109, 77, 255, 0.09), transparent 16rem),
+                radial-gradient(circle at 100% 0%, rgba(var(--club-primary-rgb, 109, 77, 255), 0.09), transparent 16rem),
                 #ffffff;
             border: 1px solid #e9ebf4;
             border-radius: 16px;
@@ -3219,7 +3219,7 @@ def inject_theme() -> None:
         }
 
         .best-season-primary {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             font-size: 1.58rem;
             font-weight: 950;
             margin-top: 16px;
@@ -3251,8 +3251,8 @@ def inject_theme() -> None:
         }
 
         .identity-note {
-            background: rgba(109, 77, 255, 0.08);
-            border: 1px solid rgba(109, 77, 255, 0.15);
+            background: rgba(var(--club-primary-rgb, 109, 77, 255), 0.08);
+            border: 1px solid rgba(var(--club-primary-rgb, 109, 77, 255), 0.15);
             border-radius: 14px;
             color: #4c4f75;
             font-size: 0.86rem;
