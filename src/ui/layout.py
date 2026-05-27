@@ -1838,7 +1838,17 @@ def season_round_result(match: pd.Series) -> dict[str, str]:
         margin = margin_match.group(1).strip()
     margin = normalize_result_wording(margin)
     if winner:
-        prefix = "won" if is_fvcc_team_name(winner) else "lost"
+        winner_key = normalize_result_team_name(winner)
+        club_team_name = safe_record_text(match.get("club_team_name") or match.get("fvcc_team_name"))
+        opponent_name = safe_record_text(match.get("opponent_name"))
+        club_key = normalize_result_team_name(club_team_name)
+        opponent_key = normalize_result_team_name(opponent_name)
+        club_won = bool(
+            (club_key and result_team_names_match(winner_key, club_key))
+            or is_active_club_team_name(winner)
+        )
+        opponent_won = bool(opponent_key and result_team_names_match(winner_key, opponent_key))
+        prefix = "won" if club_won and not opponent_won else "lost"
         return {
             "label": "Win" if prefix == "won" else "Loss",
             "class": "win" if prefix == "won" else "loss",
@@ -3294,7 +3304,7 @@ def read_match_centre_csv(path: Path) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
+def build_match_archive_frame(matches: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 
     output = matches.copy()
@@ -3309,23 +3319,26 @@ def build_match_archive_frame(matches: pd.DataFrame) -> pd.DataFrame:
         "round_name",
         "first_match_day",
         "is_ball_by_ball",
+        "source_team_ids",
     ]:
         if column not in output:
             output[column] = pd.NA
 
     output["match_date"] = pd.to_datetime(output["first_match_day"], errors="coerce", utc=True)
     output["match_date_display"] = output["match_date"].dt.strftime("%d %b %Y").fillna("Date TBC")
-    fvcc_is_home = output["home_team_name"].map(is_fvcc_team_name)
-    output["fvcc_team_id"] = output["home_team_id"].where(fvcc_is_home, output["away_team_id"])
-    output["fvcc_team_name"] = output["home_team_name"].where(fvcc_is_home, output["away_team_name"]).fillna("FVCC")
-    output["opponent_team_id"] = output["away_team_id"].where(fvcc_is_home, output["home_team_id"])
-    output["opponent_name"] = (
-        output["away_team_name"].where(fvcc_is_home, output["home_team_name"]).map(normalize_opponent_club_name)
-    )
+    home_is_club, away_is_club = active_club_match_side_masks(output, club_id=club_id)
+    output["club_team_id"] = output["home_team_id"].where(home_is_club, output["away_team_id"])
+    output["club_team_name"] = output["home_team_name"].where(home_is_club, output["away_team_name"]).fillna(get_club_short_name(club_id))
+    output["opponent_team_id"] = output["away_team_id"].where(home_is_club, output["home_team_id"])
+    output["opponent_name"] = output["away_team_name"].where(home_is_club, output["home_team_name"]).map(normalize_opponent_club_name)
+    # Preserve legacy column names for older view helpers while keeping the
+    # ownership decision club-aware for non-FVCC deployments.
+    output["fvcc_team_id"] = output["club_team_id"]
+    output["fvcc_team_name"] = output["club_team_name"]
     output["venue_name"] = output["venue_name"].map(normalize_ground_name)
     output["is_ball_by_ball_bool"] = output["is_ball_by_ball"].map(parse_bool)
     output["ball_by_ball_badge"] = output["is_ball_by_ball_bool"].map(lambda value: "Yes" if value else "No")
-    output["match_title"] = output["fvcc_team_name"].fillna("FVCC") + " vs " + output["opponent_name"].fillna("Unknown opponent")
+    output["match_title"] = output["club_team_name"].fillna(get_club_short_name(club_id)) + " vs " + output["opponent_name"].fillna("Unknown opponent")
     output["match_selector_label"] = (
         output["match_date_display"].astype(str)
         + " - "
@@ -3736,6 +3749,30 @@ def calculate_batting_contribution_percentage(batting: pd.DataFrame, innings: pd
     return output
 
 
+def active_club_match_side_masks(matches: pd.DataFrame, club_id: str | None = None) -> tuple[pd.Series, pd.Series]:
+    source_sets = matches.get("source_team_ids", pd.Series("", index=matches.index)).map(split_match_source_team_ids)
+    home_ids = matches.get("home_team_id", pd.Series("", index=matches.index)).fillna("").astype(str).str.strip()
+    away_ids = matches.get("away_team_id", pd.Series("", index=matches.index)).fillna("").astype(str).str.strip()
+    home_from_source = pd.Series(
+        [bool(team_id and team_id in source_ids) for team_id, source_ids in zip(home_ids, source_sets)],
+        index=matches.index,
+    )
+    away_from_source = pd.Series(
+        [bool(team_id and team_id in source_ids) for team_id, source_ids in zip(away_ids, source_sets)],
+        index=matches.index,
+    )
+
+    source_has_side = home_from_source | away_from_source
+    home_name_match = matches.get("home_team_name", pd.Series("", index=matches.index)).map(lambda value: is_active_club_team_name(value, club_id=club_id))
+    away_name_match = matches.get("away_team_name", pd.Series("", index=matches.index)).map(lambda value: is_active_club_team_name(value, club_id=club_id))
+    home_is_club = home_from_source | (~source_has_side & home_name_match)
+    away_is_club = away_from_source | (~source_has_side & away_name_match)
+    ambiguous = home_is_club.eq(away_is_club)
+    home_is_club = home_is_club.where(~ambiguous, True)
+    away_is_club = away_is_club.where(~ambiguous, False)
+    return home_is_club, away_is_club
+
+
 def calculate_bowling_impact_score(bowling: pd.DataFrame) -> pd.DataFrame:
     if bowling.empty:
         return bowling
@@ -4119,7 +4156,28 @@ def sorted_options(values: pd.Series) -> list[str]:
 
 
 def is_fvcc_team_name(value: object) -> bool:
-    return "fiji victorian" in str(value).casefold()
+    return is_active_club_team_name(value)
+
+
+def is_active_club_team_name(value: object, club_id: str | None = None) -> bool:
+    key = normalize_result_team_name(value)
+    return bool(key and any(result_team_names_match(key, token) for token in active_club_name_tokens(club_id)))
+
+
+def active_club_name_tokens(club_id: str | None = None) -> set[str]:
+    values = {get_club_name(club_id), get_club_short_name(club_id)}
+    tokens: set[str] = set()
+    for value in values:
+        normalized = normalize_result_team_name(value)
+        if not normalized:
+            continue
+        tokens.add(normalized)
+        tokens.add(re.sub(r"\b(cricket|club|cc)\b", "", normalized).strip())
+    return {token for token in tokens if token}
+
+
+def split_match_source_team_ids(value: object) -> set[str]:
+    return {part.strip() for part in re.split(r"[,;|]", str(value or "")) if part.strip() and part.strip().casefold() not in {"nan", "none", "nat"}}
 
 
 def safe_display(value: object, fallback: str = "-") -> str:
@@ -4151,13 +4209,113 @@ def render_hall_of_fame_page() -> None:
         """,
         unsafe_allow_html=True,
     )
-    render_premiership_records()
+    team_group_slug = render_hall_of_fame_team_group_filter(hall_of_fame_data)
+    if team_group_slug:
+        hall_of_fame_data = filter_hall_of_fame_data_by_team_group(hall_of_fame_data, team_group_slug)
+    render_premiership_records(team_group_slug)
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
     render_match_winning_performances(hall_of_fame_data)
-    render_fastest_batting_milestone_records()
+    render_fastest_batting_milestone_records(team_group_slug)
     render_record_holders(hall_of_fame_data)
     render_best_ever_seasons(hall_of_fame_data)
     render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
+
+
+def render_hall_of_fame_team_group_filter(data: dict[str, object]) -> str | None:
+    options = hall_of_fame_team_group_options(data)
+    if len(options) <= 1:
+        return options[0][0] if options else None
+    selected = render_folder_tab_widget(
+        "Hall of Fame team group",
+        options,
+        key="hof_team_group_filter",
+        control_key="hof_team_group_filter_folder_tabs",
+    )
+    return selected if selected in dict(options) else options[0][0]
+
+
+def hall_of_fame_team_group_options(data: dict[str, object]) -> list[tuple[str, str]]:
+    groups: set[str] = set()
+    for key in ["batting_raw", "bowling_raw", "fielding_raw"]:
+        frame = data.get(key)
+        if isinstance(frame, pd.DataFrame) and not frame.empty:
+            groups.update(hof_team_group_values(frame))
+    ordered = [("men", "Men"), ("women", "Women")]
+    return [option for option in ordered if option[0] in groups]
+
+
+def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_slug: str) -> dict[str, object]:
+    if team_group_slug not in {"men", "women"}:
+        return data
+    batting_raw = filter_hof_team_group_frame(data.get("batting_raw", pd.DataFrame()), team_group_slug)
+    bowling_raw = filter_hof_team_group_frame(data.get("bowling_raw", pd.DataFrame()), team_group_slug)
+    fielding_raw = filter_hof_team_group_frame(data.get("fielding_raw", pd.DataFrame()), team_group_slug)
+    batting = add_batting_display_columns(combine_player_rows(batting_raw, "batting"))
+    bowling = combine_player_rows(bowling_raw, "bowling")
+    fielding = add_display_stat_aliases(combine_player_rows(add_display_stat_aliases(fielding_raw), "fielding"))
+    all_time = build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
+    detailed_tables = {
+        "batting": format_all_time_batting_table(all_time),
+        "bowling": format_all_time_bowling_table(all_time),
+        "fielding": format_all_time_fielding_table(all_time),
+    }
+    filtered = dict(data)
+    filtered.update(
+        {
+            "batting_raw": add_batting_display_columns(batting_raw),
+            "bowling_raw": bowling_raw,
+            "fielding_raw": add_display_stat_aliases(fielding_raw),
+            "batting": batting,
+            "bowling": bowling,
+            "fielding": fielding,
+            "all_time": all_time,
+            "record_holder_cards": build_record_holder_cards(
+                {"batting_raw": batting_raw.copy(), "bowling_raw": bowling_raw.copy(), "all_time": all_time.copy()}
+            ),
+            "iconic_batting": attach_scorecard_match_ids(top_highest_scores(batting_raw, limit=10), "batting"),
+            "iconic_bowling": attach_scorecard_match_ids(top_best_bowling_innings(bowling_raw, limit=10), "bowling"),
+            "best_batting_season": best_batting_season(batting_raw),
+            "best_bowling_season": best_bowling_season(bowling_raw),
+            "detailed_tables": detailed_tables,
+        }
+    )
+    return filtered
+
+
+def hof_team_group_values(frame: pd.DataFrame) -> set[str]:
+    if frame.empty:
+        return set()
+    return set(frame.apply(classify_hof_team_group, axis=1).dropna().astype(str))
+
+
+def filter_hof_team_group_frame(frame: pd.DataFrame, team_group_slug: str) -> pd.DataFrame:
+    if not isinstance(frame, pd.DataFrame) or frame.empty:
+        return pd.DataFrame()
+    output = frame.copy()
+    mask = output.apply(classify_hof_team_group, axis=1) == team_group_slug
+    return output[mask].copy()
+
+
+def classify_hof_team_group(row: pd.Series) -> str:
+    columns = [
+        "team_group",
+        "team_gender",
+        "team_name",
+        "club_team_name",
+        "fvcc_team_name",
+        "grade_name",
+        "grade_label",
+        "team_grade_display",
+        "Teams/Grades",
+        "competition_name",
+        "teams",
+        "grades",
+    ]
+    text = " ".join(safe_record_text(row.get(column)) for column in columns if column in row)
+    normalized = re.sub(r"[^a-z0-9]+", " ", text.casefold())
+    if re.search(r"\b(women|womens|woman|female|ladies)\b", normalized):
+        return "women"
+    return "men"
 
 
 def render_hall_of_fame_v2_page() -> None:
@@ -6334,7 +6492,8 @@ def premiership_records_signature() -> tuple[tuple[str, float], ...]:
 
 
 @st.cache_data(show_spinner=False)
-def load_premiership_records(_signature: tuple[tuple[str, float], ...]) -> tuple[pd.DataFrame, pd.DataFrame]:
+def load_premiership_records(signature: tuple[tuple[str, float], ...]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    _ = signature
     wins = read_match_centre_csv(HALL_OF_FAME_PREMIERSHIP_WINS_PATH)
     players = read_match_centre_csv(HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH)
     if not wins.empty:
@@ -6383,8 +6542,11 @@ def latest_season_sort_key(value: object) -> int:
     return max(keys) if keys else 999999
 
 
-def render_premiership_records() -> None:
+def render_premiership_records(team_group_slug: str | None = None) -> None:
     wins, players = load_premiership_records(premiership_records_signature())
+    if team_group_slug in {"men", "women"}:
+        wins = filter_hof_team_group_frame(wins, team_group_slug)
+        players = filter_hof_team_group_frame(players, team_group_slug)
     if wins.empty and players.empty:
         render_section_heading("Premierships 🛡️")
         st.markdown(
@@ -6532,7 +6694,7 @@ def compact_premiership_list(value: object, limit: int = 2) -> str:
     return ", ".join(cleaned[:limit]) + f" +{len(cleaned) - limit} more"
 
 
-def render_fastest_batting_milestone_records() -> None:
+def render_fastest_batting_milestone_records(team_group_slug: str | None = None) -> None:
     track_event_once(
         "fastest_milestones_view",
         {"page_slug": "hall-of-fame", "section_name": "fastest_batting_milestones"},
@@ -6542,6 +6704,8 @@ def render_fastest_batting_milestone_records() -> None:
     st.caption("Based on matches with verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
+    if team_group_slug in {"men", "women"} and not milestones.empty:
+        milestones = filter_hof_team_group_frame(milestones, team_group_slug)
     if milestones.empty:
         render_empty_milestone_card(
             "Fastest Innings",
