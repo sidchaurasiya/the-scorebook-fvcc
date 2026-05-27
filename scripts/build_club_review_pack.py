@@ -88,6 +88,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Append strict safe auto-merge candidates to this club's manual_player_merges.csv.",
     )
+    parser.add_argument(
+        "--skip-suspicious-safe-groups",
+        action="store_true",
+        help="When applying safe auto-merges, skip strict-safe groups flagged for extra human review.",
+    )
     return parser.parse_args(argv)
 
 
@@ -124,7 +129,12 @@ def main(argv: list[str] | None = None) -> int:
     duplicate_candidates = build_duplicate_candidates(player_name_audit)
     safe_auto_merge_candidates, manual_duplicate_review_candidates = build_strict_duplicate_merge_review(club_id, frames)
     if args.apply_safe_auto_merges:
-        apply_safe_auto_merges(club_id, safe_auto_merge_candidates, dry_run=args.dry_run)
+        apply_safe_auto_merges(
+            club_id,
+            safe_auto_merge_candidates,
+            dry_run=args.dry_run,
+            skip_suspicious=args.skip_suspicious_safe_groups,
+        )
         if args.dry_run:
             print("Dry run complete. No files were written.")
             return 0
@@ -155,7 +165,13 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def apply_safe_auto_merges(club_id: str, candidates: pd.DataFrame, *, dry_run: bool = False) -> None:
+def apply_safe_auto_merges(
+    club_id: str,
+    candidates: pd.DataFrame,
+    *,
+    dry_run: bool = False,
+    skip_suspicious: bool = False,
+) -> None:
     if club_id == "fvcc":
         raise SystemExit("Refusing to apply safe auto-merges to FVCC from this onboarding helper.")
     if not dry_run:
@@ -165,6 +181,16 @@ def apply_safe_auto_merges(club_id: str, candidates: pd.DataFrame, *, dry_run: b
         return
 
     validated = validated_safe_auto_merge_groups(candidates)
+    skipped_suspicious: list[tuple[str, list[str]]] = []
+    if skip_suspicious:
+        clean_validated = []
+        for group_id, group in validated:
+            flags = suspicious_safe_group_flags(group)
+            if flags:
+                skipped_suspicious.append((group_id, flags))
+                continue
+            clean_validated.append((group_id, group))
+        validated = clean_validated
     rows_to_add = proposed_manual_merge_rows(validated)
     mapping_path = get_mapping_path("manual_player_merges.csv", club_id=club_id)
     existing = read_manual_player_merges(mapping_path)
@@ -174,6 +200,10 @@ def apply_safe_auto_merges(club_id: str, candidates: pd.DataFrame, *, dry_run: b
     print("Safe auto-merge application preview")
     print(f"- Club: {club_id}")
     print(f"- Candidate groups validated: {len(validated)}")
+    if skip_suspicious:
+        print(f"- Suspicious strict-safe groups skipped: {len(skipped_suspicious)}")
+        for group_id, flags in skipped_suspicious[:20]:
+            print(f"  SKIP {group_id}: {', '.join(flags)}")
     print(f"- Candidate rows validated: {len(rows_to_add)}")
     print(f"- Existing manual merge rows: {len(existing)}")
     print(f"- New rows to append: {len(new_rows)}")

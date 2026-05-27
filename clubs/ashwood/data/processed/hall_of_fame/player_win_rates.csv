@@ -1,18 +1,18 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,player_name_key,matches_with_result,wins,losses,win_pct,source_coverage_note
 raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,,48,29,19,60.416666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_5e62067a_ccc3_462c_af16_e0bfe01dd083,raw_5e62067a_ccc3_462c_af16_e0bfe01dd083,********,********,,10,7,3,70.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_b38ebac0_d6e2_40f0_9c56_e71cda5ce28c,raw_b38ebac0_d6e2_40f0_9c56_e71cda5ce28c,********,********,,12,9,3,75.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_b4a4b4f2_b9f0_4da2_8af9_45d1b275df8b,raw_b4a4b4f2_b9f0_4da2_8af9_45d1b275df8b,********,********,,12,1,11,8.333333333333334,Tracked deploy-safe summary from local match-centre result rows.
-raw_77f4c44d_53c5_433b_88df_aa6b35dbc161,raw_77f4c44d_53c5_433b_88df_aa6b35dbc161,********,********,,30,8,22,26.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
-raw_2b7e6a6e_6ff1_4537_ab41_2c9b79dfe3d3,raw_2b7e6a6e_6ff1_4537_ab41_2c9b79dfe3d3,********,********,,5,1,4,20.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_ef74c99f_2da9_4a87_8a80_c646782ae75e,raw_ef74c99f_2da9_4a87_8a80_c646782ae75e,********,********,,4,1,3,25.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_8193baae_9c2e_42c7_b5ac_ccdd2eac90c0,raw_8193baae_9c2e_42c7_b5ac_ccdd2eac90c0,********,********,,23,11,12,47.82608695652174,Tracked deploy-safe summary from local match-centre result rows.
-raw_d2841d79_9eae_4922_86a3_296e28f61374,raw_d2841d79_9eae_4922_86a3_296e28f61374,********,********,,9,1,8,11.11111111111111,Tracked deploy-safe summary from local match-centre result rows.
-raw_e9778f8f_91af_46c1_ab08_86d7149cb6bc,raw_e9778f8f_91af_46c1_ab08_86d7149cb6bc,********,********,,7,0,7,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_00000000_0000_0000_0000_000000000003,raw_00000000_0000_0000_0000_000000000003,********,********,,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,,25,13,12,52.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_8193baae_9c2e_42c7_b5ac_ccdd2eac90c0,raw_8193baae_9c2e_42c7_b5ac_ccdd2eac90c0,********,********,,23,11,12,47.82608695652174,Tracked deploy-safe summary from local match-centre result rows.
 raw_00000000_0000_0000_0000_000000000004,raw_00000000_0000_0000_0000_000000000004,********,********,,5,4,1,80.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_77f4c44d_53c5_433b_88df_aa6b35dbc161,raw_77f4c44d_53c5_433b_88df_aa6b35dbc161,********,********,,30,8,22,26.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_00000000_0000_0000_0000_000000000005,raw_00000000_0000_0000_0000_000000000005,********,********,,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_ef74c99f_2da9_4a87_8a80_c646782ae75e,raw_ef74c99f_2da9_4a87_8a80_c646782ae75e,********,********,,4,1,3,25.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_e9778f8f_91af_46c1_ab08_86d7149cb6bc,raw_e9778f8f_91af_46c1_ab08_86d7149cb6bc,********,********,,7,0,7,0.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_b38ebac0_d6e2_40f0_9c56_e71cda5ce28c,raw_b38ebac0_d6e2_40f0_9c56_e71cda5ce28c,********,********,,12,9,3,75.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_d2841d79_9eae_4922_86a3_296e28f61374,raw_d2841d79_9eae_4922_86a3_296e28f61374,********,********,,9,1,8,11.11111111111111,Tracked deploy-safe summary from local match-centre result rows.
+raw_5e62067a_ccc3_462c_af16_e0bfe01dd083,raw_5e62067a_ccc3_462c_af16_e0bfe01dd083,********,********,,10,7,3,70.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_2b7e6a6e_6ff1_4537_ab41_2c9b79dfe3d3,raw_2b7e6a6e_6ff1_4537_ab41_2c9b79dfe3d3,********,********,,5,1,4,20.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_b4a4b4f2_b9f0_4da2_8af9_45d1b275df8b,raw_b4a4b4f2_b9f0_4da2_8af9_45d1b275df8b,********,********,,12,1,11,8.333333333333334,Tracked deploy-safe summary from local match-centre result rows.
+raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,,25,13,12,52.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_1ae74518_642c_4fa1_a54d_c845ca874322,raw_1ae74518_642c_4fa1_a54d_c845ca874322,A Gould,A Gould,a gould,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_4a4993b6_6c33_45b9_8105_1718fa963d10,raw_4a4993b6_6c33_45b9_8105_1718fa963d10,A Nicholson,A Nicholson,a nicholson,17,6,11,35.294117647058826,Tracked deploy-safe summary from local match-centre result rows.
 raw_54711183_748a_4929_831c_dbe92e4a122c,raw_54711183_748a_4929_831c_dbe92e4a122c,A Phelan,A Phelan,a phelan,6,0,6,0.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -20,8 +20,7 @@ raw_c2f35813_18f9_400f_8bc9_913de04fe243,raw_c2f35813_18f9_400f_8bc9_913de04fe24
 raw_84ea2e7f_307d_476d_9252_999296614948,raw_84ea2e7f_307d_476d_9252_999296614948,A Pustola,A Pustola,a pustola,12,4,8,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_2380d699_ed7f_484d_a4ae_3e0c874aa759,raw_2380d699_ed7f_484d_a4ae_3e0c874aa759,A Unavana,A Unavana,a unavana,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_1affd923_6ff2_45db_a456_33edf105c6e6,raw_1affd923_6ff2_45db_a456_33edf105c6e6,Aadil Afgar,Aadil Afgar,aadil afgar,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_fa9b4350_1302_47c9_9720_ab27f94df02f,raw_fa9b4350_1302_47c9_9720_ab27f94df02f,Aadithya Pai,Aadithya Pai,aadithya pai,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_1ca2aa62_1b70_46bc_9bf6_b39af935bbce,raw_1ca2aa62_1b70_46bc_9bf6_b39af935bbce,Aadithya Pai,Aadithya Pai,aadithya pai,13,6,7,46.15384615384615,Tracked deploy-safe summary from local match-centre result rows.
+aadithya_pai,aadithya_pai,Aadithya Pai,Aadithya Pai,aadithya pai,22,9,13,40.90909090909091,Tracked deploy-safe summary from local match-centre result rows.
 raw_2a739f52_3ee9_4a41_be96_3b1d87ce990c,raw_2a739f52_3ee9_4a41_be96_3b1d87ce990c,Aaliyah Nair,Aaliyah Nair,aaliyah nair,17,6,11,35.294117647058826,Tracked deploy-safe summary from local match-centre result rows.
 raw_72ea5e1f_bb09_43c9_bed0_89e47a49ecd2,raw_72ea5e1f_bb09_43c9_bed0_89e47a49ecd2,Aarav Devarakonda,Aarav Devarakonda,aarav devarakonda,12,6,6,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_62dd1fe3_f61a_48be_905a_32624bf731fa,raw_62dd1fe3_f61a_48be_905a_32624bf731fa,Aarav Pahuja,Aarav Pahuja,aarav pahuja,23,11,12,47.82608695652174,Tracked deploy-safe summary from local match-centre result rows.
@@ -33,8 +32,7 @@ raw_b1f58317_cc2a_43d3_8c1f_48b5f4b0d69a,raw_b1f58317_cc2a_43d3_8c1f_48b5f4b0d69
 raw_02417040_0b3d_4ca2_9ef4_a25b4de3b69c,raw_02417040_0b3d_4ca2_9ef4_a25b4de3b69c,Aaron May,Aaron May,aaron may,5,2,3,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_5e8320c4_11a6_43b2_a32d_3d08c098f3d7,raw_5e8320c4_11a6_43b2_a32d_3d08c098f3d7,Aaron Ralston,Aaron Ralston,aaron ralston,9,4,5,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_2fb3e6f3_3734_4dfe_832b_a4896b7b1734,raw_2fb3e6f3_3734_4dfe_832b_a4896b7b1734,Aaron Wharton,Aaron Wharton,aaron wharton,7,2,5,28.571428571428573,Tracked deploy-safe summary from local match-centre result rows.
-raw_ad82cddc_3be2_4f08_a9e4_ef10e82e10d9,raw_ad82cddc_3be2_4f08_a9e4_ef10e82e10d9,Aaryan Panchal,Aaryan Panchal,aaryan panchal,57,27,30,47.36842105263158,Tracked deploy-safe summary from local match-centre result rows.
-raw_b32ba3ce_3037_4bdb_be2b_ee545d3fc349,raw_b32ba3ce_3037_4bdb_be2b_ee545d3fc349,Aaryan Panchal,Aaryan Panchal,aaryan panchal,29,9,20,31.03448275862069,Tracked deploy-safe summary from local match-centre result rows.
+aaryan_panchal,aaryan_panchal,Aaryan Panchal,Aaryan Panchal,aaryan panchal,86,36,50,41.86046511627907,Tracked deploy-safe summary from local match-centre result rows.
 raw_4ee04975_4f1b_4177_b185_f1c008c9cda2,raw_4ee04975_4f1b_4177_b185_f1c008c9cda2,Aaryan Rajput,Aaryan Rajput,aaryan rajput,9,4,5,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_9959d7ba_8589_47be_b458_983ee3e74720,raw_9959d7ba_8589_47be_b458_983ee3e74720,Abhay Bolisetty,Abhay Bolisetty,abhay bolisetty,11,5,6,45.45454545454545,Tracked deploy-safe summary from local match-centre result rows.
 raw_4e9d7470_ca72_498e_96bb_fddb92a48139,raw_4e9d7470_ca72_498e_96bb_fddb92a48139,Abhay Mehta,Abhay Mehta,abhay mehta,69,30,39,43.47826086956522,Tracked deploy-safe summary from local match-centre result rows.
@@ -54,12 +52,10 @@ raw_31c8c469_0493_4a8e_bd0a_ed5d514d0f00,raw_31c8c469_0493_4a8e_bd0a_ed5d514d0f0
 raw_63a94f51_cae0_46a1_8799_95c94e67812d,raw_63a94f51_cae0_46a1_8799_95c94e67812d,Aham Gol,Aham Gol,aham gol,8,0,8,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_516acdd6_1432_4c76_b070_d66a61bf777d,raw_516acdd6_1432_4c76_b070_d66a61bf777d,Aidan Gant,Aidan Gant,aidan gant,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
 raw_31bf17ba_3e88_4d0c_9afd_ec9263b8d870,raw_31bf17ba_3e88_4d0c_9afd_ec9263b8d870,Aidan Mcnamara,Aidan Mcnamara,aidan mcnamara,37,18,19,48.648648648648646,Tracked deploy-safe summary from local match-centre result rows.
-raw_e42a5f33_6ac0_417c_96d5_8f557c85bb4a,raw_e42a5f33_6ac0_417c_96d5_8f557c85bb4a,Aidan Morton,Aidan Morton,aidan morton,26,16,10,61.53846153846154,Tracked deploy-safe summary from local match-centre result rows.
-raw_e913ceb7_ad74_4c66_805c_9506208903ce,raw_e913ceb7_ad74_4c66_805c_9506208903ce,Aidan Morton,Aidan Morton,aidan morton,35,15,20,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
+aidan_morton,aidan_morton,Aidan Morton,Aidan Morton,aidan morton,61,31,30,50.81967213114754,Tracked deploy-safe summary from local match-centre result rows.
 raw_55e47bb3_abf5_4453_a752_8a6c498a9014,raw_55e47bb3_abf5_4453_a752_8a6c498a9014,Aidan Spence,Aidan Spence,aidan spence,29,22,7,75.86206896551724,Tracked deploy-safe summary from local match-centre result rows.
 raw_01525c90_703d_454c_9f35_a07f059a9c2e,raw_01525c90_703d_454c_9f35_a07f059a9c2e,Aiden Devadass,Aiden Devadass,aiden devadass,14,6,8,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
-raw_6b8dca3b_b6c4_4135_8e09_e26b118a86ea,raw_6b8dca3b_b6c4_4135_8e09_e26b118a86ea,Aiden Smith,Aiden Smith,aiden smith,45,21,24,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_3807d585_35c4_4a6e_a786_06e581fb307a,raw_3807d585_35c4_4a6e_a786_06e581fb307a,Aiden Smith,Aiden Smith,aiden smith,19,13,6,68.42105263157895,Tracked deploy-safe summary from local match-centre result rows.
+aiden_smith,aiden_smith,Aiden Smith,Aiden Smith,aiden smith,64,34,30,53.125,Tracked deploy-safe summary from local match-centre result rows.
 raw_4bb878c5_568c_44b9_b944_eda906ffb9f9,raw_4bb878c5_568c_44b9_b944_eda906ffb9f9,Aiden Suraweera,Aiden Suraweera,aiden suraweera,8,0,8,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f10b7339_d950_4fd4_9c63_833ddc6ced1e,raw_f10b7339_d950_4fd4_9c63_833ddc6ced1e,Akila Jaynnetti,Akila Jaynnetti,akila jaynnetti,24,8,16,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_f7ca2647_1797_4e7d_82ff_0a2b4e61c627,raw_f7ca2647_1797_4e7d_82ff_0a2b4e61c627,Al Dungan,Al Dungan,al dungan,4,1,3,25.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -72,8 +68,7 @@ raw_9a9ba4d3_9fc2_45ba_9a73_07aaaf0ed00b,raw_9a9ba4d3_9fc2_45ba_9a73_07aaaf0ed00
 raw_3856f713_74c1_45e0_be05_534e7ee90633,raw_3856f713_74c1_45e0_be05_534e7ee90633,Alex Danaher,Alex Danaher,alex danaher,7,3,4,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
 raw_2399f140_05b6_4793_9895_8d83588e05df,raw_2399f140_05b6_4793_9895_8d83588e05df,Alex Feola,Alex Feola,alex feola,17,10,7,58.8235294117647,Tracked deploy-safe summary from local match-centre result rows.
 raw_14fe6c54_b591_4a70_b804_7684ec3f1ed5,raw_14fe6c54_b591_4a70_b804_7684ec3f1ed5,Alex Gilders,Alex Gilders,alex gilders,30,17,13,56.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_d38ec9ae_865a_496b_bc17_ad3f81c91e0f,raw_d38ec9ae_865a_496b_bc17_ad3f81c91e0f,Alex Hamlyn,Alex Hamlyn,alex hamlyn,40,26,14,65.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_fb8ee83a_fe36_43da_a8b0_2eb15445ad7e,raw_fb8ee83a_fe36_43da_a8b0_2eb15445ad7e,Alex Hamlyn,Alex Hamlyn,alex hamlyn,13,10,3,76.92307692307692,Tracked deploy-safe summary from local match-centre result rows.
+alex_hamlyn,alex_hamlyn,Alex Hamlyn,Alex Hamlyn,alex hamlyn,53,36,17,67.9245283018868,Tracked deploy-safe summary from local match-centre result rows.
 raw_60d19887_e827_484f_86c9_b2538d526ffc,raw_60d19887_e827_484f_86c9_b2538d526ffc,Alex Jong,Alex Jong,alex jong,62,20,42,32.25806451612903,Tracked deploy-safe summary from local match-centre result rows.
 raw_97a2fe33_d1e1_4c6a_b07d_e08878912aaa,raw_97a2fe33_d1e1_4c6a_b07d_e08878912aaa,Alex Reid,Alex Reid,alex reid,31,8,23,25.806451612903224,Tracked deploy-safe summary from local match-centre result rows.
 raw_9fae5df6_fd1e_4e46_8578_6ecd04e89a30,raw_9fae5df6_fd1e_4e46_8578_6ecd04e89a30,Alexander Baizanos,Alexander Baizanos,alexander baizanos,6,2,4,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
@@ -101,43 +96,37 @@ raw_77154762_9fc5_454c_a90a_d9bd5a563fe5,raw_77154762_9fc5_454c_a90a_d9bd5a563fe
 raw_02524bb4_bf78_47d0_a153_24e81c885900,raw_02524bb4_bf78_47d0_a153_24e81c885900,Andrew Mcleod,Andrew Mcleod,andrew mcleod,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_344bd45a_2d69_4ce2_b426_98c2f5e8009f,raw_344bd45a_2d69_4ce2_b426_98c2f5e8009f,Andrew Preston,Andrew Preston,andrew preston,27,15,12,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
 raw_0c662af5_9a2d_4057_868d_2bf537805045,raw_0c662af5_9a2d_4057_868d_2bf537805045,Aneesh Kosgodage,Aneesh Kosgodage,aneesh kosgodage,35,9,26,25.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-raw_0a9495af_8733_4886_b586_dba988ecd476,raw_0a9495af_8733_4886_b586_dba988ecd476,Angus Haworth,Angus Haworth,angus haworth,32,15,17,46.875,Tracked deploy-safe summary from local match-centre result rows.
-raw_74cb287a_a30b_4cd6_ac80_b51328a21cb2,raw_74cb287a_a30b_4cd6_ac80_b51328a21cb2,Angus Haworth,Angus Haworth,angus haworth,45,19,26,42.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
+angus_haworth,angus_haworth,Angus Haworth,Angus Haworth,angus haworth,77,34,43,44.15584415584416,Tracked deploy-safe summary from local match-centre result rows.
 raw_78c695b8_c811_44a8_9d82_212a1f15b151,raw_78c695b8_c811_44a8_9d82_212a1f15b151,Angus Morrison,Angus Morrison,angus morrison,23,13,10,56.52173913043478,Tracked deploy-safe summary from local match-centre result rows.
 raw_06c8b74c_580f_43d1_aa86_2a2407ce2364,raw_06c8b74c_580f_43d1_aa86_2a2407ce2364,Angus Wood,Angus Wood,angus wood,42,33,9,78.57142857142857,Tracked deploy-safe summary from local match-centre result rows.
 raw_7dd414b0_a0f8_477a_9c83_a4968acd4878,raw_7dd414b0_a0f8_477a_9c83_a4968acd4878,Anjali Ilsley,Anjali Ilsley,anjali ilsley,23,14,9,60.869565217391305,Tracked deploy-safe summary from local match-centre result rows.
 raw_fb2f5637_b682_4b35_bff0_b3d8ac8f5118,raw_fb2f5637_b682_4b35_bff0_b3d8ac8f5118,Anjan Chakraborty,Anjan Chakraborty,anjan chakraborty,18,10,8,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
 raw_8446c0b2_a953_46d5_ad35_da11ce603fcd,raw_8446c0b2_a953_46d5_ad35_da11ce603fcd,Ankit Kajla,Ankit Kajla,ankit kajla,14,8,6,57.142857142857146,Tracked deploy-safe summary from local match-centre result rows.
 raw_334d5566_8c18_4f59_955e_6e05ddc677e9,raw_334d5566_8c18_4f59_955e_6e05ddc677e9,Anna Ronald,Anna Ronald,anna ronald,19,11,8,57.89473684210526,Tracked deploy-safe summary from local match-centre result rows.
-raw_ab52e20b_b889_41a5_a184_4d4c6666307a,raw_ab52e20b_b889_41a5_a184_4d4c6666307a,Anthony Edmonds,Anthony Edmonds,anthony edmonds,214,83,131,38.78504672897196,Tracked deploy-safe summary from local match-centre result rows.
 raw_b98aaa8f_d914_40d7_9400_3e74343d2e23,raw_b98aaa8f_d914_40d7_9400_3e74343d2e23,Anthony Edmonds,Anthony Edmonds,anthony edmonds,35,21,14,60.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_ab52e20b_b889_41a5_a184_4d4c6666307a,raw_ab52e20b_b889_41a5_a184_4d4c6666307a,Anthony Edmonds,Anthony Edmonds,anthony edmonds,214,83,131,38.78504672897196,Tracked deploy-safe summary from local match-centre result rows.
 raw_32be8b02_4828_46b0_a0f2_3d0fe86d2582,raw_32be8b02_4828_46b0_a0f2_3d0fe86d2582,Anthony Loughnan,Anthony Loughnan,anthony loughnan,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_a893a80b_314f_4b46_91c6_52bb58a25605,raw_a893a80b_314f_4b46_91c6_52bb58a25605,Anthony Papalia,Anthony Papalia,anthony papalia,154,83,71,53.896103896103895,Tracked deploy-safe summary from local match-centre result rows.
-raw_3290a5be_c420_41a6_bcb3_27230a0d42e7,raw_3290a5be_c420_41a6_bcb3_27230a0d42e7,Anthony Papalia,Anthony Papalia,anthony papalia,13,9,4,69.23076923076923,Tracked deploy-safe summary from local match-centre result rows.
+anthony_papalia,anthony_papalia,Anthony Papalia,Anthony Papalia,anthony papalia,167,92,75,55.08982035928144,Tracked deploy-safe summary from local match-centre result rows.
 raw_2799c9b3_d7a6_49f1_8074_23da384bdcc2,raw_2799c9b3_d7a6_49f1_8074_23da384bdcc2,Anthony Zambory,Anthony Zambory,anthony zambory,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_5b26c5b7_f9fd_4544_8a33_272c6dd2f9cb,raw_5b26c5b7_f9fd_4544_8a33_272c6dd2f9cb,Anurag Gade,Anurag Gade,anurag gade,16,7,9,43.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_e4a6e528_4151_423c_a5ea_115efadce3fb,raw_e4a6e528_4151_423c_a5ea_115efadce3fb,Anuruddha Kulatunga,Anuruddha Kulatunga,anuruddha kulatunga,8,4,4,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_84e853be_7c04_4971_8958_02f2b1c17a97,raw_84e853be_7c04_4971_8958_02f2b1c17a97,Anushka Gajendra,Anushka Gajendra,anushka gajendra,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_b6158906_1a95_48af_b520_a5c2b2dbd7f8,raw_b6158906_1a95_48af_b520_a5c2b2dbd7f8,Apurva Shrivastava,Apurva Shrivastava,apurva shrivastava,22,7,15,31.818181818181817,Tracked deploy-safe summary from local match-centre result rows.
-raw_dcfd47e3_662d_4183_ba8a_9cfa669d9b11,raw_dcfd47e3_662d_4183_ba8a_9cfa669d9b11,Apurva Shrivastava,Apurva Shrivastava,apurva shrivastava,10,3,7,30.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_9e7efd29_4253_4b35_9246_d50a69aa503b,raw_9e7efd29_4253_4b35_9246_d50a69aa503b,Araliya Ilsley,Araliya Ilsley,araliya ilsley,30,12,18,40.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_9d6dddbd_ab5a_4e8d_a3d9_d44d108f0893,raw_9d6dddbd_ab5a_4e8d_a3d9_d44d108f0893,Araliya Ilsley,Araliya Ilsley,araliya ilsley,35,24,11,68.57142857142857,Tracked deploy-safe summary from local match-centre result rows.
+apurva_shrivastava,apurva_shrivastava,Apurva Shrivastava,Apurva Shrivastava,apurva shrivastava,32,10,22,31.25,Tracked deploy-safe summary from local match-centre result rows.
+araliya_ilsley,araliya_ilsley,Araliya Ilsley,Araliya Ilsley,araliya ilsley,65,36,29,55.38461538461539,Tracked deploy-safe summary from local match-centre result rows.
 raw_5b46286c_48e9_4498_bdba_0a9bcc05b4ce,raw_5b46286c_48e9_4498_bdba_0a9bcc05b4ce,Archie Davies,Archie Davies,archie davies,16,7,9,43.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_6b63737b_e004_4ce0_b6f3_a533a192866f,raw_6b63737b_e004_4ce0_b6f3_a533a192866f,Archie Marquet,Archie Marquet,archie marquet,58,35,23,60.3448275862069,Tracked deploy-safe summary from local match-centre result rows.
 raw_d1b09cae_32be_4a8e_869b_6432ad9c124f,raw_d1b09cae_32be_4a8e_869b_6432ad9c124f,Archit Shivdas,Archit Shivdas,archit shivdas,17,11,6,64.70588235294117,Tracked deploy-safe summary from local match-centre result rows.
-raw_d4bc9723_f108_4e32_860e_44b003ea3f55,raw_d4bc9723_f108_4e32_860e_44b003ea3f55,Ari Morton,Ari Morton,ari morton,74,39,35,52.7027027027027,Tracked deploy-safe summary from local match-centre result rows.
 raw_83fbd89c_6d6e_4662_9ec1_fd3e6e03aef1,raw_83fbd89c_6d6e_4662_9ec1_fd3e6e03aef1,Ari Morton,Ari Morton,ari morton,42,21,21,50.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_d4bc9723_f108_4e32_860e_44b003ea3f55,raw_d4bc9723_f108_4e32_860e_44b003ea3f55,Ari Morton,Ari Morton,ari morton,74,39,35,52.7027027027027,Tracked deploy-safe summary from local match-centre result rows.
 raw_a2b0437e_883b_4508_8547_7c4667b6190d,raw_a2b0437e_883b_4508_8547_7c4667b6190d,Arjun Mavani,Arjun Mavani,arjun mavani,66,28,38,42.42424242424242,Tracked deploy-safe summary from local match-centre result rows.
 raw_bf816d77_ba18_4a08_9034_46d1586a80b3,raw_bf816d77_ba18_4a08_9034_46d1586a80b3,Arjun Motupalli,Arjun Motupalli,arjun motupalli,21,5,16,23.80952380952381,Tracked deploy-safe summary from local match-centre result rows.
 raw_8ebb7739_edc3_4d21_ba57_4b8ca8187e2e,raw_8ebb7739_edc3_4d21_ba57_4b8ca8187e2e,Arjuna Wijegunaratne,Arjuna Wijegunaratne,arjuna wijegunaratne,42,16,26,38.095238095238095,Tracked deploy-safe summary from local match-centre result rows.
 raw_eedd27f8_a4a6_445d_9a33_6e5305e2bd00,raw_eedd27f8_a4a6_445d_9a33_6e5305e2bd00,Arnav Chokka,Arnav Chokka,arnav chokka,3,1,2,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_bda597cb_5f06_4195_94fa_df1fff8a9291,raw_bda597cb_5f06_4195_94fa_df1fff8a9291,Arnav Panchal,Arnav Panchal,arnav panchal,13,9,4,69.23076923076923,Tracked deploy-safe summary from local match-centre result rows.
-raw_a7aefed6_1979_4580_a74b_d7f9fa6c3742,raw_a7aefed6_1979_4580_a74b_d7f9fa6c3742,Arnav Panchal,Arnav Panchal,arnav panchal,40,11,29,27.5,Tracked deploy-safe summary from local match-centre result rows.
+arnav_panchal,arnav_panchal,Arnav Panchal,Arnav Panchal,arnav panchal,53,20,33,37.735849056603776,Tracked deploy-safe summary from local match-centre result rows.
 raw_cc779628_be5b_4c8e_ae26_44ed87fb1552,raw_cc779628_be5b_4c8e_ae26_44ed87fb1552,Arthur Wall,Arthur Wall,arthur wall,9,4,5,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_7b529668_995c_43cc_80f7_93183b511911,raw_7b529668_995c_43cc_80f7_93183b511911,Aryan Batavia,Aryan Batavia,aryan batavia,12,4,8,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_2900a57e_3cfd_47f6_b193_884f12b5b7cb,raw_2900a57e_3cfd_47f6_b193_884f12b5b7cb,Ashan De Silva,Ashan De Silva,ashan de silva,72,34,38,47.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
-raw_82d5822b_7db7_42de_a911_db668b4133b9,raw_82d5822b_7db7_42de_a911_db668b4133b9,Asher Dharmawardena,Asher Dharmawardena,asher dharmawardena,48,18,30,37.5,Tracked deploy-safe summary from local match-centre result rows.
-raw_86ccffc5_e181_42be_be53_8395a45e5f1d,raw_86ccffc5_e181_42be_be53_8395a45e5f1d,Asher Dharmawardena,Asher Dharmawardena,asher dharmawardena,10,1,9,10.0,Tracked deploy-safe summary from local match-centre result rows.
+asher_dharmawardena,asher_dharmawardena,Asher Dharmawardena,Asher Dharmawardena,asher dharmawardena,58,19,39,32.758620689655174,Tracked deploy-safe summary from local match-centre result rows.
 raw_ae1a8839_5433_4487_948f_def12898e29e,raw_ae1a8839_5433_4487_948f_def12898e29e,Ashton Evans-Caulfield,Ashton Evans-Caulfield,ashton evans caulfield,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_0c5a43a6_9234_43e9_9908_de66ef60479a,raw_0c5a43a6_9234_43e9_9908_de66ef60479a,Ashton Wilson,Ashton Wilson,ashton wilson,15,7,8,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_eeed691d_1c1f_459d_87a7_61be2253998f,raw_eeed691d_1c1f_459d_87a7_61be2253998f,Asith Weeraratne,Asith Weeraratne,asith weeraratne,14,4,10,28.571428571428573,Tracked deploy-safe summary from local match-centre result rows.
@@ -170,24 +159,21 @@ raw_4d536c2a_9008_418e_b959_e08dbfab9e55,raw_4d536c2a_9008_418e_b959_e08dbfab9e5
 raw_475d3730_7a0a_40b1_8265_bfacf872dc3a,raw_475d3730_7a0a_40b1_8265_bfacf872dc3a,Bjay Hoffman,Bjay Hoffman,bjay hoffman,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_287b5dce_3a98_4dfe_b7aa_73be2ade3c90,raw_287b5dce_3a98_4dfe_b7aa_73be2ade3c90,Blair Bruigom,Blair Bruigom,blair bruigom,8,3,5,37.5,Tracked deploy-safe summary from local match-centre result rows.
 raw_72268599_1092_4623_9d14_6878f999980d,raw_72268599_1092_4623_9d14_6878f999980d,Blake Sebastian,Blake Sebastian,blake sebastian,11,6,5,54.54545454545455,Tracked deploy-safe summary from local match-centre result rows.
-raw_3c88fadd_b4b4_43df_b5a0_72e09da354bc,raw_3c88fadd_b4b4_43df_b5a0_72e09da354bc,Blake Smith,Blake Smith,blake smith,18,4,14,22.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
-raw_293b85ea_af79_4ec9_8207_dc178c62db5c,raw_293b85ea_af79_4ec9_8207_dc178c62db5c,Blake Smith,Blake Smith,blake smith,37,11,26,29.72972972972973,Tracked deploy-safe summary from local match-centre result rows.
+blake_smith,blake_smith,Blake Smith,Blake Smith,blake smith,55,15,40,27.272727272727273,Tracked deploy-safe summary from local match-centre result rows.
 raw_50e1b2c5_a4d3_451b_b805_b894131a7a87,raw_50e1b2c5_a4d3_451b_b805_b894131a7a87,Brad Garbett,Brad Garbett,brad garbett,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_0a750242_6ba3_423a_8b75_2474c7159e7f,raw_0a750242_6ba3_423a_8b75_2474c7159e7f,Brad James,Brad James,brad james,29,9,20,31.03448275862069,Tracked deploy-safe summary from local match-centre result rows.
 raw_eb066644_b2ad_4290_850d_cacaa6fe63cf,raw_eb066644_b2ad_4290_850d_cacaa6fe63cf,Bradley Kennedy,Bradley Kennedy,bradley kennedy,6,0,6,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_9d94ef0d_ba5f_4b49_9844_cc92f27233d5,raw_9d94ef0d_ba5f_4b49_9844_cc92f27233d5,Bradley Prior,Bradley Prior,bradley prior,2,2,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ddf7e2c3_d4e4_4ac0_93c9_7be2f82b863c,raw_ddf7e2c3_d4e4_4ac0_93c9_7be2f82b863c,Bradley Sheean,Bradley Sheean,bradley sheean,98,53,45,54.08163265306123,Tracked deploy-safe summary from local match-centre result rows.
 raw_1a7f348f_b6f0_41c4_92b6_ac4d86362916,raw_1a7f348f_b6f0_41c4_92b6_ac4d86362916,Brayden David,Brayden David,brayden david,60,33,27,55.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_8fc723f0_6191_42eb_9dac_360fc0ed9de3,raw_8fc723f0_6191_42eb_9dac_360fc0ed9de3,Brendan Jones,Brendan Jones,brendan jones,29,13,16,44.827586206896555,Tracked deploy-safe summary from local match-centre result rows.
-raw_253c0bb1_7370_46e0_9448_af0a2b31cc37,raw_253c0bb1_7370_46e0_9448_af0a2b31cc37,Brendan Jones,Brendan Jones,brendan jones,117,47,70,40.17094017094017,Tracked deploy-safe summary from local match-centre result rows.
+brendan_jones,brendan_jones,Brendan Jones,Brendan Jones,brendan jones,146,60,86,41.0958904109589,Tracked deploy-safe summary from local match-centre result rows.
 raw_cb7e1751_2464_42d4_b91a_b2e464802830,raw_cb7e1751_2464_42d4_b91a_b2e464802830,Brendan Pooley,Brendan Pooley,brendan pooley,24,12,12,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_790deca8_9024_44ec_a351_4a5270e8a1c7,raw_790deca8_9024_44ec_a351_4a5270e8a1c7,Brendan Russo,Brendan Russo,brendan russo,30,11,19,36.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_163629f9_f82f_4326_8347_249d7c011d66,raw_163629f9_f82f_4326_8347_249d7c011d66,Brendon Stack,Brendon Stack,brendon stack,86,42,44,48.83720930232558,Tracked deploy-safe summary from local match-centre result rows.
 raw_79d9891a_8e17_4084_b8fe_e5e4e3d32080,raw_79d9891a_8e17_4084_b8fe_e5e4e3d32080,Brent Field,Brent Field,brent field,16,11,5,68.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_4819d2fd_8627_4833_b5a1_1b75408ebd5d,raw_4819d2fd_8627_4833_b5a1_1b75408ebd5d,Brent Lloyd,Brent Lloyd,brent lloyd,10,4,6,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_575f9d95_6158_4fbe_a22a_d92c37b1eb43,raw_575f9d95_6158_4fbe_a22a_d92c37b1eb43,Bret Thornton,Bret Thornton,bret thornton,5,3,2,60.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_8f5e2749_5084_4823_bee4_0d740263319d,raw_8f5e2749_5084_4823_bee4_0d740263319d,Brett Carter,Brett Carter,brett carter,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_48c8c2de_9e93_4566_86a4_1d13a431b0d9,raw_48c8c2de_9e93_4566_86a4_1d13a431b0d9,Brett Carter,Brett Carter,brett carter,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+brett_carter,brett_carter,Brett Carter,Brett Carter,brett carter,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c0dfbfe5_6730_464f_b75e_e59b47424d77,raw_c0dfbfe5_6730_464f_b75e_e59b47424d77,Brett Carts,Brett Carts,brett carts,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f5932bc9_b9be_4315_96da_61288c3d624c,raw_f5932bc9_b9be_4315_96da_61288c3d624c,Brett Coad,Brett Coad,brett coad,41,11,30,26.829268292682926,Tracked deploy-safe summary from local match-centre result rows.
 raw_bf405e23_43fe_401f_8917_c6cf86a1ac07,raw_bf405e23_43fe_401f_8917_c6cf86a1ac07,Brian Fernando,Brian Fernando,brian fernando,8,6,2,75.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -197,8 +183,7 @@ raw_a154f6ac_d31f_42c5_bac7_415688da4017,raw_a154f6ac_d31f_42c5_bac7_415688da401
 raw_8a6e90fe_2916_455a_8eca_d98082d53622,raw_8a6e90fe_2916_455a_8eca_d98082d53622,Bryce Walker,Bryce Walker,bryce walker,15,7,8,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_cc963747_6104_48f7_8d21_d2181877a4f9,raw_cc963747_6104_48f7_8d21_d2181877a4f9,C Bannister,C Bannister,c bannister,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_1e948ac3_3a76_46e6_a52b_1c22edcf7708,raw_1e948ac3_3a76_46e6_a52b_1c22edcf7708,C D'Souza,C D'Souza,c d souza,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_3b278574_49f5_4be5_8217_cb1a1c149434,raw_3b278574_49f5_4be5_8217_cb1a1c149434,Caitlin Dow,Caitlin Dow,caitlin dow,35,15,20,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
-raw_426a7e1c_faa6_402e_9b73_11bbf6cbe6db,raw_426a7e1c_faa6_402e_9b73_11bbf6cbe6db,Caitlin Dow,Caitlin Dow,caitlin dow,34,24,10,70.58823529411765,Tracked deploy-safe summary from local match-centre result rows.
+caitlin_dow,caitlin_dow,Caitlin Dow,Caitlin Dow,caitlin dow,69,39,30,56.52173913043478,Tracked deploy-safe summary from local match-centre result rows.
 raw_ca855706_cb4c_44ae_a2e3_5e9ab0391c2a,raw_ca855706_cb4c_44ae_a2e3_5e9ab0391c2a,Cale Johnston,Cale Johnston,cale johnston,13,9,4,69.23076923076923,Tracked deploy-safe summary from local match-centre result rows.
 raw_271fc96c_e5d3_4a1f_93d6_cae7e3f27d69,raw_271fc96c_e5d3_4a1f_93d6_cae7e3f27d69,Callum Dyson,Callum Dyson,callum dyson,26,9,17,34.61538461538461,Tracked deploy-safe summary from local match-centre result rows.
 raw_36efd214_7c29_44c5_bd1b_5524b9db859c,raw_36efd214_7c29_44c5_bd1b_5524b9db859c,Callum Griffiths,Callum Griffiths,callum griffiths,7,3,4,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
@@ -217,8 +202,7 @@ raw_5d3bb1b1_f24f_4864_95ae_7262213ca7f2,raw_5d3bb1b1_f24f_4864_95ae_7262213ca7f
 raw_2488f46a_5a74_4660_88dc_385273f87045,raw_2488f46a_5a74_4660_88dc_385273f87045,Charles Karedan,Charles Karedan,charles karedan,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_e36a9e9b_dec1_4bdb_8ad8_3f8567e99587,raw_e36a9e9b_dec1_4bdb_8ad8_3f8567e99587,Charles Smedley,Charles Smedley,charles smedley,9,2,7,22.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
 raw_7e64cfd6_e7c2_45cb_8fe4_f092e6be37bb,raw_7e64cfd6_e7c2_45cb_8fe4_f092e6be37bb,Charlie Fry,Charlie Fry,charlie fry,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
-raw_6db575c0_15c1_43ce_a2e1_4134b5227506,raw_6db575c0_15c1_43ce_a2e1_4134b5227506,Charlie Hawtin,Charlie Hawtin,charlie hawtin,30,14,16,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_fefa6cc5_76bc_4471_9c54_af5a0c0af989,raw_fefa6cc5_76bc_4471_9c54_af5a0c0af989,Charlie Hawtin,Charlie Hawtin,charlie hawtin,132,53,79,40.15151515151515,Tracked deploy-safe summary from local match-centre result rows.
+charlie_hawtin,charlie_hawtin,Charlie Hawtin,Charlie Hawtin,charlie hawtin,162,67,95,41.358024691358025,Tracked deploy-safe summary from local match-centre result rows.
 raw_df4dcc2a_227b_4739_8290_e186dc4790ec,raw_df4dcc2a_227b_4739_8290_e186dc4790ec,Charlie Singh,Charlie Singh,charlie singh,18,7,11,38.888888888888886,Tracked deploy-safe summary from local match-centre result rows.
 raw_3b2fbce6_00c8_4b50_af4d_e13189ef2ce0,raw_3b2fbce6_00c8_4b50_af4d_e13189ef2ce0,Charlie Skepper,Charlie Skepper,charlie skepper,37,19,18,51.351351351351354,Tracked deploy-safe summary from local match-centre result rows.
 raw_6963ee3c_6621_44e8_b330_ede3918b960a,raw_6963ee3c_6621_44e8_b330_ede3918b960a,Charlie Zavarella,Charlie Zavarella,charlie zavarella,49,26,23,53.06122448979592,Tracked deploy-safe summary from local match-centre result rows.
@@ -245,8 +229,7 @@ raw_f0e34a7d_498c_4268_bb77_23d38ded6e1d,raw_f0e34a7d_498c_4268_bb77_23d38ded6e1
 raw_f733d528_c318_4dc7_aab9_26a3d55a6aeb,raw_f733d528_c318_4dc7_aab9_26a3d55a6aeb,Clint Wilson,Clint Wilson,clint wilson,9,0,9,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_e17135ea_276e_47b7_a847_54d5d4871bc6,raw_e17135ea_276e_47b7_a847_54d5d4871bc6,Clinton Abraham,Clinton Abraham,clinton abraham,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_233e0066_767c_446c_b1ca_947b64d8925f,raw_233e0066_767c_446c_b1ca_947b64d8925f,Coby Bennet,Coby Bennet,coby bennet,9,1,8,11.11111111111111,Tracked deploy-safe summary from local match-centre result rows.
-raw_736df62c_bf6a_43db_a6c6_c39b0968ffd1,raw_736df62c_bf6a_43db_a6c6_c39b0968ffd1,Cohen Billing,Cohen Billing,cohen billing,31,12,19,38.70967741935484,Tracked deploy-safe summary from local match-centre result rows.
-raw_52aa8138_eeef_49b5_8670_7e10c482b89b,raw_52aa8138_eeef_49b5_8670_7e10c482b89b,Cohen Billing,Cohen Billing,cohen billing,49,32,17,65.3061224489796,Tracked deploy-safe summary from local match-centre result rows.
+cohen_billing,cohen_billing,Cohen Billing,Cohen Billing,cohen billing,80,44,36,55.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ca6b1f19_a010_4870_9726_1e356766ca58,raw_ca6b1f19_a010_4870_9726_1e356766ca58,Colin Stegleman,Colin Stegleman,colin stegleman,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_b8812241_d85a_44c7_b45c_7f9f5e10b2b1,raw_b8812241_d85a_44c7_b45c_7f9f5e10b2b1,Connor Callister,Connor Callister,connor callister,7,4,3,57.142857142857146,Tracked deploy-safe summary from local match-centre result rows.
 raw_5e35dc43_07cb_4702_b143_c2b18e89af32,raw_5e35dc43_07cb_4702_b143_c2b18e89af32,Connor Graham,Connor Graham,connor graham,38,12,26,31.57894736842105,Tracked deploy-safe summary from local match-centre result rows.
@@ -269,8 +252,8 @@ raw_5d394869_add3_43d3_b8e0_f990c1848c05,raw_5d394869_add3_43d3_b8e0_f990c1848c0
 raw_89057353_8f1a_47d7_a2d4_bd743bcab7f6,raw_89057353_8f1a_47d7_a2d4_bd743bcab7f6,D Tennison,D Tennison,d tennison,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_5ad7d4f4_43df_481c_a3e8_fc90f29abf74,raw_5ad7d4f4_43df_481c_a3e8_fc90f29abf74,Dai-Morgan Rushbrook,Dai-Morgan Rushbrook,dai morgan rushbrook,10,4,6,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ead02824_7705_4d4c_b144_9c9d5038fd8b,raw_ead02824_7705_4d4c_b144_9c9d5038fd8b,Daksh Sharma,Daksh Sharma,daksh sharma,11,5,6,45.45454545454545,Tracked deploy-safe summary from local match-centre result rows.
-raw_00e61b95_156b_4137_bde8_618764fde491,raw_00e61b95_156b_4137_bde8_618764fde491,Dale Healy,Dale Healy,dale healy,148,69,79,46.62162162162162,Tracked deploy-safe summary from local match-centre result rows.
 raw_ac14351c_eccf_4342_beae_c1a8afae37ec,raw_ac14351c_eccf_4342_beae_c1a8afae37ec,Dale Healy,Dale Healy,dale healy,50,25,25,50.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_00e61b95_156b_4137_bde8_618764fde491,raw_00e61b95_156b_4137_bde8_618764fde491,Dale Healy,Dale Healy,dale healy,148,69,79,46.62162162162162,Tracked deploy-safe summary from local match-centre result rows.
 raw_b98cb8e2_99a7_4b9c_911a_9bc82fca1ca3,raw_b98cb8e2_99a7_4b9c_911a_9bc82fca1ca3,Dale Wilkinson,Dale Wilkinson,dale wilkinson,127,51,76,40.15748031496063,Tracked deploy-safe summary from local match-centre result rows.
 raw_f1390a44_996b_4ef1_9911_b4f37cfbf960,raw_f1390a44_996b_4ef1_9911_b4f37cfbf960,Damien Macfarlane,Damien Macfarlane,damien macfarlane,38,21,17,55.26315789473684,Tracked deploy-safe summary from local match-centre result rows.
 raw_fb5cbb7d_f6f0_4293_b50d_d8c3f378a56c,raw_fb5cbb7d_f6f0_4293_b50d_d8c3f378a56c,Damien Sheean,Damien Sheean,damien sheean,18,0,18,0.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -294,8 +277,7 @@ raw_8d21f7ad_ce1c_4aa5_8ec4_b09fadebdda4,raw_8d21f7ad_ce1c_4aa5_8ec4_b09fadebdda
 raw_fd93f7f2_0a85_40ad_90ff_28d3d81b5909,raw_fd93f7f2_0a85_40ad_90ff_28d3d81b5909,Daniel White,Daniel White,daniel white,28,4,24,14.285714285714286,Tracked deploy-safe summary from local match-centre result rows.
 raw_55f8d10b_85ca_4d0e_ae74_a3d955b61ece,raw_55f8d10b_85ca_4d0e_ae74_a3d955b61ece,Danny Ciorciari,Danny Ciorciari,danny ciorciari,6,5,1,83.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
 raw_8d9510d6_cdb2_40d5_b712_9c0dacdc4566,raw_8d9510d6_cdb2_40d5_b712_9c0dacdc4566,Danny Torpey,Danny Torpey,danny torpey,25,16,9,64.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_f77b7138_94dc_48e1_ae92_edaefad2f50b,raw_f77b7138_94dc_48e1_ae92_edaefad2f50b,Dansiam Rainsford,Dansiam Rainsford,dansiam rainsford,72,36,36,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_f6258a04_3327_4442_874c_00437dbf99a5,raw_f6258a04_3327_4442_874c_00437dbf99a5,Dansiam Rainsford,Dansiam Rainsford,dansiam rainsford,33,14,19,42.42424242424242,Tracked deploy-safe summary from local match-centre result rows.
+dansiam_rainsford,dansiam_rainsford,Dansiam Rainsford,Dansiam Rainsford,dansiam rainsford,105,50,55,47.61904761904762,Tracked deploy-safe summary from local match-centre result rows.
 raw_b830063f_d493_492b_a255_7b22f4315a4e,raw_b830063f_d493_492b_a255_7b22f4315a4e,Darren Mawson,Darren Mawson,darren mawson,21,3,18,14.285714285714286,Tracked deploy-safe summary from local match-centre result rows.
 raw_cef10ec3_b36f_4214_bea5_5cca51f462e1,raw_cef10ec3_b36f_4214_bea5_5cca51f462e1,Darren Pereira,Darren Pereira,darren pereira,6,0,6,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ee9c62e0_945b_423d_83f0_e0cb5bdecdf2,raw_ee9c62e0_945b_423d_83f0_e0cb5bdecdf2,Darren Sheean,Darren Sheean,darren sheean,110,56,54,50.90909090909091,Tracked deploy-safe summary from local match-centre result rows.
@@ -310,8 +292,7 @@ raw_70380edf_7cd8_4a98_9deb_44ec2442d31e,raw_70380edf_7cd8_4a98_9deb_44ec2442d31
 raw_df091f32_7ddc_4b55_9c4b_6137c232608d,raw_df091f32_7ddc_4b55_9c4b_6137c232608d,Dean Dernikos,Dean Dernikos,dean dernikos,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_256e4dc3_b82c_48ed_8993_fb13d26f6dbe,raw_256e4dc3_b82c_48ed_8993_fb13d26f6dbe,Dean Hewitt,Dean Hewitt,dean hewitt,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_b38d25d8_5ccb_4566_b1db_beb84d7aca27,raw_b38d25d8_5ccb_4566_b1db_beb84d7aca27,Declan Varga,Declan Varga,declan varga,95,62,33,65.26315789473684,Tracked deploy-safe summary from local match-centre result rows.
-raw_b88e0f0f_eb9e_4459_8758_839ee5be5587,raw_b88e0f0f_eb9e_4459_8758_839ee5be5587,Denith Athauda Arachchi,Denith Athauda Arachchi,denith athauda arachchi,52,25,27,48.07692307692308,Tracked deploy-safe summary from local match-centre result rows.
-raw_886b926e_f3fe_4380_a44c_7da6abd9ad0e,raw_886b926e_f3fe_4380_a44c_7da6abd9ad0e,Denith Athauda Arachchi,Denith Athauda Arachchi,denith athauda arachchi,25,9,16,36.0,Tracked deploy-safe summary from local match-centre result rows.
+denith_athauda_arachchi,denith_athauda_arachchi,Denith Athauda Arachchi,Denith Athauda Arachchi,denith athauda arachchi,77,34,43,44.15584415584416,Tracked deploy-safe summary from local match-centre result rows.
 raw_7daa91c4_43c4_42be_8f4a_58e8475ff95a,raw_7daa91c4_43c4_42be_8f4a_58e8475ff95a,Denny Baring,Denny Baring,denny baring,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_634e33e9_cc0e_4226_8e28_35324651fe6b,raw_634e33e9_cc0e_4226_8e28_35324651fe6b,Devin Fernando,Devin Fernando,devin fernando,29,17,12,58.62068965517241,Tracked deploy-safe summary from local match-centre result rows.
 raw_9312dd1a_67ec_4d07_a8fc_11f86cfe61d8,raw_9312dd1a_67ec_4d07_a8fc_11f86cfe61d8,Deyaan Kashyap,Deyaan Kashyap,deyaan kashyap,20,6,14,30.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -322,8 +303,7 @@ raw_a756ac7a_75e8_4dd6_8357_c877de8fc0f7,raw_a756ac7a_75e8_4dd6_8357_c877de8fc0f
 raw_e7a8b262_6fc8_42a5_974d_bca76c491724,raw_e7a8b262_6fc8_42a5_974d_bca76c491724,Dimuth Gammampila,Dimuth Gammampila,dimuth gammampila,17,5,12,29.41176470588235,Tracked deploy-safe summary from local match-centre result rows.
 raw_632628bd_1e04_4cea_8e46_c94347a47328,raw_632628bd_1e04_4cea_8e46_c94347a47328,Dineth Diyagama,Dineth Diyagama,dineth diyagama,32,16,16,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_4ef34637_ca3f_466b_8149_38b331adc513,raw_4ef34637_ca3f_466b_8149_38b331adc513,Dinuk Sanjeewa,Dinuk Sanjeewa,dinuk sanjeewa,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_28bf828c_1039_4f00_9a85_f41c807e880a,raw_28bf828c_1039_4f00_9a85_f41c807e880a,Dion Antipas,Dion Antipas,dion antipas,8,3,5,37.5,Tracked deploy-safe summary from local match-centre result rows.
-raw_9ef78dfe_281e_4aa6_88fc_5a2775c4ed5e,raw_9ef78dfe_281e_4aa6_88fc_5a2775c4ed5e,Dion Antipas,Dion Antipas,dion antipas,92,45,47,48.91304347826087,Tracked deploy-safe summary from local match-centre result rows.
+dion_antipas,dion_antipas,Dion Antipas,Dion Antipas,dion antipas,100,48,52,48.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_8efb7e7a_d3f5_4fae_94cf_ea9c709765ae,raw_8efb7e7a_d3f5_4fae_94cf_ea9c709765ae,Dion Nathanielsz,Dion Nathanielsz,dion nathanielsz,5,0,5,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_48a9e3af_e6c6_49dd_b8b1_97f822cb7a2e,raw_48a9e3af_e6c6_49dd_b8b1_97f822cb7a2e,Divyansh Sharma,Divyansh Sharma,divyansh sharma,12,8,4,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_c88cf387_2721_4957_9c55_754ee0067830,raw_c88cf387_2721_4957_9c55_754ee0067830,Dom Johnson,Dom Johnson,dom johnson,50,24,26,48.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -334,18 +314,16 @@ raw_11778cd7_e7e0_42c8_9535_6e48a6766e60,raw_11778cd7_e7e0_42c8_9535_6e48a6766e6
 raw_a6820871_1007_4ab2_b80c_6e02156ab56d,raw_a6820871_1007_4ab2_b80c_6e02156ab56d,Durell Weeramuni,Durell Weeramuni,durell weeramuni,9,2,7,22.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
 raw_8c87ffe3_66db_4733_b544_075510c1060c,raw_8c87ffe3_66db_4733_b544_075510c1060c,Dylan Boyenga,Dylan Boyenga,dylan boyenga,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_9358b0d0_be89_4346_8856_009edb4dcf76,raw_9358b0d0_be89_4346_8856_009edb4dcf76,Dylan Murphy,Dylan Murphy,dylan murphy,60,28,32,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_809f2a3a_3c26_4a6f_bb43_b40f08f26a7e,raw_809f2a3a_3c26_4a6f_bb43_b40f08f26a7e,Edrich Smit,Edrich Smit,edrich smit,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
-raw_e4f36cf4_7e11_4476_9188_6bf3bd9b1187,raw_e4f36cf4_7e11_4476_9188_6bf3bd9b1187,Edrich Smit,Edrich Smit,edrich smit,19,6,13,31.57894736842105,Tracked deploy-safe summary from local match-centre result rows.
+edrich_smit,edrich_smit,Edrich Smit,Edrich Smit,edrich smit,30,10,20,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_fa021aac_17ae_40ad_9768_c93144d15193,raw_fa021aac_17ae_40ad_9768_c93144d15193,Edward Betros,Edward Betros,edward betros,15,8,7,53.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_d30fc145_cf69_41c2_8a79_bc757e24eb23,raw_d30fc145_cf69_41c2_8a79_bc757e24eb23,Elissa O'Shaughnessy,Elissa O'Shaughnessy,elissa o shaughnessy,32,23,9,71.875,Tracked deploy-safe summary from local match-centre result rows.
 raw_bf067098_6f8f_4788_a26b_f792a6bf58f5,raw_bf067098_6f8f_4788_a26b_f792a6bf58f5,Elissa O'Shaughnessy,Elissa O'Shaughnessy,elissa o shaughnessy,33,14,19,42.42424242424242,Tracked deploy-safe summary from local match-centre result rows.
+raw_d30fc145_cf69_41c2_8a79_bc757e24eb23,raw_d30fc145_cf69_41c2_8a79_bc757e24eb23,Elissa O'Shaughnessy,Elissa O'Shaughnessy,elissa o shaughnessy,32,23,9,71.875,Tracked deploy-safe summary from local match-centre result rows.
 raw_96eef7f3_23e4_4451_94b2_b2ed19ca4390,raw_96eef7f3_23e4_4451_94b2_b2ed19ca4390,Eliza Barton,Eliza Barton,eliza barton,16,7,9,43.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_8c8281fc_55db_43b1_90e0_0321777f9e09,raw_8c8281fc_55db_43b1_90e0_0321777f9e09,Emerson Esau,Emerson Esau,emerson esau,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_58520010_8654_4d85_b51f_9fe5ec49cb9c,raw_58520010_8654_4d85_b51f_9fe5ec49cb9c,Emilio Edmonds,Emilio Edmonds,emilio edmonds,42,13,29,30.952380952380953,Tracked deploy-safe summary from local match-centre result rows.
 raw_f086af1f_9448_4aad_a5e4_44d30f62f097,raw_f086af1f_9448_4aad_a5e4_44d30f62f097,Emma Cooke,Emma Cooke,emma cooke,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_5e7814f4_ca3e_49a5_8ee4_8c0ba15bbb04,raw_5e7814f4_ca3e_49a5_8ee4_8c0ba15bbb04,Emma Gasper,Emma Gasper,emma gasper,21,9,12,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
-raw_86dfabe9_e7d0_4ce0_819e_c66a242235b0,raw_86dfabe9_e7d0_4ce0_819e_c66a242235b0,Emmett Simpson,Emmett Simpson,emmett simpson,24,12,12,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_f407c7b6_6b9e_47d8_8c9c_f97b62f4ce00,raw_f407c7b6_6b9e_47d8_8c9c_f97b62f4ce00,Emmett Simpson,Emmett Simpson,emmett simpson,10,1,9,10.0,Tracked deploy-safe summary from local match-centre result rows.
+emmett_simpson,emmett_simpson,Emmett Simpson,Emmett Simpson,emmett simpson,34,13,21,38.23529411764706,Tracked deploy-safe summary from local match-centre result rows.
 raw_261bbaf5_1fcb_4bde_9a3e_a2a7ca44b051,raw_261bbaf5_1fcb_4bde_9a3e_a2a7ca44b051,Enamul Hossain,Enamul Hossain,enamul hossain,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f431397f_4d4f_4dec_a090_33c21774d0cc,raw_f431397f_4d4f_4dec_a090_33c21774d0cc,Eranda Perera,Eranda Perera,eranda perera,4,3,1,75.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_aee04e4d_1e56_454a_8b6b_a4727379a123,raw_aee04e4d_1e56_454a_8b6b_a4727379a123,Eric Bohl,Eric Bohl,eric bohl,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -354,8 +332,7 @@ raw_1e48ef28_4409_4ae5_82ca_9682ec3e8f87,raw_1e48ef28_4409_4ae5_82ca_9682ec3e8f8
 raw_e760bbdb_117b_4654_8a10_cfbaa7c67a71,raw_e760bbdb_117b_4654_8a10_cfbaa7c67a71,Evann Naylor,Evann Naylor,evann naylor,6,3,3,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_307c2313_4034_4f11_bdb8_f3ebc3d3eea9,raw_307c2313_4034_4f11_bdb8_f3ebc3d3eea9,Ewan Bellairs,Ewan Bellairs,ewan bellairs,17,12,5,70.58823529411765,Tracked deploy-safe summary from local match-centre result rows.
 raw_e1207c7f_86b8_4150_badf_edcc17fe3f9b,raw_e1207c7f_86b8_4150_badf_edcc17fe3f9b,Ezra Hari,Ezra Hari,ezra hari,19,10,9,52.63157894736842,Tracked deploy-safe summary from local match-centre result rows.
-raw_e7ff8bfc_e472_48e0_a369_2116c609f79f,raw_e7ff8bfc_e472_48e0_a369_2116c609f79f,Ezra Moore,Ezra Moore,ezra moore,21,11,10,52.38095238095238,Tracked deploy-safe summary from local match-centre result rows.
-raw_da3d0953_6b0c_470d_9320_c526ccee9002,raw_da3d0953_6b0c_470d_9320_c526ccee9002,Ezra Moore,Ezra Moore,ezra moore,11,3,8,27.272727272727273,Tracked deploy-safe summary from local match-centre result rows.
+ezra_moore,ezra_moore,Ezra Moore,Ezra Moore,ezra moore,32,14,18,43.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_b337089c_8a1b_4553_abab_7280c5c2626d,raw_b337089c_8a1b_4553_abab_7280c5c2626d,Fazi Mohommed,Fazi Mohommed,fazi mohommed,9,4,5,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_3ba16e61_3929_4913_a853_c9feb8663e18,raw_3ba16e61_3929_4913_a853_c9feb8663e18,Fotios Haralambakis,Fotios Haralambakis,fotios haralambakis,36,13,23,36.111111111111114,Tracked deploy-safe summary from local match-centre result rows.
 raw_05d2599a_9fc4_4220_8d41_e80108e5b565,raw_05d2599a_9fc4_4220_8d41_e80108e5b565,Francois Lategan,Francois Lategan,francois lategan,15,8,7,53.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
@@ -366,8 +343,7 @@ raw_284ef155_a69e_4bdc_9832_df9b5cfcc064,raw_284ef155_a69e_4bdc_9832_df9b5cfcc06
 raw_49bfa438_5ffb_48f1_95f0_da54dd383d74,raw_49bfa438_5ffb_48f1_95f0_da54dd383d74,Gajan Thiyagarajah,Gajan Thiyagarajah,gajan thiyagarajah,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
 raw_39e89fe2_6da3_4c6c_8e26_8e0fb5bc7882,raw_39e89fe2_6da3_4c6c_8e26_8e0fb5bc7882,Gareth Evans,Gareth Evans,gareth evans,10,6,4,60.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_643d31a5_6f63_4191_a002_70b1e394862e,raw_643d31a5_6f63_4191_a002_70b1e394862e,Gayan Malagala,Gayan Malagala,gayan malagala,3,2,1,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
-raw_403c4f43_098e_4a5f_866f_bec5289abab3,raw_403c4f43_098e_4a5f_866f_bec5289abab3,Genevieve Fitton,Genevieve Fitton,genevieve fitton,36,18,18,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_6e0555db_6443_4f88_8888_5f773ec7b8f8,raw_6e0555db_6443_4f88_8888_5f773ec7b8f8,Genevieve Fitton,Genevieve Fitton,genevieve fitton,20,18,2,90.0,Tracked deploy-safe summary from local match-centre result rows.
+genevieve_fitton,genevieve_fitton,Genevieve Fitton,Genevieve Fitton,genevieve fitton,56,36,20,64.28571428571429,Tracked deploy-safe summary from local match-centre result rows.
 raw_a548ac65_34b5_48bc_ab8d_589dbb93b2eb,raw_a548ac65_34b5_48bc_ab8d_589dbb93b2eb,Geoff Gannon,Geoff Gannon,geoff gannon,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c68d4421_13dc_4273_83c3_949658166f04,raw_c68d4421_13dc_4273_83c3_949658166f04,George Ouzas,George Ouzas,george ouzas,6,3,3,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c9803b7c_4aed_4f91_aa12_b77b99e6877b,raw_c9803b7c_4aed_4f91_aa12_b77b99e6877b,George Tziafas,George Tziafas,george tziafas,6,2,4,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
@@ -381,14 +357,11 @@ raw_e083234d_fa1b_4829_8398_493db8f22571,raw_e083234d_fa1b_4829_8398_493db8f2257
 raw_40ca15bb_894b_4c86_8f65_db631ae52c84,raw_40ca15bb_894b_4c86_8f65_db631ae52c84,Gurpreet Ace,Gurpreet Ace,gurpreet ace,36,13,23,36.111111111111114,Tracked deploy-safe summary from local match-centre result rows.
 raw_acdad681_82c6_459a_8583_a3442f9bb3eb,raw_acdad681_82c6_459a_8583_a3442f9bb3eb,Gyan Weerasiri,Gyan Weerasiri,gyan weerasiri,9,5,4,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
 raw_7bd25eaf_b829_4dcf_8c5b_fb468f5a8113,raw_7bd25eaf_b829_4dcf_8c5b_fb468f5a8113,Haaris Adnan,Haaris Adnan,haaris adnan,21,11,10,52.38095238095238,Tracked deploy-safe summary from local match-centre result rows.
-raw_d3a2b5b4_31fa_4b78_9534_365708338b70,raw_d3a2b5b4_31fa_4b78_9534_365708338b70,Hamish Lee,Hamish Lee,hamish lee,55,29,26,52.72727272727273,Tracked deploy-safe summary from local match-centre result rows.
-raw_5eab9c21_0f1a_40b7_8cce_5f75eb5f5c32,raw_5eab9c21_0f1a_40b7_8cce_5f75eb5f5c32,Hamish Lee,Hamish Lee,hamish lee,60,20,40,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
+hamish_lee,hamish_lee,Hamish Lee,Hamish Lee,hamish lee,115,49,66,42.608695652173914,Tracked deploy-safe summary from local match-centre result rows.
 raw_86303d72_bcfe_4db4_8fb1_38acc3417988,raw_86303d72_bcfe_4db4_8fb1_38acc3417988,Hamish Mason-Jefferies,Hamish Mason-Jefferies,hamish mason jefferies,6,1,5,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_7390fa16_a51d_4ad0_a0dd_7e406328df3f,raw_7390fa16_a51d_4ad0_a0dd_7e406328df3f,Hannan Kamran,Hannan Kamran,hannan kamran,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_147f3194_bca1_495b_8425_6bfadd7b83d1,raw_147f3194_bca1_495b_8425_6bfadd7b83d1,Hardu Smit,Hardu Smit,hardu smit,20,6,14,30.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_4ab66bc2_7ad6_417a_903a_d6830689ff54,raw_4ab66bc2_7ad6_417a_903a_d6830689ff54,Hardu Smit,Hardu Smit,hardu smit,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
-raw_9f599994_10fc_45c2_b52e_fe90a2c07a44,raw_9f599994_10fc_45c2_b52e_fe90a2c07a44,Harein Malawwethantri,Harein Malawwethantri,harein malawwethantri,57,27,30,47.36842105263158,Tracked deploy-safe summary from local match-centre result rows.
-raw_1e8542a9_220a_45f2_ae12_c1592a8b637e,raw_1e8542a9_220a_45f2_ae12_c1592a8b637e,Harein Malawwethantri,Harein Malawwethantri,harein malawwethantri,44,23,21,52.27272727272727,Tracked deploy-safe summary from local match-centre result rows.
+hardu_smit,hardu_smit,Hardu Smit,Hardu Smit,hardu smit,31,10,21,32.25806451612903,Tracked deploy-safe summary from local match-centre result rows.
+harein_malawwethantri,harein_malawwethantri,Harein Malawwethantri,Harein Malawwethantri,harein malawwethantri,101,50,51,49.504950495049506,Tracked deploy-safe summary from local match-centre result rows.
 raw_0ecd3eb3_58d6_40da_afed_46ef444f6f94,raw_0ecd3eb3_58d6_40da_afed_46ef444f6f94,Harley Garrick,Harley Garrick,harley garrick,54,25,29,46.2962962962963,Tracked deploy-safe summary from local match-centre result rows.
 raw_3baf3988_35dd_41b9_bdfd_586ec675744c,raw_3baf3988_35dd_41b9_bdfd_586ec675744c,Harly Billing,Harly Billing,harly billing,65,26,39,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c5d3fcf9_d17d_4863_a9d6_1957cba3a1f0,raw_c5d3fcf9_d17d_4863_a9d6_1957cba3a1f0,Harmandeep Singh Grewal,Harmandeep Singh Grewal,harmandeep singh grewal,18,15,3,83.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
@@ -397,18 +370,15 @@ raw_1aa90531_ac6c_4252_83fd_639a416d3d47,raw_1aa90531_ac6c_4252_83fd_639a416d3d4
 raw_7a7346d6_1532_4684_ba3a_c1be4dd19a99,raw_7a7346d6_1532_4684_ba3a_c1be4dd19a99,Harris Diviny,Harris Diviny,harris diviny,21,17,4,80.95238095238095,Tracked deploy-safe summary from local match-centre result rows.
 raw_d24f8430_5577_4d12_9802_496b37c19104,raw_d24f8430_5577_4d12_9802_496b37c19104,Harrison Evans-Caulfield,Harrison Evans-Caulfield,harrison evans caulfield,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_26c3898a_b55a_4f5d_ba9a_51ca438a01dc,raw_26c3898a_b55a_4f5d_ba9a_51ca438a01dc,Harrison Lefebure,Harrison Lefebure,harrison lefebure,49,18,31,36.734693877551024,Tracked deploy-safe summary from local match-centre result rows.
-raw_04789326_b85d_4fa9_aa39_befd4b40006a,raw_04789326_b85d_4fa9_aa39_befd4b40006a,Harrison Whitfield,Harrison Whitfield,harrison whitfield,23,10,13,43.47826086956522,Tracked deploy-safe summary from local match-centre result rows.
-raw_5184f904_a8fb_4e8d_a676_1fbd13539791,raw_5184f904_a8fb_4e8d_a676_1fbd13539791,Harrison Whitfield,Harrison Whitfield,harrison whitfield,51,21,30,41.1764705882353,Tracked deploy-safe summary from local match-centre result rows.
+harrison_whitfield,harrison_whitfield,Harrison Whitfield,Harrison Whitfield,harrison whitfield,74,31,43,41.891891891891895,Tracked deploy-safe summary from local match-centre result rows.
 raw_62fe72a4_8793_4472_8ff6_e4dd6e75cc79,raw_62fe72a4_8793_4472_8ff6_e4dd6e75cc79,Harry Colley,Harry Colley,harry colley,9,2,7,22.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
 raw_fcc799f6_1d64_443b_ba3f_83bd9978bcee,raw_fcc799f6_1d64_443b_ba3f_83bd9978bcee,Harshad Ghodke,Harshad Ghodke,harshad ghodke,8,2,6,25.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_7f6294d2_b443_4002_9800_f42651119e12,raw_7f6294d2_b443_4002_9800_f42651119e12,Harvey Fitton,Harvey Fitton,harvey fitton,34,16,18,47.05882352941177,Tracked deploy-safe summary from local match-centre result rows.
-raw_ae5aab69_fcd6_425d_a054_7a8b00a2ca08,raw_ae5aab69_fcd6_425d_a054_7a8b00a2ca08,Harvey Fitton,Harvey Fitton,harvey fitton,20,9,11,45.0,Tracked deploy-safe summary from local match-centre result rows.
+harvey_fitton,harvey_fitton,Harvey Fitton,Harvey Fitton,harvey fitton,54,25,29,46.2962962962963,Tracked deploy-safe summary from local match-centre result rows.
 raw_b5cca2a7_0add_4a9e_9cc4_0c2d802f2b0d,raw_b5cca2a7_0add_4a9e_9cc4_0c2d802f2b0d,Hasitha Samarasinghe,Hasitha Samarasinghe,hasitha samarasinghe,3,1,2,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_dc1b86d8_93e7_400e_b1ee_c065d3e80ed6,raw_dc1b86d8_93e7_400e_b1ee_c065d3e80ed6,Hayagriv Mallichetty,Hayagriv Mallichetty,hayagriv mallichetty,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_763d4a22_e701_4b8d_a077_e450d5f74748,raw_763d4a22_e701_4b8d_a077_e450d5f74748,Hayden Lee,Hayden Lee,hayden lee,25,9,16,36.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_fac89aac_62b0_4192_95c5_47d59f274992,raw_fac89aac_62b0_4192_95c5_47d59f274992,Hayden Loft,Hayden Loft,hayden loft,6,2,4,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_6d78539c_5ebe_4301_a0b2_3083700ce6fa,raw_6d78539c_5ebe_4301_a0b2_3083700ce6fa,Hayden Perry,Hayden Perry,hayden perry,31,12,19,38.70967741935484,Tracked deploy-safe summary from local match-centre result rows.
-raw_b5ba7347_ac8d_4f4e_8e56_186a1b6dea4f,raw_b5ba7347_ac8d_4f4e_8e56_186a1b6dea4f,Hayden Perry,Hayden Perry,hayden perry,19,10,9,52.63157894736842,Tracked deploy-safe summary from local match-centre result rows.
+hayden_perry,hayden_perry,Hayden Perry,Hayden Perry,hayden perry,50,22,28,44.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_a1d4b82e_535a_4467_bc61_34cadc01b87e,raw_a1d4b82e_535a_4467_bc61_34cadc01b87e,Hazaifa Ahmad,Hazaifa Ahmad,hazaifa ahmad,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_77c827e9_2d7a_486e_b848_7b7037b869f7,raw_77c827e9_2d7a_486e_b848_7b7037b869f7,Henry Brady,Henry Brady,henry brady,47,23,24,48.93617021276596,Tracked deploy-safe summary from local match-centre result rows.
 raw_bfb228a3_7bad_4f28_9302_1b9906cdb33f,raw_bfb228a3_7bad_4f28_9302_1b9906cdb33f,Henry Parker,Henry Parker,henry parker,27,13,14,48.148148148148145,Tracked deploy-safe summary from local match-centre result rows.
@@ -416,8 +386,8 @@ raw_887652b9_a594_42aa_8a98_f179f5697a01,raw_887652b9_a594_42aa_8a98_f179f5697a0
 raw_57398840_53a6_4f7c_b860_739b95c8ba97,raw_57398840_53a6_4f7c_b860_739b95c8ba97,Hong Jin Gan,Hong Jin Gan,hong jin gan,39,19,20,48.717948717948715,Tracked deploy-safe summary from local match-centre result rows.
 raw_02656dde_3606_4d06_b7e3_d11a1c15f73d,raw_02656dde_3606_4d06_b7e3_d11a1c15f73d,Hridhaan Sharrma,Hridhaan Sharrma,hridhaan sharrma,44,12,32,27.272727272727273,Tracked deploy-safe summary from local match-centre result rows.
 raw_2c34b34a_293a_456d_b39b_8d65658f0f20,raw_2c34b34a_293a_456d_b39b_8d65658f0f20,Hugo Fitton,Hugo Fitton,hugo fitton,23,13,10,56.52173913043478,Tracked deploy-safe summary from local match-centre result rows.
-raw_0853a219_1ec9_4df4_acf2_9d73beeef81b,raw_0853a219_1ec9_4df4_acf2_9d73beeef81b,Hugo Fitton,Hugo Fitton,hugo fitton,54,38,16,70.37037037037037,Tracked deploy-safe summary from local match-centre result rows.
 raw_a4f5d166_6e07_4bb5_a126_5d2d73ff6695,raw_a4f5d166_6e07_4bb5_a126_5d2d73ff6695,Hugo Fitton,Hugo Fitton,hugo fitton,73,40,33,54.794520547945204,Tracked deploy-safe summary from local match-centre result rows.
+raw_0853a219_1ec9_4df4_acf2_9d73beeef81b,raw_0853a219_1ec9_4df4_acf2_9d73beeef81b,Hugo Fitton,Hugo Fitton,hugo fitton,54,38,16,70.37037037037037,Tracked deploy-safe summary from local match-centre result rows.
 raw_a63485fc_6b14_493c_b0ea_b741862eba1e,raw_a63485fc_6b14_493c_b0ea_b741862eba1e,Hugo Turudia,Hugo Turudia,hugo turudia,25,11,14,44.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ceb56dc5_bfaf_43f7_a077_07cdabbb4bb3,raw_ceb56dc5_bfaf_43f7_a077_07cdabbb4bb3,Huzaifa Adnan,Huzaifa Adnan,huzaifa adnan,75,38,37,50.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_5399dcf9_89f0_4f74_8dbb_e9ec24abd66c,raw_5399dcf9_89f0_4f74_8dbb_e9ec24abd66c,Iain Robinson,Iain Robinson,iain robinson,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -442,22 +412,19 @@ raw_bfcbb9fa_1215_4076_bc36_d9a15640f9ab,raw_bfcbb9fa_1215_4076_bc36_d9a15640f9a
 raw_c0773b32_86f2_42cf_a2cd_5d6d84bff3b9,raw_c0773b32_86f2_42cf_a2cd_5d6d84bff3b9,Jack Fowler,Jack Fowler,jack fowler,39,21,18,53.84615384615385,Tracked deploy-safe summary from local match-centre result rows.
 raw_c218d2df_082d_4b14_9d0c_9d27599d8a68,raw_c218d2df_082d_4b14_9d0c_9d27599d8a68,Jack Gibson,Jack Gibson,jack gibson,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_42f0722f_4c7e_4cc0_83fd_ece1d66f9971,raw_42f0722f_4c7e_4cc0_83fd_ece1d66f9971,Jack Graydon,Jack Graydon,jack graydon,18,13,5,72.22222222222223,Tracked deploy-safe summary from local match-centre result rows.
-raw_d22c823f_c6ed_487a_934d_f4a625d67d92,raw_d22c823f_c6ed_487a_934d_f4a625d67d92,Jack Moore,Jack Moore,jack moore,60,16,44,26.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
-raw_f1fd9ae8_b003_4659_91dd_18ad6d723a43,raw_f1fd9ae8_b003_4659_91dd_18ad6d723a43,Jack Moore,Jack Moore,jack moore,34,18,16,52.94117647058823,Tracked deploy-safe summary from local match-centre result rows.
+jack_moore,jack_moore,Jack Moore,Jack Moore,jack moore,94,34,60,36.170212765957444,Tracked deploy-safe summary from local match-centre result rows.
 raw_ca1615fd_230c_4af0_b078_de10a9841cf5,raw_ca1615fd_230c_4af0_b078_de10a9841cf5,Jack Naidoo,Jack Naidoo,jack naidoo,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_70814a78_fd07_46ca_9845_d855c4023fa2,raw_70814a78_fd07_46ca_9845_d855c4023fa2,Jack Robins,Jack Robins,jack robins,7,3,4,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
 raw_93d41f97_8a0a_4dcf_b458_61011a3d1b86,raw_93d41f97_8a0a_4dcf_b458_61011a3d1b86,Jack Sorati,Jack Sorati,jack sorati,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_5d099031_0e2a_4607_bd89_8e3731bb09d4,raw_5d099031_0e2a_4607_bd89_8e3731bb09d4,Jack Thomas,Jack Thomas,jack thomas,18,8,10,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
-raw_07d5fd9e_5fb4_4a92_8b5b_cf1bdb41e652,raw_07d5fd9e_5fb4_4a92_8b5b_cf1bdb41e652,Jack Von Fersen,Jack Von Fersen,jack von fersen,177,79,98,44.632768361581924,Tracked deploy-safe summary from local match-centre result rows.
-raw_271c744e_f9d0_40d5_857f_b5577baabc97,raw_271c744e_f9d0_40d5_857f_b5577baabc97,Jack Von Fersen,Jack Von Fersen,jack von fersen,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
+jack_von_fersen,jack_von_fersen,Jack Von Fersen,Jack Von Fersen,jack von fersen,183,83,100,45.3551912568306,Tracked deploy-safe summary from local match-centre result rows.
 raw_fd209366_59f1_44f2_8846_7430cb4a6d31,raw_fd209366_59f1_44f2_8846_7430cb4a6d31,Jackson Fox,Jackson Fox,jackson fox,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_da5eb898_9252_4f8b_b894_6e22d24fc33f,raw_da5eb898_9252_4f8b_b894_6e22d24fc33f,Jacob Cavolo,Jacob Cavolo,jacob cavolo,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_8498339c_f453_40a8_8a0d_f0295579d90a,raw_8498339c_f453_40a8_8a0d_f0295579d90a,Jacob Hattersley,Jacob Hattersley,jacob hattersley,53,22,31,41.509433962264154,Tracked deploy-safe summary from local match-centre result rows.
 raw_dd885b0c_a474_4c2b_90e9_85460c400dcb,raw_dd885b0c_a474_4c2b_90e9_85460c400dcb,Jacques Wildon,Jacques Wildon,jacques wildon,17,7,10,41.1764705882353,Tracked deploy-safe summary from local match-centre result rows.
 raw_be1ffed5_6673_486e_b2c3_84d62ce9b64c,raw_be1ffed5_6673_486e_b2c3_84d62ce9b64c,Jade Bardwell,Jade Bardwell,jade bardwell,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_6146b257_0c0e_43e8_9fe2_1d334d571e54,raw_6146b257_0c0e_43e8_9fe2_1d334d571e54,Jai Sharma,Jai Sharma,jai sharma,38,21,17,55.26315789473684,Tracked deploy-safe summary from local match-centre result rows.
-raw_29f94faa_b978_4942_a941_0b937914ab2c,raw_29f94faa_b978_4942_a941_0b937914ab2c,Jailan Faalavaau,Jailan Faalavaau,jailan faalavaau,4,3,1,75.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_9485c9d2_6d86_4c8b_bcdc_f4a011a17ebb,raw_9485c9d2_6d86_4c8b_bcdc_f4a011a17ebb,Jailan Faalavaau,Jailan Faalavaau,jailan faalavaau,10,3,7,30.0,Tracked deploy-safe summary from local match-centre result rows.
+jailan_faalavaau,jailan_faalavaau,Jailan Faalavaau,Jailan Faalavaau,jailan faalavaau,14,6,8,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
 raw_e87433db_9f9a_4a50_a463_2e5d6740b30b,raw_e87433db_9f9a_4a50_a463_2e5d6740b30b,Jake Bowman,Jake Bowman,jake bowman,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_bcf9850e_6278_44c7_b906_3caf8daf7ecc,raw_bcf9850e_6278_44c7_b906_3caf8daf7ecc,Jake Drummond,Jake Drummond,jake drummond,21,12,9,57.142857142857146,Tracked deploy-safe summary from local match-centre result rows.
 raw_263d2f7a_b677_4a8c_9c8e_ad564ac82d76,raw_263d2f7a_b677_4a8c_9c8e_ad564ac82d76,Jake Kennedy-Bodman,Jake Kennedy-Bodman,jake kennedy bodman,28,6,22,21.428571428571427,Tracked deploy-safe summary from local match-centre result rows.
@@ -467,16 +434,14 @@ raw_f4c5d937_5198_467d_89ea_9325dfb6e299,raw_f4c5d937_5198_467d_89ea_9325dfb6e29
 raw_bd98077f_2145_456b_8eb5_3bf40beaf902,raw_bd98077f_2145_456b_8eb5_3bf40beaf902,James Arney,James Arney,james arney,14,6,8,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
 raw_c8921582_c402_489a_ad94_2fe3a360a728,raw_c8921582_c402_489a_ad94_2fe3a360a728,James Boyce,James Boyce,james boyce,12,9,3,75.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_b29ed3de_b74b_44a1_9762_fb74f8e9f7b4,raw_b29ed3de_b74b_44a1_9762_fb74f8e9f7b4,James Campbell,James Campbell,james campbell,6,3,3,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_bd688df6_e921_444d_96ab_06de1dfb9d24,raw_bd688df6_e921_444d_96ab_06de1dfb9d24,James Dunn,James Dunn,james dunn,12,7,5,58.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_cae92517_8a8a_49d7_9ad1_fa5be2438f05,raw_cae92517_8a8a_49d7_9ad1_fa5be2438f05,James Dunn,James Dunn,james dunn,118,51,67,43.220338983050844,Tracked deploy-safe summary from local match-centre result rows.
+james_dunn,james_dunn,James Dunn,James Dunn,james dunn,130,58,72,44.61538461538461,Tracked deploy-safe summary from local match-centre result rows.
 raw_e2680d00_ebf9_4e3e_9781_657379b9b2e3,raw_e2680d00_ebf9_4e3e_9781_657379b9b2e3,James Flavien,James Flavien,james flavien,8,4,4,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c30e0740_de3c_4f96_b403_e3e05a51a9de,raw_c30e0740_de3c_4f96_b403_e3e05a51a9de,James Forrester,James Forrester,james forrester,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_3b924c7b_30b6_42c3_90ea_4215e4d6de9c,raw_3b924c7b_30b6_42c3_90ea_4215e4d6de9c,James Francis,James Francis,james francis,25,6,19,24.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_3965d85d_c313_4ae5_91d0_4bf4e32b8361,raw_3965d85d_c313_4ae5_91d0_4bf4e32b8361,James Fulton,James Fulton,james fulton,94,48,46,51.06382978723404,Tracked deploy-safe summary from local match-centre result rows.
 raw_e75305ea_c37a_4dd7_8c21_605a6441f8cd,raw_e75305ea_c37a_4dd7_8c21_605a6441f8cd,James Hari,James Hari,james hari,5,1,4,20.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_05178422_86e0_45c5_a632_bf9fb956716c,raw_05178422_86e0_45c5_a632_bf9fb956716c,James Keenan,James Keenan,james keenan,13,5,8,38.46153846153846,Tracked deploy-safe summary from local match-centre result rows.
-raw_a3b73e36_7008_494d_af26_24ebc3a0fa6d,raw_a3b73e36_7008_494d_af26_24ebc3a0fa6d,James Lane,James Lane,james lane,20,11,9,55.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_141a5770_143c_429c_bae4_7177c952eb75,raw_141a5770_143c_429c_bae4_7177c952eb75,James Lane,James Lane,james lane,17,6,11,35.294117647058826,Tracked deploy-safe summary from local match-centre result rows.
+james_lane,james_lane,James Lane,James Lane,james lane,37,17,20,45.945945945945944,Tracked deploy-safe summary from local match-centre result rows.
 raw_0af41563_4598_441e_bd4b_6ac0a898f7bb,raw_0af41563_4598_441e_bd4b_6ac0a898f7bb,James Laverty,James Laverty,james laverty,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_6191a227_70c3_40e5_8618_037cf0e5fc34,raw_6191a227_70c3_40e5_8618_037cf0e5fc34,James Lee,James Lee,james lee,55,25,30,45.45454545454545,Tracked deploy-safe summary from local match-centre result rows.
 raw_ab1ab263_2752_4c84_865a_281e64d4d227,raw_ab1ab263_2752_4c84_865a_281e64d4d227,James Mcmahon,James Mcmahon,james mcmahon,44,21,23,47.72727272727273,Tracked deploy-safe summary from local match-centre result rows.
@@ -484,10 +449,8 @@ raw_14d2f074_9173_4f53_8536_348f349efa57,raw_14d2f074_9173_4f53_8536_348f349efa5
 raw_49796ec5_4d5e_472d_bdf0_0bb1466e01d9,raw_49796ec5_4d5e_472d_bdf0_0bb1466e01d9,James Oana,James Oana,james oana,15,10,5,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_67c9d13f_6eac_48da_8822_8cd6fb1cdab4,raw_67c9d13f_6eac_48da_8822_8cd6fb1cdab4,James Reid,James Reid,james reid,75,29,46,38.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_489b2445_4c7f_4ef5_94c4_97a3566bba60,raw_489b2445_4c7f_4ef5_94c4_97a3566bba60,James Rolfe,James Rolfe,james rolfe,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_d591f902_9888_4f2f_80ff_ecf30f622da5,raw_d591f902_9888_4f2f_80ff_ecf30f622da5,James Scott,James Scott,james scott,11,2,9,18.181818181818183,Tracked deploy-safe summary from local match-centre result rows.
-raw_deda7998_4d72_447c_9730_a42de1cffd75,raw_deda7998_4d72_447c_9730_a42de1cffd75,James Scott,James Scott,james scott,55,21,34,38.18181818181818,Tracked deploy-safe summary from local match-centre result rows.
-raw_47f8288d_9de9_4035_a79c_1822cd14ff5d,raw_47f8288d_9de9_4035_a79c_1822cd14ff5d,James Speakman,James Speakman,james speakman,24,10,14,41.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_e581d2e8_a970_4398_bec2_074b926fc898,raw_e581d2e8_a970_4398_bec2_074b926fc898,James Speakman,James Speakman,james speakman,9,6,3,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
+james_scott,james_scott,James Scott,James Scott,james scott,66,23,43,34.84848484848485,Tracked deploy-safe summary from local match-centre result rows.
+james_speakman,james_speakman,James Speakman,James Speakman,james speakman,33,16,17,48.484848484848484,Tracked deploy-safe summary from local match-centre result rows.
 raw_40c01575_a86c_475f_8315_e698c28e4734,raw_40c01575_a86c_475f_8315_e698c28e4734,James Trescowthick,James Trescowthick,james trescowthick,3,1,2,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_0e08c53c_2ee8_4209_a889_9145ee8c9b32,raw_0e08c53c_2ee8_4209_a889_9145ee8c9b32,Jamie Bliss,Jamie Bliss,jamie bliss,88,36,52,40.90909090909091,Tracked deploy-safe summary from local match-centre result rows.
 raw_9e8d1493_7eb6_40de_851d_bbc6f44ee68c,raw_9e8d1493_7eb6_40de_851d_bbc6f44ee68c,Jamie Mcevoy,Jamie Mcevoy,jamie mcevoy,8,5,3,62.5,Tracked deploy-safe summary from local match-centre result rows.
@@ -495,8 +458,8 @@ raw_89208529_a646_4e10_a925_e4c483f11930,raw_89208529_a646_4e10_a925_e4c483f1193
 raw_1e0070a7_19d9_4492_a7b4_00a196aa0197,raw_1e0070a7_19d9_4492_a7b4_00a196aa0197,Jamie Pickering,Jamie Pickering,jamie pickering,12,4,8,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_dff1c86e_7061_4333_8cdd_d0ac416ff2f9,raw_dff1c86e_7061_4333_8cdd_d0ac416ff2f9,Janaka Mahanama,Janaka Mahanama,janaka mahanama,15,6,9,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_4b8a5a18_6d65_4f45_8a37_6b82a33186f6,raw_4b8a5a18_6d65_4f45_8a37_6b82a33186f6,Japun Singh,Japun Singh,japun singh,21,9,12,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
-raw_c14e7b71_ed3f_41a4_9c00_db29e488371f,raw_c14e7b71_ed3f_41a4_9c00_db29e488371f,Jarrod Dennis,Jarrod Dennis,jarrod dennis,63,29,34,46.03174603174603,Tracked deploy-safe summary from local match-centre result rows.
 raw_d2394deb_431b_47c8_a835_3151448d01ca,raw_d2394deb_431b_47c8_a835_3151448d01ca,Jarrod Dennis,Jarrod Dennis,jarrod dennis,72,36,36,50.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_c14e7b71_ed3f_41a4_9c00_db29e488371f,raw_c14e7b71_ed3f_41a4_9c00_db29e488371f,Jarrod Dennis,Jarrod Dennis,jarrod dennis,63,29,34,46.03174603174603,Tracked deploy-safe summary from local match-centre result rows.
 raw_3b0b90b4_4470_45fb_8b3e_9011a7661393,raw_3b0b90b4_4470_45fb_8b3e_9011a7661393,Jarryd Mcguane,Jarryd Mcguane,jarryd mcguane,44,23,21,52.27272727272727,Tracked deploy-safe summary from local match-centre result rows.
 raw_37588cb6_4c61_4fc8_9c18_abc9b5792a3d,raw_37588cb6_4c61_4fc8_9c18_abc9b5792a3d,Jasmeet Singh,Jasmeet Singh,jasmeet singh,26,10,16,38.46153846153846,Tracked deploy-safe summary from local match-centre result rows.
 raw_f17bf48a_d162_41bc_80da_9f6f09c39913,raw_f17bf48a_d162_41bc_80da_9f6f09c39913,Jasmeet Singh,Jasmeet Singh,jasmeet singh,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -522,13 +485,11 @@ raw_51def39b_cb80_4d1d_8e9b_f4abe1bc8670,raw_51def39b_cb80_4d1d_8e9b_f4abe1bc867
 raw_16db32ab_fb41_4022_897d_719919328904,raw_16db32ab_fb41_4022_897d_719919328904,Jimmy Dvorak,Jimmy Dvorak,jimmy dvorak,20,11,9,55.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ca45eeea_81d5_46f5_a2f5_d6f2d5ef546c,raw_ca45eeea_81d5_46f5_a2f5_d6f2d5ef546c,Jiya Purohit,Jiya Purohit,jiya purohit,14,7,7,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_483c5925_a9de_460c_83b6_44a6c8357f8c,raw_483c5925_a9de_460c_83b6_44a6c8357f8c,Jody Bruerton,Jody Bruerton,jody bruerton,10,3,7,30.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_31aa748b_85b8_4640_b8a5_858e567d6b21,raw_31aa748b_85b8_4640_b8a5_858e567d6b21,Joe Humphreys,Joe Humphreys,joe humphreys,13,1,12,7.6923076923076925,Tracked deploy-safe summary from local match-centre result rows.
-raw_8f0d3390_e836_4754_b0ed_59694b3f3204,raw_8f0d3390_e836_4754_b0ed_59694b3f3204,Joe Humphreys,Joe Humphreys,joe humphreys,16,8,8,50.0,Tracked deploy-safe summary from local match-centre result rows.
+joe_humphreys,joe_humphreys,Joe Humphreys,Joe Humphreys,joe humphreys,29,9,20,31.03448275862069,Tracked deploy-safe summary from local match-centre result rows.
 raw_584364dc_2324_4286_8b6a_0da95ecec8c6,raw_584364dc_2324_4286_8b6a_0da95ecec8c6,Joel Ajani,Joel Ajani,joel ajani,19,9,10,47.36842105263158,Tracked deploy-safe summary from local match-centre result rows.
 raw_a3d2fce6_c03c_4959_b776_63e3361a2b55,raw_a3d2fce6_c03c_4959_b776_63e3361a2b55,Joel Conidi,Joel Conidi,joel conidi,25,14,11,56.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_660c34ca_dfae_4698_af6b_966af833f02a,raw_660c34ca_dfae_4698_af6b_966af833f02a,Joel Lagastes,Joel Lagastes,joel lagastes,11,7,4,63.63636363636363,Tracked deploy-safe summary from local match-centre result rows.
-raw_af9f156f_863c_4573_97d5_b595df985a82,raw_af9f156f_863c_4573_97d5_b595df985a82,Joel Tyquin,Joel Tyquin,joel tyquin,42,15,27,35.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-raw_14ffcf39_f6da_4ed4_a0d1_a99d6b7f8602,raw_14ffcf39_f6da_4ed4_a0d1_a99d6b7f8602,Joel Tyquin,Joel Tyquin,joel tyquin,6,5,1,83.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
+joel_tyquin,joel_tyquin,Joel Tyquin,Joel Tyquin,joel tyquin,48,20,28,41.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_603176df_bece_4233_b234_02891091f482,raw_603176df_bece_4233_b234_02891091f482,John Bird,John Bird,john bird,46,31,15,67.3913043478261,Tracked deploy-safe summary from local match-centre result rows.
 raw_105b2d8f_027e_4102_9864_0dc28e481d23,raw_105b2d8f_027e_4102_9864_0dc28e481d23,John Kennett,John Kennett,john kennett,18,4,14,22.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
 raw_20dc60ea_e6d6_47c2_8fdd_d0a0b743c15b,raw_20dc60ea_e6d6_47c2_8fdd_d0a0b743c15b,John Luxford,John Luxford,john luxford,85,38,47,44.705882352941174,Tracked deploy-safe summary from local match-centre result rows.
@@ -546,11 +507,9 @@ raw_24953316_9f88_4220_8888_dab322c76b50,raw_24953316_9f88_4220_8888_dab322c76b5
 raw_9113f331_a4d7_4163_8bc3_3a2ad3e27087,raw_9113f331_a4d7_4163_8bc3_3a2ad3e27087,Jordan Dissanayake,Jordan Dissanayake,jordan dissanayake,13,5,8,38.46153846153846,Tracked deploy-safe summary from local match-centre result rows.
 raw_978a6b61_bb19_4fed_a883_5c74ab5840b9,raw_978a6b61_bb19_4fed_a883_5c74ab5840b9,Jordan Dsilva,Jordan Dsilva,jordan dsilva,2,2,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_8989323a_81bd_42eb_bb2e_3718e11919f6,raw_8989323a_81bd_42eb_bb2e_3718e11919f6,Jordan Haigh,Jordan Haigh,jordan haigh,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_0250328c_864d_414c_8726_89aef477e548,raw_0250328c_864d_414c_8726_89aef477e548,Jordan Irish,Jordan Irish,jordan irish,16,5,11,31.25,Tracked deploy-safe summary from local match-centre result rows.
-raw_13f8f8d0_7fab_465f_aed2_7c8c4cbf9aff,raw_13f8f8d0_7fab_465f_aed2_7c8c4cbf9aff,Jordan Irish,Jordan Irish,jordan irish,47,24,23,51.06382978723404,Tracked deploy-safe summary from local match-centre result rows.
+jordan_irish,jordan_irish,Jordan Irish,Jordan Irish,jordan irish,63,29,34,46.03174603174603,Tracked deploy-safe summary from local match-centre result rows.
 raw_2af20bee_e3df_4360_9711_eb3ecddcccb6,raw_2af20bee_e3df_4360_9711_eb3ecddcccb6,Joseph Fisicaro,Joseph Fisicaro,joseph fisicaro,41,16,25,39.02439024390244,Tracked deploy-safe summary from local match-centre result rows.
-raw_fc68051c_c0a7_4a7f_b9c1_d91e13912aec,raw_fc68051c_c0a7_4a7f_b9c1_d91e13912aec,Joseph Oddy,Joseph Oddy,joseph oddy,27,8,19,29.62962962962963,Tracked deploy-safe summary from local match-centre result rows.
-raw_a6c75da1_033b_4835_8d68_9083d1cc713c,raw_a6c75da1_033b_4835_8d68_9083d1cc713c,Joseph Oddy,Joseph Oddy,joseph oddy,27,13,14,48.148148148148145,Tracked deploy-safe summary from local match-centre result rows.
+joseph_oddy,joseph_oddy,Joseph Oddy,Joseph Oddy,joseph oddy,54,21,33,38.888888888888886,Tracked deploy-safe summary from local match-centre result rows.
 raw_32ad352c_4b5d_4305_a1ea_4ca68edd8fc9,raw_32ad352c_4b5d_4305_a1ea_4ca68edd8fc9,Joseph Pagliaro,Joseph Pagliaro,joseph pagliaro,36,16,20,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_4b767b55_3439_4a65_ac03_474a0bde772b,raw_4b767b55_3439_4a65_ac03_474a0bde772b,Joseph Papalia,Joseph Papalia,joseph papalia,92,42,50,45.65217391304348,Tracked deploy-safe summary from local match-centre result rows.
 raw_438dd132_8d29_426c_af25_be84b3db6a9f,raw_438dd132_8d29_426c_af25_be84b3db6a9f,Josh Edmonds,Josh Edmonds,josh edmonds,45,23,22,51.111111111111114,Tracked deploy-safe summary from local match-centre result rows.
@@ -582,15 +541,13 @@ raw_7edf0596_1248_4115_a88b_6d3223d2f3a4,raw_7edf0596_1248_4115_a88b_6d3223d2f3a
 raw_e1308152_0570_4e22_93d7_5b2f58ba4792,raw_e1308152_0570_4e22_93d7_5b2f58ba4792,Kael Mcleod,Kael Mcleod,kael mcleod,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_42a9ce9c_bd72_4001_bc46_cc31d436287f,raw_42a9ce9c_bd72_4001_bc46_cc31d436287f,Kahaan Gandhi,Kahaan Gandhi,kahaan gandhi,24,16,8,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_479e586a_88f5_439d_94d8_51275e1c7ce3,raw_479e586a_88f5_439d_94d8_51275e1c7ce3,Kai Nonoyama,Kai Nonoyama,kai nonoyama,11,8,3,72.72727272727273,Tracked deploy-safe summary from local match-centre result rows.
-raw_93d08096_6304_4181_9a50_3482c98cf34d,raw_93d08096_6304_4181_9a50_3482c98cf34d,Kai Stephenson,Kai Stephenson,kai stephenson,31,16,15,51.61290322580645,Tracked deploy-safe summary from local match-centre result rows.
-raw_04d64321_0546_4a69_8b69_e7091a332d05,raw_04d64321_0546_4a69_8b69_e7091a332d05,Kai Stephenson,Kai Stephenson,kai stephenson,37,17,20,45.945945945945944,Tracked deploy-safe summary from local match-centre result rows.
+kai_stephenson,kai_stephenson,Kai Stephenson,Kai Stephenson,kai stephenson,68,33,35,48.529411764705884,Tracked deploy-safe summary from local match-centre result rows.
 raw_f40b6a73_1172_4fcb_be09_744fb6a4e47c,raw_f40b6a73_1172_4fcb_be09_744fb6a4e47c,Kaity Ford,Kaity Ford,kaity ford,13,6,7,46.15384615384615,Tracked deploy-safe summary from local match-centre result rows.
 raw_0043469c_ba84_46cc_92fa_c34bb71c0a38,raw_0043469c_ba84_46cc_92fa_c34bb71c0a38,Kali Irish,Kali Irish,kali irish,11,8,3,72.72727272727273,Tracked deploy-safe summary from local match-centre result rows.
 raw_14d633f7_6dc3_4575_8541_32cae00b772d,raw_14d633f7_6dc3_4575_8541_32cae00b772d,Kanan Budhiraja,Kanan Budhiraja,kanan budhiraja,81,40,41,49.382716049382715,Tracked deploy-safe summary from local match-centre result rows.
 raw_6da99661_586e_4bcb_8c49_4833f837a997,raw_6da99661_586e_4bcb_8c49_4833f837a997,Kanishk Nadkar,Kanishk Nadkar,kanishk nadkar,13,13,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_cad6176a_8315_43a3_bcb6_ec43639be575,raw_cad6176a_8315_43a3_bcb6_ec43639be575,Kanvar Singh,Kanvar Singh,kanvar singh,26,14,12,53.84615384615385,Tracked deploy-safe summary from local match-centre result rows.
-raw_aaaa9718_08aa_49bc_a0fd_f2644653698d,raw_aaaa9718_08aa_49bc_a0fd_f2644653698d,Kapil Chowdhury,Kapil Chowdhury,kapil chowdhury,15,8,7,53.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_58f935e8_d766_49d0_80a7_62b43c36b601,raw_58f935e8_d766_49d0_80a7_62b43c36b601,Kapil Chowdhury,Kapil Chowdhury,kapil chowdhury,19,9,10,47.36842105263158,Tracked deploy-safe summary from local match-centre result rows.
+kapil_chowdhury,kapil_chowdhury,Kapil Chowdhury,Kapil Chowdhury,kapil chowdhury,34,17,17,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_6d8f32a1_5b01_4951_bc2d_cfb4ae7d8bf8,raw_6d8f32a1_5b01_4951_bc2d_cfb4ae7d8bf8,Karan Bakshi,Karan Bakshi,karan bakshi,10,5,5,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_1505f104_5b74_458e_a31f_94accf1b0279,raw_1505f104_5b74_458e_a31f_94accf1b0279,Karan Sainiwal,Karan Sainiwal,karan sainiwal,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_83967f02_089a_420a_89ba_aa2cc2c5530e,raw_83967f02_089a_420a_89ba_aa2cc2c5530e,Karanam Prabhava Rao,Karanam Prabhava Rao,karanam prabhava rao,32,9,23,28.125,Tracked deploy-safe summary from local match-centre result rows.
@@ -602,8 +559,7 @@ raw_32ed1e21_aa98_4821_84ba_c94c8d27c75b,raw_32ed1e21_aa98_4821_84ba_c94c8d27c75
 raw_9cb4c8c2_271d_425b_87e6_9c3fb6631903,raw_9cb4c8c2_271d_425b_87e6_9c3fb6631903,Kenul Dias,Kenul Dias,kenul dias,29,8,21,27.586206896551722,Tracked deploy-safe summary from local match-centre result rows.
 raw_a2536ee4_b6e5_4e9c_be87_be81d5507772,raw_a2536ee4_b6e5_4e9c_be87_be81d5507772,Keshara Dharmarathna,Keshara Dharmarathna,keshara dharmarathna,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_67a7893f_a83f_4470_b7a3_f1aaf541457b,raw_67a7893f_a83f_4470_b7a3_f1aaf541457b,Kevin Eames,Kevin Eames,kevin eames,7,3,4,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
-raw_6a3078c8_ce10_4671_84fe_b09e1d38b597,raw_6a3078c8_ce10_4671_84fe_b09e1d38b597,Keyur Desai,Keyur Desai,keyur desai,11,5,6,45.45454545454545,Tracked deploy-safe summary from local match-centre result rows.
-raw_e7e647a5_7f63_435b_9b10_a74243cdd024,raw_e7e647a5_7f63_435b_9b10_a74243cdd024,Keyur Desai,Keyur Desai,keyur desai,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+keyur_desai,keyur_desai,Keyur Desai,Keyur Desai,keyur desai,12,5,7,41.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_bdcfe3a3_f44f_40c3_a679_8938369e6661,raw_bdcfe3a3_f44f_40c3_a679_8938369e6661,Khrishang Kanakia,Khrishang Kanakia,khrishang kanakia,10,3,7,30.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_af638de6_c9a8_49c2_92b2_92ad76a3ca18,raw_af638de6_c9a8_49c2_92b2_92ad76a3ca18,Kick Robbins,Kick Robbins,kick robbins,30,11,19,36.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_eacffe72_42a1_4542_95de_c314b25fd6df,raw_eacffe72_42a1_4542_95de_c314b25fd6df,Kieran Boylan,Kieran Boylan,kieran boylan,49,24,25,48.97959183673469,Tracked deploy-safe summary from local match-centre result rows.
@@ -615,8 +571,7 @@ raw_a335d530_34f5_49b7_8deb_e38c9382f320,raw_a335d530_34f5_49b7_8deb_e38c9382f32
 raw_3de4541b_e53f_41ea_9327_469f95e793af,raw_3de4541b_e53f_41ea_9327_469f95e793af,Kris Mcevoy,Kris Mcevoy,kris mcevoy,77,32,45,41.55844155844156,Tracked deploy-safe summary from local match-centre result rows.
 raw_ee5de3a1_29b2_47db_8f5b_1b7d3ee99ff8,raw_ee5de3a1_29b2_47db_8f5b_1b7d3ee99ff8,Krisshnaa Kannan,Krisshnaa Kannan,krisshnaa kannan,24,12,12,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_2a47522d_39a9_4a26_af9f_766129e3c8ce,raw_2a47522d_39a9_4a26_af9f_766129e3c8ce,Kunjal Vyas,Kunjal Vyas,kunjal vyas,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
-raw_e76430d5_55c8_461c_9587_a9e72a6fb1de,raw_e76430d5_55c8_461c_9587_a9e72a6fb1de,Kya Candappa,Kya Candappa,kya candappa,20,16,4,80.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_2d99722d_54d9_4cf3_b5a3_e3e881b8e3d5,raw_2d99722d_54d9_4cf3_b5a3_e3e881b8e3d5,Kya Candappa,Kya Candappa,kya candappa,20,7,13,35.0,Tracked deploy-safe summary from local match-centre result rows.
+kya_candappa,kya_candappa,Kya Candappa,Kya Candappa,kya candappa,40,23,17,57.5,Tracked deploy-safe summary from local match-centre result rows.
 raw_4d389c62_eaf2_4e6b_bf39_ca4e5369c2da,raw_4d389c62_eaf2_4e6b_bf39_ca4e5369c2da,Kyle Dorman,Kyle Dorman,kyle dorman,3,1,2,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_79dd4673_5372_4af3_b687_7b49b77bc18e,raw_79dd4673_5372_4af3_b687_7b49b77bc18e,Kyle Loughnan,Kyle Loughnan,kyle loughnan,62,43,19,69.35483870967742,Tracked deploy-safe summary from local match-centre result rows.
 raw_7621d793_5618_484c_8840_bcded41ccb1f,raw_7621d793_5618_484c_8840_bcded41ccb1f,Kynan Sharma,Kynan Sharma,kynan sharma,18,8,10,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
@@ -625,12 +580,11 @@ raw_b76ef430_de99_4f4f_94d7_29c085757c28,raw_b76ef430_de99_4f4f_94d7_29c085757c2
 raw_5e9c2ac9_0c03_4798_b70e_7cdc6922b59b,raw_5e9c2ac9_0c03_4798_b70e_7cdc6922b59b,Lachlan Morrey,Lachlan Morrey,lachlan morrey,45,31,14,68.88888888888889,Tracked deploy-safe summary from local match-centre result rows.
 raw_783b8854_e3a8_400a_b526_6b5fc229355f,raw_783b8854_e3a8_400a_b526_6b5fc229355f,Lachlan Morrison,Lachlan Morrison,lachlan morrison,21,14,7,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_a72d66c1_67d2_4e5d_a8d3_bd413b47f908,raw_a72d66c1_67d2_4e5d_a8d3_bd413b47f908,Lachlan Sharp,Lachlan Sharp,lachlan sharp,60,35,25,58.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_7d63cecb_afee_4bf1_971d_bc0c475900d7,raw_7d63cecb_afee_4bf1_971d_bc0c475900d7,Lachlan Smith,Lachlan Smith,lachlan smith,65,29,36,44.61538461538461,Tracked deploy-safe summary from local match-centre result rows.
 raw_42068b77_06d0_4e80_ae8b_f7c9ca16ef6b,raw_42068b77_06d0_4e80_ae8b_f7c9ca16ef6b,Lachlan Smith,Lachlan Smith,lachlan smith,60,34,26,56.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_fcf0044a_f224_420f_baf3_b0bff297ceb3,raw_fcf0044a_f224_420f_baf3_b0bff297ceb3,Lachlan Smith,Lachlan Smith,lachlan smith,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_7d63cecb_afee_4bf1_971d_bc0c475900d7,raw_7d63cecb_afee_4bf1_971d_bc0c475900d7,Lachlan Smith,Lachlan Smith,lachlan smith,65,29,36,44.61538461538461,Tracked deploy-safe summary from local match-centre result rows.
 raw_f4e81faf_9a9f_443e_8eb8_a8840efc3623,raw_f4e81faf_9a9f_443e_8eb8_a8840efc3623,Lachlan Stewart,Lachlan Stewart,lachlan stewart,49,33,16,67.34693877551021,Tracked deploy-safe summary from local match-centre result rows.
-raw_e8aa0af7_80eb_4c30_a925_7acd614c6ac0,raw_e8aa0af7_80eb_4c30_a925_7acd614c6ac0,Lachlan Wood,Lachlan Wood,lachlan wood,26,6,20,23.076923076923077,Tracked deploy-safe summary from local match-centre result rows.
-raw_77d0f44c_9373_4871_995c_97aaa1527539,raw_77d0f44c_9373_4871_995c_97aaa1527539,Lachlan Wood,Lachlan Wood,lachlan wood,36,19,17,52.77777777777778,Tracked deploy-safe summary from local match-centre result rows.
+lachlan_wood,lachlan_wood,Lachlan Wood,Lachlan Wood,lachlan wood,62,25,37,40.32258064516129,Tracked deploy-safe summary from local match-centre result rows.
 raw_2f8c171f_a169_4281_a14a_636a45fe288c,raw_2f8c171f_a169_4281_a14a_636a45fe288c,Lachlan Wu,Lachlan Wu,lachlan wu,71,42,29,59.15492957746479,Tracked deploy-safe summary from local match-centre result rows.
 raw_614f1407_a584_41a2_a936_a3a25c330364,raw_614f1407_a584_41a2_a936_a3a25c330364,Lahiru Herath,Lahiru Herath,lahiru herath,13,2,11,15.384615384615385,Tracked deploy-safe summary from local match-centre result rows.
 raw_860c287b_d290_4421_a589_0c984f8bce3d,raw_860c287b_d290_4421_a589_0c984f8bce3d,Laksh Moschou,Laksh Moschou,laksh moschou,20,3,17,15.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -664,8 +618,8 @@ raw_a0f8e640_ce8d_4b72_9a74_c48e1db60a1d,raw_a0f8e640_ce8d_4b72_9a74_c48e1db60a1
 raw_3dfa49fc_9822_4582_a823_75dec05b3a74,raw_3dfa49fc_9822_4582_a823_75dec05b3a74,Mandar Tausalkar,Mandar Tausalkar,mandar tausalkar,53,19,34,35.84905660377358,Tracked deploy-safe summary from local match-centre result rows.
 raw_a35e8690_ad1c_4a4a_940e_96e30994292a,raw_a35e8690_ad1c_4a4a_940e_96e30994292a,Manikandan Sambath Kumar,Manikandan Sambath Kumar,manikandan sambath kumar,12,7,5,58.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_73cc3f32_34c8_4a6c_a73a_3957266d0b7e,raw_73cc3f32_34c8_4a6c_a73a_3957266d0b7e,Manjou Kurrupu,Manjou Kurrupu,manjou kurrupu,11,2,9,18.181818181818183,Tracked deploy-safe summary from local match-centre result rows.
-raw_f878b5ad_8ac9_4fe7_b572_d64065609e8c,raw_f878b5ad_8ac9_4fe7_b572_d64065609e8c,Manoj Sharma,Manoj Sharma,manoj sharma,5,2,3,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_2a40e579_09be_4e6d_9fa2_7c5dd24474b2,raw_2a40e579_09be_4e6d_9fa2_7c5dd24474b2,Manoj Sharma,Manoj Sharma,manoj sharma,48,23,25,47.916666666666664,Tracked deploy-safe summary from local match-centre result rows.
+raw_f878b5ad_8ac9_4fe7_b572_d64065609e8c,raw_f878b5ad_8ac9_4fe7_b572_d64065609e8c,Manoj Sharma,Manoj Sharma,manoj sharma,5,2,3,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_81820b8f_b8bb_4b84_9c74_395e038409e5,raw_81820b8f_b8bb_4b84_9c74_395e038409e5,Manthan Patel,Manthan Patel,manthan patel,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_e2bf55a9_a941_4358_ab4e_39b1a862184f,raw_e2bf55a9_a941_4358_ab4e_39b1a862184f,Marc Ferne,Marc Ferne,marc ferne,28,11,17,39.285714285714285,Tracked deploy-safe summary from local match-centre result rows.
 raw_47723ea9_dd43_4f27_8bf6_d8ee32d1e811,raw_47723ea9_dd43_4f27_8bf6_d8ee32d1e811,Marcus Ditton,Marcus Ditton,marcus ditton,49,24,25,48.97959183673469,Tracked deploy-safe summary from local match-centre result rows.
@@ -699,8 +653,7 @@ raw_67d675ae_117f_4382_994e_42414a0e421c,raw_67d675ae_117f_4382_994e_42414a0e421
 raw_99f1ec82_19b9_4b60_bb8c_b0fe3027b298,raw_99f1ec82_19b9_4b60_bb8c_b0fe3027b298,Matthew Hayn,Matthew Hayn,matthew hayn,14,5,9,35.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
 raw_d13dfbba_c726_44cd_a00d_c255ceed897e,raw_d13dfbba_c726_44cd_a00d_c255ceed897e,Matthew Hennessey,Matthew Hennessey,matthew hennessey,19,13,6,68.42105263157895,Tracked deploy-safe summary from local match-centre result rows.
 raw_df00e0ab_d427_4272_9a29_c3a5eb58ca4b,raw_df00e0ab_d427_4272_9a29_c3a5eb58ca4b,Matthew Kirkland,Matthew Kirkland,matthew kirkland,18,5,13,27.77777777777778,Tracked deploy-safe summary from local match-centre result rows.
-raw_88f9c270_61de_4cfc_968f_42d1d381a6a7,raw_88f9c270_61de_4cfc_968f_42d1d381a6a7,Matthew Mills,Matthew Mills,matthew mills,15,7,8,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_fa12a250_9f6b_4bb8_9613_92cc83887ca0,raw_fa12a250_9f6b_4bb8_9613_92cc83887ca0,Matthew Mills,Matthew Mills,matthew mills,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+matthew_mills,matthew_mills,Matthew Mills,Matthew Mills,matthew mills,16,7,9,43.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_6c807b72_7147_4d45_a4ba_62063e5b3787,raw_6c807b72_7147_4d45_a4ba_62063e5b3787,Matthew Naughton,Matthew Naughton,matthew naughton,9,4,5,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_3fa764bc_a496_49c7_90df_9e00d76508fb,raw_3fa764bc_a496_49c7_90df_9e00d76508fb,Matthew Ogilvie,Matthew Ogilvie,matthew ogilvie,15,7,8,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_ec7cd583_bcb3_4848_ab93_34b2a68463f6,raw_ec7cd583_bcb3_4848_ab93_34b2a68463f6,Matthew Pirozek,Matthew Pirozek,matthew pirozek,34,8,26,23.529411764705884,Tracked deploy-safe summary from local match-centre result rows.
@@ -711,8 +664,7 @@ raw_2565829f_6724_4763_98b3_0e3bbef040a6,raw_2565829f_6724_4763_98b3_0e3bbef040a
 raw_00f05af2_2bae_4ce8_9827_4ea0f5cb3db4,raw_00f05af2_2bae_4ce8_9827_4ea0f5cb3db4,Max Kelly,Max Kelly,max kelly,37,9,28,24.324324324324323,Tracked deploy-safe summary from local match-centre result rows.
 raw_13f24791_9b87_40cc_8cb3_c377b4e770cf,raw_13f24791_9b87_40cc_8cb3_c377b4e770cf,Max Maddock,Max Maddock,max maddock,10,10,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_5489a9d8_7f20_4a40_a81f_6286bc700644,raw_5489a9d8_7f20_4a40_a81f_6286bc700644,Max Tennison,Max Tennison,max tennison,50,22,28,44.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_871deb9c_51a1_4443_9d83_916d413c594b,raw_871deb9c_51a1_4443_9d83_916d413c594b,Max White,Max White,max white,20,6,14,30.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_0f709a18_103d_401b_a5bc_bcc979083177,raw_0f709a18_103d_401b_a5bc_bcc979083177,Max White,Max White,max white,37,15,22,40.54054054054054,Tracked deploy-safe summary from local match-centre result rows.
+max_white,max_white,Max White,Max White,max white,57,21,36,36.8421052631579,Tracked deploy-safe summary from local match-centre result rows.
 raw_508da04f_7b2b_4a84_a9b1_d815588244b2,raw_508da04f_7b2b_4a84_a9b1_d815588244b2,Max Zavarella,Max Zavarella,max zavarella,49,26,23,53.06122448979592,Tracked deploy-safe summary from local match-centre result rows.
 raw_46f7674a_d88c_4909_830a_43d12ce21a1e,raw_46f7674a_d88c_4909_830a_43d12ce21a1e,Maxim King,Maxim King,maxim king,45,20,25,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_1c9af2a1_923c_4333_89eb_b0f13b193900,raw_1c9af2a1_923c_4333_89eb_b0f13b193900,Mayank Vatsal,Mayank Vatsal,mayank vatsal,3,1,2,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
@@ -724,13 +676,11 @@ raw_c584bccc_9084_4807_b5ac_b199c0cdcedd,raw_c584bccc_9084_4807_b5ac_b199c0cdced
 raw_0431c21e_cd2a_4585_a9bb_14d29e00c8ba,raw_0431c21e_cd2a_4585_a9bb_14d29e00c8ba,Michael Maloni,Michael Maloni,michael maloni,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_fc02ab54_7005_4a00_a503_d3b9a46f80d7,raw_fc02ab54_7005_4a00_a503_d3b9a46f80d7,Michael Schwab,Michael Schwab,michael schwab,33,26,7,78.78787878787878,Tracked deploy-safe summary from local match-centre result rows.
 raw_8465a0c6_767c_495f_aba2_7f671e1b2934,raw_8465a0c6_767c_495f_aba2_7f671e1b2934,Michael Triantafyllou,Michael Triantafyllou,michael triantafyllou,13,4,9,30.76923076923077,Tracked deploy-safe summary from local match-centre result rows.
-raw_a5c53798_3c89_40f5_991c_5467ff942544,raw_a5c53798_3c89_40f5_991c_5467ff942544,Michael Wilson,Michael Wilson,michael wilson,70,39,31,55.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-raw_5437abc7_4124_444e_9cf3_a43ad6997db7,raw_5437abc7_4124_444e_9cf3_a43ad6997db7,Michael Wilson,Michael Wilson,michael wilson,5,0,5,0.0,Tracked deploy-safe summary from local match-centre result rows.
+michael_wilson,michael_wilson,Michael Wilson,Michael Wilson,michael wilson,75,39,36,52.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_d1d02ec2_558e_46d8_b435_0a4774d070d9,raw_d1d02ec2_558e_46d8_b435_0a4774d070d9,Mick Tennison,Mick Tennison,mick tennison,12,3,9,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_777cfc8b_a36b_4fb6_9d8c_22b6face4238,raw_777cfc8b_a36b_4fb6_9d8c_22b6face4238,Mihika Sen,Mihika Sen,mihika sen,23,19,4,82.6086956521739,Tracked deploy-safe summary from local match-centre result rows.
 raw_180d6cfa_f08d_4de2_ab75_36ee9eea400b,raw_180d6cfa_f08d_4de2_ab75_36ee9eea400b,Mike Ronchi,Mike Ronchi,mike ronchi,8,0,8,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_5fca5995_b206_4c7b_9666_32f8dd9cb8d0,raw_5fca5995_b206_4c7b_9666_32f8dd9cb8d0,Mike Sest,Mike Sest,mike sest,33,10,23,30.303030303030305,Tracked deploy-safe summary from local match-centre result rows.
-raw_396c6d9d_5c8e_4f35_8f51_a5f04bde9ab3,raw_396c6d9d_5c8e_4f35_8f51_a5f04bde9ab3,Mike Sest,Mike Sest,mike sest,4,2,2,50.0,Tracked deploy-safe summary from local match-centre result rows.
+mike_sest,mike_sest,Mike Sest,Mike Sest,mike sest,37,12,25,32.432432432432435,Tracked deploy-safe summary from local match-centre result rows.
 raw_6f7f148e_a1e4_476f_9643_2f0926b4ca05,raw_6f7f148e_a1e4_476f_9643_2f0926b4ca05,Miles Thompson,Miles Thompson,miles thompson,71,32,39,45.070422535211264,Tracked deploy-safe summary from local match-centre result rows.
 raw_3a2d1ef9_ed32_4736_a402_d30827d670bb,raw_3a2d1ef9_ed32_4736_a402_d30827d670bb,Minthaka Senaratne,Minthaka Senaratne,minthaka senaratne,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_6c46390b_2536_41bb_a9dc_a74526f91a3c,raw_6c46390b_2536_41bb_a9dc_a74526f91a3c,Minul Ratnayake,Minul Ratnayake,minul ratnayake,23,16,7,69.56521739130434,Tracked deploy-safe summary from local match-centre result rows.
@@ -739,18 +689,15 @@ raw_0034c416_3492_4c33_8b59_b6dfb091b2cc,raw_0034c416_3492_4c33_8b59_b6dfb091b2c
 raw_7c65f496_86df_4028_9a19_14db4d0da655,raw_7c65f496_86df_4028_9a19_14db4d0da655,Mitchell Gerny,Mitchell Gerny,mitchell gerny,71,46,25,64.78873239436619,Tracked deploy-safe summary from local match-centre result rows.
 raw_a0e3b235_222d_43b6_a078_9ee0b300ba9b,raw_a0e3b235_222d_43b6_a078_9ee0b300ba9b,Mitchell Lee,Mitchell Lee,mitchell lee,25,9,16,36.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ac067f23_88f4_41ea_aa61_1dfcf2a3d536,raw_ac067f23_88f4_41ea_aa61_1dfcf2a3d536,Mitchell Newton,Mitchell Newton,mitchell newton,77,31,46,40.25974025974026,Tracked deploy-safe summary from local match-centre result rows.
-raw_de5066ad_99f3_4c61_adc7_2dc964533d70,raw_de5066ad_99f3_4c61_adc7_2dc964533d70,Mitchell Sanderson,Mitchell Sanderson,mitchell sanderson,33,8,25,24.242424242424242,Tracked deploy-safe summary from local match-centre result rows.
-raw_401b1c01_96bd_4415_9659_3152e81f39c0,raw_401b1c01_96bd_4415_9659_3152e81f39c0,Mitchell Sanderson,Mitchell Sanderson,mitchell sanderson,9,1,8,11.11111111111111,Tracked deploy-safe summary from local match-centre result rows.
+mitchell_sanderson,mitchell_sanderson,Mitchell Sanderson,Mitchell Sanderson,mitchell sanderson,42,9,33,21.428571428571427,Tracked deploy-safe summary from local match-centre result rows.
 raw_71f6b87b_5c89_4ae4_8762_efe9bac83e76,raw_71f6b87b_5c89_4ae4_8762_efe9bac83e76,Mitchell Wain,Mitchell Wain,mitchell wain,125,49,76,39.2,Tracked deploy-safe summary from local match-centre result rows.
 raw_9bb9a416_bfef_48b9_a4d7_88d4e444bc3e,raw_9bb9a416_bfef_48b9_a4d7_88d4e444bc3e,Mitesh Chaudhari,Mitesh Chaudhari,mitesh chaudhari,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_2a6d947b_54d2_456f_9cfa_bc1f91c31f88,raw_2a6d947b_54d2_456f_9cfa_bc1f91c31f88,Mohid Ashraf,Mohid Ashraf,mohid ashraf,30,14,16,46.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_237c5cba_8239_47e3_b6e5_e780b9c03632,raw_237c5cba_8239_47e3_b6e5_e780b9c03632,Mohid Ashraf,Mohid Ashraf,mohid ashraf,20,12,8,60.0,Tracked deploy-safe summary from local match-centre result rows.
+mohid_ashraf,mohid_ashraf,Mohid Ashraf,Mohid Ashraf,mohid ashraf,50,26,24,52.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_0c79ba5a_c8ec_4b7c_8b9f_fda59f82fd72,raw_0c79ba5a_c8ec_4b7c_8b9f_fda59f82fd72,Mohommed Fazi,Mohommed Fazi,mohommed fazi,13,8,5,61.53846153846154,Tracked deploy-safe summary from local match-centre result rows.
 raw_ca679076_b540_4b29_b260_a4abe9ac68b0,raw_ca679076_b540_4b29_b260_a4abe9ac68b0,Molly Robinson,Molly Robinson,molly robinson,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_706ad7a2_b899_41b8_a47f_81c6b6c8877e,raw_706ad7a2_b899_41b8_a47f_81c6b6c8877e,Movin Ekanayake,Movin Ekanayake,movin ekanayake,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_d878b49c_1d30_496e_97a7_a6489c3473d9,raw_d878b49c_1d30_496e_97a7_a6489c3473d9,Muhammad Subhan,Muhammad Subhan,muhammad subhan,11,3,8,27.272727272727273,Tracked deploy-safe summary from local match-centre result rows.
-raw_d04ea8e3_3081_4312_b1b8_83e174a968eb,raw_d04ea8e3_3081_4312_b1b8_83e174a968eb,Murray Hawtin,Murray Hawtin,murray hawtin,8,3,5,37.5,Tracked deploy-safe summary from local match-centre result rows.
-raw_00fd64fd_3c7e_4578_8539_29bc8960076a,raw_00fd64fd_3c7e_4578_8539_29bc8960076a,Murray Hawtin,Murray Hawtin,murray hawtin,93,48,45,51.61290322580645,Tracked deploy-safe summary from local match-centre result rows.
+murray_hawtin,murray_hawtin,Murray Hawtin,Murray Hawtin,murray hawtin,101,51,50,50.495049504950494,Tracked deploy-safe summary from local match-centre result rows.
 raw_314bbd8b_881e_422f_a391_7de9f4c4b4d5,raw_314bbd8b_881e_422f_a391_7de9f4c4b4d5,Mursal Ashraf,Mursal Ashraf,mursal ashraf,23,10,13,43.47826086956522,Tracked deploy-safe summary from local match-centre result rows.
 raw_bfc7e100_211c_48e7_81d8_56093fc3739d,raw_bfc7e100_211c_48e7_81d8_56093fc3739d,Musashi Fujihara,Musashi Fujihara,musashi fujihara,157,75,82,47.77070063694268,Tracked deploy-safe summary from local match-centre result rows.
 raw_d60beaa1_e757_4fb7_a7df_e7d7d96210ff,raw_d60beaa1_e757_4fb7_a7df_e7d7d96210ff,Myles Danaher,Myles Danaher,myles danaher,170,73,97,42.94117647058823,Tracked deploy-safe summary from local match-centre result rows.
@@ -760,15 +707,12 @@ raw_b754d62d_630f_433e_81f1_e7b0004478c4,raw_b754d62d_630f_433e_81f1_e7b0004478c
 raw_725cc182_9c4e_4af3_95dd_4177bdd003d3,raw_725cc182_9c4e_4af3_95dd_4177bdd003d3,Nadesh Mark Gajendra,Nadesh Mark Gajendra,nadesh mark gajendra,6,1,5,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_c66446d4_3f87_48fa_99ab_7b1057125ae2,raw_c66446d4_3f87_48fa_99ab_7b1057125ae2,Namish Manjunath,Namish Manjunath,namish manjunath,22,13,9,59.09090909090909,Tracked deploy-safe summary from local match-centre result rows.
 raw_a78a63fe_c53f_4962_8bec_de07cf8ce693,raw_a78a63fe_c53f_4962_8bec_de07cf8ce693,Nate Johnston,Nate Johnston,nate johnston,34,18,16,52.94117647058823,Tracked deploy-safe summary from local match-centre result rows.
-raw_ed0fe06f_af41_4d91_b5ac_3f86f7557d06,raw_ed0fe06f_af41_4d91_b5ac_3f86f7557d06,Nathan Airey,Nathan Airey,nathan airey,44,22,22,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_18504307_fecf_45d1_adaf_cb455413d6cc,raw_18504307_fecf_45d1_adaf_cb455413d6cc,Nathan Airey,Nathan Airey,nathan airey,8,3,5,37.5,Tracked deploy-safe summary from local match-centre result rows.
-raw_a419ae4a_8476_4f8a_8597_fd6390a6c5f4,raw_a419ae4a_8476_4f8a_8597_fd6390a6c5f4,Nathan Anagnostakis,Nathan Anagnostakis,nathan anagnostakis,21,7,14,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_82efc8ae_9791_4529_95bd_35272473140f,raw_82efc8ae_9791_4529_95bd_35272473140f,Nathan Anagnostakis,Nathan Anagnostakis,nathan anagnostakis,38,19,19,50.0,Tracked deploy-safe summary from local match-centre result rows.
+nathan_airey,nathan_airey,Nathan Airey,Nathan Airey,nathan airey,52,25,27,48.07692307692308,Tracked deploy-safe summary from local match-centre result rows.
+nathan_anagnostakis,nathan_anagnostakis,Nathan Anagnostakis,Nathan Anagnostakis,nathan anagnostakis,59,26,33,44.067796610169495,Tracked deploy-safe summary from local match-centre result rows.
 raw_334d0cff_c689_4d46_93ac_9d3be197539e,raw_334d0cff_c689_4d46_93ac_9d3be197539e,Nathan D'Souza,Nathan D'Souza,nathan d souza,39,22,17,56.41025641025641,Tracked deploy-safe summary from local match-centre result rows.
 raw_72b68d5d_ab79_43d6_a2a7_96e4583caa29,raw_72b68d5d_ab79_43d6_a2a7_96e4583caa29,Nathan Fitzpatrick,Nathan Fitzpatrick,nathan fitzpatrick,150,55,95,36.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_708ea43a_6e38_4e23_9e81_92edf5556f7e,raw_708ea43a_6e38_4e23_9e81_92edf5556f7e,Nathan Gilliland,Nathan Gilliland,nathan gilliland,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_dd946619_53b4_49d6_b7c6_d4120cd94c56,raw_dd946619_53b4_49d6_b7c6_d4120cd94c56,Nathan Granig,Nathan Granig,nathan granig,38,19,19,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_473ebebe_ea4d_411e_b8e9_b0b4616d278c,raw_473ebebe_ea4d_411e_b8e9_b0b4616d278c,Nathan Granig,Nathan Granig,nathan granig,11,6,5,54.54545454545455,Tracked deploy-safe summary from local match-centre result rows.
+nathan_granig,nathan_granig,Nathan Granig,Nathan Granig,nathan granig,49,25,24,51.02040816326531,Tracked deploy-safe summary from local match-centre result rows.
 raw_58e0c49e_68e1_4be2_8fa3_d0a0501e5642,raw_58e0c49e_68e1_4be2_8fa3_d0a0501e5642,Nathan Grylls,Nathan Grylls,nathan grylls,13,9,4,69.23076923076923,Tracked deploy-safe summary from local match-centre result rows.
 raw_a928e04e_137d_4266_a1f6_cadaca827ae0,raw_a928e04e_137d_4266_a1f6_cadaca827ae0,Nathan Mitchell,Nathan Mitchell,nathan mitchell,16,10,6,62.5,Tracked deploy-safe summary from local match-centre result rows.
 raw_946022b1_1e6c_4659_8937_c79a6e070b11,raw_946022b1_1e6c_4659_8937_c79a6e070b11,Nathan Thomas,Nathan Thomas,nathan thomas,41,19,22,46.34146341463415,Tracked deploy-safe summary from local match-centre result rows.
@@ -787,12 +731,10 @@ raw_7c0b80dc_56d9_4c31_a17f_3048da3ded35,raw_7c0b80dc_56d9_4c31_a17f_3048da3ded3
 raw_725999f1_95f4_4701_b2b2_ce37cf7381bb,raw_725999f1_95f4_4701_b2b2_ce37cf7381bb,Nicholas O'Meara,Nicholas O'Meara,nicholas o meara,24,13,11,54.166666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_60b34f02_f7e8_492b_b83f_3a52ca72a826,raw_60b34f02_f7e8_492b_b83f_3a52ca72a826,Nicholas Speakman,Nicholas Speakman,nicholas speakman,39,8,31,20.512820512820515,Tracked deploy-safe summary from local match-centre result rows.
 raw_3640b396_389b_423b_a9a0_41f87d350fdf,raw_3640b396_389b_423b_a9a0_41f87d350fdf,Nicholas Woods,Nicholas Woods,nicholas woods,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_5002f85f_d3ee_4347_a482_ae5a7720e129,raw_5002f85f_d3ee_4347_a482_ae5a7720e129,Nick Berry,Nick Berry,nick berry,5,4,1,80.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_f61105d2_35b7_47f4_b3dd_3729307ddfeb,raw_f61105d2_35b7_47f4_b3dd_3729307ddfeb,Nick Berry,Nick Berry,nick berry,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+nick_berry,nick_berry,Nick Berry,Nick Berry,nick berry,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_e6e65584_dcff_45f2_a576_21f0d05833ce,raw_e6e65584_dcff_45f2_a576_21f0d05833ce,Nick Jonker,Nick Jonker,nick jonker,9,1,8,11.11111111111111,Tracked deploy-safe summary from local match-centre result rows.
 raw_97bd2656_6799_45a8_abe2_85d8ea9dbc8a,raw_97bd2656_6799_45a8_abe2_85d8ea9dbc8a,Nick Miliaresis,Nick Miliaresis,nick miliaresis,14,5,9,35.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-raw_9b93dd0f_7307_45c7_bc45_cda19ddd63e6,raw_9b93dd0f_7307_45c7_bc45_cda19ddd63e6,Nigel Arulanandam,Nigel Arulanandam,nigel arulanandam,5,1,4,20.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_60820c0c_2bc2_4436_a731_61346b266aef,raw_60820c0c_2bc2_4436_a731_61346b266aef,Nigel Arulanandam,Nigel Arulanandam,nigel arulanandam,55,26,29,47.27272727272727,Tracked deploy-safe summary from local match-centre result rows.
+nigel_arulanandam,nigel_arulanandam,Nigel Arulanandam,Nigel Arulanandam,nigel arulanandam,60,27,33,45.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_31ffe3e3_37d4_4b01_a69b_1837efde67a7,raw_31ffe3e3_37d4_4b01_a69b_1837efde67a7,Nihat Mittal,Nihat Mittal,nihat mittal,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c384cffd_8dc5_4b69_bf4b_1d6ab2ca7e40,raw_c384cffd_8dc5_4b69_bf4b_1d6ab2ca7e40,Nikolas Davis,Nikolas Davis,nikolas davis,35,19,16,54.285714285714285,Tracked deploy-safe summary from local match-centre result rows.
 raw_7d91715d_a203_482e_8ee0_993f9bdd9652,raw_7d91715d_a203_482e_8ee0_993f9bdd9652,Nikolas Fortuna,Nikolas Fortuna,nikolas fortuna,76,42,34,55.26315789473684,Tracked deploy-safe summary from local match-centre result rows.
@@ -801,10 +743,8 @@ raw_c5eabe48_712a_4c04_90e9_70d704be4023,raw_c5eabe48_712a_4c04_90e9_70d704be402
 raw_a8807fc5_34c0_4bda_ac84_ab843990c2a3,raw_a8807fc5_34c0_4bda_ac84_ab843990c2a3,Nirujan Vijayarajan,Nirujan Vijayarajan,nirujan vijayarajan,16,12,4,75.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_c9e28016_34c9_492e_8c19_48e3d5b5c371,raw_c9e28016_34c9_492e_8c19_48e3d5b5c371,Nishil Shah,Nishil Shah,nishil shah,15,11,4,73.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
 raw_d91daad5_8cdb_49b3_96ae_caffb2a71ea0,raw_d91daad5_8cdb_49b3_96ae_caffb2a71ea0,Nitin Ukunde,Nitin Ukunde,nitin ukunde,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_65829674_48a8_4e98_bafa_8e9c42fa01af,raw_65829674_48a8_4e98_bafa_8e9c42fa01af,Noah Billing,Noah Billing,noah billing,13,0,13,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_3b21d24e_5d84_4e4f_98ea_ba390849703a,raw_3b21d24e_5d84_4e4f_98ea_ba390849703a,Noah Billing,Noah Billing,noah billing,94,47,47,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_8c23f86e_c4d9_41fc_b693_e86d198516e7,raw_8c23f86e_c4d9_41fc_b693_e86d198516e7,Noah Leipold,Noah Leipold,noah leipold,9,4,5,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
-raw_191f2298_5240_4de3_a341_f99007ede846,raw_191f2298_5240_4de3_a341_f99007ede846,Noah Leipold,Noah Leipold,noah leipold,21,14,7,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
+noah_billing,noah_billing,Noah Billing,Noah Billing,noah billing,107,47,60,43.925233644859816,Tracked deploy-safe summary from local match-centre result rows.
+noah_leipold,noah_leipold,Noah Leipold,Noah Leipold,noah leipold,30,18,12,60.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_67a66073_f466_4f24_9a25_ce95678eeaf3,raw_67a66073_f466_4f24_9a25_ce95678eeaf3,Noah Reginald,Noah Reginald,noah reginald,10,2,8,20.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_95d684a6_811e_4d80_a3cb_c12af3290116,raw_95d684a6_811e_4d80_a3cb_c12af3290116,Nuwan Kariyawasam,Nuwan Kariyawasam,nuwan kariyawasam,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f4ae787a_b802_49a4_9d05_58ca49d9f2aa,raw_f4ae787a_b802_49a4_9d05_58ca49d9f2aa,Nuwan Ranasinghe,Nuwan Ranasinghe,nuwan ranasinghe,19,10,9,52.63157894736842,Tracked deploy-safe summary from local match-centre result rows.
@@ -813,17 +753,14 @@ raw_99dc47e3_8357_472f_9ad9_712a1288e243,raw_99dc47e3_8357_472f_9ad9_712a1288e24
 raw_b65b3648_418a_475d_a7bf_b267d9738b42,raw_b65b3648_418a_475d_a7bf_b267d9738b42,Oliver Choi,Oliver Choi,oliver choi,14,2,12,14.285714285714286,Tracked deploy-safe summary from local match-centre result rows.
 raw_60b9f70d_2941_4343_ad72_ae444b13bc94,raw_60b9f70d_2941_4343_ad72_ae444b13bc94,Oliver Haines,Oliver Haines,oliver haines,15,8,7,53.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_779d362e_3c91_4905_b1ba_716cda4d1114,raw_779d362e_3c91_4905_b1ba_716cda4d1114,Oliver Hayn,Oliver Hayn,oliver hayn,12,7,5,58.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
-raw_860841d6_a437_4e08_b982_238ad9ebdfc5,raw_860841d6_a437_4e08_b982_238ad9ebdfc5,Oliver Howe,Oliver Howe,oliver howe,21,13,8,61.904761904761905,Tracked deploy-safe summary from local match-centre result rows.
-raw_441359c3_f39b_4061_b1d0_414f7a9778c3,raw_441359c3_f39b_4061_b1d0_414f7a9778c3,Oliver Howe,Oliver Howe,oliver howe,13,3,10,23.076923076923077,Tracked deploy-safe summary from local match-centre result rows.
-raw_526193f0_9923_493b_9bb1_017891054949,raw_526193f0_9923_493b_9bb1_017891054949,Oliver Steer,Oliver Steer,oliver steer,19,12,7,63.1578947368421,Tracked deploy-safe summary from local match-centre result rows.
-raw_a66b4002_94c8_4df5_8903_216f51ea7279,raw_a66b4002_94c8_4df5_8903_216f51ea7279,Oliver Steer,Oliver Steer,oliver steer,85,34,51,40.0,Tracked deploy-safe summary from local match-centre result rows.
+oliver_howe,oliver_howe,Oliver Howe,Oliver Howe,oliver howe,34,16,18,47.05882352941177,Tracked deploy-safe summary from local match-centre result rows.
+oliver_steer,oliver_steer,Oliver Steer,Oliver Steer,oliver steer,104,46,58,44.23076923076923,Tracked deploy-safe summary from local match-centre result rows.
 raw_e6f7c0b7_c138_4c4f_b7c0_22af23f088af,raw_e6f7c0b7_c138_4c4f_b7c0_22af23f088af,Oliver Watt,Oliver Watt,oliver watt,114,58,56,50.87719298245614,Tracked deploy-safe summary from local match-centre result rows.
 raw_ab672760_1fa0_4fa1_827b_bcaa302ec726,raw_ab672760_1fa0_4fa1_827b_bcaa302ec726,Ollie Howe,Ollie Howe,ollie howe,14,6,8,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
 raw_d35ae8ae_8ce8_4e65_ae87_dc82802136e8,raw_d35ae8ae_8ce8_4e65_ae87_dc82802136e8,Olovalu Betham,Olovalu Betham,olovalu betham,12,2,10,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_dd6b0bb0_4835_4d70_8834_c5c4b18a7845,raw_dd6b0bb0_4835_4d70_8834_c5c4b18a7845,Oscar Moore,Oscar Moore,oscar moore,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_e88ce34f_fafd_4347_8a3a_7dc27e089087,raw_e88ce34f_fafd_4347_8a3a_7dc27e089087,Oscar Ricciuti,Oscar Ricciuti,oscar ricciuti,10,7,3,70.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_7a9844c9_9782_4713_bc5e_76847a53346c,raw_7a9844c9_9782_4713_bc5e_76847a53346c,Oscar Sarafian,Oscar Sarafian,oscar sarafian,54,20,34,37.03703703703704,Tracked deploy-safe summary from local match-centre result rows.
-raw_b520a1ce_12d2_486c_8203_da32d9e1fcf2,raw_b520a1ce_12d2_486c_8203_da32d9e1fcf2,Oscar Sarafian,Oscar Sarafian,oscar sarafian,48,18,30,37.5,Tracked deploy-safe summary from local match-centre result rows.
+oscar_sarafian,oscar_sarafian,Oscar Sarafian,Oscar Sarafian,oscar sarafian,102,38,64,37.254901960784316,Tracked deploy-safe summary from local match-centre result rows.
 raw_3abafb0c_7217_460d_84a3_4bc1c75f7d54,raw_3abafb0c_7217_460d_84a3_4bc1c75f7d54,Ossie Elliott,Ossie Elliott,ossie elliott,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_50342e18_41bf_4046_8e85_cd254f7b82b9,raw_50342e18_41bf_4046_8e85_cd254f7b82b9,Otis Talman,Otis Talman,otis talman,9,5,4,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
 raw_38841fb3_9d3a_488e_81fb_d5b16f2565ed,raw_38841fb3_9d3a_488e_81fb_d5b16f2565ed,Oudom Chhit,Oudom Chhit,oudom chhit,60,26,34,43.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
@@ -835,12 +772,10 @@ raw_ee98188d_5b8e_4001_bf3e_646eb723167a,raw_ee98188d_5b8e_4001_bf3e_646eb723167
 raw_e1720062_f9be_405c_9cd7_21f78da03642,raw_e1720062_f9be_405c_9cd7_21f78da03642,Pahan Wijayasinghe,Pahan Wijayasinghe,pahan wijayasinghe,11,5,6,45.45454545454545,Tracked deploy-safe summary from local match-centre result rows.
 raw_1485aeed_baba_419c_895b_379c29ac8041,raw_1485aeed_baba_419c_895b_379c29ac8041,Pamad Peiris,Pamad Peiris,pamad peiris,30,22,8,73.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
 raw_367d272b_1932_485b_8017_db00036ff7f6,raw_367d272b_1932_485b_8017_db00036ff7f6,Paranjay Jadeja,Paranjay Jadeja,paranjay jadeja,14,5,9,35.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-raw_5c180480_33a9_4cad_9376_23df0acef0df,raw_5c180480_33a9_4cad_9376_23df0acef0df,Partha Patel,Partha Patel,partha patel,16,7,9,43.75,Tracked deploy-safe summary from local match-centre result rows.
 raw_e9647cd3_814d_4816_8aef_bf9bf552db36,raw_e9647cd3_814d_4816_8aef_bf9bf552db36,Partha Patel,Partha Patel,partha patel,24,4,20,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
-raw_b2ac8e46_2709_497b_a249_e801154b2ba4,raw_b2ac8e46_2709_497b_a249_e801154b2ba4,Pascal Traczewski,Pascal Traczewski,pascal traczewski,21,10,11,47.61904761904762,Tracked deploy-safe summary from local match-centre result rows.
-raw_8f14f809_9d01_40d3_8e5f_9815aababc60,raw_8f14f809_9d01_40d3_8e5f_9815aababc60,Pascal Traczewski,Pascal Traczewski,pascal traczewski,37,24,13,64.86486486486487,Tracked deploy-safe summary from local match-centre result rows.
-raw_16464ba8_bb8f_4ef2_bb8f_d7a500085956,raw_16464ba8_bb8f_4ef2_bb8f_d7a500085956,Patrick Cushing,Patrick Cushing,patrick cushing,6,0,6,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_969b950e_7fb8_4aa4_b8e2_995fec0b6116,raw_969b950e_7fb8_4aa4_b8e2_995fec0b6116,Patrick Cushing,Patrick Cushing,patrick cushing,10,4,6,40.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_5c180480_33a9_4cad_9376_23df0acef0df,raw_5c180480_33a9_4cad_9376_23df0acef0df,Partha Patel,Partha Patel,partha patel,16,7,9,43.75,Tracked deploy-safe summary from local match-centre result rows.
+pascal_traczewski,pascal_traczewski,Pascal Traczewski,Pascal Traczewski,pascal traczewski,58,34,24,58.62068965517241,Tracked deploy-safe summary from local match-centre result rows.
+patrick_cushing,patrick_cushing,Patrick Cushing,Patrick Cushing,patrick cushing,16,4,12,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_7b722aa7_f2c2_4bb7_bb48_e15bebb88f36,raw_7b722aa7_f2c2_4bb7_bb48_e15bebb88f36,Patrick Kellaway,Patrick Kellaway,patrick kellaway,26,6,20,23.076923076923077,Tracked deploy-safe summary from local match-centre result rows.
 raw_7f996c8a_9f81_483f_987e_afa9bdd04ff6,raw_7f996c8a_9f81_483f_987e_afa9bdd04ff6,Patrick Mcmahon,Patrick Mcmahon,patrick mcmahon,17,7,10,41.1764705882353,Tracked deploy-safe summary from local match-centre result rows.
 raw_33e1cfda_e3ae_4ee8_b199_4a23fa256aad,raw_33e1cfda_e3ae_4ee8_b199_4a23fa256aad,Patrick Muling,Patrick Muling,patrick muling,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -875,8 +810,7 @@ raw_429514cc_607c_401e_90e1_6b60c86cd1f8,raw_429514cc_607c_401e_90e1_6b60c86cd1f
 raw_33f491a4_989b_4a0c_a335_5a6abbf1b182,raw_33f491a4_989b_4a0c_a335_5a6abbf1b182,R Gunarathna,R Gunarathna,r gunarathna,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_390e1753_6734_471f_937d_5f9657ad43d9,raw_390e1753_6734_471f_937d_5f9657ad43d9,Rabjot Singh,Rabjot Singh,rabjot singh,3,2,1,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_7f85d9cb_a470_4f86_9e95_1a2bc9a956b7,raw_7f85d9cb_a470_4f86_9e95_1a2bc9a956b7,Rafael Choi,Rafael Choi,rafael choi,10,0,10,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_6c822d4f_14e7_40a9_a612_4ef25c48dfd1,raw_6c822d4f_14e7_40a9_a612_4ef25c48dfd1,Rafael Sergianis,Rafael Sergianis,rafael sergianis,12,6,6,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_3e2d04b3_699d_4000_8ea6_47dc336f85a6,raw_3e2d04b3_699d_4000_8ea6_47dc336f85a6,Rafael Sergianis,Rafael Sergianis,rafael sergianis,36,21,15,58.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
+rafael_sergianis,rafael_sergianis,Rafael Sergianis,Rafael Sergianis,rafael sergianis,48,27,21,56.25,Tracked deploy-safe summary from local match-centre result rows.
 raw_a85a1de9_5d5a_4bdc_b4c5_5b1c6b77297c,raw_a85a1de9_5d5a_4bdc_b4c5_5b1c6b77297c,Rahel Kosgodage,Rahel Kosgodage,rahel kosgodage,9,6,3,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_4d15be74_9311_4a14_acbb_4ebc097c257a,raw_4d15be74_9311_4a14_acbb_4ebc097c257a,Rahul Mamgain,Rahul Mamgain,rahul mamgain,5,0,5,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_b9ff5290_c7ee_4c5b_920e_b228c6699389,raw_b9ff5290_c7ee_4c5b_920e_b228c6699389,Rahul Sharma,Rahul Sharma,rahul sharma,6,5,1,83.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
@@ -913,13 +847,11 @@ raw_f562516b_0ec2_4ac7_b6ed_e9e98728eff0,raw_f562516b_0ec2_4ac7_b6ed_e9e98728eff
 raw_e1aab09a_5d26_4d65_9a78_ef076551b1ac,raw_e1aab09a_5d26_4d65_9a78_ef076551b1ac,Riley Bennetts,Riley Bennetts,riley bennetts,8,1,7,12.5,Tracked deploy-safe summary from local match-centre result rows.
 raw_41541542_05b4_4ce3_a329_7d45df25ecff,raw_41541542_05b4_4ce3_a329_7d45df25ecff,Riley Maddock,Riley Maddock,riley maddock,30,18,12,60.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f6467787_fcd5_4830_b768_c29c95a01a5f,raw_f6467787_fcd5_4830_b768_c29c95a01a5f,Rischi Gary Annand,Rischi Gary Annand,rischi gary annand,11,6,5,54.54545454545455,Tracked deploy-safe summary from local match-centre result rows.
-raw_7facac6b_8dfd_4981_a2b0_8bd3d24fd8a9,raw_7facac6b_8dfd_4981_a2b0_8bd3d24fd8a9,Rishabh Chowdhury,Rishabh Chowdhury,rishabh chowdhury,12,3,9,25.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_addce7b6_9091_4698_92f8_8cb552c362df,raw_addce7b6_9091_4698_92f8_8cb552c362df,Rishabh Chowdhury,Rishabh Chowdhury,rishabh chowdhury,27,14,13,51.851851851851855,Tracked deploy-safe summary from local match-centre result rows.
+rishabh_chowdhury,rishabh_chowdhury,Rishabh Chowdhury,Rishabh Chowdhury,rishabh chowdhury,39,17,22,43.58974358974359,Tracked deploy-safe summary from local match-centre result rows.
 raw_1c09113e_4fe3_4f55_ba64_80c4a6d27cc3,raw_1c09113e_4fe3_4f55_ba64_80c4a6d27cc3,Risindi Wagolla,Risindi Wagolla,risindi wagolla,12,11,1,91.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_b26d4e24_147e_49d5_859b_0d969bfdf90f,raw_b26d4e24_147e_49d5_859b_0d969bfdf90f,Rithika Kumbalatara,Rithika Kumbalatara,rithika kumbalatara,15,1,14,6.666666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_e3d2fd32_0ac1_4632_a67d_2905c7e2bbdc,raw_e3d2fd32_0ac1_4632_a67d_2905c7e2bbdc,Ritvij Roy,Ritvij Roy,ritvij roy,7,0,7,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_c041a2c2_6485_477d_ba5e_385ec800a231,raw_c041a2c2_6485_477d_ba5e_385ec800a231,Riyansh Tausalkar,Riyansh Tausalkar,riyansh tausalkar,36,17,19,47.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
-raw_5e40f638_7f25_470b_a1db_8068b3ca774b,raw_5e40f638_7f25_470b_a1db_8068b3ca774b,Riyansh Tausalkar,Riyansh Tausalkar,riyansh tausalkar,9,1,8,11.11111111111111,Tracked deploy-safe summary from local match-centre result rows.
+riyansh_tausalkar,riyansh_tausalkar,Riyansh Tausalkar,Riyansh Tausalkar,riyansh tausalkar,45,18,27,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_2f0553f8_25bf_42b9_8888_3ea1cf8ce3e5,raw_2f0553f8_25bf_42b9_8888_3ea1cf8ce3e5,Robert Chetwin,Robert Chetwin,robert chetwin,36,11,25,30.555555555555557,Tracked deploy-safe summary from local match-centre result rows.
 raw_596edb0f_9b32_495e_b2a1_87a56a795fdf,raw_596edb0f_9b32_495e_b2a1_87a56a795fdf,Robert Murphy,Robert Murphy,robert murphy,10,9,1,90.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_a4a8c83b_7232_4985_bf7f_c13f86f6f073,raw_a4a8c83b_7232_4985_bf7f_c13f86f6f073,Robert Naylor,Robert Naylor,robert naylor,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -934,8 +866,7 @@ raw_71df2cb5_06a0_4a7a_a492_05465b9d97a0,raw_71df2cb5_06a0_4a7a_a492_05465b9d97a
 raw_fa37ac57_0b73_41c8_9ed8_3b4c748d233d,raw_fa37ac57_0b73_41c8_9ed8_3b4c748d233d,Romesh Gunatilake,Romesh Gunatilake,romesh gunatilake,27,12,15,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
 raw_74138dbb_3b20_4daf_aeea_5ddcd765f535,raw_74138dbb_3b20_4daf_aeea_5ddcd765f535,Ronan Shaw,Ronan Shaw,ronan shaw,13,3,10,23.076923076923077,Tracked deploy-safe summary from local match-centre result rows.
 raw_096b9895_fed0_4723_90a2_ca1c7fb389c3,raw_096b9895_fed0_4723_90a2_ca1c7fb389c3,Roneel Kumar,Roneel Kumar,roneel kumar,19,13,6,68.42105263157895,Tracked deploy-safe summary from local match-centre result rows.
-raw_9187d270_37d4_4950_bf4e_bf6ede7e134b,raw_9187d270_37d4_4950_bf4e_bf6ede7e134b,Rory Shepherd,Rory Shepherd,rory shepherd,39,9,30,23.076923076923077,Tracked deploy-safe summary from local match-centre result rows.
-raw_27703fc2_f50d_4c75_b617_12c48f6cc8a5,raw_27703fc2_f50d_4c75_b617_12c48f6cc8a5,Rory Shepherd,Rory Shepherd,rory shepherd,10,7,3,70.0,Tracked deploy-safe summary from local match-centre result rows.
+rory_shepherd,rory_shepherd,Rory Shepherd,Rory Shepherd,rory shepherd,49,16,33,32.6530612244898,Tracked deploy-safe summary from local match-centre result rows.
 raw_189c2ac7_fdf1_44d6_8a76_8fe3f6cefa13,raw_189c2ac7_fdf1_44d6_8a76_8fe3f6cefa13,Roshan Ariyaratnam,Roshan Ariyaratnam,roshan ariyaratnam,14,9,5,64.28571428571429,Tracked deploy-safe summary from local match-centre result rows.
 raw_d43e1564_d1ef_44ee_a50f_58598cf874c9,raw_d43e1564_d1ef_44ee_a50f_58598cf874c9,Roshan Bandara,Roshan Bandara,roshan bandara,32,16,16,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ea039ca0_e59a_4359_b9fa_1bb03f60e834,raw_ea039ca0_e59a_4359_b9fa_1bb03f60e834,Ross Pryde,Ross Pryde,ross pryde,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -947,8 +878,7 @@ raw_907f8386_6a13_4610_b9f1_e39b4044dbc1,raw_907f8386_6a13_4610_b9f1_e39b4044dbc
 raw_9865a931_9405_4083_83e4_133bb6d1219b,raw_9865a931_9405_4083_83e4_133bb6d1219b,Ryan Evans,Ryan Evans,ryan evans,19,10,9,52.63157894736842,Tracked deploy-safe summary from local match-centre result rows.
 raw_d2f06601_de3f_4136_b91f_d178eb6cd795,raw_d2f06601_de3f_4136_b91f_d178eb6cd795,Ryan Francis,Ryan Francis,ryan francis,30,16,14,53.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_69e6b7a1_adc2_477f_a46a_412c10aac170,raw_69e6b7a1_adc2_477f_a46a_412c10aac170,Ryan Jones,Ryan Jones,ryan jones,20,4,16,20.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_5066a977_222a_498a_8f20_848d1ca6895b,raw_5066a977_222a_498a_8f20_848d1ca6895b,Ryan Kennedy,Ryan Kennedy,ryan kennedy,69,32,37,46.3768115942029,Tracked deploy-safe summary from local match-centre result rows.
-raw_f5d3308d_2e78_4c35_b821_d43e7d645ed3,raw_f5d3308d_2e78_4c35_b821_d43e7d645ed3,Ryan Kennedy,Ryan Kennedy,ryan kennedy,5,1,4,20.0,Tracked deploy-safe summary from local match-centre result rows.
+ryan_kennedy,ryan_kennedy,Ryan Kennedy,Ryan Kennedy,ryan kennedy,74,33,41,44.5945945945946,Tracked deploy-safe summary from local match-centre result rows.
 raw_268758b7_140d_4465_93a9_6271535e0b92,raw_268758b7_140d_4465_93a9_6271535e0b92,Ryan Mccrea,Ryan Mccrea,ryan mccrea,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
 raw_6be57c8a_4e33_49a2_8d69_a1d9a425dfa5,raw_6be57c8a_4e33_49a2_8d69_a1d9a425dfa5,Ryan Pathmanathan,Ryan Pathmanathan,ryan pathmanathan,30,16,14,53.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_97c8f5a8_4573_46b3_9238_19bddd3e74b8,raw_97c8f5a8_4573_46b3_9238_19bddd3e74b8,Ryan Taranto,Ryan Taranto,ryan taranto,36,19,17,52.77777777777778,Tracked deploy-safe summary from local match-centre result rows.
@@ -973,8 +903,7 @@ raw_f5c70abf_99d7_456d_a21b_c61a44ea33f9,raw_f5c70abf_99d7_456d_a21b_c61a44ea33f
 raw_81767eb9_c774_44c4_b39b_f3d982fe66bf,raw_81767eb9_c774_44c4_b39b_f3d982fe66bf,Samuel Johnson,Samuel Johnson,samuel johnson,22,17,5,77.27272727272727,Tracked deploy-safe summary from local match-centre result rows.
 raw_abe2916b_9e77_4e3a_951b_b9c7ebc177d3,raw_abe2916b_9e77_4e3a_951b_b9c7ebc177d3,Samuel Kerber,Samuel Kerber,samuel kerber,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_923bc494_8e26_450d_84b5_c0d6a6be9cd8,raw_923bc494_8e26_450d_84b5_c0d6a6be9cd8,Samuel Lee,Samuel Lee,samuel lee,28,11,17,39.285714285714285,Tracked deploy-safe summary from local match-centre result rows.
-raw_ca64fbeb_d0aa_48f7_87e0_09827a93e02a,raw_ca64fbeb_d0aa_48f7_87e0_09827a93e02a,Samuel Nolan,Samuel Nolan,samuel nolan,22,12,10,54.54545454545455,Tracked deploy-safe summary from local match-centre result rows.
-raw_21f00543_5a4b_4992_891e_63a1aa0cdc0e,raw_21f00543_5a4b_4992_891e_63a1aa0cdc0e,Samuel Nolan,Samuel Nolan,samuel nolan,5,1,4,20.0,Tracked deploy-safe summary from local match-centre result rows.
+samuel_nolan,samuel_nolan,Samuel Nolan,Samuel Nolan,samuel nolan,27,13,14,48.148148148148145,Tracked deploy-safe summary from local match-centre result rows.
 raw_9bf045ed_5ca8_4182_8b8e_54c824048506,raw_9bf045ed_5ca8_4182_8b8e_54c824048506,Samuel Wittman,Samuel Wittman,samuel wittman,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_60c3d3ab_a311_4734_9a43_d29188b54c96,raw_60c3d3ab_a311_4734_9a43_d29188b54c96,Sanath Upamanyu,Sanath Upamanyu,sanath upamanyu,20,3,17,15.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_030d0e6f_194a_4f6c_a3da_583758a19d88,raw_030d0e6f_194a_4f6c_a3da_583758a19d88,Sanjay Chandrasekar,Sanjay Chandrasekar,sanjay chandrasekar,5,0,5,0.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -989,21 +918,18 @@ raw_136933c0_2bf8_40ab_b27f_3ec1789eadb5,raw_136933c0_2bf8_40ab_b27f_3ec1789eadb
 raw_a704287f_6e71_4dfb_9cfc_e70118ee333d,raw_a704287f_6e71_4dfb_9cfc_e70118ee333d,Scott Howell,Scott Howell,scott howell,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_a6ad0698_c073_4d55_b1fa_85a3be587bdd,raw_a6ad0698_c073_4d55_b1fa_85a3be587bdd,Scott Nicholson,Scott Nicholson,scott nicholson,11,3,8,27.272727272727273,Tracked deploy-safe summary from local match-centre result rows.
 raw_37190600_f84a_412b_9a09_ac59a76d83e7,raw_37190600_f84a_412b_9a09_ac59a76d83e7,Sean Mundy,Sean Mundy,sean mundy,10,3,7,30.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_0781fb45_84c9_4d9c_b4e9_59776e609251,raw_0781fb45_84c9_4d9c_b4e9_59776e609251,Sean Murphy,Sean Murphy,sean murphy,7,3,4,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
-raw_74625791_70f4_4c96_935b_9419c7560fb2,raw_74625791_70f4_4c96_935b_9419c7560fb2,Sean Murphy,Sean Murphy,sean murphy,47,26,21,55.319148936170215,Tracked deploy-safe summary from local match-centre result rows.
+sean_murphy,sean_murphy,Sean Murphy,Sean Murphy,sean murphy,54,29,25,53.7037037037037,Tracked deploy-safe summary from local match-centre result rows.
 raw_ffe30eae_15f6_4c4d_ab7a_73ad772912fa,raw_ffe30eae_15f6_4c4d_ab7a_73ad772912fa,Sean Neary,Sean Neary,sean neary,11,2,9,18.181818181818183,Tracked deploy-safe summary from local match-centre result rows.
 raw_85535a52_79c1_4892_b2ba_8c43b6d30a3d,raw_85535a52_79c1_4892_b2ba_8c43b6d30a3d,Seaton Mundy,Seaton Mundy,seaton mundy,9,3,6,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_aa8248be_97a8_4c83_b784_c1ba9708bde4,raw_aa8248be_97a8_4c83_b784_c1ba9708bde4,Sebastian Antonacci,Sebastian Antonacci,sebastian antonacci,23,12,11,52.17391304347826,Tracked deploy-safe summary from local match-centre result rows.
-raw_07a4d6a3_f754_443f_82ac_dd57b322ed87,raw_07a4d6a3_f754_443f_82ac_dd57b322ed87,Sebastian Fernandez,Sebastian Fernandez,sebastian fernandez,9,8,1,88.88888888888889,Tracked deploy-safe summary from local match-centre result rows.
-raw_d94b8478_0f01_4220_a300_68d75f5bc03a,raw_d94b8478_0f01_4220_a300_68d75f5bc03a,Sebastian Fernandez,Sebastian Fernandez,sebastian fernandez,9,6,3,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
+sebastian_fernandez,sebastian_fernandez,Sebastian Fernandez,Sebastian Fernandez,sebastian fernandez,18,14,4,77.77777777777777,Tracked deploy-safe summary from local match-centre result rows.
 raw_0953d944_c845_4363_9dc4_d3a9d0e42cd2,raw_0953d944_c845_4363_9dc4_d3a9d0e42cd2,Sebastian Fourtzis,Sebastian Fourtzis,sebastian fourtzis,12,6,6,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_d05b8c50_07b5_41d6_b935_7c323d89d202,raw_d05b8c50_07b5_41d6_b935_7c323d89d202,Seinya Malawwethantri,Seinya Malawwethantri,seinya malawwethantri,15,4,11,26.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_aacaf0ca_1053_445e_9357_2cfc800efeae,raw_aacaf0ca_1053_445e_9357_2cfc800efeae,Seth De Silva,Seth De Silva,seth de silva,17,4,13,23.529411764705884,Tracked deploy-safe summary from local match-centre result rows.
 raw_c552010a_0ca9_4b92_a7a8_ee57aa862f4c,raw_c552010a_0ca9_4b92_a7a8_ee57aa862f4c,Seth Senaweera,Seth Senaweera,seth senaweera,18,11,7,61.111111111111114,Tracked deploy-safe summary from local match-centre result rows.
 raw_e4805d9a_2dcb_4504_93bf_3f7a26e9ebcd,raw_e4805d9a_2dcb_4504_93bf_3f7a26e9ebcd,Shaan Loganathan,Shaan Loganathan,shaan loganathan,38,23,15,60.526315789473685,Tracked deploy-safe summary from local match-centre result rows.
 raw_934fa0fe_8e43_4a30_9968_8893a7d747d7,raw_934fa0fe_8e43_4a30_9968_8893a7d747d7,Shagun Pant,Shagun Pant,shagun pant,14,5,9,35.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-raw_392080a7_7f51_44ab_92a4_87622e4362d5,raw_392080a7_7f51_44ab_92a4_87622e4362d5,Shahroze Haris,Shahroze Haris,shahroze haris,6,5,1,83.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
-raw_a23d035a_a477_44f6_8854_576df77da5df,raw_a23d035a_a477_44f6_8854_576df77da5df,Shahroze Haris,Shahroze Haris,shahroze haris,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
+shahroze_haris,shahroze_haris,Shahroze Haris,Shahroze Haris,shahroze haris,8,6,2,75.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_1a226ea8_2cc5_48dc_858d_b0e884f777f9,raw_1a226ea8_2cc5_48dc_858d_b0e884f777f9,Shail Shah,Shail Shah,shail shah,2,1,1,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_fc65ea52_4410_4a8e_914f_47d633e4cf6c,raw_fc65ea52_4410_4a8e_914f_47d633e4cf6c,Shane Dissanayake,Shane Dissanayake,shane dissanayake,85,36,49,42.35294117647059,Tracked deploy-safe summary from local match-centre result rows.
 raw_cedd9bd2_8b45_46b0_8cd6_536d1b6348b5,raw_cedd9bd2_8b45_46b0_8cd6_536d1b6348b5,Shane Reneits,Shane Reneits,shane reneits,3,3,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -1020,8 +946,7 @@ raw_4f04d277_8050_4d3b_996d_3af78b4ec429,raw_4f04d277_8050_4d3b_996d_3af78b4ec42
 raw_6fb9c04b_ae0d_4079_afc1_a1b0448912bd,raw_6fb9c04b_ae0d_4079_afc1_a1b0448912bd,Shreenika Sharma,Shreenika Sharma,shreenika sharma,12,11,1,91.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_56252576_2bf9_45a9_bece_10e141c228b4,raw_56252576_2bf9_45a9_bece_10e141c228b4,Shrinandhan Sathish Kumar,Shrinandhan Sathish Kumar,shrinandhan sathish kumar,15,3,12,20.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_edaf5124_29dc_4b68_b87e_475135b0f9d2,raw_edaf5124_29dc_4b68_b87e_475135b0f9d2,Shubham Dhaka,Shubham Dhaka,shubham dhaka,21,11,10,52.38095238095238,Tracked deploy-safe summary from local match-centre result rows.
-raw_3f68d4a9_b7b9_4d0f_855e_3ff29a306d12,raw_3f68d4a9_b7b9_4d0f_855e_3ff29a306d12,Shubham Goel,Shubham Goel,shubham goel,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
-raw_8498f237_f216_4a60_b474_8d98b96f101d,raw_8498f237_f216_4a60_b474_8d98b96f101d,Shubham Goel,Shubham Goel,shubham goel,7,4,3,57.142857142857146,Tracked deploy-safe summary from local match-centre result rows.
+shubham_goel,shubham_goel,Shubham Goel,Shubham Goel,shubham goel,13,8,5,61.53846153846154,Tracked deploy-safe summary from local match-centre result rows.
 raw_cac8727c_efb6_48b6_82b6_93030dab4a66,raw_cac8727c_efb6_48b6_82b6_93030dab4a66,Sid Kapoor,Sid Kapoor,sid kapoor,18,10,8,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
 raw_c12e282c_03d5_4665_af73_c04e88f70b33,raw_c12e282c_03d5_4665_af73_c04e88f70b33,Sidak Sethi,Sidak Sethi,sidak sethi,7,0,7,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_beefcff4_b27b_4118_8ea3_1f1d090a4122,raw_beefcff4_b27b_4118_8ea3_1f1d090a4122,Siddharth Chandrabhushan Daggaonkar,Siddharth Chandrabhushan Daggaonkar,siddharth chandrabhushan daggaonkar,15,10,5,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
@@ -1043,8 +968,7 @@ raw_b82895ed_2be5_4c36_9f04_9f5f495374e4,raw_b82895ed_2be5_4c36_9f04_9f5f495374e
 raw_e8eb8ba7_9917_4779_97b2_6d85c89315fa,raw_e8eb8ba7_9917_4779_97b2_6d85c89315fa,Sri Kovelakonda,Sri Kovelakonda,sri kovelakonda,4,1,3,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_8282e565_8c15_453f_9572_a3f4221f0ccc,raw_8282e565_8c15_453f_9572_a3f4221f0ccc,Srihaas Tanneeru,Srihaas Tanneeru,srihaas tanneeru,12,1,11,8.333333333333334,Tracked deploy-safe summary from local match-centre result rows.
 raw_4929f199_accd_49de_9aee_cb0c6d6475ab,raw_4929f199_accd_49de_9aee_cb0c6d6475ab,Stephen Catros,Stephen Catros,stephen catros,16,8,8,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_5c49e001_795c_4ace_8be8_84409996a7b5,raw_5c49e001_795c_4ace_8be8_84409996a7b5,Stephen Knowles,Stephen Knowles,stephen knowles,17,3,14,17.647058823529413,Tracked deploy-safe summary from local match-centre result rows.
-raw_c1c07780_4962_42b2_ae8c_048a66708ac7,raw_c1c07780_4962_42b2_ae8c_048a66708ac7,Stephen Knowles,Stephen Knowles,stephen knowles,54,30,24,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
+stephen_knowles,stephen_knowles,Stephen Knowles,Stephen Knowles,stephen knowles,71,33,38,46.478873239436616,Tracked deploy-safe summary from local match-centre result rows.
 raw_001a20c5_9fc4_464d_b3fa_b846f9553f69,raw_001a20c5_9fc4_464d_b3fa_b846f9553f69,Stephen Pierce,Stephen Pierce,stephen pierce,3,1,2,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_0129e0e3_50ee_4a1c_8fd7_e8bfdc7a8850,raw_0129e0e3_50ee_4a1c_8fd7_e8bfdc7a8850,Steve Cato,Steve Cato,steve cato,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ae7a576c_6c07_4a5b_a638_bbb362882c67,raw_ae7a576c_6c07_4a5b_a638_bbb362882c67,Stuart Gruchy,Stuart Gruchy,stuart gruchy,21,9,12,42.857142857142854,Tracked deploy-safe summary from local match-centre result rows.
@@ -1075,8 +999,7 @@ raw_dee99678_2529_434f_b3e2_bbd5346a33a0,raw_dee99678_2529_434f_b3e2_bbd5346a33a
 raw_24a75076_5ac4_4cb9_8a8b_6d6fe1b4fc56,raw_24a75076_5ac4_4cb9_8a8b_6d6fe1b4fc56,Thilina Dissanayake,Thilina Dissanayake,thilina dissanayake,23,11,12,47.82608695652174,Tracked deploy-safe summary from local match-centre result rows.
 raw_8dc80a31_439a_494c_b30c_e13c3f62f165,raw_8dc80a31_439a_494c_b30c_e13c3f62f165,Thomas Gilmour,Thomas Gilmour,thomas gilmour,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_ee1df644_2ec1_4783_becc_ece267755747,raw_ee1df644_2ec1_4783_becc_ece267755747,Thomas Kinnane,Thomas Kinnane,thomas kinnane,197,97,100,49.23857868020305,Tracked deploy-safe summary from local match-centre result rows.
-raw_901ab3bf_6ecf_4790_a9a3_60ae4e9ad15c,raw_901ab3bf_6ecf_4790_a9a3_60ae4e9ad15c,Thomas Lee,Thomas Lee,thomas lee,61,28,33,45.90163934426229,Tracked deploy-safe summary from local match-centre result rows.
-raw_16a78bf2_4d27_495e_b9af_aa2d3ebf87f9,raw_16a78bf2_4d27_495e_b9af_aa2d3ebf87f9,Thomas Lee,Thomas Lee,thomas lee,12,4,8,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
+thomas_lee,thomas_lee,Thomas Lee,Thomas Lee,thomas lee,73,32,41,43.83561643835616,Tracked deploy-safe summary from local match-centre result rows.
 raw_463f7ffb_3bd5_4437_9256_1c15bf2f25a4,raw_463f7ffb_3bd5_4437_9256_1c15bf2f25a4,Thomas Spowart,Thomas Spowart,thomas spowart,21,11,10,52.38095238095238,Tracked deploy-safe summary from local match-centre result rows.
 raw_cd19f9bf_ad27_4b79_a6ac_a4110f81f24b,raw_cd19f9bf_ad27_4b79_a6ac_a4110f81f24b,Thomas Wareing,Thomas Wareing,thomas wareing,13,10,3,76.92307692307692,Tracked deploy-safe summary from local match-centre result rows.
 raw_2dc03a00_1900_45f0_a387_b286a07cbe7e,raw_2dc03a00_1900_45f0_a387_b286a07cbe7e,Thomas Yeung,Thomas Yeung,thomas yeung,15,6,9,40.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -1087,10 +1010,9 @@ raw_53bac2ad_1f40_47f8_ac68_4a546b882a21,raw_53bac2ad_1f40_47f8_ac68_4a546b882a2
 raw_6081fbf8_38fa_4833_908f_2e194169bcfa,raw_6081fbf8_38fa_4833_908f_2e194169bcfa,Tim Naughton,Tim Naughton,tim naughton,26,10,16,38.46153846153846,Tracked deploy-safe summary from local match-centre result rows.
 raw_de55fe19_729b_4044_a8d5_53d3f1990d11,raw_de55fe19_729b_4044_a8d5_53d3f1990d11,Tim Taylor,Tim Taylor,tim taylor,11,0,11,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_7b9d5dc0_0ce1_4d67_b1fc_09d6c660d82a,raw_7b9d5dc0_0ce1_4d67_b1fc_09d6c660d82a,Timothy Loughnan,Timothy Loughnan,timothy loughnan,18,14,4,77.77777777777777,Tracked deploy-safe summary from local match-centre result rows.
-raw_160fa423_4c27_46e3_a63a_889533475a89,raw_160fa423_4c27_46e3_a63a_889533475a89,Timothy Pape,Timothy Pape,timothy pape,39,21,18,53.84615384615385,Tracked deploy-safe summary from local match-centre result rows.
 raw_cfe70af8_a02f_48bf_9df4_cb27b84b11ac,raw_cfe70af8_a02f_48bf_9df4_cb27b84b11ac,Timothy Pape,Timothy Pape,timothy pape,199,77,122,38.69346733668342,Tracked deploy-safe summary from local match-centre result rows.
-raw_40a5513e_7d95_44b8_9279_d23ca41d4f8f,raw_40a5513e_7d95_44b8_9279_d23ca41d4f8f,Toby Pryde,Toby Pryde,toby pryde,41,8,33,19.51219512195122,Tracked deploy-safe summary from local match-centre result rows.
-raw_367c3ac3_d111_4377_b399_ee8ac5890ea5,raw_367c3ac3_d111_4377_b399_ee8ac5890ea5,Toby Pryde,Toby Pryde,toby pryde,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_160fa423_4c27_46e3_a63a_889533475a89,raw_160fa423_4c27_46e3_a63a_889533475a89,Timothy Pape,Timothy Pape,timothy pape,39,21,18,53.84615384615385,Tracked deploy-safe summary from local match-centre result rows.
+toby_pryde,toby_pryde,Toby Pryde,Toby Pryde,toby pryde,42,9,33,21.428571428571427,Tracked deploy-safe summary from local match-centre result rows.
 raw_4827ad27_9cd8_4a63_8c04_5ff944ffa649,raw_4827ad27_9cd8_4a63_8c04_5ff944ffa649,Toby Ryan,Toby Ryan,toby ryan,20,9,11,45.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_dff2c021_f3d5_4485_a28f_b877ca39364d,raw_dff2c021_f3d5_4485_a28f_b877ca39364d,Tom Ford,Tom Ford,tom ford,12,8,4,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
 raw_5a502c0d_ca5d_4bc8_935e_22010e1acc0a,raw_5a502c0d_ca5d_4bc8_935e_22010e1acc0a,Tom Hamilton,Tom Hamilton,tom hamilton,14,5,9,35.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
@@ -1099,8 +1021,7 @@ raw_eb284608_0394_43ce_bd92_b2d89c443a01,raw_eb284608_0394_43ce_bd92_b2d89c443a0
 raw_e1356f88_2031_45f0_a9ee_494e5cd7d2d5,raw_e1356f88_2031_45f0_a9ee_494e5cd7d2d5,Tom Mcmanemin,Tom Mcmanemin,tom mcmanemin,13,5,8,38.46153846153846,Tracked deploy-safe summary from local match-centre result rows.
 raw_d65687da_5df4_4d19_8884_7f6d4f41c338,raw_d65687da_5df4_4d19_8884_7f6d4f41c338,Tom Moncrieff,Tom Moncrieff,tom moncrieff,20,15,5,75.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_7ad6b2b1_fbc3_4543_92dd_85375512db94,raw_7ad6b2b1_fbc3_4543_92dd_85375512db94,Tom Serry,Tom Serry,tom serry,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_08170cf6_48d2_40d9_87a4_0452dd3886cb,raw_08170cf6_48d2_40d9_87a4_0452dd3886cb,Tom Sest,Tom Sest,tom sest,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_1ba310a4_1fb1_432c_9c18_03c8dff1ceec,raw_1ba310a4_1fb1_432c_9c18_03c8dff1ceec,Tom Sest,Tom Sest,tom sest,76,28,48,36.8421052631579,Tracked deploy-safe summary from local match-centre result rows.
+tom_sest,tom_sest,Tom Sest,Tom Sest,tom sest,77,28,49,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
 raw_554faf47_8975_4a7a_92ef_53d02a1e1988,raw_554faf47_8975_4a7a_92ef_53d02a1e1988,Tomas Debicki,Tomas Debicki,tomas debicki,8,8,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f9ea11f4_4f7e_4184_a6d0_e06335a5824f,raw_f9ea11f4_4f7e_4184_a6d0_e06335a5824f,Tommy Bradley-Malcolm,Tommy Bradley-Malcolm,tommy bradley malcolm,14,10,4,71.42857142857143,Tracked deploy-safe summary from local match-centre result rows.
 raw_77b9980c_6807_4de8_91c3_3dcbcb6c9f07,raw_77b9980c_6807_4de8_91c3_3dcbcb6c9f07,Tony Duffy,Tony Duffy,tony duffy,6,0,6,0.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -1115,8 +1036,7 @@ raw_a0eee8ad_b5aa_4024_bacd_ff0231bcdacd,raw_a0eee8ad_b5aa_4024_bacd_ff0231bcdac
 raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,Unknown Player_1,Unknown Player_1,unknown player 1,8,3,5,37.5,Tracked deploy-safe summary from local match-centre result rows.
 raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,Unknown Player_2,Unknown Player_2,unknown player 2,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_7f4b8dc5_e69d_403d_8118_dc207c6826a7,raw_7f4b8dc5_e69d_403d_8118_dc207c6826a7,Vaidik Patel,Vaidik Patel,vaidik patel,29,16,13,55.172413793103445,Tracked deploy-safe summary from local match-centre result rows.
-raw_9fe39b40_335e_4590_bfde_3803de1ad663,raw_9fe39b40_335e_4590_bfde_3803de1ad663,Valentin Guenebaut,Valentin Guenebaut,valentin guenebaut,38,16,22,42.10526315789474,Tracked deploy-safe summary from local match-centre result rows.
-raw_795c9179_ca35_4470_889b_e3c44e4200f9,raw_795c9179_ca35_4470_889b_e3c44e4200f9,Valentin Guenebaut,Valentin Guenebaut,valentin guenebaut,26,19,7,73.07692307692308,Tracked deploy-safe summary from local match-centre result rows.
+valentin_guenebaut,valentin_guenebaut,Valentin Guenebaut,Valentin Guenebaut,valentin guenebaut,64,35,29,54.6875,Tracked deploy-safe summary from local match-centre result rows.
 raw_ddb876d5_1818_4b7a_b9fa_727e460716ad,raw_ddb876d5_1818_4b7a_b9fa_727e460716ad,Vaninder Pal Singh,Vaninder Pal Singh,vaninder pal singh,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_9b689b3b_1fde_4f98_b3f1_1b8381b111a3,raw_9b689b3b_1fde_4f98_b3f1_1b8381b111a3,Varun Kashyap,Varun Kashyap,varun kashyap,4,1,3,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_822251f6_c764_4fd0_a0db_fc4066fde55d,raw_822251f6_c764_4fd0_a0db_fc4066fde55d,Varuna Dharmarathna,Varuna Dharmarathna,varuna dharmarathna,32,20,12,62.5,Tracked deploy-safe summary from local match-centre result rows.
@@ -1134,10 +1054,8 @@ raw_3de34d08_e820_46be_be15_abf43e72abf3,raw_3de34d08_e820_46be_be15_abf43e72abf
 raw_57827e6e_e123_416d_a5b4_30ee6c8c3f84,raw_57827e6e_e123_416d_a5b4_30ee6c8c3f84,Visith Wijeweera,Visith Wijeweera,visith wijeweera,100,49,51,49.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_24bca6ff_ca0b_46c3_9e39_626c685f435e,raw_24bca6ff_ca0b_46c3_9e39_626c685f435e,Vivaan Desai,Vivaan Desai,vivaan desai,12,2,10,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_6d27d683_5890_4784_b58a_da8fbe541c95,raw_6d27d683_5890_4784_b58a_da8fbe541c95,Vivaan Devle,Vivaan Devle,vivaan devle,13,1,12,7.6923076923076925,Tracked deploy-safe summary from local match-centre result rows.
-raw_a0dee68d_01e1_4035_860e_19783c041c14,raw_a0dee68d_01e1_4035_860e_19783c041c14,Vivaan Mehta,Vivaan Mehta,vivaan mehta,23,12,11,52.17391304347826,Tracked deploy-safe summary from local match-centre result rows.
-raw_859b270e_985b_4643_bc84_c4ec35f92e79,raw_859b270e_985b_4643_bc84_c4ec35f92e79,Vivaan Mehta,Vivaan Mehta,vivaan mehta,71,34,37,47.88732394366197,Tracked deploy-safe summary from local match-centre result rows.
-raw_2c3935c0_a073_4a44_896b_363566dc80a4,raw_2c3935c0_a073_4a44_896b_363566dc80a4,Vivaan Tonapi,Vivaan Tonapi,vivaan tonapi,19,13,6,68.42105263157895,Tracked deploy-safe summary from local match-centre result rows.
-raw_fe3a8862_6b9b_42cd_b4ff_e204951f91f3,raw_fe3a8862_6b9b_42cd_b4ff_e204951f91f3,Vivaan Tonapi,Vivaan Tonapi,vivaan tonapi,27,13,14,48.148148148148145,Tracked deploy-safe summary from local match-centre result rows.
+vivaan_mehta,vivaan_mehta,Vivaan Mehta,Vivaan Mehta,vivaan mehta,94,46,48,48.93617021276596,Tracked deploy-safe summary from local match-centre result rows.
+vivaan_tonapi,vivaan_tonapi,Vivaan Tonapi,Vivaan Tonapi,vivaan tonapi,46,26,20,56.52173913043478,Tracked deploy-safe summary from local match-centre result rows.
 raw_b945dd91_80e7_4db7_b767_8493dd18e530,raw_b945dd91_80e7_4db7_b767_8493dd18e530,W Martin,W Martin,w martin,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_156f021c_e619_4746_8e64_ff399430d179,raw_156f021c_e619_4746_8e64_ff399430d179,Wade King,Wade King,wade king,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_6cb504fe_3e48_4bf1_82af_4b9f236e3875,raw_6cb504fe_3e48_4bf1_82af_4b9f236e3875,Wes Mendes,Wes Mendes,wes mendes,45,31,14,68.88888888888889,Tracked deploy-safe summary from local match-centre result rows.
@@ -1147,11 +1065,9 @@ raw_f5e4bdb4_1c1a_4f97_ada2_9c36254cf77a,raw_f5e4bdb4_1c1a_4f97_ada2_9c36254cf77
 raw_0f773581_b4c2_46d1_8807_eeba6c744370,raw_0f773581_b4c2_46d1_8807_eeba6c744370,Will Girdwood,Will Girdwood,will girdwood,33,23,10,69.6969696969697,Tracked deploy-safe summary from local match-centre result rows.
 raw_23fcd9a9_274b_4ead_b4d3_91e596b72c10,raw_23fcd9a9_274b_4ead_b4d3_91e596b72c10,Will Liakakos,Will Liakakos,will liakakos,15,11,4,73.33333333333333,Tracked deploy-safe summary from local match-centre result rows.
 raw_e726eb15_3e6f_45b9_8e41_2cfbca3dca10,raw_e726eb15_3e6f_45b9_8e41_2cfbca3dca10,Will Thurston,Will Thurston,will thurston,10,5,5,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_cf4a5fb0_4a7e_4632_ba29_8fe0f7ee3cf7,raw_cf4a5fb0_4a7e_4632_ba29_8fe0f7ee3cf7,William Croxford,William Croxford,william croxford,80,30,50,37.5,Tracked deploy-safe summary from local match-centre result rows.
-raw_daf3ea92_752b_4a7f_b204_c5358cb8e252,raw_daf3ea92_752b_4a7f_b204_c5358cb8e252,William Croxford,William Croxford,william croxford,23,14,9,60.869565217391305,Tracked deploy-safe summary from local match-centre result rows.
+william_croxford,william_croxford,William Croxford,William Croxford,william croxford,103,44,59,42.71844660194175,Tracked deploy-safe summary from local match-centre result rows.
 raw_94f97fe5_d438_49f8_b0c5_e7eb0021d84a,raw_94f97fe5_d438_49f8_b0c5_e7eb0021d84a,William Lane,William Lane,william lane,14,3,11,21.428571428571427,Tracked deploy-safe summary from local match-centre result rows.
-raw_233afba5_91c9_4089_951e_cc695c77fe5c,raw_233afba5_91c9_4089_951e_cc695c77fe5c,William Lee,William Lee,william lee,74,36,38,48.648648648648646,Tracked deploy-safe summary from local match-centre result rows.
-raw_3a659030_9e6d_4845_b8f3_b087120602b3,raw_3a659030_9e6d_4845_b8f3_b087120602b3,William Lee,William Lee,william lee,3,0,3,0.0,Tracked deploy-safe summary from local match-centre result rows.
+william_lee,william_lee,William Lee,William Lee,william lee,77,36,41,46.753246753246756,Tracked deploy-safe summary from local match-centre result rows.
 raw_9ca4df57_e157_47a5_9468_701b60c57780,raw_9ca4df57_e157_47a5_9468_701b60c57780,William Mcmahon,William Mcmahon,william mcmahon,3,3,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_8078a35f_cbbf_4077_b737_94597be8021b,raw_8078a35f_cbbf_4077_b737_94597be8021b,William T Speakman,William T Speakman,william t speakman,11,4,7,36.36363636363637,Tracked deploy-safe summary from local match-centre result rows.
 raw_43062792_ebb9_477b_a0e9_d2575e54266e,raw_43062792_ebb9_477b_a0e9_d2575e54266e,William Walters,William Walters,william walters,6,4,2,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
@@ -1174,5 +1090,5 @@ raw_1bc2a603_46a7_4674_8aa8_e2b69c059e17,raw_1bc2a603_46a7_4674_8aa8_e2b69c059e1
 raw_3a495e55_5958_45eb_95f6_4f6aa2e74d39,raw_3a495e55_5958_45eb_95f6_4f6aa2e74d39,Zachary Pryde,Zachary Pryde,zachary pryde,41,20,21,48.78048780487805,Tracked deploy-safe summary from local match-centre result rows.
 raw_d5938ae7_f3af_4c97_ad73_7cd6bd32be05,raw_d5938ae7_f3af_4c97_ad73_7cd6bd32be05,Zack Watson,Zack Watson,zack watson,10,5,5,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_97bac3d1_ceb1_49de_abc2_adfa8734bf51,raw_97bac3d1_ceb1_49de_abc2_adfa8734bf51,Zak Hattersley,Zak Hattersley,zak hattersley,78,37,41,47.43589743589744,Tracked deploy-safe summary from local match-centre result rows.
-raw_f9946af0_9ff5_4216_9d6d_ff4bef0f9446,raw_f9946af0_9ff5_4216_9d6d_ff4bef0f9446,Zara Sharma,Zara Sharma,zara sharma,6,1,5,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.
 raw_00414835_8b61_4d76_a871_b2df15877220,raw_00414835_8b61_4d76_a871_b2df15877220,Zara Sharma,Zara Sharma,zara sharma,10,2,8,20.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_f9946af0_9ff5_4216_9d6d_ff4bef0f9446,raw_f9946af0_9ff5_4216_9d6d_ff4bef0f9446,Zara Sharma,Zara Sharma,zara sharma,6,1,5,16.666666666666668,Tracked deploy-safe summary from local match-centre result rows.

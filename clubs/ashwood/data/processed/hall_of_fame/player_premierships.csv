@@ -1,1 +1,104 @@
-canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+canonical_player_id,canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+aidan_morton,Aidan Morton,Aidan Morton,2,"Summer 2021/22, Summer 2024/25","05. U16C K Noy, U13 Combined Sunday - Tim Boyce Shield","Ashwood U16 Mixed FRI, Ashwood",Summer 2024/25,"a7f9b6f7-d2d0-4487-a407-de7bf47acde2, d544714a-4c4c-47d3-918a-9917e29e984a",high
+harein_malawwethantri,Harein Malawwethantri,Harein Malawwethantri,2,"Summer 2020/21, Summer 2024/25","Under 12B E R Frampton, 05. U16C K Noy","Ashwood, Ashwood U16 Mixed FRI",Summer 2024/25,"a13ca232-d85a-4d65-beb3-fc1f62672334, a7f9b6f7-d2d0-4487-a407-de7bf47acde2",high
+valentin_guenebaut,Valentin Guenebaut,Valentin Guenebaut,2,"Summer 2020/21, Summer 2024/25","Under 12B E R Frampton, 05. U16C K Noy","Ashwood, Ashwood U16 Mixed FRI",Summer 2024/25,"a13ca232-d85a-4d65-beb3-fc1f62672334, a7f9b6f7-d2d0-4487-a407-de7bf47acde2",high
+raw_b38d25d8_5ccb_4566_b1db_beb84d7aca27,Declan Varga,Declan Varga,2,"Summer 2022/23, Summer 2023/24","LOC 7 - 35 Overs (Fitzwilliam Shield), 34. LOC5 - Tom Minahan Shield","Ashwood, Ashwood 3rd XI",Summer 2023/24,"413f5e90-7f0d-4d45-8309-c900405a7257, d73e955a-faee-454c-838a-fa9083f2ef95",high
+cohen_billing,Cohen Billing,Cohen Billing,2,"Summer 2020/21, Summer 2021/22","Under 12B E R Frampton, U13 Combined Sunday - Tim Boyce Shield",Ashwood,Summer 2021/22,"a13ca232-d85a-4d65-beb3-fc1f62672334, d544714a-4c4c-47d3-918a-9917e29e984a",high
+raw_a4f5d166_6e07_4bb5_a126_5d2d73ff6695,Hugo Fitton,Hugo Fitton,2,"Summer 2020/21, Summer 2021/22","Under 12B E R Frampton, U13 Combined Sunday - Tim Boyce Shield",Ashwood,Summer 2021/22,"a13ca232-d85a-4d65-beb3-fc1f62672334, d544714a-4c4c-47d3-918a-9917e29e984a",high
+murray_hawtin,Murray Hawtin,Murray Hawtin,2,"Summer 2020/21, Summer 2021/22","Under 12B E R Frampton, U13 Combined Sunday - Tim Boyce Shield",Ashwood,Summer 2021/22,"a13ca232-d85a-4d65-beb3-fc1f62672334, d544714a-4c4c-47d3-918a-9917e29e984a",high
+raw_14d2f074_9173_4f53_8536_348f349efa57,James Morrey,James Morrey,2,"Summer 2010/11, Summer 2016/17","Under 14B F J Dobeli, E Turf (Cohen Shield)",Ashwood,Summer 2016/17,"387e2e11-66c0-4003-937f-6471b12eacec, 3dc44122-cda6-4096-8b5e-870d341164e5",high
+raw_cfe70af8_a02f_48bf_9df4_cb27b84b11ac,Timothy Pape,Timothy Pape,2,"Summer 2007/08, Summer 2016/17","A Turf (Sturgess Shield), E Turf (Cohen Shield)",Ashwood,Summer 2016/17,"06004e49-a099-48db-880c-10d5895e6456, 3dc44122-cda6-4096-8b5e-870d341164e5",high
+aaryan_panchal,Aaryan Panchal,Aaryan Panchal,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_efc85b0d_faaa_49e5_8a44_416ed3f20b15,Amaan Ahsan,Amaan Ahsan,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_6b63737b_e004_4ce0_b6f3_a533a192866f,Archie Marquet,Archie Marquet,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_3b2fbce6_00c8_4b50_af4d_e13189ef2ce0,Charlie Skepper,Charlie Skepper,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+hamish_lee,Hamish Lee,Hamish Lee,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_0853a219_1ec9_4df4_acf2_9d73beeef81b,Hugo Fitton,Hugo Fitton,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_6146b257_0c0e_43e8_9fe2_1d334d571e54,Jai Sharma,Jai Sharma,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_42068b77_06d0_4e80_ae8b_f7c9ca16ef6b,Lachlan Smith,Lachlan Smith,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+raw_4faf2304_e764_49ed_8cc3_21f492b2b164,Marvin Singh,Marvin Singh,1,Summer 2024/25,05. U16C K Noy,Ashwood U16 Mixed FRI,Summer 2024/25,a7f9b6f7-d2d0-4487-a407-de7bf47acde2,high
+anthony_papalia,Anthony Papalia,Anthony Papalia,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+charlie_hawtin,Charlie Hawtin,Charlie Hawtin,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+raw_8f49ac0b_7cf8_455f_b54d_871153206789,Connor Wall,Connor Wall,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+jack_von_fersen,Jack Von Fersen,Jack Von Fersen,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+raw_a8807fc5_34c0_4bda_ac84_ab843990c2a3,Nirujan Vijayarajan,Nirujan Vijayarajan,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+raw_c9e28016_34c9_492e_8c19_48e3d5b5c371,Nishil Shah,Nishil Shah,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+oliver_steer,Oliver Steer,Oliver Steer,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+raw_3449b9ba_4bbf_4a99_afc3_be3f2142ac3d,Praveen Prakash,Praveen Prakash,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+raw_93c87559_7ccc_4e16_bd28_dd0538acea52,Rahul Victor Rajeevan,Rahul Victor Rajeevan,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+william_croxford,William Croxford,William Croxford,1,Summer 2023/24,34. LOC5 - Tom Minahan Shield,Ashwood 3rd XI,Summer 2023/24,d73e955a-faee-454c-838a-fa9083f2ef95,high
+alex_hamlyn,Alex Hamlyn,Alex Hamlyn,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_3c946744_511a_42a8_a518_dc543ae7f726,Alexander Feola,Alexander Feola,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_79dd4673_5372_4af3_b687_7b49b77bc18e,Kyle Loughnan,Kyle Loughnan,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_f4e81faf_9a9f_443e_8eb8_a8840efc3623,Lachlan Stewart,Lachlan Stewart,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_7c65f496_86df_4028_9a19_14db4d0da655,Mitchell Gerny,Mitchell Gerny,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+noah_leipold,Noah Leipold,Noah Leipold,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+pascal_traczewski,Pascal Traczewski,Pascal Traczewski,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_9a1337f1_beb9_4e04_bb89_26d641e1e10b,Silas Fisher,Silas Fisher,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_7b9d5dc0_0ce1_4d67_b1fc_09d6c660d82a,Timothy Loughnan,Timothy Loughnan,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_a8920b05_8510_4e06_90f4_e65a5bc15c6e,Wesley Mendes,Wesley Mendes,1,Summer 2022/23,LOC 7 - 35 Overs (Fitzwilliam Shield),Ashwood,Summer 2022/23,413f5e90-7f0d-4d45-8309-c900405a7257,high
+raw_f4c5d937_5198_467d_89ea_9325dfb6e299,Jake Selby,Jake Selby,1,Summer 2021/22,U13 Combined Sunday - Tim Boyce Shield,Ashwood,Summer 2021/22,d544714a-4c4c-47d3-918a-9917e29e984a,high
+raw_438dd132_8d29_426c_af25_be84b3db6a9f,Josh Edmonds,Josh Edmonds,1,Summer 2021/22,U13 Combined Sunday - Tim Boyce Shield,Ashwood,Summer 2021/22,d544714a-4c4c-47d3-918a-9917e29e984a,high
+raw_14d633f7_6dc3_4575_8541_32cae00b772d,Kanan Budhiraja,Kanan Budhiraja,1,Summer 2021/22,U13 Combined Sunday - Tim Boyce Shield,Ashwood,Summer 2021/22,d544714a-4c4c-47d3-918a-9917e29e984a,high
+rafael_sergianis,Rafael Sergianis,Rafael Sergianis,1,Summer 2021/22,U13 Combined Sunday - Tim Boyce Shield,Ashwood,Summer 2021/22,d544714a-4c4c-47d3-918a-9917e29e984a,high
+raw_89ab5485_8ed4_4609_8f7c_b511550777d6,Rhys Scott,Rhys Scott,1,Summer 2021/22,U13 Combined Sunday - Tim Boyce Shield,Ashwood,Summer 2021/22,d544714a-4c4c-47d3-918a-9917e29e984a,high
+raw_db6e6fed_7c1b_4b9e_b805_c4710634af11,Ava Barton,Ava Barton,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_80a0a724_7797_4405_9481_b2c80fdac771,Ethan Brown,Ethan Brown,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_ceb56dc5_bfaf_43f7_a077_07cdabbb4bb3,Huzaifa Adnan,Huzaifa Adnan,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_7d63cecb_afee_4bf1_971d_bc0c475900d7,Lachlan Smith,Lachlan Smith,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_2f8c171f_a169_4281_a14a_636a45fe288c,Lachlan Wu,Lachlan Wu,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_e4805d9a_2dcb_4504_93bf_3f7a26e9ebcd,Shaan Loganathan,Shaan Loganathan,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_e27eb6a7_fd61_48dc_9cc5_e3ea0084168f,Yianni Touloupis,Yianni Touloupis,1,Summer 2020/21,Under 12B E R Frampton,Ashwood,Summer 2020/21,a13ca232-d85a-4d65-beb3-fc1f62672334,high
+raw_a4ea32c4_f86a_4c58_85a7_a83752281ebd,Alexander Danaher,Alexander Danaher,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_8ebb7739_edc3_4d21_ba57_4b8ca8187e2e,Arjuna Wijegunaratne,Arjuna Wijegunaratne,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_2900a57e_3cfd_47f6_b193_884f12b5b7cb,Ashan De Silva,Ashan De Silva,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+brendan_jones,Brendan Jones,Brendan Jones,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_94887439_6c48_44d1_a5b9_d8aaf1b68ddc,Cameron Flint,Cameron Flint,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_3b0b90b4_4470_45fb_8b3e_9011a7661393,Jarryd Mcguane,Jarryd Mcguane,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_ac067f23_88f4_41ea_aa61_1dfcf2a3d536,Mitchell Newton,Mitchell Newton,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_d60beaa1_e757_4fb7_a7df_e7d7d96210ff,Myles Danaher,Myles Danaher,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_72b68d5d_ab79_43d6_a2a7_96e4583caa29,Nathan Fitzpatrick,Nathan Fitzpatrick,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_e90a9378_a554_4cc0_befb_20b6c35ae579,Sanjay Chandrasekhar,Sanjay Chandrasekhar,1,Summer 2016/17,E Turf (Cohen Shield),Ashwood,Summer 2016/17,3dc44122-cda6-4096-8b5e-870d341164e5,high
+raw_55e47bb3_abf5_4453_a752_8a6c498a9014,Aidan Spence,Aidan Spence,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_06c8b74c_580f_43d1_aa86_2a2407ce2364,Angus Wood,Angus Wood,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_883f0bfd_d699_4e5f_98bc_f5bc3678f8ee,Connor Rate,Connor Rate,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_f2b578f4_21f9_4b84_9468_164ff70b75e1,Curtis Ward,Curtis Ward,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_d3967489_a284_474b_ac68_52576167707c,Daniel Spence,Daniel Spence,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_7a7346d6_1532_4684_ba3a_c1be4dd19a99,Harris Diviny,Harris Diviny,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_be7b5038_22b1_41c1_a7c5_bcad6f773345,Jake Langton,Jake Langton,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_603176df_bece_4233_b234_02891091f482,John Bird,John Bird,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_372c7761_07bb_4210_9c64_e64705735805,Lucas Morrey,Lucas Morrey,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_6c46390b_2536_41bb_a9dc_a74526f91a3c,Minul Ratnayake,Minul Ratnayake,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_0f087d81_fb75_4656_8aae_5d3ba2d2fdb9,Satvik Verma,Satvik Verma,1,Summer 2010/11,Under 14B F J Dobeli,Ashwood,Summer 2010/11,387e2e11-66c0-4003-937f-6471b12eacec,high
+raw_08f3c30c_03f6_4e9e_91fe_4e2f6088cfe7,Adam Rolfe,Adam Rolfe,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_ab52e20b_b889_41a5_a184_4d4c6666307a,Anthony Edmonds,Anthony Edmonds,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_163629f9_f82f_4326_8347_249d7c011d66,Brendon Stack,Brendon Stack,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_b98cb8e2_99a7_4b9c_911a_9bc82fca1ca3,Dale Wilkinson,Dale Wilkinson,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_ee9c62e0_945b_423d_83f0_e0cb5bdecdf2,Darren Sheean,Darren Sheean,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_e35db09a_37b8_4803_a73a_4d6355568bad,Mark Edmonds,Mark Edmonds,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+michael_wilson,Michael Wilson,Michael Wilson,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_db26ebb5_2dca_44e3_bd52_f230bc7a6235,O Effendi,O Effendi,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_079453d4_f839_40e0_bfe1_4de871486f75,Paul Weston,Paul Weston,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_822251f6_c764_4fd0_a0db_fc4066fde55d,Varuna Dharmarathna,Varuna Dharmarathna,1,Summer 2007/08,A Turf (Sturgess Shield),Ashwood,Summer 2007/08,06004e49-a099-48db-880c-10d5895e6456,high
+raw_073e0dc7_49f0_43e7_969f_9f72d0f04ff4,Bryan Sword,Bryan Sword,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_2a60a673_0e4c_4b7a_bd36_63d0d505238b,Christopher Leeton,Christopher Leeton,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_26c3898a_b55a_4f5d_ba9a_51ca438a01dc,Harrison Lefebure,Harrison Lefebure,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_0e08c53c_2ee8_4209_a889_9145ee8c9b32,Jamie Bliss,Jamie Bliss,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_e7236d10_71c1_4a36_bbde_ce9821602066,Jonathan Cook,Jonathan Cook,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_b49a4e79_b203_4791_9299_3538640817e2,Marcus Naughton,Marcus Naughton,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_5489a9d8_7f20_4a40_a81f_6286bc700644,Max Tennison,Max Tennison,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_4b448716_c276_4003_a2f0_2808bd8e1bb8,Simon Morrison,Simon Morrison,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_ab177621_3845_48c1_9eb2_ca41282203ac,Simon O'Connor,Simon O'Connor,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_3e774131_ab12_49de_ada7_36f319d1e349,Tony Gooding,Tony Gooding,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_6648650d_7963_483d_b8d6_7c3813da82ef,Trent Logan,Trent Logan,1,Summer 2005/06,C1 (C Gold),Ashwood,Summer 2005/06,45ef0a13-325c-439f-9587-1d53e03a1610,high
+raw_56d35c55_1f2e_4224_8c57_cc380bb05f13,Andrew Carter,Andrew Carter,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_77154762_9fc5_454c_a90a_d9bd5a563fe5,Andrew Hickey,Andrew Hickey,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_6d05a294_33de_456f_bb9f_d1908934b7a6,Ben Higgins,Ben Higgins,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_79d9891a_8e17_4084_b8fe_e5e4e3d32080,Brent Field,Brent Field,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_5a0879a7_f6ef_4c7a_8d61_268aa8c4d285,Chris Safstrom,Chris Safstrom,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_315a6372_9207_4f45_b04c_d78374ffb070,Leigh Northway,Leigh Northway,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_5135743a_4833_42f3_a5a3_273878e14b50,Matt Laverty,Matt Laverty,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_596edb0f_9b32_495e_b2a1_87a56a795fdf,Robert Murphy,Robert Murphy,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_320cce31_3e59_46cf_abd4_cc5a41acaa25,Rohan Benstead,Rohan Benstead,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_0eed874d_38bb_45a3_9321_4aee8faf9337,Sam Morris,Sam Morris,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
+raw_eb284608_0394_43ce_bd92_b2d89c443a01,Tom Huggins,Tom Huggins,1,Summer 2004/05,D Gold,Ashwood,Summer 2004/05,72547c16-a184-407b-ab6d-a6ee078c4742,high
