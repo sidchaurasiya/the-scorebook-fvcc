@@ -391,3 +391,14 @@ Follow-up status: Preview-ready after final visual review.
 - Hall of Fame: Men/Women toggle added and verified. Women’s view shows classified women’s records and clean empty states where sections have no women’s data.
 - Links: HOF player, season, and scorecard links remained valid in local smoke.
 - Remaining caveats: 14 manual duplicate groups remain, opponent/ground mappings are still conservative starter mappings, and a final human mobile/narrow visual pass is still recommended.
+
+## Fastest Innings Validation Follow-Up - May 27, 2026
+
+Fastest Innings is now stricter across all pilot clubs and FVCC.
+
+- Source cumulative batter-run fields are advisory only; deploy-safe fastest records use per-delivery batter-run progression unless source cumulative values validate cleanly.
+- Suspicious rows are excluded or corrected before display. Missing or untrustworthy ball-by-ball coverage remains unavailable rather than guessed.
+- The false-looking fastest 50 examples were corrected from existing local ball-by-ball data: Plenty Geoffrey King 52 balls, Reynella Cameron Pannach 63 balls, and Georges River Christopher McArthur 35 balls.
+- No deploy-safe fastest 50 is below 9 balls and no deploy-safe fastest 100 is below 17 balls after rebuild.
+- HOF Iconic Performances and Fastest Innings now use active club theming variables instead of old FVCC purple accents.
+- Detailed before/after counts are in `docs/multi_club_fastest_innings_audit.md`.

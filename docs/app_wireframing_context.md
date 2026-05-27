@@ -1833,3 +1833,16 @@ Design and product implications:
 - Before client-facing wireframes or previews, allow for team/grade mapping cleanup and duplicate-player review states in the product language.
 
 Detailed run counts live in `docs/multi_club_match_centre_backfill_summary.md`.
+
+## 23. Fastest Innings Trust Boundary
+
+Fastest Innings must remain a verified ball-by-ball section. The deploy-safe builder should use the batter's per-delivery run progression and legal balls faced, not unvalidated source cumulative fields.
+
+Display rules:
+
+- Show fastest 50s/100s only when verified local ball-by-ball rows confirm the milestone timing.
+- Treat source cumulative batter runs as advisory unless they are monotonic, plausible delivery-by-delivery, and reconcile with scorecard/per-delivery totals.
+- Treat scorecard balls of `0` as missing when verified ball-by-ball legal-ball counts exist.
+- Exclude suspicious records instead of showing false precision. As a guardrail, fastest 50s below 9 balls and fastest 100s below 17 balls must not display unless explicitly verified by a trustworthy delivery sequence.
+- Keep the subtitle/trust language: "Based on matches with verified ball-by-ball data."
+- HOF Iconic Performances and Fastest Innings visual accents should use active club colour variables, not FVCC-only purple values.

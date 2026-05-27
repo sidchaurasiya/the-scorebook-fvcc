@@ -11,6 +11,7 @@ from src.data.name_normalization import normalize_ground_name, normalize_opponen
 
 
 MILESTONES = [25, 50, 100, 150]
+MIN_PLAUSIBLE_MILESTONE_BALLS = {50: 9, 100: 17}
 
 
 @dataclass(frozen=True)
@@ -172,17 +173,66 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
             scorecard = scorecard.iloc[0]
         group = group.sort_values(["innings_order", "over_number", "ball_number", "ball_event_id"]).copy()
         group["runs_bat"] = pd.to_numeric(group.get("runs_bat"), errors="coerce").fillna(0)
-        group["legal_ball"] = group.get("is_legal_delivery", pd.Series(dtype="object")).map(parse_bool).astype(int)
-        balls_source_used = "source_cumulative" if has_source_cumulative_balls(group) else "derived_legal_balls"
-        group["batter_runs"] = cumulative_batter_runs(group)
+        group["legal_ball"] = legal_delivery_series(group)
+        scorecard_final_runs = safe_int(scorecard.get("runs_scored"))
+        scorecard_final_balls = positive_safe_int(scorecard.get("balls_faced"))
+        runs_source_used, run_warnings = choose_batter_runs_source(group, scorecard_final_runs)
+        group["batter_runs"] = cumulative_batter_runs(group, runs_source_used)
+        balls_source_used, ball_warnings = choose_balls_faced_source(group, scorecard_final_balls)
         group["balls_faced"] = cumulative_balls_faced(group, balls_source_used)
+        trusted_final_runs = safe_int(group["batter_runs"].max())
+        if (
+            scorecard_final_runs is not None
+            and trusted_final_runs is not None
+            and trusted_final_runs != scorecard_final_runs
+            and runs_source_used != "source_cumulative_validated"
+        ):
+            warnings.append(
+                validation_row(
+                    "trusted_runs_mismatch_scorecard_excluded",
+                    "excluded",
+                    match_id,
+                    innings_id,
+                    participant_id,
+                    scorecard_final_runs,
+                    trusted_final_runs,
+                    "Fastest milestones were excluded because verified per-delivery batter runs could not be reconciled with the scorecard total.",
+                    scorecard_final_balls,
+                    safe_int(group["balls_faced"].dropna().iloc[-1]) if group["balls_faced"].notna().any() else None,
+                    {},
+                    balls_source_used,
+                    runs_source_used,
+                )
+            )
+            continue
         milestones = {f"balls_to_{target}": milestone_ball(group, target) for target in MILESTONES}
+        for target, minimum in MIN_PLAUSIBLE_MILESTONE_BALLS.items():
+            milestone_key = f"balls_to_{target}"
+            milestone_value = milestones.get(milestone_key)
+            if milestone_value is not None and milestone_value < minimum:
+                warnings.append(
+                    validation_row(
+                        f"balls_to_{target}_below_plausibility_threshold",
+                        "excluded",
+                        match_id,
+                        innings_id,
+                        participant_id,
+                        f">={minimum}",
+                        milestone_value,
+                        f"Fastest {target} below the hard plausibility threshold was excluded from deploy-safe records.",
+                        scorecard_final_balls,
+                        safe_int(group["balls_faced"].dropna().iloc[-1]) if group["balls_faced"].notna().any() else None,
+                        milestones,
+                        balls_source_used,
+                        runs_source_used,
+                    )
+                )
+                milestones[milestone_key] = None
         if all(value is None for value in milestones.values()):
             continue
-        final_runs = int(pd.to_numeric(scorecard.get("runs_scored"), errors="coerce")) if pd.notna(scorecard.get("runs_scored")) else int(group["batter_runs"].max())
+        final_runs = scorecard_final_runs if scorecard_final_runs is not None else int(group["batter_runs"].max())
         source_final_balls = safe_int(group["balls_faced"].dropna().iloc[-1]) if group["balls_faced"].notna().any() else None
-        scorecard_final_balls = safe_int(scorecard.get("balls_faced"))
-        final_balls = scorecard_final_balls if scorecard_final_balls is not None else source_final_balls
+        final_balls = trusted_final_balls(scorecard_final_balls, source_final_balls)
         team_runs = pd.to_numeric(scorecard.get("team_runs"), errors="coerce")
         identity_row = identity.get(participant_id, {})
         player_name = as_text(scorecard.get("player_name") or scorecard.get("player_short_name"))
@@ -194,6 +244,8 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
                 "player_name": player_name,
                 "canonical_player_name": identity_row.get("canonical_name") or player_name,
                 "match_id": match_id,
+                "innings_id": innings_id,
+                "participant_id": participant_id,
                 "match_date": scorecard.get("match_date"),
                 "season": scorecard.get("season"),
                 "team_name": scorecard.get("team_name"),
@@ -209,21 +261,28 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
                 "team_run_contribution_pct": safe_div(final_runs * 100, float(team_runs)) if pd.notna(team_runs) else pd.NA,
                 "result_text": scorecard.get("result_text"),
                 "is_not_out": not_out,
+                "runs_source_used": runs_source_used,
                 "balls_faced_source_used": balls_source_used,
                 "source_ball_by_ball_available": True,
             }
         )
+        for check_name, message in run_warnings:
+            warnings.append(validation_row(check_name, "warning", match_id, innings_id, participant_id, "valid cumulative runs", runs_source_used, message, scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
+        for check_name, message in ball_warnings:
+            warnings.append(validation_row(check_name, "warning", match_id, innings_id, participant_id, "valid cumulative balls", balls_source_used, message, scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
         derived_runs = int(group["batter_runs"].max())
         if final_runs != derived_runs:
-            warnings.append(validation_row("final_runs_match_scorecard", "warning", match_id, innings_id, participant_id, final_runs, derived_runs, "Derived ball-by-ball runs differ from scorecard runs.", scorecard_final_balls, source_final_balls, milestones, balls_source_used))
+            warnings.append(validation_row("final_runs_match_scorecard", "warning", match_id, innings_id, participant_id, final_runs, derived_runs, "Trusted ball-by-ball runs differ from scorecard runs.", scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
         if scorecard_final_balls is not None and source_final_balls is not None and scorecard_final_balls != source_final_balls:
-            warnings.append(validation_row("final_balls_match_scorecard", "warning", match_id, innings_id, participant_id, scorecard_final_balls, source_final_balls, "Ball-by-ball cumulative balls faced differ from scorecard balls faced.", scorecard_final_balls, source_final_balls, milestones, balls_source_used))
+            warnings.append(validation_row("final_balls_match_scorecard", "warning", match_id, innings_id, participant_id, scorecard_final_balls, source_final_balls, "Ball-by-ball cumulative balls faced differ from scorecard balls faced.", scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
+        if safe_int(scorecard.get("balls_faced")) == 0 and source_final_balls is not None:
+            warnings.append(validation_row("scorecard_balls_zero_treated_as_missing", "warning", match_id, innings_id, participant_id, "positive scorecard balls or verified BBB balls", 0, "Scorecard balls faced was zero, so verified ball-by-ball legal balls were used for fastest milestone timing.", scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
         for target in [50, 100]:
             milestone_value = milestones.get(f"balls_to_{target}")
             if scorecard_final_balls is not None and milestone_value is not None and milestone_value > scorecard_final_balls:
-                warnings.append(validation_row(f"balls_to_{target}_exceeds_scorecard_balls", "warning", match_id, innings_id, participant_id, scorecard_final_balls, milestone_value, f"Balls to {target} exceeds scorecard balls faced.", scorecard_final_balls, source_final_balls, milestones, balls_source_used))
+                warnings.append(validation_row(f"balls_to_{target}_exceeds_scorecard_balls", "warning", match_id, innings_id, participant_id, scorecard_final_balls, milestone_value, f"Balls to {target} exceeds scorecard balls faced.", scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
         if not_out and not has_clear_not_out_status(scorecard):
-            warnings.append(validation_row("not_out_status_inferred", "warning", match_id, innings_id, participant_id, "clear not-out dismissal field", "blank dismissal field", "Final score uses a not-out star because no dismissal was recorded for this batter.", scorecard_final_balls, source_final_balls, milestones, balls_source_used))
+            warnings.append(validation_row("not_out_status_inferred", "warning", match_id, innings_id, participant_id, "clear not-out dismissal field", "blank dismissal field", "Final score uses a not-out star because no dismissal was recorded for this batter.", scorecard_final_balls, source_final_balls, milestones, balls_source_used, runs_source_used))
     milestones = pd.DataFrame(rows, columns=empty_milestones().columns)
     return milestones, pd.DataFrame(warnings, columns=empty_validation().columns)
 
@@ -270,23 +329,95 @@ def load_identity_lookup(players_path: Path | None, aliases_path: Path | None) -
     return lookup
 
 
-def cumulative_batter_runs(group: pd.DataFrame) -> pd.Series:
+def choose_batter_runs_source(group: pd.DataFrame, scorecard_final_runs: int | None) -> tuple[str, list[tuple[str, str]]]:
+    derived_runs = pd.to_numeric(group.get("runs_bat"), errors="coerce").fillna(0).cumsum()
     source_runs = numeric_column(group, "striker_runs_scored")
-    if source_runs.notna().any():
-        return source_runs.ffill().fillna(0)
-    return group["runs_bat"].cumsum()
+    warnings: list[tuple[str, str]] = []
+    if source_runs.notna().any() and not source_cumulative_runs_valid(source_runs, derived_runs, scorecard_final_runs):
+        warnings.append(("source_cumulative_runs_invalid", "Source cumulative batter runs were non-monotonic, jumped implausibly, or disagreed with verified per-delivery batter runs."))
+    if scorecard_final_runs is not None and int(derived_runs.max()) != scorecard_final_runs:
+        if source_runs.notna().any() and source_cumulative_runs_valid(source_runs, derived_runs, scorecard_final_runs):
+            return "source_cumulative_validated", warnings
+        warnings.append(("derived_runs_mismatch_scorecard", "Per-delivery batter runs did not match the scorecard total; fastest milestones from this innings should be reviewed."))
+    return "derived_runs_bat", warnings
+
+
+def cumulative_batter_runs(group: pd.DataFrame, source_used: str = "derived_runs_bat") -> pd.Series:
+    if source_used == "source_cumulative_validated":
+        return numeric_column(group, "striker_runs_scored").ffill().fillna(0)
+    return pd.to_numeric(group.get("runs_bat"), errors="coerce").fillna(0).cumsum()
+
+
+def source_cumulative_runs_valid(source_runs: pd.Series, derived_runs: pd.Series, scorecard_final_runs: int | None) -> bool:
+    values = pd.to_numeric(source_runs, errors="coerce").ffill().fillna(0)
+    if values.empty or not values.notna().any():
+        return False
+    deltas = values.diff().fillna(values)
+    if (deltas < 0).any():
+        return False
+    if (deltas > 6).any():
+        return False
+    final_source = safe_int(values.iloc[-1])
+    final_derived = safe_int(derived_runs.iloc[-1]) if not derived_runs.empty else None
+    if scorecard_final_runs is not None and final_source != scorecard_final_runs:
+        return False
+    if final_derived is not None and scorecard_final_runs == final_derived:
+        max_gap = (values - derived_runs).abs().max()
+        if pd.notna(max_gap) and float(max_gap) > 6:
+            return False
+    return True
+
+
+def choose_balls_faced_source(group: pd.DataFrame, scorecard_final_balls: int | None) -> tuple[str, list[tuple[str, str]]]:
+    warnings: list[tuple[str, str]] = []
+    if has_source_cumulative_balls(group):
+        source_balls = numeric_column(group, "striker_balls_faced").ffill()
+        derived_balls = group["legal_ball"].cumsum()
+        if source_cumulative_balls_valid(source_balls, derived_balls, scorecard_final_balls):
+            return "source_cumulative_validated", warnings
+        warnings.append(("source_cumulative_balls_invalid", "Source cumulative balls faced were missing, non-monotonic, or disagreed with scorecard/verified legal-ball counts."))
+    return "derived_legal_balls", warnings
 
 
 def cumulative_balls_faced(group: pd.DataFrame, source_used: str) -> pd.Series:
-    if source_used == "source_cumulative":
+    if source_used == "source_cumulative_validated":
         return numeric_column(group, "striker_balls_faced").ffill()
     return group["legal_ball"].cumsum()
+
+
+def source_cumulative_balls_valid(source_balls: pd.Series, derived_balls: pd.Series, scorecard_final_balls: int | None) -> bool:
+    values = pd.to_numeric(source_balls, errors="coerce").ffill()
+    if values.empty or values.notna().sum() == 0:
+        return False
+    filled = values.fillna(0)
+    deltas = filled.diff().fillna(filled)
+    if (deltas < 0).any() or (deltas > 1).any():
+        return False
+    final_source = positive_safe_int(filled.iloc[-1])
+    final_derived = positive_safe_int(derived_balls.iloc[-1]) if not derived_balls.empty else None
+    if scorecard_final_balls is not None and final_source != scorecard_final_balls:
+        return False
+    if scorecard_final_balls is None and final_derived is not None and final_source != final_derived:
+        return False
+    return True
 
 
 def has_source_cumulative_balls(group: pd.DataFrame) -> bool:
     if "striker_balls_faced" not in group:
         return False
     return pd.to_numeric(group["striker_balls_faced"], errors="coerce").notna().any()
+
+
+def legal_delivery_series(group: pd.DataFrame) -> pd.Series:
+    if "is_legal_delivery" not in group:
+        return pd.Series(1, index=group.index)
+    return group["is_legal_delivery"].map(parse_bool).astype(int)
+
+
+def trusted_final_balls(scorecard_final_balls: int | None, source_final_balls: int | None) -> int | None:
+    if scorecard_final_balls is not None:
+        return scorecard_final_balls
+    return source_final_balls
 
 
 def milestone_ball(group: pd.DataFrame, target: int) -> int | None:
@@ -326,6 +457,7 @@ def validation_row(
     source_final_balls: object = "",
     milestones: dict[str, object] | None = None,
     balls_faced_source_used: object = "",
+    runs_source_used: object = "",
 ) -> dict[str, object]:
     milestones = milestones or {}
     return {
@@ -340,6 +472,7 @@ def validation_row(
         "source_final_balls": source_final_balls,
         "milestone_balls_to_50": milestones.get("balls_to_50", ""),
         "milestone_balls_to_100": milestones.get("balls_to_100", ""),
+        "runs_source_used": runs_source_used,
         "balls_faced_source_used": balls_faced_source_used,
         "message": message,
     }
@@ -352,6 +485,8 @@ def empty_milestones() -> pd.DataFrame:
             "player_name",
             "canonical_player_name",
             "match_id",
+            "innings_id",
+            "participant_id",
             "match_date",
             "season",
             "team_name",
@@ -370,6 +505,7 @@ def empty_milestones() -> pd.DataFrame:
             "team_run_contribution_pct",
             "result_text",
             "is_not_out",
+            "runs_source_used",
             "balls_faced_source_used",
             "source_ball_by_ball_available",
         ]
@@ -390,6 +526,7 @@ def empty_validation() -> pd.DataFrame:
             "source_final_balls",
             "milestone_balls_to_50",
             "milestone_balls_to_100",
+            "runs_source_used",
             "balls_faced_source_used",
             "message",
         ]
@@ -434,6 +571,13 @@ def safe_int(value: object) -> int | None:
     if pd.isna(number):
         return None
     return int(number)
+
+
+def positive_safe_int(value: object) -> int | None:
+    number = safe_int(value)
+    if number is None or number <= 0:
+        return None
+    return number
 
 
 def numeric_column(frame: pd.DataFrame, column: str) -> pd.Series:
