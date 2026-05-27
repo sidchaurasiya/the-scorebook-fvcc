@@ -22,6 +22,7 @@ if str(ROOT) not in sys.path:
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import get_processed_match_centre_dir, get_processed_path, get_season_overview_dir  # noqa: E402
 from src.data.match_centre_ownership import ensure_club_ownership_columns  # noqa: E402
+from src.data.scorecard_validation import filter_plausible_bowling_figures  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
@@ -264,6 +265,8 @@ def build_scorecard_bowling(frames: dict[str, pd.DataFrame], club_id: str | None
         return pd.DataFrame()
     rows = layout.scorecard_dedupe(rows, ["match_id", "innings_id", "participant_id"])
     rows["wickets_taken"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
+    rows["runs_conceded"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
+    rows = filter_plausible_bowling_figures(rows, wickets_column="wickets_taken", runs_column="runs_conceded")
     rows["is_3wi"] = rows["wickets_taken"].isin([3, 4])
     rows["is_5wi"] = rows["wickets_taken"] >= 5
     return group_scope(rows).agg(

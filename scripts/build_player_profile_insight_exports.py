@@ -25,6 +25,7 @@ from scripts import build_season_overview_detail_exports as season_exports  # no
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import get_player_profile_dir, get_processed_match_centre_dir, get_raw_match_centre_dir  # noqa: E402
 from src.data.name_normalization import normalize_opponent_club_name, normalize_ground_name as shared_normalize_ground_name  # noqa: E402
+from src.data.scorecard_validation import filter_plausible_bowling_figures  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
@@ -251,6 +252,7 @@ def prepare_bowling(frames: dict[str, pd.DataFrame], club_id: str | None = None)
     rows = ensure_display_player_name(rows)
     rows["wickets_numeric"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
     rows["runs_against_numeric"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
+    rows = filter_plausible_bowling_figures(rows, wickets_column="wickets_numeric", runs_column="runs_against_numeric")
     rows["balls_numeric"] = rows.get("overs_bowled", pd.Series(index=rows.index, dtype="object")).map(layout.cricket_overs_to_balls).fillna(0)
     rows = rows[rows["balls_numeric"].gt(0)].copy()
     rows["is_3wi"] = rows["wickets_numeric"].isin([3, 4])
