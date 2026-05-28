@@ -409,10 +409,10 @@ def build_batting_breakdown(batting: pd.DataFrame, balls: pd.DataFrame, dimensio
 
 def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, column: str) -> pd.DataFrame:
     if batting.empty or balls.empty:
-        return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced"])
+        return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_batting_innings", "bbb_matches"])
     keys = batting[
         player_dimension_columns(column)
-        + ["match_id", "innings_id", "participant_id", "runs_numeric", "balls_numeric"]
+        + ["match_id", "innings_id", "participant_id", "runs_numeric", "balls_numeric", "out"]
     ].drop_duplicates()
     ball_source = balls.drop(columns=["season_label", "grade_label", "opponent_label", "ground_label", "home_away_label", "captain_label"], errors="ignore")
     source = ball_source.merge(
@@ -422,7 +422,7 @@ def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, colu
         how="inner",
     )
     if source.empty:
-        return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced"])
+        return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_batting_innings", "bbb_matches"])
     source["wides"] = pd.to_numeric(source.get("wides"), errors="coerce").fillna(0)
     source["source_batter_runs"] = pd.to_numeric(source.get("striker_runs_scored"), errors="coerce")
     source["source_batter_balls"] = pd.to_numeric(source.get("striker_balls_faced"), errors="coerce")
@@ -438,6 +438,7 @@ def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, colu
         source_batter_balls=("source_batter_balls", "max"),
         scorecard_runs=("runs_numeric", "max"),
         scorecard_balls=("balls_numeric", "max"),
+        dismissed=("out", "max"),
     )
     has_ball_audit = innings["source_batter_runs"].notna() & innings["source_batter_balls"].notna()
     ball_audit_matches = (
@@ -458,10 +459,13 @@ def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, colu
         & ((has_ball_audit & ball_audit_matches) | (~has_ball_audit & scorecard_audit_matches))
     ].copy()
     if innings.empty:
-        return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced"])
+        return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_batting_innings", "bbb_matches"])
     return innings.groupby(player_dimension_columns(column), dropna=False, as_index=False).agg(
         bbb_runs=("bbb_runs", "sum"),
         bbb_balls_faced=("bbb_balls_faced", "sum"),
+        bbb_dismissals=("dismissed", "sum"),
+        bbb_batting_innings=("innings_id", "nunique"),
+        bbb_matches=("match_id", "nunique"),
     )
 
 

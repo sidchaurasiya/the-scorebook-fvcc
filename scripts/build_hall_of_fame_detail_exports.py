@@ -275,20 +275,19 @@ def build_player_bbb_batting_rates(batting: pd.DataFrame, balls: pd.DataFrame) -
         return pd.DataFrame()
     grouped = grouped.rename(columns={"canonical_player_id": "player_key"})
     grouped["canonical_player_id"] = grouped["player_key"]
-    grouped["bbb_batting_innings"] = pd.NA
-    grouped["bbb_matches"] = pd.NA
     grouped = grouped[
-        ["player_key", "canonical_player_id", "canonical_player_name", "display_player_name", "bbb_runs", "bbb_balls_faced", "bbb_batting_innings", "bbb_matches"]
+        [
+            "player_key",
+            "canonical_player_id",
+            "canonical_player_name",
+            "display_player_name",
+            "bbb_runs",
+            "bbb_balls_faced",
+            "bbb_dismissals",
+            "bbb_batting_innings",
+            "bbb_matches",
+        ]
     ].copy()
-    coverage = rows.groupby("canonical_player_id", as_index=False).agg(
-        bbb_batting_innings=("innings_id", "nunique"),
-        bbb_matches=("match_id", "nunique"),
-    )
-    grouped = grouped.drop(columns=["bbb_batting_innings", "bbb_matches"]).merge(
-        coverage.rename(columns={"canonical_player_id": "player_key"}),
-        on="player_key",
-        how="left",
-    )
     grouped["bat_sr"] = grouped.apply(lambda row: layout.divide_or_none(row["bbb_runs"] * 100, row["bbb_balls_faced"]), axis=1)
     return grouped.sort_values("display_player_name")
 

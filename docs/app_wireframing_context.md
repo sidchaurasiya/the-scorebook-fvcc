@@ -1315,9 +1315,8 @@ Batting metrics currently rendered:
 1. Batting Avg
 2. Strike Rate
 3. Balls per Dismissal
-4. Minutes per Dismissal
-5. Boundary Rate
-6. Innings per Duck
+4. Boundary Rate
+5. Innings per Duck
 
 Bowling metrics currently rendered:
 
@@ -1338,7 +1337,7 @@ Label logic:
 - Any better-than-peer result is `Better than avg`.
 - Marginally worse within 10% is `Around avg`.
 - More than 10% worse is `Worse than avg`.
-- Higher-is-better: batting average, strike rate, balls/minutes per dismissal, boundary rate, innings per duck, overs per extra.
+- Higher-is-better: batting average, strike rate, balls per dismissal, boundary rate, innings per duck, overs per extra.
 - Lower-is-better: bowling average, bowling strike rate, economy, overs per maiden.
 
 Special duck rule:
@@ -1410,7 +1409,8 @@ Content:
 Known Player Profile gaps:
 
 - Player vs Peers has no minimum-volume thresholds yet.
-- Minutes per Dismissal often unavailable.
+- Player vs Peers no longer shows `Minutes per Dismissal`.
+- Player vs Peers `Balls per Dismissal` must use verified BBB balls faced and BBB dismissals from the same covered innings only. Non-BBB innings are excluded entirely.
 - Player Profile deep links work, but clickable player names throughout the entire app can still be expanded.
 - Shareable player cards would be useful.
 - Some charts/tables can become dense on mobile.
@@ -1500,6 +1500,7 @@ These must use verified ball-by-ball rows:
 - bowling Dot Ball %
 - boundary ball %
 - balls per boundary
+- balls per dismissal if based on ball-by-ball innings
 - phase-based batting/bowling metrics
 - bowling ball outcome distribution
 - death-over/new-ball role analysis
@@ -1511,7 +1512,6 @@ Player vs Peers should avoid average-of-averages where possible. Pooled peer tot
 - Batting Avg
 - Strike Rate
 - Balls per Dismissal
-- Minutes per Dismissal
 - Boundary Rate
 - Innings per Duck
 - Bowling Avg

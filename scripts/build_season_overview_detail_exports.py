@@ -289,8 +289,14 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
     batting = layout.scorecard_dedupe(batting, ["match_id", "innings_id", "participant_id", "bat_instance"])
     batting["scorecard_runs"] = pd.to_numeric(batting.get("runs_scored"), errors="coerce")
     batting["scorecard_balls"] = pd.to_numeric(batting.get("balls_faced"), errors="coerce")
+    dismissal = (
+        batting.get("dismissal_type", pd.Series("", index=batting.index)).fillna("").astype(str).str.casefold().str.strip()
+        + " "
+        + batting.get("dismissal_text", pd.Series("", index=batting.index)).fillna("").astype(str).str.casefold().str.strip()
+    ).str.strip()
+    batting["bbb_dismissed"] = (~dismissal.isin({"", "not out", "retired not out", "retired hurt"})).astype(int)
     lookup = batting.drop_duplicates(["match_id", "innings_id", "participant_id"])[
-        scope_columns() + ["participant_id", "scorecard_runs", "scorecard_balls"]
+        scope_columns() + ["participant_id", "scorecard_runs", "scorecard_balls", "bbb_dismissed"]
     ].copy()
     lookup = key_lookup(lookup, "participant_id")
     rows = key_lookup(balls, "striker_participant_id").merge(lookup, on=["_match_id", "_innings_id", "_participant_id"], how="inner")
@@ -313,6 +319,7 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
         source_batter_runs=("source_batter_runs", "max"),
         source_batter_balls=("source_batter_balls", "max"),
         bbb_dot_balls=("batting_dot_ball", "sum"),
+        bbb_dismissed=("bbb_dismissed", "max"),
         latest_match_date=("first_match_day", "max"),
     )
     innings_grouped["has_source_cumulative"] = innings_grouped["source_batter_runs"].notna() & innings_grouped["source_batter_balls"].notna()
@@ -340,6 +347,7 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
         display_player_name=("display_player_name", "first"),
         bbb_runs=("bbb_runs", "sum"),
         bbb_balls_faced=("bbb_balls_faced", "sum"),
+        bbb_dismissals=("bbb_dismissed", "sum"),
         bbb_dot_balls=("bbb_dot_balls", "sum"),
         bbb_dot_ball_balls_faced=("bbb_dot_ball_balls_faced", "sum"),
         bbb_batting_innings=("innings_id_y", "nunique"),
