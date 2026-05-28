@@ -2055,6 +2055,14 @@ def inject_theme() -> None:
             padding: 22px 24px 24px;
         }
 
+        .hof-detail-footnote {
+            color: #6d7492;
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin: 0 0 10px;
+        }
+
         div.st-key-runs_chart_card h4,
         div.st-key-top_scorers_card h4,
         div.st-key-top_wickets_card h4,
