@@ -36,8 +36,7 @@ The Player vs Peers batting card shows:
 | --- | --- | --- | --- | --- | --- |
 | Batting Avg | Total runs / total outs. Outs = innings - not outs. | Pooled peer runs / pooled peer outs. | Player-level min/max batting average. | Higher is better. | Blank if outs are 0 or missing. |
 | Strike Rate | Verified ball-by-ball runs * 100 / verified ball-by-ball balls faced, using all verified coverage for the player. | Pooled verified ball-by-ball peer runs * 100 / pooled verified ball-by-ball peer balls for players in the peer cohort. | Player-level min/max verified strike rate. | Higher is better. | Blank if verified ball-by-ball balls faced are 0 or missing. |
-| Balls per Dismissal | Scorecard balls faced / scorecard outs across the peer scope. | Pooled scorecard balls faced / pooled scorecard outs. | Player-level min/max balls per dismissal. | Higher is better. | Blank if outs are 0 or missing. |
-| Minutes per Dismissal | Scorecard batting minutes / scorecard outs where minutes are available. | Pooled scorecard minutes / pooled scorecard outs. | Player-level min/max minutes per dismissal. | Higher is better. | Hidden/blank if minutes are unavailable or zero. |
+| Balls per Dismissal | Verified ball-by-ball balls faced / verified BBB dismissals from those same covered innings only. | Pooled verified ball-by-ball peer balls faced / pooled verified BBB dismissals in the same peer cohort. | Player-level min/max BBB balls per dismissal. | Higher is better. | Blank if BBB balls faced are 0/missing or BBB dismissals are 0. |
 | Boundary Rate | (4s + 6s) / innings. | Pooled peer boundaries / pooled peer innings. | Player-level min/max boundary rate. | Higher is better. | Blank if innings are 0 or missing. |
 | Innings per Duck | Innings / ducks. | Pooled peer innings / pooled peer ducks. | Player-level min/max innings per duck. | Higher is better. | Blank if ducks are 0. |
 
@@ -65,7 +64,6 @@ Pooled peer calculations are used for:
 - Batting Avg
 - Strike Rate
 - Balls per Dismissal
-- Minutes per Dismissal
 - Boundary Rate
 - Innings per Duck
 - Bowling Avg
@@ -81,12 +79,12 @@ Min/max values remain player-level min/max values so the range line still shows 
 
 Player vs Peers batting strike rate uses verified ball-by-ball batting summaries only. The selected-player Strike Rate should match the Player Profile career Strike Rate because both use the same verified career ball-by-ball source.
 
-The old Winter 2025 onward filter should not be used for:
+Delivery-based batting metrics in Player vs Peers must use verified ball-by-ball rows only. In particular:
 
-- Balls per Dismissal
-- Minutes per Dismissal
-
-Those dismissal-frequency metrics use available scorecard balls/minutes and outs consistently across the selected peer scope.
+- Strike Rate = BBB runs / BBB balls from the same verified innings sample.
+- Balls per Dismissal = BBB balls / BBB dismissals from that same verified innings sample.
+- Non-BBB scorecard innings must be excluded entirely.
+- Missing BBB coverage should render blank/`N/A`, not `0` and not a mixed-source low value.
 
 ## Marker Visuals
 
@@ -102,7 +100,7 @@ Those dismissal-frequency metrics use available scorecard balls/minutes and outs
 
 3. Players with zero ducks, zero maidens, or zero extras display blank values for those frequency metrics. This avoids divide-by-zero, but it does not yet show a friendly "No ducks", "No maidens", or "No extras" text.
 
-4. Batting minutes appear to be mostly unavailable/zero in the current data. Minutes per Dismissal will hide or show blank unless usable minutes exist.
+4. `Minutes per Dismissal` has been removed from the UI and peer comparison calculations.
 
 ## Debug Output
 

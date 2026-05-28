@@ -7629,10 +7629,6 @@ def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str
             "fielding": format_all_time_fielding_table(all_time),
         }
     with st.container(key="full_stats_card"):
-        st.markdown(
-            '<div class="hof-detail-footnote">Win % uses matches with a classified result; Matches shows total club appearances.</div>',
-            unsafe_allow_html=True,
-        )
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
             render_all_time_detail_table(tables["batting"], "hof_batting_detail")
@@ -11084,8 +11080,7 @@ def get_player_peer_comparison(
             sum_numeric(batting_rows, "bbb_runs") * 100,
             sum_numeric(batting_rows, "bbb_balls"),
         ),
-        "balls_per_dismissal": divide_or_none(sum_numeric(batting_rows, "reliable_balls"), sum_numeric(batting_rows, "reliable_outs")),
-        "minutes_per_dismissal": divide_or_none(sum_numeric(batting_rows, "reliable_minutes"), sum_numeric(batting_rows, "reliable_outs")),
+        "balls_per_dismissal": divide_or_none(sum_numeric(batting_rows, "bbb_balls"), sum_numeric(batting_rows, "bbb_dismissals")),
         "boundary_rate": divide_or_none(sum_numeric(batting_rows, "boundaries"), sum_numeric(batting_rows, "innings")),
         "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
     }
@@ -11103,7 +11098,6 @@ def get_player_peer_comparison(
             ("Batting Avg", "bat_avg", False, "decimal"),
             ("Strike Rate", "bat_sr", False, "percent"),
             ("Balls per Dismissal", "balls_per_dismissal", False, "decimal"),
-            ("Minutes per Dismissal", "minutes_per_dismissal", False, "decimal"),
             ("Boundary Rate", "boundary_rate", False, "decimal"),
             ("Innings per Duck", "innings_per_duck", False, "decimal"),
         ],
@@ -11189,9 +11183,6 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
         not_outs = sum_column(group, "battingNotOuts")
         outs = max(0.0, innings - not_outs)
         balls = sum_column(group, "battingBallsFaced")
-        reliable_balls = balls
-        reliable_outs = outs
-        reliable_minutes = sum_column(group, "battingMinutes")
         boundaries = sum_column(group, "battingFours") + sum_column(group, "battingSixes")
         ducks = sum_column(group, "batting0s")
         rows.append(
@@ -11203,13 +11194,10 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
                 "outs": outs,
                 "bbb_runs": 0.0,
                 "bbb_balls": 0.0,
-                "reliable_balls": reliable_balls,
-                "reliable_outs": reliable_outs,
-                "reliable_minutes": reliable_minutes,
+                "bbb_dismissals": 0.0,
                 "bat_avg": divide_or_none(runs, outs),
                 "bat_sr": None,
-                "balls_per_dismissal": divide_or_none(reliable_balls, reliable_outs),
-                "minutes_per_dismissal": divide_or_none(reliable_minutes, reliable_outs) if reliable_minutes > 0 else None,
+                "balls_per_dismissal": None,
                 "boundaries": boundaries,
                 "boundary_rate": divide_or_none(boundaries, innings),
                 "ducks": ducks,
@@ -11222,27 +11210,46 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
 def add_bbb_peer_batting_rates(batting_rows: pd.DataFrame, seasons: tuple[str, ...], peer_scope: tuple[str, ...]) -> pd.DataFrame:
     if batting_rows.empty:
         return batting_rows
-    source = read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH)
+    source = read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH)
     if source.empty or "canonical_player_id" not in source:
         return batting_rows
-    for column in ["bbb_runs", "bbb_balls_faced"]:
-        if column not in source:
-            source[column] = 0
-        source[column] = pd.to_numeric(source[column], errors="coerce").fillna(0)
-    grouped = source.groupby("canonical_player_id", dropna=False, as_index=False).agg(
+    scoped = apply_team_grade_display_columns(source.copy())
+    if "season" in scoped:
+        scoped = scoped[scoped["season"].astype(str).isin(seasons)].copy()
+    if scoped.empty:
+        return batting_rows
+    if peer_scope:
+        scoped["_peer_scope_key"] = scoped.apply(
+            lambda row: peer_scope_key(row.get("season", ""), peer_scope_grade_label(row)),
+            axis=1,
+        )
+        matched = scoped[scoped["_peer_scope_key"].isin(peer_scope)].copy()
+        scoped = matched if not matched.empty else scoped
+        scoped = scoped.drop(columns=["_peer_scope_key"], errors="ignore")
+    for column in ["bbb_runs", "bbb_balls_faced", "bbb_dismissals"]:
+        if column not in scoped:
+            scoped[column] = 0
+        scoped[column] = pd.to_numeric(scoped[column], errors="coerce").fillna(0)
+    grouped = scoped.groupby("canonical_player_id", dropna=False, as_index=False).agg(
         bbb_runs=("bbb_runs", "sum"),
         bbb_balls=("bbb_balls_faced", "sum"),
+        bbb_dismissals=("bbb_dismissals", "sum"),
     )
-    grouped["bat_sr_bbb"] = grouped.apply(lambda row: divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls"])), axis=1)
-    output = batting_rows.drop(columns=["bbb_runs", "bbb_balls", "bat_sr"], errors="ignore").merge(
+    grouped["bat_sr"] = grouped.apply(lambda row: divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls"])), axis=1)
+    grouped["balls_per_dismissal"] = grouped.apply(
+        lambda row: divide_or_none(float(row["bbb_balls"]), float(row["bbb_dismissals"])),
+        axis=1,
+    )
+    output = batting_rows.drop(columns=["bbb_runs", "bbb_balls", "bbb_dismissals", "bat_sr", "balls_per_dismissal"], errors="ignore").merge(
         grouped,
         on="canonical_player_id",
         how="left",
     )
-    output["bbb_runs"] = pd.to_numeric(output.get("bbb_runs"), errors="coerce").fillna(0)
-    output["bbb_balls"] = pd.to_numeric(output.get("bbb_balls"), errors="coerce").fillna(0)
-    output["bat_sr"] = pd.to_numeric(output.get("bat_sr_bbb"), errors="coerce")
-    return output.drop(columns=["bat_sr_bbb"], errors="ignore")
+    for column in ["bbb_runs", "bbb_balls", "bbb_dismissals"]:
+        output[column] = pd.to_numeric(output.get(column), errors="coerce").fillna(0)
+    output["bat_sr"] = pd.to_numeric(output.get("bat_sr"), errors="coerce")
+    output["balls_per_dismissal"] = pd.to_numeric(output.get("balls_per_dismissal"), errors="coerce")
+    return output
 
 
 def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> pd.DataFrame:
@@ -11445,6 +11452,7 @@ def peer_status_class(status: object) -> str:
 def peer_metric_note(label: object) -> str:
     notes = {
         "Strike Rate": "Verified ball-by-ball only",
+        "Balls per Dismissal": "Verified BBB balls and BBB dismissals only",
         "Boundary Rate": "4s + 6s per innings",
         "Innings per Duck": "Higher means fewer ducks",
         "Overs per Maiden": "Lower means maidens are more frequent",

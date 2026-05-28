@@ -62,6 +62,8 @@ This document is the working handover for The Scorebook / FVCC app. It is intend
 - Current Player Profile QA status: a 50-player audit script/report was added and run locally. Latest audit result after QA follow-up: 0 Critical, 0 High, 0 Medium, 26 Low, 9 Info findings.
 - Remaining Player Profile QA issues are mainly data-coverage and empty-state gaps, not confirmed formula bugs: older bowlers without verified ball-by-ball phase rows, sparse split views for players with no batting/bowling/fielding source rows, and documented missing BBB Strike Rate coverage.
 - Bowling Phase must never fake missing ball-by-ball coverage. If no verified BBB phase summary exists for a bowler, show a calm empty state such as `Bowling phase data is not available for this player yet.`
+- Player vs Peers no longer shows `Minutes per Dismissal`.
+- Player vs Peers `Balls per Dismissal` is BBB-only: verified BBB balls faced divided by BBB dismissals from the same covered innings only. Never mix BBB balls with all-scorecard dismissals.
 - Recommended permanent tests for Player Profile metric rules: batting average uses outs, BBB Strike Rate uses BBB runs/balls only, missing BBB is `N/A`, 30s are 30-49 inclusive, 3WI excludes 5WI, BBI parses wickets then runs, bowling phase respects match type, and known aliases resolve to one canonical profile.
 - A lightweight permanent pytest file now covers those Player Profile metric doctrines at `tests/test_player_profile_metrics.py`; generated 50-player QA reports remain local under `data/processed/experimental/player_profile_qa/`.
 - Current Player Profile polish: premiership profile tags are now top-priority (`Premiership Winning Captain` before `Premiership Winner`, both before other tags), Career Highlights leader cards use the season as their main context instead of repeating the selected player name, Batting Position `Best fit` now requires 4+ innings in a position, and Dismissal Fingerprint rows show compact club-average/difference detail beside each dismissal type.
@@ -696,21 +698,16 @@ Batting:
    - Peer avg: pooled reliable peer runs * 100 / pooled reliable peer balls faced.
    - Higher is better.
 3. Balls per Dismissal
-   - Uses Winter 2025 onward only.
-   - Player: reliable balls faced / reliable outs.
-   - Peer avg: pooled reliable peer balls faced / pooled reliable peer outs.
+   - Player: verified ball-by-ball balls faced / verified BBB dismissals from those same covered innings only.
+   - Peer avg: pooled verified ball-by-ball peer balls faced / pooled verified BBB dismissals in the same peer scope.
    - Higher is better.
-4. Minutes per Dismissal
-   - Uses Winter 2025 onward only.
-   - Player: reliable batting minutes / reliable outs.
-   - Peer avg: pooled reliable peer batting minutes / pooled reliable peer outs.
-   - Higher is better.
-   - If minutes are missing/zero/unusable, row is omitted or shown unavailable gracefully.
-5. Boundary Rate
+   - Non-BBB scorecard innings must be excluded entirely.
+   - Missing BBB coverage should show `N/A`, not `0` or a mixed-source low value.
+4. Boundary Rate
    - Current code: (4s + 6s) / innings.
    - Peer avg: pooled peer boundaries / pooled peer innings.
    - Higher is better.
-6. Innings per Duck
+5. Innings per Duck
    - Current code: innings / ducks.
    - Peer avg: pooled peer innings / pooled peer ducks.
    - Higher is better.
