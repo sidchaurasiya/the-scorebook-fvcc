@@ -7186,15 +7186,15 @@ def best_win_rate_record(all_time: pd.DataFrame) -> dict[str, str] | None:
     leaders = all_time.copy()
     for column in ["Matches", "Win %", "Win Count", "Win Matches"]:
         leaders[column] = pd.to_numeric(leaders[column], errors="coerce")
-    leaders = leaders[(leaders["Matches"] >= 60) & leaders["Win %"].notna() & leaders["Win Matches"].notna()]
+    leaders = leaders[(leaders["Win Matches"] >= 60) & leaders["Win %"].notna() & leaders["Win Matches"].notna()]
     leaders = leaders[leaders["Win Matches"] > 0]
     if leaders.empty:
         return None
-    leaders = leaders.sort_values(["Win %", "Matches", "Player"], ascending=[False, False, True])
+    leaders = leaders.sort_values(["Win %", "Win Matches", "Player"], ascending=[False, False, True])
     row = leaders.iloc[0]
     wins = safe_record_int(row.get("Win Count"))
     matches = safe_record_int(row.get("Win Matches"))
-    meta = f"{wins:,} wins from {matches:,} matches" if wins is not None and matches else ""
+    meta = f"{wins:,} wins from {matches:,} matches with results" if wins is not None and matches else ""
     return {
         "title": "Best Win %",
         "player": str(row.get("Player", "-")),
@@ -7629,6 +7629,10 @@ def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str
             "fielding": format_all_time_fielding_table(all_time),
         }
     with st.container(key="full_stats_card"):
+        st.markdown(
+            '<div class="hof-detail-footnote">Win % uses matches with a classified result; Matches shows total club appearances.</div>',
+            unsafe_allow_html=True,
+        )
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
             render_all_time_detail_table(tables["batting"], "hof_batting_detail")
