@@ -41,7 +41,7 @@ from scripts.club_refresh_utils import (  # noqa: E402
     print_paths,
     resolve_club_id,
 )
-from src.config.club_config import get_club_name, get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir  # noqa: E402
+from src.config.club_config import get_club_name, get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir, get_season_filter  # noqa: E402
 
 
 RAW_DIR = ROOT / "data" / "raw" / "match_centre" / "all_available"
@@ -78,7 +78,8 @@ def main() -> int:
     players_path = get_processed_path("players.csv", club_id=club_id)
     aliases_path = get_mapping_path("player_aliases.csv", club_id=club_id)
     started_at = now_iso()
-    combos = load_scope_combinations(args, teams_path=teams_path, seasons_path=seasons_path)
+    season_filter = get_season_filter(club_id)
+    combos = load_scope_combinations(args, club_id=club_id, season_filter=season_filter, teams_path=teams_path, seasons_path=seasons_path)
     dry_run_summary(
         combos,
         club_id=club_id,
@@ -155,10 +156,24 @@ def main() -> int:
     return 0
 
 
-def load_scope_combinations(args: argparse.Namespace, *, teams_path: Path = TEAMS_PATH, seasons_path: Path = SEASONS_PATH) -> pd.DataFrame:
+def load_scope_combinations(
+    args: argparse.Namespace,
+    *,
+    club_id: str,
+    season_filter: dict[str, tuple[str, ...]] | None = None,
+    teams_path: Path = TEAMS_PATH,
+    seasons_path: Path = SEASONS_PATH,
+) -> pd.DataFrame:
     teams = pd.read_csv(teams_path)
     seasons = pd.read_csv(seasons_path) if seasons_path.exists() else pd.DataFrame(columns=["id", "startDate"])
     teams = teams.drop_duplicates(["season_id", "team_id"]).copy()
+    if season_filter and (season_filter.get("include_seasons") or season_filter.get("include_season_ids")):
+        include_seasons = {str(value).strip().casefold() for value in season_filter.get("include_seasons", ()) if str(value).strip()}
+        include_season_ids = {str(value).strip() for value in season_filter.get("include_season_ids", ()) if str(value).strip()}
+        teams = teams[
+            teams["season"].astype(str).str.strip().str.casefold().isin(include_seasons)
+            | teams["season_id"].astype(str).isin(include_season_ids)
+        ]
     if args.season_ids:
         teams = teams[teams["season_id"].astype(str).isin(set(args.season_ids))]
     if args.team_ids:

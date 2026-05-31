@@ -1,0 +1,40 @@
+canonical_player_id,canonical_player_name,display_player_name,premiership_count,seasons,grades,teams,latest_premiership_season,evidence_match_ids,confidence
+raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,2,Summer 2022/23,"SECA Wed U18 T20, SECA Fri 16A","Le Page Park, Le Page Park 1",Summer 2022/23,"0c07eaa0-16aa-4f56-855d-62f16a8030fb, 6eecc44a-520b-4676-9fe7-22e66e37155c",high
+raw_4e72478b_8628_43b5_97c6_575903bd8e5d,Axel Karlsson-Lacy,Axel Karlsson-Lacy,2,Summer 2022/23,"SECA Wed U18 T20, SECA Fri 16A","Le Page Park, Le Page Park 1",Summer 2022/23,"0c07eaa0-16aa-4f56-855d-62f16a8030fb, 6eecc44a-520b-4676-9fe7-22e66e37155c",high
+raw_0be51291_b6bc_4836_87c4_57231ca49145,Lachlan O'Meara,Lachlan O'Meara,2,Summer 2022/23,"SECA Wed U18 T20, SECA Fri 16A","Le Page Park, Le Page Park 1",Summer 2022/23,"0c07eaa0-16aa-4f56-855d-62f16a8030fb, 6eecc44a-520b-4676-9fe7-22e66e37155c",high
+raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,2,Summer 2022/23,"SECA Wed U18 T20, SECA Fri 16A","Le Page Park, Le Page Park 1",Summer 2022/23,"0c07eaa0-16aa-4f56-855d-62f16a8030fb, 6eecc44a-520b-4676-9fe7-22e66e37155c",high
+raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,2,Summer 2022/23,"SECA Wed U18 T20, SECA Fri 16A","Le Page Park, Le Page Park 1",Summer 2022/23,"0c07eaa0-16aa-4f56-855d-62f16a8030fb, 6eecc44a-520b-4676-9fe7-22e66e37155c",high
+raw_0f772c08_0727_41df_bf28_6fcaf76a770e,********,********,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_c63003f9_fe3c_4a9f_ad97_b1a3362a3a80,Aarav Shah,Aarav Shah,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_cf0de31b_2d72_4605_a710_14627aa443a3,Alexander Arnaoutis,Alexander Arnaoutis,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_7f7078d3_cdc1_474a_8372_375b961b1887,Angus Palmer,Angus Palmer,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_e8317b03_c419_4653_ba44_22284d41077e,Archie Trevellyan,Archie Trevellyan,1,Summer 2022/23,SECA Wed U18 T20,Le Page Park,Summer 2022/23,0c07eaa0-16aa-4f56-855d-62f16a8030fb,high
+raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_b69b98e7_e1aa_43b0_9d87_c5cd2f7ad6c0,Ashley Milroy,Ashley Milroy,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_356a0b92_8357_45a2_8048_62622aba3d7f,Avanith Manoj,Avanith Manoj,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_7d50e5d5_eb59_497a_9c51_0ad60f2937b4,Bailey Peace,Bailey Peace,1,Summer 2022/23,SECA Wed U18 T20,Le Page Park,Summer 2022/23,0c07eaa0-16aa-4f56-855d-62f16a8030fb,high
+raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_e4e74a21_f9db_47f2_9a65_5cc5d03fb1ec,Charlie Brookes,Charlie Brookes,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_2800c47b_d1fe_4c83_b3c3_b1b94880d37b,Henry Gadsden,Henry Gadsden,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_3e3718f3_6a8a_49ea_b66d_72a717217ce0,Jack Collins,Jack Collins,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_f1b37f5c_b481_4050_a738_401e8ba15bf3,Jack Czosnek,Jack Czosnek,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_c66a6f03_4549_442b_b5b3_b9f4632a33a3,Jack Morgan,Jack Morgan,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_793d5273_7514_4339_998a_2e715b70b7c2,Jack Sotiriadis,Jack Sotiriadis,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,1,Summer 2022/23,SECA Wed U18 T20,Le Page Park,Summer 2022/23,0c07eaa0-16aa-4f56-855d-62f16a8030fb,high
+raw_27dde802_c0c8_4ed2_b4b7_5499fe59aea8,Krishna Sridhar,Krishna Sridhar,1,Summer 2022/23,SECA Wed U18 T20,Le Page Park,Summer 2022/23,0c07eaa0-16aa-4f56-855d-62f16a8030fb,high
+raw_a1cfe360_3ec8_4097_a678_eb33a09f929c,Lachlan Drew,Lachlan Drew,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_8a6326e9_afda_4881_965c_737a00810dcc,Liam Chamoff,Liam Chamoff,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_9cc7cbbe_5bc0_4c29_9169_d2e85eefc118,Lucas Rowley,Lucas Rowley,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_c4f007f2_1a95_4b56_88a5_eae425fdd011,Manansh Verma,Manansh Verma,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_b017c9dc_05e2_4c47_b9a9_0673887ee9a9,Mitchell Cunningham,Mitchell Cunningham,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_dc5f478e_216e_4ea0_8ce1_8fe2121c7387,Muhammad Saeed,Muhammad Saeed,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_8c6ed679_2481_456e_a7aa_df4cc8d0dcfb,Noah Mitchell,Noah Mitchell,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_428bf0be_b4b7_4709_ab41_bedaf4a9fcb4,Oliver Bolt,Oliver Bolt,1,Summer 2022/23,SECA Wed U18 T20,Le Page Park,Summer 2022/23,0c07eaa0-16aa-4f56-855d-62f16a8030fb,high
+raw_a66fa58c_a22f_4116_bc45_f5b2c4d109cf,Oliver Drury,Oliver Drury,1,Summer 2022/23,SECA Fri 16A,Le Page Park 1,Summer 2022/23,6eecc44a-520b-4676-9fe7-22e66e37155c,high
+raw_5af5ead1_3f1d_4ce4_94f3_6191a1e9685a,Rohan Ranganathan,Rohan Ranganathan,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_f9c9a184_26ef_47aa_979f_3d5a0b94c16d,Toby Harvey,Toby Harvey,1,Summer 2022/23,SECA Fri 14C Central,Le Page Park 3,Summer 2022/23,23d0245c-ec19-4344-8034-5249f13aca92,high
+raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,1,Summer 2022/23,SECA Sat 12C South,Le Page Park 2,Summer 2022/23,20f6f31b-3071-4e70-b22f-a21ea3901f82,high
+raw_b44a113f_9d1f_4b83_8f93_f5e61aed7225,William Blitz,William Blitz,1,Summer 2022/23,SECA Wed U18 T20,Le Page Park,Summer 2022/23,0c07eaa0-16aa-4f56-855d-62f16a8030fb,high

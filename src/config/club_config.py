@@ -166,6 +166,28 @@ def get_branding_value(name: str, default: Any = None, club_id: str | None = Non
     return branding.get(name, default)
 
 
+def get_season_filter(club_id: str | None = None, *, config: dict[str, Any] | None = None) -> dict[str, tuple[str, ...]]:
+    data = (config or load_club_config(club_id)).get("data", {})
+    season_filter = data.get("season_filter", {})
+    if not isinstance(season_filter, dict):
+        return {"include_seasons": (), "include_season_ids": ()}
+
+    def normalize(values: object) -> tuple[str, ...]:
+        if values is None:
+            return ()
+        if isinstance(values, str):
+            values = [values]
+        if not isinstance(values, (list, tuple, set)):
+            return ()
+        cleaned = [str(value).strip() for value in values if str(value).strip()]
+        return tuple(dict.fromkeys(cleaned))
+
+    return {
+        "include_seasons": normalize(season_filter.get("include_seasons")),
+        "include_season_ids": normalize(season_filter.get("include_season_ids")),
+    }
+
+
 def normalize_club_id(value: object) -> str:
     club_id = str(value or DEFAULT_CLUB_ID).strip().casefold().replace(" ", "-")
     return club_id or DEFAULT_CLUB_ID

@@ -48,6 +48,7 @@ from src.config.club_config import (  # noqa: E402
     get_processed_dir,
     get_processed_match_centre_dir,
     get_player_profile_dir,
+    get_season_filter,
     get_season_overview_dir,
     load_club_config,
 )
@@ -126,6 +127,7 @@ def main() -> int:
     args = parser.parse_args()
     club_id = resolve_club_id(args.club)
     club_config = load_club_config(club_id)
+    season_filter = get_season_filter(club_id, config=club_config)
     playcricket_club_id = configured_playcricket_club_id(club_config, club_id)
     processed_output_dir = PROCESSED_DIR if args.legacy_output else get_processed_dir(club_id=club_id)
     raw_output_dir = RAW_DIR
@@ -138,12 +140,16 @@ def main() -> int:
     mode = "dry run plan" if args.dry_run else "local-only identity rebuild" if args.local_only_identity_rebuild else "normal refresh"
     print(f"Mode: {mode}")
     print_club_header("Club context", club_id)
+    if season_filter["include_seasons"] or season_filter["include_season_ids"]:
+        scope = ", ".join([*season_filter["include_seasons"], *season_filter["include_season_ids"]])
+        print(f"- season filter: {scope}")
     print()
 
     if args.dry_run:
         print_refresh_plan(
             club_id,
             playcricket_club_id=playcricket_club_id,
+            season_filter=season_filter,
             processed_dir=processed_output_dir,
             raw_dir=raw_output_dir,
             cache_dir=cache_output_dir,
@@ -192,6 +198,9 @@ def main() -> int:
         season_limit=args.season_limit,
         force_seasons=True,
         force_season_ids=None if args.force_all else current_ids,
+        season_filter=season_filter,
+        include_seasons=set(season_filter["include_seasons"]),
+        include_season_ids=set(season_filter["include_season_ids"]),
         processed_dir=processed_output_dir,
         raw_dir=raw_output_dir,
         metadata_path=metadata_output_path,
@@ -240,6 +249,7 @@ def print_refresh_plan(
     club_id: str,
     *,
     playcricket_club_id: str,
+    season_filter: dict[str, tuple[str, ...]],
     processed_dir: Path,
     raw_dir: Path,
     cache_dir: Path,
@@ -247,6 +257,11 @@ def print_refresh_plan(
 ) -> None:
     print("Refresh plan")
     print(f"- PlayCricket club ID: {playcricket_club_id}")
+    if season_filter["include_seasons"] or season_filter["include_season_ids"]:
+        scope = ", ".join([*season_filter["include_seasons"], *season_filter["include_season_ids"]])
+        print(f"- season filter: {scope}")
+    else:
+        print("- season filter: none")
     print_paths("Aggregate refresh roots", [processed_dir, raw_dir, cache_dir, metadata_path.parent])
     print_outputs("Planned aggregate CSV outputs", aggregate_output_paths(processed_dir))
     print_outputs("Planned metadata output", [metadata_path])
