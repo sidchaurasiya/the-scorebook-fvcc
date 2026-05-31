@@ -9,7 +9,7 @@ import pandas as pd
 
 from scripts.build_club_review_pack import build_strict_duplicate_merge_review
 from scripts import refresh_data
-from src.config.club_config import REPO_ROOT, allow_legacy_fallback, get_processed_path
+from src.config.club_config import REPO_ROOT, allow_legacy_fallback, get_processed_path, get_season_filter
 from src.utils import analytics
 from src.utils.player_identity import normalize_player_name_for_strict_merge
 
@@ -50,6 +50,20 @@ def test_refresh_data_dry_run_does_not_run_match_centre() -> None:
     assert result.returncode == 0
     assert "Dry run complete. No network requests were made and no files were written." in result.stdout
     assert "scripts/refresh_match_centre_data.py" not in result.stdout
+
+
+def test_season_filter_helper_normalizes_requested_scope() -> None:
+    config = {
+        "data": {
+            "season_filter": {
+                "include_seasons": ["Summer 2022/23"],
+                "include_season_ids": ["3e3a72f9-34fa-49f5-a42e-35d86629a3af"],
+            }
+        }
+    }
+    season_filter = get_season_filter("le-page-park", config=config)
+    assert season_filter["include_seasons"] == ("Summer 2022/23",)
+    assert season_filter["include_season_ids"] == ("3e3a72f9-34fa-49f5-a42e-35d86629a3af",)
 
 
 def test_refresh_data_default_match_centre_is_flag_gated() -> None:

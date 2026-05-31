@@ -307,6 +307,9 @@ def refresh_playcricket_backup(
     season_limit: int | None = None,
     force_seasons: bool = False,
     force_season_ids: set[str] | None = None,
+    season_filter: dict[str, tuple[str, ...]] | None = None,
+    include_seasons: set[str] | None = None,
+    include_season_ids: set[str] | None = None,
     processed_dir: Path | str | None = None,
     raw_dir: Path | str | None = None,
     metadata_path: Path | str | None = None,
@@ -332,6 +335,15 @@ def refresh_playcricket_backup(
     source_endpoints: list[str] = []
 
     force_season_ids = {str(season_id) for season_id in (force_season_ids or set()) if str(season_id).strip()}
+    configured_filter = season_filter or {}
+    include_seasons = {str(name).strip().casefold() for name in (include_seasons or set()) if str(name).strip()}
+    include_seasons.update(
+        str(name).strip().casefold() for name in configured_filter.get("include_seasons", ()) if str(name).strip()
+    )
+    include_season_ids = {str(season_id).strip() for season_id in (include_season_ids or set()) if str(season_id).strip()}
+    include_season_ids.update(
+        str(season_id).strip() for season_id in configured_filter.get("include_season_ids", ()) if str(season_id).strip()
+    )
 
     try:
         seasons_payload = fetcher.get_json(
@@ -349,6 +361,12 @@ def refresh_playcricket_backup(
 
     if season_limit:
         seasons = seasons[:season_limit]
+    if include_seasons or include_season_ids:
+        seasons = filter_seasons(
+            seasons,
+            include_seasons=include_seasons,
+            include_season_ids=include_season_ids,
+        )
 
     summary.seasons_found = len(seasons)
     all_teams: list[dict[str, Any]] = []
@@ -470,6 +488,27 @@ def refresh_playcricket_backup(
     active_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     active_metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     return summary
+
+
+def filter_seasons(
+    seasons: list[dict[str, Any]],
+    *,
+    include_seasons: set[str] | None = None,
+    include_season_ids: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    if not seasons:
+        return seasons
+    include_seasons = {str(value).strip().casefold() for value in (include_seasons or set()) if str(value).strip()}
+    include_season_ids = {str(value).strip() for value in (include_season_ids or set()) if str(value).strip()}
+    if not include_seasons and not include_season_ids:
+        return seasons
+    filtered: list[dict[str, Any]] = []
+    for season in seasons:
+        season_id = str(season.get("id") or "").strip()
+        season_name = str(season.get("name") or "").strip().casefold()
+        if season_id in include_season_ids or season_name in include_seasons:
+            filtered.append(season)
+    return filtered
 
 
 def fetch_stats(

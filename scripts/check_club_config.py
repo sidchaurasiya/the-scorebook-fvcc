@@ -26,6 +26,7 @@ from src.config.club_config import (  # noqa: E402
     get_player_profile_dir,
     get_player_profile_path,
     get_raw_match_centre_dir,
+    get_season_filter,
     get_season_overview_dir,
     get_season_overview_path,
     load_club_config,
@@ -106,12 +107,18 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     failures: list[str] = []
     club_config = config.get("club", {})
+    season_filter = get_season_filter(club_id, config=config)
 
     print(f"Active club ID: {club_id}")
     print(f"Club display name: {get_club_name(club_id)}")
     print(f"App name: {club_config.get('app_name', 'The Scorebook')}")
     print(f"PlayCricket club ID: {club_config.get('playcricket_club_id', '')}")
     print(f"Legacy fallback enabled: {allow_legacy_fallback(club_id, config=config)}")
+    if season_filter["include_seasons"] or season_filter["include_season_ids"]:
+        scope = ", ".join([*season_filter["include_seasons"], *season_filter["include_season_ids"]])
+        print(f"Season filter: {scope}")
+    else:
+        print("Season filter: none")
 
     data_config = config.get("data", {})
     for key in [

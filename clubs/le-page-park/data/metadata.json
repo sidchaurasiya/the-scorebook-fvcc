@@ -1,0 +1,38 @@
+{
+  "club_id": "92e3c14d-8ad8-eb11-a7ad-2818780da0cc",
+  "club_url": "",
+  "seasons_fetched": [
+    {
+      "id": "3e3a72f9-34fa-49f5-a42e-35d86629a3af",
+      "name": "Summer 2022/23",
+      "startDate": "2022-07-01T00:00:00.0000000+00:00",
+      "isCurrentSeason": false,
+      "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
+    }
+  ],
+  "fetch_date_time": "2026-05-31T22:59:41.634351+00:00",
+  "last_successful_refresh_time": "2026-05-31T22:59:41.634351+00:00",
+  "source_endpoints_used": [
+    "/fixturesladders/organisations/{club_id}/seasons",
+    "/fixturesladders/organisations/{club_id}/teams",
+    "/participants/grades/{grade_id}/batting-statistics",
+    "/participants/grades/{grade_id}/bowling-statistics",
+    "/participants/grades/{grade_id}/fielding-statistics"
+  ],
+  "matches_fetched": 0,
+  "players_fetched": 227,
+  "teams_fetched": 22,
+  "stat_rows": {
+    "batting": 427,
+    "bowling": 427,
+    "fielding": 427
+  },
+  "live_requests": 68,
+  "cache_hits": 0,
+  "failed_requests": [],
+  "notes": [
+    "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",
+    "Refresh should be used sparingly; normal dashboard usage reads the active club processed data first.",
+    "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population."
+  ]
+}
