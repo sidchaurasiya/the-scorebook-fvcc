@@ -88,7 +88,7 @@ Delivery-based batting metrics in Player vs Peers must use verified ball-by-ball
 
 ## Marker Visuals
 
-- Player marker: purple circular marker.
+- Player marker: active club-colour circular marker.
 - Peer average marker: grey vertical marker with the shared `.peer-marker.avg-marker` styling.
 - Dismissal Fingerprint should reuse the same grey benchmark marker class/style for club-average markers so the visual language remains consistent across Player DNA and Player vs Peers.
 

@@ -548,7 +548,7 @@ def active_club_colour(key: str, fallback: str) -> str:
 
 
 def active_chart_primary_colour() -> str:
-    return active_club_colour("primary_colour", "#6D4DFF")
+    return active_club_colour("primary_colour", "#24455F")
 
 
 def active_chart_secondary_colour() -> str:
@@ -7968,7 +7968,7 @@ def apply_hof_table_sorting(table: pd.DataFrame, table_type: str) -> pd.DataFram
 
 def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", key_prefix).strip("-") or "hof-detail-table"
-    link_colour = active_club_colour("primary_colour", "#6D4DFF")
+    link_colour = active_club_colour("primary_colour", "#24455F")
     accent_colour = active_club_colour("accent_colour", link_colour)
     primary_soft = active_club_colour("background_colour", "#F7F7FC")
     columns = table.columns.tolist()
@@ -12019,6 +12019,8 @@ def profile_performance_table_html(
     table_id: str,
     height: int,
 ) -> str:
+    link_colour = active_club_colour("primary_colour", "#24455F")
+    link_hover_colour = active_club_colour("accent_colour", link_colour)
     safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "profile-performance-table"
     columns = table.columns.tolist()
     colgroup = "".join(
@@ -12151,7 +12153,7 @@ def profile_performance_table_html(
       }}
       .profile-performance-table .profile-label-text,
       .profile-performance-table .profile-label-link {{
-        color: #0072ce;
+        color: {html.escape(link_colour)};
         display: block;
         font-weight: 750;
         line-height: 1.13;
@@ -12164,7 +12166,7 @@ def profile_performance_table_html(
         color: #11154b;
       }}
       .profile-performance-table .profile-label-link:hover {{
-        color: #5b3df5;
+        color: {html.escape(link_hover_colour)};
         text-decoration: underline;
       }}
       .profile-performance-table tr:nth-child(even) td {{

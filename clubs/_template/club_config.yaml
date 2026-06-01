@@ -8,10 +8,10 @@ club:
   default_page: hall-of-fame
 
 branding:
-  primary_colour: "#6D4DFF"
-  secondary_colour: "#9F2747"
-  background_colour: "#F7F8FC"
-  accent_colour: "#6D4DFF"
+  primary_colour: "#24455F"
+  secondary_colour: "#A31952"
+  background_colour: "#F6F8FB"
+  accent_colour: "#D4A83A"
   logo_path: null
 
 contact:

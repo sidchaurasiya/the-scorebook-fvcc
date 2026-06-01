@@ -153,7 +153,7 @@ Navigation rules:
 ## 3. Design Direction
 
 - Overall feel: premium modern sports analytics dashboard.
-- Theme: white cards, dark navy text, purple/indigo accents, with blue/green used where already established.
+- Theme: white cards, dark navy text, and active-club accents. FVCC now uses shirt-inspired navy, maroon, and gold rather than the legacy purple-first palette.
 - Avoid heavy gold styling. Normal medal emojis and rank badges are fine, but do not make the UI gold-themed.
 - Hall of Fame can feel ceremonial, but it should remain restrained.
 - Mobile should be clean, readable, and not cramped.
@@ -766,10 +766,10 @@ Label logic:
 Visual:
 
 - Legend:
-  - Purple dot = player.
+  - Active club-colour dot = player.
   - Grey marker = peer average.
 - Range line shows lowest to highest peer value.
-- Cards use purple/green accent headings.
+- Cards use active club-colour / green accent headings.
 - Mobile must remain readable.
 
 Audit/debug files:
@@ -978,7 +978,8 @@ Fastest Innings validation update:
 - The milestone builder uses per-delivery batter runs unless source cumulative batter runs validate cleanly. This prevents false records from malformed source cumulative fields that jump to final scores early.
 - Deploy-safe fastest 50s below 9 balls and fastest 100s below 17 balls are excluded unless a trustworthy delivery sequence explicitly verifies them.
 - Known false-looking examples were corrected from local ball-by-ball data: Plenty Geoffrey King 52 balls, Reynella Cameron Pannach 63 balls, and Georges River Christopher McArthur 35 balls.
-- HOF Iconic Performances and Fastest Innings styling now uses active club colour variables, with FVCC retaining purple through its config.
+- HOF Iconic Performances and Fastest Innings styling uses active club colour variables. FVCC now resolves those variables from its shirt-inspired navy `#24455F`, maroon `#A31952`, gold `#D4A83A`, and cool background `#F6F8FB` config palette.
+- FVCC theme refresh: shared sidebar, navigation, links, folder tabs, pill toggles, KPI accents, progress bars, Hall of Fame surfaces, Season Overview, Milestone, Player Profile, mobile navigation, and custom HTML table links now resolve through active-club variables. Other clubs keep their own config palettes.
 - Detailed audit notes are in `docs/multi_club_fastest_innings_audit.md`.
 
 ## 18. Final Instructions For Future Codex Session

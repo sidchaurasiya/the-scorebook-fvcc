@@ -65,7 +65,7 @@ No required deploy-safe file was missing in the final read-only audit.
 | `plenty` | 873 rows, 804 non-zero | 866 rows, 374 non-zero | thresholds pass | 44 wins, 30 captains | app-relative ids present | club theme pass | high historical mapping volume | ready with caveats |
 | `reynella` | 933 rows, 812 non-zero | 926 rows, 310 non-zero | thresholds pass | 11 wins, 10 captains | app-relative ids present | club theme pass | duplicate/team-grade caveats | ready with caveats |
 | `georges-river-district` | 1,040 rows, 869 non-zero | 1,020 rows, 510 non-zero | thresholds pass | 10 wins, 10 captains | app-relative ids present | club theme pass | highest due fixed malformed scorecard row | ready with caveats |
-| `fvcc` | 293 rows, 246 non-zero | 290 rows, 133 non-zero | thresholds pass | 8 wins, 8 captains | app-relative ids present | FVCC purple preserved | low regression risk | pass |
+| `fvcc` | 293 rows, 246 non-zero | 290 rows, 133 non-zero | thresholds pass | 8 wins, 8 captains | app-relative ids present | FVCC navy/maroon/gold palette | low regression risk | pass |
 
 Metric rules re-confirmed:
 
@@ -115,9 +115,11 @@ Static and route-level checks confirm:
 - unresolved player IDs render as text instead of broken links
 - scorecard links are URL-shape valid PlayCricket links
 - visible theming is driven by active club variables
-- FVCC continues to use its purple theme through FVCC config
+- FVCC uses its shirt-inspired navy, maroon, and gold theme through FVCC config
 
-The source purple audit still reports source-level hits in `src/ui`; those are retained only where backed by active club variables or FVCC defaults. Runtime smoke checks were used as the visibility check for non-FVCC theme leakage.
+The original source purple audit reported source-level hits in `src/ui`; those were retained only where backed by active club variables or the then-current FVCC defaults. Runtime smoke checks were used as the visibility check for non-FVCC theme leakage.
+
+Post-hardening FVCC theme update: FVCC no longer uses the legacy purple-first config. Its active-club palette is navy `#24455F`, maroon `#A31952`, gold `#D4A83A`, and cool background `#F6F8FB`. Shared component defaults and legacy purple helper surfaces were moved onto active-club variables so pilot clubs keep their own palettes.
 
 ## Smoke Results
 
@@ -131,7 +133,7 @@ Local Streamlit smoke tests were run one server at a time with `SHOW_EXPERIMENTA
 | `plenty` | pass | pass | pass | pass | none seen | none seen | club colours | pass |
 | `reynella` | pass | pass | pass | pass | none seen | none seen | club colours | pass |
 | `georges-river-district` | pass | pass | pass | pass | none seen | none seen | club colours | pass |
-| `fvcc` | pass | pass | pass | pass | not applicable | none seen | FVCC purple | pass |
+| `fvcc` | pass | pass | pass | pass | not applicable | none seen | FVCC navy/maroon/gold | pass |
 
 The in-app browser tooling did not expose a reliable viewport resize API during this final pass, so mobile/narrow smoke is recorded as a recommended final human check before sharing a link. Earlier Southside narrow-review issues were addressed in prior commits.
 
