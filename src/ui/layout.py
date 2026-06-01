@@ -7968,8 +7968,8 @@ def apply_hof_table_sorting(table: pd.DataFrame, table_type: str) -> pd.DataFram
 
 def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", key_prefix).strip("-") or "hof-detail-table"
-    link_colour = active_club_colour("primary_colour", "#24455F")
-    accent_colour = active_club_colour("accent_colour", link_colour)
+    link_colour = active_club_colour("secondary_colour", "#28485F")
+    accent_colour = active_club_colour("primary_colour", link_colour)
     primary_soft = active_club_colour("background_colour", "#F7F7FC")
     columns = table.columns.tolist()
     header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
@@ -8090,6 +8090,11 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         text-decoration: none;
         font-weight: 650;
       }}
+      .hof-detail-sortable a.hof-detail-player,
+      .hof-detail-sortable a.hof-detail-season {{
+        color: var(--hof-link);
+        font-weight: 750;
+      }}
       .hof-detail-sortable a:hover {{
         color: var(--hof-link-hover);
         text-decoration: underline;
@@ -8204,9 +8209,9 @@ def hof_detail_default_sort_dir(column: object) -> str:
 
 def hof_detail_display_value(column: str, value: object) -> str:
     if column == "Player":
-        return hof_detail_link_cell(value, profile_link_display_pattern())
+        return hof_detail_link_cell(value, profile_link_display_pattern(), role="player")
     if column in {"Debut Season", "Latest Season"}:
-        return hof_detail_link_cell(value, overview_link_display_pattern())
+        return hof_detail_link_cell(value, overview_link_display_pattern(), role="season")
     if pd.isna(value) or str(value).strip() == "":
         return "N/A"
     if column == "Win %" or column == "Bat SR":
@@ -8225,14 +8230,15 @@ def hof_detail_display_value(column: str, value: object) -> str:
     return html.escape(text if text and text != "—" else "N/A")
 
 
-def hof_detail_link_cell(value: object, display_pattern: str) -> str:
+def hof_detail_link_cell(value: object, display_pattern: str, role: str = "player") -> str:
     if pd.isna(value) or str(value).strip() == "":
         return "N/A"
     text = str(value).strip()
     label = link_display_label(text)
     if is_app_internal_url(text):
         return (
-            f'<a href="{html.escape(text, quote=True)}" target="_top" data-hof-internal-link="1">'
+            f'<a class="hof-detail-link hof-detail-{html.escape(role, quote=True)}" '
+            f'href="{html.escape(text, quote=True)}" target="_top" data-hof-internal-link="1">'
             f"{html.escape(label or text)}</a>"
         )
     return html.escape(label or text)
@@ -15667,8 +15673,8 @@ def render_full_stats_table(
 
 def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_id: str) -> str:
     safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "season-detail-table"
-    link_colour = active_club_colour("primary_colour", "#0072CE")
-    accent_colour = active_club_colour("accent_colour", link_colour)
+    link_colour = active_club_colour("secondary_colour", "#28485F")
+    accent_colour = active_club_colour("primary_colour", link_colour)
     soft_colour = active_club_colour("background_colour", "#F7F8FC")
     columns = table.columns.tolist()
     colgroup = "".join(

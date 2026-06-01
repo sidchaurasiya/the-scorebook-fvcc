@@ -1973,6 +1973,51 @@ def inject_theme() -> None:
             font-weight: 700;
         }
 
+        .block-container:has(.hall-of-fame-page) a.player-profile-link,
+        .block-container:has(.hall-of-fame-page) a.player-profile-link:visited,
+        .block-container:has(.hall-of-fame-page) a.season-overview-link,
+        .block-container:has(.hall-of-fame-page) a.season-overview-link:visited,
+        .block-container:has(.hall-of-fame-page) .hof-v2-performance-player a,
+        .block-container:has(.hall-of-fame-page) .hof-v2-performance-player a:visited,
+        .block-container:has(.hall-of-fame-page) .hof-v2-record-player a,
+        .block-container:has(.hall-of-fame-page) .hof-v2-record-player a:visited,
+        .block-container:has(.hall-of-fame-page) .hof-v2-trophy-year a,
+        .block-container:has(.hall-of-fame-page) .hof-v2-trophy-year a:visited,
+        .block-container:has(.hall-of-fame-page) .hof-v2-rank-row a,
+        .block-container:has(.hall-of-fame-page) .hof-v2-rank-row a:visited,
+        .block-container:has(.hall-of-fame-page) .hof-card a.player-profile-link,
+        .block-container:has(.hall-of-fame-page) .hof-card a.season-overview-link,
+        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
+        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player_id="],
+        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=season-overview"][href*="season="],
+        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="] {
+            color: var(--club-secondary) !important;
+        }
+
+        .block-container:has(.hall-of-fame-page) a.scorecard-link,
+        .block-container:has(.hall-of-fame-page) a.scorecard-link:visited,
+        .block-container:has(.hall-of-fame-page) .hof-v2-subtle-link {
+            color: var(--club-primary) !important;
+        }
+
+        .block-container:has(.season-overview-page) a.player-profile-link,
+        .block-container:has(.season-overview-page) a.player-profile-link:visited,
+        .block-container:has(.season-overview-page) a.season-overview-link,
+        .block-container:has(.season-overview-page) a.season-overview-link:visited,
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player_id="],
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season-overview"][href*="season="],
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="] {
+            color: var(--club-secondary) !important;
+        }
+
+        .block-container:has(.season-overview-page) a.scorecard-link,
+        .block-container:has(.season-overview-page) a.scorecard-link:visited,
+        .block-container:has(.season-overview-page) a.season-round-scorecard-link,
+        .block-container:has(.season-overview-page) a.season-round-scorecard-link:visited {
+            color: var(--club-primary) !important;
+        }
+
         .improver-gain {
             color: #109768;
             font-size: 1.4rem;
@@ -7568,6 +7613,28 @@ def active_club_theme_css() -> str:
         a:focus-visible,
         a.scorecard-link:focus-visible {{
             outline-color: rgba(var(--club-primary-rgb), 0.44) !important;
+        }}
+
+        .block-container:has(.season-overview-page) a.player-profile-link,
+        .block-container:has(.season-overview-page) a.player-profile-link:visited,
+        .block-container:has(.season-overview-page) a.season-overview-link,
+        .block-container:has(.season-overview-page) a.season-overview-link:visited,
+        .stVerticalBlock.st-key-top_scorers_card a.player-profile-link,
+        .stVerticalBlock.st-key-top_scorers_card a.player-profile-link:visited,
+        .stVerticalBlock.st-key-top_wickets_card a.player-profile-link,
+        .stVerticalBlock.st-key-top_wickets_card a.player-profile-link:visited,
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player_id="],
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season-overview"][href*="season="],
+        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="] {{
+            color: var(--club-secondary) !important;
+        }}
+
+        .block-container:has(.season-overview-page) a.scorecard-link,
+        .block-container:has(.season-overview-page) a.scorecard-link:visited,
+        .block-container:has(.season-overview-page) a.season-round-scorecard-link,
+        .block-container:has(.season-overview-page) a.season-round-scorecard-link:visited {{
+            color: var(--club-primary) !important;
         }}
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button,
