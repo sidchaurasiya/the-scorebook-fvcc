@@ -2672,6 +2672,22 @@ def inject_theme() -> None:
             color: var(--club-primary);
         }
 
+        .premiership-player-card .performance-player strong,
+        .premiership-player-card .performance-player strong a,
+        .premiership-player-card .performance-player strong a:visited,
+        .premiership-player-card .performance-player span a.season-overview-link,
+        .premiership-player-card .performance-player span a.season-overview-link:visited {
+            color: var(--ink) !important;
+        }
+
+        .premiership-player-card .performance-player span {
+            font-size: 0.93rem;
+        }
+
+        .premiership-player-card .performance-player strong {
+            font-size: 1.02rem;
+        }
+
         .premiership-player-row .performance-player span {
             display: block;
             max-width: 100%;
