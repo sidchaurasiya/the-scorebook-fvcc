@@ -1784,7 +1784,7 @@ def inject_theme() -> None:
             width: 32px;
         }
 
-        .kpi-icon.purple { background: linear-gradient(135deg, var(--club-primary), var(--club-accent)); }
+        .kpi-icon.purple { background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)); }
         .kpi-icon.blue { background: linear-gradient(135deg, #6aa9ff, #2f72ff); }
         .kpi-icon.green { background: linear-gradient(135deg, #34d399, #12b981); }
 
@@ -3835,7 +3835,7 @@ def inject_theme() -> None:
 
         .position-track div,
         .fingerprint-bar {
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent));
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary));
             border-radius: inherit;
             height: 100%;
         }
@@ -4759,7 +4759,7 @@ def inject_theme() -> None:
         }
 
         .peer-fill {
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent));
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary));
             border-radius: inherit;
             height: 100%;
             left: 0;
@@ -4998,7 +4998,7 @@ def inject_theme() -> None:
         }
 
         .milestone-segment.active {
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent));
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary));
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb, 75, 55, 216), 0.18);
             color: #ffffff !important;
         }
@@ -7393,15 +7393,15 @@ def inject_theme() -> None:
 
 
 def active_club_theme_css() -> str:
-    primary = safe_hex_colour(get_branding_value("primary_colour", "#24455F"), "#24455F")
-    secondary = safe_hex_colour(get_branding_value("secondary_colour", "#A31952"), "#A31952")
+    primary = safe_hex_colour(get_branding_value("primary_colour", "#A31952"), "#A31952")
+    secondary = safe_hex_colour(get_branding_value("secondary_colour", "#28485F"), "#28485F")
     accent = safe_hex_colour(get_branding_value("accent_colour", primary), primary)
     background = safe_hex_colour(get_branding_value("background_colour", "#F6F8FB"), "#F6F8FB")
     link = primary
     highlight = tint_hex(accent, 0.86)
     primary_soft = tint_hex(primary, 0.90)
     secondary_soft = tint_hex(secondary, 0.88)
-    sidebar_bg = darken_hex(primary, 0.24)
+    sidebar_bg = darken_hex(secondary, 0.24)
     sidebar_active = primary
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
@@ -7433,19 +7433,19 @@ def active_club_theme_css() -> str:
 
         .stApp {{
             background:
-                radial-gradient(circle at top right, rgba(var(--club-accent-rgb), 0.09), transparent 32rem),
+                radial-gradient(circle at top right, rgba(var(--club-secondary-rgb), 0.09), transparent 32rem),
                 var(--club-bg);
         }}
 
         section[data-testid="stSidebar"] {{
             background:
-                radial-gradient(circle at 18% 0%, rgba(var(--club-accent-rgb), 0.38), transparent 14rem),
-                radial-gradient(circle at 80% 42%, rgba(var(--club-secondary-rgb), 0.16), transparent 12rem),
-                linear-gradient(180deg, var(--club-primary) 0%, var(--club-sidebar-bg) 100%) !important;
+                radial-gradient(circle at 18% 0%, rgba(var(--club-secondary-rgb), 0.20), transparent 14rem),
+                radial-gradient(circle at 80% 42%, rgba(var(--club-primary-rgb), 0.22), transparent 12rem),
+                linear-gradient(180deg, var(--club-secondary) 0%, var(--club-sidebar-bg) 100%) !important;
         }}
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
-            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-secondary)) !important;
             box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
         }}
 
@@ -7474,7 +7474,7 @@ def active_club_theme_css() -> str:
         }}
 
         section[data-testid="stSidebar"] .side-nav-item.active {{
-            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-secondary)) !important;
             box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
         }}
 
@@ -7505,7 +7505,7 @@ def active_club_theme_css() -> str:
 
         div[data-testid="stTabs"] button[aria-selected="true"],
         .profile-segment.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             color: #ffffff !important;
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.22) !important;
         }}
@@ -7539,7 +7539,7 @@ def active_club_theme_css() -> str:
         a.scorecard-link:hover,
         a.season-round-scorecard-link:hover,
         a.full-link:hover {{
-            color: var(--club-accent) !important;
+            color: var(--club-secondary) !important;
         }}
 
         .club-label,
@@ -7560,14 +7560,14 @@ def active_club_theme_css() -> str:
 
         .mobile-nav-link.active,
         div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             border-color: rgba(var(--club-primary-rgb), 0.22) !important;
             color: #ffffff !important;
         }}
 
         a:focus-visible,
         a.scorecard-link:focus-visible {{
-            outline-color: rgba(var(--club-accent-rgb), 0.44) !important;
+            outline-color: rgba(var(--club-primary-rgb), 0.44) !important;
         }}
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button,
@@ -7577,19 +7577,19 @@ def active_club_theme_css() -> str:
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover,
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover * {{
-            color: var(--club-accent) !important;
+            color: var(--club-secondary) !important;
         }}
 
         .stButton > button[kind="primary"],
         .stDownloadButton > button[kind="primary"] {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             border-color: var(--club-primary) !important;
         }}
 
         .stButton > button:focus-visible,
         .stDownloadButton > button:focus-visible {{
-            box-shadow: 0 0 0 0.2rem rgba(var(--club-accent-rgb), 0.22) !important;
-            border-color: var(--club-accent) !important;
+            box-shadow: 0 0 0 0.2rem rgba(var(--club-primary-rgb), 0.22) !important;
+            border-color: var(--club-primary) !important;
         }}
 
         div[data-testid="stMetricValue"],
@@ -7602,7 +7602,7 @@ def active_club_theme_css() -> str:
 
         .cv-hero {{
             background:
-                linear-gradient(135deg, {primary} 0%, {accent} 100%),
+                linear-gradient(135deg, {secondary} 0%, {primary} 100%),
                 repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 54px) !important;
             box-shadow: 0 22px 52px {sidebar_shadow} !important;
         }}
@@ -7610,7 +7610,7 @@ def active_club_theme_css() -> str:
         .cv-callout,
         .season-detail-card,
         .profile-intelligence-card {{
-            border-color: rgba(var(--club-accent-rgb), 0.28) !important;
+            border-color: rgba(var(--club-primary-rgb), 0.28) !important;
         }}
 
         .position-track div,
@@ -7623,7 +7623,7 @@ def active_club_theme_css() -> str:
         .player-v2-progress-track span,
         .milestone-progress-card .progress-track div,
         .hof-progress-row .progress-track div {{
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .team-leader-card::before,
@@ -7631,22 +7631,22 @@ def active_club_theme_css() -> str:
         .pill.purple,
         .score-dot.purple,
         .legend-dot.current {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .profile-segment:hover,
         .profile-segment:focus-visible,
         .folder-tab:hover,
         .folder-tab:focus-visible {{
-            border-color: rgba(var(--club-accent-rgb), 0.34) !important;
+            border-color: rgba(var(--club-primary-rgb), 0.34) !important;
             color: var(--club-primary) !important;
         }}
 
         .folder-tab.active,
         .folder-tab[aria-selected="true"],
         .profile-segment.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
-            border-color: rgba(var(--club-accent-rgb), 0.38) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
+            border-color: rgba(var(--club-primary-rgb), 0.38) !important;
             color: #ffffff !important;
             box-shadow: 0 12px 28px rgba(var(--club-primary-rgb), 0.12) !important;
         }}
@@ -7655,7 +7655,7 @@ def active_club_theme_css() -> str:
         .record-card::before,
         .profile-season-summary-card::before,
         .season-v2-card::before {{
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .record-value,
@@ -7688,7 +7688,7 @@ def active_club_theme_css() -> str:
         .impact-marker,
         .peer-marker,
         .profile-best-dot {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             color: #ffffff !important;
         }}
 
@@ -7745,7 +7745,7 @@ def active_club_theme_css() -> str:
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[kind="primary"] {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.18) !important;
             color: #ffffff !important;
         }}
@@ -7802,12 +7802,12 @@ def active_club_theme_css() -> str:
         .player-v2-progress-track span,
         .profile-phase-track span,
         .recent-form-chip.batting.strong {{
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .season-v2-hero {{
             background:
-                radial-gradient(circle at 12% 18%, rgba(var(--club-accent-rgb), 0.16), transparent 30%),
+                radial-gradient(circle at 12% 18%, rgba(var(--club-primary-rgb), 0.16), transparent 30%),
                 linear-gradient(135deg, #ffffff 0%, var(--club-primary-soft) 58%, var(--club-secondary-soft) 100%) !important;
             border-color: rgba(var(--club-primary-rgb), 0.16) !important;
         }}
@@ -7817,7 +7817,7 @@ def active_club_theme_css() -> str:
         }}
 
         .kpi-card::after {{
-            background: radial-gradient(circle, rgba(var(--club-accent-rgb), 0.12), transparent 68%) !important;
+            background: radial-gradient(circle, rgba(var(--club-secondary-rgb), 0.12), transparent 68%) !important;
         }}
 
         div.st-key-mobile_nav_fallback .mobile-info-icon,
@@ -7827,7 +7827,7 @@ def active_club_theme_css() -> str:
         }}
 
         div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             border-color: rgba(var(--club-primary-rgb), 0.28) !important;
             color: #ffffff !important;
         }}

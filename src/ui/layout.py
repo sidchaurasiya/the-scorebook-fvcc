@@ -548,11 +548,11 @@ def active_club_colour(key: str, fallback: str) -> str:
 
 
 def active_chart_primary_colour() -> str:
-    return active_club_colour("primary_colour", "#24455F")
+    return active_club_colour("primary_colour", "#A31952")
 
 
 def active_chart_secondary_colour() -> str:
-    return active_club_colour("secondary_colour", "#10B981")
+    return active_club_colour("secondary_colour", "#28485F")
 
 
 def add_missing_canonical_player_ids(table: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
