@@ -48,7 +48,7 @@ Root causes fixed:
 
 - HOF Detailed Records Win % no longer uses an FVCC-only result-text check. Win-rate exports now classify the active club side from local match-centre rows.
 - Scorecard-derived 30s now use club-local player identity mappings, so Southside's approved safe merges flow into `player_scorecard_milestones.csv`.
-- Runtime theme CSS now reads active club branding colours and overrides the main sidebar, tab, link/button, progress, and section accents. FVCC keeps its configured purple defaults.
+- Runtime theme CSS reads active club branding colours and overrides the main sidebar, tab, link/button, progress, and section accents. FVCC now uses its shirt-inspired navy, maroon, and gold config palette.
 
 | club_id | HOF Win % status | 30s status | premiership status | link status | club colour/theme status | preview readiness |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -386,7 +386,7 @@ Southside East Caulfield remains the recommended first private preview candidate
 Follow-up status: Preview-ready after final visual review.
 
 - Premierships: 5 verified Southside Grand Final wins still render. Captain roles are now extracted from the verified winning-team scorecard payload where available: Vatsan Vasu, Aamir Rana, Pranav Sinha, and Christopher Jones. One E Grade row remains without captain evidence and is intentionally blank.
-- Theming: remaining FVCC/purple accents in shared sidebar/link/tab/progress styles were replaced with active club variables. Southside now uses its configured blue/accent palette across Hall of Fame, Season Overview, Milestone, and Player Profile; FVCC keeps its purple default.
+- Theming: shared sidebar/link/tab/progress styles resolve through active club variables. Southside uses its configured blue/accent palette across Hall of Fame, Season Overview, Milestone, and Player Profile; FVCC now uses its shirt-inspired navy, maroon, and gold config palette.
 - Season Overview: Winter 2026 women’s rows now use fetched team ownership and show Caroline Springs Cricket Club as opponent, not Southside.
 - Hall of Fame: Men/Women toggle added and verified. Women’s view shows classified women’s records and clean empty states where sections have no women’s data.
 - Links: HOF player, season, and scorecard links remained valid in local smoke.

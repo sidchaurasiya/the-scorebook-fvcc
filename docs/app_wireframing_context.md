@@ -1298,7 +1298,7 @@ Current subtitle:
 
 Visual:
 
-- Purple dot = selected player.
+- Active club-colour dot = selected player.
 - Grey marker = peer average.
 - Range line = lowest to highest peer value.
 - Status pill: Better than avg / Around avg / Worse than avg.
@@ -1845,4 +1845,5 @@ Display rules:
 - Treat scorecard balls of `0` as missing when verified ball-by-ball legal-ball counts exist.
 - Exclude suspicious records instead of showing false precision. As a guardrail, fastest 50s below 9 balls and fastest 100s below 17 balls must not display unless explicitly verified by a trustworthy delivery sequence.
 - Keep the subtitle/trust language: "Based on matches with verified ball-by-ball data."
-- HOF Iconic Performances and Fastest Innings visual accents should use active club colour variables, not FVCC-only purple values.
+- HOF Iconic Performances and Fastest Innings visual accents should use active club colour variables, not FVCC-only colour values.
+- FVCC branding was refreshed from the legacy purple-first palette to the current shirt-inspired palette: navy `#24455F`, maroon `#A31952`, gold `#D4A83A`, cool background `#F6F8FB`, and dark navy text. Shared components should continue to resolve accents from the active club config so pilot clubs retain their own identities.
