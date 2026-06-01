@@ -4,7 +4,13 @@ Match-centre data is match-level PlayCricket data from public match-centre endpo
 
 This pipeline is separate from the existing aggregate stats refresh. It does not replace `scripts/refresh_data.py`, does not alter the Streamlit app, and does not write into the existing aggregate `data/processed/*.csv` tables.
 
-The weekly `scripts/refresh_data.py` workflow now runs a narrow current-season match-centre refresh after the aggregate PlayCricket refresh, then rebuilds the small deploy-safe Season Overview, Player Profile, and Hall of Fame exports. This prevents aggregate scorecard stats from being current while scorecard detail, Season by Round, Recent Form, and ball-by-ball-derived metrics remain stale.
+The weekly `scripts/refresh_data.py --club fvcc --with-current-match-centre`
+workflow runs a narrow current-season match-centre refresh after the aggregate
+PlayCricket refresh, then rebuilds the small deploy-safe Season Overview,
+Player Profile, and Hall of Fame exports. Follow it with
+`scripts/refresh_club_outputs.py --club fvcc` so the reviewed deploy-safe wrapper
+is exercised explicitly. This prevents aggregate leader totals and scorecard
+detail such as Season by Round from drifting apart.
 
 ## Data Strategy
 

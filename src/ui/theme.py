@@ -2675,9 +2675,13 @@ def inject_theme() -> None:
         .premiership-player-card .performance-player strong,
         .premiership-player-card .performance-player strong a,
         .premiership-player-card .performance-player strong a:visited,
-        .premiership-player-card .performance-player span a.season-overview-link,
-        .premiership-player-card .performance-player span a.season-overview-link:visited {
+        .premiership-player-card .hof-season-text,
+        .premiership-player-card .hof-season-text:visited {
             color: var(--ink) !important;
+        }
+
+        .premiership-player-card .hof-value-text {
+            color: var(--club-primary) !important;
         }
 
         .premiership-player-card .performance-player span {
@@ -7750,8 +7754,6 @@ def active_club_theme_css() -> str:
         .hof-v2-trophy-year a,
         .best-season-primary,
         .premiership-player-row .performance-value,
-        .premiership-player-row .performance-player span a.season-overview-link,
-        .premiership-player-row .performance-player span a.season-overview-link:visited,
         .milestone-away,
         .milestone-progress-top span:not(.milestone-row-badge),
         .milestone-group-title,

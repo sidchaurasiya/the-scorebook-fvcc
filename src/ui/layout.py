@@ -6698,10 +6698,10 @@ def player_premiership_row_html(rank: int, row: pd.Series) -> str:
         '<div class="performance-row premiership-player-row">'
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
-        f'<strong>{player_profile_link_html(player_id, player)}</strong>'
+        f'<strong class="hof-player-name">{player_profile_link_html(player_id, player)}</strong>'
         f'<span>{details}</span>'
         '</div>'
-        f'<div class="performance-value">{html.escape(value)}</div>'
+        f'<div class="performance-value hof-value-text">{html.escape(value)}</div>'
         "</div>"
     )
 
@@ -6711,7 +6711,7 @@ def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
     if not seasons:
         return ""
     visible = seasons[:visible_limit]
-    links = [season_overview_link_html(season) for season in visible]
+    links = [season_overview_link_html(season, "season-overview-link hof-season-text") for season in visible]
     if len(seasons) > visible_limit:
         links.append(f"+{len(seasons) - visible_limit} more")
     return ", ".join(links)
