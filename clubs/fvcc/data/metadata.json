@@ -213,8 +213,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-06-01T06:58:23.910385+00:00",
-  "last_successful_refresh_time": "2026-06-01T06:58:23.910385+00:00",
+  "fetch_date_time": "2026-06-01T08:48:01.592279+00:00",
+  "last_successful_refresh_time": "2026-06-01T08:48:01.592279+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -230,8 +230,8 @@
     "bowling": 1911,
     "fielding": 1911
   },
-  "live_requests": 253,
-  "cache_hits": 0,
+  "live_requests": 5,
+  "cache_hits": 248,
   "failed_requests": [],
   "notes": [
     "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",

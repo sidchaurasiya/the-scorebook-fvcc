@@ -49,7 +49,8 @@ git status
 6. Run the real refresh.
 
 ```bash
-./.venv-app/bin/python scripts/refresh_data.py --club fvcc
+./.venv-app/bin/python scripts/refresh_data.py --club fvcc --with-current-match-centre
+./.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc
 ```
 
    The refresh should:
@@ -168,7 +169,7 @@ Restart the app afterwards:
 
 ## Design Requirement
 
-The refresh script must keep the app local-data-first:
+The weekly refresh must keep the app local-data-first:
 
 - Pull PlayCricket data into timestamped raw backups.
 - Rebuild active-club processed datasets.
@@ -176,6 +177,9 @@ The refresh script must keep the app local-data-first:
 - Reapply team/grade display normalization.
 - Leave raw historical backups intact.
 - Avoid unnecessary repeated API calls by refreshing the live/current season and using cached historical responses.
+- Always refresh aggregates before rebuilding deploy-safe summaries. Running
+  `scripts/refresh_club_outputs.py` alone can update Season by Round from current
+  scorecards while leaving Season Overview aggregate leader totals stale.
 
 Page code should consume the shared processed data layer. Avoid creating page-specific CSVs such as `hall_of_fame_output.csv` or `player_profile_output.csv` unless the source pull is genuinely different.
 
