@@ -2636,13 +2636,15 @@ def inject_theme() -> None:
         }
 
         .premiership-player-row .performance-player span a.season-overview-link,
-        .premiership-player-row .performance-player span a.season-overview-link:visited {
+        .premiership-player-row .performance-player span a.season-overview-link:visited,
+        .premiership-player-row .performance-player span a.hof-season-text,
+        .premiership-player-row .performance-player span a.hof-season-text:visited {
             color: var(--club-link, #4b37d8) !important;
             font-weight: 850;
         }
 
         .premiership-empty p {
-            color: #737994;
+            color: var(--muted);
             font-weight: 750;
             margin: 6px 0 0;
         }
@@ -7397,11 +7399,15 @@ def active_club_theme_css() -> str:
     secondary = safe_hex_colour(get_branding_value("secondary_colour", "#7C5CFF"), "#7C5CFF")
     accent = safe_hex_colour(get_branding_value("accent_colour", primary), primary)
     background = safe_hex_colour(get_branding_value("background_colour", "#F7F8FC"), "#F7F8FC")
+    text = safe_hex_colour(get_branding_value("text_colour", "#080B3F"), "#080B3F")
+    muted = safe_hex_colour(get_branding_value("muted_text_colour", "#6D728E"), "#6D728E")
+    line = safe_hex_colour(get_branding_value("border_colour", "#E7EAF5"), "#E7EAF5")
+    surface = safe_hex_colour(get_branding_value("surface_colour", "#FFFFFF"), "#FFFFFF")
     link = primary
     highlight = tint_hex(accent, 0.86)
     primary_soft = tint_hex(primary, 0.90)
     secondary_soft = tint_hex(secondary, 0.88)
-    sidebar_bg = darken_hex(primary, 0.24)
+    sidebar_bg = safe_hex_colour(get_branding_value("primary_dark_colour", darken_hex(primary, 0.24)), darken_hex(primary, 0.24))
     sidebar_active = primary
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
@@ -7416,6 +7422,10 @@ def active_club_theme_css() -> str:
             --club-secondary: {secondary};
             --club-accent: {accent};
             --club-bg: {background};
+            --club-text: {text};
+            --club-muted: {muted};
+            --club-border: {line};
+            --club-surface: {surface};
             --club-link: {link};
             --club-highlight: {highlight};
             --club-primary-soft: {primary_soft};
@@ -7426,9 +7436,14 @@ def active_club_theme_css() -> str:
             --club-accent-rgb: {accent_rgb};
             --club-secondary-rgb: {secondary_rgb};
             --club-highlight-rgb: {highlight_rgb};
+            --ink: var(--club-text);
+            --muted: var(--club-muted);
+            --line: var(--club-border);
+            --surface: var(--club-surface);
+            --surface-soft: var(--club-bg);
+            --card-border: var(--club-border);
             --pitch: var(--club-primary);
             --pitch-2: var(--club-accent);
-            --surface-soft: var(--club-bg);
         }}
 
         .stApp {{
@@ -7500,7 +7515,12 @@ def active_club_theme_css() -> str:
         }}
 
         div[data-testid="stTabs"] button {{
-            color: rgba(8, 10, 63, 0.68) !important;
+            color: var(--muted) !important;
+        }}
+
+        div[data-testid="stTabs"] [role="tablist"] {{
+            background: var(--surface-soft) !important;
+            border: 1px solid var(--line) !important;
         }}
 
         div[data-testid="stTabs"] button[aria-selected="true"],
