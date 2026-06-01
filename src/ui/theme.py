@@ -2700,9 +2700,9 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
-        .premiership-player-row .performance-player span a.season-overview-link,
-        .premiership-player-row .performance-player span a.season-overview-link:visited {
-            color: var(--club-link, var(--club-primary)) !important;
+        .premiership-player-row .performance-player span a.hof-season-text,
+        .premiership-player-row .performance-player span a.hof-season-text:visited {
+            color: var(--ink) !important;
             font-weight: 850;
         }
 
