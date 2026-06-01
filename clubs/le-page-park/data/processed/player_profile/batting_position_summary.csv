@@ -1,71 +1,135 @@
 canonical_player_id,canonical_player_name,display_player_name,position_group,position_order,innings,runs,outs,average
+raw_00000000_0000_0000_0000_000000000001,********,********,Opener,1,1,41,0,
+raw_00000000_0000_0000_0000_000000000002,********,********,Opener,1,1,8,1,8.0
 raw_050ca70e_6eb2_40b6_a5d9_d2cf3f8ca486,********,********,Opener,1,1,8,1,8.0
 raw_0f772c08_0727_41df_bf28_6fcaf76a770e,********,********,Opener,1,1,10,0,
 raw_51820ab2_8dc5_4c6f_8ac0_f48f25a7e5d2,********,********,Opener,1,4,38,0,
+raw_59aa490c_d517_471a_9cbb_4cc5ad145aab,********,********,Opener,1,4,123,2,61.5
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,Opener,1,1,37,0,
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,Opener,1,3,34,2,17.0
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,Opener,1,2,41,1,41.0
 raw_d9d46c96_eb16_4dc9_b1f4_e565c66c8700,********,********,Opener,1,2,34,1,34.0
 raw_e159e527_cdff_433e_9e2a_17b20bed090e,********,********,Opener,1,2,2,2,1.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 3,3,2,92,1,92.0
 raw_51820ab2_8dc5_4c6f_8ac0_f48f25a7e5d2,********,********,No. 3,3,2,24,2,12.0
+raw_59aa490c_d517_471a_9cbb_4cc5ad145aab,********,********,No. 3,3,1,22,0,
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,No. 3,3,2,20,0,
 raw_d9d46c96_eb16_4dc9_b1f4_e565c66c8700,********,********,No. 3,3,1,9,1,9.0
 raw_0f772c08_0727_41df_bf28_6fcaf76a770e,********,********,No. 4,4,1,10,1,10.0
 raw_51820ab2_8dc5_4c6f_8ac0_f48f25a7e5d2,********,********,No. 4,4,2,32,2,16.0
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,No. 4,4,1,15,1,15.0
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,No. 4,4,1,0,1,0.0
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,No. 4,4,3,8,3,2.6666666666666665
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 5,5,1,5,0,
 raw_0f772c08_0727_41df_bf28_6fcaf76a770e,********,********,No. 5,5,3,29,1,29.0
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,No. 5,5,1,15,0,
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,No. 5,5,4,21,3,7.0
+raw_00000000_0000_0000_0000_000000000001,********,********,No. 6,6,1,22,1,22.0
 raw_51820ab2_8dc5_4c6f_8ac0_f48f25a7e5d2,********,********,No. 6,6,2,59,0,
 raw_566490e4_0591_40ed_a365_daa48e5c7999,********,********,No. 6,6,2,20,1,20.0
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,No. 6,6,1,21,1,21.0
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,No. 6,6,2,2,2,1.0
 raw_d9d46c96_eb16_4dc9_b1f4_e565c66c8700,********,********,No. 6,6,1,19,1,19.0
 raw_e159e527_cdff_433e_9e2a_17b20bed090e,********,********,No. 6,6,1,2,1,2.0
+raw_00000000_0000_0000_0000_000000000003,********,********,No. 7,7,1,1,1,1.0
 raw_51820ab2_8dc5_4c6f_8ac0_f48f25a7e5d2,********,********,No. 7,7,1,9,1,9.0
 raw_566490e4_0591_40ed_a365_daa48e5c7999,********,********,No. 7,7,2,25,2,12.5
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,No. 7,7,3,20,2,10.0
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,No. 7,7,5,10,4,2.5
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,No. 7,7,1,1,1,1.0
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,********,********,No. 7,7,1,15,0,
+raw_00000000_0000_0000_0000_000000000002,********,********,No. 8,8,2,0,2,0.0
 raw_0f772c08_0727_41df_bf28_6fcaf76a770e,********,********,No. 8,8,1,0,1,0.0
 raw_566490e4_0591_40ed_a365_daa48e5c7999,********,********,No. 8,8,1,18,1,18.0
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,No. 8,8,3,31,2,15.5
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,No. 8,8,2,0,2,0.0
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,No. 8,8,1,8,0,
 raw_0f772c08_0727_41df_bf28_6fcaf76a770e,********,********,No. 9,9,3,17,2,8.5
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,No. 9,9,2,18,1,18.0
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,No. 9,9,3,4,1,4.0
+raw_8d3c95b5_7dce_471c_930b_565de2405083,********,********,No. 9,9,2,4,2,2.0
 raw_e159e527_cdff_433e_9e2a_17b20bed090e,********,********,No. 9,9,2,12,1,12.0
+raw_00000000_0000_0000_0000_000000000001,********,********,Tail,10,1,8,0,
+raw_00000000_0000_0000_0000_000000000002,********,********,Tail,10,1,14,0,
 raw_566490e4_0591_40ed_a365_daa48e5c7999,********,********,Tail,10,8,35,5,7.0
 raw_7a879f7b_e7d9_4794_829d_2fe69b1bf528,********,********,Tail,10,1,3,0,
 raw_840885b7_547c_4892_88e1_d9a4950a1d2f,********,********,Tail,10,1,10,0,
 raw_2ba39213_7898_48ec_91f7_1d63f143ef70,Aahan Belgaonkar,Aahan Belgaonkar,Opener,1,2,9,1,9.0
 raw_2ba39213_7898_48ec_91f7_1d63f143ef70,Aahan Belgaonkar,Aahan Belgaonkar,No. 6,6,4,27,4,6.75
-raw_c63003f9_fe3c_4a9f_ad97_b1a3362a3a80,Aarav Shah,Aarav Shah,Opener,1,2,7,1,7.0
-raw_c63003f9_fe3c_4a9f_ad97_b1a3362a3a80,Aarav Shah,Aarav Shah,No. 6,6,2,9,0,
-raw_c63003f9_fe3c_4a9f_ad97_b1a3362a3a80,Aarav Shah,Aarav Shah,Tail,10,2,4,2,2.0
-raw_9dd7b3c4_2412_4065_be35_bae948beaa71,Aaron Carroll,Aaron Carroll,Opener,1,1,68,1,68.0
-raw_9dd7b3c4_2412_4065_be35_bae948beaa71,Aaron Carroll,Aaron Carroll,No. 3,3,4,132,4,33.0
-raw_9dd7b3c4_2412_4065_be35_bae948beaa71,Aaron Carroll,Aaron Carroll,No. 4,4,3,48,3,16.0
-raw_9dd7b3c4_2412_4065_be35_bae948beaa71,Aaron Carroll,Aaron Carroll,No. 5,5,1,6,1,6.0
-raw_9dd7b3c4_2412_4065_be35_bae948beaa71,Aaron Carroll,Aaron Carroll,No. 6,6,1,0,1,0.0
+aarav_shah,Aarav Shah,Aarav Shah,Opener,1,2,7,1,7.0
+aarav_shah,Aarav Shah,Aarav Shah,No. 6,6,2,9,0,
+aarav_shah,Aarav Shah,Aarav Shah,No. 7,7,1,10,1,10.0
+aarav_shah,Aarav Shah,Aarav Shah,No. 8,8,1,0,1,0.0
+aarav_shah,Aarav Shah,Aarav Shah,No. 9,9,1,0,1,0.0
+aarav_shah,Aarav Shah,Aarav Shah,Tail,10,5,26,5,5.2
+aaron_carroll,Aaron Carroll,Aaron Carroll,Opener,1,1,68,1,68.0
+aaron_carroll,Aaron Carroll,Aaron Carroll,No. 3,3,6,136,6,22.666666666666668
+aaron_carroll,Aaron Carroll,Aaron Carroll,No. 4,4,3,48,3,16.0
+aaron_carroll,Aaron Carroll,Aaron Carroll,No. 5,5,6,96,6,16.0
+aaron_carroll,Aaron Carroll,Aaron Carroll,No. 6,6,4,36,4,9.0
 raw_87789f2f_f256_4fb1_9a8c_9e947024919b,Abdul Rehman,Abdul Rehman,No. 4,4,1,7,0,
 raw_87789f2f_f256_4fb1_9a8c_9e947024919b,Abdul Rehman,Abdul Rehman,No. 7,7,1,2,0,
+raw_655881bb_7474_4162_9c69_3e3ae677a81d,Abhey Singh Hanjrah,Abhey Singh Hanjrah,Opener,1,4,51,2,25.5
+raw_655881bb_7474_4162_9c69_3e3ae677a81d,Abhey Singh Hanjrah,Abhey Singh Hanjrah,No. 5,5,4,37,4,9.25
+raw_655881bb_7474_4162_9c69_3e3ae677a81d,Abhey Singh Hanjrah,Abhey Singh Hanjrah,No. 6,6,4,29,2,14.5
+raw_655881bb_7474_4162_9c69_3e3ae677a81d,Abhey Singh Hanjrah,Abhey Singh Hanjrah,No. 7,7,1,10,1,10.0
+raw_655881bb_7474_4162_9c69_3e3ae677a81d,Abhey Singh Hanjrah,Abhey Singh Hanjrah,Tail,10,1,0,1,0.0
+raw_eeb09ec0_1886_4888_b24c_09c0d36e1cc6,Abigail Morris,Abigail Morris,Opener,1,9,175,3,58.333333333333336
+raw_eeb09ec0_1886_4888_b24c_09c0d36e1cc6,Abigail Morris,Abigail Morris,No. 6,6,1,15,1,15.0
+raw_eeb09ec0_1886_4888_b24c_09c0d36e1cc6,Abigail Morris,Abigail Morris,No. 7,7,3,36,0,
+raw_eeb09ec0_1886_4888_b24c_09c0d36e1cc6,Abigail Morris,Abigail Morris,No. 8,8,3,26,1,26.0
+raw_f26e1612_b55f_47d8_a154_362e04d5e4ab,Abigail Murphy,Abigail Murphy,Opener,1,4,14,0,
+raw_f26e1612_b55f_47d8_a154_362e04d5e4ab,Abigail Murphy,Abigail Murphy,No. 3,3,1,5,0,
+raw_f26e1612_b55f_47d8_a154_362e04d5e4ab,Abigail Murphy,Abigail Murphy,No. 4,4,1,2,0,
+raw_f26e1612_b55f_47d8_a154_362e04d5e4ab,Abigail Murphy,Abigail Murphy,No. 6,6,1,2,0,
+raw_f26e1612_b55f_47d8_a154_362e04d5e4ab,Abigail Murphy,Abigail Murphy,No. 7,7,1,2,0,
+raw_585b0bd7_76c5_4699_bd6b_aaba6ed9f15f,Aditi Jaswal,Aditi Jaswal,No. 4,4,2,25,1,25.0
+raw_585b0bd7_76c5_4699_bd6b_aaba6ed9f15f,Aditi Jaswal,Aditi Jaswal,No. 6,6,1,4,0,
+raw_585b0bd7_76c5_4699_bd6b_aaba6ed9f15f,Aditi Jaswal,Aditi Jaswal,No. 7,7,2,8,1,8.0
+raw_585b0bd7_76c5_4699_bd6b_aaba6ed9f15f,Aditi Jaswal,Aditi Jaswal,No. 8,8,1,8,0,
+raw_585b0bd7_76c5_4699_bd6b_aaba6ed9f15f,Aditi Jaswal,Aditi Jaswal,No. 9,9,2,10,0,
 raw_ee055da1_188d_4350_a9bc_c7db37a29b43,Adrian Taranto,Adrian Taranto,Opener,1,1,0,1,0.0
 raw_ee055da1_188d_4350_a9bc_c7db37a29b43,Adrian Taranto,Adrian Taranto,No. 5,5,2,74,2,37.0
 raw_ee055da1_188d_4350_a9bc_c7db37a29b43,Adrian Taranto,Adrian Taranto,No. 6,6,3,50,3,16.666666666666668
 raw_ee055da1_188d_4350_a9bc_c7db37a29b43,Adrian Taranto,Adrian Taranto,No. 8,8,2,2,2,1.0
 raw_ee055da1_188d_4350_a9bc_c7db37a29b43,Adrian Taranto,Adrian Taranto,Tail,10,2,17,1,17.0
+raw_ee318972_76cd_4a19_87a4_af60f0c8d96f,Adrielle Nelson,Adrielle Nelson,Opener,1,1,7,0,
+raw_ee318972_76cd_4a19_87a4_af60f0c8d96f,Adrielle Nelson,Adrielle Nelson,No. 4,4,4,5,0,
+raw_ee318972_76cd_4a19_87a4_af60f0c8d96f,Adrielle Nelson,Adrielle Nelson,No. 5,5,4,18,0,
+raw_ee318972_76cd_4a19_87a4_af60f0c8d96f,Adrielle Nelson,Adrielle Nelson,No. 6,6,3,16,0,
+raw_ee318972_76cd_4a19_87a4_af60f0c8d96f,Adrielle Nelson,Adrielle Nelson,No. 7,7,1,2,0,
+raw_ee318972_76cd_4a19_87a4_af60f0c8d96f,Adrielle Nelson,Adrielle Nelson,No. 8,8,1,5,0,
 raw_969b290f_6ed6_44c2_b1d2_f3b135984171,Alex Cole,Alex Cole,No. 3,3,1,0,1,0.0
 raw_969b290f_6ed6_44c2_b1d2_f3b135984171,Alex Cole,Alex Cole,No. 4,4,1,12,1,12.0
 raw_969b290f_6ed6_44c2_b1d2_f3b135984171,Alex Cole,Alex Cole,No. 7,7,3,12,3,4.0
 raw_969b290f_6ed6_44c2_b1d2_f3b135984171,Alex Cole,Alex Cole,No. 8,8,1,2,1,2.0
+raw_d68c4b90_4a46_421d_bde0_4764788cc722,Alex Forster,Alex Forster,Opener,1,1,10,1,10.0
+raw_d68c4b90_4a46_421d_bde0_4764788cc722,Alex Forster,Alex Forster,No. 3,3,1,2,1,2.0
+raw_d68c4b90_4a46_421d_bde0_4764788cc722,Alex Forster,Alex Forster,No. 5,5,2,2,2,1.0
+raw_d68c4b90_4a46_421d_bde0_4764788cc722,Alex Forster,Alex Forster,No. 6,6,3,26,3,8.666666666666666
+raw_d68c4b90_4a46_421d_bde0_4764788cc722,Alex Forster,Alex Forster,No. 7,7,1,9,1,9.0
+raw_d68c4b90_4a46_421d_bde0_4764788cc722,Alex Forster,Alex Forster,Tail,10,1,4,0,
 raw_cf0de31b_2d72_4605_a710_14627aa443a3,Alexander Arnaoutis,Alexander Arnaoutis,Opener,1,6,78,2,39.0
 raw_cf0de31b_2d72_4605_a710_14627aa443a3,Alexander Arnaoutis,Alexander Arnaoutis,No. 9,9,1,22,0,
 raw_cf0de31b_2d72_4605_a710_14627aa443a3,Alexander Arnaoutis,Alexander Arnaoutis,Tail,10,1,5,0,
+raw_00000000_0000_0000_0000_000000000001,Alice Butterly,Alice Butterly,Opener,1,1,15,0,
+raw_00000000_0000_0000_0000_000000000001,Alice Butterly,Alice Butterly,No. 3,3,1,7,0,
+raw_00000000_0000_0000_0000_000000000001,Alice Butterly,Alice Butterly,No. 4,4,3,27,1,27.0
+raw_00000000_0000_0000_0000_000000000001,Alice Butterly,Alice Butterly,No. 7,7,1,6,0,
+raw_00000000_0000_0000_0000_000000000001,Alice Butterly,Alice Butterly,No. 8,8,4,25,0,
+raw_00000000_0000_0000_0000_000000000001,Alice Butterly,Alice Butterly,No. 9,9,1,2,0,
 raw_3941b4da_862b_4fa5_8ca8_82cb952d2b55,Alicia Davis,Alicia Davis,No. 3,3,1,7,1,7.0
 raw_3941b4da_862b_4fa5_8ca8_82cb952d2b55,Alicia Davis,Alicia Davis,No. 4,4,1,7,1,7.0
 raw_3941b4da_862b_4fa5_8ca8_82cb952d2b55,Alicia Davis,Alicia Davis,No. 5,5,1,16,0,
 raw_3941b4da_862b_4fa5_8ca8_82cb952d2b55,Alicia Davis,Alicia Davis,No. 6,6,1,7,1,7.0
 raw_3941b4da_862b_4fa5_8ca8_82cb952d2b55,Alicia Davis,Alicia Davis,No. 8,8,1,9,0,
-raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 4,4,1,70,1,70.0
-raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 7,7,1,48,1,48.0
+raw_28fa36a1_aa7e_4427_842d_7b0150fa65b8,Alistair Abernethy,Alistair Abernethy,No. 9,9,1,23,0,
+raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 3,3,2,51,1,51.0
+raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 4,4,3,119,3,39.666666666666664
+raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 5,5,1,8,1,8.0
+raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 6,6,1,14,1,14.0
+raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 7,7,2,67,2,33.5
+raw_44b9c8cc_47b2_4fc8_b7ec_931241a4d251,Allan Brudar,Allan Brudar,No. 9,9,1,6,1,6.0
 raw_f6735adc_b8fc_4b78_b4ed_49518a7f33cc,Amelia Gomez,Amelia Gomez,Opener,1,4,47,3,15.666666666666666
 raw_f6735adc_b8fc_4b78_b4ed_49518a7f33cc,Amelia Gomez,Amelia Gomez,No. 3,3,1,11,0,
 raw_f6735adc_b8fc_4b78_b4ed_49518a7f33cc,Amelia Gomez,Amelia Gomez,No. 4,4,1,10,0,
@@ -74,49 +138,94 @@ raw_d70f68a1_c897_4e57_ac39_9862d22f4dec,Amy Brougham,Amy Brougham,No. 3,3,1,6,1
 raw_d70f68a1_c897_4e57_ac39_9862d22f4dec,Amy Brougham,Amy Brougham,No. 5,5,1,5,1,5.0
 raw_d70f68a1_c897_4e57_ac39_9862d22f4dec,Amy Brougham,Amy Brougham,No. 6,6,1,29,1,29.0
 raw_d70f68a1_c897_4e57_ac39_9862d22f4dec,Amy Brougham,Amy Brougham,No. 7,7,1,12,1,12.0
-raw_cbb2f5aa_637c_42c8_9860_779ab7770434,Andrew East,Andrew East,No. 5,5,1,4,1,4.0
-raw_cbb2f5aa_637c_42c8_9860_779ab7770434,Andrew East,Andrew East,No. 7,7,2,5,2,2.5
-raw_cbb2f5aa_637c_42c8_9860_779ab7770434,Andrew East,Andrew East,No. 8,8,1,0,1,0.0
-raw_cbb2f5aa_637c_42c8_9860_779ab7770434,Andrew East,Andrew East,No. 9,9,1,0,1,0.0
-raw_cbb2f5aa_637c_42c8_9860_779ab7770434,Andrew East,Andrew East,Tail,10,2,2,1,2.0
-raw_40df85fc_5cff_45de_b75c_b7e937a8cb85,Andrew Trease,Andrew Trease,Opener,1,2,105,2,52.5
-raw_40df85fc_5cff_45de_b75c_b7e937a8cb85,Andrew Trease,Andrew Trease,No. 3,3,3,62,2,31.0
-raw_40df85fc_5cff_45de_b75c_b7e937a8cb85,Andrew Trease,Andrew Trease,No. 6,6,1,4,1,4.0
+andrew_east,Andrew East,Andrew East,No. 5,5,1,4,1,4.0
+andrew_east,Andrew East,Andrew East,No. 6,6,1,0,1,0.0
+andrew_east,Andrew East,Andrew East,No. 7,7,3,13,3,4.333333333333333
+andrew_east,Andrew East,Andrew East,No. 8,8,2,4,1,4.0
+andrew_east,Andrew East,Andrew East,No. 9,9,1,0,1,0.0
+andrew_east,Andrew East,Andrew East,Tail,10,3,4,1,4.0
+andrew_trease,Andrew Trease,Andrew Trease,Opener,1,3,126,3,42.0
+andrew_trease,Andrew Trease,Andrew Trease,No. 3,3,11,171,9,19.0
+andrew_trease,Andrew Trease,Andrew Trease,No. 4,4,4,89,3,29.666666666666668
+andrew_trease,Andrew Trease,Andrew Trease,No. 5,5,2,47,2,23.5
+andrew_trease,Andrew Trease,Andrew Trease,No. 6,6,2,7,2,3.5
 raw_f3e4ab83_5197_430a_9122_61fa195beba1,Andrew Yates,Andrew Yates,No. 5,5,1,2,1,2.0
-raw_7f7078d3_cdc1_474a_8372_375b961b1887,Angus Palmer,Angus Palmer,Opener,1,1,11,0,
-raw_7f7078d3_cdc1_474a_8372_375b961b1887,Angus Palmer,Angus Palmer,No. 5,5,1,13,1,13.0
-raw_7f7078d3_cdc1_474a_8372_375b961b1887,Angus Palmer,Angus Palmer,No. 8,8,3,5,2,2.5
-raw_7f7078d3_cdc1_474a_8372_375b961b1887,Angus Palmer,Angus Palmer,No. 9,9,3,16,3,5.333333333333333
+angus_palmer,Angus Palmer,Angus Palmer,Opener,1,2,27,1,27.0
+angus_palmer,Angus Palmer,Angus Palmer,No. 5,5,1,13,1,13.0
+angus_palmer,Angus Palmer,Angus Palmer,No. 8,8,6,61,4,15.25
+angus_palmer,Angus Palmer,Angus Palmer,No. 9,9,9,47,7,6.714285714285714
+angus_palmer,Angus Palmer,Angus Palmer,Tail,10,5,22,3,7.333333333333333
 raw_53997de3_3547_4493_b36b_87355f9627ff,Ankit Gupta,Ankit Gupta,Opener,1,4,98,4,24.5
 raw_53997de3_3547_4493_b36b_87355f9627ff,Ankit Gupta,Ankit Gupta,No. 3,3,1,70,1,70.0
 raw_53997de3_3547_4493_b36b_87355f9627ff,Ankit Gupta,Ankit Gupta,Tail,10,1,3,0,
-raw_3f14cd5d_7787_4c77_a51b_62c3b0c68414,Annabel Meehan,Annabel Meehan,Opener,1,2,8,2,4.0
-raw_3f14cd5d_7787_4c77_a51b_62c3b0c68414,Annabel Meehan,Annabel Meehan,No. 3,3,1,7,1,7.0
-raw_3f14cd5d_7787_4c77_a51b_62c3b0c68414,Annabel Meehan,Annabel Meehan,No. 4,4,3,62,2,31.0
-raw_3f14cd5d_7787_4c77_a51b_62c3b0c68414,Annabel Meehan,Annabel Meehan,No. 5,5,1,3,1,3.0
-raw_3f14cd5d_7787_4c77_a51b_62c3b0c68414,Annabel Meehan,Annabel Meehan,No. 6,6,2,9,1,9.0
-raw_3f14cd5d_7787_4c77_a51b_62c3b0c68414,Annabel Meehan,Annabel Meehan,No. 9,9,2,17,2,8.5
-raw_e8317b03_c419_4653_ba44_22284d41077e,Archie Trevellyan,Archie Trevellyan,No. 5,5,1,4,1,4.0
-raw_e8317b03_c419_4653_ba44_22284d41077e,Archie Trevellyan,Archie Trevellyan,No. 8,8,1,0,0,
-raw_e8317b03_c419_4653_ba44_22284d41077e,Archie Trevellyan,Archie Trevellyan,No. 9,9,4,8,4,2.0
-raw_e8317b03_c419_4653_ba44_22284d41077e,Archie Trevellyan,Archie Trevellyan,Tail,10,6,37,2,18.5
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,Opener,1,1,1,1,1.0
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 3,3,1,8,1,8.0
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 4,4,1,13,0,
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 5,5,1,11,1,11.0
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 6,6,1,1,1,1.0
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 7,7,2,1,2,0.5
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 8,8,2,3,2,1.5
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,No. 9,9,1,0,1,0.0
-raw_1d5db6ed_f07d_4654_ba96_9258c6d6714e,Archie Wilton,Archie Wilton,Tail,10,1,15,1,15.0
-raw_b69b98e7_e1aa_43b0_9d87_c5cd2f7ad6c0,Ashley Milroy,Ashley Milroy,No. 3,3,1,0,1,0.0
-raw_b69b98e7_e1aa_43b0_9d87_c5cd2f7ad6c0,Ashley Milroy,Ashley Milroy,No. 5,5,1,2,1,2.0
-raw_b69b98e7_e1aa_43b0_9d87_c5cd2f7ad6c0,Ashley Milroy,Ashley Milroy,No. 6,6,5,11,3,3.6666666666666665
-raw_b69b98e7_e1aa_43b0_9d87_c5cd2f7ad6c0,Ashley Milroy,Ashley Milroy,No. 7,7,2,8,2,4.0
+annabel_meehan,Annabel Meehan,Annabel Meehan,Opener,1,2,8,2,4.0
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 3,3,3,34,2,17.0
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 4,4,3,62,2,31.0
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 5,5,6,56,3,18.666666666666668
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 6,6,4,38,1,38.0
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 7,7,3,25,1,25.0
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 8,8,1,9,0,
+annabel_meehan,Annabel Meehan,Annabel Meehan,No. 9,9,2,17,2,8.5
+raw_292a9514_0176_473b_960a_e9b6c3d73745,April Chaudhary,April Chaudhary,Opener,1,6,172,3,57.333333333333336
+raw_292a9514_0176_473b_960a_e9b6c3d73745,April Chaudhary,April Chaudhary,No. 3,3,1,4,1,4.0
+raw_292a9514_0176_473b_960a_e9b6c3d73745,April Chaudhary,April Chaudhary,No. 5,5,1,44,0,
+raw_292a9514_0176_473b_960a_e9b6c3d73745,April Chaudhary,April Chaudhary,No. 8,8,1,3,0,
+raw_a722e99f_9d13_493e_8587_f1035c30d2f7,Archie Denver,Archie Denver,No. 5,5,3,55,3,18.333333333333332
+raw_a722e99f_9d13_493e_8587_f1035c30d2f7,Archie Denver,Archie Denver,No. 9,9,2,3,1,3.0
+raw_a722e99f_9d13_493e_8587_f1035c30d2f7,Archie Denver,Archie Denver,Tail,10,2,27,2,13.5
+archie_trevellyan,Archie Trevellyan,Archie Trevellyan,No. 5,5,1,4,1,4.0
+archie_trevellyan,Archie Trevellyan,Archie Trevellyan,No. 8,8,1,0,0,
+archie_trevellyan,Archie Trevellyan,Archie Trevellyan,No. 9,9,4,8,4,2.0
+archie_trevellyan,Archie Trevellyan,Archie Trevellyan,Tail,10,6,37,2,18.5
+archie_wilton,Archie Wilton,Archie Wilton,Opener,1,2,2,2,1.0
+archie_wilton,Archie Wilton,Archie Wilton,No. 3,3,1,8,1,8.0
+archie_wilton,Archie Wilton,Archie Wilton,No. 4,4,1,13,0,
+archie_wilton,Archie Wilton,Archie Wilton,No. 5,5,1,11,1,11.0
+archie_wilton,Archie Wilton,Archie Wilton,No. 6,6,2,2,2,1.0
+archie_wilton,Archie Wilton,Archie Wilton,No. 7,7,4,3,4,0.75
+archie_wilton,Archie Wilton,Archie Wilton,No. 8,8,5,5,5,1.0
+archie_wilton,Archie Wilton,Archie Wilton,No. 9,9,3,10,3,3.3333333333333335
+archie_wilton,Archie Wilton,Archie Wilton,Tail,10,2,15,2,7.5
+raw_66b5817a_731b_44f1_9df5_1c879b609647,Arshia Arora,Arshia Arora,Opener,1,42,1090,25,43.6
+raw_66b5817a_731b_44f1_9df5_1c879b609647,Arshia Arora,Arshia Arora,No. 3,3,1,10,1,10.0
+raw_66b5817a_731b_44f1_9df5_1c879b609647,Arshia Arora,Arshia Arora,No. 5,5,2,8,2,4.0
+raw_66b5817a_731b_44f1_9df5_1c879b609647,Arshia Arora,Arshia Arora,No. 7,7,1,25,0,
+raw_66b5817a_731b_44f1_9df5_1c879b609647,Arshia Arora,Arshia Arora,No. 8,8,1,3,0,
+raw_9f0d2b05_450a_4a72_b465_7753bc5f92d4,Ash Wood,Ash Wood,Opener,1,1,1,1,1.0
+raw_9f0d2b05_450a_4a72_b465_7753bc5f92d4,Ash Wood,Ash Wood,No. 3,3,1,9,1,9.0
+raw_9f0d2b05_450a_4a72_b465_7753bc5f92d4,Ash Wood,Ash Wood,No. 4,4,2,41,2,20.5
+raw_9f0d2b05_450a_4a72_b465_7753bc5f92d4,Ash Wood,Ash Wood,No. 7,7,3,30,3,10.0
+raw_9f0d2b05_450a_4a72_b465_7753bc5f92d4,Ash Wood,Ash Wood,No. 8,8,1,7,0,
+ashley_milroy,Ashley Milroy,Ashley Milroy,No. 3,3,1,0,1,0.0
+ashley_milroy,Ashley Milroy,Ashley Milroy,No. 5,5,2,16,2,8.0
+ashley_milroy,Ashley Milroy,Ashley Milroy,No. 6,6,8,35,6,5.833333333333333
+ashley_milroy,Ashley Milroy,Ashley Milroy,No. 7,7,5,51,4,12.75
+ashley_milroy,Ashley Milroy,Ashley Milroy,No. 8,8,6,52,2,26.0
+ashley_milroy,Ashley Milroy,Ashley Milroy,No. 9,9,2,8,2,4.0
+ashley_milroy,Ashley Milroy,Ashley Milroy,Tail,10,2,5,1,5.0
+raw_4f4ce667_9258_4a5e_9852_c8513491bb20,Asmita Malla Thakuri,Asmita Malla Thakuri,No. 3,3,1,2,1,2.0
+raw_4f4ce667_9258_4a5e_9852_c8513491bb20,Asmita Malla Thakuri,Asmita Malla Thakuri,No. 5,5,1,0,1,0.0
+raw_4f4ce667_9258_4a5e_9852_c8513491bb20,Asmita Malla Thakuri,Asmita Malla Thakuri,No. 6,6,1,11,0,
+raw_4f4ce667_9258_4a5e_9852_c8513491bb20,Asmita Malla Thakuri,Asmita Malla Thakuri,No. 7,7,2,2,2,1.0
+raw_ec133457_c859_4c5c_8347_bbd18ed58129,Atharv Gangal,Atharv Gangal,Opener,1,3,40,1,40.0
+raw_ec133457_c859_4c5c_8347_bbd18ed58129,Atharv Gangal,Atharv Gangal,No. 5,5,1,17,1,17.0
+raw_ec133457_c859_4c5c_8347_bbd18ed58129,Atharv Gangal,Atharv Gangal,No. 6,6,1,0,1,0.0
+raw_ec133457_c859_4c5c_8347_bbd18ed58129,Atharv Gangal,Atharv Gangal,No. 7,7,1,22,0,
+raw_ec133457_c859_4c5c_8347_bbd18ed58129,Atharv Gangal,Atharv Gangal,No. 8,8,1,7,1,7.0
+raw_ec133457_c859_4c5c_8347_bbd18ed58129,Atharv Gangal,Atharv Gangal,Tail,10,2,44,1,44.0
+raw_db3804f0_9e5c_43d0_a21e_4b07c6860f7e,Austin Measham,Austin Measham,Opener,1,7,46,0,
+raw_db3804f0_9e5c_43d0_a21e_4b07c6860f7e,Austin Measham,Austin Measham,No. 4,4,6,33,0,
+raw_db3804f0_9e5c_43d0_a21e_4b07c6860f7e,Austin Measham,Austin Measham,No. 5,5,1,5,0,
 raw_356a0b92_8357_45a2_8048_62622aba3d7f,Avanith Manoj,Avanith Manoj,Opener,1,4,26,2,13.0
 raw_356a0b92_8357_45a2_8048_62622aba3d7f,Avanith Manoj,Avanith Manoj,No. 3,3,1,3,0,
 raw_356a0b92_8357_45a2_8048_62622aba3d7f,Avanith Manoj,Avanith Manoj,No. 4,4,3,33,0,
 raw_356a0b92_8357_45a2_8048_62622aba3d7f,Avanith Manoj,Avanith Manoj,No. 5,5,1,4,0,
+raw_8dbe1aab_9809_4e74_bc5e_3c0bdf55d08b,Avyay Tewari,Avyay Tewari,Opener,1,2,14,0,
+raw_8dbe1aab_9809_4e74_bc5e_3c0bdf55d08b,Avyay Tewari,Avyay Tewari,No. 3,3,2,11,0,
+raw_8dbe1aab_9809_4e74_bc5e_3c0bdf55d08b,Avyay Tewari,Avyay Tewari,No. 4,4,2,28,0,
+raw_8dbe1aab_9809_4e74_bc5e_3c0bdf55d08b,Avyay Tewari,Avyay Tewari,No. 5,5,2,15,0,
+raw_8dbe1aab_9809_4e74_bc5e_3c0bdf55d08b,Avyay Tewari,Avyay Tewari,No. 6,6,1,10,0,
+raw_8dbe1aab_9809_4e74_bc5e_3c0bdf55d08b,Avyay Tewari,Avyay Tewari,No. 7,7,1,1,0,
 raw_4e72478b_8628_43b5_97c6_575903bd8e5d,Axel Karlsson-Lacy,Axel Karlsson-Lacy,Opener,1,1,40,0,
 raw_4e72478b_8628_43b5_97c6_575903bd8e5d,Axel Karlsson-Lacy,Axel Karlsson-Lacy,No. 3,3,1,37,1,37.0
 raw_4e72478b_8628_43b5_97c6_575903bd8e5d,Axel Karlsson-Lacy,Axel Karlsson-Lacy,No. 4,4,1,15,1,15.0
@@ -137,10 +246,13 @@ raw_c9a1231a_5e42_4271_a7ff_d5f6abc3eb75,Beau Marasco,Beau Marasco,No. 5,5,1,1,1
 raw_c9a1231a_5e42_4271_a7ff_d5f6abc3eb75,Beau Marasco,Beau Marasco,No. 6,6,1,21,1,21.0
 raw_c9a1231a_5e42_4271_a7ff_d5f6abc3eb75,Beau Marasco,Beau Marasco,No. 8,8,1,31,0,
 raw_c9a1231a_5e42_4271_a7ff_d5f6abc3eb75,Beau Marasco,Beau Marasco,Tail,10,1,8,1,8.0
-raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,Opener,1,4,47,3,15.666666666666666
+raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,Opener,1,6,49,4,12.25
 raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,No. 4,4,3,50,1,50.0
 raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,No. 5,5,4,34,2,17.0
-raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,No. 7,7,1,13,0,
+raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,No. 7,7,3,39,2,19.5
+raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,No. 8,8,1,3,1,3.0
+raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,No. 9,9,3,19,2,9.5
+raw_845a9212_88f9_4752_a16f_984aa6f9e09b,Ben Ludecke,Ben Ludecke,Tail,10,1,1,1,1.0
 raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,Opener,1,2,9,1,9.0
 raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,No. 3,3,1,1,1,1.0
 raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,No. 4,4,2,17,2,8.5
@@ -148,20 +260,57 @@ raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,No. 5,5,1,24,1,
 raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,No. 7,7,2,14,1,14.0
 raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,No. 8,8,1,0,1,0.0
 raw_3523e491_fad3_475d_9ffc_179c52aa280a,Ben Winders,Ben Winders,No. 9,9,2,9,1,9.0
+raw_12ba35a2_6e4b_42e6_b4ce_b145b30382fd,Benjamin Hielscher,Benjamin Hielscher,Opener,1,4,80,0,
+raw_12ba35a2_6e4b_42e6_b4ce_b145b30382fd,Benjamin Hielscher,Benjamin Hielscher,No. 3,3,2,22,0,
+raw_12ba35a2_6e4b_42e6_b4ce_b145b30382fd,Benjamin Hielscher,Benjamin Hielscher,No. 4,4,2,12,0,
+raw_12ba35a2_6e4b_42e6_b4ce_b145b30382fd,Benjamin Hielscher,Benjamin Hielscher,No. 5,5,1,9,0,
+raw_12ba35a2_6e4b_42e6_b4ce_b145b30382fd,Benjamin Hielscher,Benjamin Hielscher,No. 6,6,5,89,0,
+raw_3e5939fc_b1f4_47a7_b40a_6b2970453e12,Benjamin Morgan,Benjamin Morgan,No. 3,3,1,14,1,14.0
+raw_3e5939fc_b1f4_47a7_b40a_6b2970453e12,Benjamin Morgan,Benjamin Morgan,No. 6,6,2,17,1,17.0
+raw_3e5939fc_b1f4_47a7_b40a_6b2970453e12,Benjamin Morgan,Benjamin Morgan,No. 8,8,2,32,1,32.0
+raw_3e5939fc_b1f4_47a7_b40a_6b2970453e12,Benjamin Morgan,Benjamin Morgan,Tail,10,3,22,3,7.333333333333333
+raw_8c8df7f0_c72e_4d11_8f72_45202657de34,Benjamin Picinic,Benjamin Picinic,Opener,1,2,15,2,7.5
+raw_8c8df7f0_c72e_4d11_8f72_45202657de34,Benjamin Picinic,Benjamin Picinic,No. 3,3,5,29,3,9.666666666666666
+raw_8c8df7f0_c72e_4d11_8f72_45202657de34,Benjamin Picinic,Benjamin Picinic,No. 4,4,1,14,1,14.0
+raw_8c8df7f0_c72e_4d11_8f72_45202657de34,Benjamin Picinic,Benjamin Picinic,No. 5,5,2,14,1,14.0
 raw_f15bbe79_db30_4adc_8e6a_35c59da901ab,Bhanu Sharma,Bhanu Sharma,No. 3,3,1,14,1,14.0
 raw_f15bbe79_db30_4adc_8e6a_35c59da901ab,Bhanu Sharma,Bhanu Sharma,No. 9,9,1,0,1,0.0
-raw_2ced9a80_56f2_439c_bfd5_c479aff6f79d,Blake Dickson,Blake Dickson,Opener,1,1,2,0,
-raw_2ced9a80_56f2_439c_bfd5_c479aff6f79d,Blake Dickson,Blake Dickson,No. 3,3,1,8,0,
+blake_dickson,Blake Dickson,Blake Dickson,Opener,1,1,2,0,
+blake_dickson,Blake Dickson,Blake Dickson,No. 3,3,1,8,0,
+blake_dickson,Blake Dickson,Blake Dickson,No. 6,6,1,8,0,
+blake_dickson,Blake Dickson,Blake Dickson,No. 7,7,1,12,1,12.0
+blake_dickson,Blake Dickson,Blake Dickson,No. 8,8,2,13,2,6.5
+blake_dickson,Blake Dickson,Blake Dickson,No. 9,9,2,7,2,3.5
+blake_dickson,Blake Dickson,Blake Dickson,Tail,10,3,24,1,24.0
 raw_3d163caf_a4db_468b_9d4c_c40b98036efd,Blake Renfrey,Blake Renfrey,Opener,1,5,103,4,25.75
 raw_3d163caf_a4db_468b_9d4c_c40b98036efd,Blake Renfrey,Blake Renfrey,No. 4,4,1,36,1,36.0
 raw_3d163caf_a4db_468b_9d4c_c40b98036efd,Blake Renfrey,Blake Renfrey,No. 7,7,1,4,0,
 raw_3d163caf_a4db_468b_9d4c_c40b98036efd,Blake Renfrey,Blake Renfrey,No. 9,9,1,1,1,1.0
 raw_dfbc6dea_35bf_4618_ba92_c2300293624b,Brad Carlyle,Brad Carlyle,Opener,1,1,2,1,2.0
-raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 5,5,1,18,1,18.0
-raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 6,6,1,1,1,1.0
-raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 7,7,3,18,2,9.0
-raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 8,8,1,3,1,3.0
-raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,Tail,10,3,16,1,16.0
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,Opener,1,1,5,0,
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 5,5,5,66,5,13.2
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 6,6,3,53,3,17.666666666666668
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 7,7,5,38,3,12.666666666666666
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 8,8,4,34,3,11.333333333333334
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,No. 9,9,1,0,1,0.0
+raw_3bbaef39_bb84_413d_b78e_fb80382af6ad,Bradley Pollard,Bradley Pollard,Tail,10,6,31,3,10.333333333333334
+raw_060f682c_4793_416e_9cb8_236d9ff9d7b1,Brendan Flood,Brendan Flood,Opener,1,6,66,6,11.0
+raw_060f682c_4793_416e_9cb8_236d9ff9d7b1,Brendan Flood,Brendan Flood,No. 3,3,2,42,2,21.0
+raw_060f682c_4793_416e_9cb8_236d9ff9d7b1,Brendan Flood,Brendan Flood,No. 4,4,2,60,1,60.0
+raw_060f682c_4793_416e_9cb8_236d9ff9d7b1,Brendan Flood,Brendan Flood,No. 5,5,1,16,1,16.0
+raw_060f682c_4793_416e_9cb8_236d9ff9d7b1,Brendan Flood,Brendan Flood,No. 6,6,1,38,1,38.0
+raw_060f682c_4793_416e_9cb8_236d9ff9d7b1,Brendan Flood,Brendan Flood,No. 7,7,1,35,1,35.0
+raw_468c3a0a_d327_4152_82d5_99052aa371b1,Brian Drew,Brian Drew,No. 3,3,3,16,3,5.333333333333333
+raw_468c3a0a_d327_4152_82d5_99052aa371b1,Brian Drew,Brian Drew,No. 4,4,1,9,1,9.0
+raw_468c3a0a_d327_4152_82d5_99052aa371b1,Brian Drew,Brian Drew,No. 5,5,4,37,4,9.25
+raw_468c3a0a_d327_4152_82d5_99052aa371b1,Brian Drew,Brian Drew,No. 6,6,1,0,1,0.0
+raw_468c3a0a_d327_4152_82d5_99052aa371b1,Brian Drew,Brian Drew,No. 8,8,2,27,1,27.0
+raw_468c3a0a_d327_4152_82d5_99052aa371b1,Brian Drew,Brian Drew,No. 9,9,1,29,0,
+raw_b25813b9_f535_43d4_91b5_e79208cb7f13,Brody Dillon,Brody Dillon,Opener,1,1,0,1,0.0
+raw_b25813b9_f535_43d4_91b5_e79208cb7f13,Brody Dillon,Brody Dillon,No. 4,4,1,18,1,18.0
+raw_b25813b9_f535_43d4_91b5_e79208cb7f13,Brody Dillon,Brody Dillon,No. 6,6,1,12,0,
+raw_b25813b9_f535_43d4_91b5_e79208cb7f13,Brody Dillon,Brody Dillon,No. 9,9,1,3,0,
+raw_b25813b9_f535_43d4_91b5_e79208cb7f13,Brody Dillon,Brody Dillon,Tail,10,3,7,2,3.5
 raw_0fc3ce8f_2552_4cd1_ba0f_23f5ab16bd9d,Caleb Gomez,Caleb Gomez,Opener,1,5,21,5,4.2
 raw_0fc3ce8f_2552_4cd1_ba0f_23f5ab16bd9d,Caleb Gomez,Caleb Gomez,No. 4,4,1,12,1,12.0
 raw_0fc3ce8f_2552_4cd1_ba0f_23f5ab16bd9d,Caleb Gomez,Caleb Gomez,Tail,10,1,0,0,
@@ -169,11 +318,22 @@ raw_9deda825_274c_4262_9493_9bfc300da2f1,Caleb Riach,Caleb Riach,No. 6,6,1,0,1,0
 raw_9deda825_274c_4262_9493_9bfc300da2f1,Caleb Riach,Caleb Riach,No. 8,8,1,9,0,
 raw_9deda825_274c_4262_9493_9bfc300da2f1,Caleb Riach,Caleb Riach,No. 9,9,2,8,2,4.0
 raw_9deda825_274c_4262_9493_9bfc300da2f1,Caleb Riach,Caleb Riach,Tail,10,1,6,0,
-raw_4d7a27ba_94a1_4597_a15a_0618f93f7f84,Cameron Bird,Cameron Bird,Opener,1,1,0,1,0.0
-raw_4d7a27ba_94a1_4597_a15a_0618f93f7f84,Cameron Bird,Cameron Bird,No. 3,3,1,0,1,0.0
-raw_4d7a27ba_94a1_4597_a15a_0618f93f7f84,Cameron Bird,Cameron Bird,No. 5,5,1,6,1,6.0
-raw_4d7a27ba_94a1_4597_a15a_0618f93f7f84,Cameron Bird,Cameron Bird,No. 7,7,3,10,2,5.0
-raw_4d7a27ba_94a1_4597_a15a_0618f93f7f84,Cameron Bird,Cameron Bird,Tail,10,2,10,2,5.0
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,Opener,1,1,8,0,
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,No. 3,3,1,17,1,17.0
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,No. 5,5,1,15,0,
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,No. 6,6,1,10,1,10.0
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,No. 7,7,2,21,0,
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,No. 8,8,1,10,1,10.0
+raw_b061eb89_c4ac_4cde_b28d_e07ace44d82c,Camden Drew,Camden Drew,Tail,10,2,47,0,
+cameron_bird,Cameron Bird,Cameron Bird,Opener,1,3,0,1,0.0
+cameron_bird,Cameron Bird,Cameron Bird,No. 3,3,1,0,1,0.0
+cameron_bird,Cameron Bird,Cameron Bird,No. 4,4,1,2,1,2.0
+cameron_bird,Cameron Bird,Cameron Bird,No. 5,5,2,6,2,3.0
+cameron_bird,Cameron Bird,Cameron Bird,No. 6,6,3,25,3,8.333333333333334
+cameron_bird,Cameron Bird,Cameron Bird,No. 7,7,4,10,3,3.3333333333333335
+cameron_bird,Cameron Bird,Cameron Bird,No. 8,8,1,0,1,0.0
+cameron_bird,Cameron Bird,Cameron Bird,No. 9,9,1,6,0,
+cameron_bird,Cameron Bird,Cameron Bird,Tail,10,3,26,3,8.666666666666666
 raw_19423fcd_e852_4910_a803_6a29c8579cc7,Cameron Littlewood,Cameron Littlewood,Opener,1,4,49,2,24.5
 raw_19423fcd_e852_4910_a803_6a29c8579cc7,Cameron Littlewood,Cameron Littlewood,No. 5,5,1,16,0,
 raw_19423fcd_e852_4910_a803_6a29c8579cc7,Cameron Littlewood,Cameron Littlewood,No. 6,6,5,63,2,31.5
@@ -183,6 +343,22 @@ raw_6ae7d1a8_3d1b_450c_91f9_039c872db37e,Camilla Jorgensen,Camilla Jorgensen,No.
 raw_6ae7d1a8_3d1b_450c_91f9_039c872db37e,Camilla Jorgensen,Camilla Jorgensen,No. 4,4,1,0,1,0.0
 raw_6ae7d1a8_3d1b_450c_91f9_039c872db37e,Camilla Jorgensen,Camilla Jorgensen,No. 5,5,1,8,1,8.0
 raw_6ae7d1a8_3d1b_450c_91f9_039c872db37e,Camilla Jorgensen,Camilla Jorgensen,No. 6,6,2,17,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,Opener,1,5,60,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,No. 3,3,3,22,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,No. 4,4,1,6,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,No. 6,6,2,35,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,No. 7,7,1,2,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,No. 8,8,2,31,0,
+raw_27ade128_5de1_4f67_9968_82830ab0428a,Carter Livolti,Carter Livolti,No. 9,9,1,13,0,
+raw_1e23de54_757e_47e8_a05d_1b4fb22b6d1c,Cassandra Keen,Cassandra Keen,Opener,1,8,93,5,18.6
+raw_1e23de54_757e_47e8_a05d_1b4fb22b6d1c,Cassandra Keen,Cassandra Keen,No. 4,4,2,36,1,36.0
+raw_1e23de54_757e_47e8_a05d_1b4fb22b6d1c,Cassandra Keen,Cassandra Keen,No. 5,5,2,28,1,28.0
+raw_f3979aab_fb4d_4e42_8d7e_51ed49c16e84,Charlie Bowman,Charlie Bowman,Opener,1,2,5,2,2.5
+raw_f3979aab_fb4d_4e42_8d7e_51ed49c16e84,Charlie Bowman,Charlie Bowman,No. 5,5,1,0,1,0.0
+raw_f3979aab_fb4d_4e42_8d7e_51ed49c16e84,Charlie Bowman,Charlie Bowman,No. 6,6,1,5,1,5.0
+raw_f3979aab_fb4d_4e42_8d7e_51ed49c16e84,Charlie Bowman,Charlie Bowman,No. 7,7,2,14,2,7.0
+raw_f3979aab_fb4d_4e42_8d7e_51ed49c16e84,Charlie Bowman,Charlie Bowman,No. 8,8,1,7,1,7.0
+raw_f3979aab_fb4d_4e42_8d7e_51ed49c16e84,Charlie Bowman,Charlie Bowman,Tail,10,1,7,0,
 raw_e4e74a21_f9db_47f2_9a65_5cc5d03fb1ec,Charlie Brookes,Charlie Brookes,No. 3,3,1,11,1,11.0
 raw_e4e74a21_f9db_47f2_9a65_5cc5d03fb1ec,Charlie Brookes,Charlie Brookes,No. 4,4,2,53,1,53.0
 raw_e4e74a21_f9db_47f2_9a65_5cc5d03fb1ec,Charlie Brookes,Charlie Brookes,No. 6,6,1,36,1,36.0
@@ -207,9 +383,23 @@ raw_8e138d48_f269_41f2_8c0c_382462e64cc4,Charlie Murphy,Charlie Murphy,No. 5,5,2
 raw_8e138d48_f269_41f2_8c0c_382462e64cc4,Charlie Murphy,Charlie Murphy,No. 7,7,1,13,1,13.0
 raw_8e138d48_f269_41f2_8c0c_382462e64cc4,Charlie Murphy,Charlie Murphy,No. 8,8,1,0,1,0.0
 raw_8e138d48_f269_41f2_8c0c_382462e64cc4,Charlie Murphy,Charlie Murphy,Tail,10,2,7,1,7.0
+raw_54047b72_d454_42da_9098_529f566569d5,Charlie Rogers,Charlie Rogers,Opener,1,4,40,0,
+raw_54047b72_d454_42da_9098_529f566569d5,Charlie Rogers,Charlie Rogers,No. 3,3,1,6,0,
+raw_54047b72_d454_42da_9098_529f566569d5,Charlie Rogers,Charlie Rogers,No. 4,4,2,16,0,
+raw_54047b72_d454_42da_9098_529f566569d5,Charlie Rogers,Charlie Rogers,No. 5,5,3,20,0,
+raw_54047b72_d454_42da_9098_529f566569d5,Charlie Rogers,Charlie Rogers,No. 6,6,3,39,0,
+raw_54047b72_d454_42da_9098_529f566569d5,Charlie Rogers,Charlie Rogers,No. 7,7,1,15,0,
+raw_21c8a168_941a_466f_8e2b_abdef56d9cd9,Charlie Smith,Charlie Smith,Opener,1,8,183,6,30.5
+raw_21c8a168_941a_466f_8e2b_abdef56d9cd9,Charlie Smith,Charlie Smith,No. 3,3,3,47,3,15.666666666666666
+raw_21c8a168_941a_466f_8e2b_abdef56d9cd9,Charlie Smith,Charlie Smith,No. 4,4,4,21,4,5.25
+raw_21c8a168_941a_466f_8e2b_abdef56d9cd9,Charlie Smith,Charlie Smith,No. 5,5,2,45,1,45.0
+raw_21c8a168_941a_466f_8e2b_abdef56d9cd9,Charlie Smith,Charlie Smith,No. 7,7,2,35,2,17.5
 raw_f6671363_3677_4df6_9d06_4834394f1dc6,Charlie Speight,Charlie Speight,No. 3,3,1,5,0,
 raw_f6671363_3677_4df6_9d06_4834394f1dc6,Charlie Speight,Charlie Speight,No. 6,6,1,9,0,
-raw_9dd2dca6_6f31_4a9a_b1ee_9b47d6679f96,Charlie Woetzel,Charlie Woetzel,Opener,1,1,10,0,
+charlie_woetzel,Charlie Woetzel,Charlie Woetzel,Opener,1,5,18,4,4.5
+charlie_woetzel,Charlie Woetzel,Charlie Woetzel,No. 3,3,1,7,1,7.0
+charlie_woetzel,Charlie Woetzel,Charlie Woetzel,No. 5,5,1,0,1,0.0
+charlie_woetzel,Charlie Woetzel,Charlie Woetzel,No. 9,9,1,3,1,3.0
 raw_53f545df_eb23_451b_bd7e_56c0466308b6,Charlotte Woodford,Charlotte Woodford,Opener,1,3,21,1,21.0
 raw_53f545df_eb23_451b_bd7e_56c0466308b6,Charlotte Woodford,Charlotte Woodford,No. 4,4,2,10,1,10.0
 raw_53f545df_eb23_451b_bd7e_56c0466308b6,Charlotte Woodford,Charlotte Woodford,No. 5,5,1,4,1,4.0
@@ -219,20 +409,24 @@ raw_5f225244_9807_4066_ada7_4203dae286ac,Chloe Winders,Chloe Winders,Opener,1,1,
 raw_5f225244_9807_4066_ada7_4203dae286ac,Chloe Winders,Chloe Winders,No. 6,6,2,7,1,7.0
 raw_5f225244_9807_4066_ada7_4203dae286ac,Chloe Winders,Chloe Winders,No. 7,7,1,6,1,6.0
 raw_5f225244_9807_4066_ada7_4203dae286ac,Chloe Winders,Chloe Winders,No. 8,8,2,1,2,0.5
-raw_8c2b66df_7c53_42d2_9ceb_7f00b4dba98f,Chris Daley,Chris Daley,No. 4,4,2,55,1,55.0
-raw_8c2b66df_7c53_42d2_9ceb_7f00b4dba98f,Chris Daley,Chris Daley,No. 5,5,1,51,0,
-raw_8c2b66df_7c53_42d2_9ceb_7f00b4dba98f,Chris Daley,Chris Daley,No. 6,6,2,38,2,19.0
+chris_daley,Chris Daley,Chris Daley,No. 4,4,3,110,2,55.0
+chris_daley,Chris Daley,Chris Daley,No. 5,5,1,51,0,
+chris_daley,Chris Daley,Chris Daley,No. 6,6,2,38,2,19.0
 raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,Opener,1,1,0,1,0.0
 raw_5e36f31b_0210_4f8f_9829_a7834186f737,Chris Woodford,Chris Woodford,No. 3,3,1,15,1,15.0
 raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,No. 3,3,2,15,2,7.5
 raw_5e36f31b_0210_4f8f_9829_a7834186f737,Chris Woodford,Chris Woodford,No. 4,4,2,39,2,19.5
 raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,No. 4,4,1,13,1,13.0
 raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,No. 5,5,1,3,1,3.0
-raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,No. 7,7,1,6,1,6.0
+raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,No. 7,7,2,20,2,10.0
 raw_5e36f31b_0210_4f8f_9829_a7834186f737,Chris Woodford,Chris Woodford,No. 8,8,2,24,2,12.0
 raw_5e36f31b_0210_4f8f_9829_a7834186f737,Chris Woodford,Chris Woodford,No. 9,9,1,6,0,
 raw_5e36f31b_0210_4f8f_9829_a7834186f737,Chris Woodford,Chris Woodford,Tail,10,2,34,2,17.0
 raw_9f32cd40_c6ea_44e9_b115_c1f52dfc0ae2,Chris Woodford,Chris Woodford,Tail,10,3,10,1,10.0
+raw_c3c78732_12d7_4995_a3b6_d4c54445bb4e,Ciara Pinzone,Ciara Pinzone,No. 6,6,4,14,3,4.666666666666667
+raw_c3c78732_12d7_4995_a3b6_d4c54445bb4e,Ciara Pinzone,Ciara Pinzone,No. 7,7,4,15,4,3.75
+raw_c3c78732_12d7_4995_a3b6_d4c54445bb4e,Ciara Pinzone,Ciara Pinzone,No. 8,8,3,4,2,2.0
+raw_c3c78732_12d7_4995_a3b6_d4c54445bb4e,Ciara Pinzone,Ciara Pinzone,No. 9,9,3,6,0,
 raw_d3284eec_2262_4530_9616_b40856f8edcc,Clinton Einsiedel,Clinton Einsiedel,Opener,1,1,1,1,1.0
 raw_d3284eec_2262_4530_9616_b40856f8edcc,Clinton Einsiedel,Clinton Einsiedel,No. 3,3,2,26,2,13.0
 raw_d3284eec_2262_4530_9616_b40856f8edcc,Clinton Einsiedel,Clinton Einsiedel,No. 4,4,2,74,1,74.0
@@ -244,50 +438,91 @@ raw_421b74cf_1b63_434d_9d22_f43d91be3e67,Colin Marshall,Colin Marshall,No. 6,6,2
 raw_421b74cf_1b63_434d_9d22_f43d91be3e67,Colin Marshall,Colin Marshall,No. 8,8,1,19,1,19.0
 raw_421b74cf_1b63_434d_9d22_f43d91be3e67,Colin Marshall,Colin Marshall,No. 9,9,1,5,1,5.0
 raw_421b74cf_1b63_434d_9d22_f43d91be3e67,Colin Marshall,Colin Marshall,Tail,10,2,1,0,
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,Opener,1,1,27,0,
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,No. 3,3,5,58,4,14.5
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,No. 4,4,3,44,3,14.666666666666666
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,No. 5,5,2,49,1,49.0
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,No. 6,6,4,34,4,8.5
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,No. 7,7,1,2,1,2.0
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,No. 8,8,1,7,0,
-raw_b03490af_d72b_4880_80ab_9823472113c8,Cooper O'Meara,Cooper O'Meara,Tail,10,1,6,0,
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,Opener,1,13,511,7,73.0
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,No. 3,3,13,210,11,19.09090909090909
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,No. 4,4,10,238,9,26.444444444444443
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,No. 5,5,4,79,2,39.5
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,No. 6,6,4,34,4,8.5
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,No. 7,7,3,7,3,2.3333333333333335
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,No. 8,8,1,7,0,
+cooper_o_meara,Cooper O'Meara,Cooper O'Meara,Tail,10,2,16,0,
+raw_27829d44_6f99_44cd_9912_4fb9be48955c,Daivik Karate,Daivik Karate,Opener,1,5,70,0,
+raw_27829d44_6f99_44cd_9912_4fb9be48955c,Daivik Karate,Daivik Karate,No. 3,3,3,26,0,
+raw_27829d44_6f99_44cd_9912_4fb9be48955c,Daivik Karate,Daivik Karate,No. 5,5,1,5,0,
+raw_27829d44_6f99_44cd_9912_4fb9be48955c,Daivik Karate,Daivik Karate,No. 6,6,2,19,0,
 raw_0d3c88dc_29ea_4de3_8864_161264afacb7,Daniel Perry,Daniel Perry,Opener,1,1,0,1,0.0
 raw_c62b5f37_0474_4aa3_860f_d6131176b473,Daniel Roper,Daniel Roper,No. 5,5,1,5,0,
 raw_c62b5f37_0474_4aa3_860f_d6131176b473,Daniel Roper,Daniel Roper,No. 6,6,1,0,1,0.0
 raw_c62b5f37_0474_4aa3_860f_d6131176b473,Daniel Roper,Daniel Roper,No. 8,8,1,3,1,3.0
 raw_c62b5f37_0474_4aa3_860f_d6131176b473,Daniel Roper,Daniel Roper,No. 9,9,1,0,1,0.0
 raw_c62b5f37_0474_4aa3_860f_d6131176b473,Daniel Roper,Daniel Roper,Tail,10,1,0,1,0.0
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,Opener,1,3,13,2,6.5
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,No. 3,3,1,15,0,
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,No. 4,4,1,3,1,3.0
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,No. 5,5,1,1,1,1.0
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,No. 6,6,1,1,1,1.0
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,No. 7,7,3,16,0,
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,No. 8,8,2,11,2,5.5
-raw_6da549fa_1473_4ed0_b05a_2fd53c82c8ba,Darcy Denver,Darcy Denver,Tail,10,2,1,2,0.5
+raw_42686571_5f60_495f_8cb0_009e0f63cfa1,Danielle Benedykt,Danielle Benedykt,No. 9,9,3,3,2,1.5
+raw_35324490_32a9_407c_b9dc_19909dc8e93c,Daraius Mendonca,Daraius Mendonca,No. 6,6,1,1,1,1.0
+raw_35324490_32a9_407c_b9dc_19909dc8e93c,Daraius Mendonca,Daraius Mendonca,No. 8,8,1,8,0,
+raw_35324490_32a9_407c_b9dc_19909dc8e93c,Daraius Mendonca,Daraius Mendonca,No. 9,9,3,5,2,2.5
+raw_35324490_32a9_407c_b9dc_19909dc8e93c,Daraius Mendonca,Daraius Mendonca,Tail,10,3,2,2,1.0
+darcy_denver,Darcy Denver,Darcy Denver,Opener,1,3,13,2,6.5
+darcy_denver,Darcy Denver,Darcy Denver,No. 3,3,1,15,0,
+darcy_denver,Darcy Denver,Darcy Denver,No. 4,4,2,3,2,1.5
+darcy_denver,Darcy Denver,Darcy Denver,No. 5,5,1,1,1,1.0
+darcy_denver,Darcy Denver,Darcy Denver,No. 6,6,1,1,1,1.0
+darcy_denver,Darcy Denver,Darcy Denver,No. 7,7,3,16,0,
+darcy_denver,Darcy Denver,Darcy Denver,No. 8,8,2,11,2,5.5
+darcy_denver,Darcy Denver,Darcy Denver,No. 9,9,1,14,0,
+darcy_denver,Darcy Denver,Darcy Denver,Tail,10,2,1,2,0.5
 raw_951c05cc_6a28_437e_a862_4042724c7324,Darren Wilton,Darren Wilton,Opener,1,12,489,11,44.45454545454545
 raw_951c05cc_6a28_437e_a862_4042724c7324,Darren Wilton,Darren Wilton,No. 4,4,1,27,1,27.0
 raw_0343b752_ba93_4698_8e3c_a9f9ce54acfc,David Lo Schiavo,David Lo Schiavo,Opener,1,1,2,1,2.0
 raw_0343b752_ba93_4698_8e3c_a9f9ce54acfc,David Lo Schiavo,David Lo Schiavo,No. 3,3,1,0,1,0.0
 raw_0343b752_ba93_4698_8e3c_a9f9ce54acfc,David Lo Schiavo,David Lo Schiavo,No. 5,5,2,5,2,2.5
 raw_0343b752_ba93_4698_8e3c_a9f9ce54acfc,David Lo Schiavo,David Lo Schiavo,No. 8,8,2,8,1,8.0
+raw_4ddf3c9c_55f5_49d7_a30a_70c4fb9c1d22,David May,David May,Opener,1,1,19,1,19.0
+raw_4ddf3c9c_55f5_49d7_a30a_70c4fb9c1d22,David May,David May,No. 4,4,1,9,0,
+raw_4ddf3c9c_55f5_49d7_a30a_70c4fb9c1d22,David May,David May,No. 6,6,1,40,1,40.0
+raw_4ddf3c9c_55f5_49d7_a30a_70c4fb9c1d22,David May,David May,No. 8,8,2,13,2,6.5
+raw_4ddf3c9c_55f5_49d7_a30a_70c4fb9c1d22,David May,David May,Tail,10,5,14,3,4.666666666666667
 raw_d76f166e_7485_4382_a040_a9db995c92c9,Dean Partridge,Dean Partridge,No. 8,8,1,20,0,
 raw_add0cad8_8b9e_4e73_be2b_922ec6350464,Dean Rosenberg,Dean Rosenberg,No. 7,7,1,8,0,
+raw_1faf31fe_0129_4d3d_999e_8d3cff68fd75,Deetya Muralidaran,Deetya Muralidaran,Opener,1,4,17,0,
+raw_1faf31fe_0129_4d3d_999e_8d3cff68fd75,Deetya Muralidaran,Deetya Muralidaran,No. 4,4,2,4,0,
+raw_1faf31fe_0129_4d3d_999e_8d3cff68fd75,Deetya Muralidaran,Deetya Muralidaran,No. 6,6,2,9,0,
+raw_1faf31fe_0129_4d3d_999e_8d3cff68fd75,Deetya Muralidaran,Deetya Muralidaran,No. 9,9,1,1,0,
+raw_fcd9a92c_5798_4129_a837_699025583c4e,Deonna Joseph,Deonna Joseph,Opener,1,1,30,0,
+raw_fcd9a92c_5798_4129_a837_699025583c4e,Deonna Joseph,Deonna Joseph,No. 6,6,1,5,1,5.0
 raw_9ef65dff_5d8d_47f6_8ab4_0157274c3c5b,Dianne Firth,Dianne Firth,No. 5,5,3,45,2,22.5
 raw_9ef65dff_5d8d_47f6_8ab4_0157274c3c5b,Dianne Firth,Dianne Firth,No. 6,6,6,97,5,19.4
 raw_9ef65dff_5d8d_47f6_8ab4_0157274c3c5b,Dianne Firth,Dianne Firth,No. 7,7,2,33,2,16.5
 raw_9ef65dff_5d8d_47f6_8ab4_0157274c3c5b,Dianne Firth,Dianne Firth,No. 8,8,2,32,2,16.0
 raw_9ef65dff_5d8d_47f6_8ab4_0157274c3c5b,Dianne Firth,Dianne Firth,No. 9,9,3,25,2,12.5
 raw_9ef65dff_5d8d_47f6_8ab4_0157274c3c5b,Dianne Firth,Dianne Firth,Tail,10,2,30,1,30.0
-raw_9045063b_3cb9_4d05_b515_60f3386071b9,Dillon Wijayamanna,Dillon Wijayamanna,No. 3,3,2,2,0,
-raw_9045063b_3cb9_4d05_b515_60f3386071b9,Dillon Wijayamanna,Dillon Wijayamanna,No. 5,5,1,1,0,
+raw_e61f4f04_9afe_4e5c_9515_625446514c0a,Dillon Melnjak,Dillon Melnjak,No. 3,3,2,59,2,29.5
+dillon_wijayamanna,Dillon Wijayamanna,Dillon Wijayamanna,Opener,1,8,44,7,6.285714285714286
+dillon_wijayamanna,Dillon Wijayamanna,Dillon Wijayamanna,No. 3,3,2,2,0,
+dillon_wijayamanna,Dillon Wijayamanna,Dillon Wijayamanna,No. 5,5,1,1,0,
+dillon_wijayamanna,Dillon Wijayamanna,Dillon Wijayamanna,Tail,10,1,0,1,0.0
+raw_d9868d07_9783_4078_9391_2c8f39b4e001,Dylan Brasher,Dylan Brasher,Opener,1,1,50,1,50.0
 raw_4c2d1817_2dc0_4c6a_8cf7_1c6e92507b05,Eden Marson,Eden Marson,Opener,1,8,193,8,24.125
 raw_4c2d1817_2dc0_4c6a_8cf7_1c6e92507b05,Eden Marson,Eden Marson,No. 4,4,2,10,1,10.0
 raw_4c2d1817_2dc0_4c6a_8cf7_1c6e92507b05,Eden Marson,Eden Marson,No. 5,5,1,50,0,
 raw_62882708_8488_4f9f_b0ba_53076f7905b8,Edi Melnjak,Edi Melnjak,No. 7,7,1,0,0,
 raw_ad7fc84e_d2de_45f7_b492_47823b7417de,Eeman Saeed,Eeman Saeed,Opener,1,1,2,0,
 raw_ad7fc84e_d2de_45f7_b492_47823b7417de,Eeman Saeed,Eeman Saeed,No. 4,4,1,0,0,
+raw_061881e8_cb14_4fa8_8778_760a14913ab2,Eeshan Gurjar,Eeshan Gurjar,Opener,1,5,70,0,
+raw_061881e8_cb14_4fa8_8778_760a14913ab2,Eeshan Gurjar,Eeshan Gurjar,No. 4,4,3,52,0,
+raw_061881e8_cb14_4fa8_8778_760a14913ab2,Eeshan Gurjar,Eeshan Gurjar,No. 5,5,1,22,0,
+raw_061881e8_cb14_4fa8_8778_760a14913ab2,Eeshan Gurjar,Eeshan Gurjar,No. 6,6,2,22,0,
+raw_061881e8_cb14_4fa8_8778_760a14913ab2,Eeshan Gurjar,Eeshan Gurjar,No. 7,7,3,47,0,
+raw_ba41f990_99ba_4562_be30_d9b45221b8f7,Eleftherios Tsitsiras,Eleftherios Tsitsiras,No. 7,7,1,0,1,0.0
+raw_ba41f990_99ba_4562_be30_d9b45221b8f7,Eleftherios Tsitsiras,Eleftherios Tsitsiras,Tail,10,3,3,2,1.5
+raw_a3028aa3_ef18_4496_bd04_e6f3b4970e35,Elias Brown,Elias Brown,Opener,1,4,29,0,
+raw_a3028aa3_ef18_4496_bd04_e6f3b4970e35,Elias Brown,Elias Brown,No. 3,3,3,28,0,
+raw_a3028aa3_ef18_4496_bd04_e6f3b4970e35,Elias Brown,Elias Brown,No. 5,5,1,12,0,
+raw_a3028aa3_ef18_4496_bd04_e6f3b4970e35,Elias Brown,Elias Brown,No. 7,7,4,61,0,
+raw_a3028aa3_ef18_4496_bd04_e6f3b4970e35,Elias Brown,Elias Brown,No. 8,8,1,7,0,
+raw_4f1712e7_1798_4775_9dd0_9715d46d6a09,Elliott Jensen,Elliott Jensen,No. 4,4,1,13,1,13.0
+raw_4f1712e7_1798_4775_9dd0_9715d46d6a09,Elliott Jensen,Elliott Jensen,No. 5,5,5,34,4,8.5
+raw_4f1712e7_1798_4775_9dd0_9715d46d6a09,Elliott Jensen,Elliott Jensen,No. 7,7,2,7,2,3.5
+raw_4f1712e7_1798_4775_9dd0_9715d46d6a09,Elliott Jensen,Elliott Jensen,No. 8,8,1,0,1,0.0
 raw_ab82d43a_4058_4c80_a55d_972ebf0121e9,Emily Campbell,Emily Campbell,Opener,1,4,15,4,3.75
 raw_ab82d43a_4058_4c80_a55d_972ebf0121e9,Emily Campbell,Emily Campbell,No. 3,3,1,12,0,
 raw_ab82d43a_4058_4c80_a55d_972ebf0121e9,Emily Campbell,Emily Campbell,No. 4,4,2,0,2,0.0
@@ -297,6 +532,17 @@ raw_ab82d43a_4058_4c80_a55d_972ebf0121e9,Emily Campbell,Emily Campbell,No. 7,7,3
 raw_ab82d43a_4058_4c80_a55d_972ebf0121e9,Emily Campbell,Emily Campbell,No. 8,8,1,3,1,3.0
 raw_96ddbba9_5f03_4b46_8b4b_ddf78bea0181,Emma Hall,Emma Hall,Opener,1,2,40,1,40.0
 raw_96ddbba9_5f03_4b46_8b4b_ddf78bea0181,Emma Hall,Emma Hall,No. 5,5,1,6,1,6.0
+raw_b353b779_1f15_4e87_8754_9416ca44503c,Emma Holliday,Emma Holliday,Opener,1,1,4,1,4.0
+raw_b353b779_1f15_4e87_8754_9416ca44503c,Emma Holliday,Emma Holliday,No. 3,3,1,0,1,0.0
+raw_b353b779_1f15_4e87_8754_9416ca44503c,Emma Holliday,Emma Holliday,No. 4,4,1,8,1,8.0
+raw_b353b779_1f15_4e87_8754_9416ca44503c,Emma Holliday,Emma Holliday,No. 7,7,3,9,2,4.5
+raw_b353b779_1f15_4e87_8754_9416ca44503c,Emma Holliday,Emma Holliday,No. 8,8,2,4,1,4.0
+raw_b353b779_1f15_4e87_8754_9416ca44503c,Emma Holliday,Emma Holliday,No. 9,9,5,4,3,1.3333333333333333
+raw_a57daeee_5c8b_44a1_a085_556ef4317ab0,Ethan Bernes,Ethan Bernes,Opener,1,3,9,1,9.0
+raw_a57daeee_5c8b_44a1_a085_556ef4317ab0,Ethan Bernes,Ethan Bernes,No. 3,3,2,33,2,16.5
+raw_a57daeee_5c8b_44a1_a085_556ef4317ab0,Ethan Bernes,Ethan Bernes,No. 4,4,2,18,2,9.0
+raw_a57daeee_5c8b_44a1_a085_556ef4317ab0,Ethan Bernes,Ethan Bernes,No. 5,5,4,64,3,21.333333333333332
+raw_a57daeee_5c8b_44a1_a085_556ef4317ab0,Ethan Bernes,Ethan Bernes,No. 8,8,1,2,0,
 raw_cd32f284_8e4d_40eb_ab1f_2defa3e766e7,Ethan Capp,Ethan Capp,No. 5,5,1,17,1,17.0
 raw_cd32f284_8e4d_40eb_ab1f_2defa3e766e7,Ethan Capp,Ethan Capp,No. 8,8,1,2,1,2.0
 raw_cd32f284_8e4d_40eb_ab1f_2defa3e766e7,Ethan Capp,Ethan Capp,Tail,10,5,55,4,13.75
@@ -307,10 +553,25 @@ raw_e16e1a1a_2ad5_4072_9905_92330f35bd8c,Ewan Armstrong,Ewan Armstrong,Opener,1,
 raw_e16e1a1a_2ad5_4072_9905_92330f35bd8c,Ewan Armstrong,Ewan Armstrong,No. 4,4,1,5,1,5.0
 raw_e16e1a1a_2ad5_4072_9905_92330f35bd8c,Ewan Armstrong,Ewan Armstrong,No. 6,6,1,26,1,26.0
 raw_e16e1a1a_2ad5_4072_9905_92330f35bd8c,Ewan Armstrong,Ewan Armstrong,Tail,10,2,0,1,0.0
-raw_411e6cef_fbd6_4633_947c_742b2a52e355,Ewan Fallows,Ewan Fallows,No. 5,5,1,0,1,0.0
-raw_411e6cef_fbd6_4633_947c_742b2a52e355,Ewan Fallows,Ewan Fallows,No. 6,6,2,24,2,12.0
-raw_411e6cef_fbd6_4633_947c_742b2a52e355,Ewan Fallows,Ewan Fallows,No. 8,8,1,8,1,8.0
-raw_411e6cef_fbd6_4633_947c_742b2a52e355,Ewan Fallows,Ewan Fallows,Tail,10,6,21,6,3.5
+ewan_fallows,Ewan Fallows,Ewan Fallows,Opener,1,1,16,1,16.0
+ewan_fallows,Ewan Fallows,Ewan Fallows,No. 3,3,1,47,1,47.0
+ewan_fallows,Ewan Fallows,Ewan Fallows,No. 5,5,2,1,2,0.5
+ewan_fallows,Ewan Fallows,Ewan Fallows,No. 6,6,5,63,5,12.6
+ewan_fallows,Ewan Fallows,Ewan Fallows,No. 7,7,3,42,3,14.0
+ewan_fallows,Ewan Fallows,Ewan Fallows,No. 8,8,1,8,1,8.0
+ewan_fallows,Ewan Fallows,Ewan Fallows,No. 9,9,1,4,1,4.0
+ewan_fallows,Ewan Fallows,Ewan Fallows,Tail,10,6,21,6,3.5
+raw_090944ea_a6ee_4e16_be61_66270a716275,Falak Syeda,Falak Syeda,Opener,1,2,27,2,13.5
+raw_090944ea_a6ee_4e16_be61_66270a716275,Falak Syeda,Falak Syeda,No. 3,3,1,44,1,44.0
+raw_090944ea_a6ee_4e16_be61_66270a716275,Falak Syeda,Falak Syeda,No. 4,4,1,13,1,13.0
+raw_1d74361f_7deb_4dc6_b351_74c3400c9080,Finn Robison,Finn Robison,Tail,10,4,3,2,1.5
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,Opener,1,3,26,0,
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,No. 4,4,1,0,0,
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,No. 5,5,1,4,0,
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,No. 6,6,1,28,0,
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,No. 7,7,4,43,0,
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,No. 8,8,1,13,0,
+raw_ed4ac762_2661_4fb8_9fe9_b4344ecb1f16,Florence Archer,Florence Archer,No. 9,9,1,10,0,
 raw_72ecda81_2921_4f5d_b9eb_c0c9a829215f,Gary Measham,Gary Measham,Opener,1,1,0,1,0.0
 raw_72ecda81_2921_4f5d_b9eb_c0c9a829215f,Gary Measham,Gary Measham,No. 3,3,1,4,0,
 raw_72ecda81_2921_4f5d_b9eb_c0c9a829215f,Gary Measham,Gary Measham,No. 4,4,1,0,1,0.0
@@ -322,8 +583,12 @@ raw_0c712035_0729_4959_bc78_ae18f46af5ca,Gemma Kerr,Gemma Kerr,No. 4,4,1,0,1,0.0
 raw_0c712035_0729_4959_bc78_ae18f46af5ca,Gemma Kerr,Gemma Kerr,No. 5,5,2,13,1,13.0
 raw_0c712035_0729_4959_bc78_ae18f46af5ca,Gemma Kerr,Gemma Kerr,No. 8,8,2,0,2,0.0
 raw_0c712035_0729_4959_bc78_ae18f46af5ca,Gemma Kerr,Gemma Kerr,No. 9,9,2,3,1,3.0
+raw_b68cd104_2f15_46c6_9c41_6ea895675975,George Bustin,George Bustin,Opener,1,5,53,1,53.0
+raw_b68cd104_2f15_46c6_9c41_6ea895675975,George Bustin,George Bustin,No. 4,4,1,20,1,20.0
+raw_b68cd104_2f15_46c6_9c41_6ea895675975,George Bustin,George Bustin,No. 7,7,3,49,2,24.5
+raw_b68cd104_2f15_46c6_9c41_6ea895675975,George Bustin,George Bustin,Tail,10,1,10,1,10.0
 raw_23257033_eab6_4bf1_9b95_482eeec9eacf,Glenn Czosnek,Glenn Czosnek,Opener,1,2,114,2,57.0
-raw_23257033_eab6_4bf1_9b95_482eeec9eacf,Glenn Czosnek,Glenn Czosnek,No. 3,3,2,110,2,55.0
+raw_23257033_eab6_4bf1_9b95_482eeec9eacf,Glenn Czosnek,Glenn Czosnek,No. 3,3,4,229,3,76.33333333333333
 raw_23257033_eab6_4bf1_9b95_482eeec9eacf,Glenn Czosnek,Glenn Czosnek,No. 4,4,1,3,1,3.0
 raw_23257033_eab6_4bf1_9b95_482eeec9eacf,Glenn Czosnek,Glenn Czosnek,No. 7,7,1,37,1,37.0
 raw_23257033_eab6_4bf1_9b95_482eeec9eacf,Glenn Czosnek,Glenn Czosnek,No. 9,9,1,10,1,10.0
@@ -336,6 +601,21 @@ raw_a0fce8b9_c44a_43d5_a880_8220bb6708be,Grace Campbell,Grace Campbell,No. 6,6,2
 raw_a0fce8b9_c44a_43d5_a880_8220bb6708be,Grace Campbell,Grace Campbell,No. 7,7,3,30,2,15.0
 raw_a0fce8b9_c44a_43d5_a880_8220bb6708be,Grace Campbell,Grace Campbell,No. 9,9,3,17,2,8.5
 raw_a0fce8b9_c44a_43d5_a880_8220bb6708be,Grace Campbell,Grace Campbell,Tail,10,1,9,0,
+raw_1dc047d0_4bf9_4a67_838a_d73d5050c326,Grace O'Brien,Grace O'Brien,No. 3,3,5,53,3,17.666666666666668
+raw_1dc047d0_4bf9_4a67_838a_d73d5050c326,Grace O'Brien,Grace O'Brien,No. 4,4,3,18,3,6.0
+raw_1dc047d0_4bf9_4a67_838a_d73d5050c326,Grace O'Brien,Grace O'Brien,No. 5,5,4,32,3,10.666666666666666
+raw_1dc047d0_4bf9_4a67_838a_d73d5050c326,Grace O'Brien,Grace O'Brien,No. 6,6,1,15,1,15.0
+raw_1dc047d0_4bf9_4a67_838a_d73d5050c326,Grace O'Brien,Grace O'Brien,No. 9,9,1,1,0,
+raw_1cc69697_e59e_440d_a134_4ac8f76d710d,Greg Hill,Greg Hill,No. 7,7,2,1,2,0.5
+raw_1cc69697_e59e_440d_a134_4ac8f76d710d,Greg Hill,Greg Hill,No. 9,9,2,7,2,3.5
+raw_1cc69697_e59e_440d_a134_4ac8f76d710d,Greg Hill,Greg Hill,Tail,10,2,9,1,9.0
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,Opener,1,4,25,0,
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,No. 3,3,2,18,0,
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,No. 4,4,3,17,0,
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,No. 5,5,3,29,0,
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,No. 7,7,1,3,0,
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,No. 8,8,1,13,0,
+raw_40f93723_84f4_4862_9bcd_d6d21ddcc83d,Griffin Warner,Griffin Warner,No. 9,9,1,14,0,
 raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,Opener,1,1,2,1,2.0
 raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,No. 3,3,1,17,1,17.0
 raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,No. 4,4,2,30,2,15.0
@@ -343,25 +623,51 @@ raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,No. 6,6,1
 raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,No. 7,7,1,0,1,0.0
 raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,No. 9,9,1,6,1,6.0
 raw_af809a80_48a1_4bc7_bec9_5544d36a287d,Hamish Layzell,Hamish Layzell,Tail,10,1,8,1,8.0
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,Opener,1,1,9,1,9.0
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 3,3,4,12,4,3.0
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 4,4,2,3,2,1.5
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 5,5,2,12,2,6.0
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 6,6,2,29,2,14.5
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 7,7,2,39,1,39.0
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 8,8,1,0,1,0.0
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,No. 9,9,4,18,4,4.5
+raw_77acd29e_0b32_4ff2_b3df_07527e112511,Hari Krishna Mani,Hari Krishna Mani,Tail,10,3,18,2,9.0
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,Opener,1,6,61,6,10.166666666666666
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,No. 3,3,1,8,1,8.0
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,No. 4,4,7,103,6,17.166666666666668
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,No. 5,5,2,15,2,7.5
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,No. 6,6,3,17,3,5.666666666666667
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,No. 7,7,1,5,0,
+raw_206cab31_cd0c_4f11_b7fd_227cdb364bce,Harrison Smith,Harrison Smith,No. 8,8,1,22,1,22.0
 raw_a6d6d0b0_2d6a_4cd7_b023_68c3449c5ab5,Harry Austin,Harry Austin,Opener,1,1,15,1,15.0
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,Opener,1,3,35,2,17.5
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 3,3,3,52,2,26.0
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 4,4,2,44,1,44.0
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 5,5,2,71,1,71.0
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 6,6,1,0,1,0.0
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 7,7,1,4,1,4.0
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 8,8,3,40,3,13.333333333333334
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,No. 9,9,1,11,0,
-raw_0ba84df8_a028_4f51_b996_55e373035288,Harvey Gostlow,Harvey Gostlow,Tail,10,1,13,0,
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,Opener,1,5,75,5,15.0
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 3,3,3,27,3,9.0
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 4,4,3,33,3,11.0
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 5,5,2,13,2,6.5
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 6,6,1,18,1,18.0
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 7,7,1,30,1,30.0
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 8,8,1,14,0,
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,No. 9,9,2,25,1,25.0
-raw_ee8d81da_f8bf_4d02_9d31_4dea7c85b52b,Hayden Finkelde,Hayden Finkelde,Tail,10,3,15,0,
+raw_c6fbc86a_ba40_49ae_a381_f752d24f25a0,Harvey Drakos,Harvey Drakos,Opener,1,1,3,0,
+raw_c6fbc86a_ba40_49ae_a381_f752d24f25a0,Harvey Drakos,Harvey Drakos,No. 5,5,1,4,0,
+raw_c6fbc86a_ba40_49ae_a381_f752d24f25a0,Harvey Drakos,Harvey Drakos,No. 6,6,2,13,0,
+raw_c6fbc86a_ba40_49ae_a381_f752d24f25a0,Harvey Drakos,Harvey Drakos,No. 7,7,2,11,0,
+raw_c6fbc86a_ba40_49ae_a381_f752d24f25a0,Harvey Drakos,Harvey Drakos,No. 9,9,1,3,0,
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,Opener,1,4,35,3,11.666666666666666
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 3,3,3,52,2,26.0
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 4,4,4,74,3,24.666666666666668
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 5,5,2,71,1,71.0
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 6,6,3,10,3,3.3333333333333335
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 7,7,4,26,3,8.666666666666666
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 8,8,4,48,3,16.0
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,No. 9,9,2,15,0,
+harvey_gostlow,Harvey Gostlow,Harvey Gostlow,Tail,10,1,13,0,
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,Opener,1,5,75,5,15.0
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 3,3,3,27,3,9.0
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 4,4,4,41,3,13.666666666666666
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 5,5,2,13,2,6.5
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 6,6,1,18,1,18.0
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 7,7,1,30,1,30.0
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 8,8,1,14,0,
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,No. 9,9,2,25,1,25.0
+hayden_finkelde,Hayden Finkelde,Hayden Finkelde,Tail,10,3,15,0,
+raw_aec9d2f2_0edc_4357_bbfd_3a0140fcccb8,Hayden Firth,Hayden Firth,No. 5,5,1,10,1,10.0
+raw_aec9d2f2_0edc_4357_bbfd_3a0140fcccb8,Hayden Firth,Hayden Firth,No. 6,6,2,18,1,18.0
+raw_aec9d2f2_0edc_4357_bbfd_3a0140fcccb8,Hayden Firth,Hayden Firth,No. 8,8,6,82,5,16.4
+raw_aec9d2f2_0edc_4357_bbfd_3a0140fcccb8,Hayden Firth,Hayden Firth,No. 9,9,4,25,3,8.333333333333334
+raw_aec9d2f2_0edc_4357_bbfd_3a0140fcccb8,Hayden Firth,Hayden Firth,Tail,10,4,5,2,2.5
 raw_8d9627d4_212d_473a_b003_b2de02fb1eed,Hayden Partridge,Hayden Partridge,No. 4,4,1,2,1,2.0
 raw_8d9627d4_212d_473a_b003_b2de02fb1eed,Hayden Partridge,Hayden Partridge,No. 5,5,1,11,1,11.0
 raw_8d9627d4_212d_473a_b003_b2de02fb1eed,Hayden Partridge,Hayden Partridge,No. 7,7,1,13,1,13.0
@@ -374,28 +680,68 @@ raw_3030aea9_9fdb_4c31_8e68_132b3ef629b8,Hayley Carr,Hayley Carr,No. 4,4,2,42,2,
 raw_3030aea9_9fdb_4c31_8e68_132b3ef629b8,Hayley Carr,Hayley Carr,No. 5,5,3,41,1,41.0
 raw_3030aea9_9fdb_4c31_8e68_132b3ef629b8,Hayley Carr,Hayley Carr,No. 6,6,1,21,0,
 raw_3030aea9_9fdb_4c31_8e68_132b3ef629b8,Hayley Carr,Hayley Carr,No. 7,7,4,40,3,13.333333333333334
+raw_f5bb9a65_0197_43fb_8380_f0bbb1f48b1e,Hemantha Alles,Hemantha Alles,No. 4,4,6,82,6,13.666666666666666
+raw_f5bb9a65_0197_43fb_8380_f0bbb1f48b1e,Hemantha Alles,Hemantha Alles,No. 5,5,1,22,1,22.0
+raw_f5bb9a65_0197_43fb_8380_f0bbb1f48b1e,Hemantha Alles,Hemantha Alles,No. 6,6,2,42,1,42.0
+raw_f5bb9a65_0197_43fb_8380_f0bbb1f48b1e,Hemantha Alles,Hemantha Alles,No. 7,7,1,42,1,42.0
+raw_60d583e3_0915_45ba_8992_8e8c70fa3219,Henry Cumming,Henry Cumming,No. 3,3,1,5,1,5.0
+raw_60d583e3_0915_45ba_8992_8e8c70fa3219,Henry Cumming,Henry Cumming,No. 4,4,3,7,2,3.5
+raw_60d583e3_0915_45ba_8992_8e8c70fa3219,Henry Cumming,Henry Cumming,No. 6,6,2,18,2,9.0
+raw_60d583e3_0915_45ba_8992_8e8c70fa3219,Henry Cumming,Henry Cumming,No. 7,7,1,2,1,2.0
+raw_60d583e3_0915_45ba_8992_8e8c70fa3219,Henry Cumming,Henry Cumming,No. 9,9,1,1,1,1.0
 raw_2800c47b_d1fe_4c83_b3c3_b1b94880d37b,Henry Gadsden,Henry Gadsden,Opener,1,2,3,2,1.5
 raw_2800c47b_d1fe_4c83_b3c3_b1b94880d37b,Henry Gadsden,Henry Gadsden,No. 4,4,1,15,1,15.0
 raw_2800c47b_d1fe_4c83_b3c3_b1b94880d37b,Henry Gadsden,Henry Gadsden,No. 6,6,1,14,0,
 raw_2800c47b_d1fe_4c83_b3c3_b1b94880d37b,Henry Gadsden,Henry Gadsden,No. 7,7,3,10,2,5.0
 raw_2800c47b_d1fe_4c83_b3c3_b1b94880d37b,Henry Gadsden,Henry Gadsden,No. 8,8,1,6,1,6.0
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,Opener,1,1,3,1,3.0
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,No. 3,3,4,7,3,2.3333333333333335
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,No. 4,4,1,2,0,
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,No. 5,5,1,13,0,
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,No. 6,6,1,1,1,1.0
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,No. 8,8,1,7,0,
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,No. 9,9,2,1,1,1.0
+raw_36638da6_4f79_49db_808b_a30f8809370a,Henry Sanderson,Henry Sanderson,Tail,10,1,1,1,1.0
 raw_b4320a33_23dd_4d34_89c7_0759169cd3ac,Hudson Straford,Hudson Straford,No. 5,5,1,8,0,
 raw_b4320a33_23dd_4d34_89c7_0759169cd3ac,Hudson Straford,Hudson Straford,No. 8,8,1,13,1,13.0
-raw_e6d78b2e_e418_497a_b6dd_d49b2af55f0f,Ilisha Rajiv,Ilisha Rajiv,Opener,1,2,5,1,5.0
-raw_e6d78b2e_e418_497a_b6dd_d49b2af55f0f,Ilisha Rajiv,Ilisha Rajiv,No. 5,5,2,17,2,8.5
-raw_e6d78b2e_e418_497a_b6dd_d49b2af55f0f,Ilisha Rajiv,Ilisha Rajiv,No. 6,6,2,10,1,10.0
-raw_e6d78b2e_e418_497a_b6dd_d49b2af55f0f,Ilisha Rajiv,Ilisha Rajiv,No. 7,7,4,26,1,26.0
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,Opener,1,7,161,2,80.5
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 3,3,2,44,1,44.0
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 4,4,1,1,1,1.0
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 5,5,9,77,8,9.625
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 6,6,5,54,4,13.5
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 7,7,5,32,1,32.0
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 8,8,1,2,0,
+ilisha_rajiv,Ilisha Rajiv,Ilisha Rajiv,No. 9,9,1,0,1,0.0
+raw_7e67f921_d780_49f0_9f3c_88365387b50c,Imogen Wheeler,Imogen Wheeler,Opener,1,2,4,2,2.0
+raw_7e67f921_d780_49f0_9f3c_88365387b50c,Imogen Wheeler,Imogen Wheeler,No. 4,4,2,36,0,
+raw_7e67f921_d780_49f0_9f3c_88365387b50c,Imogen Wheeler,Imogen Wheeler,No. 5,5,1,3,1,3.0
+raw_7e67f921_d780_49f0_9f3c_88365387b50c,Imogen Wheeler,Imogen Wheeler,No. 6,6,3,16,2,8.0
+raw_7e67f921_d780_49f0_9f3c_88365387b50c,Imogen Wheeler,Imogen Wheeler,No. 7,7,5,21,4,5.25
+raw_7e67f921_d780_49f0_9f3c_88365387b50c,Imogen Wheeler,Imogen Wheeler,No. 8,8,1,8,0,
 raw_8d4ab148_3480_415f_98a6_3540b0358ed2,Indianna King,Indianna King,Opener,1,5,27,3,9.0
 raw_8d4ab148_3480_415f_98a6_3540b0358ed2,Indianna King,Indianna King,No. 3,3,1,12,0,
 raw_8d4ab148_3480_415f_98a6_3540b0358ed2,Indianna King,Indianna King,No. 4,4,2,18,1,18.0
 raw_8d4ab148_3480_415f_98a6_3540b0358ed2,Indianna King,Indianna King,No. 7,7,1,31,1,31.0
-raw_c86590ef_8492_4612_a62b_c459624231eb,Isha Gurung,Isha Gurung,Opener,1,7,88,5,17.6
-raw_c86590ef_8492_4612_a62b_c459624231eb,Isha Gurung,Isha Gurung,No. 3,3,1,8,1,8.0
-raw_c86590ef_8492_4612_a62b_c459624231eb,Isha Gurung,Isha Gurung,No. 4,4,1,9,0,
-raw_c86590ef_8492_4612_a62b_c459624231eb,Isha Gurung,Isha Gurung,Tail,10,1,0,1,0.0
-raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 6,6,1,22,1,22.0
-raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 7,7,1,0,1,0.0
-raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 8,8,1,15,1,15.0
+isha_gurung,Isha Gurung,Isha Gurung,Opener,1,25,388,12,32.333333333333336
+isha_gurung,Isha Gurung,Isha Gurung,No. 3,3,4,64,4,16.0
+isha_gurung,Isha Gurung,Isha Gurung,No. 4,4,2,37,0,
+isha_gurung,Isha Gurung,Isha Gurung,No. 6,6,1,3,0,
+isha_gurung,Isha Gurung,Isha Gurung,No. 9,9,1,1,0,
+isha_gurung,Isha Gurung,Isha Gurung,Tail,10,1,0,1,0.0
+raw_530f3990_542c_4561_ab9d_b3adbe089209,Ishaan Chand,Ishaan Chand,Opener,1,7,170,7,24.285714285714285
+raw_530f3990_542c_4561_ab9d_b3adbe089209,Ishaan Chand,Ishaan Chand,No. 5,5,1,3,1,3.0
+raw_530f3990_542c_4561_ab9d_b3adbe089209,Ishaan Chand,Ishaan Chand,No. 7,7,1,0,1,0.0
+raw_aef440be_d9da_40bd_8816_024fd61e40ea,Ishreet Kaur,Ishreet Kaur,Opener,1,9,90,6,15.0
+raw_aef440be_d9da_40bd_8816_024fd61e40ea,Ishreet Kaur,Ishreet Kaur,No. 3,3,3,60,1,60.0
+raw_aef440be_d9da_40bd_8816_024fd61e40ea,Ishreet Kaur,Ishreet Kaur,No. 6,6,1,17,0,
+raw_aef440be_d9da_40bd_8816_024fd61e40ea,Ishreet Kaur,Ishreet Kaur,No. 7,7,3,31,2,15.5
+raw_aef440be_d9da_40bd_8816_024fd61e40ea,Ishreet Kaur,Ishreet Kaur,No. 8,8,2,10,1,10.0
+raw_aef440be_d9da_40bd_8816_024fd61e40ea,Ishreet Kaur,Ishreet Kaur,No. 9,9,2,2,1,2.0
+raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 3,3,1,3,1,3.0
+raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 4,4,4,99,4,24.75
+raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 6,6,4,46,3,15.333333333333334
+raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 7,7,2,47,1,47.0
+raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 8,8,2,22,1,22.0
 raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,No. 9,9,1,12,1,12.0
 raw_3d67336a_079b_4492_b020_a404ed00f08e,Jack Armstrong,Jack Armstrong,Tail,10,2,19,2,9.5
 raw_3e3718f3_6a8a_49ea_b66d_72a717217ce0,Jack Collins,Jack Collins,No. 3,3,1,20,0,
@@ -423,14 +769,25 @@ raw_f93411fb_7139_464d_beca_31fa4e5d413f,Jack O’brien,Jack O’brien,No. 9,9,2
 raw_793d5273_7514_4339_998a_2e715b70b7c2,Jack Sotiriadis,Jack Sotiriadis,No. 8,8,3,14,2,7.0
 raw_793d5273_7514_4339_998a_2e715b70b7c2,Jack Sotiriadis,Jack Sotiriadis,No. 9,9,1,1,1,1.0
 raw_793d5273_7514_4339_998a_2e715b70b7c2,Jack Sotiriadis,Jack Sotiriadis,Tail,10,3,49,0,
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,Opener,1,1,47,1,47.0
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,No. 4,4,5,139,3,46.333333333333336
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,No. 5,5,5,30,4,7.5
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,No. 6,6,1,13,1,13.0
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,No. 7,7,2,6,2,3.0
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,No. 8,8,4,77,3,25.666666666666668
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,No. 9,9,2,18,1,18.0
-raw_19c8de14_e59a_4a84_8269_2cc0d2c8e0d5,Jackson O'Meara,Jackson O'Meara,Tail,10,1,2,0,
+raw_fa6ef2b4_13cd_4658_8707_22442b2b0b14,Jack Wilson,Jack Wilson,Opener,1,5,86,4,21.5
+raw_fa6ef2b4_13cd_4658_8707_22442b2b0b14,Jack Wilson,Jack Wilson,No. 3,3,1,2,1,2.0
+raw_fa6ef2b4_13cd_4658_8707_22442b2b0b14,Jack Wilson,Jack Wilson,No. 5,5,1,2,1,2.0
+raw_fa6ef2b4_13cd_4658_8707_22442b2b0b14,Jack Wilson,Jack Wilson,No. 7,7,1,11,0,
+raw_fa6ef2b4_13cd_4658_8707_22442b2b0b14,Jack Wilson,Jack Wilson,No. 8,8,1,0,1,0.0
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,Opener,1,1,47,1,47.0
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 3,3,1,0,1,0.0
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 4,4,7,249,5,49.8
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 5,5,8,65,7,9.285714285714286
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 6,6,3,18,2,9.0
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 7,7,4,8,2,4.0
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 8,8,7,88,6,14.666666666666666
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,No. 9,9,2,18,1,18.0
+jackson_o_meara,Jackson O'Meara,Jackson O'Meara,Tail,10,1,2,0,
+raw_a7fbfb04_1a2b_409b_8149_5eca4c4a0a67,Jacob Apted,Jacob Apted,No. 4,4,1,20,1,20.0
+raw_a7fbfb04_1a2b_409b_8149_5eca4c4a0a67,Jacob Apted,Jacob Apted,No. 6,6,5,40,5,8.0
+raw_a7fbfb04_1a2b_409b_8149_5eca4c4a0a67,Jacob Apted,Jacob Apted,No. 7,7,2,16,1,16.0
+raw_a7fbfb04_1a2b_409b_8149_5eca4c4a0a67,Jacob Apted,Jacob Apted,No. 8,8,2,60,2,30.0
+raw_a7fbfb04_1a2b_409b_8149_5eca4c4a0a67,Jacob Apted,Jacob Apted,No. 9,9,1,9,1,9.0
 raw_796e3f5c_279d_45db_8b22_ec5891f7030c,Jade Stainer,Jade Stainer,Opener,1,1,6,0,
 raw_796e3f5c_279d_45db_8b22_ec5891f7030c,Jade Stainer,Jade Stainer,No. 3,3,1,1,1,1.0
 raw_796e3f5c_279d_45db_8b22_ec5891f7030c,Jade Stainer,Jade Stainer,No. 4,4,1,2,1,2.0
@@ -442,34 +799,106 @@ raw_6dfbb52a_33fa_4d1d_b638_07b09a3454c1,Jagrithi Udayabhanu,Jagrithi Udayabhanu
 raw_6dfbb52a_33fa_4d1d_b638_07b09a3454c1,Jagrithi Udayabhanu,Jagrithi Udayabhanu,No. 5,5,1,8,0,
 raw_6dfbb52a_33fa_4d1d_b638_07b09a3454c1,Jagrithi Udayabhanu,Jagrithi Udayabhanu,No. 6,6,1,10,0,
 raw_6dfbb52a_33fa_4d1d_b638_07b09a3454c1,Jagrithi Udayabhanu,Jagrithi Udayabhanu,No. 7,7,1,7,0,
-raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,Opener,1,1,10,1,10.0
-raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 3,3,1,0,1,0.0
+raw_38b952cb_e866_4b8f_b5fb_fa1031c78cb6,Jaiveer Shah,Jaiveer Shah,Opener,1,5,60,3,20.0
+raw_38b952cb_e866_4b8f_b5fb_fa1031c78cb6,Jaiveer Shah,Jaiveer Shah,No. 3,3,1,19,0,
+raw_38b952cb_e866_4b8f_b5fb_fa1031c78cb6,Jaiveer Shah,Jaiveer Shah,No. 4,4,2,28,1,28.0
+raw_38b952cb_e866_4b8f_b5fb_fa1031c78cb6,Jaiveer Shah,Jaiveer Shah,No. 6,6,2,24,1,24.0
+raw_38b952cb_e866_4b8f_b5fb_fa1031c78cb6,Jaiveer Shah,Jaiveer Shah,Tail,10,1,9,0,
+raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,Opener,1,16,330,13,25.384615384615383
+raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 3,3,2,3,2,1.5
 raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 4,4,3,47,2,23.5
+raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 5,5,1,6,1,6.0
 raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 6,6,2,11,1,11.0
-raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 8,8,2,39,1,39.0
+raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 7,7,1,2,1,2.0
+raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,No. 8,8,3,39,2,19.5
 raw_edbcf983_4f68_4b51_989d_cde24ea717c1,Jake Finkelde,Jake Finkelde,Tail,10,1,12,0,
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,Opener,1,12,91,12,7.583333333333333
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,No. 3,3,3,46,3,15.333333333333334
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,No. 4,4,2,7,2,3.5
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,No. 5,5,1,11,1,11.0
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,No. 7,7,1,8,1,8.0
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,No. 8,8,1,1,1,1.0
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,No. 9,9,1,0,1,0.0
+raw_8c0c9a63_877a_4947_aff6_6c3c703615bf,Jake Flood,Jake Flood,Tail,10,1,0,0,
+raw_bb59db35_8c9e_456d_a7cb_16da34664559,Jake Hill,Jake Hill,Opener,1,5,43,5,8.6
+raw_bb59db35_8c9e_456d_a7cb_16da34664559,Jake Hill,Jake Hill,No. 3,3,1,5,1,5.0
+raw_4e0cc43a_d00b_49dd_b961_c136bef7cf9c,Jaksh Sharma,Jaksh Sharma,Opener,1,4,36,0,
+raw_4e0cc43a_d00b_49dd_b961_c136bef7cf9c,Jaksh Sharma,Jaksh Sharma,No. 3,3,3,18,0,
+raw_4e0cc43a_d00b_49dd_b961_c136bef7cf9c,Jaksh Sharma,Jaksh Sharma,No. 4,4,1,11,0,
+raw_4e0cc43a_d00b_49dd_b961_c136bef7cf9c,Jaksh Sharma,Jaksh Sharma,No. 5,5,3,45,0,
+raw_4e0cc43a_d00b_49dd_b961_c136bef7cf9c,Jaksh Sharma,Jaksh Sharma,No. 6,6,1,3,0,
+raw_4e0cc43a_d00b_49dd_b961_c136bef7cf9c,Jaksh Sharma,Jaksh Sharma,No. 7,7,1,14,0,
+raw_1254f61c_c985_4535_9ba9_3ecce8404a77,James Bottomley,James Bottomley,Opener,1,2,9,1,9.0
+raw_1254f61c_c985_4535_9ba9_3ecce8404a77,James Bottomley,James Bottomley,No. 4,4,1,0,1,0.0
+raw_1254f61c_c985_4535_9ba9_3ecce8404a77,James Bottomley,James Bottomley,No. 7,7,2,17,1,17.0
+raw_1254f61c_c985_4535_9ba9_3ecce8404a77,James Bottomley,James Bottomley,No. 8,8,1,0,1,0.0
+raw_1254f61c_c985_4535_9ba9_3ecce8404a77,James Bottomley,James Bottomley,No. 9,9,3,27,3,9.0
+raw_1254f61c_c985_4535_9ba9_3ecce8404a77,James Bottomley,James Bottomley,Tail,10,2,13,2,6.5
+raw_e2d71650_5218_4030_b86e_b597358993de,James Connolly,James Connolly,Opener,1,4,33,4,8.25
+raw_e2d71650_5218_4030_b86e_b597358993de,James Connolly,James Connolly,No. 3,3,6,64,6,10.666666666666666
+raw_e2d71650_5218_4030_b86e_b597358993de,James Connolly,James Connolly,No. 4,4,1,7,1,7.0
+raw_e2d71650_5218_4030_b86e_b597358993de,James Connolly,James Connolly,No. 8,8,1,4,1,4.0
 raw_09ea681f_12bf_4a6f_962d_6975966b2653,James Littlewood,James Littlewood,Opener,1,1,30,1,30.0
 raw_09ea681f_12bf_4a6f_962d_6975966b2653,James Littlewood,James Littlewood,No. 3,3,2,66,1,66.0
 raw_09ea681f_12bf_4a6f_962d_6975966b2653,James Littlewood,James Littlewood,No. 5,5,1,52,0,
 raw_09ea681f_12bf_4a6f_962d_6975966b2653,James Littlewood,James Littlewood,No. 6,6,1,20,0,
 raw_09ea681f_12bf_4a6f_962d_6975966b2653,James Littlewood,James Littlewood,No. 7,7,1,16,0,
 raw_09ea681f_12bf_4a6f_962d_6975966b2653,James Littlewood,James Littlewood,No. 9,9,1,0,1,0.0
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,Opener,1,3,18,0,
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,No. 3,3,1,8,0,
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,No. 4,4,1,3,0,
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,No. 5,5,1,15,0,
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,No. 6,6,3,19,0,
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,No. 7,7,3,47,0,
+raw_7b1791b4_e50f_49c7_833c_88be3d632a7e,James Pountney,James Pountney,No. 8,8,2,32,0,
 raw_143d2dea_50b6_49ba_b944_205a00ba3513,Jared Amsterdam,Jared Amsterdam,Opener,1,1,2,1,2.0
 raw_143d2dea_50b6_49ba_b944_205a00ba3513,Jared Amsterdam,Jared Amsterdam,No. 7,7,1,5,0,
 raw_143d2dea_50b6_49ba_b944_205a00ba3513,Jared Amsterdam,Jared Amsterdam,No. 9,9,1,1,1,1.0
 raw_143d2dea_50b6_49ba_b944_205a00ba3513,Jared Amsterdam,Jared Amsterdam,Tail,10,5,15,4,3.75
+raw_ced50fa1_0616_4826_818e_d37a15e073ac,Jayda Chhit,Jayda Chhit,No. 3,3,1,1,1,1.0
+raw_ced50fa1_0616_4826_818e_d37a15e073ac,Jayda Chhit,Jayda Chhit,No. 5,5,1,21,1,21.0
+raw_ced50fa1_0616_4826_818e_d37a15e073ac,Jayda Chhit,Jayda Chhit,No. 6,6,5,78,5,15.6
+raw_ced50fa1_0616_4826_818e_d37a15e073ac,Jayda Chhit,Jayda Chhit,No. 7,7,2,0,1,0.0
+raw_ced50fa1_0616_4826_818e_d37a15e073ac,Jayda Chhit,Jayda Chhit,No. 8,8,1,9,1,9.0
 raw_24b4e7b2_e5ed_411c_a2df_5174d3cfd377,Jeff Davis,Jeff Davis,No. 4,4,1,39,0,
 raw_24b4e7b2_e5ed_411c_a2df_5174d3cfd377,Jeff Davis,Jeff Davis,No. 6,6,1,12,1,12.0
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,Opener,1,3,87,3,29.0
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,No. 3,3,3,46,3,15.333333333333334
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,No. 4,4,3,104,1,104.0
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,No. 5,5,2,12,1,12.0
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,No. 6,6,1,20,0,
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,No. 7,7,1,0,1,0.0
-raw_a4bd70a5_b9b1_4acd_b5ac_3b2b364ea4a7,Jobe Carlyle,Jobe Carlyle,No. 8,8,1,1,1,1.0
+raw_93a16f8d_dfad_442f_8cd9_ea9929695a10,Jenny Aldridge,Jenny Aldridge,Opener,1,1,8,1,8.0
+raw_93a16f8d_dfad_442f_8cd9_ea9929695a10,Jenny Aldridge,Jenny Aldridge,No. 3,3,3,53,2,26.5
+raw_93a16f8d_dfad_442f_8cd9_ea9929695a10,Jenny Aldridge,Jenny Aldridge,No. 4,4,1,8,1,8.0
+raw_93a16f8d_dfad_442f_8cd9_ea9929695a10,Jenny Aldridge,Jenny Aldridge,No. 5,5,1,2,1,2.0
+raw_93a16f8d_dfad_442f_8cd9_ea9929695a10,Jenny Aldridge,Jenny Aldridge,No. 6,6,1,1,1,1.0
+raw_93a16f8d_dfad_442f_8cd9_ea9929695a10,Jenny Aldridge,Jenny Aldridge,No. 7,7,1,20,1,20.0
+raw_477000b0_579f_4d3a_a54e_5529c5f8e6bd,Jerusha Joby Johnson,Jerusha Joby Johnson,No. 3,3,1,2,0,
+raw_477000b0_579f_4d3a_a54e_5529c5f8e6bd,Jerusha Joby Johnson,Jerusha Joby Johnson,No. 4,4,2,8,0,
+raw_477000b0_579f_4d3a_a54e_5529c5f8e6bd,Jerusha Joby Johnson,Jerusha Joby Johnson,No. 5,5,1,3,0,
+raw_477000b0_579f_4d3a_a54e_5529c5f8e6bd,Jerusha Joby Johnson,Jerusha Joby Johnson,No. 6,6,4,6,0,
+raw_477000b0_579f_4d3a_a54e_5529c5f8e6bd,Jerusha Joby Johnson,Jerusha Joby Johnson,No. 7,7,2,3,0,
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,Opener,1,20,471,19,24.789473684210527
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,No. 3,3,5,111,4,27.75
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,No. 4,4,4,110,2,55.0
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,No. 5,5,4,32,3,10.666666666666666
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,No. 6,6,1,20,0,
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,No. 7,7,2,8,2,4.0
+jobe_carlyle,Jobe Carlyle,Jobe Carlyle,No. 8,8,1,1,1,1.0
+raw_9ae543a6_3f44_4adb_b971_b8ee07150c6c,Joel Melnjak,Joel Melnjak,No. 6,6,1,19,1,19.0
+raw_9ae543a6_3f44_4adb_b971_b8ee07150c6c,Joel Melnjak,Joel Melnjak,No. 7,7,1,19,0,
 raw_17bb911f_815a_4230_85b1_771bba3ec204,Jonathan Vincent,Jonathan Vincent,No. 4,4,3,32,3,10.666666666666666
 raw_17bb911f_815a_4230_85b1_771bba3ec204,Jonathan Vincent,Jonathan Vincent,Tail,10,1,32,1,32.0
 raw_6c348ff6_d894_4a16_bab6_a4a39f259911,Jordan Keen,Jordan Keen,Opener,1,1,17,1,17.0
+raw_4341e6b3_efbf_4101_ad56_4309090a54bd,Josh Hense,Josh Hense,Opener,1,1,0,1,0.0
+raw_4341e6b3_efbf_4101_ad56_4309090a54bd,Josh Hense,Josh Hense,No. 3,3,3,30,3,10.0
+raw_4341e6b3_efbf_4101_ad56_4309090a54bd,Josh Hense,Josh Hense,No. 6,6,3,33,3,11.0
+raw_4341e6b3_efbf_4101_ad56_4309090a54bd,Josh Hense,Josh Hense,Tail,10,1,0,0,
+raw_60b57717_7d17_4d97_8d9a_7a310d46ff76,Joshua Bolitho,Joshua Bolitho,Opener,1,2,22,0,
+raw_60b57717_7d17_4d97_8d9a_7a310d46ff76,Joshua Bolitho,Joshua Bolitho,No. 3,3,4,34,0,
+raw_60b57717_7d17_4d97_8d9a_7a310d46ff76,Joshua Bolitho,Joshua Bolitho,No. 5,5,5,49,0,
+raw_60b57717_7d17_4d97_8d9a_7a310d46ff76,Joshua Bolitho,Joshua Bolitho,No. 6,6,2,23,0,
+raw_60b57717_7d17_4d97_8d9a_7a310d46ff76,Joshua Bolitho,Joshua Bolitho,No. 8,8,2,9,0,
+raw_6088a286_a7a7_4f16_8755_ffdf38732314,Joshua Grabert,Joshua Grabert,No. 3,3,1,0,1,0.0
+raw_6088a286_a7a7_4f16_8755_ffdf38732314,Joshua Grabert,Joshua Grabert,No. 4,4,1,1,1,1.0
+raw_6088a286_a7a7_4f16_8755_ffdf38732314,Joshua Grabert,Joshua Grabert,No. 6,6,3,26,2,13.0
+raw_6088a286_a7a7_4f16_8755_ffdf38732314,Joshua Grabert,Joshua Grabert,No. 7,7,3,43,1,43.0
+raw_6088a286_a7a7_4f16_8755_ffdf38732314,Joshua Grabert,Joshua Grabert,No. 8,8,1,0,1,0.0
 raw_abd38fcb_df9b_4fd1_a173_bc1def1d04bc,Joshua Hense,Joshua Hense,Opener,1,1,4,1,4.0
 raw_abd38fcb_df9b_4fd1_a173_bc1def1d04bc,Joshua Hense,Joshua Hense,No. 3,3,1,12,1,12.0
 raw_abd38fcb_df9b_4fd1_a173_bc1def1d04bc,Joshua Hense,Joshua Hense,No. 7,7,1,0,1,0.0
@@ -488,27 +917,74 @@ raw_9693d0bf_38a9_4ca6_a948_abf50a7f3772,Justin Glazier,Justin Glazier,No. 3,3,1
 raw_9693d0bf_38a9_4ca6_a948_abf50a7f3772,Justin Glazier,Justin Glazier,No. 6,6,2,15,2,7.5
 raw_9693d0bf_38a9_4ca6_a948_abf50a7f3772,Justin Glazier,Justin Glazier,No. 9,9,1,5,1,5.0
 raw_9693d0bf_38a9_4ca6_a948_abf50a7f3772,Justin Glazier,Justin Glazier,Tail,10,1,0,1,0.0
+raw_a1f3753c_84b8_46f7_b99b_6601395c5cab,Justin Greer,Justin Greer,No. 5,5,1,49,0,
 raw_80c4b5b8_f0aa_4d31_930c_683f13bb321c,Justin Harris,Justin Harris,No. 3,3,1,10,1,10.0
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,Opener,1,3,22,0,
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,No. 3,3,1,3,0,
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,No. 4,4,4,26,0,
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,No. 5,5,1,6,0,
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,No. 6,6,2,13,0,
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,No. 7,7,2,9,0,
+raw_26900273_0fa2_4964_93c0_ae7df4c29dbc,Kaiser Joshi,Kaiser Joshi,No. 8,8,2,14,0,
+raw_23ed21a5_42dc_4165_9a8f_5e0f423a486a,Kasun Tharaka Weerasinghe Bamunu Arachchige Don,Kasun Tharaka Weerasinghe Bamunu Arachchige Don,Tail,10,7,35,4,8.75
+raw_b0bc4cc3_1987_4ff4_983e_9d0f006b8ccf,Kate Bernes,Kate Bernes,Opener,1,7,77,3,25.666666666666668
+raw_b0bc4cc3_1987_4ff4_983e_9d0f006b8ccf,Kate Bernes,Kate Bernes,No. 4,4,3,43,1,43.0
+raw_b0bc4cc3_1987_4ff4_983e_9d0f006b8ccf,Kate Bernes,Kate Bernes,No. 5,5,2,20,1,20.0
+raw_b0bc4cc3_1987_4ff4_983e_9d0f006b8ccf,Kate Bernes,Kate Bernes,No. 8,8,1,8,0,
+raw_b0bc4cc3_1987_4ff4_983e_9d0f006b8ccf,Kate Bernes,Kate Bernes,No. 9,9,1,10,1,10.0
+raw_91211a3b_ce70_43df_8be9_d40a0d81d472,Kate Bolt,Kate Bolt,No. 5,5,1,5,0,
+raw_91211a3b_ce70_43df_8be9_d40a0d81d472,Kate Bolt,Kate Bolt,No. 6,6,2,5,2,2.5
+raw_91211a3b_ce70_43df_8be9_d40a0d81d472,Kate Bolt,Kate Bolt,No. 8,8,1,8,0,
+raw_02cd48e4_8613_414b_b881_344a7b733b0b,Kathryn Boicos,Kathryn Boicos,Opener,1,1,0,1,0.0
+raw_02cd48e4_8613_414b_b881_344a7b733b0b,Kathryn Boicos,Kathryn Boicos,No. 3,3,4,67,3,22.333333333333332
+raw_02cd48e4_8613_414b_b881_344a7b733b0b,Kathryn Boicos,Kathryn Boicos,No. 4,4,2,45,0,
+raw_02cd48e4_8613_414b_b881_344a7b733b0b,Kathryn Boicos,Kathryn Boicos,No. 5,5,1,20,1,20.0
+raw_02cd48e4_8613_414b_b881_344a7b733b0b,Kathryn Boicos,Kathryn Boicos,No. 6,6,1,16,1,16.0
 raw_432509ed_469f_4586_b7d4_0475845b7400,Kay Rabadi,Kay Rabadi,No. 3,3,1,57,1,57.0
 raw_432509ed_469f_4586_b7d4_0475845b7400,Kay Rabadi,Kay Rabadi,No. 5,5,6,97,5,19.4
 raw_432509ed_469f_4586_b7d4_0475845b7400,Kay Rabadi,Kay Rabadi,No. 6,6,4,55,3,18.333333333333332
 raw_432509ed_469f_4586_b7d4_0475845b7400,Kay Rabadi,Kay Rabadi,No. 8,8,1,20,1,20.0
 raw_432509ed_469f_4586_b7d4_0475845b7400,Kay Rabadi,Kay Rabadi,Tail,10,1,8,1,8.0
+raw_1a46126f_80bd_4fee_a71e_1b4680fffa40,Koby Chamoff,Koby Chamoff,Opener,1,1,3,1,3.0
+raw_1a46126f_80bd_4fee_a71e_1b4680fffa40,Koby Chamoff,Koby Chamoff,No. 3,3,2,10,0,
+raw_1a46126f_80bd_4fee_a71e_1b4680fffa40,Koby Chamoff,Koby Chamoff,No. 4,4,1,29,0,
+raw_1a46126f_80bd_4fee_a71e_1b4680fffa40,Koby Chamoff,Koby Chamoff,No. 5,5,1,3,1,3.0
+raw_1a46126f_80bd_4fee_a71e_1b4680fffa40,Koby Chamoff,Koby Chamoff,No. 6,6,1,7,1,7.0
+raw_1a46126f_80bd_4fee_a71e_1b4680fffa40,Koby Chamoff,Koby Chamoff,No. 8,8,1,3,0,
 raw_27dde802_c0c8_4ed2_b4b7_5499fe59aea8,Krishna Sridhar,Krishna Sridhar,No. 5,5,1,15,1,15.0
 raw_27dde802_c0c8_4ed2_b4b7_5499fe59aea8,Krishna Sridhar,Krishna Sridhar,No. 6,6,1,0,0,
 raw_27dde802_c0c8_4ed2_b4b7_5499fe59aea8,Krishna Sridhar,Krishna Sridhar,No. 7,7,2,10,1,10.0
 raw_27dde802_c0c8_4ed2_b4b7_5499fe59aea8,Krishna Sridhar,Krishna Sridhar,Tail,10,1,13,1,13.0
+raw_fe99b1b0_eed3_4f36_a159_7ad17b650da0,Ky Rabadi,Ky Rabadi,Opener,1,16,450,13,34.61538461538461
+raw_fe99b1b0_eed3_4f36_a159_7ad17b650da0,Ky Rabadi,Ky Rabadi,No. 4,4,1,16,1,16.0
+raw_521b93f1_58c9_4301_af67_c7db0aa5fbb9,Lachie May,Lachie May,No. 3,3,1,0,1,0.0
+raw_521b93f1_58c9_4301_af67_c7db0aa5fbb9,Lachie May,Lachie May,No. 4,4,2,32,2,16.0
+raw_521b93f1_58c9_4301_af67_c7db0aa5fbb9,Lachie May,Lachie May,No. 6,6,1,12,1,12.0
+raw_521b93f1_58c9_4301_af67_c7db0aa5fbb9,Lachie May,Lachie May,No. 9,9,3,14,1,14.0
+raw_521b93f1_58c9_4301_af67_c7db0aa5fbb9,Lachie May,Lachie May,Tail,10,6,24,3,8.0
+raw_1e7a32d8_bca8_44f5_a624_53d2373f3ad5,Lachie O’meara,Lachie O’meara,No. 4,4,1,20,0,
+raw_1e7a32d8_bca8_44f5_a624_53d2373f3ad5,Lachie O’meara,Lachie O’meara,No. 5,5,2,11,1,11.0
+raw_1e7a32d8_bca8_44f5_a624_53d2373f3ad5,Lachie O’meara,Lachie O’meara,No. 7,7,1,0,1,0.0
+raw_1e7a32d8_bca8_44f5_a624_53d2373f3ad5,Lachie O’meara,Lachie O’meara,No. 8,8,1,0,1,0.0
+raw_1e7a32d8_bca8_44f5_a624_53d2373f3ad5,Lachie O’meara,Lachie O’meara,Tail,10,4,14,0,
 raw_7d24dfd5_4d3b_419b_8fd0_fc672d2ad95c,Lachlan Bolt,Lachlan Bolt,No. 6,6,1,0,1,0.0
 raw_7d24dfd5_4d3b_419b_8fd0_fc672d2ad95c,Lachlan Bolt,Lachlan Bolt,No. 7,7,2,13,1,13.0
 raw_7d24dfd5_4d3b_419b_8fd0_fc672d2ad95c,Lachlan Bolt,Lachlan Bolt,No. 9,9,2,3,2,1.5
 raw_7d24dfd5_4d3b_419b_8fd0_fc672d2ad95c,Lachlan Bolt,Lachlan Bolt,Tail,10,5,43,2,21.5
-raw_8408aea9_680b_4e76_bf9f_2731202912d7,Lachlan Carroll,Lachlan Carroll,Opener,1,10,171,9,19.0
-raw_8408aea9_680b_4e76_bf9f_2731202912d7,Lachlan Carroll,Lachlan Carroll,No. 8,8,1,1,0,
-raw_a1cfe360_3ec8_4097_a678_eb33a09f929c,Lachlan Drew,Lachlan Drew,Opener,1,2,25,1,25.0
-raw_a1cfe360_3ec8_4097_a678_eb33a09f929c,Lachlan Drew,Lachlan Drew,No. 4,4,4,91,1,91.0
-raw_a1cfe360_3ec8_4097_a678_eb33a09f929c,Lachlan Drew,Lachlan Drew,No. 6,6,1,49,0,
-raw_a1cfe360_3ec8_4097_a678_eb33a09f929c,Lachlan Drew,Lachlan Drew,No. 7,7,1,22,0,
-raw_a1cfe360_3ec8_4097_a678_eb33a09f929c,Lachlan Drew,Lachlan Drew,No. 8,8,1,40,0,
+lachlan_carroll,Lachlan Carroll,Lachlan Carroll,Opener,1,12,187,10,18.7
+lachlan_carroll,Lachlan Carroll,Lachlan Carroll,No. 4,4,1,29,1,29.0
+lachlan_carroll,Lachlan Carroll,Lachlan Carroll,No. 5,5,6,146,4,36.5
+lachlan_carroll,Lachlan Carroll,Lachlan Carroll,No. 6,6,3,43,2,21.5
+lachlan_carroll,Lachlan Carroll,Lachlan Carroll,No. 7,7,2,9,2,4.5
+lachlan_carroll,Lachlan Carroll,Lachlan Carroll,No. 8,8,1,1,0,
+lachlan_drew,Lachlan Drew,Lachlan Drew,Opener,1,3,25,2,12.5
+lachlan_drew,Lachlan Drew,Lachlan Drew,No. 3,3,2,7,2,3.5
+lachlan_drew,Lachlan Drew,Lachlan Drew,No. 4,4,8,143,4,35.75
+lachlan_drew,Lachlan Drew,Lachlan Drew,No. 6,6,2,53,1,53.0
+lachlan_drew,Lachlan Drew,Lachlan Drew,No. 7,7,2,34,0,
+lachlan_drew,Lachlan Drew,Lachlan Drew,No. 8,8,1,40,0,
+lachlan_drew,Lachlan Drew,Lachlan Drew,No. 9,9,4,36,4,9.0
+lachlan_drew,Lachlan Drew,Lachlan Drew,Tail,10,1,3,1,3.0
 raw_3059c8e8_28cc_4acd_8272_1b6e80251d10,Lachlan Meehan,Lachlan Meehan,Opener,1,9,170,7,24.285714285714285
 raw_3059c8e8_28cc_4acd_8272_1b6e80251d10,Lachlan Meehan,Lachlan Meehan,No. 4,4,2,4,2,2.0
 raw_3059c8e8_28cc_4acd_8272_1b6e80251d10,Lachlan Meehan,Lachlan Meehan,No. 5,5,1,25,1,25.0
@@ -534,54 +1010,82 @@ raw_39f812e0_ce12_4df7_a30c_d61f40929ab1,Lara Mcguinness,Lara Mcguinness,Tail,10
 raw_05b212db_ec29_4767_8de3_d6cc87813895,Leigh Batey,Leigh Batey,Opener,1,4,46,4,11.5
 raw_05b212db_ec29_4767_8de3_d6cc87813895,Leigh Batey,Leigh Batey,No. 4,4,1,2,1,2.0
 raw_05b212db_ec29_4767_8de3_d6cc87813895,Leigh Batey,Leigh Batey,Tail,10,1,1,0,
-raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,Opener,1,16,433,14,30.928571428571427
+raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,Opener,1,17,490,15,32.666666666666664
 raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,No. 4,4,1,9,1,9.0
 raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,No. 5,5,1,15,1,15.0
 raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,No. 6,6,3,14,3,4.666666666666667
 raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,No. 7,7,1,4,1,4.0
 raw_20d5c841_72e3_4c48_a1d4_2e699279cb27,Lenny Wilton,Lenny Wilton,Tail,10,1,23,0,
-raw_b45c610a_7b24_4769_866b_69ce72b4b332,Letitia Kovacs,Letitia Kovacs,Opener,1,3,8,3,2.6666666666666665
-raw_b45c610a_7b24_4769_866b_69ce72b4b332,Letitia Kovacs,Letitia Kovacs,No. 3,3,2,15,0,
-raw_b45c610a_7b24_4769_866b_69ce72b4b332,Letitia Kovacs,Letitia Kovacs,No. 5,5,2,13,0,
-raw_b45c610a_7b24_4769_866b_69ce72b4b332,Letitia Kovacs,Letitia Kovacs,No. 6,6,2,8,1,8.0
-raw_b45c610a_7b24_4769_866b_69ce72b4b332,Letitia Kovacs,Letitia Kovacs,No. 8,8,1,1,1,1.0
-raw_b45c610a_7b24_4769_866b_69ce72b4b332,Letitia Kovacs,Letitia Kovacs,Tail,10,1,10,0,
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,No. 4,4,1,6,1,6.0
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,No. 5,5,2,29,1,29.0
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,No. 6,6,1,5,1,5.0
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,No. 7,7,1,1,1,1.0
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,No. 8,8,2,11,2,5.5
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,No. 9,9,2,9,2,4.5
-raw_041c2869_ee90_4997_803e_cbe2d03c7c3c,Levi Hoare,Levi Hoare,Tail,10,2,5,1,5.0
-raw_c5c2f767_7903_4f10_9135_6835b39c95c9,Levi Wilton,Levi Wilton,Opener,1,4,35,3,11.666666666666666
-raw_c5c2f767_7903_4f10_9135_6835b39c95c9,Levi Wilton,Levi Wilton,No. 3,3,1,8,1,8.0
-raw_c5c2f767_7903_4f10_9135_6835b39c95c9,Levi Wilton,Levi Wilton,No. 6,6,1,10,1,10.0
-raw_c5c2f767_7903_4f10_9135_6835b39c95c9,Levi Wilton,Levi Wilton,No. 7,7,3,5,3,1.6666666666666667
-raw_c5c2f767_7903_4f10_9135_6835b39c95c9,Levi Wilton,Levi Wilton,No. 9,9,1,7,1,7.0
-raw_c5c2f767_7903_4f10_9135_6835b39c95c9,Levi Wilton,Levi Wilton,Tail,10,1,7,1,7.0
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,Opener,1,1,2,1,2.0
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,No. 4,4,1,0,1,0.0
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,No. 5,5,3,72,2,36.0
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,No. 6,6,1,5,1,5.0
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,No. 7,7,1,3,1,3.0
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,No. 8,8,1,0,0,
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,No. 9,9,4,23,3,7.666666666666667
-raw_275a28a8_f7ec_48aa_a173_645ba3014247,Lewis Armstrong,Lewis Armstrong,Tail,10,1,1,1,1.0
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,Opener,1,15,158,8,19.75
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,No. 3,3,12,135,8,16.875
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,No. 4,4,2,12,1,12.0
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,No. 5,5,4,29,1,29.0
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,No. 6,6,4,22,2,11.0
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,No. 7,7,4,13,2,6.5
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,No. 8,8,2,2,1,2.0
+letitia_kovacs,Letitia Kovacs,Letitia Kovacs,Tail,10,1,10,0,
+levi_hoare,Levi Hoare,Levi Hoare,No. 4,4,1,6,1,6.0
+levi_hoare,Levi Hoare,Levi Hoare,No. 5,5,2,29,1,29.0
+levi_hoare,Levi Hoare,Levi Hoare,No. 6,6,1,5,1,5.0
+levi_hoare,Levi Hoare,Levi Hoare,No. 7,7,1,1,1,1.0
+levi_hoare,Levi Hoare,Levi Hoare,No. 8,8,2,11,2,5.5
+levi_hoare,Levi Hoare,Levi Hoare,No. 9,9,2,9,2,4.5
+levi_hoare,Levi Hoare,Levi Hoare,Tail,10,4,6,2,3.0
+levi_wilton,Levi Wilton,Levi Wilton,Opener,1,13,192,11,17.454545454545453
+levi_wilton,Levi Wilton,Levi Wilton,No. 3,3,1,8,1,8.0
+levi_wilton,Levi Wilton,Levi Wilton,No. 5,5,1,21,0,
+levi_wilton,Levi Wilton,Levi Wilton,No. 6,6,1,10,1,10.0
+levi_wilton,Levi Wilton,Levi Wilton,No. 7,7,3,5,3,1.6666666666666667
+levi_wilton,Levi Wilton,Levi Wilton,No. 9,9,1,7,1,7.0
+levi_wilton,Levi Wilton,Levi Wilton,Tail,10,1,7,1,7.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,Opener,1,4,102,3,34.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,No. 4,4,1,0,1,0.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,No. 5,5,4,72,3,24.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,No. 6,6,1,5,1,5.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,No. 7,7,2,16,1,16.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,No. 8,8,2,9,1,9.0
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,No. 9,9,6,33,5,6.6
+lewis_armstrong,Lewis Armstrong,Lewis Armstrong,Tail,10,2,62,1,62.0
+raw_22ec622b_eced_4165_bc7b_01ad7d1934b8,Lexi Firth,Lexi Firth,No. 4,4,2,15,1,15.0
+raw_22ec622b_eced_4165_bc7b_01ad7d1934b8,Lexi Firth,Lexi Firth,No. 5,5,3,31,2,15.5
+raw_22ec622b_eced_4165_bc7b_01ad7d1934b8,Lexi Firth,Lexi Firth,No. 6,6,9,93,5,18.6
+raw_22ec622b_eced_4165_bc7b_01ad7d1934b8,Lexi Firth,Lexi Firth,No. 7,7,6,14,5,2.8
+raw_22ec622b_eced_4165_bc7b_01ad7d1934b8,Lexi Firth,Lexi Firth,No. 8,8,5,27,3,9.0
 raw_9d07581d_ab79_4ce3_8ab0_bac31c80d22d,Liam Capp,Liam Capp,No. 5,5,1,1,1,1.0
 raw_9d07581d_ab79_4ce3_8ab0_bac31c80d22d,Liam Capp,Liam Capp,No. 6,6,2,9,2,4.5
 raw_9d07581d_ab79_4ce3_8ab0_bac31c80d22d,Liam Capp,Liam Capp,No. 8,8,4,1,4,0.25
 raw_9d07581d_ab79_4ce3_8ab0_bac31c80d22d,Liam Capp,Liam Capp,Tail,10,3,4,0,
-raw_8a6326e9_afda_4881_965c_737a00810dcc,Liam Chamoff,Liam Chamoff,Opener,1,5,59,3,19.666666666666668
-raw_8a6326e9_afda_4881_965c_737a00810dcc,Liam Chamoff,Liam Chamoff,No. 3,3,2,30,1,30.0
-raw_8a6326e9_afda_4881_965c_737a00810dcc,Liam Chamoff,Liam Chamoff,No. 5,5,1,16,1,16.0
-raw_8a6326e9_afda_4881_965c_737a00810dcc,Liam Chamoff,Liam Chamoff,No. 7,7,1,3,1,3.0
+liam_chamoff,Liam Chamoff,Liam Chamoff,Opener,1,7,59,3,19.666666666666668
+liam_chamoff,Liam Chamoff,Liam Chamoff,No. 3,3,2,30,1,30.0
+liam_chamoff,Liam Chamoff,Liam Chamoff,No. 4,4,2,31,2,15.5
+liam_chamoff,Liam Chamoff,Liam Chamoff,No. 5,5,4,56,4,14.0
+liam_chamoff,Liam Chamoff,Liam Chamoff,No. 6,6,1,3,1,3.0
+liam_chamoff,Liam Chamoff,Liam Chamoff,No. 7,7,2,16,2,8.0
+liam_chamoff,Liam Chamoff,Liam Chamoff,No. 9,9,1,9,1,9.0
 raw_417f1576_1f57_4e35_a979_1626ce531124,Liana Karabatsos,Liana Karabatsos,No. 5,5,1,1,1,1.0
 raw_417f1576_1f57_4e35_a979_1626ce531124,Liana Karabatsos,Liana Karabatsos,No. 8,8,1,3,0,
+raw_2777df77_3faf_42c0_ac82_baa8db88d158,Lily Sell,Lily Sell,No. 3,3,5,67,1,67.0
+raw_2777df77_3faf_42c0_ac82_baa8db88d158,Lily Sell,Lily Sell,No. 4,4,2,13,1,13.0
+raw_2777df77_3faf_42c0_ac82_baa8db88d158,Lily Sell,Lily Sell,No. 5,5,2,17,1,17.0
+raw_2777df77_3faf_42c0_ac82_baa8db88d158,Lily Sell,Lily Sell,No. 6,6,1,6,1,6.0
+raw_2777df77_3faf_42c0_ac82_baa8db88d158,Lily Sell,Lily Sell,No. 7,7,2,8,2,4.0
 raw_bae62a2e_7f91_4c2d_b60a_6bd9932f51d1,Livia Brostek,Livia Brostek,No. 4,4,1,1,1,1.0
 raw_bae62a2e_7f91_4c2d_b60a_6bd9932f51d1,Livia Brostek,Livia Brostek,No. 5,5,2,6,2,3.0
 raw_bae62a2e_7f91_4c2d_b60a_6bd9932f51d1,Livia Brostek,Livia Brostek,No. 6,6,1,0,1,0.0
 raw_bae62a2e_7f91_4c2d_b60a_6bd9932f51d1,Livia Brostek,Livia Brostek,No. 7,7,1,0,0,
 raw_bae62a2e_7f91_4c2d_b60a_6bd9932f51d1,Livia Brostek,Livia Brostek,No. 8,8,1,1,0,
+raw_822349ea_8741_453d_bb52_6c5d00c76f07,Logan Corr,Logan Corr,Opener,1,1,2,1,2.0
+raw_822349ea_8741_453d_bb52_6c5d00c76f07,Logan Corr,Logan Corr,No. 3,3,2,9,2,4.5
+raw_822349ea_8741_453d_bb52_6c5d00c76f07,Logan Corr,Logan Corr,No. 7,7,1,0,1,0.0
+raw_822349ea_8741_453d_bb52_6c5d00c76f07,Logan Corr,Logan Corr,No. 8,8,2,10,0,
+raw_822349ea_8741_453d_bb52_6c5d00c76f07,Logan Corr,Logan Corr,No. 9,9,1,7,1,7.0
+raw_822349ea_8741_453d_bb52_6c5d00c76f07,Logan Corr,Logan Corr,Tail,10,2,1,1,1.0
+raw_4fe03ee7_714c_4dd0_966b_1d0de96da7a3,Lucas Jenner,Lucas Jenner,Opener,1,4,23,0,
+raw_4fe03ee7_714c_4dd0_966b_1d0de96da7a3,Lucas Jenner,Lucas Jenner,No. 3,3,1,7,0,
+raw_4fe03ee7_714c_4dd0_966b_1d0de96da7a3,Lucas Jenner,Lucas Jenner,No. 4,4,3,19,0,
+raw_4fe03ee7_714c_4dd0_966b_1d0de96da7a3,Lucas Jenner,Lucas Jenner,No. 5,5,3,16,0,
+raw_4fe03ee7_714c_4dd0_966b_1d0de96da7a3,Lucas Jenner,Lucas Jenner,No. 6,6,1,4,0,
+raw_4fe03ee7_714c_4dd0_966b_1d0de96da7a3,Lucas Jenner,Lucas Jenner,No. 7,7,1,16,0,
 raw_9cc7cbbe_5bc0_4c29_9169_d2e85eefc118,Lucas Rowley,Lucas Rowley,Opener,1,5,34,2,17.0
 raw_9cc7cbbe_5bc0_4c29_9169_d2e85eefc118,Lucas Rowley,Lucas Rowley,No. 3,3,3,26,1,26.0
 raw_9cc7cbbe_5bc0_4c29_9169_d2e85eefc118,Lucas Rowley,Lucas Rowley,No. 6,6,1,9,0,
@@ -591,6 +1095,11 @@ raw_1d6afe64_b5bc_47ff_9ee7_43499288e3a0,Luke Keen,Luke Keen,No. 5,5,1,8,1,8.0
 raw_1d6afe64_b5bc_47ff_9ee7_43499288e3a0,Luke Keen,Luke Keen,No. 7,7,2,22,2,11.0
 raw_1d6afe64_b5bc_47ff_9ee7_43499288e3a0,Luke Keen,Luke Keen,No. 8,8,2,21,1,21.0
 raw_1d6afe64_b5bc_47ff_9ee7_43499288e3a0,Luke Keen,Luke Keen,Tail,10,1,11,0,
+raw_c743fd9c_4bc5_4bf8_874c_bb5f80e051b1,Luke Measham,Luke Measham,Opener,1,3,18,2,9.0
+raw_c743fd9c_4bc5_4bf8_874c_bb5f80e051b1,Luke Measham,Luke Measham,No. 3,3,1,26,1,26.0
+raw_c743fd9c_4bc5_4bf8_874c_bb5f80e051b1,Luke Measham,Luke Measham,No. 6,6,1,0,1,0.0
+raw_c743fd9c_4bc5_4bf8_874c_bb5f80e051b1,Luke Measham,Luke Measham,No. 9,9,1,14,0,
+raw_c743fd9c_4bc5_4bf8_874c_bb5f80e051b1,Luke Measham,Luke Measham,Tail,10,1,9,0,
 raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,Opener,1,1,5,0,
 raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,No. 3,3,1,5,1,5.0
 raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,No. 5,5,1,1,1,1.0
@@ -598,49 +1107,84 @@ raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,No. 6,6,3,27,
 raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,No. 7,7,1,7,0,
 raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,No. 8,8,2,4,1,4.0
 raw_48b5c047_ea62_49f2_a5e7_44db93dc8216,Maddy Fenton,Maddy Fenton,No. 9,9,1,4,1,4.0
+raw_0bbf136a_db97_42dc_b6e7_2d3240a8a84f,Madeleine Fenton,Madeleine Fenton,No. 4,4,1,6,1,6.0
+raw_0bbf136a_db97_42dc_b6e7_2d3240a8a84f,Madeleine Fenton,Madeleine Fenton,No. 5,5,1,1,0,
+raw_0bbf136a_db97_42dc_b6e7_2d3240a8a84f,Madeleine Fenton,Madeleine Fenton,No. 7,7,2,29,0,
+raw_0bbf136a_db97_42dc_b6e7_2d3240a8a84f,Madeleine Fenton,Madeleine Fenton,No. 8,8,2,13,0,
 raw_c4f007f2_1a95_4b56_88a5_eae425fdd011,Manansh Verma,Manansh Verma,No. 3,3,1,5,1,5.0
 raw_c4f007f2_1a95_4b56_88a5_eae425fdd011,Manansh Verma,Manansh Verma,No. 5,5,1,4,0,
 raw_c4f007f2_1a95_4b56_88a5_eae425fdd011,Manansh Verma,Manansh Verma,No. 6,6,1,2,1,2.0
 raw_c4f007f2_1a95_4b56_88a5_eae425fdd011,Manansh Verma,Manansh Verma,No. 8,8,2,4,2,2.0
 raw_c4f007f2_1a95_4b56_88a5_eae425fdd011,Manansh Verma,Manansh Verma,Tail,10,4,11,2,5.5
-raw_2e5a66ba_ab57_45d1_a1c1_41bea15c94c7,Mark Gostlow,Mark Gostlow,Opener,1,3,212,3,70.66666666666667
-raw_2e5a66ba_ab57_45d1_a1c1_41bea15c94c7,Mark Gostlow,Mark Gostlow,No. 3,3,3,162,2,81.0
-raw_2e5a66ba_ab57_45d1_a1c1_41bea15c94c7,Mark Gostlow,Mark Gostlow,No. 5,5,1,5,1,5.0
-raw_2e5a66ba_ab57_45d1_a1c1_41bea15c94c7,Mark Gostlow,Mark Gostlow,No. 6,6,1,0,1,0.0
-raw_2e5a66ba_ab57_45d1_a1c1_41bea15c94c7,Mark Gostlow,Mark Gostlow,No. 7,7,1,11,1,11.0
-raw_2e5a66ba_ab57_45d1_a1c1_41bea15c94c7,Mark Gostlow,Mark Gostlow,No. 8,8,1,5,1,5.0
+mark_gostlow,Mark Gostlow,Mark Gostlow,Opener,1,4,252,4,63.0
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 3,3,3,162,2,81.0
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 4,4,2,84,2,42.0
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 5,5,2,5,2,2.5
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 6,6,1,0,1,0.0
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 7,7,3,32,3,10.666666666666666
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 8,8,1,5,1,5.0
+mark_gostlow,Mark Gostlow,Mark Gostlow,No. 9,9,1,12,1,12.0
 raw_aae3ed0e_6973_42a7_9992_c4bb23f0d0c8,Mark Schonewille,Mark Schonewille,Opener,1,1,32,1,32.0
 raw_aae3ed0e_6973_42a7_9992_c4bb23f0d0c8,Mark Schonewille,Mark Schonewille,No. 5,5,1,7,1,7.0
 raw_aae3ed0e_6973_42a7_9992_c4bb23f0d0c8,Mark Schonewille,Mark Schonewille,No. 6,6,1,17,1,17.0
+raw_b2ec81a5_3a35_4497_bc61_e60280839e14,Martin Brown,Martin Brown,Opener,1,2,0,0,
+raw_b2ec81a5_3a35_4497_bc61_e60280839e14,Martin Brown,Martin Brown,No. 4,4,1,0,0,
+raw_b2ec81a5_3a35_4497_bc61_e60280839e14,Martin Brown,Martin Brown,No. 8,8,3,16,3,5.333333333333333
+raw_b2ec81a5_3a35_4497_bc61_e60280839e14,Martin Brown,Martin Brown,No. 9,9,1,0,0,
+raw_b2ec81a5_3a35_4497_bc61_e60280839e14,Martin Brown,Martin Brown,Tail,10,5,41,2,20.5
 raw_8428fbcb_b5e6_4706_b1c5_ae53b9b16dae,Martin O'Meara,Martin O'Meara,No. 3,3,1,2,1,2.0
-raw_bd81f7d6_c456_44c1_bff6_7b9a6344d1ef,Matilda Lloyd,Matilda Lloyd,Opener,1,1,15,1,15.0
-raw_bd81f7d6_c456_44c1_bff6_7b9a6344d1ef,Matilda Lloyd,Matilda Lloyd,No. 3,3,7,77,3,25.666666666666668
-raw_bd81f7d6_c456_44c1_bff6_7b9a6344d1ef,Matilda Lloyd,Matilda Lloyd,No. 4,4,3,49,3,16.333333333333332
-raw_bd81f7d6_c456_44c1_bff6_7b9a6344d1ef,Matilda Lloyd,Matilda Lloyd,No. 5,5,2,33,1,33.0
-raw_bd81f7d6_c456_44c1_bff6_7b9a6344d1ef,Matilda Lloyd,Matilda Lloyd,No. 6,6,1,21,0,
-raw_bd81f7d6_c456_44c1_bff6_7b9a6344d1ef,Matilda Lloyd,Matilda Lloyd,No. 7,7,1,1,1,1.0
+matilda_lloyd,Matilda Lloyd,Matilda Lloyd,Opener,1,1,15,1,15.0
+matilda_lloyd,Matilda Lloyd,Matilda Lloyd,No. 3,3,14,248,8,31.0
+matilda_lloyd,Matilda Lloyd,Matilda Lloyd,No. 4,4,16,307,11,27.90909090909091
+matilda_lloyd,Matilda Lloyd,Matilda Lloyd,No. 5,5,5,81,3,27.0
+matilda_lloyd,Matilda Lloyd,Matilda Lloyd,No. 6,6,1,21,0,
+matilda_lloyd,Matilda Lloyd,Matilda Lloyd,No. 7,7,2,14,1,14.0
+raw_8d6edd99_d0cd_4e9d_b129_08cae4a54a5f,Matthew Collett,Matthew Collett,Opener,1,2,18,1,18.0
+raw_8d6edd99_d0cd_4e9d_b129_08cae4a54a5f,Matthew Collett,Matthew Collett,No. 5,5,4,90,2,45.0
+raw_8d6edd99_d0cd_4e9d_b129_08cae4a54a5f,Matthew Collett,Matthew Collett,No. 6,6,1,0,1,0.0
+raw_8d6edd99_d0cd_4e9d_b129_08cae4a54a5f,Matthew Collett,Matthew Collett,No. 8,8,1,11,1,11.0
+raw_8d6edd99_d0cd_4e9d_b129_08cae4a54a5f,Matthew Collett,Matthew Collett,Tail,10,1,28,0,
 raw_6c89b45f_a0f0_4e29_b4a2_93feff67f34f,Matthew Collins,Matthew Collins,No. 5,5,1,7,1,7.0
 raw_af1f540b_5975_4ac3_9eb7_a5c2e3a1e888,Max Hoare,Max Hoare,No. 4,4,1,10,1,10.0
 raw_af1f540b_5975_4ac3_9eb7_a5c2e3a1e888,Max Hoare,Max Hoare,No. 8,8,2,3,2,1.5
 raw_af1f540b_5975_4ac3_9eb7_a5c2e3a1e888,Max Hoare,Max Hoare,Tail,10,4,22,3,7.333333333333333
-raw_80f2f730_2a03_4a0c_81e6_1c4deb39cad1,Max Lambert,Max Lambert,Opener,1,4,47,0,
-raw_80f2f730_2a03_4a0c_81e6_1c4deb39cad1,Max Lambert,Max Lambert,No. 4,4,1,19,0,
-raw_80f2f730_2a03_4a0c_81e6_1c4deb39cad1,Max Lambert,Max Lambert,No. 6,6,1,10,0,
-raw_80f2f730_2a03_4a0c_81e6_1c4deb39cad1,Max Lambert,Max Lambert,No. 7,7,1,6,0,
+max_lambert,Max Lambert,Max Lambert,Opener,1,9,89,5,17.8
+max_lambert,Max Lambert,Max Lambert,No. 3,3,4,37,4,9.25
+max_lambert,Max Lambert,Max Lambert,No. 4,4,2,27,1,27.0
+max_lambert,Max Lambert,Max Lambert,No. 5,5,4,78,4,19.5
+max_lambert,Max Lambert,Max Lambert,No. 6,6,3,23,2,11.5
+max_lambert,Max Lambert,Max Lambert,No. 7,7,3,23,2,11.5
+max_lambert,Max Lambert,Max Lambert,Tail,10,3,3,2,1.5
+raw_50007094_778c_4490_81d9_766a96a401ec,Max Phillips,Max Phillips,Opener,1,2,23,1,23.0
+raw_50007094_778c_4490_81d9_766a96a401ec,Max Phillips,Max Phillips,No. 4,4,3,15,3,5.0
+raw_50007094_778c_4490_81d9_766a96a401ec,Max Phillips,Max Phillips,No. 8,8,1,8,1,8.0
+raw_50007094_778c_4490_81d9_766a96a401ec,Max Phillips,Max Phillips,Tail,10,1,19,0,
 raw_efd8add5_7130_41bb_9a36_7a5a14a31c6d,Max Stewart,Max Stewart,No. 3,3,1,10,1,10.0
-raw_f489fbdb_1a1f_4e1c_8bfc_3cb0feeb9ef9,Maximus Brennan,Maximus Brennan,Opener,1,1,2,0,
-raw_f489fbdb_1a1f_4e1c_8bfc_3cb0feeb9ef9,Maximus Brennan,Maximus Brennan,No. 3,3,1,4,1,4.0
-raw_f489fbdb_1a1f_4e1c_8bfc_3cb0feeb9ef9,Maximus Brennan,Maximus Brennan,No. 4,4,1,14,0,
-raw_f489fbdb_1a1f_4e1c_8bfc_3cb0feeb9ef9,Maximus Brennan,Maximus Brennan,No. 8,8,2,11,2,5.5
-raw_f489fbdb_1a1f_4e1c_8bfc_3cb0feeb9ef9,Maximus Brennan,Maximus Brennan,Tail,10,1,4,0,
+maximus_brennan,Maximus Brennan,Maximus Brennan,Opener,1,7,43,3,14.333333333333334
+maximus_brennan,Maximus Brennan,Maximus Brennan,No. 3,3,1,4,1,4.0
+maximus_brennan,Maximus Brennan,Maximus Brennan,No. 4,4,2,14,1,14.0
+maximus_brennan,Maximus Brennan,Maximus Brennan,No. 5,5,1,2,0,
+maximus_brennan,Maximus Brennan,Maximus Brennan,No. 7,7,1,9,1,9.0
+maximus_brennan,Maximus Brennan,Maximus Brennan,No. 8,8,2,11,2,5.5
+maximus_brennan,Maximus Brennan,Maximus Brennan,Tail,10,1,4,0,
+raw_948b6400_f207_4344_bb73_60d691734efc,Maya Brown,Maya Brown,Opener,1,3,17,0,
+raw_948b6400_f207_4344_bb73_60d691734efc,Maya Brown,Maya Brown,No. 3,3,2,7,0,
+raw_948b6400_f207_4344_bb73_60d691734efc,Maya Brown,Maya Brown,No. 4,4,1,8,0,
+raw_948b6400_f207_4344_bb73_60d691734efc,Maya Brown,Maya Brown,No. 5,5,3,9,0,
+raw_948b6400_f207_4344_bb73_60d691734efc,Maya Brown,Maya Brown,No. 7,7,3,18,0,
+raw_dbbf1204_6a81_4708_bf99_5cfad7293acf,Mia Newman,Mia Newman,Opener,1,1,5,1,5.0
+raw_dbbf1204_6a81_4708_bf99_5cfad7293acf,Mia Newman,Mia Newman,No. 3,3,5,29,5,5.8
+raw_dbbf1204_6a81_4708_bf99_5cfad7293acf,Mia Newman,Mia Newman,No. 5,5,2,13,2,6.5
+raw_dbbf1204_6a81_4708_bf99_5cfad7293acf,Mia Newman,Mia Newman,No. 6,6,3,22,3,7.333333333333333
+raw_dbbf1204_6a81_4708_bf99_5cfad7293acf,Mia Newman,Mia Newman,No. 8,8,1,8,0,
 raw_5bd40808_a9eb_40ae_b9e9_c3863f83601a,Mia Ursprung,Mia Ursprung,Opener,1,1,8,1,8.0
 raw_5bd40808_a9eb_40ae_b9e9_c3863f83601a,Mia Ursprung,Mia Ursprung,No. 3,3,2,8,2,4.0
 raw_5bd40808_a9eb_40ae_b9e9_c3863f83601a,Mia Ursprung,Mia Ursprung,No. 4,4,1,21,1,21.0
 raw_5bd40808_a9eb_40ae_b9e9_c3863f83601a,Mia Ursprung,Mia Ursprung,No. 9,9,1,20,0,
 raw_6df5fb39_6791_4d84_9885_da158ba7f527,Michael De Iacovo,Michael De Iacovo,Opener,1,2,83,2,41.5
 raw_6df5fb39_6791_4d84_9885_da158ba7f527,Michael De Iacovo,Michael De Iacovo,Tail,10,1,6,1,6.0
-raw_a058310c_1d94_43e6_94c7_0f95a9f28264,Michael Knight,Michael Knight,No. 9,9,2,16,2,8.0
-raw_a058310c_1d94_43e6_94c7_0f95a9f28264,Michael Knight,Michael Knight,Tail,10,6,17,4,4.25
+raw_a058310c_1d94_43e6_94c7_0f95a9f28264,Michael Knight,Michael Knight,No. 9,9,4,21,4,5.25
+raw_a058310c_1d94_43e6_94c7_0f95a9f28264,Michael Knight,Michael Knight,Tail,10,9,46,5,9.2
 raw_aa93ea37_834e_402d_bfa3_b6cf82e4bcc5,Michael O'Brien,Michael O'Brien,No. 3,3,9,447,8,55.875
 raw_aa93ea37_834e_402d_bfa3_b6cf82e4bcc5,Michael O'Brien,Michael O'Brien,No. 4,4,1,1,1,1.0
 raw_aa93ea37_834e_402d_bfa3_b6cf82e4bcc5,Michael O'Brien,Michael O'Brien,No. 7,7,1,44,0,
@@ -648,23 +1192,34 @@ raw_4d2c8522_c169_4c9c_a7ed_e22aa6ea918e,Michael Perry,Michael Perry,Opener,1,1,
 raw_4d2c8522_c169_4c9c_a7ed_e22aa6ea918e,Michael Perry,Michael Perry,No. 3,3,1,4,1,4.0
 raw_4d2c8522_c169_4c9c_a7ed_e22aa6ea918e,Michael Perry,Michael Perry,No. 7,7,1,2,1,2.0
 raw_4d2c8522_c169_4c9c_a7ed_e22aa6ea918e,Michael Perry,Michael Perry,No. 9,9,1,1,1,1.0
+raw_dc52db84_978a_4edd_9af3_7b537d9fb28e,Michelle Delacorn,Michelle Delacorn,Opener,1,3,60,0,
+raw_dc52db84_978a_4edd_9af3_7b537d9fb28e,Michelle Delacorn,Michelle Delacorn,No. 3,3,4,73,1,73.0
+raw_dc52db84_978a_4edd_9af3_7b537d9fb28e,Michelle Delacorn,Michelle Delacorn,No. 9,9,1,8,0,
 raw_30467ac2_61fa_4bd7_a297_839ea064a75c,Mick Haber,Mick Haber,Opener,1,3,47,3,15.666666666666666
 raw_30467ac2_61fa_4bd7_a297_839ea064a75c,Mick Haber,Mick Haber,No. 6,6,1,9,1,9.0
 raw_30467ac2_61fa_4bd7_a297_839ea064a75c,Mick Haber,Mick Haber,No. 7,7,1,18,1,18.0
 raw_30467ac2_61fa_4bd7_a297_839ea064a75c,Mick Haber,Mick Haber,No. 9,9,1,6,0,
 raw_30467ac2_61fa_4bd7_a297_839ea064a75c,Mick Haber,Mick Haber,Tail,10,1,8,1,8.0
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,Opener,1,18,533,11,48.45454545454545
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,No. 3,3,1,7,1,7.0
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,No. 4,4,1,2,0,
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,No. 5,5,4,56,4,14.0
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,No. 7,7,2,20,1,20.0
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,No. 8,8,3,16,2,8.0
-raw_a30a7fa5_cbdd_45fc_a14f_5d9dbcc901f5,Millar Harris,Millar Harris,Tail,10,2,26,2,13.0
-raw_b017c9dc_05e2_4c47_b9a9_0673887ee9a9,Mitchell Cunningham,Mitchell Cunningham,Opener,1,4,101,3,33.666666666666664
-raw_b017c9dc_05e2_4c47_b9a9_0673887ee9a9,Mitchell Cunningham,Mitchell Cunningham,No. 3,3,2,21,2,10.5
-raw_b017c9dc_05e2_4c47_b9a9_0673887ee9a9,Mitchell Cunningham,Mitchell Cunningham,No. 4,4,1,7,0,
-raw_b017c9dc_05e2_4c47_b9a9_0673887ee9a9,Mitchell Cunningham,Mitchell Cunningham,No. 5,5,1,24,0,
-raw_b017c9dc_05e2_4c47_b9a9_0673887ee9a9,Mitchell Cunningham,Mitchell Cunningham,No. 7,7,1,7,1,7.0
+raw_604a0461_4bde_4131_9182_ac5202dd7e03,Milla Beames,Milla Beames,Opener,1,6,136,2,68.0
+raw_604a0461_4bde_4131_9182_ac5202dd7e03,Milla Beames,Milla Beames,No. 3,3,5,83,2,41.5
+raw_604a0461_4bde_4131_9182_ac5202dd7e03,Milla Beames,Milla Beames,No. 5,5,1,31,0,
+raw_604a0461_4bde_4131_9182_ac5202dd7e03,Milla Beames,Milla Beames,No. 6,6,2,66,0,
+raw_604a0461_4bde_4131_9182_ac5202dd7e03,Milla Beames,Milla Beames,No. 7,7,6,38,3,12.666666666666666
+raw_604a0461_4bde_4131_9182_ac5202dd7e03,Milla Beames,Milla Beames,No. 8,8,3,13,2,6.5
+millar_harris,Millar Harris,Millar Harris,Opener,1,25,681,18,37.833333333333336
+millar_harris,Millar Harris,Millar Harris,No. 3,3,5,99,5,19.8
+millar_harris,Millar Harris,Millar Harris,No. 4,4,1,2,0,
+millar_harris,Millar Harris,Millar Harris,No. 5,5,4,56,4,14.0
+millar_harris,Millar Harris,Millar Harris,No. 7,7,2,20,1,20.0
+millar_harris,Millar Harris,Millar Harris,No. 8,8,3,16,2,8.0
+millar_harris,Millar Harris,Millar Harris,Tail,10,2,26,2,13.0
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,Opener,1,5,101,3,33.666666666666664
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,No. 3,3,2,21,2,10.5
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,No. 4,4,2,18,1,18.0
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,No. 5,5,3,81,1,81.0
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,No. 6,6,3,50,3,16.666666666666668
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,No. 7,7,4,62,3,20.666666666666668
+mitchell_cunningham,Mitchell Cunningham,Mitchell Cunningham,No. 8,8,2,9,1,9.0
 raw_e88ffc97_c8b4_428a_8f25_0a955929f58f,Molly Allan,Molly Allan,No. 3,3,1,0,1,0.0
 raw_e88ffc97_c8b4_428a_8f25_0a955929f58f,Molly Allan,Molly Allan,No. 4,4,1,1,1,1.0
 raw_e88ffc97_c8b4_428a_8f25_0a955929f58f,Molly Allan,Molly Allan,No. 5,5,1,4,1,4.0
@@ -678,20 +1233,62 @@ raw_83dcb8a7_b992_42ca_8f38_ea5c6acf8791,Morgan Fisher,Morgan Fisher,No. 8,8,1,0
 raw_dc5f478e_216e_4ea0_8ce1_8fe2121c7387,Muhammad Saeed,Muhammad Saeed,Opener,1,2,55,2,27.5
 raw_dc5f478e_216e_4ea0_8ce1_8fe2121c7387,Muhammad Saeed,Muhammad Saeed,No. 3,3,1,8,1,8.0
 raw_dc5f478e_216e_4ea0_8ce1_8fe2121c7387,Muhammad Saeed,Muhammad Saeed,No. 4,4,1,5,1,5.0
-raw_10685f73_96d6_4af9_9a69_619b5a838484,Nathan Vohra,Nathan Vohra,Opener,1,1,5,0,
-raw_10685f73_96d6_4af9_9a69_619b5a838484,Nathan Vohra,Nathan Vohra,No. 6,6,1,4,0,
+raw_b97741b8_aac4_485d_a833_3ca78471a555,Narelle Partridge,Narelle Partridge,No. 5,5,1,3,0,
+raw_b97741b8_aac4_485d_a833_3ca78471a555,Narelle Partridge,Narelle Partridge,No. 7,7,2,13,0,
+raw_b97741b8_aac4_485d_a833_3ca78471a555,Narelle Partridge,Narelle Partridge,No. 9,9,2,1,2,0.5
+raw_df19b9b5_c4e1_4f5b_8841_2d01139c6de4,Nathan Lambert,Nathan Lambert,No. 3,3,1,20,1,20.0
+raw_df19b9b5_c4e1_4f5b_8841_2d01139c6de4,Nathan Lambert,Nathan Lambert,No. 4,4,3,15,3,5.0
+raw_df19b9b5_c4e1_4f5b_8841_2d01139c6de4,Nathan Lambert,Nathan Lambert,No. 5,5,2,19,2,9.5
+raw_df19b9b5_c4e1_4f5b_8841_2d01139c6de4,Nathan Lambert,Nathan Lambert,No. 6,6,4,67,2,33.5
+raw_df19b9b5_c4e1_4f5b_8841_2d01139c6de4,Nathan Lambert,Nathan Lambert,No. 7,7,2,24,1,24.0
+nathan_vohra,Nathan Vohra,Nathan Vohra,Opener,1,3,36,0,
+nathan_vohra,Nathan Vohra,Nathan Vohra,No. 3,3,1,0,1,0.0
+nathan_vohra,Nathan Vohra,Nathan Vohra,No. 5,5,2,18,1,18.0
+nathan_vohra,Nathan Vohra,Nathan Vohra,No. 6,6,3,35,1,35.0
+nathan_vohra,Nathan Vohra,Nathan Vohra,No. 7,7,1,20,0,
+nathan_vohra,Nathan Vohra,Nathan Vohra,No. 8,8,1,0,1,0.0
+nathan_vohra,Nathan Vohra,Nathan Vohra,No. 9,9,1,8,1,8.0
+raw_55b74dcc_1449_4b87_ad5f_18c96e429c32,Niam Sharma,Niam Sharma,Opener,1,2,31,0,
+raw_55b74dcc_1449_4b87_ad5f_18c96e429c32,Niam Sharma,Niam Sharma,No. 3,3,3,32,0,
+raw_55b74dcc_1449_4b87_ad5f_18c96e429c32,Niam Sharma,Niam Sharma,No. 4,4,2,16,0,
+raw_55b74dcc_1449_4b87_ad5f_18c96e429c32,Niam Sharma,Niam Sharma,No. 5,5,1,4,0,
+raw_55b74dcc_1449_4b87_ad5f_18c96e429c32,Niam Sharma,Niam Sharma,No. 6,6,1,9,0,
+raw_55b74dcc_1449_4b87_ad5f_18c96e429c32,Niam Sharma,Niam Sharma,No. 7,7,1,10,0,
 raw_02024841_5b5f_412a_8f5d_3c66d785e179,Nicholas Huttley,Nicholas Huttley,No. 5,5,1,4,1,4.0
 raw_02024841_5b5f_412a_8f5d_3c66d785e179,Nicholas Huttley,Nicholas Huttley,No. 8,8,1,26,1,26.0
-raw_8c6ed679_2481_456e_a7aa_df4cc8d0dcfb,Noah Mitchell,Noah Mitchell,Opener,1,1,7,0,
-raw_8c6ed679_2481_456e_a7aa_df4cc8d0dcfb,Noah Mitchell,Noah Mitchell,No. 6,6,2,12,1,12.0
-raw_8c6ed679_2481_456e_a7aa_df4cc8d0dcfb,Noah Mitchell,Noah Mitchell,No. 8,8,3,41,0,
-raw_8c6ed679_2481_456e_a7aa_df4cc8d0dcfb,Noah Mitchell,Noah Mitchell,No. 9,9,3,34,1,34.0
-raw_8c6ed679_2481_456e_a7aa_df4cc8d0dcfb,Noah Mitchell,Noah Mitchell,Tail,10,1,0,1,0.0
-raw_02174ec9_b005_4668_9668_2a8086342398,Oliver Apostolopoulos,Oliver Apostolopoulos,Opener,1,5,89,2,44.5
-raw_02174ec9_b005_4668_9668_2a8086342398,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 3,3,3,49,2,24.5
-raw_02174ec9_b005_4668_9668_2a8086342398,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 4,4,1,17,0,
-raw_02174ec9_b005_4668_9668_2a8086342398,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 5,5,1,13,0,
-raw_02174ec9_b005_4668_9668_2a8086342398,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 6,6,2,25,2,12.5
+raw_e90ef5d5_93da_4a4b_8e8f_7814937ef86e,Nishka Reddy Kasarla,Nishka Reddy Kasarla,Opener,1,4,86,2,43.0
+raw_e90ef5d5_93da_4a4b_8e8f_7814937ef86e,Nishka Reddy Kasarla,Nishka Reddy Kasarla,No. 3,3,2,38,0,
+raw_e90ef5d5_93da_4a4b_8e8f_7814937ef86e,Nishka Reddy Kasarla,Nishka Reddy Kasarla,No. 4,4,3,41,1,41.0
+raw_e90ef5d5_93da_4a4b_8e8f_7814937ef86e,Nishka Reddy Kasarla,Nishka Reddy Kasarla,No. 6,6,1,18,0,
+raw_e90ef5d5_93da_4a4b_8e8f_7814937ef86e,Nishka Reddy Kasarla,Nishka Reddy Kasarla,No. 9,9,1,7,1,7.0
+noah_mitchell,Noah Mitchell,Noah Mitchell,Opener,1,1,7,0,
+noah_mitchell,Noah Mitchell,Noah Mitchell,No. 3,3,1,7,1,7.0
+noah_mitchell,Noah Mitchell,Noah Mitchell,No. 5,5,1,0,1,0.0
+noah_mitchell,Noah Mitchell,Noah Mitchell,No. 6,6,2,12,1,12.0
+noah_mitchell,Noah Mitchell,Noah Mitchell,No. 8,8,4,57,0,
+noah_mitchell,Noah Mitchell,Noah Mitchell,No. 9,9,5,37,2,18.5
+noah_mitchell,Noah Mitchell,Noah Mitchell,Tail,10,7,22,3,7.333333333333333
+raw_3a7590b3_b23c_4996_9e5c_92184e19e133,Noah Wood,Noah Wood,No. 4,4,3,47,1,47.0
+raw_3a7590b3_b23c_4996_9e5c_92184e19e133,Noah Wood,Noah Wood,No. 6,6,1,33,1,33.0
+raw_3a7590b3_b23c_4996_9e5c_92184e19e133,Noah Wood,Noah Wood,No. 8,8,1,35,1,35.0
+raw_3a7590b3_b23c_4996_9e5c_92184e19e133,Noah Wood,Noah Wood,No. 9,9,2,13,2,6.5
+raw_3a7590b3_b23c_4996_9e5c_92184e19e133,Noah Wood,Noah Wood,Tail,10,3,73,1,73.0
+raw_a3df490e_32be_4b93_bba5_a8bdfa870a87,Obi Grant,Obi Grant,No. 6,6,2,22,1,22.0
+raw_a3df490e_32be_4b93_bba5_a8bdfa870a87,Obi Grant,Obi Grant,No. 9,9,2,20,1,20.0
+raw_a3df490e_32be_4b93_bba5_a8bdfa870a87,Obi Grant,Obi Grant,Tail,10,4,21,3,7.0
+raw_b987beab_1cd8_456c_ae90_e0a4af757dde,Ocienne Farquharson,Ocienne Farquharson,Opener,1,6,114,4,28.5
+raw_b987beab_1cd8_456c_ae90_e0a4af757dde,Ocienne Farquharson,Ocienne Farquharson,No. 4,4,2,35,1,35.0
+raw_b987beab_1cd8_456c_ae90_e0a4af757dde,Ocienne Farquharson,Ocienne Farquharson,No. 5,5,1,26,1,26.0
+raw_b987beab_1cd8_456c_ae90_e0a4af757dde,Ocienne Farquharson,Ocienne Farquharson,No. 6,6,1,14,0,
+raw_b987beab_1cd8_456c_ae90_e0a4af757dde,Ocienne Farquharson,Ocienne Farquharson,No. 8,8,2,27,1,27.0
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,Opener,1,7,94,3,31.333333333333332
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 3,3,5,57,4,14.25
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 4,4,3,34,1,34.0
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 5,5,1,13,0,
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 6,6,2,25,2,12.5
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 8,8,1,0,1,0.0
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,No. 9,9,1,0,1,0.0
+oliver_apostolopoulos,Oliver Apostolopoulos,Oliver Apostolopoulos,Tail,10,1,1,1,1.0
 raw_428bf0be_b4b7_4709_ab41_bedaf4a9fcb4,Oliver Bolt,Oliver Bolt,Opener,1,3,35,3,11.666666666666666
 raw_428bf0be_b4b7_4709_ab41_bedaf4a9fcb4,Oliver Bolt,Oliver Bolt,No. 3,3,1,51,0,
 raw_428bf0be_b4b7_4709_ab41_bedaf4a9fcb4,Oliver Bolt,Oliver Bolt,No. 5,5,1,13,1,13.0
@@ -703,48 +1300,114 @@ raw_a66fa58c_a22f_4116_bc45_f5b2c4d109cf,Oliver Drury,Oliver Drury,Opener,1,2,19
 raw_a66fa58c_a22f_4116_bc45_f5b2c4d109cf,Oliver Drury,Oliver Drury,No. 4,4,2,1,2,0.5
 raw_a66fa58c_a22f_4116_bc45_f5b2c4d109cf,Oliver Drury,Oliver Drury,No. 5,5,1,12,1,12.0
 raw_a66fa58c_a22f_4116_bc45_f5b2c4d109cf,Oliver Drury,Oliver Drury,No. 9,9,2,2,1,2.0
-raw_adccb7d8_dde3_4c50_87f4_002c6994be9f,Oliver Wright,Oliver Wright,Opener,1,1,4,0,
-raw_adccb7d8_dde3_4c50_87f4_002c6994be9f,Oliver Wright,Oliver Wright,No. 5,5,1,14,0,
-raw_708b3d8e_225d_4959_ac64_a839e1fd708d,Oshan De Silva,Oshan De Silva,Opener,1,2,7,2,3.5
-raw_708b3d8e_225d_4959_ac64_a839e1fd708d,Oshan De Silva,Oshan De Silva,No. 5,5,1,0,1,0.0
-raw_708b3d8e_225d_4959_ac64_a839e1fd708d,Oshan De Silva,Oshan De Silva,No. 6,6,4,77,4,19.25
-raw_708b3d8e_225d_4959_ac64_a839e1fd708d,Oshan De Silva,Oshan De Silva,No. 7,7,5,149,5,29.8
-raw_708b3d8e_225d_4959_ac64_a839e1fd708d,Oshan De Silva,Oshan De Silva,Tail,10,1,3,1,3.0
-raw_7a570b7a_a631_44ea_9ae3_a2ef2c1588e6,Owen Kovacs,Owen Kovacs,Opener,1,6,189,6,31.5
-raw_7a570b7a_a631_44ea_9ae3_a2ef2c1588e6,Owen Kovacs,Owen Kovacs,No. 3,3,3,14,3,4.666666666666667
-raw_7a570b7a_a631_44ea_9ae3_a2ef2c1588e6,Owen Kovacs,Owen Kovacs,No. 4,4,4,65,4,16.25
-raw_7a570b7a_a631_44ea_9ae3_a2ef2c1588e6,Owen Kovacs,Owen Kovacs,No. 6,6,2,29,2,14.5
+oliver_wright,Oliver Wright,Oliver Wright,Opener,1,8,67,3,22.333333333333332
+oliver_wright,Oliver Wright,Oliver Wright,No. 5,5,1,14,0,
+oliver_wright,Oliver Wright,Oliver Wright,Tail,10,2,43,1,43.0
+raw_a6ea7854_12f1_4fbc_9a4d_75eb3f887389,Orla Mcentee,Orla Mcentee,Opener,1,3,25,0,
+raw_a6ea7854_12f1_4fbc_9a4d_75eb3f887389,Orla Mcentee,Orla Mcentee,No. 3,3,1,3,0,
+raw_a6ea7854_12f1_4fbc_9a4d_75eb3f887389,Orla Mcentee,Orla Mcentee,No. 4,4,1,3,0,
+raw_a6ea7854_12f1_4fbc_9a4d_75eb3f887389,Orla Mcentee,Orla Mcentee,No. 5,5,3,17,0,
+raw_a6ea7854_12f1_4fbc_9a4d_75eb3f887389,Orla Mcentee,Orla Mcentee,No. 6,6,1,9,0,
+raw_a6ea7854_12f1_4fbc_9a4d_75eb3f887389,Orla Mcentee,Orla Mcentee,No. 7,7,1,8,0,
+raw_76e5ce2e_7dff_4be4_b17f_01a54dd7aee6,Oscar Cameron,Oscar Cameron,Opener,1,4,23,0,
+raw_76e5ce2e_7dff_4be4_b17f_01a54dd7aee6,Oscar Cameron,Oscar Cameron,No. 3,3,2,9,0,
+raw_76e5ce2e_7dff_4be4_b17f_01a54dd7aee6,Oscar Cameron,Oscar Cameron,No. 4,4,4,27,0,
+raw_76e5ce2e_7dff_4be4_b17f_01a54dd7aee6,Oscar Cameron,Oscar Cameron,No. 5,5,1,10,0,
+raw_76e5ce2e_7dff_4be4_b17f_01a54dd7aee6,Oscar Cameron,Oscar Cameron,No. 6,6,3,17,0,
+raw_76e5ce2e_7dff_4be4_b17f_01a54dd7aee6,Oscar Cameron,Oscar Cameron,No. 7,7,1,10,0,
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,Opener,1,2,22,1,22.0
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,No. 3,3,2,26,2,13.0
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,No. 5,5,3,27,2,13.5
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,No. 6,6,1,16,1,16.0
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,No. 7,7,2,19,1,19.0
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,No. 8,8,1,5,0,
+raw_dd4902cc_db6f_4a08_a057_e1cfb333751b,Oscar Ryan,Oscar Ryan,Tail,10,1,1,0,
+oshan_de_silva,Oshan De Silva,Oshan De Silva,Opener,1,2,7,2,3.5
+oshan_de_silva,Oshan De Silva,Oshan De Silva,No. 3,3,1,13,1,13.0
+oshan_de_silva,Oshan De Silva,Oshan De Silva,No. 5,5,1,0,1,0.0
+oshan_de_silva,Oshan De Silva,Oshan De Silva,No. 6,6,4,77,4,19.25
+oshan_de_silva,Oshan De Silva,Oshan De Silva,No. 7,7,6,149,6,24.833333333333332
+oshan_de_silva,Oshan De Silva,Oshan De Silva,No. 8,8,2,3,1,3.0
+oshan_de_silva,Oshan De Silva,Oshan De Silva,No. 9,9,3,53,3,17.666666666666668
+oshan_de_silva,Oshan De Silva,Oshan De Silva,Tail,10,1,3,1,3.0
+raw_6f41a163_f8d6_468a_85ab_a531e09c40d2,Owen Bernes,Owen Bernes,Opener,1,9,232,8,29.0
+raw_6f41a163_f8d6_468a_85ab_a531e09c40d2,Owen Bernes,Owen Bernes,No. 6,6,1,4,1,4.0
+owen_kovacs,Owen Kovacs,Owen Kovacs,Opener,1,7,190,7,27.142857142857142
+owen_kovacs,Owen Kovacs,Owen Kovacs,No. 3,3,4,17,4,4.25
+owen_kovacs,Owen Kovacs,Owen Kovacs,No. 4,4,9,99,8,12.375
+owen_kovacs,Owen Kovacs,Owen Kovacs,No. 6,6,3,30,3,10.0
+owen_kovacs,Owen Kovacs,Owen Kovacs,No. 7,7,2,60,1,60.0
+owen_kovacs,Owen Kovacs,Owen Kovacs,No. 8,8,1,2,1,2.0
+owen_kovacs,Owen Kovacs,Owen Kovacs,No. 9,9,1,1,0,
 raw_3e8e71d6_f0d3_4a55_87ba_ad53b54c25f9,Owen Leonard,Owen Leonard,No. 9,9,1,5,1,5.0
-raw_12f87747_c807_4af9_a435_0302e0f75eba,Paul Firth,Paul Firth,No. 6,6,1,4,1,4.0
-raw_12f87747_c807_4af9_a435_0302e0f75eba,Paul Firth,Paul Firth,No. 8,8,1,13,1,13.0
-raw_12f87747_c807_4af9_a435_0302e0f75eba,Paul Firth,Paul Firth,No. 9,9,3,22,1,22.0
-raw_12f87747_c807_4af9_a435_0302e0f75eba,Paul Firth,Paul Firth,Tail,10,3,49,3,16.333333333333332
-raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,Opener,1,1,29,1,29.0
-raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 4,4,1,19,1,19.0
-raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 5,5,2,110,1,110.0
+raw_b16b5d13_9047_4b04_b47c_db01dad1088b,Owen Richardson,Owen Richardson,No. 3,3,1,3,1,3.0
+raw_b16b5d13_9047_4b04_b47c_db01dad1088b,Owen Richardson,Owen Richardson,No. 8,8,3,25,3,8.333333333333334
+raw_b16b5d13_9047_4b04_b47c_db01dad1088b,Owen Richardson,Owen Richardson,No. 9,9,1,12,1,12.0
+raw_b16b5d13_9047_4b04_b47c_db01dad1088b,Owen Richardson,Owen Richardson,Tail,10,1,0,0,
+paul_firth,Paul Firth,Paul Firth,No. 6,6,1,4,1,4.0
+paul_firth,Paul Firth,Paul Firth,No. 8,8,1,13,1,13.0
+paul_firth,Paul Firth,Paul Firth,No. 9,9,3,22,1,22.0
+paul_firth,Paul Firth,Paul Firth,Tail,10,6,71,6,11.833333333333334
+raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,Opener,1,2,36,2,18.0
+raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 3,3,1,1,1,1.0
+raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 4,4,2,40,2,20.0
+raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 5,5,4,116,3,38.666666666666664
 raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 7,7,4,81,2,40.5
 raw_7dd9c14f_b376_46b0_b7f4_496c336412b1,Paul O'Meara,Paul O'Meara,No. 8,8,1,24,0,
-raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,Opener,1,1,5,1,5.0
+raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,Opener,1,2,6,2,3.0
 raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 3,3,1,149,1,149.0
-raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 4,4,3,96,3,32.0
+raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 4,4,4,157,3,52.333333333333336
 raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 5,5,2,21,2,10.5
-raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 6,6,2,31,2,15.5
-raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 7,7,1,19,1,19.0
-raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 8,8,1,1,1,1.0
-raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,Opener,1,3,78,1,78.0
+raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 6,6,3,60,3,20.0
+raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 7,7,4,31,4,7.75
+raw_0eed85d1_8683_4eb2_971e_accf0a7c6e6e,Peter Ashton,Peter Ashton,No. 8,8,2,1,2,0.5
+raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,Opener,1,5,89,3,29.666666666666668
 raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 4,4,1,6,0,
-raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 7,7,2,22,2,11.0
-raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 8,8,1,1,1,1.0
+raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 5,5,2,47,2,23.5
+raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 6,6,3,51,2,25.5
+raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 7,7,3,41,3,13.666666666666666
+raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 8,8,2,10,1,10.0
+raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,No. 9,9,1,8,0,
 raw_db66bcb9_6642_4548_820f_2758d66aed70,Peter Beames,Peter Beames,Tail,10,3,18,2,9.0
-raw_18703ba4_efb3_4ed1_9825_1a0792087e3b,Peter Mentiplay,Peter Mentiplay,No. 3,3,11,321,11,29.181818181818183
-raw_18703ba4_efb3_4ed1_9825_1a0792087e3b,Peter Mentiplay,Peter Mentiplay,No. 4,4,1,3,1,3.0
-raw_18703ba4_efb3_4ed1_9825_1a0792087e3b,Peter Mentiplay,Peter Mentiplay,No. 9,9,1,40,0,
-raw_18703ba4_efb3_4ed1_9825_1a0792087e3b,Peter Mentiplay,Peter Mentiplay,Tail,10,1,27,0,
-raw_952d259c_a1b8_46b3_9169_043ae8c7cb60,Rajiv Lal,Rajiv Lal,No. 3,3,2,48,2,24.0
-raw_952d259c_a1b8_46b3_9169_043ae8c7cb60,Rajiv Lal,Rajiv Lal,No. 4,4,3,11,3,3.6666666666666665
-raw_952d259c_a1b8_46b3_9169_043ae8c7cb60,Rajiv Lal,Rajiv Lal,No. 6,6,1,32,1,32.0
-raw_952d259c_a1b8_46b3_9169_043ae8c7cb60,Rajiv Lal,Rajiv Lal,No. 7,7,2,19,2,9.5
-raw_952d259c_a1b8_46b3_9169_043ae8c7cb60,Rajiv Lal,Rajiv Lal,No. 9,9,1,32,1,32.0
+peter_mentiplay,Peter Mentiplay,Peter Mentiplay,No. 3,3,19,420,18,23.333333333333332
+peter_mentiplay,Peter Mentiplay,Peter Mentiplay,No. 4,4,1,3,1,3.0
+peter_mentiplay,Peter Mentiplay,Peter Mentiplay,No. 5,5,1,40,0,
+peter_mentiplay,Peter Mentiplay,Peter Mentiplay,No. 9,9,1,40,0,
+peter_mentiplay,Peter Mentiplay,Peter Mentiplay,Tail,10,1,27,0,
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,No. 3,3,1,19,1,19.0
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,No. 4,4,1,16,0,
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,No. 5,5,1,11,1,11.0
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,No. 6,6,1,0,1,0.0
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,No. 7,7,1,6,1,6.0
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,No. 9,9,2,16,1,16.0
+raw_78a81bef_c818_483a_9362_55944ffef672,Phoenix O'Keeffe,Phoenix O'Keeffe,Tail,10,1,2,0,
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,Opener,1,1,2,1,2.0
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,No. 3,3,1,4,1,4.0
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,No. 4,4,2,7,2,3.5
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,No. 5,5,3,20,2,10.0
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,No. 6,6,2,6,2,3.0
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,No. 8,8,3,5,3,1.6666666666666667
+raw_bbd75a3e_8f9a_4214_96f0_3f4f23349170,Pippa May,Pippa May,No. 9,9,1,1,1,1.0
+raw_8b1eb6d7_8c59_495f_9199_8c47d07f994b,Pooja Sapkota,Pooja Sapkota,Opener,1,1,3,1,3.0
+raw_8b1eb6d7_8c59_495f_9199_8c47d07f994b,Pooja Sapkota,Pooja Sapkota,No. 3,3,1,0,1,0.0
+raw_8b1eb6d7_8c59_495f_9199_8c47d07f994b,Pooja Sapkota,Pooja Sapkota,No. 5,5,1,0,1,0.0
+raw_8b1eb6d7_8c59_495f_9199_8c47d07f994b,Pooja Sapkota,Pooja Sapkota,No. 6,6,2,6,2,3.0
+raw_8b1eb6d7_8c59_495f_9199_8c47d07f994b,Pooja Sapkota,Pooja Sapkota,No. 7,7,1,11,0,
+raw_8b1eb6d7_8c59_495f_9199_8c47d07f994b,Pooja Sapkota,Pooja Sapkota,No. 8,8,1,19,0,
+raw_46525816_b8ab_4b38_bebc_cd2c5922b375,Pranvi ( Ollie) Tewari,Pranvi ( Ollie) Tewari,No. 4,4,2,8,0,
+raw_46525816_b8ab_4b38_bebc_cd2c5922b375,Pranvi ( Ollie) Tewari,Pranvi ( Ollie) Tewari,No. 5,5,2,6,0,
+raw_46525816_b8ab_4b38_bebc_cd2c5922b375,Pranvi ( Ollie) Tewari,Pranvi ( Ollie) Tewari,No. 7,7,1,4,0,
+raw_46525816_b8ab_4b38_bebc_cd2c5922b375,Pranvi ( Ollie) Tewari,Pranvi ( Ollie) Tewari,No. 8,8,3,6,0,
+rajiv_lal,Rajiv Lal,Rajiv Lal,Opener,1,4,113,4,28.25
+rajiv_lal,Rajiv Lal,Rajiv Lal,No. 3,3,2,48,2,24.0
+rajiv_lal,Rajiv Lal,Rajiv Lal,No. 4,4,3,11,3,3.6666666666666665
+rajiv_lal,Rajiv Lal,Rajiv Lal,No. 5,5,2,4,2,2.0
+rajiv_lal,Rajiv Lal,Rajiv Lal,No. 6,6,2,37,2,18.5
+rajiv_lal,Rajiv Lal,Rajiv Lal,No. 7,7,4,26,4,6.5
+rajiv_lal,Rajiv Lal,Rajiv Lal,No. 9,9,1,32,1,32.0
+raw_211977af_ccf7_45f3_a599_7de169ea81c8,Rasik Malhotra,Rasik Malhotra,No. 3,3,1,4,1,4.0
+raw_211977af_ccf7_45f3_a599_7de169ea81c8,Rasik Malhotra,Rasik Malhotra,No. 6,6,3,53,2,26.5
+raw_211977af_ccf7_45f3_a599_7de169ea81c8,Rasik Malhotra,Rasik Malhotra,No. 9,9,1,21,1,21.0
 raw_53b830dd_874e_4c24_8d23_ffcd7c8eb1cf,Rehatt Singh,Rehatt Singh,Opener,1,3,24,2,12.0
 raw_53b830dd_874e_4c24_8d23_ffcd7c8eb1cf,Rehatt Singh,Rehatt Singh,No. 3,3,1,11,0,
 raw_deec7aea_4b59_4214_8d58_8d259fe40fe2,Rehatt Singh,Rehatt Singh,No. 5,5,2,34,2,17.0
@@ -758,6 +1421,34 @@ raw_73bed5ae_74f1_4784_b844_18b97121f9c2,Rex Tippett,Rex Tippett,Opener,1,1,21,1
 raw_73bed5ae_74f1_4784_b844_18b97121f9c2,Rex Tippett,Rex Tippett,No. 5,5,2,11,2,5.5
 raw_73bed5ae_74f1_4784_b844_18b97121f9c2,Rex Tippett,Rex Tippett,No. 8,8,1,8,1,8.0
 raw_73bed5ae_74f1_4784_b844_18b97121f9c2,Rex Tippett,Rex Tippett,No. 9,9,1,0,1,0.0
+raw_2790e471_0262_4f7e_96f3_967de32c7e2a,Reyansh Agrawal,Reyansh Agrawal,Opener,1,1,33,0,
+raw_2790e471_0262_4f7e_96f3_967de32c7e2a,Reyansh Agrawal,Reyansh Agrawal,No. 4,4,1,16,0,
+raw_2790e471_0262_4f7e_96f3_967de32c7e2a,Reyansh Agrawal,Reyansh Agrawal,No. 5,5,2,26,0,
+raw_2790e471_0262_4f7e_96f3_967de32c7e2a,Reyansh Agrawal,Reyansh Agrawal,No. 6,6,4,63,0,
+raw_2790e471_0262_4f7e_96f3_967de32c7e2a,Reyansh Agrawal,Reyansh Agrawal,No. 7,7,1,10,0,
+raw_3da8165a_40a0_4290_9af2_c8c52a2b423e,Rhys Milroy,Rhys Milroy,No. 3,3,4,90,0,
+raw_3da8165a_40a0_4290_9af2_c8c52a2b423e,Rhys Milroy,Rhys Milroy,No. 4,4,1,6,1,6.0
+raw_3da8165a_40a0_4290_9af2_c8c52a2b423e,Rhys Milroy,Rhys Milroy,No. 7,7,1,31,0,
+raw_3da8165a_40a0_4290_9af2_c8c52a2b423e,Rhys Milroy,Rhys Milroy,No. 8,8,2,36,1,36.0
+raw_3da8165a_40a0_4290_9af2_c8c52a2b423e,Rhys Milroy,Rhys Milroy,No. 9,9,2,38,1,38.0
+raw_3da8165a_40a0_4290_9af2_c8c52a2b423e,Rhys Milroy,Rhys Milroy,Tail,10,1,0,1,0.0
+raw_113e78e2_cd7f_4d47_9c32_57cf91c56749,Riley North,Riley North,Opener,1,2,22,1,22.0
+raw_113e78e2_cd7f_4d47_9c32_57cf91c56749,Riley North,Riley North,No. 3,3,1,14,0,
+raw_113e78e2_cd7f_4d47_9c32_57cf91c56749,Riley North,Riley North,No. 4,4,3,18,2,9.0
+raw_113e78e2_cd7f_4d47_9c32_57cf91c56749,Riley North,Riley North,No. 5,5,1,20,0,
+raw_113e78e2_cd7f_4d47_9c32_57cf91c56749,Riley North,Riley North,No. 7,7,4,19,3,6.333333333333333
+raw_113e78e2_cd7f_4d47_9c32_57cf91c56749,Riley North,Riley North,No. 8,8,2,30,0,
+raw_6c2b2bc2_cb6e_4f8d_a5b6_1d691f5b41ca,Rishika Vartak,Rishika Vartak,No. 5,5,1,3,1,3.0
+raw_6c2b2bc2_cb6e_4f8d_a5b6_1d691f5b41ca,Rishika Vartak,Rishika Vartak,No. 6,6,4,18,4,4.5
+raw_6c2b2bc2_cb6e_4f8d_a5b6_1d691f5b41ca,Rishika Vartak,Rishika Vartak,No. 7,7,1,0,1,0.0
+raw_6c2b2bc2_cb6e_4f8d_a5b6_1d691f5b41ca,Rishika Vartak,Rishika Vartak,No. 8,8,1,1,1,1.0
+raw_6c2b2bc2_cb6e_4f8d_a5b6_1d691f5b41ca,Rishika Vartak,Rishika Vartak,No. 9,9,3,1,1,1.0
+raw_483a3f95_84b8_4f53_b671_2ae2f177afd6,Ritisha Kanuri,Ritisha Kanuri,Opener,1,1,2,1,2.0
+raw_483a3f95_84b8_4f53_b671_2ae2f177afd6,Ritisha Kanuri,Ritisha Kanuri,No. 3,3,1,23,0,
+raw_483a3f95_84b8_4f53_b671_2ae2f177afd6,Ritisha Kanuri,Ritisha Kanuri,No. 4,4,2,31,0,
+raw_483a3f95_84b8_4f53_b671_2ae2f177afd6,Ritisha Kanuri,Ritisha Kanuri,No. 5,5,1,4,1,4.0
+raw_483a3f95_84b8_4f53_b671_2ae2f177afd6,Ritisha Kanuri,Ritisha Kanuri,No. 6,6,1,15,0,
+raw_483a3f95_84b8_4f53_b671_2ae2f177afd6,Ritisha Kanuri,Ritisha Kanuri,No. 8,8,1,4,0,
 raw_526052de_ff98_45e3_b6c2_ccf86047c835,Robbie Talbot,Robbie Talbot,No. 5,5,1,1,1,1.0
 raw_526052de_ff98_45e3_b6c2_ccf86047c835,Robbie Talbot,Robbie Talbot,No. 8,8,1,7,0,
 raw_526052de_ff98_45e3_b6c2_ccf86047c835,Robbie Talbot,Robbie Talbot,No. 9,9,1,3,0,
@@ -768,26 +1459,42 @@ raw_9ce260f7_65ed_414d_b8ae_83f6aa38e18d,Roger Winders,Roger Winders,Opener,1,1,
 raw_5af5ead1_3f1d_4ce4_94f3_6191a1e9685a,Rohan Ranganathan,Rohan Ranganathan,No. 3,3,1,4,0,
 raw_5af5ead1_3f1d_4ce4_94f3_6191a1e9685a,Rohan Ranganathan,Rohan Ranganathan,No. 4,4,1,0,1,0.0
 raw_5af5ead1_3f1d_4ce4_94f3_6191a1e9685a,Rohan Ranganathan,Rohan Ranganathan,Tail,10,3,5,2,2.5
+raw_6624531f_71c8_45fa_8d53_f8701ba0f2a5,Roman Salerno,Roman Salerno,Opener,1,1,0,1,0.0
+raw_6624531f_71c8_45fa_8d53_f8701ba0f2a5,Roman Salerno,Roman Salerno,No. 3,3,1,17,1,17.0
+raw_6624531f_71c8_45fa_8d53_f8701ba0f2a5,Roman Salerno,Roman Salerno,No. 4,4,4,48,4,12.0
+raw_6624531f_71c8_45fa_8d53_f8701ba0f2a5,Roman Salerno,Roman Salerno,No. 5,5,2,11,1,11.0
+raw_6624531f_71c8_45fa_8d53_f8701ba0f2a5,Roman Salerno,Roman Salerno,No. 6,6,1,39,0,
+raw_6624531f_71c8_45fa_8d53_f8701ba0f2a5,Roman Salerno,Roman Salerno,No. 7,7,1,7,1,7.0
+raw_5e4666db_9cdd_4668_8cd5_bfbc85ace107,Romy Doyle,Romy Doyle,Opener,1,4,38,0,
+raw_5e4666db_9cdd_4668_8cd5_bfbc85ace107,Romy Doyle,Romy Doyle,No. 3,3,1,3,0,
+raw_07c939c9_9104_41ae_bef5_bd33475308ea,Roshan Gunatilake,Roshan Gunatilake,Opener,1,1,2,1,2.0
+raw_07c939c9_9104_41ae_bef5_bd33475308ea,Roshan Gunatilake,Roshan Gunatilake,No. 3,3,8,281,4,70.25
 raw_2518e6c7_53a2_409b_b5f0_af27d1124e33,Roshan Perera,Roshan Perera,No. 5,5,1,159,0,
 raw_e761280a_b538_4603_926f_ab52a31398fa,Ruben Retief,Ruben Retief,Opener,1,4,38,4,9.5
 raw_e761280a_b538_4603_926f_ab52a31398fa,Ruben Retief,Ruben Retief,No. 7,7,1,2,0,
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,Opener,1,1,15,0,
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,No. 3,3,2,46,1,46.0
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,No. 4,4,3,31,0,
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,No. 5,5,2,23,1,23.0
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,No. 6,6,2,17,1,17.0
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,No. 7,7,1,15,0,
-raw_3901edc2_88fe_44df_be48_1247ddd407b8,Ruby Aldridge,Ruby Aldridge,No. 8,8,1,7,0,
-raw_de1f0095_418d_4ea1_83f8_61f0ce11569c,Ruby Hollier,Ruby Hollier,Opener,1,1,4,1,4.0
-raw_de1f0095_418d_4ea1_83f8_61f0ce11569c,Ruby Hollier,Ruby Hollier,No. 4,4,1,1,1,1.0
-raw_de1f0095_418d_4ea1_83f8_61f0ce11569c,Ruby Hollier,Ruby Hollier,No. 7,7,2,4,1,4.0
-raw_de1f0095_418d_4ea1_83f8_61f0ce11569c,Ruby Hollier,Ruby Hollier,No. 8,8,1,9,0,
-raw_de1f0095_418d_4ea1_83f8_61f0ce11569c,Ruby Hollier,Ruby Hollier,No. 9,9,1,7,1,7.0
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,Opener,1,1,15,0,
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,No. 3,3,2,46,1,46.0
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,No. 4,4,17,195,10,19.5
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,No. 5,5,10,137,4,34.25
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,No. 6,6,8,152,4,38.0
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,No. 7,7,5,23,4,5.75
+ruby_aldridge,Ruby Aldridge,Ruby Aldridge,No. 8,8,2,7,0,
+ruby_hollier,Ruby Hollier,Ruby Hollier,Opener,1,1,4,1,4.0
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 3,3,1,4,1,4.0
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 4,4,2,3,2,1.5
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 5,5,2,2,1,2.0
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 6,6,2,9,1,9.0
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 7,7,3,9,1,9.0
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 8,8,3,10,0,
+ruby_hollier,Ruby Hollier,Ruby Hollier,No. 9,9,2,10,1,10.0
+ruby_hollier,Ruby Hollier,Ruby Hollier,Tail,10,1,6,0,
 raw_2bc88813_755c_4291_bb4d_df6d9b5570f1,Rudi Coggins,Rudi Coggins,Opener,1,5,71,3,23.666666666666668
 raw_2bc88813_755c_4291_bb4d_df6d9b5570f1,Rudi Coggins,Rudi Coggins,No. 3,3,1,10,1,10.0
 raw_2bc88813_755c_4291_bb4d_df6d9b5570f1,Rudi Coggins,Rudi Coggins,No. 4,4,2,34,2,17.0
 raw_2bc88813_755c_4291_bb4d_df6d9b5570f1,Rudi Coggins,Rudi Coggins,No. 7,7,2,9,1,9.0
 raw_2bc88813_755c_4291_bb4d_df6d9b5570f1,Rudi Coggins,Rudi Coggins,No. 8,8,1,1,1,1.0
+raw_4d34b741_c83e_418d_8294_f99e1d03f088,Rushil Sumaria,Rushil Sumaria,No. 9,9,1,6,0,
+raw_4d34b741_c83e_418d_8294_f99e1d03f088,Rushil Sumaria,Rushil Sumaria,Tail,10,5,12,2,6.0
 raw_f27fca0f_5ab1_4899_811b_35445d7b27b8,Ryan Schonewille,Ryan Schonewille,No. 4,4,1,0,1,0.0
 raw_f27fca0f_5ab1_4899_811b_35445d7b27b8,Ryan Schonewille,Ryan Schonewille,No. 5,5,2,15,2,7.5
 raw_f27fca0f_5ab1_4899_811b_35445d7b27b8,Ryan Schonewille,Ryan Schonewille,No. 7,7,1,0,1,0.0
@@ -795,14 +1502,64 @@ raw_f27fca0f_5ab1_4899_811b_35445d7b27b8,Ryan Schonewille,Ryan Schonewille,No. 9
 raw_b877448b_a1a9_4a70_8105_db11d617da92,Sabeer Sethi,Sabeer Sethi,No. 3,3,2,7,1,7.0
 raw_b877448b_a1a9_4a70_8105_db11d617da92,Sabeer Sethi,Sabeer Sethi,No. 5,5,1,0,1,0.0
 raw_b877448b_a1a9_4a70_8105_db11d617da92,Sabeer Sethi,Sabeer Sethi,No. 7,7,1,1,0,
+raw_6541aa3c_a00c_4462_aabd_c20b0945364d,Sachin Kapse,Sachin Kapse,No. 8,8,1,0,1,0.0
+raw_6541aa3c_a00c_4462_aabd_c20b0945364d,Sachin Kapse,Sachin Kapse,No. 9,9,2,11,2,5.5
+raw_6541aa3c_a00c_4462_aabd_c20b0945364d,Sachin Kapse,Sachin Kapse,Tail,10,3,1,2,0.5
+raw_1499665f_3213_4e8a_8af2_43a390a8b6e2,Sahib Chug,Sahib Chug,Opener,1,1,0,0,
+raw_1499665f_3213_4e8a_8af2_43a390a8b6e2,Sahib Chug,Sahib Chug,No. 4,4,1,2,1,2.0
+raw_1499665f_3213_4e8a_8af2_43a390a8b6e2,Sahib Chug,Sahib Chug,No. 5,5,1,1,1,1.0
+raw_1499665f_3213_4e8a_8af2_43a390a8b6e2,Sahib Chug,Sahib Chug,No. 8,8,1,3,1,3.0
+raw_1499665f_3213_4e8a_8af2_43a390a8b6e2,Sahib Chug,Sahib Chug,Tail,10,5,2,1,2.0
+raw_187ea06c_7c91_463d_bf08_d1ee0d2a8ccd,Sam Mcauliffe,Sam Mcauliffe,No. 3,3,1,9,1,9.0
+raw_187ea06c_7c91_463d_bf08_d1ee0d2a8ccd,Sam Mcauliffe,Sam Mcauliffe,No. 4,4,3,64,3,21.333333333333332
+raw_187ea06c_7c91_463d_bf08_d1ee0d2a8ccd,Sam Mcauliffe,Sam Mcauliffe,No. 5,5,1,0,1,0.0
+raw_187ea06c_7c91_463d_bf08_d1ee0d2a8ccd,Sam Mcauliffe,Sam Mcauliffe,No. 7,7,1,35,1,35.0
+raw_187ea06c_7c91_463d_bf08_d1ee0d2a8ccd,Sam Mcauliffe,Sam Mcauliffe,Tail,10,1,0,0,
+raw_dca52c66_1862_4047_b7b6_058a8477dbdc,Sam Perry,Sam Perry,No. 6,6,1,34,0,
+raw_dca52c66_1862_4047_b7b6_058a8477dbdc,Sam Perry,Sam Perry,No. 8,8,1,7,1,7.0
+raw_dca52c66_1862_4047_b7b6_058a8477dbdc,Sam Perry,Sam Perry,No. 9,9,1,9,0,
+raw_14c6470e_b041_4486_b72b_5059abae4d86,Sam Robison,Sam Robison,Opener,1,1,10,1,10.0
+raw_14c6470e_b041_4486_b72b_5059abae4d86,Sam Robison,Sam Robison,No. 5,5,1,2,1,2.0
+raw_14c6470e_b041_4486_b72b_5059abae4d86,Sam Robison,Sam Robison,No. 7,7,1,1,1,1.0
+raw_14c6470e_b041_4486_b72b_5059abae4d86,Sam Robison,Sam Robison,No. 8,8,3,7,2,3.5
+raw_14c6470e_b041_4486_b72b_5059abae4d86,Sam Robison,Sam Robison,Tail,10,3,4,2,2.0
+raw_a6dbf31e_f0cc_4e4e_a992_b75fa7513404,Samaya Kamdar,Samaya Kamdar,No. 7,7,1,4,0,
 raw_9f412c9a_f49a_493c_823b_ea9a83111221,Samuel Boontjes,Samuel Boontjes,No. 6,6,2,72,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,Opener,1,3,41,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 3,3,2,28,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 4,4,1,12,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 5,5,3,44,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 6,6,2,44,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 7,7,1,24,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 8,8,1,14,0,
+raw_0589dd7c_acf3_4572_9ed2_8cc4b749fd2a,Samuel Goldman,Samuel Goldman,No. 9,9,1,20,0,
 raw_46204ef2_c64c_4cfa_9cfc_12c2c5675ce2,Satish Karate,Satish Karate,No. 3,3,1,0,1,0.0
 raw_46204ef2_c64c_4cfa_9cfc_12c2c5675ce2,Satish Karate,Satish Karate,No. 5,5,1,10,1,10.0
 raw_46204ef2_c64c_4cfa_9cfc_12c2c5675ce2,Satish Karate,Satish Karate,No. 8,8,1,25,0,
 raw_46204ef2_c64c_4cfa_9cfc_12c2c5675ce2,Satish Karate,Satish Karate,Tail,10,1,5,1,5.0
 raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 4,4,2,49,2,24.5
-raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 5,5,7,218,5,43.6
-raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 6,6,1,76,1,76.0
+raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 5,5,8,224,6,37.333333333333336
+raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 6,6,2,89,2,44.5
+raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 7,7,1,7,1,7.0
+raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 8,8,1,5,1,5.0
+raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,No. 9,9,4,22,3,7.333333333333333
+raw_2951c80e_3d94_4677_8781_c2c20ea52029,Sayeed Shah,Sayeed Shah,Tail,10,2,11,1,11.0
+raw_3eb50b99_ce1c_4c3a_91f5_c671570a7f96,Scarlett Williams,Scarlett Williams,Opener,1,8,83,0,
+raw_3eb50b99_ce1c_4c3a_91f5_c671570a7f96,Scarlett Williams,Scarlett Williams,No. 3,3,1,1,0,
+raw_3eb50b99_ce1c_4c3a_91f5_c671570a7f96,Scarlett Williams,Scarlett Williams,No. 6,6,1,4,0,
+raw_3eb50b99_ce1c_4c3a_91f5_c671570a7f96,Scarlett Williams,Scarlett Williams,No. 7,7,1,14,0,
+raw_3eb50b99_ce1c_4c3a_91f5_c671570a7f96,Scarlett Williams,Scarlett Williams,No. 8,8,2,10,0,
+raw_2e3fd47e_345e_4d86_b188_8054b022d1d8,Sean Palmer,Sean Palmer,Tail,10,3,7,1,7.0
+raw_61f14274_32de_4e1c_864f_4c7dd400e452,Sejal Malhotra,Sejal Malhotra,Opener,1,1,0,1,0.0
+raw_61f14274_32de_4e1c_864f_4c7dd400e452,Sejal Malhotra,Sejal Malhotra,No. 3,3,6,108,1,108.0
+raw_61f14274_32de_4e1c_864f_4c7dd400e452,Sejal Malhotra,Sejal Malhotra,No. 4,4,1,3,1,3.0
+raw_61f14274_32de_4e1c_864f_4c7dd400e452,Sejal Malhotra,Sejal Malhotra,No. 7,7,3,10,2,5.0
+raw_61f14274_32de_4e1c_864f_4c7dd400e452,Sejal Malhotra,Sejal Malhotra,No. 9,9,2,0,1,0.0
+raw_470898a9_bddb_473d_a151_dcafd956ade6,Seth De Silva,Seth De Silva,Opener,1,3,31,0,
+raw_470898a9_bddb_473d_a151_dcafd956ade6,Seth De Silva,Seth De Silva,No. 3,3,2,22,0,
+raw_470898a9_bddb_473d_a151_dcafd956ade6,Seth De Silva,Seth De Silva,No. 5,5,2,27,0,
+raw_470898a9_bddb_473d_a151_dcafd956ade6,Seth De Silva,Seth De Silva,No. 6,6,3,44,0,
+raw_470898a9_bddb_473d_a151_dcafd956ade6,Seth De Silva,Seth De Silva,No. 7,7,1,1,0,
 raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,Opener,1,1,4,1,4.0
 raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,No. 3,3,6,47,5,9.4
 raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,No. 4,4,7,59,6,9.833333333333334
@@ -810,6 +1567,12 @@ raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,No. 5,5,1,7
 raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,No. 6,6,1,9,1,9.0
 raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,No. 7,7,2,17,1,17.0
 raw_e35beab2_f5cf_4e89_8cdb_360948665764,Sharon Scrase,Sharon Scrase,Tail,10,1,9,1,9.0
+raw_aa2e45a3_3f4f_4e58_85a4_0508c663cb7d,Shlok Pawali,Shlok Pawali,Opener,1,4,54,0,
+raw_aa2e45a3_3f4f_4e58_85a4_0508c663cb7d,Shlok Pawali,Shlok Pawali,No. 3,3,3,59,0,
+raw_aa2e45a3_3f4f_4e58_85a4_0508c663cb7d,Shlok Pawali,Shlok Pawali,No. 4,4,2,30,0,
+raw_aa2e45a3_3f4f_4e58_85a4_0508c663cb7d,Shlok Pawali,Shlok Pawali,No. 5,5,2,40,0,
+raw_aa2e45a3_3f4f_4e58_85a4_0508c663cb7d,Shlok Pawali,Shlok Pawali,No. 6,6,3,34,0,
+raw_aa2e45a3_3f4f_4e58_85a4_0508c663cb7d,Shlok Pawali,Shlok Pawali,No. 8,8,1,9,0,
 raw_1816590c_a529_44ad_b8b3_43979200e5ad,Shuly Peterson,Shuly Peterson,Opener,1,2,13,1,13.0
 raw_1816590c_a529_44ad_b8b3_43979200e5ad,Shuly Peterson,Shuly Peterson,No. 4,4,2,8,1,8.0
 raw_1816590c_a529_44ad_b8b3_43979200e5ad,Shuly Peterson,Shuly Peterson,No. 5,5,2,17,1,17.0
@@ -821,20 +1584,57 @@ raw_a5eaf93f_8895_4992_9924_6bba0f7b2212,Siddhant Rohith,Siddhant Rohith,No. 3,3
 raw_a5eaf93f_8895_4992_9924_6bba0f7b2212,Siddhant Rohith,Siddhant Rohith,No. 4,4,4,40,2,20.0
 raw_a5eaf93f_8895_4992_9924_6bba0f7b2212,Siddhant Rohith,Siddhant Rohith,No. 5,5,1,14,1,14.0
 raw_a5eaf93f_8895_4992_9924_6bba0f7b2212,Siddhant Rohith,Siddhant Rohith,No. 6,6,1,7,0,
+raw_e63b6f4d_a9c4_4c55_8df2_8ee2aded44b1,Smita Singh,Smita Singh,Opener,1,1,2,1,2.0
+raw_e63b6f4d_a9c4_4c55_8df2_8ee2aded44b1,Smita Singh,Smita Singh,No. 3,3,1,23,1,23.0
+raw_e63b6f4d_a9c4_4c55_8df2_8ee2aded44b1,Smita Singh,Smita Singh,No. 4,4,7,98,3,32.666666666666664
+raw_e63b6f4d_a9c4_4c55_8df2_8ee2aded44b1,Smita Singh,Smita Singh,No. 5,5,1,14,1,14.0
+raw_e63b6f4d_a9c4_4c55_8df2_8ee2aded44b1,Smita Singh,Smita Singh,No. 6,6,1,17,0,
+raw_94e9e294_e82d_4129_a95d_8e8246d2ad7b,Sonia Carroll,Sonia Carroll,No. 4,4,2,12,1,12.0
+raw_94e9e294_e82d_4129_a95d_8e8246d2ad7b,Sonia Carroll,Sonia Carroll,No. 5,5,1,1,0,
+raw_94e9e294_e82d_4129_a95d_8e8246d2ad7b,Sonia Carroll,Sonia Carroll,No. 6,6,2,15,0,
+raw_94e9e294_e82d_4129_a95d_8e8246d2ad7b,Sonia Carroll,Sonia Carroll,No. 7,7,1,2,0,
+raw_94e9e294_e82d_4129_a95d_8e8246d2ad7b,Sonia Carroll,Sonia Carroll,No. 8,8,2,8,2,4.0
+raw_94e9e294_e82d_4129_a95d_8e8246d2ad7b,Sonia Carroll,Sonia Carroll,No. 9,9,1,3,1,3.0
+raw_057648e0_b592_4afe_a3e6_bef737c225e8,Sophie May,Sophie May,No. 4,4,2,12,1,12.0
+raw_057648e0_b592_4afe_a3e6_bef737c225e8,Sophie May,Sophie May,No. 5,5,4,16,4,4.0
+raw_057648e0_b592_4afe_a3e6_bef737c225e8,Sophie May,Sophie May,No. 6,6,4,26,3,8.666666666666666
+raw_057648e0_b592_4afe_a3e6_bef737c225e8,Sophie May,Sophie May,No. 7,7,3,24,2,12.0
+raw_057648e0_b592_4afe_a3e6_bef737c225e8,Sophie May,Sophie May,No. 8,8,5,14,2,7.0
+raw_057648e0_b592_4afe_a3e6_bef737c225e8,Sophie May,Sophie May,No. 9,9,3,15,2,7.5
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,Opener,1,5,54,3,18.0
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,No. 4,4,1,3,1,3.0
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,No. 5,5,1,6,0,
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,No. 6,6,1,5,0,
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,No. 7,7,2,6,1,6.0
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,No. 8,8,1,3,1,3.0
+raw_fed5e48d_81c6_4f5b_a3f2_fbaa636e2c46,Spencer Witherington,Spencer Witherington,No. 9,9,3,46,2,23.0
 raw_4f7d56c8_137c_40c7_95ac_f360f8c7b24a,Stephen Littlewood,Stephen Littlewood,Tail,10,1,4,0,
-raw_b466874a_7da1_4923_9305_7bcebfcc9754,Steve Mcconchie,Steve Mcconchie,Opener,1,2,97,2,48.5
-raw_b466874a_7da1_4923_9305_7bcebfcc9754,Steve Mcconchie,Steve Mcconchie,No. 4,4,7,359,5,71.8
-raw_b466874a_7da1_4923_9305_7bcebfcc9754,Steve Mcconchie,Steve Mcconchie,No. 5,5,2,13,1,13.0
-raw_b466874a_7da1_4923_9305_7bcebfcc9754,Steve Mcconchie,Steve Mcconchie,No. 6,6,3,57,3,19.0
-raw_b466874a_7da1_4923_9305_7bcebfcc9754,Steve Mcconchie,Steve Mcconchie,No. 7,7,1,2,1,2.0
-raw_b466874a_7da1_4923_9305_7bcebfcc9754,Steve Mcconchie,Steve Mcconchie,Tail,10,1,25,1,25.0
-raw_abd89195_1d61_41fe_98f9_5a9c120d4003,Steven Finkelde,Steven Finkelde,Opener,1,3,146,3,48.666666666666664
+steve_mcconchie,Steve Mcconchie,Steve Mcconchie,Opener,1,18,628,14,44.857142857142854
+steve_mcconchie,Steve Mcconchie,Steve Mcconchie,No. 4,4,9,391,7,55.857142857142854
+steve_mcconchie,Steve Mcconchie,Steve Mcconchie,No. 5,5,2,13,1,13.0
+steve_mcconchie,Steve Mcconchie,Steve Mcconchie,No. 6,6,3,57,3,19.0
+steve_mcconchie,Steve Mcconchie,Steve Mcconchie,No. 7,7,1,2,1,2.0
+steve_mcconchie,Steve Mcconchie,Steve Mcconchie,Tail,10,1,25,1,25.0
+raw_abd89195_1d61_41fe_98f9_5a9c120d4003,Steven Finkelde,Steven Finkelde,Opener,1,12,462,10,46.2
 raw_f49f13cc_f4d8_4d87_a40b_6310a48143c9,Stuart Cumming,Stuart Cumming,No. 3,3,1,1,1,1.0
 raw_f49f13cc_f4d8_4d87_a40b_6310a48143c9,Stuart Cumming,Stuart Cumming,No. 4,4,1,7,1,7.0
 raw_f49f13cc_f4d8_4d87_a40b_6310a48143c9,Stuart Cumming,Stuart Cumming,No. 5,5,1,1,0,
 raw_f49f13cc_f4d8_4d87_a40b_6310a48143c9,Stuart Cumming,Stuart Cumming,No. 6,6,1,6,0,
 raw_f49f13cc_f4d8_4d87_a40b_6310a48143c9,Stuart Cumming,Stuart Cumming,No. 8,8,1,2,1,2.0
 raw_f49f13cc_f4d8_4d87_a40b_6310a48143c9,Stuart Cumming,Stuart Cumming,Tail,10,1,3,0,
+raw_55aa43e4_73ed_4f0f_a616_572df0899066,Suman Ganguly,Suman Ganguly,No. 4,4,1,2,1,2.0
+raw_55aa43e4_73ed_4f0f_a616_572df0899066,Suman Ganguly,Suman Ganguly,No. 7,7,2,8,2,4.0
+raw_55aa43e4_73ed_4f0f_a616_572df0899066,Suman Ganguly,Suman Ganguly,No. 9,9,1,2,1,2.0
+raw_eaaee60d_649f_48e0_b387_3740cb0ae740,Supreet Singh,Supreet Singh,Opener,1,1,20,1,20.0
+raw_eaaee60d_649f_48e0_b387_3740cb0ae740,Supreet Singh,Supreet Singh,No. 5,5,1,4,1,4.0
+raw_eaaee60d_649f_48e0_b387_3740cb0ae740,Supreet Singh,Supreet Singh,No. 6,6,1,0,1,0.0
+raw_eaaee60d_649f_48e0_b387_3740cb0ae740,Supreet Singh,Supreet Singh,No. 7,7,1,2,1,2.0
+raw_eaaee60d_649f_48e0_b387_3740cb0ae740,Supreet Singh,Supreet Singh,No. 8,8,2,18,1,18.0
+raw_0ef5ca04_1189_4b87_b9e3_1caef43a3952,Susanne King,Susanne King,Opener,1,3,37,1,37.0
+raw_0ef5ca04_1189_4b87_b9e3_1caef43a3952,Susanne King,Susanne King,No. 3,3,1,11,1,11.0
+raw_0ef5ca04_1189_4b87_b9e3_1caef43a3952,Susanne King,Susanne King,No. 5,5,2,34,0,
+raw_0ef5ca04_1189_4b87_b9e3_1caef43a3952,Susanne King,Susanne King,No. 7,7,1,5,0,
+raw_0ef5ca04_1189_4b87_b9e3_1caef43a3952,Susanne King,Susanne King,No. 8,8,1,4,1,4.0
 raw_179b1fa7_f16d_4a59_a2a5_9068c6ccb645,Taj Brown,Taj Brown,Opener,1,1,11,1,11.0
 raw_179b1fa7_f16d_4a59_a2a5_9068c6ccb645,Taj Brown,Taj Brown,No. 4,4,2,31,1,31.0
 raw_179b1fa7_f16d_4a59_a2a5_9068c6ccb645,Taj Brown,Taj Brown,No. 5,5,2,33,1,33.0
@@ -845,31 +1645,56 @@ raw_15515a5c_0a23_4492_8b3f_4dc306279589,Taliyah Mead,Taliyah Mead,No. 5,5,2,6,2
 raw_15515a5c_0a23_4492_8b3f_4dc306279589,Taliyah Mead,Taliyah Mead,No. 6,6,2,5,1,5.0
 raw_15515a5c_0a23_4492_8b3f_4dc306279589,Taliyah Mead,Taliyah Mead,No. 7,7,3,21,2,10.5
 raw_15515a5c_0a23_4492_8b3f_4dc306279589,Taliyah Mead,Taliyah Mead,No. 9,9,1,0,1,0.0
-raw_d2ef323c_209b_4293_a92a_aad37a1a19dd,Tate Gramaconi,Tate Gramaconi,No. 8,8,2,38,2,19.0
-raw_d2ef323c_209b_4293_a92a_aad37a1a19dd,Tate Gramaconi,Tate Gramaconi,No. 9,9,3,74,1,74.0
-raw_d2ef323c_209b_4293_a92a_aad37a1a19dd,Tate Gramaconi,Tate Gramaconi,Tail,10,2,17,0,
+raw_0c96f058_8b07_49bb_a142_ea9d7f4cd2bf,Tania Shepherd,Tania Shepherd,Opener,1,5,36,3,12.0
+raw_0c96f058_8b07_49bb_a142_ea9d7f4cd2bf,Tania Shepherd,Tania Shepherd,No. 5,5,1,0,0,
+raw_0c96f058_8b07_49bb_a142_ea9d7f4cd2bf,Tania Shepherd,Tania Shepherd,No. 6,6,1,6,0,
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,No. 4,4,1,20,1,20.0
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,No. 5,5,1,5,1,5.0
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,No. 6,6,4,84,4,21.0
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,No. 7,7,2,39,1,39.0
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,No. 8,8,2,38,2,19.0
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,No. 9,9,6,118,4,29.5
+tate_gramaconi,Tate Gramaconi,Tate Gramaconi,Tail,10,2,17,0,
+raw_306e41ac_4a44_4557_91db_4b625875a25b,Taylah Robson,Taylah Robson,No. 8,8,1,0,1,0.0
+raw_126fa4e9_fa4e_4a10_8bd6_1b554e54aa8a,Theo Meek,Theo Meek,No. 3,3,1,1,1,1.0
+raw_126fa4e9_fa4e_4a10_8bd6_1b554e54aa8a,Theo Meek,Theo Meek,No. 4,4,1,0,1,0.0
+raw_126fa4e9_fa4e_4a10_8bd6_1b554e54aa8a,Theo Meek,Theo Meek,No. 6,6,2,33,1,33.0
+raw_126fa4e9_fa4e_4a10_8bd6_1b554e54aa8a,Theo Meek,Theo Meek,No. 9,9,1,9,1,9.0
+raw_126fa4e9_fa4e_4a10_8bd6_1b554e54aa8a,Theo Meek,Theo Meek,Tail,10,1,0,0,
 raw_bcb40b94_6930_4df9_a56c_c86facce48f4,Thomas Carroll,Thomas Carroll,Opener,1,1,20,1,20.0
 raw_bcb40b94_6930_4df9_a56c_c86facce48f4,Thomas Carroll,Thomas Carroll,No. 3,3,1,14,1,14.0
 raw_bcb40b94_6930_4df9_a56c_c86facce48f4,Thomas Carroll,Thomas Carroll,No. 7,7,2,39,1,39.0
 raw_bcb40b94_6930_4df9_a56c_c86facce48f4,Thomas Carroll,Thomas Carroll,No. 8,8,3,22,2,11.0
 raw_bcb40b94_6930_4df9_a56c_c86facce48f4,Thomas Carroll,Thomas Carroll,No. 9,9,1,8,1,8.0
 raw_bcb40b94_6930_4df9_a56c_c86facce48f4,Thomas Carroll,Thomas Carroll,Tail,10,1,3,0,
+raw_66deb1c3_641f_49cb_81e8_ca1851c29733,Tileah Carr,Tileah Carr,Opener,1,5,18,4,4.5
+raw_66deb1c3_641f_49cb_81e8_ca1851c29733,Tileah Carr,Tileah Carr,No. 6,6,2,9,1,9.0
+raw_66deb1c3_641f_49cb_81e8_ca1851c29733,Tileah Carr,Tileah Carr,No. 7,7,3,18,1,18.0
+raw_66deb1c3_641f_49cb_81e8_ca1851c29733,Tileah Carr,Tileah Carr,No. 9,9,1,9,0,
 raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,Opener,1,2,14,1,14.0
 raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,No. 4,4,2,1,2,0.5
-raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,No. 6,6,4,67,2,33.5
+raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,No. 6,6,7,125,4,31.25
+raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,No. 7,7,1,0,1,0.0
+raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,No. 8,8,1,50,1,50.0
+raw_76d2583d_e21b_42a8_b274_2df0f1f1212c,Tim O'Meara,Tim O'Meara,No. 9,9,1,9,1,9.0
+raw_a1cb5c8d_7c9a_459c_aec4_b8d559678f2b,Tiyah’ Santosh,Tiyah’ Santosh,No. 4,4,2,12,0,
+raw_a1cb5c8d_7c9a_459c_aec4_b8d559678f2b,Tiyah’ Santosh,Tiyah’ Santosh,No. 5,5,2,7,2,3.5
+raw_a1cb5c8d_7c9a_459c_aec4_b8d559678f2b,Tiyah’ Santosh,Tiyah’ Santosh,No. 6,6,3,19,3,6.333333333333333
+raw_a1cb5c8d_7c9a_459c_aec4_b8d559678f2b,Tiyah’ Santosh,Tiyah’ Santosh,No. 7,7,3,13,2,6.5
+raw_a1cb5c8d_7c9a_459c_aec4_b8d559678f2b,Tiyah’ Santosh,Tiyah’ Santosh,No. 8,8,2,10,1,10.0
 raw_8cd7a078_6aad_43dd_b40f_557e5fc7c655,Toby Dartnell,Toby Dartnell,Opener,1,5,105,4,26.25
 raw_8cd7a078_6aad_43dd_b40f_557e5fc7c655,Toby Dartnell,Toby Dartnell,No. 3,3,2,27,2,13.5
 raw_8cd7a078_6aad_43dd_b40f_557e5fc7c655,Toby Dartnell,Toby Dartnell,No. 4,4,1,31,0,
 raw_8cd7a078_6aad_43dd_b40f_557e5fc7c655,Toby Dartnell,Toby Dartnell,No. 5,5,1,0,1,0.0
 raw_8cd7a078_6aad_43dd_b40f_557e5fc7c655,Toby Dartnell,Toby Dartnell,No. 7,7,1,22,1,22.0
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 3,3,2,4,2,2.0
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 4,4,2,13,2,6.5
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 5,5,1,6,1,6.0
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 6,6,1,10,0,
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 7,7,2,3,1,3.0
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 8,8,3,8,3,2.6666666666666665
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,No. 9,9,3,8,3,2.6666666666666665
-raw_8407a02c_617e_40d6_83c1_4ba0262cace0,Toby East,Toby East,Tail,10,3,8,2,4.0
+toby_east,Toby East,Toby East,No. 3,3,3,11,3,3.6666666666666665
+toby_east,Toby East,Toby East,No. 4,4,2,13,2,6.5
+toby_east,Toby East,Toby East,No. 5,5,4,34,4,8.5
+toby_east,Toby East,Toby East,No. 6,6,3,59,1,59.0
+toby_east,Toby East,Toby East,No. 7,7,2,3,1,3.0
+toby_east,Toby East,Toby East,No. 8,8,5,16,5,3.2
+toby_east,Toby East,Toby East,No. 9,9,3,8,3,2.6666666666666665
+toby_east,Toby East,Toby East,Tail,10,3,8,2,4.0
 raw_f9c9a184_26ef_47aa_979f_3d5a0b94c16d,Toby Harvey,Toby Harvey,Opener,1,4,35,2,17.5
 raw_f9c9a184_26ef_47aa_979f_3d5a0b94c16d,Toby Harvey,Toby Harvey,No. 3,3,1,18,0,
 raw_f9c9a184_26ef_47aa_979f_3d5a0b94c16d,Toby Harvey,Toby Harvey,No. 4,4,1,28,0,
@@ -884,32 +1709,77 @@ raw_47b6f7ea_f78d_4cf7_8483_55540e4b1de8,Toby Robison,Toby Robison,No. 5,5,1,18,
 raw_47b6f7ea_f78d_4cf7_8483_55540e4b1de8,Toby Robison,Toby Robison,No. 7,7,1,0,1,0.0
 raw_47b6f7ea_f78d_4cf7_8483_55540e4b1de8,Toby Robison,Toby Robison,Tail,10,3,27,0,
 raw_51af483d_3945_446c_bbdc_173f69602a3e,Tom Murphy,Tom Murphy,No. 9,9,1,6,0,
-raw_e4c8a264_8faf_49cb_938b_4b9912eef3f9,Tommy Hollier,Tommy Hollier,Opener,1,1,0,0,
-raw_e4c8a264_8faf_49cb_938b_4b9912eef3f9,Tommy Hollier,Tommy Hollier,No. 5,5,1,4,1,4.0
-raw_e4c8a264_8faf_49cb_938b_4b9912eef3f9,Tommy Hollier,Tommy Hollier,No. 6,6,2,3,1,3.0
-raw_e4c8a264_8faf_49cb_938b_4b9912eef3f9,Tommy Hollier,Tommy Hollier,No. 7,7,1,0,1,0.0
-raw_e4c8a264_8faf_49cb_938b_4b9912eef3f9,Tommy Hollier,Tommy Hollier,No. 9,9,1,0,0,
-raw_e4c8a264_8faf_49cb_938b_4b9912eef3f9,Tommy Hollier,Tommy Hollier,Tail,10,1,2,1,2.0
-raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,Opener,1,1,0,1,0.0
-raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,No. 3,3,1,6,1,6.0
-raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,No. 4,4,1,2,0,
-raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,No. 5,5,4,40,4,10.0
-raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,No. 7,7,1,9,1,9.0
-raw_a17ec66c_07ad_4baf_87e9_4fd3e556c6de,Tony Mcswiggan,Tony Mcswiggan,No. 9,9,1,17,0,
-raw_4ec7bf60_b6c3_409f_b9a7_dae8a91a620c,Tracy Armstrong,Tracy Armstrong,Opener,1,4,62,4,15.5
-raw_4ec7bf60_b6c3_409f_b9a7_dae8a91a620c,Tracy Armstrong,Tracy Armstrong,No. 6,6,1,24,1,24.0
-raw_4ec7bf60_b6c3_409f_b9a7_dae8a91a620c,Tracy Armstrong,Tracy Armstrong,Tail,10,1,0,0,
+raw_78541eb8_ea12_475b_9f05_0d20941a913a,Tom Robinson,Tom Robinson,No. 4,4,3,67,2,33.5
+raw_78541eb8_ea12_475b_9f05_0d20941a913a,Tom Robinson,Tom Robinson,No. 5,5,1,2,0,
+tommy_hollier,Tommy Hollier,Tommy Hollier,Opener,1,1,0,0,
+tommy_hollier,Tommy Hollier,Tommy Hollier,No. 4,4,1,2,1,2.0
+tommy_hollier,Tommy Hollier,Tommy Hollier,No. 5,5,1,4,1,4.0
+tommy_hollier,Tommy Hollier,Tommy Hollier,No. 6,6,2,3,1,3.0
+tommy_hollier,Tommy Hollier,Tommy Hollier,No. 7,7,1,0,1,0.0
+tommy_hollier,Tommy Hollier,Tommy Hollier,No. 8,8,1,6,1,6.0
+tommy_hollier,Tommy Hollier,Tommy Hollier,No. 9,9,4,8,1,8.0
+tommy_hollier,Tommy Hollier,Tommy Hollier,Tail,10,5,5,4,1.25
+raw_1c68b081_1962_4411_9020_7b73be1da996,Tomy Mclelland,Tomy Mclelland,Opener,1,4,72,0,
+raw_1c68b081_1962_4411_9020_7b73be1da996,Tomy Mclelland,Tomy Mclelland,No. 3,3,2,29,0,
+raw_1c68b081_1962_4411_9020_7b73be1da996,Tomy Mclelland,Tomy Mclelland,No. 5,5,1,18,0,
+raw_1c68b081_1962_4411_9020_7b73be1da996,Tomy Mclelland,Tomy Mclelland,No. 7,7,1,41,0,
+raw_1c68b081_1962_4411_9020_7b73be1da996,Tomy Mclelland,Tomy Mclelland,No. 8,8,1,12,0,
+raw_1c68b081_1962_4411_9020_7b73be1da996,Tomy Mclelland,Tomy Mclelland,No. 9,9,1,18,0,
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,Opener,1,1,0,1,0.0
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,No. 3,3,1,6,1,6.0
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,No. 4,4,1,2,0,
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,No. 5,5,4,40,4,10.0
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,No. 7,7,3,12,3,4.0
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,No. 8,8,4,27,1,27.0
+tony_mcswiggan,Tony Mcswiggan,Tony Mcswiggan,No. 9,9,1,17,0,
+tracy_armstrong,Tracy Armstrong,Tracy Armstrong,Opener,1,12,281,10,28.1
+tracy_armstrong,Tracy Armstrong,Tracy Armstrong,No. 3,3,1,5,0,
+tracy_armstrong,Tracy Armstrong,Tracy Armstrong,No. 6,6,1,24,1,24.0
+tracy_armstrong,Tracy Armstrong,Tracy Armstrong,Tail,10,2,0,0,
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,Opener,1,2,0,0,
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 3,3,2,45,2,22.5
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 4,4,2,84,2,42.0
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 5,5,2,58,1,58.0
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 6,6,5,48,3,16.0
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 7,7,2,25,2,12.5
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 8,8,3,16,1,16.0
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,No. 9,9,1,5,1,5.0
+raw_2a567dbc_0a6c_48f6_bb93_15646368f602,Tyson Beames,Tyson Beames,Tail,10,6,41,3,13.666666666666666
 raw_80375b44_0e02_4aa6_a096_467bab669261,Tyson Einsiedel,Tyson Einsiedel,No. 3,3,3,35,3,11.666666666666666
 raw_80375b44_0e02_4aa6_a096_467bab669261,Tyson Einsiedel,Tyson Einsiedel,No. 7,7,2,13,1,13.0
 raw_80375b44_0e02_4aa6_a096_467bab669261,Tyson Einsiedel,Tyson Einsiedel,No. 8,8,1,0,1,0.0
 raw_80375b44_0e02_4aa6_a096_467bab669261,Tyson Einsiedel,Tyson Einsiedel,No. 9,9,2,33,1,33.0
 raw_00000000_0000_0000_0000_000000000001,Unknown Player_1,Unknown Player_1,No. 6,6,1,18,1,18.0
 raw_00000000_0000_0000_0000_000000000002,Unknown Player_2,Unknown Player_2,No. 7,7,1,8,1,8.0
+raw_042772eb_37d7_4e2b_a11d_7210ca675012,Utpal K Bera,Utpal K Bera,No. 4,4,1,13,1,13.0
+raw_042772eb_37d7_4e2b_a11d_7210ca675012,Utpal K Bera,Utpal K Bera,No. 5,5,2,41,1,41.0
+raw_042772eb_37d7_4e2b_a11d_7210ca675012,Utpal K Bera,Utpal K Bera,No. 7,7,1,19,1,19.0
+raw_042772eb_37d7_4e2b_a11d_7210ca675012,Utpal K Bera,Utpal K Bera,No. 8,8,4,37,4,9.25
+raw_e04d96c0_a180_40fc_8c08_db05cd937d5a,Vaishnavi Gopalakrishnan,Vaishnavi Gopalakrishnan,Opener,1,1,0,1,0.0
+raw_e04d96c0_a180_40fc_8c08_db05cd937d5a,Vaishnavi Gopalakrishnan,Vaishnavi Gopalakrishnan,No. 5,5,4,18,3,6.0
+raw_e04d96c0_a180_40fc_8c08_db05cd937d5a,Vaishnavi Gopalakrishnan,Vaishnavi Gopalakrishnan,No. 6,6,1,3,1,3.0
+raw_e04d96c0_a180_40fc_8c08_db05cd937d5a,Vaishnavi Gopalakrishnan,Vaishnavi Gopalakrishnan,No. 7,7,1,2,1,2.0
+raw_e04d96c0_a180_40fc_8c08_db05cd937d5a,Vaishnavi Gopalakrishnan,Vaishnavi Gopalakrishnan,No. 8,8,2,16,1,16.0
 raw_17666413_153e_42a6_847b_9acfacb63664,Vandana Ramesh,Vandana Ramesh,No. 3,3,2,2,2,1.0
 raw_17666413_153e_42a6_847b_9acfacb63664,Vandana Ramesh,Vandana Ramesh,No. 4,4,2,4,1,4.0
 raw_17666413_153e_42a6_847b_9acfacb63664,Vandana Ramesh,Vandana Ramesh,No. 6,6,3,12,1,12.0
 raw_17666413_153e_42a6_847b_9acfacb63664,Vandana Ramesh,Vandana Ramesh,No. 7,7,2,10,2,5.0
 raw_17666413_153e_42a6_847b_9acfacb63664,Vandana Ramesh,Vandana Ramesh,No. 8,8,1,0,1,0.0
+raw_591d6229_2765_4793_82bd_3d5838adbe70,Vayithra Perera,Vayithra Perera,Opener,1,4,14,0,
+raw_591d6229_2765_4793_82bd_3d5838adbe70,Vayithra Perera,Vayithra Perera,No. 3,3,1,3,0,
+raw_591d6229_2765_4793_82bd_3d5838adbe70,Vayithra Perera,Vayithra Perera,No. 4,4,2,10,0,
+raw_591d6229_2765_4793_82bd_3d5838adbe70,Vayithra Perera,Vayithra Perera,No. 5,5,1,2,0,
+raw_591d6229_2765_4793_82bd_3d5838adbe70,Vayithra Perera,Vayithra Perera,No. 7,7,3,13,0,
+raw_591d6229_2765_4793_82bd_3d5838adbe70,Vayithra Perera,Vayithra Perera,No. 8,8,2,7,0,
+raw_9fcade4a_d19a_4c3e_89ea_8fe05df52aa7,Vethara Perera,Vethara Perera,Opener,1,1,6,0,
+raw_9fcade4a_d19a_4c3e_89ea_8fe05df52aa7,Vethara Perera,Vethara Perera,No. 3,3,9,35,0,
+raw_9fcade4a_d19a_4c3e_89ea_8fe05df52aa7,Vethara Perera,Vethara Perera,No. 4,4,1,1,0,
+raw_9fcade4a_d19a_4c3e_89ea_8fe05df52aa7,Vethara Perera,Vethara Perera,No. 5,5,3,8,0,
+raw_101e958b_679b_49ee_99c7_04062fa29d97,Vihaan Gupta,Vihaan Gupta,No. 3,3,1,1,0,
+raw_101e958b_679b_49ee_99c7_04062fa29d97,Vihaan Gupta,Vihaan Gupta,No. 7,7,2,26,2,13.0
+raw_101e958b_679b_49ee_99c7_04062fa29d97,Vihaan Gupta,Vihaan Gupta,Tail,10,4,1,3,0.3333333333333333
+raw_ee64e225_2dda_4393_a5e1_d569cc98f117,Virginia Grace Rankin,Virginia Grace Rankin,No. 3,3,1,4,1,4.0
+raw_ee64e225_2dda_4393_a5e1_d569cc98f117,Virginia Grace Rankin,Virginia Grace Rankin,No. 4,4,1,13,0,
 raw_71614b44_b862_4d9c_aa5d_de324202b07a,Vivaan Ajith,Vivaan Ajith,Opener,1,1,26,0,
 raw_71614b44_b862_4d9c_aa5d_de324202b07a,Vivaan Ajith,Vivaan Ajith,No. 3,3,3,77,1,77.0
 raw_71614b44_b862_4d9c_aa5d_de324202b07a,Vivaan Ajith,Vivaan Ajith,No. 4,4,2,26,1,26.0
@@ -919,21 +1789,68 @@ raw_71614b44_b862_4d9c_aa5d_de324202b07a,Vivaan Ajith,Vivaan Ajith,No. 7,7,1,13,
 raw_6f928c5a_ac40_4425_a05a_8f3b8e885edb,Will Mckean,Will Mckean,Opener,1,7,225,4,56.25
 raw_6f928c5a_ac40_4425_a05a_8f3b8e885edb,Will Mckean,Will Mckean,No. 3,3,2,73,2,36.5
 raw_6f928c5a_ac40_4425_a05a_8f3b8e885edb,Will Mckean,Will Mckean,No. 6,6,1,1,1,1.0
+raw_28c04eca_98e3_4ad0_ae24_2fcbdd16ba7f,Will Rodgers,Will Rodgers,Opener,1,5,41,5,8.2
+raw_28c04eca_98e3_4ad0_ae24_2fcbdd16ba7f,Will Rodgers,Will Rodgers,No. 3,3,1,5,1,5.0
+raw_28c04eca_98e3_4ad0_ae24_2fcbdd16ba7f,Will Rodgers,Will Rodgers,No. 4,4,1,1,1,1.0
+raw_28c04eca_98e3_4ad0_ae24_2fcbdd16ba7f,Will Rodgers,Will Rodgers,No. 5,5,1,9,1,9.0
+raw_28c04eca_98e3_4ad0_ae24_2fcbdd16ba7f,Will Rodgers,Will Rodgers,No. 6,6,1,9,1,9.0
 raw_b44a113f_9d1f_4b83_8f93_f5e61aed7225,William Blitz,William Blitz,Opener,1,5,103,4,25.75
 raw_b44a113f_9d1f_4b83_8f93_f5e61aed7225,William Blitz,William Blitz,No. 6,6,1,49,1,49.0
-raw_874b97cb_ea34_46f5_86da_5e53cbf24712,William Firth,William Firth,Opener,1,1,2,0,
-raw_874b97cb_ea34_46f5_86da_5e53cbf24712,William Firth,William Firth,No. 4,4,2,20,1,20.0
-raw_874b97cb_ea34_46f5_86da_5e53cbf24712,William Firth,William Firth,No. 5,5,1,5,0,
-raw_874b97cb_ea34_46f5_86da_5e53cbf24712,William Firth,William Firth,No. 7,7,2,3,1,3.0
-raw_874b97cb_ea34_46f5_86da_5e53cbf24712,William Firth,William Firth,No. 8,8,1,6,1,6.0
-raw_3f11b7a8_e426_4692_a683_920ae9ef01ad,William Peatt,William Peatt,Opener,1,1,0,1,0.0
-raw_3f11b7a8_e426_4692_a683_920ae9ef01ad,William Peatt,William Peatt,No. 4,4,1,2,0,
-raw_3f11b7a8_e426_4692_a683_920ae9ef01ad,William Peatt,William Peatt,Tail,10,3,5,2,2.5
-raw_1fd91a81_fda8_408c_b579_0aaae6687a9d,Zahra White,Zahra White,Opener,1,7,27,4,6.75
-raw_1fd91a81_fda8_408c_b579_0aaae6687a9d,Zahra White,Zahra White,No. 6,6,1,6,0,
-raw_1fd91a81_fda8_408c_b579_0aaae6687a9d,Zahra White,Zahra White,No. 8,8,1,7,0,
+raw_0188eb0a_0ef7_470b_ad98_64565b8678ee,William Cassar,William Cassar,Opener,1,1,0,1,0.0
+raw_0188eb0a_0ef7_470b_ad98_64565b8678ee,William Cassar,William Cassar,No. 3,3,4,8,3,2.6666666666666665
+raw_0188eb0a_0ef7_470b_ad98_64565b8678ee,William Cassar,William Cassar,No. 5,5,1,22,0,
+raw_0188eb0a_0ef7_470b_ad98_64565b8678ee,William Cassar,William Cassar,No. 6,6,2,11,1,11.0
+raw_0188eb0a_0ef7_470b_ad98_64565b8678ee,William Cassar,William Cassar,No. 8,8,5,6,2,3.0
+raw_0188eb0a_0ef7_470b_ad98_64565b8678ee,William Cassar,William Cassar,No. 9,9,1,0,1,0.0
+william_firth,William Firth,William Firth,Opener,1,2,2,0,
+william_firth,William Firth,William Firth,No. 4,4,4,35,2,17.5
+william_firth,William Firth,William Firth,No. 5,5,6,199,3,66.33333333333333
+william_firth,William Firth,William Firth,No. 6,6,1,10,0,
+william_firth,William Firth,William Firth,No. 7,7,3,33,2,16.5
+william_firth,William Firth,William Firth,No. 8,8,1,6,1,6.0
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,Opener,1,3,36,0,
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,No. 3,3,1,14,0,
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,No. 4,4,3,27,0,
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,No. 6,6,2,7,0,
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,No. 7,7,1,5,0,
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,No. 8,8,1,8,0,
+raw_a9ab8e23_0c3a_4fcf_9907_2415ce9fb726,William Glenister,William Glenister,No. 9,9,2,28,0,
+william_peatt,William Peatt,William Peatt,Opener,1,4,12,4,3.0
+william_peatt,William Peatt,William Peatt,No. 3,3,1,18,0,
+william_peatt,William Peatt,William Peatt,No. 4,4,4,27,2,13.5
+william_peatt,William Peatt,William Peatt,No. 6,6,1,5,0,
+william_peatt,William Peatt,William Peatt,No. 7,7,1,7,0,
+william_peatt,William Peatt,William Peatt,Tail,10,3,5,2,2.5
+raw_9f0c2add_f4eb_4a2b_9ecf_f293ecd3ee0c,Xavier Parris,Xavier Parris,No. 5,5,1,17,1,17.0
+raw_9f0c2add_f4eb_4a2b_9ecf_f293ecd3ee0c,Xavier Parris,Xavier Parris,No. 7,7,1,19,0,
+raw_9f0c2add_f4eb_4a2b_9ecf_f293ecd3ee0c,Xavier Parris,Xavier Parris,No. 8,8,1,55,0,
+raw_9f0c2add_f4eb_4a2b_9ecf_f293ecd3ee0c,Xavier Parris,Xavier Parris,Tail,10,4,28,2,14.0
+raw_efecb084_d862_49ea_a9a7_70b20a24049c,Yatharth Manware,Yatharth Manware,Opener,1,2,35,2,17.5
+raw_efecb084_d862_49ea_a9a7_70b20a24049c,Yatharth Manware,Yatharth Manware,No. 3,3,4,90,3,30.0
+raw_efecb084_d862_49ea_a9a7_70b20a24049c,Yatharth Manware,Yatharth Manware,No. 4,4,2,103,0,
+raw_efecb084_d862_49ea_a9a7_70b20a24049c,Yatharth Manware,Yatharth Manware,Tail,10,1,34,1,34.0
+zahra_white,Zahra White,Zahra White,Opener,1,11,62,5,12.4
+zahra_white,Zahra White,Zahra White,No. 3,3,3,20,1,20.0
+zahra_white,Zahra White,Zahra White,No. 5,5,2,6,2,3.0
+zahra_white,Zahra White,Zahra White,No. 6,6,3,19,0,
+zahra_white,Zahra White,Zahra White,No. 8,8,3,31,1,31.0
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,Opener,1,1,6,1,6.0
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,No. 4,4,1,2,1,2.0
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,No. 5,5,1,5,0,
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,No. 7,7,2,10,1,10.0
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,No. 8,8,1,6,1,6.0
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,No. 9,9,3,5,2,2.5
+raw_758640f0_0ec6_4459_bff2_b043b3d87cc2,Zander Kotze,Zander Kotze,Tail,10,2,6,1,6.0
 raw_e12a1232_8173_472e_a08a_83ac28185f8a,Zane Regnier,Zane Regnier,Opener,1,1,2,1,2.0
 raw_e12a1232_8173_472e_a08a_83ac28185f8a,Zane Regnier,Zane Regnier,No. 4,4,1,5,1,5.0
 raw_e12a1232_8173_472e_a08a_83ac28185f8a,Zane Regnier,Zane Regnier,No. 5,5,3,59,3,19.666666666666668
 raw_e12a1232_8173_472e_a08a_83ac28185f8a,Zane Regnier,Zane Regnier,No. 8,8,1,2,0,
 raw_e12a1232_8173_472e_a08a_83ac28185f8a,Zane Regnier,Zane Regnier,No. 9,9,1,8,1,8.0
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,Opener,1,2,4,2,2.0
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 3,3,2,16,2,8.0
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 4,4,3,17,2,8.5
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 5,5,3,44,1,44.0
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 6,6,1,23,0,
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 7,7,1,12,1,12.0
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 8,8,1,27,0,
+raw_32e37c3c_4003_4698_a0ba_cbff40c63f25,Zoe Howard,Zoe Howard,No. 9,9,1,0,0,
