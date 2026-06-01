@@ -3,6 +3,13 @@
   "club_url": "",
   "seasons_fetched": [
     {
+      "id": "a826b403-b813-4318-9805-5bbe4cf7f238",
+      "name": "Summer 2025/26",
+      "startDate": "2025-07-01T00:00:00.0000000+00:00",
+      "isCurrentSeason": true,
+      "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
+    },
+    {
       "id": "3e3a72f9-34fa-49f5-a42e-35d86629a3af",
       "name": "Summer 2022/23",
       "startDate": "2022-07-01T00:00:00.0000000+00:00",
@@ -10,8 +17,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-05-31T22:59:41.634351+00:00",
-  "last_successful_refresh_time": "2026-05-31T22:59:41.634351+00:00",
+  "fetch_date_time": "2026-05-31T23:51:30.941915+00:00",
+  "last_successful_refresh_time": "2026-05-31T23:51:30.941915+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -20,15 +27,15 @@
     "/participants/grades/{grade_id}/fielding-statistics"
   ],
   "matches_fetched": 0,
-  "players_fetched": 227,
-  "teams_fetched": 22,
+  "players_fetched": 456,
+  "teams_fetched": 47,
   "stat_rows": {
-    "batting": 427,
-    "bowling": 427,
-    "fielding": 427
+    "batting": 834,
+    "bowling": 834,
+    "fielding": 834
   },
-  "live_requests": 68,
-  "cache_hits": 0,
+  "live_requests": 77,
+  "cache_hits": 67,
   "failed_requests": [],
   "notes": [
     "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",

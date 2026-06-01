@@ -5,7 +5,7 @@
 - Branch: `demo/le-page-park-2022-23`
 - Club ID: `le-page-park`
 - PlayCricket club ID: `92e3c14d-8ad8-eb11-a7ad-2818780da0cc`
-- Recommended season scope: `Summer 2022/23`
+- Recommended season scope: `Summer 2022/23` and `Summer 2025/26`
 
 ## Required Environment
 - `CLUB_ID=le-page-park`
@@ -28,6 +28,7 @@ CLUB_ID=le-page-park SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false ./.venv-app/bin/
 - Confirm player and season links work
 - Confirm scorecard links are present and URL-shaped correctly
 - Confirm premierships show verified captains where local scorecard evidence exists
+- Confirm only the two approved seasons appear in the selector
 
 ## What Not To Commit
 - `data/raw/match_centre/`
@@ -45,7 +46,7 @@ CLUB_ID=le-page-park SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false ./.venv-app/bin/
 - Do not merge to `main` until the preview is approved.
 
 ## Caveats
-- 4 manual duplicate review candidates remain.
-- No safe auto-merges were applied because the duplicate candidates overlap in season.
+- 112 strict-safe duplicate merges were applied for the two-season scope.
+- 3 manual duplicate review groups remain.
+- The demo intentionally excludes winter seasons.
 - External PlayCricket scorecard pages were not auto-opened during validation.
-
