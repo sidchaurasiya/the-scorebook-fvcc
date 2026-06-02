@@ -6,6 +6,7 @@
 - Club ID: `le-page-park`
 - PlayCricket club ID: `92e3c14d-8ad8-eb11-a7ad-2818780da0cc`
 - Recommended season scope: `Summer 2022/23` and `Summer 2025/26`
+- Demo default season: `Summer 2022/23`
 
 ## Required Environment
 - `CLUB_ID=le-page-park`
@@ -29,6 +30,7 @@ CLUB_ID=le-page-park SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false ./.venv-app/bin/
 - Confirm scorecard links are present and URL-shaped correctly
 - Confirm premierships show verified captains where local scorecard evidence exists
 - Confirm only the two approved seasons appear in the selector
+- Confirm the initial season selection lands on `Summer 2022/23`
 
 ## What Not To Commit
 - `data/raw/match_centre/`

@@ -45,14 +45,14 @@ data:
   allow_legacy_fallback: false
   season_filter:
     include_seasons:
-      - Summer 2025/26
       - Summer 2022/23
+      - Summer 2025/26
     include_season_ids:
-      - a826b403-b813-4318-9805-5bbe4cf7f238
       - 3e3a72f9-34fa-49f5-a42e-35d86629a3af
+      - a826b403-b813-4318-9805-5bbe4cf7f238
 
 display:
-  default_season: latest
+  default_season: Summer 2022/23
   include_summer: true
   include_winter: false
   home_ground_keywords:

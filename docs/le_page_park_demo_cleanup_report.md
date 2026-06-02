@@ -4,6 +4,7 @@
 The Le Page Park demo is now restricted to Steve McConchie in Player Profile flows.
 
 Local demo URL: http://localhost:8510/?page=hall-of-fame
+Demo default season: Summer 2022/23
 
 ## What Changed
 - Merged the two Steve McConchie player identities into one demo-visible profile.
@@ -36,6 +37,7 @@ Local demo URL: http://localhost:8510/?page=hall-of-fame
 - A few masked identities remain in season-based source rows.
 - Other player profiles are intentionally inaccessible in the demo, so any non-Steve deep link will fall back to plain text or the allowed Steve profile.
 - The restriction is demo-only; it does not delete underlying data.
+- The demo still retains Summer 2025/26 in the selector for comparison, but the landing season is now Summer 2022/23.
 
 ## Final Take
 This is a safer client demo now: one clear selectable player, no confusing alternate profiles, and no clickable non-Steve player links to wander into.
