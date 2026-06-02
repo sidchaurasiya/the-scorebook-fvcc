@@ -28,6 +28,10 @@ features:
   milestone_enabled: true
   player_profile_enabled: true
 
+demo:
+  player_profile_allow_names:
+    - Steve McConchie
+
 data:
   root_dir: clubs/le-page-park/data
   processed_dir: clubs/le-page-park/data/processed

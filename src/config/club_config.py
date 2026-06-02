@@ -166,6 +166,30 @@ def get_branding_value(name: str, default: Any = None, club_id: str | None = Non
     return branding.get(name, default)
 
 
+def get_demo_player_profile_allowlist(
+    club_id: str | None = None,
+    *,
+    config: dict[str, Any] | None = None,
+) -> dict[str, tuple[str, ...]]:
+    demo = (config or load_club_config(club_id)).get("demo", {})
+    if not isinstance(demo, dict):
+        return {"names": (), "ids": ()}
+
+    def normalize(values: object) -> tuple[str, ...]:
+        if values is None:
+            return ()
+        if isinstance(values, str):
+            values = [values]
+        if not isinstance(values, (list, tuple, set)):
+            return ()
+        cleaned = [str(value).strip() for value in values if str(value).strip()]
+        return tuple(dict.fromkeys(cleaned))
+
+    names = demo.get("player_profile_allow_names") or demo.get("player_profile_allowed_names") or ()
+    ids = demo.get("player_profile_allow_ids") or demo.get("player_profile_allowed_ids") or ()
+    return {"names": normalize(names), "ids": normalize(ids)}
+
+
 def get_season_filter(club_id: str | None = None, *, config: dict[str, Any] | None = None) -> dict[str, tuple[str, ...]]:
     data = (config or load_club_config(club_id)).get("data", {})
     season_filter = data.get("season_filter", {})
