@@ -5,6 +5,7 @@
 - Club: `Le Page Park Cricket Club`
 - Official PlayCricket club ID: `92e3c14d-8ad8-eb11-a7ad-2818780da0cc`
 - Season scope: `Summer 2022/23` and `Summer 2025/26`
+- Demo default season: `Summer 2022/23`
 
 ## Data Summary
 - Seasons: 2
@@ -26,6 +27,7 @@
 - Legacy fallback: disabled
 - Winter seasons: excluded
 - Season filter: `Summer 2022/23`, `Summer 2025/26`
+- Default landing season: `Summer 2022/23`
 - Manual duplicate merges: 112 strict-safe rows applied
 
 ## Duplicate Review
