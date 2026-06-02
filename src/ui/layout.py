@@ -6,7 +6,7 @@ import re
 import subprocess
 import textwrap
 import time
-from urllib.parse import quote, unquote
+from urllib.parse import parse_qs, quote, unquote, urlparse
 from pathlib import Path
 
 import altair as alt
@@ -49,6 +49,7 @@ from src.data.playcricket_ingestion import (
 )
 from src.config.club_config import (
     allow_legacy_fallback,
+    get_demo_player_profile_allowlist,
     get_active_club_id,
     get_branding_value,
     get_club_name,
@@ -335,6 +336,8 @@ def render_mobile_nav_link(label: str, slug: str, current_page: str) -> str:
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
     player_id_text = str(player_id or "").strip()
     player_name_text = str(player_name or "").strip()
+    if not player_profile_link_allowed(player_id_text, player_name_text):
+        return ""
     if player_id_text:
         params = {"page": PLAYER_PROFILE_QUERY_PAGE, "player_id": player_id_text}
     elif player_name_text:
@@ -354,6 +357,44 @@ def player_profile_link_html(player_id: object, player_name: object, class_name:
         f'target="_self" title="Open Player Profile for {html.escape(player_name_text, quote=True)}">'
         f"{html.escape(player_name_text)}</a>"
     )
+
+
+def player_profile_link_allowed(player_id: object = "", player_name: object | None = None) -> bool:
+    restrictions = get_demo_player_profile_allowlist()
+    allowed_names = {
+        display_player_name(name).casefold()
+        for name in restrictions.get("names", ())
+        if display_player_name(name)
+    }
+    allowed_ids = {
+        str(value).strip().casefold()
+        for value in restrictions.get("ids", ())
+        if str(value).strip()
+    }
+    if not allowed_names and not allowed_ids:
+        return True
+
+    player_id_text = str(player_id or "").strip().casefold()
+    player_name_text = display_player_name(player_name).casefold()
+    if player_id_text and player_id_text in allowed_ids:
+        return True
+    if player_name_text and player_name_text in allowed_names:
+        return True
+    return False
+
+
+def internal_player_profile_allowed(url: object) -> bool:
+    value = str(url or "").strip()
+    if not value or not is_app_internal_url(value):
+        return True
+
+    parsed = urlparse(value)
+    query = parse_qs(parsed.query)
+    if str(query.get("page", [""])[0]).strip() != PLAYER_PROFILE_QUERY_PAGE:
+        return True
+    player_id = str(query.get("player_id", [""])[0]).strip()
+    player_name = link_display_label(value)
+    return player_profile_link_allowed(player_id, player_name)
 
 
 def season_overview_url(season: object) -> str:
@@ -526,7 +567,7 @@ def link_player_column(table: pd.DataFrame, id_column: str = "canonical_player_i
         return table
     output = table.copy()
     output["Player"] = [
-        player_profile_url(player_id, player)
+        player_profile_url(player_id, player) or str(player or "")
         for player_id, player in zip(output[id_column], output["Player"])
     ]
     return output.drop(columns=[id_column], errors="ignore")
@@ -4178,7 +4219,7 @@ def display_table(frame: pd.DataFrame, columns: list[str], rename_map: dict[str,
     output = output[columns].rename(columns=rename_map)
     if "Player" in output:
         output["Player"] = [
-            player_profile_url(player_id, player)
+            player_profile_url(player_id, player) or str(player or "")
             for player_id, player in zip(player_profile_ids, output["Player"])
         ]
     return coerce_display_numbers(output)
@@ -8231,6 +8272,8 @@ def hof_detail_link_cell(value: object, display_pattern: str) -> str:
     text = str(value).strip()
     label = link_display_label(text)
     if is_app_internal_url(text):
+        if not internal_player_profile_allowed(text):
+            return html.escape(label or text)
         return (
             f'<a href="{html.escape(text, quote=True)}" target="_top" data-hof-internal-link="1">'
             f"{html.escape(label or text)}</a>"
@@ -8823,12 +8866,14 @@ def render_player_profile_page() -> None:
     if selected_player_id not in player_names_by_id:
         selected_player_id = ""
         set_selected_player_id("")
+    if not selected_player_id and len(option_ids) == 1:
+        selected_player_id = set_selected_player_id(option_ids[0], manual=False)
     st.session_state.pop("player_profile_selector_label", None)
     with st.container(key="player_selector_card"):
         selected_id = st.selectbox(
             "Search player",
             option_ids,
-            index=option_ids.index(selected_player_id) if selected_player_id in option_ids else None,
+            index=option_ids.index(selected_player_id) if selected_player_id in option_ids else (0 if len(option_ids) == 1 else None),
             format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
             placeholder="Select a player...",
             key="player_profile_selector_id",
@@ -8936,6 +8981,8 @@ def render_player_profile_v2_page() -> None:
     }
     query_player_id = resolve_player_query_to_id(player_names_by_id)
     default_player_id = query_player_id or default_player_profile_v2_id(player_names_by_id)
+    if len(option_ids) == 1:
+        default_player_id = option_ids[0]
     with st.container(key="player_v2_selector_card"):
         selected_id = st.selectbox(
             "Search player",
@@ -9743,8 +9790,35 @@ def load_player_profile_index(_local_version: float, _identity_version: float) -
         .drop_duplicates()
         .rename(columns={"canonical_player_id": "id", "canonical_player_name": "name"})
     )
+    index = filter_player_profile_index_for_demo(index)
     index["name_sort"] = index["name"].astype(str).str.casefold()
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
+
+
+def filter_player_profile_index_for_demo(index: pd.DataFrame) -> pd.DataFrame:
+    restrictions = get_demo_player_profile_allowlist()
+    allowed_names = {
+        display_player_name(name).casefold()
+        for name in restrictions.get("names", ())
+        if display_player_name(name)
+    }
+    allowed_ids = {
+        str(value).strip().casefold()
+        for value in restrictions.get("ids", ())
+        if str(value).strip()
+    }
+    if not allowed_names and not allowed_ids:
+        return index
+
+    output = index.copy()
+    name_key = output["name"].fillna("").astype(str).map(display_player_name).str.casefold()
+    id_key = output["id"].fillna("").astype(str).str.strip().str.casefold()
+    filtered = output[name_key.isin(allowed_names) | id_key.isin(allowed_ids)].copy()
+    if filtered.empty:
+        return filtered
+    filtered["name_sort"] = filtered["name"].astype(str).str.casefold()
+    filtered = filtered.sort_values(["name_sort", "id"]).drop_duplicates(subset=["name_sort"], keep="first")
+    return filtered.drop(columns=["name_sort"], errors="ignore").reset_index(drop=True)
 
 
 @st.cache_data(show_spinner=False)
@@ -16029,6 +16103,8 @@ def season_detail_player_link_cell(value: object) -> str:
     text = str(value).strip()
     label = link_display_label(text)
     if is_app_internal_url(text):
+        if not internal_player_profile_allowed(text):
+            return html.escape(label or text)
         return (
             f'<a href="{html.escape(text, quote=True)}" data-season-detail-link="1" target="_top" '
             f'title="Open Player Profile for {html.escape(label or text, quote=True)}">'
