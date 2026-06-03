@@ -28,6 +28,7 @@ def build_batting_milestones(
     scope_names: list[str] | None = None,
     club_team_ids: set[str] | None = None,
     club_name_token: str | None = None,
+    runs_source_exceptions: set[tuple[str, str, str]] | None = None,
 ) -> MilestoneBuildResult:
     scopes = available_scope_dirs(processed_root, scope_names=scope_names)
     frames = [load_scope(scope) for scope in scopes]
@@ -44,7 +45,7 @@ def build_batting_milestones(
     matches = add_match_context(matches, frames, club_team_ids=club_team_ids, club_name_token=club_name_token)
     batting = add_batting_context(batting, matches, innings)
     identity = load_identity_lookup(players_path, aliases_path)
-    milestones, validation = calculate_milestones(batting, balls, identity)
+    milestones, validation = calculate_milestones(batting, balls, identity, runs_source_exceptions=runs_source_exceptions)
     validation = pd.concat([validation, validation_warnings(batting, balls, milestones)], ignore_index=True)
     return MilestoneBuildResult(milestones.sort_values(["match_date", "player_name"], ascending=[False, True]), validation, scope_names)
 
@@ -155,7 +156,12 @@ def add_batting_context(batting: pd.DataFrame, matches: pd.DataFrame, innings: p
     return output
 
 
-def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: dict[str, dict[str, str]]) -> tuple[pd.DataFrame, pd.DataFrame]:
+def calculate_milestones(
+    batting: pd.DataFrame,
+    balls: pd.DataFrame,
+    identity: dict[str, dict[str, str]],
+    runs_source_exceptions: set[tuple[str, str, str]] | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     rows = []
     warnings = []
     if batting.empty or balls.empty:
@@ -163,6 +169,7 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
 
     batting_lookup = batting.set_index(["match_id", "innings_id", "participant_id"], drop=False)
     grouped_balls = balls.groupby(["match_id", "innings_id", "striker_participant_id"], dropna=False)
+    source_exceptions = runs_source_exceptions or set()
     for key, group in grouped_balls:
         match_id, innings_id, participant_id = [as_text(value) for value in key]
         if (match_id, innings_id, participant_id) not in batting_lookup.index:
@@ -176,7 +183,8 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
         group["legal_ball"] = legal_delivery_series(group)
         scorecard_final_runs = safe_int(scorecard.get("runs_scored"))
         scorecard_final_balls = positive_safe_int(scorecard.get("balls_faced"))
-        runs_source_used, run_warnings = choose_batter_runs_source(group, scorecard_final_runs)
+        force_runs_source = (match_id, innings_id, participant_id) in source_exceptions
+        runs_source_used, run_warnings = choose_batter_runs_source(group, scorecard_final_runs, force_source_validated=force_runs_source)
         group["batter_runs"] = cumulative_batter_runs(group, runs_source_used)
         balls_source_used, ball_warnings = choose_balls_faced_source(group, scorecard_final_balls)
         group["balls_faced"] = cumulative_balls_faced(group, balls_source_used)
@@ -205,6 +213,24 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
                 )
             )
             continue
+        if force_runs_source and runs_source_used == "source_cumulative_validated":
+            warnings.append(
+                validation_row(
+                    "source_cumulative_exception_applied",
+                    "warning",
+                    match_id,
+                    innings_id,
+                    participant_id,
+                    "trusted demo exception",
+                    "source_cumulative_validated",
+                    "Le Page demo exception applied for a specific innings that is verified from ball-by-ball delivery progression but has a scorecard reconciliation mismatch in the raw cumulative source.",
+                    scorecard_final_balls,
+                    safe_int(group["balls_faced"].dropna().iloc[-1]) if group["balls_faced"].notna().any() else None,
+                    {},
+                    balls_source_used,
+                    runs_source_used,
+                )
+            )
         milestones = {f"balls_to_{target}": milestone_ball(group, target) for target in MILESTONES}
         for target, minimum in MIN_PLAUSIBLE_MILESTONE_BALLS.items():
             milestone_key = f"balls_to_{target}"
@@ -329,12 +355,19 @@ def load_identity_lookup(players_path: Path | None, aliases_path: Path | None) -
     return lookup
 
 
-def choose_batter_runs_source(group: pd.DataFrame, scorecard_final_runs: int | None) -> tuple[str, list[tuple[str, str]]]:
+def choose_batter_runs_source(
+    group: pd.DataFrame,
+    scorecard_final_runs: int | None,
+    *,
+    force_source_validated: bool = False,
+) -> tuple[str, list[tuple[str, str]]]:
     derived_runs = pd.to_numeric(group.get("runs_bat"), errors="coerce").fillna(0).cumsum()
     source_runs = numeric_column(group, "striker_runs_scored")
     warnings: list[tuple[str, str]] = []
     if source_runs.notna().any() and not source_cumulative_runs_valid(source_runs, derived_runs, scorecard_final_runs):
         warnings.append(("source_cumulative_runs_invalid", "Source cumulative batter runs were non-monotonic, jumped implausibly, or disagreed with verified per-delivery batter runs."))
+        if force_source_validated:
+            return "source_cumulative_validated", warnings
     if scorecard_final_runs is not None and int(derived_runs.max()) != scorecard_final_runs:
         if source_runs.notna().any() and source_cumulative_runs_valid(source_runs, derived_runs, scorecard_final_runs):
             return "source_cumulative_validated", warnings

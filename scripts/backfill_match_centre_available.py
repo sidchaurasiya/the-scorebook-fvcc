@@ -41,7 +41,7 @@ from scripts.club_refresh_utils import (  # noqa: E402
     print_paths,
     resolve_club_id,
 )
-from src.config.club_config import get_club_name, get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir, get_season_filter  # noqa: E402
+from src.config.club_config import get_club_name, get_demo_fastest_milestone_exceptions, get_mapping_path, get_processed_match_centre_dir, get_processed_path, get_raw_match_centre_dir, get_season_filter  # noqa: E402
 
 
 RAW_DIR = ROOT / "data" / "raw" / "match_centre" / "all_available"
@@ -134,6 +134,7 @@ def main() -> int:
         scope_names=["all_available"],
         club_team_ids=get_club_team_ids(club_id),
         club_name_token=get_club_name(club_id),
+        runs_source_exceptions=set(get_demo_fastest_milestone_exceptions(club_id=club_id)),
     )
     milestone_result.milestones.to_csv(processed_dir / "all_batting_milestones.csv", index=False)
     milestone_result.validation.to_csv(processed_dir / "batting_milestones_validation.csv", index=False)
