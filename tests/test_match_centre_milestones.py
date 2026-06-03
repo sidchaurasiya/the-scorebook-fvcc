@@ -83,3 +83,15 @@ def test_below_threshold_fastest_50_is_excluded() -> None:
     excluded = validation[validation["check_name"] == "balls_to_50_below_plausibility_threshold"]
     assert not excluded.empty
     assert set(excluded["severity"]) == {"excluded"}
+
+
+def test_forced_exception_can_use_source_cumulative_progression() -> None:
+    runs = [6, 6, 6, 6, 6, 6, 6, 6, 2, 4]
+    bad_source = [0, 0, 0, 0, 0, 0, 0, 0, 0, 54]
+    exceptions = {("match-1", "innings-1", "player-1")}
+
+    milestones, validation = calculate_milestones(batting_row(54), ball_rows(runs, bad_source), {}, exceptions)
+
+    assert int(milestones.iloc[0]["balls_to_50"]) == 10
+    assert milestones.iloc[0]["runs_source_used"] == "source_cumulative_validated"
+    assert validation["check_name"].str.contains("source_cumulative_exception_applied").any()

@@ -31,6 +31,8 @@ features:
 demo:
   player_profile_allow_names:
     - Steve McConchie
+  fastest_milestone_exceptions:
+    - match_id=d9f17462-6cb4-4bcd-bda1-3021cb2c9a2a;innings_id=12b09659-b925-41ab-a3bd-9066c33a3723;participant_id=b466874a-7da1-4923-9305-7bcebfcc9754;runs_source=striker_runs_scored;note=Le Page demo-only Steve McConchie innings exception verified from local ball-by-ball details.
 
 data:
   root_dir: clubs/le-page-park/data

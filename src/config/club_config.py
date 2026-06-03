@@ -190,6 +190,44 @@ def get_demo_player_profile_allowlist(
     return {"names": normalize(names), "ids": normalize(ids)}
 
 
+def get_demo_fastest_milestone_exceptions(
+    club_id: str | None = None,
+    *,
+    config: dict[str, Any] | None = None,
+) -> tuple[tuple[str, str, str], ...]:
+    demo = (config or load_club_config(club_id)).get("demo", {})
+    if not isinstance(demo, dict):
+        return ()
+
+    raw = demo.get("fastest_milestone_exceptions") or demo.get("fastest_milestone_exception") or ()
+    if isinstance(raw, dict):
+        raw = [raw]
+    if not isinstance(raw, (list, tuple, set)):
+        return ()
+
+    rows: list[tuple[str, str, str]] = []
+    for item in raw:
+        match_id = innings_id = participant_id = ""
+        if isinstance(item, dict):
+            match_id = str(item.get("match_id") or "").strip()
+            innings_id = str(item.get("innings_id") or "").strip()
+            participant_id = str(item.get("participant_id") or item.get("player_id") or "").strip()
+        else:
+            text = str(item or "").strip()
+            parts: dict[str, str] = {}
+            for chunk in text.split(";"):
+                if "=" not in chunk:
+                    continue
+                key, value = chunk.split("=", 1)
+                parts[key.strip().casefold()] = value.strip()
+            match_id = parts.get("match_id", "")
+            innings_id = parts.get("innings_id", "")
+            participant_id = parts.get("participant_id") or parts.get("player_id") or ""
+        if match_id and innings_id and participant_id:
+            rows.append((match_id, innings_id, participant_id))
+    return tuple(dict.fromkeys(rows))
+
+
 def get_season_filter(club_id: str | None = None, *, config: dict[str, Any] | None = None) -> dict[str, tuple[str, ...]]:
     data = (config or load_club_config(club_id)).get("data", {})
     season_filter = data.get("season_filter", {})

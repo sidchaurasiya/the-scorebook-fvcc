@@ -36,12 +36,12 @@ Demo default season: Summer 2022/23
 ## Fastest 100s Audit
 - Club-owned 100+ scorecard innings in the two demo seasons: 8
 - Inning-by-inning BBB verification available for the 100s: 3
-- Included in deploy-safe Fastest 100s: 2
-- Excluded from deploy-safe Fastest 100s: 6
+- Included in deploy-safe Fastest 100s: 3
+- Excluded from deploy-safe Fastest 100s: 5
 - Exclusion reasons:
   - 5 innings are scorecard-only with no verified ball-by-ball innings, so the balls-to-100 timing cannot be trusted.
-  - 1 innings (Steve McConchie, 175) has BBB rows, but the verified per-delivery total does not reconcile with the scorecard total, so it remains excluded rather than being guessed.
-- Result: the current Fastest 100s section is conservative on purpose; it only shows the two innings that can be verified from local BBB data.
+  - Steve McConchie’s 175 was included via an explicit Le Page demo exception because the ball-by-ball delivery progression is still traceable and reaches 175 even though one cumulative batting source in the raw feed is internally inconsistent.
+- Result: the current Fastest 100s section is conservative on purpose; it shows the three innings that can be verified or explicitly approved for the demo.
 
 ## Potential Demo Risks
 - A few masked identities remain in season-based source rows.

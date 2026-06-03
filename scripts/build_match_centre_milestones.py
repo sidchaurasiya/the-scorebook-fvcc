@@ -18,7 +18,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.club_refresh_utils import add_club_args, get_club_team_ids, get_playcricket_club_id, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
-from src.config.club_config import get_club_name, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
+from src.config.club_config import get_club_name, get_demo_fastest_milestone_exceptions, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
 
 
@@ -56,6 +56,7 @@ def main(argv: list[str] | None = None) -> int:
         aliases_path=aliases_path,
         club_team_ids=get_club_team_ids(club_id),
         club_name_token=get_club_name(club_id),
+        runs_source_exceptions=set(get_demo_fastest_milestone_exceptions(club_id=club_id)),
     )
     result.milestones.to_csv(milestones_path, index=False)
     result.validation.to_csv(validation_path, index=False)
