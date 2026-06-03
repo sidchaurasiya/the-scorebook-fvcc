@@ -60,5 +60,15 @@
 - The demo intentionally keeps winter seasons out of scope.
 - External PlayCricket pages were not opened automatically during validation.
 
+## Fastest 100s Audit
+- Club-owned 100+ innings across `Summer 2022/23` and `Summer 2025/26`: 8
+- Those with verified ball-by-ball progression: 3
+- Those included in deploy-safe Fastest 100s: 2
+- Those excluded: 6
+- Why they were excluded:
+  - 5 innings are scorecard-only and do not have verified BBB coverage, so the balls-to-100 timing cannot be claimed.
+  - 1 innings (Steve McConchie, 175) has BBB coverage but the per-delivery total does not reconcile with the scorecard total, so it remains excluded for accuracy.
+- Conclusion: the current Fastest 100s output is intentionally conservative and should be presented that way in the demo.
+
 ## Recommendation
 Le Page Park is ready for a private preview demo on the two-season scope of `Summer 2022/23` and `Summer 2025/26`.
