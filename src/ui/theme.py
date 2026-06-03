@@ -7443,24 +7443,24 @@ def active_club_theme_css() -> str:
             --surface-soft: var(--club-bg);
             --card-border: var(--club-border);
             --pitch: var(--club-primary);
-            --pitch-2: var(--club-accent);
+            --pitch-2: var(--club-secondary);
         }}
 
         .stApp {{
             background:
-                radial-gradient(circle at top right, rgba(var(--club-accent-rgb), 0.09), transparent 32rem),
+                radial-gradient(circle at top right, rgba(var(--club-secondary-rgb), 0.09), transparent 32rem),
                 var(--club-bg);
         }}
 
         section[data-testid="stSidebar"] {{
             background:
-                radial-gradient(circle at 18% 0%, rgba(var(--club-accent-rgb), 0.38), transparent 14rem),
+                radial-gradient(circle at 18% 0%, rgba(var(--club-secondary-rgb), 0.22), transparent 14rem),
                 radial-gradient(circle at 80% 42%, rgba(var(--club-secondary-rgb), 0.16), transparent 12rem),
                 linear-gradient(180deg, var(--club-primary) 0%, var(--club-sidebar-bg) 100%) !important;
         }}
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
-            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-secondary)) !important;
             box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
         }}
 
@@ -7489,7 +7489,7 @@ def active_club_theme_css() -> str:
         }}
 
         section[data-testid="stSidebar"] .side-nav-item.active {{
-            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-secondary)) !important;
             box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
         }}
 
@@ -7525,7 +7525,7 @@ def active_club_theme_css() -> str:
 
         div[data-testid="stTabs"] button[aria-selected="true"],
         .profile-segment.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             color: #ffffff !important;
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.22) !important;
         }}
@@ -7559,7 +7559,7 @@ def active_club_theme_css() -> str:
         a.scorecard-link:hover,
         a.season-round-scorecard-link:hover,
         a.full-link:hover {{
-            color: var(--club-accent) !important;
+            color: var(--club-secondary) !important;
         }}
 
         .club-label,
@@ -7580,14 +7580,14 @@ def active_club_theme_css() -> str:
 
         .mobile-nav-link.active,
         div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             border-color: rgba(var(--club-primary-rgb), 0.22) !important;
             color: #ffffff !important;
         }}
 
         a:focus-visible,
         a.scorecard-link:focus-visible {{
-            outline-color: rgba(var(--club-accent-rgb), 0.44) !important;
+            outline-color: rgba(var(--club-secondary-rgb), 0.44) !important;
         }}
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button,
@@ -7597,19 +7597,19 @@ def active_club_theme_css() -> str:
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover,
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover * {{
-            color: var(--club-accent) !important;
+            color: var(--club-secondary) !important;
         }}
 
         .stButton > button[kind="primary"],
         .stDownloadButton > button[kind="primary"] {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             border-color: var(--club-primary) !important;
         }}
 
         .stButton > button:focus-visible,
         .stDownloadButton > button:focus-visible {{
-            box-shadow: 0 0 0 0.2rem rgba(var(--club-accent-rgb), 0.22) !important;
-            border-color: var(--club-accent) !important;
+            box-shadow: 0 0 0 0.2rem rgba(var(--club-secondary-rgb), 0.22) !important;
+            border-color: var(--club-secondary) !important;
         }}
 
         div[data-testid="stMetricValue"],
@@ -7622,7 +7622,7 @@ def active_club_theme_css() -> str:
 
         .cv-hero {{
             background:
-                linear-gradient(135deg, {primary} 0%, {accent} 100%),
+                linear-gradient(135deg, {primary} 0%, {secondary} 100%),
                 repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 54px) !important;
             box-shadow: 0 22px 52px {sidebar_shadow} !important;
         }}
@@ -7630,7 +7630,7 @@ def active_club_theme_css() -> str:
         .cv-callout,
         .season-detail-card,
         .profile-intelligence-card {{
-            border-color: rgba(var(--club-accent-rgb), 0.28) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.28) !important;
         }}
 
         .position-track div,
@@ -7643,7 +7643,7 @@ def active_club_theme_css() -> str:
         .player-v2-progress-track span,
         .milestone-progress-card .progress-track div,
         .hof-progress-row .progress-track div {{
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .team-leader-card::before,
@@ -7651,22 +7651,22 @@ def active_club_theme_css() -> str:
         .pill.purple,
         .score-dot.purple,
         .legend-dot.current {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .profile-segment:hover,
         .profile-segment:focus-visible,
         .folder-tab:hover,
         .folder-tab:focus-visible {{
-            border-color: rgba(var(--club-accent-rgb), 0.34) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.34) !important;
             color: var(--club-primary) !important;
         }}
 
         .folder-tab.active,
         .folder-tab[aria-selected="true"],
         .profile-segment.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
-            border-color: rgba(var(--club-accent-rgb), 0.38) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.38) !important;
             color: #ffffff !important;
             box-shadow: 0 12px 28px rgba(var(--club-primary-rgb), 0.12) !important;
         }}
@@ -7675,7 +7675,7 @@ def active_club_theme_css() -> str:
         .record-card::before,
         .profile-season-summary-card::before,
         .season-v2-card::before {{
-            background: linear-gradient(90deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary)) !important;
         }}
 
         .record-value,
@@ -7708,7 +7708,7 @@ def active_club_theme_css() -> str:
         .impact-marker,
         .peer-marker,
         .profile-best-dot {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             color: #ffffff !important;
         }}
 
@@ -7765,7 +7765,7 @@ def active_club_theme_css() -> str:
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[kind="primary"] {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-accent)) !important;
+            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.18) !important;
             color: #ffffff !important;
         }}
