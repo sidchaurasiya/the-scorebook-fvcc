@@ -10764,7 +10764,8 @@ def leader_highlight_secondary_context(details: list[str], *, by_grade: bool) ->
 def render_player_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
     career = profile_view["career"].iloc[0]
     is_batsman, is_bowler = player_profile_role_flags(career)
-    if not (is_batsman or is_bowler) and profile_view.get("dismissal_fingerprint", pd.DataFrame()).empty:
+    has_bowling_phase = not profile_view.get("bowling_phase", pd.DataFrame()).empty
+    if not (is_batsman or is_bowler or has_bowling_phase) and profile_view.get("dismissal_fingerprint", pd.DataFrame()).empty:
         return
 
     render_section_heading("Player DNA 🧬")
@@ -10780,7 +10781,7 @@ def render_player_intelligence(profile_view: dict[str, pd.DataFrame]) -> None:
             )
     with top_columns[1]:
         render_dismissal_fingerprint(profile_view)
-    if is_bowler:
+    if is_bowler or has_bowling_phase:
         render_bowling_phase_intelligence(profile_view)
 
 
