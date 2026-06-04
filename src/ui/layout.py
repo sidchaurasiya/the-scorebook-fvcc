@@ -101,6 +101,7 @@ from src.utils.analytics import (
     track_event_once,
     track_page_view,
 )
+from src.utils.performance import file_mtime, log_timing
 
 
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -129,8 +130,8 @@ HALL_OF_FAME_PLAYER_WIN_RATES_PATH = get_hall_of_fame_path("player_win_rates.csv
 HALL_OF_FAME_BBB_BATTING_RATES_PATH = get_hall_of_fame_path("player_bbb_batting_rates.csv")
 HALL_OF_FAME_SCORECARD_MILESTONES_PATH = get_hall_of_fame_path("player_scorecard_milestones.csv")
 HALL_OF_FAME_BOWLING_MILESTONES_PATH = get_hall_of_fame_path("player_bowling_milestones.csv")
-DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
+RUN_RUNTIME_IDENTITY_AUDIT = os.getenv("SCOREBOOK_RUNTIME_IDENTITY_AUDIT") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
 SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES = False
 SHOW_SEASON_OVERVIEW_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
@@ -175,8 +176,7 @@ LEGACY_PAGE_SLUGS = {
 
 
 def log_hof_timing(label: str, started_at: float) -> None:
-    if DEBUG_HOF_TIMINGS:
-        print(f"[hall-of-fame] {label}: {(time.perf_counter() - started_at) * 1000:.1f} ms")
+    log_timing(f"Hall of Fame {label}", started_at)
 
 
 def get_page_definitions() -> tuple[tuple[str, str, str], ...]:
@@ -612,6 +612,7 @@ def render_routing_debug_line() -> None:
 
 def render_page() -> None:
     """Render the dashboard."""
+    page_started_at = time.perf_counter()
     inject_theme()
     inject_ga4()
     selected_page = render_sidebar()
@@ -648,6 +649,7 @@ def render_page() -> None:
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
+    log_timing("page render", page_started_at, page=selected_page)
 
 
 def render_sidebar() -> str:
@@ -791,6 +793,7 @@ def render_data_source_panel(
     header_title: str = "Season Overview 🧭",
     header_description: str = "Track team performance, player leaders, and season-by-season club trends.",
 ) -> dict[str, object] | None:
+    panel_started_at = time.perf_counter()
     club_url = DEFAULT_CLUB_URL
     using_local_backup = local_backup_available()
     local_version = metadata_mtime()
@@ -993,6 +996,12 @@ def render_data_source_panel(
         selected_season,
         teams if is_all_teams else [selected_team],
     )
+    log_timing(
+        "Season Overview data load",
+        panel_started_at,
+        season=selected_season_name,
+        scope="all" if is_all_teams else selected_team_id,
+    )
 
     return {
         "request": request,
@@ -1145,34 +1154,23 @@ def load_local_all_team_frames(
 ) -> dict[str, pd.DataFrame]:
     team_ids = {str(team["id"]) for team in teams}
     identity_version = player_aliases_mtime()
-    frames = {}
+    team_scope_frames = {}
+    combined_frames = {}
     for category in ["batting", "bowling", "fielding"]:
         frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
         if not frame.empty and "team_id" in frame:
             frame = frame[frame["team_id"].astype(str).isin(team_ids)]
-        frames[category] = combine_player_rows(frame, category)
+        team_scope_frames[category] = frame.copy()
+        combined_frames[category] = combine_player_rows(frame, category)
 
     return {
-        "batting": add_batting_display_columns(frames["batting"]),
-        "bowling": frames["bowling"],
-        "fielding": frames["fielding"],
-        "team_batting": add_batting_display_columns(frame_for_team_scope("batting", season_id, team_ids, local_version, identity_version)),
-        "team_bowling": frame_for_team_scope("bowling", season_id, team_ids, local_version, identity_version),
-        "team_fielding": frame_for_team_scope("fielding", season_id, team_ids, local_version, identity_version),
+        "batting": add_batting_display_columns(combined_frames["batting"]),
+        "bowling": combined_frames["bowling"],
+        "fielding": combined_frames["fielding"],
+        "team_batting": add_batting_display_columns(team_scope_frames["batting"]),
+        "team_bowling": team_scope_frames["bowling"],
+        "team_fielding": team_scope_frames["fielding"],
     }
-
-
-def frame_for_team_scope(
-    category: str,
-    season_id: str,
-    team_ids: set[str],
-    local_version: float,
-    identity_version: float | None = None,
-) -> pd.DataFrame:
-    frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
-    if not frame.empty and "team_id" in frame:
-        frame = frame[frame["team_id"].astype(str).isin(team_ids)]
-    return frame.copy()
 
 
 def season_overview_detail_source_signature() -> tuple[tuple[str, float], ...]:
@@ -1496,6 +1494,7 @@ def match_centre_sources_for_scorecards() -> dict[str, pd.DataFrame]:
 
 
 def render_season_by_round(dashboard_data: dict[str, object]) -> None:
+    started_at = time.perf_counter()
     render_section_heading("Season by Round 🗓️")
     sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
     rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
@@ -1514,6 +1513,7 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
             render_season_round_empty_state("Round-by-round scorecards are not available for this grade yet.")
             return
         st.markdown(season_round_cards_html(visible_rows), unsafe_allow_html=True)
+    log_timing("Season by Round render", started_at, rows=len(rows), selected_rows=len(visible_rows) if options else 0)
 
 
 def render_season_round_empty_state(message: str = "Round-by-round scorecards are not available for this season yet.") -> None:
@@ -3331,10 +3331,19 @@ def load_match_centre_archive(scope_name: str, _signature: tuple[tuple[str, floa
 
 
 def read_match_centre_csv(path: Path) -> pd.DataFrame:
+    return read_match_centre_csv_cached(str(path), file_mtime(path))
+
+
+@st.cache_data(show_spinner=False)
+def read_match_centre_csv_cached(path_value: str, _file_version: float) -> pd.DataFrame:
+    started_at = time.perf_counter()
+    path = Path(path_value)
     if not path.exists():
         return pd.DataFrame()
     try:
-        return pd.read_csv(path)
+        frame = pd.read_csv(path)
+        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
+        return frame
     except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return pd.DataFrame()
 
@@ -4222,6 +4231,7 @@ def safe_display(value: object, fallback: str = "-") -> str:
 
 
 def render_hall_of_fame_page() -> None:
+    page_started_at = time.perf_counter()
     started_at = time.perf_counter()
     hall_of_fame_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime(), HALL_OF_FAME_DATA_VERSION)
     log_hof_timing("load prepared Hall of Fame data", started_at)
@@ -4247,13 +4257,28 @@ def render_hall_of_fame_page() -> None:
     team_group_slug = render_hall_of_fame_team_group_filter(hall_of_fame_data)
     if team_group_slug:
         hall_of_fame_data = filter_hall_of_fame_data_by_team_group(hall_of_fame_data, team_group_slug)
-    render_premiership_records(team_group_slug)
+    started_at = time.perf_counter()
+    render_premiership_records(team_group_slug, hall_of_fame_data["all_time"])
+    log_timing("Hall of Fame render Premierships", started_at)
+    started_at = time.perf_counter()
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
+    log_timing("Hall of Fame render leaders", started_at)
+    started_at = time.perf_counter()
     render_match_winning_performances(hall_of_fame_data)
+    log_timing("Hall of Fame render iconic performances", started_at)
+    started_at = time.perf_counter()
     render_fastest_batting_milestone_records(team_group_slug)
+    log_timing("Hall of Fame render fastest innings", started_at)
+    started_at = time.perf_counter()
     render_record_holders(hall_of_fame_data)
+    log_timing("Hall of Fame render record holders", started_at)
+    started_at = time.perf_counter()
     render_best_ever_seasons(hall_of_fame_data)
+    log_timing("Hall of Fame render greatest seasons", started_at)
+    started_at = time.perf_counter()
     render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
+    log_timing("Hall of Fame render detailed records", started_at)
+    log_timing("Hall of Fame page render", page_started_at)
 
 
 def render_hall_of_fame_team_group_filter(data: dict[str, object]) -> str | None:
@@ -4931,19 +4956,14 @@ def render_hall_of_fame_v2_recommendations() -> None:
 
 
 def render_approaching_milestones_page() -> None:
-    historical_data = load_hall_of_fame_data(metadata_mtime(), player_aliases_mtime())
+    page_started_at = time.perf_counter()
+    started_at = time.perf_counter()
+    historical_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime(), HALL_OF_FAME_DATA_VERSION)
+    log_timing("Milestone load Hall of Fame data", started_at)
     if historical_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the milestone watchlist.")
         return
 
-    active_players = recent_active_canonical_players(historical_data)
-    watchlist = build_approaching_milestone_watchlist(historical_data["all_time"])
-    if active_players:
-        watchlist = watchlist[watchlist["Player"].isin(active_players)].copy()
-    season_window = milestone_achievement_season_window(historical_data)
-    achieved = build_achieved_milestones(historical_data, season_window)
-    hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
-    hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
     selected_view = selected_milestone_page_view()
     st.markdown(
         f"""
@@ -4954,11 +4974,26 @@ def render_approaching_milestones_page() -> None:
         unsafe_allow_html=True,
     )
     if selected_view == "achieved":
+        started_at = time.perf_counter()
+        season_window = milestone_achievement_season_window(historical_data)
+        achieved = build_achieved_milestones(historical_data, season_window)
+        hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
+        log_timing("Milestone build achieved view", started_at)
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
     elif selected_view == "exclusive":
+        started_at = time.perf_counter()
         render_milestone_club(historical_data["all_time"], selected_milestone_club_category())
+        log_timing("Milestone render exclusive view", started_at)
     else:
+        started_at = time.perf_counter()
+        active_players = recent_active_canonical_players(historical_data)
+        watchlist = build_approaching_milestone_watchlist(historical_data["all_time"])
+        if active_players:
+            watchlist = watchlist[watchlist["Player"].isin(active_players)].copy()
+        hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
+        log_timing("Milestone build upcoming view", started_at)
         render_career_milestone_cards(watchlist, hall_of_fame_watch)
+    log_timing("Milestone page render", page_started_at, view=selected_view)
 
 
 def milestone_page_view_options() -> list[tuple[str, str]]:
@@ -5548,7 +5583,7 @@ def load_hall_of_fame_data(
     batting_raw = apply_team_grade_display_columns(batting_raw)
     bowling_raw = apply_team_grade_display_columns(bowling_raw)
     fielding_raw = apply_team_grade_display_columns(fielding_raw)
-    if allow_legacy_fallback():
+    if allow_legacy_fallback() and RUN_RUNTIME_IDENTITY_AUDIT:
         export_team_grade_display_audit(
             [batting_raw, bowling_raw, fielding_raw],
             path=get_mapping_path("team_grade_display_audit.csv"),
@@ -5561,7 +5596,7 @@ def load_hall_of_fame_data(
         "mapping_rows_added": 0,
         "mapping_conflicts": 0,
     }
-    if allow_legacy_fallback():
+    if allow_legacy_fallback() and RUN_RUNTIME_IDENTITY_AUDIT:
         started_at = time.perf_counter()
         identity_source = pd.concat(
             [
@@ -6169,6 +6204,15 @@ def build_all_time_matches_by_player_name() -> pd.DataFrame:
     return combined.groupby("player_name_key", as_index=False)["matches"].max()
 
 
+def build_all_time_matches_lookup(all_time: pd.DataFrame) -> pd.DataFrame:
+    if all_time.empty or "Player" not in all_time or "Matches" not in all_time:
+        return pd.DataFrame(columns=["player_name_key", "matches"])
+    output = all_time[["Player", "Matches"]].copy()
+    output["player_name_key"] = output["Player"].map(player_name_match_key)
+    output["matches"] = pd.to_numeric(output["Matches"], errors="coerce").fillna(0)
+    return output[["player_name_key", "matches"]].drop_duplicates("player_name_key")
+
+
 def match_centre_fvcc_team_ids(matches: pd.DataFrame) -> dict[str, set[str]]:
     if matches.empty or "match_id" not in matches:
         return {}
@@ -6548,23 +6592,39 @@ def load_premiership_records(signature: tuple[tuple[str, float], ...]) -> tuple[
                 )
             ]
         name_column = "display_player_name" if "display_player_name" in players else "canonical_player_name"
-        players["_premiership_matches_sort"] = 0
         if name_column in players:
             players[name_column] = players[name_column].map(display_player_name)
-            matches_lookup = build_all_time_matches_by_player_name()
-            if not matches_lookup.empty:
-                players["_player_name_key"] = players[name_column].map(player_name_match_key)
-                players = players.merge(matches_lookup, left_on="_player_name_key", right_on="player_name_key", how="left")
-            else:
-                players["matches"] = pd.NA
-            players["_premiership_matches_sort"] = pd.to_numeric(players.get("matches"), errors="coerce").fillna(0)
         players["_earliest_premiership_sort"] = players.get("seasons", pd.Series("", index=players.index)).map(earliest_season_sort_key)
         players = players.sort_values(
-            ["premiership_count", "_premiership_matches_sort", "_earliest_premiership_sort", name_column],
-            ascending=[False, False, True, True],
+            ["premiership_count", "_earliest_premiership_sort", name_column],
+            ascending=[False, True, True],
             na_position="last",
-        ).drop(columns=["_player_name_key", "player_name_key", "_premiership_matches_sort", "_earliest_premiership_sort"], errors="ignore")
+        ).drop(columns=["_earliest_premiership_sort"], errors="ignore")
     return wins, players
+
+
+def sort_premiership_players_by_matches(players: pd.DataFrame, all_time: pd.DataFrame) -> pd.DataFrame:
+    if players.empty:
+        return players
+    name_column = "display_player_name" if "display_player_name" in players else "canonical_player_name"
+    if name_column not in players:
+        return players
+    matches_lookup = build_all_time_matches_lookup(all_time)
+    output = players.copy()
+    output["_player_name_key"] = output[name_column].map(player_name_match_key)
+    if not matches_lookup.empty:
+        output = output.merge(matches_lookup, left_on="_player_name_key", right_on="player_name_key", how="left")
+    output["_premiership_matches_sort"] = pd.to_numeric(output.get("matches"), errors="coerce").fillna(0)
+    output["_earliest_premiership_sort"] = output.get("seasons", pd.Series("", index=output.index)).map(earliest_season_sort_key)
+    output = output.sort_values(
+        ["premiership_count", "_premiership_matches_sort", "_earliest_premiership_sort", name_column],
+        ascending=[False, False, True, True],
+        na_position="last",
+    )
+    return output.drop(
+        columns=["_player_name_key", "player_name_key", "matches", "_premiership_matches_sort", "_earliest_premiership_sort"],
+        errors="ignore",
+    )
 
 
 def earliest_season_sort_key(value: object) -> int:
@@ -6577,11 +6637,13 @@ def latest_season_sort_key(value: object) -> int:
     return max(keys) if keys else 999999
 
 
-def render_premiership_records(team_group_slug: str | None = None) -> None:
+def render_premiership_records(team_group_slug: str | None = None, all_time: pd.DataFrame | None = None) -> None:
     wins, players = load_premiership_records(premiership_records_signature())
     if team_group_slug in {"men", "women"}:
         wins = filter_hof_team_group_frame(wins, team_group_slug)
         players = filter_hof_team_group_frame(players, team_group_slug)
+    if all_time is not None:
+        players = sort_premiership_players_by_matches(players, all_time)
     if wins.empty and players.empty:
         render_section_heading("Premierships 🛡️")
         st.markdown(
@@ -6773,9 +6835,8 @@ def load_batting_milestone_records(_path: str | None = None, _mtime: float | Non
     path = batting_milestones_path()
     if path is None:
         return pd.DataFrame()
-    try:
-        records = pd.read_csv(path)
-    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+    records = read_match_centre_csv(path)
+    if records.empty:
         return pd.DataFrame()
     if "final_score_display" not in records:
         records["final_score_display"] = ""
@@ -7285,7 +7346,6 @@ def render_best_ever_seasons(data: dict[str, object]) -> None:
     st.markdown(f'<div class="best-season-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
 
 
-@st.cache_data(show_spinner=False)
 def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
     if df.empty or "season" not in df:
         return None
@@ -7300,37 +7360,87 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
     if frame.empty:
         return None
 
-    rows = []
-    for (player_id, player, season), group in frame.groupby(["_player_id", "_player", "season"], dropna=False):
-        runs = sum_column(group, "battingAggregate")
-        balls = sum_column(group, "battingBallsFaced")
-        innings = sum_column(group, "battingInnings")
-        not_outs = sum_column(group, "battingNotOuts")
-        outs = max(innings - not_outs, 0)
-        row = {
-            "player": player,
-            "player_id": player_id,
-            "season": season,
-            "matches": sum_column(group, "matches"),
-            "runs": runs,
-            "innings": innings,
-            "average": divide_or_none(runs, outs),
-            "strike_rate": divide_or_none(runs * 100, balls) if profile_season_sort_key(season) >= profile_season_sort_key("Summer 2024/25") else None,
-            "hs": best_high_score(group),
-            "50s": sum_column(group, "batting50s"),
-            "100s": sum_column(group, "batting100s"),
-            "4s": sum_column(group, "battingFours"),
-            "6s": sum_column(group, "battingSixes"),
-            "0s": sum_column(group, "batting0s"),
+    group_cols = ["_player_id", "_player", "season"]
+    numeric_columns = [
+        "matches",
+        "battingAggregate",
+        "battingBallsFaced",
+        "battingInnings",
+        "battingNotOuts",
+        "batting50s",
+        "batting100s",
+        "battingFours",
+        "battingSixes",
+        "batting0s",
+    ]
+    for column in numeric_columns:
+        if column not in frame:
+            frame[column] = 0
+        frame[column] = pd.to_numeric(frame[column], errors="coerce").fillna(0)
+    grouped = frame.groupby(group_cols, dropna=False, as_index=False)[numeric_columns].sum()
+    grouped = grouped.rename(
+        columns={
+            "_player_id": "player_id",
+            "_player": "player",
+            "battingAggregate": "runs",
+            "battingInnings": "innings",
+            "batting50s": "50s",
+            "batting100s": "100s",
+            "battingFours": "4s",
+            "battingSixes": "6s",
+            "batting0s": "0s",
         }
-        if runs > 0:
-            rows.append(row)
-    if not rows:
+    )
+    grouped["_outs"] = (grouped["innings"] - grouped["battingNotOuts"]).clip(lower=0)
+    grouped["average"] = grouped.apply(lambda row: divide_or_none(float(row["runs"]), float(row["_outs"])), axis=1)
+    grouped["strike_rate"] = grouped.apply(
+        lambda row: divide_or_none(float(row["runs"]) * 100, float(row["battingBallsFaced"]))
+        if profile_season_sort_key(row["season"]) >= profile_season_sort_key("Summer 2024/25")
+        else None,
+        axis=1,
+    )
+
+    if "battingHighScore" in frame:
+        hs_rows = frame.copy()
+        hs_rows["_score_sort"] = pd.to_numeric(hs_rows["battingHighScore"], errors="coerce")
+        hs_rows["_not_out_sort"] = hs_rows["isBattingHSNotOut"].map(as_bool) if "isBattingHSNotOut" in hs_rows else False
+        hs_rows = hs_rows[hs_rows["_score_sort"].notna()].sort_values(
+            [*group_cols, "_score_sort", "_not_out_sort"],
+            ascending=[True, True, True, False, False],
+        )
+        hs_rows["hs"] = hs_rows.apply(format_high_score_value, axis=1)
+        hs_lookup = hs_rows.drop_duplicates(group_cols)[[*group_cols, "hs"]].rename(
+            columns={"_player_id": "player_id", "_player": "player"}
+        )
+        grouped = grouped.merge(hs_lookup, on=["player_id", "player", "season"], how="left")
+    if "hs" not in grouped:
+        grouped["hs"] = "—"
+    grouped = grouped[grouped["runs"] > 0].copy()
+    if grouped.empty:
         return None
-    return sorted(rows, key=lambda row: (-row["runs"], -(row["average"] or 0), str(row["player"]).casefold()))[0]
+    grouped["_average_sort"] = pd.to_numeric(grouped["average"], errors="coerce").fillna(0)
+    grouped["_player_sort"] = grouped["player"].astype(str).str.casefold()
+    row = grouped.sort_values(["runs", "_average_sort", "_player_sort"], ascending=[False, False, True]).iloc[0]
+    batting_average = row["average"]
+    batting_strike_rate = row["strike_rate"]
+    return {
+        "player": row["player"],
+        "player_id": row["player_id"],
+        "season": row["season"],
+        "matches": float(row["matches"]),
+        "runs": float(row["runs"]),
+        "innings": float(row["innings"]),
+        "average": None if pd.isna(batting_average) else float(batting_average),
+        "strike_rate": None if pd.isna(batting_strike_rate) else float(batting_strike_rate),
+        "hs": row["hs"],
+        "50s": float(row["50s"]),
+        "100s": float(row["100s"]),
+        "4s": float(row["4s"]),
+        "6s": float(row["6s"]),
+        "0s": float(row["0s"]),
+    }
 
 
-@st.cache_data(show_spinner=False)
 def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
     if df.empty or "season" not in df:
         return None
@@ -7345,31 +7455,70 @@ def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
     if frame.empty:
         return None
 
-    rows = []
-    for (player_id, player, season), group in frame.groupby(["_player_id", "_player", "season"], dropna=False):
-        wickets = sum_column(group, "bowlingWickets")
-        balls = sum_column(group, "bowlingBalls")
-        runs = sum_column(group, "bowlingRuns")
-        row = {
-            "player": player,
-            "player_id": player_id,
-            "season": season,
-            "matches": sum_column(group, "matches"),
-            "wickets": wickets,
-            "overs": format_balls_as_overs(balls) if balls else "—",
-            "maidens": sum_column(group, "bowlingMaidens"),
-            "average": divide_or_none(runs, wickets),
-            "economy": divide_or_none(runs * 6, balls),
-            "strike_rate": divide_or_none(balls, wickets),
-            "bbi": best_bowling_value(group),
-            "5wi": sum_column(group, "bowling5WIs"),
-            "10wm": sum_column(group, "bowling10WMs"),
+    group_cols = ["_player_id", "_player", "season"]
+    numeric_columns = ["matches", "bowlingWickets", "bowlingBalls", "bowlingRuns", "bowlingMaidens", "bowling5WIs", "bowling10WMs"]
+    for column in numeric_columns:
+        if column not in frame:
+            frame[column] = 0
+        frame[column] = pd.to_numeric(frame[column], errors="coerce").fillna(0)
+    grouped = frame.groupby(group_cols, dropna=False, as_index=False)[numeric_columns].sum()
+    grouped = grouped.rename(
+        columns={
+            "_player_id": "player_id",
+            "_player": "player",
+            "bowlingWickets": "wickets",
+            "bowlingBalls": "balls",
+            "bowlingRuns": "runs",
+            "bowlingMaidens": "maidens",
+            "bowling5WIs": "5wi",
+            "bowling10WMs": "10wm",
         }
-        if wickets > 0:
-            rows.append(row)
-    if not rows:
+    )
+    grouped["overs"] = grouped["balls"].map(lambda value: format_balls_as_overs(value) if value else "—")
+    grouped["average"] = grouped.apply(lambda row: divide_or_none(float(row["runs"]), float(row["wickets"])), axis=1)
+    grouped["economy"] = grouped.apply(lambda row: divide_or_none(float(row["runs"]) * 6, float(row["balls"])), axis=1)
+    grouped["strike_rate"] = grouped.apply(lambda row: divide_or_none(float(row["balls"]), float(row["wickets"])), axis=1)
+
+    if "bowlingBestInnings" in frame:
+        bbi_rows = frame.dropna(subset=["bowlingBestInnings"]).copy()
+        parsed = bbi_rows["bowlingBestInnings"].astype(str).str.extract(r"(\d+)\s*[-/]\s*(\d+)")
+        bbi_rows["_bbi_wickets"] = pd.to_numeric(parsed[0], errors="coerce").fillna(0)
+        bbi_rows["_bbi_runs"] = pd.to_numeric(parsed[1], errors="coerce").fillna(999)
+        bbi_rows = bbi_rows[bbi_rows["_bbi_wickets"] > 0].sort_values(
+            [*group_cols, "_bbi_wickets", "_bbi_runs"],
+            ascending=[True, True, True, False, True],
+        )
+        bbi_lookup = bbi_rows.drop_duplicates(group_cols)[[*group_cols, "bowlingBestInnings"]].rename(
+            columns={"_player_id": "player_id", "_player": "player", "bowlingBestInnings": "bbi"}
+        )
+        grouped = grouped.merge(bbi_lookup, on=["player_id", "player", "season"], how="left")
+    if "bbi" not in grouped:
+        grouped["bbi"] = "—"
+    grouped["bbi"] = grouped["bbi"].fillna("—")
+    grouped = grouped[grouped["wickets"] > 0].copy()
+    if grouped.empty:
         return None
-    return sorted(rows, key=lambda row: (-row["wickets"], row["average"] or 999999, str(row["player"]).casefold()))[0]
+    grouped["_average_sort"] = pd.to_numeric(grouped["average"], errors="coerce").fillna(999999)
+    grouped["_player_sort"] = grouped["player"].astype(str).str.casefold()
+    row = grouped.sort_values(["wickets", "_average_sort", "_player_sort"], ascending=[False, True, True]).iloc[0]
+    bowling_average = row["average"]
+    bowling_economy = row["economy"]
+    bowling_strike_rate = row["strike_rate"]
+    return {
+        "player": row["player"],
+        "player_id": row["player_id"],
+        "season": row["season"],
+        "matches": float(row["matches"]),
+        "wickets": float(row["wickets"]),
+        "overs": row["overs"],
+        "maidens": float(row["maidens"]),
+        "average": None if pd.isna(bowling_average) else float(bowling_average),
+        "economy": None if pd.isna(bowling_economy) else float(bowling_economy),
+        "strike_rate": None if pd.isna(bowling_strike_rate) else float(bowling_strike_rate),
+        "bbi": row["bbi"],
+        "5wi": float(row["5wi"]),
+        "10wm": float(row["10wm"]),
+    }
 
 
 def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
@@ -8755,6 +8904,7 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
 
 
 def render_player_profile_page() -> None:
+    page_started_at = time.perf_counter()
     index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
     st.markdown(
         f"""
@@ -8909,6 +9059,7 @@ def render_player_profile_page() -> None:
     render_player_trends(profile_view["season_table"])
     render_player_performance_breakdown(profile_view)
     render_player_milestones(profile_view["career"].iloc[0])
+    log_timing("Player Profile render", page_started_at, player_id=selected_id)
 
 
 def render_player_profile_v2_page() -> None:
@@ -10605,7 +10756,7 @@ def player_leader_details(profile_view: dict[str, pd.DataFrame]) -> dict[str, li
 
 @st.cache_data
 def cached_player_leader_details(player_id: str, _local_version: float, _identity_version: float) -> dict[str, list[str]]:
-    historical_data = load_hall_of_fame_data(_local_version, _identity_version)
+    historical_data = get_hall_of_fame_data(_local_version, _identity_version, HALL_OF_FAME_DATA_VERSION)
     if historical_data is None:
         return {}
     batting = historical_data.get("batting_raw", pd.DataFrame())
@@ -11934,6 +12085,7 @@ def profile_performance_empty_copy(label_column: str, discipline: str) -> tuple[
 
 
 def render_profile_performance_table(rows: pd.DataFrame, label_column: str, discipline: str) -> None:
+    started_at = time.perf_counter()
     filtered = rows[rows["discipline"].astype(str) == discipline].copy() if "discipline" in rows else rows.head(0)
     filtered = filtered[filtered["breakdown_label"].astype(str).str.strip() != ""].copy() if "breakdown_label" in filtered else filtered
     if filtered.empty:
@@ -12016,6 +12168,7 @@ def render_profile_performance_table(rows: pd.DataFrame, label_column: str, disc
         height=height,
         scrolling=False,
     )
+    log_timing("Player Profile performance table render", started_at, rows=len(display), table_label=label_column, discipline=discipline)
 
 
 def profile_performance_table_html(
@@ -13326,8 +13479,24 @@ def build_player_merge_audit_data(data: dict[str, object]) -> dict[str, pd.DataF
 def read_duplicate_suggestions() -> pd.DataFrame:
     path = player_identity_path(DUPLICATE_AUDIT_PATH.name)
     if path.exists():
-        return pd.read_csv(path, dtype=str).fillna("")
+        return read_string_csv(path)
     return pd.DataFrame()
+
+
+@st.cache_data(show_spinner=False)
+def read_string_csv_cached(path_value: str, _file_version: float) -> pd.DataFrame:
+    started_at = time.perf_counter()
+    path = Path(path_value)
+    try:
+        frame = pd.read_csv(path, dtype=str).fillna("")
+        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
+        return frame
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+        return pd.DataFrame()
+
+
+def read_string_csv(path: Path) -> pd.DataFrame:
+    return read_string_csv_cached(str(path), file_mtime(path))
 
 
 def build_raw_profile_breakdown(
@@ -15659,6 +15828,7 @@ def render_full_stats_table(
     category: str,
     show_team: bool = False,
 ) -> None:
+    started_at = time.perf_counter()
     output = build_full_stats_frame(df, category, show_team)
     components.html(
         season_overview_detail_table_html(
@@ -15669,6 +15839,7 @@ def render_full_stats_table(
         height=560,
         scrolling=False,
     )
+    log_timing("Season Overview detail table render", started_at, rows=len(output), category=category, show_team=show_team)
 
 
 def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_id: str) -> str:

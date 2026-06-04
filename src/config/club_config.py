@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import copy
 import os
+import time
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 import streamlit as st
+from src.utils.performance import log_timing
 
 try:
     import yaml
@@ -173,6 +175,7 @@ def normalize_club_id(value: object) -> str:
 
 @lru_cache(maxsize=None)
 def _load_club_config_cached(club_id: str) -> dict[str, Any]:
+    started_at = time.perf_counter()
     config_path = CLUBS_ROOT / club_id / "club_config.yaml"
     if not config_path.exists():
         raise RuntimeError(
@@ -201,6 +204,7 @@ def _load_club_config_cached(club_id: str) -> dict[str, Any]:
             f"Club config id mismatch: loaded '{configured_id}' from {config_path}, expected '{club_id}'."
         )
 
+    log_timing("config load", started_at, club_id=club_id, path=config_path)
     return loaded
 
 

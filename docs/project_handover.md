@@ -982,6 +982,16 @@ Fastest Innings validation update:
 - FVCC theme refresh: shared sidebar, navigation, links, folder tabs, pill toggles, KPI accents, progress bars, Hall of Fame surfaces, Season Overview, Milestone, Player Profile, mobile navigation, and custom HTML table links now resolve through active-club variables. Other clubs keep their own config palettes.
 - Detailed audit notes are in `docs/multi_club_fastest_innings_audit.md`.
 
+Performance profiling update:
+
+- Runtime timing logs are available with `SCOREBOOK_PERF_LOG=1` (or legacy `FVCC_DEBUG_TIMINGS=1`), covering config load, CSV reads, deploy-safe loads, page render time, Season by Round, Detailed Stats, Player Profile tables, Hall of Fame sections, and Milestone view builds.
+- CSV runtime readers now cache by absolute path plus file modified time, so refreshed deploy-safe CSVs invalidate naturally without loading other club folders.
+- Player Profile source frames are cached per active club and identity mapping version instead of remapping batting/bowling/fielding data on each player profile.
+- Hall of Fame no longer runs runtime player/team audit exports unless `SCOREBOOK_RUNTIME_IDENTITY_AUDIT=1`; generated audit/debug CSVs should stay unstaged unless explicitly requested.
+- Hall of Fame Premierships now reuses the already-prepared all-time table for match-count tie sorting, and greatest-season summaries use vectorized aggregation.
+- Milestone now uses the prepared Hall of Fame cache bundle instead of rebuilding the lower-level Hall of Fame dataset when moving between pages.
+- Main-branch production validation should smoke FVCC Hall of Fame, Season Overview, Milestone, and Player Profile after any performance port, with optional Southside/GRDCC regression when shared multi-club code changes.
+
 ## 18. Final Instructions For Future Codex Session
 
 Before making any future change:
