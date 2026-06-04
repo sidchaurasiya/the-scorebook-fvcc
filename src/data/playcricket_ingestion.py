@@ -14,6 +14,7 @@ import requests
 import streamlit as st
 
 from src.config.club_config import get_data_root, get_processed_path
+from src.utils.performance import log_timing
 from src.data.playcricket_public import (
     PLAYCRICKET_PUBLIC_BASE_URL,
     PlayCricketPublicError,
@@ -287,11 +288,14 @@ def read_processed_table(name: str) -> pd.DataFrame:
 
 @st.cache_data(show_spinner=False)
 def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.DataFrame:
+    started_at = time.perf_counter()
     path = Path(path_value)
     if not path.exists():
         return pd.DataFrame()
     try:
-        return pd.read_csv(path)
+        frame = pd.read_csv(path)
+        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
+        return frame
     except (MemoryError, OSError, pd.errors.ParserError):
         return pd.DataFrame()
 
