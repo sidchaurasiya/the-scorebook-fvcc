@@ -22,6 +22,10 @@ APPS: tuple[StreamlitApp, ...] = (
         name="Le Page Park Hall of Fame",
         url="https://le-page-park-scorebook-demo.streamlit.app/?page=hall-of-fame",
     ),
+    StreamlitApp(
+        name="FVCC Production",
+        url="https://the-scorebook-fvcc.streamlit.app/",
+    ),
 )
 
 PAGE_LOAD_TIMEOUT_MS = 60_000
