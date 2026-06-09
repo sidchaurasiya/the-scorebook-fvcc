@@ -4,13 +4,18 @@
 from __future__ import annotations
 
 import csv
+import os
 import re
 import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+os.environ.setdefault("CLUB_ID", "georges-river-district")
+
 SUPPLEMENTAL_DIR = ROOT / "clubs" / "georges-river-district" / "data" / "processed" / "supplemental"
+PROCESSED_DIR = ROOT / "clubs" / "georges-river-district" / "data" / "processed"
 APP_FACING_FILES = [
     "excel_all_seasons_batting.csv",
     "excel_all_seasons_bowling.csv",
@@ -70,6 +75,11 @@ def main() -> int:
                 if runs is not None and high_score is not None and high_score > runs:
                     failures.append(f"{filename}:{row_number} high score > total runs")
 
+    loaded_result = validate_loaded_app_bowling()
+    failures.extend(loaded_result["failures"])
+    lineage_result = validate_loader_source_boundaries()
+    failures.extend(lineage_result["failures"])
+
     print("files checked:")
     for filename in APP_FACING_FILES:
         print(f"- {filename}")
@@ -77,6 +87,9 @@ def main() -> int:
     for filename in AUDIT_ONLY_FILES:
         print(f"- {filename}")
     print(f"rows checked: {rows_checked}")
+    print(f"loaded app-facing bowling rows checked: {loaded_result['rows_checked']}")
+    print(f"Nathan Percy app-facing regression result: {loaded_result['nathan_percy_result']}")
+    print(f"loader source boundary result: {lineage_result['message']}")
     print(f"failures found: {len(failures)}")
     print(f"H Jolly regression result: {h_jolly_result}")
     print("app-facing clean-only confirmation: " + ("passed" if not failures else "failed"))
@@ -94,6 +107,85 @@ def main() -> int:
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
+
+
+def validate_loaded_app_bowling() -> dict[str, object]:
+    failures: list[str] = []
+    primary = read_csv(PROCESSED_DIR / "all_seasons_bowling.csv")
+    supplemental = read_csv(SUPPLEMENTAL_DIR / "excel_all_seasons_bowling.csv")
+    primary = [row for row in primary if not invalid_grdcc_primary_bowling_row(row)]
+    primary_seasons = {clean_text(row.get("season")) for row in primary if clean_text(row.get("season"))}
+    supplemental = [row for row in supplemental if clean_text(row.get("season")) not in primary_seasons]
+    bowling = primary + supplemental
+    if not bowling:
+        return {"failures": ["Loaded app-facing all_seasons_bowling is empty"], "rows_checked": 0, "nathan_percy_result": "not checked"}
+    rows_checked = len(bowling)
+    for idx, row in enumerate(bowling):
+        player = clean_text(row.get("canonical_player_name") or row.get("player_name"))
+        season = clean_text(row.get("season"))
+        wickets = number_or_none(row.get("bowlingWickets"))
+        matches = number_or_none(row.get("matches"))
+        average = number_or_none(row.get("bowlingAverage"))
+        best_bowling = clean_text(row.get("bowlingBestInnings"))
+        five_wi = number_or_none(row.get("bowling5WIs"))
+        ten_wm = number_or_none(row.get("bowling10WMs"))
+        bbi_wickets = best_bowling_wickets(best_bowling)
+        if wickets is not None and wickets > 100:
+            failures.append(f"loaded bowling row {idx + 2}: bowlingWickets > 100 ({wickets:g})")
+        if matches is not None and matches <= 0 and wickets is not None and wickets > 0:
+            failures.append(f"loaded bowling row {idx + 2}: matches=0 with wickets > 0")
+        if average is not None and average <= 0 and wickets is not None and wickets > 0:
+            failures.append(f"loaded bowling row {idx + 2}: bowlingAverage <= 0 with wickets > 0")
+        if bbi_wickets is not None and wickets is not None and bbi_wickets > wickets:
+            failures.append(f"loaded bowling row {idx + 2}: BBI wickets > season wickets")
+        if five_wi is not None and matches is not None and five_wi > matches:
+            failures.append(f"loaded bowling row {idx + 2}: 5WI > matches")
+        if ten_wm is not None and matches is not None and ten_wm > matches:
+            failures.append(f"loaded bowling row {idx + 2}: 10WM > matches")
+
+    nathan = [
+        row
+        for row in bowling
+        if clean_text(row.get("season")) == "Summer 1995/96"
+        and clean_text(row.get("canonical_player_name") or row.get("player_name")) == "Nathan Percy"
+    ]
+    nathan_wickets = sum(number_or_none(row.get("bowlingWickets")) or 0 for row in nathan)
+    nathan_result = f"loaded rows={len(nathan)}, wickets_sum={nathan_wickets:g}"
+    if nathan_wickets >= 101:
+        failures.append("Nathan Percy Summer 1995/96 still aggregates to 101+ wickets in loaded app-facing bowling")
+    return {"failures": failures, "rows_checked": rows_checked, "nathan_percy_result": nathan_result}
+
+
+def invalid_grdcc_primary_bowling_row(row: dict[str, str]) -> bool:
+    wickets = number_or_none(row.get("bowlingWickets")) or 0
+    runs = number_or_none(row.get("bowlingRuns")) or 0
+    balls = number_or_none(row.get("bowlingBalls")) or 0
+    bbi_wickets = best_bowling_wickets(row.get("bowlingBestInnings"))
+    if bbi_wickets is not None and bbi_wickets > wickets:
+        return True
+    if wickets <= 0:
+        return False
+    average = runs / wickets if wickets > 0 else None
+    economy = runs * 6 / balls if balls > 0 else None
+    return bool(
+        ((balls <= 0) and wickets > 0)
+        or (average is not None and average <= 0)
+        or ((wickets >= 10) and (runs < wickets))
+        or ((wickets >= 10) and average is not None and average < 1)
+        or ((balls >= 60) and economy is not None and economy < 0.5)
+        or wickets > balls
+    )
+
+
+def validate_loader_source_boundaries() -> dict[str, object]:
+    failures: list[str] = []
+    loader_path = ROOT / "src" / "data" / "playcricket_ingestion.py"
+    text = loader_path.read_text(encoding="utf-8")
+    blocked = ["excel_player_season_summary.csv", "excel_review_rows.csv", "excel_rejected_rows.csv", "excel_outlier_audit.csv"]
+    used = [name for name in blocked if name in text]
+    if used:
+        failures.append(f"App loader references audit/review files: {', '.join(used)}")
+    return {"failures": failures, "message": "app loader uses clean batting/bowling supplemental files only" if not failures else "failed"}
 
 
 def clean_text(value: object) -> str:
@@ -115,6 +207,12 @@ def number_or_none(value: object) -> float | None:
         return None
     match = re.search(r"-?\d+(?:\.\d+)?", text)
     return float(match.group()) if match else None
+
+
+def best_bowling_wickets(value: object) -> float | None:
+    text = clean_text(value)
+    match = re.match(r"(\d+)[-/]", text)
+    return float(match.group(1)) if match else None
 
 
 if __name__ == "__main__":

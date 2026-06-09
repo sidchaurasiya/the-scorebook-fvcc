@@ -32,6 +32,15 @@
 - Excel data remains barred from fastest milestones, dot-ball metrics, phase metrics, balls-per-boundary, and other ball-by-ball-only outputs.
 - Review and rejected Excel rows must not feed Best Batting Season, Best Bowling Season, Record Holders, Hall of Fame leaders, Greatest Individual Seasons, Player Profile headline records, or milestones.
 
+## Nathan Percy 101-Wicket Card Trace
+
+- Root cause: the visible `Nathan Percy`, `Summer 1995/96`, `101 wickets` Best Bowling Season card was not produced by Excel. It came from primary processed PlayCricket aggregate rows in `clubs/georges-river-district/data/processed/all_seasons_bowling.csv`.
+- Exact source rows: line `6163` had Nathan Percy, First Grade, `90` wickets, `2` runs conceded, `156` balls, BBI `1-45`, average `0.02`, economy `0.08`; line `6219` had Nathan Percy, Second Grade, `11` wickets, `214` runs conceded, `435` balls.
+- Transformation step: Hall of Fame loaded `all_seasons_bowling` through `read_processed_table`, then `best_bowling_season` grouped by canonical player and season. The invalid `90` wickets plus the valid `11` wickets aggregated to the visible `101 wickets`.
+- Fix: GRDCC app-facing primary bowling rows now pass a sanity gate before supplemental Excel rows are appended. It excludes impossible bowling rows where BBI wickets exceed season wickets, wickets exceed balls, wickets have zero balls, high wicket counts have fewer runs than wickets, derived average is below `1`, or derived economy is below `0.5` over a meaningful workload.
+- Validation: `scripts/validate_grdcc_excel_app_outputs.py` now mirrors the app-facing load path, verifies audit/review Excel files are not loader sources, and fails if Nathan Percy `Summer 1995/96` still aggregates to `101+` wickets.
+- Result: the invalid Nathan Percy `90`-wicket source row is excluded from app-facing records. Nathan Percy remains visible for `Summer 1995/96` only through the traceable `11`-wicket PlayCricket row.
+
 ## Manual Review Required
 
 - Rows in `excel_review_rows.csv` need GRDCC/client review before they can be promoted.
