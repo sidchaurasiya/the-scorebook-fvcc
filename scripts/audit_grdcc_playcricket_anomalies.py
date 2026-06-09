@@ -44,6 +44,29 @@ AUDIT_COLUMNS = [
     "notes",
 ]
 
+DECISION_REVIEW_COLUMNS = [
+    "source_system",
+    "source_file",
+    "source_row",
+    "player_name",
+    "canonical_player_id",
+    "season",
+    "team",
+    "grade",
+    "metric_group",
+    "issue_codes",
+    "issue_reasons",
+    "highest_severity",
+    "recommended_actions",
+    "app_facing_allowed",
+    "current_app_status",
+    "suggested_decision",
+    "decision_priority",
+    "notes",
+]
+
+DECISION_SUMMARY_COLUMNS = ["summary_group", "value", "count"]
+
 DECISION_COLUMNS = [
     "source_file",
     "source_row",
@@ -83,9 +106,13 @@ def main() -> int:
     write_csv(VALIDATION_DIR / "playcricket_bowling_anomalies.csv", [r for r in anomalies if r["metric_group"] == "bowling"], AUDIT_COLUMNS)
     write_csv(VALIDATION_DIR / "playcricket_fielding_anomalies.csv", [r for r in anomalies if r["metric_group"] == "fielding"], AUDIT_COLUMNS)
     write_csv(VALIDATION_DIR / "playcricket_duplicate_player_season_audit.csv", duplicate_rows, AUDIT_COLUMNS)
+    decision_rows = build_decision_review(anomalies)
+    decision_summary_rows = build_decision_summary(decision_rows)
+    write_csv(VALIDATION_DIR / "playcricket_anomaly_decision_review.csv", decision_rows, DECISION_REVIEW_COLUMNS)
+    write_csv(VALIDATION_DIR / "playcricket_anomaly_decision_summary.csv", decision_summary_rows, DECISION_SUMMARY_COLUMNS)
     summary_rows = build_summary(scanned, anomalies, app_lineage)
     write_csv(VALIDATION_DIR / "playcricket_anomaly_summary.csv", summary_rows, ["metric", "value"])
-    write_report(scanned, anomalies, duplicate_rows, app_lineage, rows_by_group)
+    write_report(scanned, anomalies, duplicate_rows, app_lineage, rows_by_group, decision_rows, decision_summary_rows)
 
     severity_counts = Counter(str(row["severity"]) for row in anomalies)
     print("rows scanned:")
@@ -104,6 +131,8 @@ def main() -> int:
         VALIDATION_DIR / "playcricket_bowling_anomalies.csv",
         VALIDATION_DIR / "playcricket_fielding_anomalies.csv",
         VALIDATION_DIR / "playcricket_duplicate_player_season_audit.csv",
+        VALIDATION_DIR / "playcricket_anomaly_decision_review.csv",
+        VALIDATION_DIR / "playcricket_anomaly_decision_summary.csv",
         VALIDATION_DIR / "playcricket_anomaly_summary.csv",
         ROOT / "docs" / "georges_river_playcricket_anomaly_audit_report.md",
         SOURCE_DIR / "playcricket_manual_anomaly_decisions.csv",
@@ -385,7 +414,160 @@ def build_summary(scanned: dict[str, int], anomalies: list[dict[str, object]], a
     return rows
 
 
-def write_report(scanned: dict[str, int], anomalies: list[dict[str, object]], duplicate_rows: list[dict[str, object]], app_lineage: dict[str, object], rows_by_group: dict[str, list[dict[str, str]]]) -> None:
+def build_decision_review(anomalies: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str, str, str, str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in anomalies:
+        key = (
+            clean_text(row.get("source_file")),
+            clean_text(row.get("source_row")),
+            clean_text(row.get("player_name")),
+            clean_text(row.get("season")),
+            clean_text(row.get("team")),
+            clean_text(row.get("grade")),
+            clean_text(row.get("metric_group")),
+        )
+        grouped[key].append(row)
+
+    decision_rows: list[dict[str, object]] = []
+    for rows in grouped.values():
+        first = rows[0]
+        issue_codes = sorted({clean_text(row.get("issue_code")) for row in rows if clean_text(row.get("issue_code"))})
+        reasons = sorted({clean_text(row.get("reason")) for row in rows if clean_text(row.get("reason"))})
+        actions = sorted({clean_text(row.get("recommended_action")) for row in rows if clean_text(row.get("recommended_action"))})
+        allowed_values = sorted({clean_text(row.get("app_facing_allowed")) for row in rows if clean_text(row.get("app_facing_allowed"))})
+        allowed = combined_app_facing_allowed(allowed_values)
+        suggested_decision, decision_priority = suggest_decision(issue_codes, actions)
+        if invalid_player_name(first.get("player_name")):
+            suggested_decision, decision_priority = "exclude_from_records", "P1"
+        decision_rows.append(
+            {
+                "source_system": clean_text(first.get("source_system")) or "playcricket",
+                "source_file": clean_text(first.get("source_file")),
+                "source_row": clean_text(first.get("source_row")),
+                "player_name": clean_text(first.get("player_name")),
+                "canonical_player_id": clean_text(first.get("canonical_player_id")),
+                "season": clean_text(first.get("season")),
+                "team": clean_text(first.get("team")),
+                "grade": clean_text(first.get("grade")),
+                "metric_group": clean_text(first.get("metric_group")),
+                "issue_codes": "; ".join(issue_codes),
+                "issue_reasons": "; ".join(reasons),
+                "highest_severity": highest_severity(rows),
+                "recommended_actions": "; ".join(actions),
+                "app_facing_allowed": allowed,
+                "current_app_status": current_app_status(allowed),
+                "suggested_decision": suggested_decision,
+                "decision_priority": decision_priority,
+                "notes": "",
+            }
+        )
+    decision_rows.sort(key=decision_sort_key)
+    return decision_rows
+
+
+def build_decision_summary(decision_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    summary: list[dict[str, object]] = []
+    for summary_group, field in [
+        ("decision_priority", "decision_priority"),
+        ("suggested_decision", "suggested_decision"),
+        ("metric_group", "metric_group"),
+        ("app_facing_allowed", "app_facing_allowed"),
+    ]:
+        counts = Counter(clean_text(row.get(field)) for row in decision_rows)
+        summary.extend({"summary_group": summary_group, "value": key, "count": value} for key, value in sorted(counts.items()))
+
+    issue_counts: Counter[str] = Counter()
+    for row in decision_rows:
+        for code in clean_text(row.get("issue_codes")).split("; "):
+            if code:
+                issue_counts[code] += 1
+    summary.extend({"summary_group": "issue_code", "value": key, "count": value} for key, value in issue_counts.most_common())
+    return summary
+
+
+def suggest_decision(issue_codes: list[str], actions: list[str]) -> tuple[str, str]:
+    code_set = set(issue_codes)
+    action_set = set(actions)
+    if "app_facing_primary_bowling_excluded" in code_set:
+        return "already_excluded_review_source", "P1"
+    if "exclude_from_records" in action_set or "invalid_player_name" in code_set:
+        return "exclude_from_records", "P1"
+    if issue_codes and all(is_duplicate_or_identity_issue(code) for code in issue_codes):
+        return "manual_identity_review", "P2"
+    if any(is_manual_stat_issue(code) for code in issue_codes):
+        return "manual_stat_review", "P2"
+    return "manual_stat_review", "P2"
+
+
+def is_duplicate_or_identity_issue(code: str) -> bool:
+    return code.startswith("duplicate_") or code.startswith("same_") or code.startswith("minor_spelling_variant")
+
+
+def is_manual_stat_issue(code: str) -> bool:
+    keywords = (
+        "strike_rate",
+        "average",
+        "wickets_gt",
+        "season_runs",
+        "innings_gt",
+        "high_score",
+        "catches_gt",
+        "stumpings_gt",
+        "dismissals_gt",
+        "economy_gt",
+    )
+    return any(keyword in code for keyword in keywords)
+
+
+def highest_severity(rows: list[dict[str, object]]) -> str:
+    order = {"high": 0, "medium": 1, "low": 2}
+    return min((clean_text(row.get("severity")) for row in rows), key=lambda value: order.get(value, 99), default="")
+
+
+def combined_app_facing_allowed(values: list[str]) -> str:
+    if "no" in values:
+        return "no"
+    if "pending" in values:
+        return "pending"
+    if "yes" in values:
+        return "yes"
+    return "pending"
+
+
+def current_app_status(app_facing_allowed: str) -> str:
+    if app_facing_allowed == "no":
+        return "excluded_from_app"
+    if app_facing_allowed == "pending":
+        return "not_confirmed_safe"
+    return "allowed_or_audit_only"
+
+
+def decision_sort_key(row: dict[str, object]) -> tuple[object, ...]:
+    priority_order = {"P1": 0, "P2": 1}
+    severity_order = {"high": 0, "medium": 1, "low": 2}
+    return (
+        priority_order.get(clean_text(row.get("decision_priority")), 99),
+        severity_order.get(clean_text(row.get("highest_severity")), 99),
+        clean_text(row.get("metric_group")),
+        -season_sort_key(clean_text(row.get("season"))),
+        clean_text(row.get("player_name")).casefold(),
+    )
+
+
+def season_sort_key(season: str) -> int:
+    match = re.search(r"(18|19|20)\d{2}", season)
+    return int(match.group()) if match else -1
+
+
+def write_report(
+    scanned: dict[str, int],
+    anomalies: list[dict[str, object]],
+    duplicate_rows: list[dict[str, object]],
+    app_lineage: dict[str, object],
+    rows_by_group: dict[str, list[dict[str, str]]],
+    decision_rows: list[dict[str, object]],
+    decision_summary_rows: list[dict[str, object]],
+) -> None:
     path = ROOT / "docs" / "georges_river_playcricket_anomaly_audit_report.md"
     severity = Counter(str(row["severity"]) for row in anomalies)
     issue_codes = Counter(str(row["issue_code"]) for row in anomalies)
@@ -436,6 +618,20 @@ def write_report(scanned: dict[str, int], anomalies: list[dict[str, object]], du
             f"- Duplicate / identity audit rows: {len(duplicate_rows)}",
             "- These are report-only. No player merges were created or changed.",
             "",
+            "## Decision Review Export",
+            "",
+            "- Source-row decision file: `clubs/georges-river-district/data/processed/validation/playcricket_anomaly_decision_review.csv`.",
+            "- Summary file: `clubs/georges-river-district/data/processed/validation/playcricket_anomaly_decision_summary.csv`.",
+            "- Use the decision review file for manual pre-preview review. It collapses repeated issue-level findings into one row per source file, source row, player, season, team, grade, and metric group.",
+            "- `P1` = must resolve, approve, or exclude before client preview.",
+            "- `P2` = manual review; preview can proceed only if the row is not app-facing dangerous.",
+            f"- Decision review rows: {len(decision_rows)}.",
+            f"- Current app-facing dangerous raw rows already excluded by the GRDCC app-facing sanity filter: {app_lineage['dangerous_count']}.",
+            "",
+            "### Decision Summary",
+            "",
+            *decision_summary_table(decision_summary_rows),
+            "",
             "## Nathan Percy Root Cause And Status",
             "",
             "- The `Nathan Percy`, `Summer 1995/96`, `101 wickets` Hall of Fame card came from primary processed PlayCricket bowling data, not Excel.",
@@ -457,6 +653,15 @@ def write_report(scanned: dict[str, int], anomalies: list[dict[str, object]], du
         ]
     )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def decision_summary_table(rows: list[dict[str, object]]) -> list[str]:
+    if not rows:
+        return ["- None."]
+    output = ["| Summary Group | Value | Count |", "|---|---|---:|"]
+    for row in rows:
+        output.append(f"| {clean_text(row.get('summary_group'))} | {clean_text(row.get('value'))} | {clean_text(row.get('count'))} |")
+    return output
 
 
 def markdown_table(rows: list[dict[str, object]]) -> list[str]:
