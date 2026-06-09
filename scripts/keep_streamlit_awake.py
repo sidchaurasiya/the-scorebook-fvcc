@@ -21,19 +21,19 @@ class StreamlitApp:
 APPS: tuple[StreamlitApp, ...] = (
     StreamlitApp(
         name="Le Page Park root",
-        url="https://the-scorebook-le-page-park-demo.streamlit.app/",
+        url="https://the-scorebook-le-page-park-demo.streamlit.app/?source=keep_awake",
     ),
     StreamlitApp(
         name="Le Page Park Hall of Fame",
-        url="https://the-scorebook-le-page-park-demo.streamlit.app/?page=hall-of-fame",
+        url="https://the-scorebook-le-page-park-demo.streamlit.app/?page=hall-of-fame&source=keep_awake",
     ),
     StreamlitApp(
         name="FVCC root",
-        url="https://the-scorebook-fvcc.streamlit.app/",
+        url="https://the-scorebook-fvcc.streamlit.app/?source=keep_awake",
     ),
     StreamlitApp(
         name="FVCC Hall of Fame",
-        url="https://the-scorebook-fvcc.streamlit.app/?page=hall-of-fame",
+        url="https://the-scorebook-fvcc.streamlit.app/?page=hall-of-fame&source=keep_awake",
     ),
 )
 

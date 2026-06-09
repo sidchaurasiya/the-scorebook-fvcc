@@ -20,12 +20,12 @@ MAX_PARAM_LENGTH = 160
 
 
 def _measurement_id() -> str:
-    value = str(os.getenv("GA4_MEASUREMENT_ID", "") or "").strip()
+    try:
+        value = str(st.secrets.get("GA4_MEASUREMENT_ID", "") or "").strip()
+    except Exception:
+        value = ""
     if not value:
-        try:
-            value = str(st.secrets.get("GA4_MEASUREMENT_ID", "") or "").strip()
-        except Exception:
-            value = ""
+        value = str(os.getenv("GA4_MEASUREMENT_ID", "") or "").strip()
     if not value or not re.fullmatch(r"[A-Za-z0-9_-]{3,80}", value):
         return ""
     return value
@@ -62,14 +62,53 @@ def _clean_params(params: Mapping[str, Any] | None) -> dict[str, str | int | flo
 
 def default_event_params(params: Mapping[str, Any] | None = None) -> dict[str, Any]:
     """Return public, club-aware GA4 parameters for every Scorebook event."""
+    provided_params = dict(params or {})
     output: dict[str, Any] = {
         "app_area": "scorebook",
         "club_id": _safe_active_club_id(),
         "club_name": _safe_club_name(),
     }
-    output.update(dict(params or {}))
+    output.update(_routing_context_params())
+    output.update(provided_params)
     if "page_name" not in output and output.get("page_title"):
         output["page_name"] = output["page_title"]
+    if "page_name" not in provided_params and "page_title" not in provided_params and output.get("page_slug"):
+        output["page_name"] = str(output["page_slug"]).replace("-", " ").title()
+    output.update(_traffic_context_params(output))
+    return output
+
+
+def _query_param_value(name: str) -> str:
+    try:
+        value = st.query_params.get(name, "")
+    except Exception:
+        return ""
+    if isinstance(value, list):
+        value = value[0] if value else ""
+    return str(value or "").strip()
+
+
+def _routing_context_params() -> dict[str, str]:
+    page_slug = _query_param_value("page") or "hall-of-fame"
+    return {
+        "page_slug": page_slug,
+        "page_name": page_slug.replace("-", " ").title(),
+    }
+
+
+def _traffic_context_params(params: Mapping[str, Any]) -> dict[str, str]:
+    output: dict[str, str] = {}
+    source = _query_param_value("source") or _query_param_value("utm_source")
+    medium = _query_param_value("medium") or _query_param_value("utm_medium")
+    campaign = _query_param_value("campaign") or _query_param_value("utm_campaign")
+    if source:
+        output["traffic_source"] = source
+        if "source" not in params:
+            output["source"] = source
+    if medium:
+        output["traffic_medium"] = medium
+    if campaign:
+        output["traffic_campaign"] = campaign
     return output
 
 
@@ -144,8 +183,8 @@ def inject_ga4() -> None:
     session_key = f"_scorebook_ga4_injected_{measurement_id}"
     if st.session_state.get(session_key):
         return
-    components.html(_ga4_script(measurement_id), height=0, width=0)
-    st.session_state[session_key] = True
+    if _render_ga4_script(_ga4_script(measurement_id)):
+        st.session_state[session_key] = True
 
 
 def render_analytics_debug_status(*, sidebar: bool = True) -> None:
@@ -167,7 +206,7 @@ def track_event(event_name: str, params: Mapping[str, Any] | None = None) -> Non
     cleaned_event = _clean_event_name(event_name)
     if not measurement_id or not cleaned_event:
         return
-    components.html(_ga4_script(measurement_id, cleaned_event, params), height=0, width=0)
+    _render_ga4_script(_ga4_script(measurement_id, cleaned_event, params))
 
 
 def track_event_once(
@@ -203,6 +242,15 @@ def track_page_view(page_slug: str, page_title: str | None = None) -> None:
             "page_path": f"?page={cleaned_slug}",
         },
     )
+    track_event(
+        "scorebook_page_view",
+        {
+            "page_slug": cleaned_slug,
+            "page_title": page_title_text,
+            "page_name": page_title_text,
+            "page_path": f"?page={cleaned_slug}",
+        },
+    )
 
 
 def ga4_link_onclick(event_name: str, params: Mapping[str, Any] | None = None) -> str:
@@ -218,3 +266,30 @@ def ga4_link_onclick(event_name: str, params: Mapping[str, Any] | None = None) -
         ");}"
     )
     return f' onclick="{html.escape(script, quote=True)}"'
+
+
+def _render_ga4_script(script: str) -> bool:
+    try:
+        components.html(script, height=0, width=0)
+    except Exception:
+        return False
+    return True
+
+
+def ga4_scorecard_link_onclick(
+    *,
+    page_slug: str | None = None,
+    match_id: object = "",
+    scorecard_url: object = "",
+    section_name: str = "scorecard",
+) -> str:
+    return ga4_link_onclick(
+        "scorecard_link_click",
+        {
+            "page_slug": page_slug,
+            "match_id": match_id,
+            "scorecard_url": scorecard_url,
+            "section_name": section_name,
+            "outbound": True,
+        },
+    )
