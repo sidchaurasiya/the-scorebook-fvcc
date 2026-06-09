@@ -12,10 +12,13 @@
 
 - Sheets processed: 94
 - Nonblank rows read: 6,269
-- Accepted player-season summary rows: 5,928
-- Rejected rows: 0
-- Outlier metric issues flagged: 1,731
-- Source row / metric groups excluded from record-driving supplemental outputs: 975
+- Clean app-safe supplemental rows: 5,354
+- Review rows excluded pending manual review: 1,216
+- Rejected rows: 212
+- Outlier / validation issues flagged: 3,023
+- Column mapping issues flagged: 5
+- Reconciliation issues flagged: 1,294
+- Source row / metric groups excluded from record-driving supplemental outputs: 1,428
 - Seasons detected from sheet names: Summer 1929/30 through Summer 2021/22
 - Distinct player names detected: 2,115
 - Empty annual sheets detected: `1941-42`, `1942-43`, `1943-44`, `1945-46`
@@ -87,15 +90,21 @@ The importer now writes `excel_outlier_audit.csv` and excludes high/medium sever
 ## Known Flagged Example
 
 - `H Jolly`, `Summer 1944/45`, source sheet `1944-45`, source row `17` had `924` in the early-workbook bowling runs column. This value was previously at risk of surfacing as `924 wickets` because of the shifted early bowling-column interpretation.
-- The corrected parser treats `924` as runs conceded, not wickets, and the row is recorded in `excel_outlier_audit.csv` as `legacy_misaligned_bowling_wickets_candidate` with action `excluded_from_records`.
-- The cleaned supplemental bowling output no longer contains a `924` wicket row for H Jolly, so it cannot drive Best Bowling Season or Hall of Fame headline records.
+- The corrected parser treats `924` as runs conceded, not wickets. The reconciliation check confirms `924 / 81 = 11.41`, matching the source bowling average.
+- The clean supplemental bowling output now contains H Jolly with `81` wickets, `924` runs conceded, and a reconciled average around `11.41`.
+- The cleaned supplemental bowling output does not contain a `924` wicket row for H Jolly, so the previous headline-record bug is fixed at source.
 
 ## Deploy-Safe Supplemental Outputs
 
 - `clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_bowling.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_player_season_summary.csv`
+- `clubs/georges-river-district/data/processed/supplemental/excel_clean_rows.csv`
+- `clubs/georges-river-district/data/processed/supplemental/excel_review_rows.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_rejected_rows.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_outlier_audit.csv`
+- `clubs/georges-river-district/data/processed/supplemental/excel_column_mapping_audit.csv`
+- `clubs/georges-river-district/data/processed/supplemental/excel_reconciliation_audit.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_ingestion_summary.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_workbook_sheet_audit.csv`
+- `docs/georges_river_excel_ingestion_quality_report.md`
