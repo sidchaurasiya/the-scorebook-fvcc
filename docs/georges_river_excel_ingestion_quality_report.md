@@ -10,12 +10,12 @@
 
 ## QA Counts
 
-- Clean rows feeding app-safe supplemental records: 5354
-- Review rows excluded pending manual review: 1216
-- Rejected rows excluded from records: 212
+- Clean rows feeding app-safe supplemental records: 5335
+- Review rows excluded pending manual review: 1139
+- Rejected rows excluded from records: 308
 - Column mapping issues found: 5
 - Reconciliation issues found: 1294
-- Outlier / validation issues found: 3023
+- Outlier / validation issues found: 3203
 
 ## H Jolly Regression
 
@@ -26,6 +26,9 @@
 ## Safe To Show In App
 
 - Clean Excel batting and bowling season-summary rows can feed aggregate records only.
+- App-facing Excel supplemental files are `excel_all_seasons_batting.csv` and `excel_all_seasons_bowling.csv`; both are generated from clean/approved rows only.
+- `excel_player_season_summary.csv` is audit/context output only and is not read by the app supplemental loader.
+- `excel_review_rows.csv`, `excel_rejected_rows.csv`, and `excel_outlier_audit.csv` are not app-facing.
 - Excel data remains barred from fastest milestones, dot-ball metrics, phase metrics, balls-per-boundary, and other ball-by-ball-only outputs.
 - Review and rejected Excel rows must not feed Best Batting Season, Best Bowling Season, Record Holders, Hall of Fame leaders, Greatest Individual Seasons, Player Profile headline records, or milestones.
 
@@ -43,29 +46,29 @@
 | 1 | Summer 1996/97 | batting | battingNotOuts | 15.0 | high | Not-outs cannot exceed innings. |
 | 1 | Summer 1980/81 | batting | not_outs_not_above_innings | 16.0 | high | not_outs_not_above_innings cannot exceed innings. |
 | 1 | Summer 1996/97 | batting | not_outs_not_above_innings | 15.0 | high | not_outs_not_above_innings cannot exceed innings. |
+| 1 | Summer 1980/81 | batting | numeric_only_player_name | 1 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 1 | Summer 1992/93 | batting | numeric_only_player_name | 1 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 1 | Summer 1996/97 | batting | numeric_only_player_name | 1 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 10 | Summer 1935/36 | batting | numeric_only_player_name | 10 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 10 | Summer 1980/81 | batting | numeric_only_player_name | 10 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 10 | Summer 1992/93 | batting | numeric_only_player_name | 10 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 10 | Summer 1996/97 | batting | numeric_only_player_name | 10 | high | Numeric-only player names are likely row numbers or batting-order values. |
 | 11 | Summer 1980/81 | batting | battingNotOuts | 11.0 | high | Not-outs cannot exceed innings. |
 | 11 | Summer 1992/93 | batting | battingNotOuts | 11.0 | high | Not-outs cannot exceed innings. |
 | 11 | Summer 1980/81 | batting | not_outs_not_above_innings | 11.0 | high | not_outs_not_above_innings cannot exceed innings. |
 | 11 | Summer 1992/93 | batting | not_outs_not_above_innings | 11.0 | high | not_outs_not_above_innings cannot exceed innings. |
+| 11 | Summer 1980/81 | batting | numeric_only_player_name | 11 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 11 | Summer 1992/93 | batting | numeric_only_player_name | 11 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 11 | Summer 1996/97 | batting | numeric_only_player_name | 11 | high | Numeric-only player names are likely row numbers or batting-order values. |
 | 11 4 | Summer 1935/36 | batting | battingNotOuts | 3.0 | high | Not-outs cannot exceed innings. |
 | 11 4 | Summer 1935/36 | batting | not_outs_not_above_innings | 3.0 | high | not_outs_not_above_innings cannot exceed innings. |
 | 12 | Summer 1992/93 | batting | battingNotOuts | 10.0 | high | Not-outs cannot exceed innings. |
 | 12 | Summer 1996/97 | batting | battingNotOuts | 15.0 | high | Not-outs cannot exceed innings. |
 | 12 | Summer 1992/93 | batting | not_outs_not_above_innings | 10.0 | high | not_outs_not_above_innings cannot exceed innings. |
 | 12 | Summer 1996/97 | batting | not_outs_not_above_innings | 15.0 | high | not_outs_not_above_innings cannot exceed innings. |
+| 12 | Summer 1980/81 | batting | numeric_only_player_name | 12 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 12 | Summer 1992/93 | batting | numeric_only_player_name | 12 | high | Numeric-only player names are likely row numbers or batting-order values. |
+| 12 | Summer 1996/97 | batting | numeric_only_player_name | 12 | high | Numeric-only player names are likely row numbers or batting-order values. |
 | 12 3 | Summer 1939/40 | batting | battingNotOuts | 2.0 | high | Not-outs cannot exceed innings. |
 | 12 3 | Summer 1939/40 | batting | not_outs_not_above_innings | 2.0 | high | not_outs_not_above_innings cannot exceed innings. |
 | 12 4 | Summer 1936/37 | batting | battingNotOuts | 7.0 | high | Not-outs cannot exceed innings. |
-| 12 4 | Summer 1936/37 | batting | not_outs_not_above_innings | 7.0 | high | not_outs_not_above_innings cannot exceed innings. |
-| 13 | Summer 1970/71 | batting | battingNotOuts | 8.0 | high | Not-outs cannot exceed innings. |
-| 13 | Summer 1996/97 | batting | battingNotOuts | 12.0 | high | Not-outs cannot exceed innings. |
-| 13 | Summer 1970/71 | batting | not_outs_not_above_innings | 8.0 | high | not_outs_not_above_innings cannot exceed innings. |
-| 13 | Summer 1996/97 | batting | not_outs_not_above_innings | 12.0 | high | not_outs_not_above_innings cannot exceed innings. |
-| 13 1 | Summer 1970/71 | batting | battingNotOuts | 6.0 | high | Not-outs cannot exceed innings. |
-| 13 1 | Summer 1970/71 | batting | not_outs_not_above_innings | 6.0 | high | not_outs_not_above_innings cannot exceed innings. |
-| 13 2 | Summer 1931/32 | batting | battingNotOuts | 5.0 | high | Not-outs cannot exceed innings. |
-| 13 2 | Summer 1944/45 | batting | battingNotOuts | 5.0 | high | Not-outs cannot exceed innings. |
-| 13 2 | Summer 1968/69 | batting | battingNotOuts | 4.0 | high | Not-outs cannot exceed innings. |
-| 13 2 | Summer 1931/32 | batting | not_outs_not_above_innings | 5.0 | high | not_outs_not_above_innings cannot exceed innings. |
-| 13 2 | Summer 1944/45 | batting | not_outs_not_above_innings | 5.0 | high | not_outs_not_above_innings cannot exceed innings. |
-| 13 2 | Summer 1968/69 | batting | not_outs_not_above_innings | 4.0 | high | not_outs_not_above_innings cannot exceed innings. |

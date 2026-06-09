@@ -1041,6 +1041,8 @@ def validate_batting_row(row: dict[str, object]) -> list[dict[str, object]]:
         issues.append(outlier(row, "batting", "player_name", "", "missing_required", "high", "Missing player name."))
     if is_masked_name(player):
         issues.append(outlier(row, "batting", "player_name", player, "missing_required", "high", "Masked player name cannot drive records."))
+    if is_numeric_only_name(player):
+        issues.append(outlier(row, "batting", "numeric_only_player_name", player, "missing_required", "high", "Numeric-only player names are likely row numbers or batting-order values."))
     if not season:
         issues.append(outlier(row, "batting", "season", "", "missing_required", "high", "Missing season."))
     for metric, value in [
@@ -1097,6 +1099,8 @@ def validate_bowling_row(row: dict[str, object]) -> list[dict[str, object]]:
         issues.append(outlier(row, "bowling", "player_name", "", "missing_required", "high", "Missing player name."))
     if is_masked_name(player):
         issues.append(outlier(row, "bowling", "player_name", player, "missing_required", "high", "Masked player name cannot drive records."))
+    if is_numeric_only_name(player):
+        issues.append(outlier(row, "bowling", "numeric_only_player_name", player, "missing_required", "high", "Numeric-only player names are likely row numbers or batting-order values."))
     if not season:
         issues.append(outlier(row, "bowling", "season", "", "missing_required", "high", "Missing season."))
     for metric, value in [
@@ -1297,6 +1301,9 @@ def write_quality_report(rows: dict[str, list[dict[str, object]]], audit: dict[s
         "## Safe To Show In App",
         "",
         "- Clean Excel batting and bowling season-summary rows can feed aggregate records only.",
+        "- App-facing Excel supplemental files are `excel_all_seasons_batting.csv` and `excel_all_seasons_bowling.csv`; both are generated from clean/approved rows only.",
+        "- `excel_player_season_summary.csv` is audit/context output only and is not read by the app supplemental loader.",
+        "- `excel_review_rows.csv`, `excel_rejected_rows.csv`, and `excel_outlier_audit.csv` are not app-facing.",
         "- Excel data remains barred from fastest milestones, dot-ball metrics, phase metrics, balls-per-boundary, and other ball-by-ball-only outputs.",
         "- Review and rejected Excel rows must not feed Best Batting Season, Best Bowling Season, Record Holders, Hall of Fame leaders, Greatest Individual Seasons, Player Profile headline records, or milestones.",
         "",
@@ -1425,6 +1432,10 @@ def is_total_text(value: object) -> bool:
 def is_masked_name(value: object) -> bool:
     text = clean_text(value)
     return bool(text) and set(text) <= {"*"}
+
+
+def is_numeric_only_name(value: object) -> bool:
+    return bool(re.fullmatch(r"\d+", clean_text(value)))
 
 
 def has_total_rows(rows: list[list[object]]) -> bool:

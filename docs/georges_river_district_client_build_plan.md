@@ -41,13 +41,14 @@
 - Workbook coverage: annual sheets from `1929-30` through `2021-22`, plus an intro sheet.
 - Empty annual sheets: `1941-42`, `1942-43`, `1943-44`, `1945-46`.
 - Ingestion output folder: `clubs/georges-river-district/data/processed/supplemental/`.
-- Clean app-safe supplemental rows: 5,354.
-- Review rows excluded pending manual review: 1,216.
-- Rejected rows: 212.
+- Clean app-safe supplemental rows: 5,335.
+- Review rows excluded pending manual review: 1,139.
+- Rejected rows: 308.
 - Distinct player names detected: 2,115.
 - The workbook contains historical season summaries, not match scorecards or ball-by-ball data.
 - Supplemental rows are club-scoped and appended only for GRDCC seasons not already present in primary processed PlayCricket / PlayHQ tables.
-- Excel QA safeguards are active: 3,023 validation/outlier issues, 5 column-mapping issues, and 1,294 reconciliation issues are written to supplemental audit outputs.
+- Excel QA safeguards are active: 3,203 validation/outlier issues, 5 column-mapping issues, and 1,294 reconciliation issues are written to supplemental audit outputs.
+- Numeric-only player names are excluded from app-facing Excel records unless manually approved.
 - Known regression example: `H Jolly`, `Summer 1944/45`, source row `17`, had `924` in the early bowling runs column. The corrected parser treats this as runs conceded, maps wickets as `81`, and reconciles `924 / 81 = 11.41` against the source bowling average. The previous `924 wickets` issue is fixed at source and cannot feed headline records.
 - QA report: `docs/georges_river_excel_ingestion_quality_report.md`.
 

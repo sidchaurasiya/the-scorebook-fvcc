@@ -12,13 +12,13 @@
 
 - Sheets processed: 94
 - Nonblank rows read: 6,269
-- Clean app-safe supplemental rows: 5,354
-- Review rows excluded pending manual review: 1,216
-- Rejected rows: 212
-- Outlier / validation issues flagged: 3,023
+- Clean app-safe supplemental rows: 5,335
+- Review rows excluded pending manual review: 1,139
+- Rejected rows: 308
+- Outlier / validation issues flagged: 3,203
 - Column mapping issues flagged: 5
 - Reconciliation issues flagged: 1,294
-- Source row / metric groups excluded from record-driving supplemental outputs: 1,428
+- Source row / metric groups excluded from record-driving supplemental outputs: 1,447
 - Seasons detected from sheet names: Summer 1929/30 through Summer 2021/22
 - Distinct player names detected: 2,115
 - Empty annual sheets detected: `1941-42`, `1942-43`, `1943-44`, `1945-46`
@@ -83,6 +83,7 @@ The importer now writes `excel_outlier_audit.csv` and excludes high/medium sever
 
 - Batting rules cover impossible negative values, runs above 1,500, innings above 40, average above 250, strike rate above 300, milestone counts above innings, high score above aggregate runs, not-outs above innings, missing season, and masked/missing player names.
 - Bowling rules cover impossible negative values, wickets above 100, wickets above balls bowled, wickets with zero matches or zero balls when known, wickets above 10 per recorded match, economy outside 0.5-15, zero average with wickets and runs conceded, strike rate outside 3-300, 5WI/10WM above matches, missing season, and masked/missing player names.
+- Numeric-only player names are high-severity issues because they are likely row numbers or batting-order values, not real player names.
 - Early-workbook bowling columns are now mapped as `Overs`, `Mdns`, `Runs`, `Wkts`, `Ave`. This fixes the previous risk where a runs-conceded value could be misread as wickets.
 - High and medium severity Excel issues are excluded from headline record cards pending manual review.
 - Low severity issues may remain only as accepted warnings.
