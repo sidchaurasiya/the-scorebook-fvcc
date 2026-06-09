@@ -257,6 +257,28 @@ def configured_club_shield_text() -> str:
     return short_name[:2].upper() if short_name else "FV"
 
 
+def configured_club_logo_path() -> Path | None:
+    logo_path = str(get_branding_value("logo_path", "") or "").strip()
+    if not logo_path:
+        return None
+    path = Path(logo_path)
+    if not path.is_absolute():
+        path = APP_ROOT / path
+    return path if path.exists() and path.is_file() else None
+
+
+def configured_club_shield_html() -> str:
+    logo_path = configured_club_logo_path()
+    if logo_path:
+        encoded = base64.b64encode(logo_path.read_bytes()).decode("ascii")
+        return (
+            '<div class="side-shield side-shield-logo">'
+            f'<img src="data:image/png;base64,{encoded}" alt="{html.escape(configured_club_short_name(), quote=True)} logo">'
+            "</div>"
+        )
+    return f'<div class="side-shield">{html.escape(configured_club_shield_text())}</div>'
+
+
 def configured_contact() -> dict[str, object]:
     contact = load_club_config().get("contact", {})
     return contact if isinstance(contact, dict) else {}
@@ -713,7 +735,7 @@ def render_sidebar() -> str:
     st.sidebar.markdown(
         f"""
         <div class="side-brand">
-            <div class="side-shield">{html.escape(configured_club_shield_text())}</div>
+            {configured_club_shield_html()}
             <div>
                 <div class="side-title">{html.escape(configured_club_short_name())}</div>
                 <div class="side-subtitle">Stats Hub</div>
@@ -9723,12 +9745,13 @@ def player_v2_percent(value: object) -> str:
     return "—" if pd.isna(number) else f"{float(number):.1f}%"
 
 
-@st.cache_data
 def load_player_profile_index(_local_version: float, _identity_version: float) -> pd.DataFrame:
     aliases = load_player_aliases()
     frames = []
     for category in ["batting", "bowling", "fielding"]:
         frame = read_processed_table(f"all_seasons_{category}")
+        if not frame.empty and "source_system" in frame:
+            frame = frame[frame["source_system"].astype(str).str.casefold() != "excel"].copy()
         if not frame.empty:
             frames.append(apply_player_identity_mapping(frame, aliases))
     if not frames:

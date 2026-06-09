@@ -32,6 +32,35 @@
 - Latest processed season present locally: `Summer 2025/26`.
 - Pilot state before this paid build: `Preview-ready with caveats`.
 - Highest QA risk in the pilot notes: Georges River was called out as the highest-risk club after a malformed bowling row was fixed during final hardening.
+- Client logo added at `clubs/georges-river-district/assets/logo.png`.
+- Historical Excel source added at `clubs/georges-river-district/data/source/bexley_stats_spreadsheets.xlsx`.
+
+## Historical Excel Supplement
+
+- Workbook audited in `docs/georges_river_excel_ingestion_audit.md`.
+- Workbook coverage: annual sheets from `1929-30` through `2021-22`, plus an intro sheet.
+- Empty annual sheets: `1941-42`, `1942-43`, `1943-44`, `1945-46`.
+- Ingestion output folder: `clubs/georges-river-district/data/processed/supplemental/`.
+- Accepted player-season summary rows: 5,928.
+- Distinct player names detected: 2,115.
+- The workbook contains historical season summaries, not match scorecards or ball-by-ball data.
+- Supplemental rows are club-scoped and appended only for GRDCC seasons not already present in primary processed PlayCricket / PlayHQ tables.
+
+## Excel-Safe Metrics
+
+- Career runs, innings, not-outs, high score, 50s, 100s, ducks, and batting average where the workbook provides enough summary fields.
+- Career wickets, overs, maidens, runs conceded, and bowling average where early workbook bowling fields are present.
+- Season-summary tables, provided the source is treated as `Historical Excel`.
+
+## PlayCricket / Ball-By-Ball Only Metrics
+
+- Fastest 50s / 100s.
+- Delivery-level batting strike rate unless the source row is later proven from scorecard balls faced.
+- Batting dot-ball percentage.
+- Bowling dot-ball percentage.
+- Balls per boundary.
+- Phase metrics.
+- Any scorecard-link, match-result, or milestone claim requiring match-level evidence.
 
 ## Known Pilot Caveats
 
@@ -44,6 +73,8 @@
 - Win-rate denominators should stay explicit so missing coverage does not become a fake zero.
 - Scorecard links should be spot-checked on the live app before sharing.
 - Mobile layout should get one final visual check before client preview.
+- Historical Excel rows use conservative Excel-scoped IDs; manual alias/merge review remains required before client-facing all-time record sign-off.
+- Workbook team/grade labels are inconsistent or absent, so grade-specific claims from Excel need manual evidence.
 
 ## Highest-Risk Review Items Before Client Share
 

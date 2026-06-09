@@ -21,8 +21,7 @@ branding:
   positive_colour: "#1B8A5A"
   negative_colour: "#B23A48"
   warning_colour: "#D6A732"
-  # TODO: add the supplied logo asset path here when the branded file is available.
-  logo_path: null
+  logo_path: clubs/georges-river-district/assets/logo.png
 
 contact:
   creators:
