@@ -710,7 +710,12 @@ def inject_theme() -> None:
             display: block;
             height: 100%;
             object-fit: contain;
+            transform-origin: center;
             width: 100%;
+        }
+
+        .side-shield-logo-zoom img {
+            transform: scale(1.12);
         }
 
         .side-title {
@@ -1331,6 +1336,12 @@ def inject_theme() -> None:
             font-size: 0.78rem;
             font-weight: 700;
             margin-top: 4px;
+        }
+
+        .hof-v2-performance-hero .hof-v2-muted a.season-overview-link,
+        .hof-v2-performance-hero .hof-v2-muted a.season-overview-link:visited {
+            color: var(--club-muted-text, #66758D) !important;
+            font-weight: 800;
         }
 
         .hof-v2-race-time {
@@ -2667,6 +2678,12 @@ def inject_theme() -> None:
 
         .premiership-player-row .premiership-more-seasons {
             color: var(--club-muted-text, #66758D);
+            font-weight: 750;
+        }
+
+        .fastest-innings-card .performance-player span a.season-overview-link,
+        .fastest-innings-card .performance-player span a.season-overview-link:visited {
+            color: var(--club-muted-text, #66758D) !important;
             font-weight: 750;
         }
 
