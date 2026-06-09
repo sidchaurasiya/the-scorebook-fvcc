@@ -1,0 +1,35 @@
+metric_group,metric,available_in_excel,available_in_playcricket,excel_non_null_count,playcricket_non_null_count,excel_season_range,playcricket_season_range,safe_to_use_from_excel,safe_to_use_from_playcricket,notes
+batting,matches,yes,yes,3278,7789,Summer 1929/30 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean Excel and sane PlayCricket aggregate rows.
+batting,innings,yes,yes,4950,7789,Summer 1929/30 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean player-season summaries.
+batting,not_outs,yes,yes,2981,7789,Summer 1929/30 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe when innings/not-out columns are populated.
+batting,runs,yes,yes,4824,7789,Summer 1929/30 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean Excel and sane PlayCricket aggregate rows.
+batting,high_score,yes,yes,4637,7789,Summer 1929/30 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe when high score <= season runs.
+batting,batting_average,yes,yes,4673,6871,Summer 1929/30 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe when denominators are present and QA-clean.
+batting,batting_strike_rate,yes,yes,442,1774,Summer 2010/11 to Summer 2021/22,Summer 2010/11 to Summer 2025/26,no,yes,Excel strike rate is aggregate-only and not BBB verified.
+batting,balls_faced,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Use for aggregate context only; BBB-only rates remain verified-ball-by-ball only.
+batting,30s,no,no,0,0,,,no,no,Unavailable unless explicitly present.
+batting,50s,yes,yes,890,7789,Summer 1975/76 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe where clean and count <= innings.
+batting,100s,yes,yes,147,7789,Summer 1975/76 to Summer 2020/21,Summer 1968/69 to Summer 2025/26,yes,yes,Safe where clean and count <= innings.
+batting,ducks,yes,yes,1058,7789,Summer 2004/05 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,yes,yes,Safe where clean and count <= innings.
+batting,fours,yes,yes,1417,7789,Summer 2004/05 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,no,yes,Excel boundary columns are sparse; use cautiously if present.
+batting,sixes,yes,yes,661,7789,Summer 2004/05 to Summer 2021/22,Summer 1968/69 to Summer 2025/26,no,yes,Excel boundary columns are sparse; use cautiously if present.
+bowling,matches,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean aggregate rows.
+bowling,overs,yes,yes,355,7789,Summer 1929/30 to Summer 1974/75,Summer 1968/69 to Summer 2025/26,yes,yes,Derived from balls where available.
+bowling,balls,yes,yes,355,7789,Summer 1929/30 to Summer 1974/75,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean aggregate rows.
+bowling,maidens,yes,yes,273,7789,Summer 1929/30 to Summer 1969/70,Summer 1968/69 to Summer 2025/26,yes,yes,Safe when present and <= overs.
+bowling,bowling_runs_conceded,yes,yes,343,7789,Summer 1929/30 to Summer 1969/70,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean Excel and sane PlayCricket rows.
+bowling,wickets,yes,yes,354,7789,Summer 1929/30 to Summer 1974/75,Summer 1968/69 to Summer 2025/26,yes,yes,Safe from clean Excel and sane PlayCricket rows.
+bowling,bowling_average,yes,yes,348,3923,Summer 1929/30 to Summer 1965/66,Summer 1968/69 to Summer 2025/26,yes,yes,Safe when reconciled against runs/wickets.
+bowling,economy,yes,yes,0,5017,,Summer 1968/69 to Summer 2025/26,yes,yes,Can be calculated from runs and balls/overs for clean Excel.
+bowling,bowling_strike_rate,yes,yes,0,3923,,Summer 1968/69 to Summer 2025/26,yes,yes,Can be calculated from balls and wickets for clean Excel.
+bowling,best_bowling,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Excel BBI treated unavailable unless explicitly present and verified.
+bowling,bbi_wickets,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Derived from BBI only when present and verified.
+bowling,bbi_runs,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Derived from BBI only when present and verified.
+bowling,3wi,no,no,0,0,,,no,no,Unavailable unless explicitly present.
+bowling,5wi,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Excel 5WI unavailable unless explicitly present and verified.
+bowling,10wm,yes,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Excel 10WM unavailable unless explicitly present and verified.
+fielding,catches,no,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,PlayCricket supports aggregate fielding; Excel app-facing fielding not produced.
+fielding,stumpings,no,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,PlayCricket supports aggregate fielding; Excel app-facing fielding not produced.
+fielding,run_outs,no,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,PlayCricket supports aggregate fielding; Excel app-facing fielding not produced.
+fielding,dismissals,no,yes,0,7789,,Summer 1968/69 to Summer 2025/26,no,yes,Derived fielding total from PlayCricket components.
+ball_by_ball,fastest_50_100_dot_balls_phase_metrics,no,no,0,0,,,no,no,"BBB-only metrics require verified ball-by-ball data, not spreadsheet or aggregate PlayCricket rows."
