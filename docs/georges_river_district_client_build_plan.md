@@ -41,19 +41,22 @@
 - Workbook coverage: annual sheets from `1929-30` through `2021-22`, plus an intro sheet.
 - Empty annual sheets: `1941-42`, `1942-43`, `1943-44`, `1945-46`.
 - Ingestion output folder: `clubs/georges-river-district/data/processed/supplemental/`.
-- Accepted player-season summary rows: 5,928.
+- Clean app-safe supplemental rows: 5,354.
+- Review rows excluded pending manual review: 1,216.
+- Rejected rows: 212.
 - Distinct player names detected: 2,115.
 - The workbook contains historical season summaries, not match scorecards or ball-by-ball data.
 - Supplemental rows are club-scoped and appended only for GRDCC seasons not already present in primary processed PlayCricket / PlayHQ tables.
-- Excel outlier audit is active: 1,731 metric issues are flagged in `excel_outlier_audit.csv`, with 975 source row / metric groups excluded from record-driving supplemental outputs pending manual review.
-- Known quarantined example: `H Jolly`, `Summer 1944/45`, source row `17`, had `924` in the early bowling runs column. The corrected parser no longer treats that as wickets, and the legacy misaligned `924 wickets` candidate is excluded from headline records.
+- Excel QA safeguards are active: 3,023 validation/outlier issues, 5 column-mapping issues, and 1,294 reconciliation issues are written to supplemental audit outputs.
+- Known regression example: `H Jolly`, `Summer 1944/45`, source row `17`, had `924` in the early bowling runs column. The corrected parser treats this as runs conceded, maps wickets as `81`, and reconciles `924 / 81 = 11.41` against the source bowling average. The previous `924 wickets` issue is fixed at source and cannot feed headline records.
+- QA report: `docs/georges_river_excel_ingestion_quality_report.md`.
 
 ## Excel-Safe Metrics
 
 - Career runs, innings, not-outs, high score, 50s, 100s, ducks, and batting average where the workbook provides enough summary fields.
 - Career wickets, overs, maidens, runs conceded, and bowling average where early workbook bowling fields are present.
 - Season-summary tables, provided the source is treated as `Historical Excel`.
-- Only rows passing the Excel outlier gate should feed Hall of Fame / Record Holders / Greatest Seasons style cards.
+- Only rows passing the Excel mapping, reconciliation, and outlier gates should feed Hall of Fame / Record Holders / Greatest Seasons style cards.
 
 ## PlayCricket / Ball-By-Ball Only Metrics
 
@@ -65,6 +68,7 @@
 - Phase metrics.
 - Any scorecard-link, match-result, or milestone claim requiring match-level evidence.
 - Any Excel row flagged high or medium severity in `excel_outlier_audit.csv` until manually approved.
+- Any Excel row in `excel_review_rows.csv` or `excel_rejected_rows.csv`.
 
 ## Known Pilot Caveats
 

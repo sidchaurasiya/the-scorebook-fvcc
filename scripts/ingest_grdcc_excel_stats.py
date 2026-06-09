@@ -16,6 +16,46 @@ from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FILE = "bexley_stats_spreadsheets.xlsx"
+MANUAL_APPROVAL_COLUMNS = [
+    "source_sheet",
+    "source_row",
+    "player_name",
+    "season",
+    "issue_code",
+    "approved",
+    "approved_metric",
+    "corrected_value",
+    "notes",
+]
+MAPPING_AUDIT_COLUMNS = [
+    "source_file",
+    "source_sheet",
+    "source_row_header",
+    "detected_section",
+    "source_column_name",
+    "source_column_index",
+    "mapped_metric",
+    "mapping_confidence",
+    "mapping_reason",
+    "issue_flag",
+]
+RECONCILIATION_AUDIT_COLUMNS = [
+    "source_file",
+    "source_sheet",
+    "source_row",
+    "player_name",
+    "season",
+    "metric_group",
+    "check_name",
+    "source_value",
+    "expected_value",
+    "difference",
+    "tolerance",
+    "issue_flag",
+    "severity",
+    "reason",
+    "action",
+]
 NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     "rel": "http://schemas.openxmlformats.org/package/2006/relationships",
@@ -42,11 +82,17 @@ def main(argv: list[str] | None = None) -> int:
 
     workbook = read_xlsx(source_path)
     audit = audit_workbook(workbook)
+    manual_approvals_path = ROOT / "clubs" / club_id / "data" / "source" / "excel_manual_approvals.csv"
+    ensure_manual_approvals_template(manual_approvals_path)
+    manual_approvals = load_manual_approvals(manual_approvals_path)
     rows = ingest_workbook(workbook, source_path.name)
+    rows = apply_manual_approvals(rows, manual_approvals)
     rows = validate_and_quarantine_rows(rows)
     output_dir = ROOT / "clubs" / club_id / "data" / "processed" / "supplemental"
     output_dir.mkdir(parents=True, exist_ok=True)
     outputs = write_outputs(output_dir, rows, audit)
+    report_path = write_quality_report(rows, audit)
+    outputs.append(report_path)
 
     print_summary(audit, rows, outputs)
     return 0
@@ -257,6 +303,8 @@ def ingest_workbook(workbook: dict[str, list[list[object]]], source_file: str) -
     bowling: list[dict[str, object]] = []
     summary: list[dict[str, object]] = []
     rejected: list[dict[str, object]] = []
+    mapping_audit: list[dict[str, object]] = []
+    reconciliation_audit: list[dict[str, object]] = []
     for sheet_name, rows in workbook.items():
         season = sheet_to_season(sheet_name)
         if not season:
@@ -269,8 +317,10 @@ def ingest_workbook(workbook: dict[str, list[list[object]]], source_file: str) -
                 active_grade = first_cell
             header = [clean_text(value).upper() for value in row]
             if {"FIRST NAME", "SURNAME"}.issubset(set(header)):
+                mapping_audit.extend(mapping_audit_for_early_header(source_file, sheet_name, row_number, header))
                 parsed = parse_early_table(rows[idx + 1 :], idx + 2, header, sheet_name, season, active_grade, source_file)
             elif "PLAYER" in header:
+                mapping_audit.extend(mapping_audit_for_late_header(source_file, sheet_name, row_number, header))
                 parsed = parse_late_table(rows[idx + 1 :], idx + 2, header, sheet_name, season, active_grade, source_file)
             else:
                 continue
@@ -278,7 +328,15 @@ def ingest_workbook(workbook: dict[str, list[list[object]]], source_file: str) -
             bowling.extend(parsed["bowling"])
             summary.extend(parsed["summary"])
             rejected.extend(parsed["rejected"])
-    return {"batting": batting, "bowling": bowling, "summary": summary, "rejected": rejected}
+            reconciliation_audit.extend(parsed["reconciliation_audit"])
+    return {
+        "batting": batting,
+        "bowling": bowling,
+        "summary": summary,
+        "rejected": rejected,
+        "mapping_audit": mapping_audit,
+        "reconciliation_audit": reconciliation_audit,
+    }
 
 
 def parse_early_table(
@@ -291,7 +349,7 @@ def parse_early_table(
     source_file: str,
 ) -> dict[str, list[dict[str, object]]]:
     indexes = {name: header.index(name) for name in header if name}
-    out = {"batting": [], "bowling": [], "summary": [], "rejected": []}
+    out = {"batting": [], "bowling": [], "summary": [], "rejected": [], "reconciliation_audit": []}
     for offset, row in enumerate(rows):
         source_row = start_row + offset
         if is_next_table_start(row, rows[offset + 1] if offset + 1 < len(rows) else []):
@@ -331,9 +389,13 @@ def parse_early_table(
             "bowling5WIs": "",
         }
         if has_batting_value(batting_row):
-            out["batting"].append(to_batting_processed_row(batting_row))
+            processed = to_batting_processed_row(batting_row)
+            out["batting"].append(processed)
+            out["reconciliation_audit"].extend(reconcile_batting_row(processed))
         if has_bowling_value(bowling_row):
-            out["bowling"].append(to_bowling_processed_row(bowling_row))
+            processed = to_bowling_processed_row(bowling_row)
+            out["bowling"].append(processed)
+            out["reconciliation_audit"].extend(reconcile_bowling_row(processed))
         out["summary"].append({**common, **summary_values(batting_row, bowling_row)})
     return out
 
@@ -348,7 +410,7 @@ def parse_late_table(
     source_file: str,
 ) -> dict[str, list[dict[str, object]]]:
     indexes = {name: idx for idx, name in enumerate(header) if name}
-    out = {"batting": [], "bowling": [], "summary": [], "rejected": []}
+    out = {"batting": [], "bowling": [], "summary": [], "rejected": [], "reconciliation_audit": []}
     for offset, row in enumerate(rows):
         source_row = start_row + offset
         if is_next_table_start(row, rows[offset + 1] if offset + 1 < len(rows) else []):
@@ -377,7 +439,9 @@ def parse_late_table(
             "batting0s": value_at(row, indexes.get("0S", -1)),
         }
         if has_batting_value(batting_row):
-            out["batting"].append(to_batting_processed_row(batting_row))
+            processed = to_batting_processed_row(batting_row)
+            out["batting"].append(processed)
+            out["reconciliation_audit"].extend(reconcile_batting_row(processed))
             out["summary"].append({**common, **summary_values(batting_row, {})})
     return out
 
@@ -485,6 +549,341 @@ BASE_CONTEXT_COLUMNS = [
 ]
 
 
+def ensure_manual_approvals_template(path: Path) -> None:
+    if path.exists():
+        return
+    write_csv(path, [])
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=MANUAL_APPROVAL_COLUMNS)
+        writer.writeheader()
+
+
+def load_manual_approvals(path: Path) -> dict[tuple[str, str, str, str, str], dict[str, object]]:
+    approvals: dict[tuple[str, str, str, str, str], dict[str, object]] = {}
+    if not path.exists():
+        return approvals
+    with path.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            if clean_text(row.get("approved")).casefold() not in {"yes", "y", "true", "1"}:
+                continue
+            key = approval_key(
+                row.get("source_sheet"),
+                row.get("source_row"),
+                row.get("player_name"),
+                row.get("season"),
+                row.get("issue_code"),
+            )
+            approvals[key] = row
+    return approvals
+
+
+def apply_manual_approvals(rows: dict[str, list[dict[str, object]]], approvals: dict[tuple[str, str, str, str, str], dict[str, object]]) -> dict[str, list[dict[str, object]]]:
+    if not approvals:
+        return rows
+    for group in ("batting", "bowling"):
+        for row in rows.get(group, []):
+            for key, approval in approvals.items():
+                source_sheet, source_row, player_name, season, _issue_code = key
+                if (
+                    source_sheet != clean_text(row.get("source_sheet"))
+                    or source_row != clean_text(row.get("source_row"))
+                    or player_name.casefold() != clean_text(row.get("player_name")).casefold()
+                    or season != clean_text(row.get("season"))
+                ):
+                    continue
+                metric = clean_text(approval.get("approved_metric"))
+                corrected = clean_number(approval.get("corrected_value"))
+                notes = clean_text(approval.get("notes"))
+                if metric and corrected != "" and notes and metric in row:
+                    row[metric] = corrected
+                    row["manual_approval_notes"] = notes
+                if notes:
+                    existing = clean_text(row.get("manual_approval_issue_codes"))
+                    issue_code = key[-1]
+                    row["manual_approval_issue_codes"] = "; ".join(part for part in [existing, issue_code] if part)
+    return rows
+
+
+def approval_key(source_sheet: object, source_row: object, player_name: object, season: object, issue_code: object) -> tuple[str, str, str, str, str]:
+    return (
+        clean_text(source_sheet),
+        clean_text(source_row),
+        clean_text(player_name),
+        clean_text(season),
+        clean_text(issue_code),
+    )
+
+
+def mapping_audit_for_early_header(source_file: str, sheet_name: str, header_row: int, header: list[str]) -> list[dict[str, object]]:
+    expected = [
+        ("identity", "FIRST NAME", "player_first_name", "high", "Early workbook identity column."),
+        ("identity", "SURNAME", "player_surname", "high", "Early workbook identity column."),
+        ("general", "GAMES", "matches", "high", "Games column maps to season matches."),
+        ("batting", "INNS", "battingInnings", "high", "Inns appears in the batting section before Total/Ave."),
+        ("batting", "NO", "battingNotOuts", "high", "NO appears in the batting section before Total/Ave."),
+        ("batting", "HS", "battingHighScore", "high", "HS appears in the batting section before Total/Ave."),
+        ("batting", "TOTAL", "battingAggregate", "high", "Total appears in the batting section before the first Ave column."),
+        ("batting", "AVE", "battingAverage", "high", "The first Ave column follows batting Total."),
+        ("bowling", "OVERS", "bowlingOvers", "high", "Overs starts the early-workbook bowling section."),
+        ("bowling", "MDNS", "bowlingMaidens", "high", "Mdns follows Overs in the bowling section."),
+    ]
+    rows = [mapping_row(source_file, sheet_name, header_row, section, header, label, metric, confidence, reason) for section, label, metric, confidence, reason in expected]
+    overs_index = index_or_none(header, "OVERS")
+    bowling_offsets = [
+        (2, "bowlingRuns", "high", "Runs two columns after Overs/Mdns is section-aware bowling runs conceded, not batting runs."),
+        (3, "bowlingWickets", "high", "Wkts follows bowling runs in the early workbook bowling block."),
+        (4, "bowlingAverage", "high", "The Ave after Wkts is bowling average, not batting average."),
+    ]
+    for offset, metric, confidence, reason in bowling_offsets:
+        if overs_index is None:
+            rows.append(missing_mapping_row(source_file, sheet_name, header_row, "bowling", metric, "OVERS anchor missing."))
+            continue
+        column_index_0 = overs_index + offset
+        rows.append(
+            {
+                "source_file": source_file,
+                "source_sheet": sheet_name,
+                "source_row_header": header_row,
+                "detected_section": "bowling",
+                "source_column_name": value_at(header, column_index_0),
+                "source_column_index": column_index_0 + 1,
+                "mapped_metric": metric,
+                "mapping_confidence": confidence if clean_text(value_at(header, column_index_0)) else "medium",
+                "mapping_reason": reason,
+                "issue_flag": "" if clean_text(value_at(header, column_index_0)) else "blank_header_cell",
+            }
+        )
+    return rows
+
+
+def mapping_audit_for_late_header(source_file: str, sheet_name: str, header_row: int, header: list[str]) -> list[dict[str, object]]:
+    expected = [
+        ("identity", "PLAYER", "player_name", "high", "Later workbook player identity column."),
+        ("general", "MAT", "matches", "high", "MAT maps to season matches."),
+        ("batting", "INN", "battingInnings", "high", "Later workbook table is batting-only summary."),
+        ("batting", "NO", "battingNotOuts", "high", "Not-outs in batting-only summary."),
+        ("batting", "100S", "batting100s", "high", "Hundreds in batting-only summary."),
+        ("batting", "50S", "batting50s", "high", "Fifties in batting-only summary."),
+        ("batting", "0S", "batting0s", "high", "Ducks in batting-only summary."),
+        ("batting", "4S", "battingFours", "high", "Fours in batting-only summary."),
+        ("batting", "6S", "battingSixes", "high", "Sixes in batting-only summary."),
+        ("batting", "MINS", "battingMinutes", "medium", "Minutes retained as source summary context."),
+        ("batting", "HS", "battingHighScore", "high", "High score in batting-only summary."),
+        ("batting", "RUNS", "battingAggregate", "high", "Runs in later batting-only block maps to batting aggregate."),
+        ("batting", "AVE.", "battingAverage", "high", "Average in later batting-only block."),
+        ("batting", "STR.", "battingStrikeRate", "medium", "Workbook provides strike rate, but Excel data is not ball-by-ball."),
+    ]
+    return [mapping_row(source_file, sheet_name, header_row, section, header, label, metric, confidence, reason) for section, label, metric, confidence, reason in expected]
+
+
+def mapping_row(
+    source_file: str,
+    sheet_name: str,
+    header_row: int,
+    section: str,
+    header: list[str],
+    label: str,
+    metric: str,
+    confidence: str,
+    reason: str,
+) -> dict[str, object]:
+    idx = index_or_none(header, label)
+    if idx is None:
+        return missing_mapping_row(source_file, sheet_name, header_row, section, metric, f"Expected source column {label!r} not found.")
+    return {
+        "source_file": source_file,
+        "source_sheet": sheet_name,
+        "source_row_header": header_row,
+        "detected_section": section,
+        "source_column_name": value_at(header, idx),
+        "source_column_index": idx + 1,
+        "mapped_metric": metric,
+        "mapping_confidence": confidence,
+        "mapping_reason": reason,
+        "issue_flag": "",
+    }
+
+
+def missing_mapping_row(source_file: str, sheet_name: str, header_row: int, section: str, metric: str, reason: str) -> dict[str, object]:
+    return {
+        "source_file": source_file,
+        "source_sheet": sheet_name,
+        "source_row_header": header_row,
+        "detected_section": section,
+        "source_column_name": "",
+        "source_column_index": "",
+        "mapped_metric": metric,
+        "mapping_confidence": "low",
+        "mapping_reason": reason,
+        "issue_flag": "missing_expected_column",
+    }
+
+
+def index_or_none(values: list[str], target: str) -> int | None:
+    try:
+        return values.index(target)
+    except ValueError:
+        return None
+
+
+def reconcile_batting_row(row: dict[str, object]) -> list[dict[str, object]]:
+    checks: list[dict[str, object]] = []
+    runs = number_or_none(row.get("battingAggregate"))
+    innings = number_or_none(row.get("battingInnings"))
+    not_outs = number_or_none(row.get("battingNotOuts"))
+    high_score = number_or_none(row.get("battingHighScore"))
+    average = number_or_none(row.get("battingAverage"))
+    fifties = number_or_none(row.get("batting50s"))
+    hundreds = number_or_none(row.get("batting100s"))
+    ducks = number_or_none(row.get("batting0s"))
+
+    if runs is not None and high_score is not None:
+        checks.append(reconciliation_row(row, "batting", "high_score_not_above_total_runs", high_score, runs, 0, high_score > runs, "high", "High score cannot exceed season runs."))
+    for name, value in [("100s_not_above_innings", hundreds), ("50s_not_above_innings", fifties), ("ducks_not_above_innings", ducks), ("not_outs_not_above_innings", not_outs)]:
+        if value is not None and innings is not None:
+            checks.append(reconciliation_row(row, "batting", name, value, innings, 0, value > innings, "high", f"{name} cannot exceed innings."))
+    if runs is not None and innings is not None and not_outs is not None and average is not None:
+        dismissals = innings - not_outs
+        if dismissals > 0:
+            expected = runs / dismissals
+            checks.append(
+                reconciliation_row(
+                    row,
+                    "batting",
+                    "batting_average_reconciliation",
+                    average,
+                    round(expected, 2),
+                    0.15,
+                    abs(average - expected) > 0.15,
+                    "medium",
+                    "Source batting average does not reconcile with runs / dismissals.",
+                )
+            )
+        elif runs > 0:
+            checks.append(reconciliation_row(row, "batting", "high_numerator_zero_dismissals", runs, 0, 0, True, "medium", "Runs recorded with zero dismissals; average cannot be independently reconciled."))
+    return checks
+
+
+def reconcile_bowling_row(row: dict[str, object]) -> list[dict[str, object]]:
+    checks: list[dict[str, object]] = []
+    wickets = number_or_none(row.get("bowlingWickets"))
+    runs = number_or_none(row.get("bowlingRuns"))
+    balls = number_or_none(row.get("bowlingBalls"))
+    average = number_or_none(row.get("bowlingAverage"))
+    economy = number_or_none(row.get("bowlingEconomyRate"))
+    strike_rate = number_or_none(row.get("bowlingStrikeRate"))
+
+    if runs is not None and wickets is not None and wickets > 0:
+        expected_average = runs / wickets
+        if average is not None:
+            checks.append(
+                reconciliation_row(
+                    row,
+                    "bowling",
+                    "bowling_average_reconciliation",
+                    average,
+                    round(expected_average, 2),
+                    0.15,
+                    abs(average - expected_average) > 0.15,
+                    "high",
+                    "Source bowling average does not reconcile with runs conceded / wickets.",
+                )
+            )
+    elif runs is not None and runs > 0 and (wickets is None or wickets <= 0):
+        checks.append(reconciliation_row(row, "bowling", "high_numerator_zero_wickets", runs, 0, 0, True, "medium", "Runs conceded recorded with zero wickets; average cannot be reconciled."))
+
+    if runs is not None and balls is not None and balls > 0:
+        expected_economy = runs * 6 / balls
+        if economy is not None:
+            checks.append(
+                reconciliation_row(
+                    row,
+                    "bowling",
+                    "bowling_economy_reconciliation",
+                    economy,
+                    round(expected_economy, 2),
+                    0.15,
+                    abs(economy - expected_economy) > 0.15,
+                    "medium",
+                    "Source economy does not reconcile with runs conceded / overs.",
+                )
+            )
+    elif runs is not None and runs > 0:
+        checks.append(reconciliation_row(row, "bowling", "high_numerator_zero_overs", runs, 0, 0, True, "high", "Runs conceded with zero overs/balls indicates a section or denominator problem."))
+
+    if balls is not None and wickets is not None and wickets > 0:
+        expected_strike_rate = balls / wickets
+        if strike_rate is not None:
+            checks.append(
+                reconciliation_row(
+                    row,
+                    "bowling",
+                    "bowling_strike_rate_reconciliation",
+                    strike_rate,
+                    round(expected_strike_rate, 2),
+                    0.15,
+                    abs(strike_rate - expected_strike_rate) > 0.15,
+                    "medium",
+                    "Source bowling strike rate does not reconcile with balls / wickets.",
+                )
+            )
+    if wickets is not None and runs is not None and wickets > 100 and runs <= 100:
+        checks.append(reconciliation_row(row, "bowling", "wickets_likely_mapped_from_bowling_runs", wickets, runs, 0, True, "high", "Wickets are implausibly high while runs are low; likely wrong column mapping."))
+    if wickets is not None and runs is not None and runs > 500 and wickets > 0 and average is not None:
+        expected_average = runs / wickets
+        checks.append(
+            reconciliation_row(
+                row,
+                "bowling",
+                "bowling_runs_not_wickets_semantic_check",
+                runs,
+                round(expected_average, 2),
+                0.15,
+                abs(average - expected_average) > 0.15,
+                "high",
+                "Large bowling runs value must reconcile as runs conceded, not wickets.",
+                action_override="" if abs(average - expected_average) <= 0.15 else None,
+            )
+        )
+    return checks
+
+
+def reconciliation_row(
+    row: dict[str, object],
+    metric_group: str,
+    check_name: str,
+    source_value: object,
+    expected_value: object,
+    tolerance: object,
+    issue: bool,
+    severity: str,
+    reason: str,
+    action_override: str | None = None,
+) -> dict[str, object]:
+    try:
+        difference = round(float(source_value) - float(expected_value), 4)
+    except (TypeError, ValueError):
+        difference = ""
+    action = action_override if action_override is not None else ("excluded_from_records" if issue and severity in {"high", "medium"} else "")
+    return {
+        "source_file": row.get("source_file", SOURCE_FILE),
+        "source_sheet": row.get("source_sheet", ""),
+        "source_row": row.get("source_row", ""),
+        "player_name": row.get("player_name", ""),
+        "season": row.get("season", ""),
+        "metric_group": metric_group,
+        "check_name": check_name,
+        "source_value": source_value,
+        "expected_value": expected_value,
+        "difference": difference,
+        "tolerance": tolerance,
+        "issue_flag": "yes" if issue else "",
+        "severity": severity if issue else "",
+        "reason": reason if issue else "",
+        "action": action,
+    }
+
+
 def summary_values(batting: dict[str, object], bowling: dict[str, object]) -> dict[str, object]:
     return {
         "matches": clean_number(batting.get("matches") or bowling.get("matches")),
@@ -504,27 +903,120 @@ def validate_and_quarantine_rows(rows: dict[str, list[dict[str, object]]]) -> di
     outliers: list[dict[str, object]] = []
     clean_batting: list[dict[str, object]] = []
     clean_bowling: list[dict[str, object]] = []
+    clean_rows: list[dict[str, object]] = []
+    review_rows: list[dict[str, object]] = []
+    rejected_rows: list[dict[str, object]] = list(rows.get("rejected", []))
+    reconciliation_by_row = reconciliation_issues_by_row(rows.get("reconciliation_audit", []))
 
     for row in rows["batting"]:
-        issues = validate_batting_row(row)
+        issues = validate_batting_row(row) + reconciliation_by_row.get(row_key(row, "batting"), [])
+        issues = apply_issue_approvals(row, issues)
         outliers.extend(issues)
         if record_row_allowed(issues):
+            row["data_confidence"] = "high" if no_issue_warnings(row, rows) else row.get("data_confidence", "medium")
             clean_batting.append(row)
+            clean_rows.append(qa_row(row, "batting", "clean", "feeds_app_records", issues))
         else:
             row["data_confidence"] = "low"
+            bucket = "rejected" if row_rejected(issues) else "review"
+            qa = qa_row(row, "batting", bucket, "excluded_from_records", issues)
+            (rejected_rows if bucket == "rejected" else review_rows).append(qa)
 
     for row in rows["bowling"]:
-        issues = validate_bowling_row(row)
+        issues = validate_bowling_row(row) + reconciliation_by_row.get(row_key(row, "bowling"), [])
+        issues = apply_issue_approvals(row, issues)
         outliers.extend(issues)
         if record_row_allowed(issues):
+            row["data_confidence"] = "high" if no_issue_warnings(row, rows) else row.get("data_confidence", "medium")
             clean_bowling.append(row)
+            clean_rows.append(qa_row(row, "bowling", "clean", "feeds_app_records", issues))
         else:
             row["data_confidence"] = "low"
+            bucket = "rejected" if row_rejected(issues) else "review"
+            qa = qa_row(row, "bowling", bucket, "excluded_from_records", issues)
+            (rejected_rows if bucket == "rejected" else review_rows).append(qa)
 
     rows["batting"] = clean_batting
     rows["bowling"] = clean_bowling
+    rows["clean_rows"] = clean_rows
+    rows["review_rows"] = review_rows
+    rows["rejected"] = rejected_rows
     rows["outliers"] = outliers
     return rows
+
+
+def reconciliation_issues_by_row(reconciliation_audit: list[dict[str, object]]) -> dict[tuple[object, object, str], list[dict[str, object]]]:
+    grouped: dict[tuple[object, object, str], list[dict[str, object]]] = defaultdict(list)
+    for check in reconciliation_audit:
+        if not check.get("issue_flag"):
+            continue
+        grouped[(check.get("source_sheet"), check.get("source_row"), clean_text(check.get("metric_group")))].append(
+            {
+                "source_file": check.get("source_file", SOURCE_FILE),
+                "source_sheet": check.get("source_sheet", ""),
+                "source_row": check.get("source_row", ""),
+                "player_name": check.get("player_name", ""),
+                "season": check.get("season", ""),
+                "team_or_grade": "",
+                "metric_group": check.get("metric_group", ""),
+                "metric_name": check.get("check_name", ""),
+                "metric_value": check.get("source_value", ""),
+                "issue_type": "format_issue" if "mapped" in clean_text(check.get("check_name")) else "suspicious",
+                "severity": check.get("severity", "medium"),
+                "reason": check.get("reason", ""),
+                "action": check.get("action") or "excluded_from_records",
+                "data_confidence": "low",
+            }
+        )
+    return grouped
+
+
+def row_key(row: dict[str, object], metric_group: str) -> tuple[object, object, str]:
+    return (row.get("source_sheet"), row.get("source_row"), metric_group)
+
+
+def apply_issue_approvals(row: dict[str, object], issues: list[dict[str, object]]) -> list[dict[str, object]]:
+    approved_codes = {part.strip() for part in clean_text(row.get("manual_approval_issue_codes")).split(";") if part.strip()}
+    if not approved_codes:
+        return issues
+    for issue in issues:
+        if clean_text(issue.get("metric_name")) in approved_codes:
+            issue["action"] = "accepted_with_warning"
+            issue["data_confidence"] = "medium"
+            issue["reason"] = f"{issue.get('reason')} Manual approval recorded: {row.get('manual_approval_notes')}".strip()
+    return issues
+
+
+def no_issue_warnings(row: dict[str, object], rows: dict[str, list[dict[str, object]]]) -> bool:
+    return not any(
+        check.get("source_sheet") == row.get("source_sheet")
+        and check.get("source_row") == row.get("source_row")
+        and check.get("metric_group") in {"batting", "bowling"}
+        and check.get("issue_flag")
+        for check in rows.get("reconciliation_audit", [])
+    )
+
+
+def row_rejected(issues: list[dict[str, object]]) -> bool:
+    return any(clean_text(issue.get("issue_type")) in {"invalid", "missing_required"} and clean_text(issue.get("severity")) == "high" for issue in issues)
+
+
+def qa_row(row: dict[str, object], metric_group: str, qa_status: str, action: str, issues: list[dict[str, object]]) -> dict[str, object]:
+    return {
+        "source_file": row.get("source_file", SOURCE_FILE),
+        "source_sheet": row.get("source_sheet", ""),
+        "source_row": row.get("source_row", ""),
+        "player_name": row.get("player_name", ""),
+        "season": row.get("season", ""),
+        "team_or_grade": row.get("grade_name") or row.get("team_name", ""),
+        "metric_group": metric_group,
+        "qa_status": qa_status,
+        "action": action,
+        "data_confidence": row.get("data_confidence", ""),
+        "issue_count": len(issues),
+        "issue_codes": "; ".join(clean_text(issue.get("metric_name")) for issue in issues if clean_text(issue.get("metric_name"))),
+        "issue_reasons": "; ".join(clean_text(issue.get("reason")) for issue in issues if clean_text(issue.get("reason"))),
+    }
 
 
 def record_row_allowed(issues: list[dict[str, object]]) -> bool:
@@ -640,18 +1132,6 @@ def validate_bowling_row(row: dict[str, object]) -> list[dict[str, object]]:
     for metric, value in [("bowling5WIs", five_wickets), ("bowling10WMs", ten_wickets)]:
         if value is not None and matches is not None and value > matches:
             issues.append(outlier(row, "bowling", metric, value, "invalid", "high", f"{metric} cannot exceed matches."))
-    if runs is not None and runs >= 900:
-        issues.append(
-            outlier(
-                row,
-                "bowling",
-                "legacy_misaligned_bowling_wickets_candidate",
-                runs,
-                "format_issue",
-                "high",
-                "Very high early-workbook runs value was previously at risk of being misread as wickets; exclude from headline records pending manual review.",
-            )
-        )
     return issues
 
 
@@ -691,11 +1171,15 @@ def write_outputs(output_dir: Path, rows: dict[str, list[dict[str, object]]], au
         ("excel_all_seasons_batting.csv", "batting"),
         ("excel_all_seasons_bowling.csv", "bowling"),
         ("excel_player_season_summary.csv", "summary"),
+        ("excel_clean_rows.csv", "clean_rows"),
+        ("excel_review_rows.csv", "review_rows"),
         ("excel_rejected_rows.csv", "rejected"),
         ("excel_outlier_audit.csv", "outliers"),
+        ("excel_column_mapping_audit.csv", "mapping_audit"),
+        ("excel_reconciliation_audit.csv", "reconciliation_audit"),
     ]:
         path = output_dir / filename
-        write_csv(path, rows[key])
+        write_csv(path, rows[key], fieldnames=preferred_fieldnames(filename, rows[key]))
         outputs.append(path)
     summary_rows = [
         {
@@ -703,9 +1187,12 @@ def write_outputs(output_dir: Path, rows: dict[str, list[dict[str, object]]], au
             "value": len(audit["sheets"]),
         },
         {"metric": "rows_read", "value": sum(int(sheet["row_count"]) for sheet in audit["sheets"])},
-        {"metric": "rows_accepted", "value": len(rows["summary"])},
+        {"metric": "rows_accepted", "value": len(rows["clean_rows"])},
+        {"metric": "rows_review", "value": len(rows["review_rows"])},
         {"metric": "rows_rejected", "value": len(rows["rejected"])},
         {"metric": "rows_flagged", "value": len(rows.get("outliers", []))},
+        {"metric": "column_mapping_issues", "value": sum(1 for row in rows.get("mapping_audit", []) if row.get("issue_flag"))},
+        {"metric": "reconciliation_issues", "value": sum(1 for row in rows.get("reconciliation_audit", []) if row.get("issue_flag"))},
         {
             "metric": "rows_excluded_from_records",
             "value": len({(row.get("source_sheet"), row.get("source_row"), row.get("metric_group")) for row in rows.get("outliers", []) if row.get("action") == "excluded_from_records"}),
@@ -722,26 +1209,143 @@ def write_outputs(output_dir: Path, rows: dict[str, list[dict[str, object]]], au
     return outputs
 
 
-def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
+def preferred_fieldnames(filename: str, rows: list[dict[str, object]]) -> list[str] | None:
+    if filename == "excel_column_mapping_audit.csv":
+        return MAPPING_AUDIT_COLUMNS
+    if filename == "excel_reconciliation_audit.csv":
+        return RECONCILIATION_AUDIT_COLUMNS
+    if filename in {"excel_clean_rows.csv", "excel_review_rows.csv", "excel_rejected_rows.csv"}:
+        return [
+            "source_file",
+            "source_sheet",
+            "source_row",
+            "player_name",
+            "season",
+            "team_or_grade",
+            "metric_group",
+            "qa_status",
+            "action",
+            "data_confidence",
+            "issue_count",
+            "issue_codes",
+            "issue_reasons",
+        ]
+    return None
+
+
+def write_csv(path: Path, rows: list[dict[str, object]], fieldnames: list[str] | None = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames: list[str] = []
-    for row in rows:
-        for key in row:
-            if key not in fieldnames:
-                fieldnames.append(key)
+    if fieldnames is None:
+        fieldnames = []
+        for row in rows:
+            for key in row:
+                if key not in fieldnames:
+                    fieldnames.append(key)
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames or ["empty"])
         writer.writeheader()
         for row in rows:
-            writer.writerow(row)
+            writer.writerow({key: row.get(key, "") for key in writer.fieldnames or []})
+
+
+def write_quality_report(rows: dict[str, list[dict[str, object]]], audit: dict[str, object]) -> Path:
+    path = ROOT / "docs" / "georges_river_excel_ingestion_quality_report.md"
+    mapping_issues = [row for row in rows.get("mapping_audit", []) if row.get("issue_flag")]
+    reconciliation_issues = [row for row in rows.get("reconciliation_audit", []) if row.get("issue_flag")]
+    h_jolly_rows = [
+        row
+        for row in rows.get("bowling", [])
+        if clean_text(row.get("player_name")).casefold() == "h jolly" and clean_text(row.get("season")) == "Summer 1944/45"
+    ]
+    h_jolly_result = "not found"
+    if h_jolly_rows:
+        row = h_jolly_rows[0]
+        h_jolly_result = (
+            f"found in clean bowling output with wickets `{row.get('bowlingWickets')}`, "
+            f"runs conceded `{row.get('bowlingRuns')}`, average `{row.get('bowlingAverage')}`"
+        )
+    suspicious = sorted(
+        rows.get("outliers", []),
+        key=lambda item: (severity_sort_key(item.get("severity")), clean_text(item.get("player_name")), clean_text(item.get("metric_name"))),
+    )[:30]
+    lines = [
+        "# Georges River Excel Ingestion Quality Report",
+        "",
+        "## Coverage",
+        "",
+        f"- Workbook: `clubs/georges-river-district/data/source/{SOURCE_FILE}`",
+        f"- Sheets scanned: {len(audit['sheets'])}",
+        f"- Nonblank rows read: {sum(int(sheet['row_count']) for sheet in audit['sheets'])}",
+        f"- Seasons detected: {audit['seasons'][0]} through {audit['seasons'][-1]}" if audit["seasons"] else "- Seasons detected: none",
+        f"- Distinct player names detected: {len(audit['players'])}",
+        "",
+        "## QA Counts",
+        "",
+        f"- Clean rows feeding app-safe supplemental records: {len(rows.get('clean_rows', []))}",
+        f"- Review rows excluded pending manual review: {len(rows.get('review_rows', []))}",
+        f"- Rejected rows excluded from records: {len(rows.get('rejected', []))}",
+        f"- Column mapping issues found: {len(mapping_issues)}",
+        f"- Reconciliation issues found: {len(reconciliation_issues)}",
+        f"- Outlier / validation issues found: {len(rows.get('outliers', []))}",
+        "",
+        "## H Jolly Regression",
+        "",
+        f"- Result: {h_jolly_result}.",
+        "- Expected interpretation: `924` is bowling runs conceded and `81` is wickets, producing an average of about `11.41`.",
+        "- The clean app-facing bowling output must never contain `924` as H Jolly's wickets value.",
+        "",
+        "## Safe To Show In App",
+        "",
+        "- Clean Excel batting and bowling season-summary rows can feed aggregate records only.",
+        "- Excel data remains barred from fastest milestones, dot-ball metrics, phase metrics, balls-per-boundary, and other ball-by-ball-only outputs.",
+        "- Review and rejected Excel rows must not feed Best Batting Season, Best Bowling Season, Record Holders, Hall of Fame leaders, Greatest Individual Seasons, Player Profile headline records, or milestones.",
+        "",
+        "## Manual Review Required",
+        "",
+        "- Rows in `excel_review_rows.csv` need GRDCC/client review before they can be promoted.",
+        "- `excel_manual_approvals.csv` is header-only until explicit manual decisions are documented.",
+        "- Team/grade names in the workbook are conservative and should not be treated as definitive grade evidence without review.",
+        "",
+        "## Top 30 Suspicious Records",
+        "",
+    ]
+    if suspicious:
+        lines.extend(["| Player | Season | Group | Metric | Value | Severity | Reason |", "|---|---|---|---|---:|---|---|"])
+        for issue in suspicious:
+            lines.append(
+                "| "
+                + " | ".join(
+                    [
+                        clean_text(issue.get("player_name")),
+                        clean_text(issue.get("season")),
+                        clean_text(issue.get("metric_group")),
+                        clean_text(issue.get("metric_name")),
+                        clean_text(issue.get("metric_value")),
+                        clean_text(issue.get("severity")),
+                        clean_text(issue.get("reason")).replace("|", "/"),
+                    ]
+                )
+                + " |"
+            )
+    else:
+        lines.append("- No suspicious records found.")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
+def severity_sort_key(value: object) -> int:
+    return {"high": 0, "medium": 1, "low": 2}.get(clean_text(value), 9)
 
 
 def print_summary(audit: dict[str, object], rows: dict[str, list[dict[str, object]]], outputs: list[Path]) -> None:
     print(f"sheets processed: {len(audit['sheets'])}")
     print(f"rows read: {sum(int(sheet['row_count']) for sheet in audit['sheets'])}")
-    print(f"rows accepted: {len(rows['summary'])}")
+    print(f"rows accepted: {len(rows.get('clean_rows', []))}")
+    print(f"rows review: {len(rows.get('review_rows', []))}")
     print(f"rows rejected: {len(rows['rejected'])}")
     print(f"rows flagged: {len(rows.get('outliers', []))}")
+    print(f"column mapping issues: {sum(1 for row in rows.get('mapping_audit', []) if row.get('issue_flag'))}")
+    print(f"reconciliation issues: {sum(1 for row in rows.get('reconciliation_audit', []) if row.get('issue_flag'))}")
     print(
         "rows excluded from records: "
         f"{len({(row.get('source_sheet'), row.get('source_row'), row.get('metric_group')) for row in rows.get('outliers', []) if row.get('action') == 'excluded_from_records'})}"
