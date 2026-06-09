@@ -95,7 +95,7 @@ from src.utils.team_grade import (
     normalize_spaces,
 )
 from src.utils.analytics import (
-    ga4_link_onclick,
+    ga4_scorecard_link_onclick,
     inject_ga4,
     render_analytics_debug_status,
     track_event_once,
@@ -394,13 +394,11 @@ def scorecard_link_html(
     if not url:
         return ""
     match_id_text = str(match_id or "").strip()
-    onclick = ga4_link_onclick(
-        "playcricket_scorecard_click",
-        {
-            "page_slug": page_slug or page_slug_from_query(),
-            "match_id": match_id_text,
-            "section_name": section_name,
-        },
+    onclick = ga4_scorecard_link_onclick(
+        page_slug=page_slug or page_slug_from_query(),
+        match_id=match_id_text,
+        scorecard_url=url,
+        section_name=section_name,
     )
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
@@ -429,13 +427,11 @@ def scorecard_url_link_html(
             section_name=section_name,
         )
     match_id_text = safe_record_text(match_id)
-    onclick = ga4_link_onclick(
-        "playcricket_scorecard_click",
-        {
-            "page_slug": page_slug or page_slug_from_query(),
-            "match_id": match_id_text,
-            "section_name": section_name,
-        },
+    onclick = ga4_scorecard_link_onclick(
+        page_slug=page_slug or page_slug_from_query(),
+        match_id=match_id_text,
+        scorecard_url=url_text,
+        section_name=section_name,
     )
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url_text, quote=True)}" '
@@ -929,7 +925,7 @@ def render_data_source_panel(
         selected_team_id = str(selected_team.get("id", "") or "")
         selected_grade_id = str(grade.get("id", "") or "")
         track_event_once(
-            "season_filter_change",
+            "season_selected",
             {
                 "page_slug": page_slug,
                 "selected_season": selected_season_name,
@@ -938,13 +934,23 @@ def render_data_source_panel(
             key=f"{page_slug}:season-filter:{selected_season.get('id')}",
         )
         track_event_once(
-            "team_filter_change",
+            "team_selected",
             {
                 "page_slug": page_slug,
                 "selected_season": selected_season_name,
                 "selected_team": selected_team_label,
             },
             key=f"{page_slug}:team-filter:{selected_season.get('id')}:{selected_team_id}:{selected_grade_id}",
+        )
+        track_event_once(
+            "section_view",
+            {
+                "page_slug": page_slug,
+                "section_name": "season_controls",
+                "selected_season": selected_season_name,
+                "selected_team": selected_team_label,
+            },
+            key=f"{page_slug}:section:season-controls:{selected_season.get('id')}:{selected_team_id}:{selected_grade_id}",
         )
 
     with st.container(key="header_intro"):
@@ -4243,6 +4249,15 @@ def render_hall_of_fame_page() -> None:
         {"page_slug": "hall-of-fame"},
         key="hall-of-fame-view",
     )
+    track_event_once(
+        "section_view",
+        {
+            "page_slug": "hall-of-fame",
+            "page_name": "Hall of Fame",
+            "section_name": "hall_of_fame",
+        },
+        key="hall-of-fame-section-view",
+    )
 
     st.markdown(
         f"""
@@ -4965,6 +4980,15 @@ def render_approaching_milestones_page() -> None:
         return
 
     selected_view = selected_milestone_page_view()
+    track_event_once(
+        "section_view",
+        {
+            "page_slug": "milestone",
+            "page_name": "Milestone",
+            "section_name": selected_view,
+        },
+        key=f"milestone-section-view:{selected_view}",
+    )
     st.markdown(
         f"""
         <div class="near-milestones-page"></div>
@@ -6796,6 +6820,11 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
         "fastest_milestones_view",
         {"page_slug": "hall-of-fame", "section_name": "fastest_batting_milestones"},
         key="fastest-milestones-view",
+    )
+    track_event_once(
+        "section_view",
+        {"page_slug": "hall-of-fame", "section_name": "fastest_batting_milestones"},
+        key="hall-of-fame-section-fastest-batting-milestones",
     )
     render_section_heading("Fastest Innings ⚡")
     st.caption("Based on matches with verified ball-by-ball data.")
@@ -9048,6 +9077,17 @@ def render_player_profile_page() -> None:
             "source": profile_source,
         },
         key=f"player-profile-view:{selected_id}",
+    )
+    track_event_once(
+        "section_view",
+        {
+            "page_slug": PLAYER_PROFILE_QUERY_PAGE,
+            "page_name": "Player Profile",
+            "section_name": "player_profile",
+            "player_name": player_name,
+            "player_slug": analytics_player_slug(player_name, selected_id),
+        },
+        key=f"player-profile-section-view:{selected_id}",
     )
 
     render_player_header_card(profile_view)
