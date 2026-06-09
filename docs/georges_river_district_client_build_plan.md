@@ -45,12 +45,15 @@
 - Distinct player names detected: 2,115.
 - The workbook contains historical season summaries, not match scorecards or ball-by-ball data.
 - Supplemental rows are club-scoped and appended only for GRDCC seasons not already present in primary processed PlayCricket / PlayHQ tables.
+- Excel outlier audit is active: 1,731 metric issues are flagged in `excel_outlier_audit.csv`, with 975 source row / metric groups excluded from record-driving supplemental outputs pending manual review.
+- Known quarantined example: `H Jolly`, `Summer 1944/45`, source row `17`, had `924` in the early bowling runs column. The corrected parser no longer treats that as wickets, and the legacy misaligned `924 wickets` candidate is excluded from headline records.
 
 ## Excel-Safe Metrics
 
 - Career runs, innings, not-outs, high score, 50s, 100s, ducks, and batting average where the workbook provides enough summary fields.
 - Career wickets, overs, maidens, runs conceded, and bowling average where early workbook bowling fields are present.
 - Season-summary tables, provided the source is treated as `Historical Excel`.
+- Only rows passing the Excel outlier gate should feed Hall of Fame / Record Holders / Greatest Seasons style cards.
 
 ## PlayCricket / Ball-By-Ball Only Metrics
 
@@ -61,6 +64,7 @@
 - Balls per boundary.
 - Phase metrics.
 - Any scorecard-link, match-result, or milestone claim requiring match-level evidence.
+- Any Excel row flagged high or medium severity in `excel_outlier_audit.csv` until manually approved.
 
 ## Known Pilot Caveats
 
@@ -75,6 +79,7 @@
 - Mobile layout should get one final visual check before client preview.
 - Historical Excel rows use conservative Excel-scoped IDs; manual alias/merge review remains required before client-facing all-time record sign-off.
 - Workbook team/grade labels are inconsistent or absent, so grade-specific claims from Excel need manual evidence.
+- Player Profile selectable lists exclude masked/hidden players and the Excel supplemental player identities until duplicate and alias QA is complete.
 
 ## Highest-Risk Review Items Before Client Share
 

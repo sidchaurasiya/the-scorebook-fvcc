@@ -673,8 +673,8 @@ def inject_theme() -> None:
         .side-brand {
             display: flex;
             align-items: center;
-            gap: 13px;
-            margin-bottom: 34px;
+            gap: 15px;
+            margin-bottom: 36px;
         }
 
         .side-shield {
@@ -686,15 +686,24 @@ def inject_theme() -> None:
             display: flex;
             font-size: 0.85rem;
             font-weight: 900;
-            height: 56px;
+            height: 58px;
             justify-content: center;
-            width: 46px;
+            width: 48px;
         }
 
         .side-shield-logo {
-            background: #ffffff;
+            background:
+                radial-gradient(circle at 32% 18%, rgba(255,255,255,0.98), rgba(255,255,255,0.88) 58%, rgba(216,232,245,0.98) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.88);
+            border-radius: 19px;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.92),
+                0 16px 34px rgba(0,0,0,0.24),
+                0 0 0 5px rgba(255,255,255,0.10);
+            height: 64px;
             overflow: hidden;
-            padding: 3px;
+            padding: 7px;
+            width: 58px;
         }
 
         .side-shield-logo img {
@@ -2652,8 +2661,13 @@ def inject_theme() -> None:
         .premiership-player-row .performance-player span a.season-overview-link:visited,
         .premiership-player-row .performance-player span a.hof-season-text,
         .premiership-player-row .performance-player span a.hof-season-text:visited {
-            color: var(--club-link, #4b37d8) !important;
-            font-weight: 850;
+            color: var(--club-muted-text, #66758D) !important;
+            font-weight: 750;
+        }
+
+        .premiership-player-row .premiership-more-seasons {
+            color: var(--club-muted-text, #66758D);
+            font-weight: 750;
         }
 
         .premiership-empty p {

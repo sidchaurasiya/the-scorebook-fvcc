@@ -14,6 +14,8 @@
 - Nonblank rows read: 6,269
 - Accepted player-season summary rows: 5,928
 - Rejected rows: 0
+- Outlier metric issues flagged: 1,731
+- Source row / metric groups excluded from record-driving supplemental outputs: 975
 - Seasons detected from sheet names: Summer 1929/30 through Summer 2021/22
 - Distinct player names detected: 2,115
 - Empty annual sheets detected: `1941-42`, `1942-43`, `1943-44`, `1945-46`
@@ -72,11 +74,28 @@ The audit detected 2,115 distinct displayed player names. Original workbook name
 - Later sheets include batting strike-rate columns, but the workbook does not provide underlying ball-by-ball data. These values must not be used for BBB-only metrics.
 - Excel-derived data must not feed fastest milestones, dot-ball rates, phase metrics, balls-per-boundary metrics, or any record that requires ball-by-ball proof.
 
+## Outlier Quarantine Rules
+
+The importer now writes `excel_outlier_audit.csv` and excludes high/medium severity Excel issues from record-driving supplemental batting and bowling outputs. The source workbook remains untouched.
+
+- Batting rules cover impossible negative values, runs above 1,500, innings above 40, average above 250, strike rate above 300, milestone counts above innings, high score above aggregate runs, not-outs above innings, missing season, and masked/missing player names.
+- Bowling rules cover impossible negative values, wickets above 100, wickets above balls bowled, wickets with zero matches or zero balls when known, wickets above 10 per recorded match, economy outside 0.5-15, zero average with wickets and runs conceded, strike rate outside 3-300, 5WI/10WM above matches, missing season, and masked/missing player names.
+- Early-workbook bowling columns are now mapped as `Overs`, `Mdns`, `Runs`, `Wkts`, `Ave`. This fixes the previous risk where a runs-conceded value could be misread as wickets.
+- High and medium severity Excel issues are excluded from headline record cards pending manual review.
+- Low severity issues may remain only as accepted warnings.
+
+## Known Flagged Example
+
+- `H Jolly`, `Summer 1944/45`, source sheet `1944-45`, source row `17` had `924` in the early-workbook bowling runs column. This value was previously at risk of surfacing as `924 wickets` because of the shifted early bowling-column interpretation.
+- The corrected parser treats `924` as runs conceded, not wickets, and the row is recorded in `excel_outlier_audit.csv` as `legacy_misaligned_bowling_wickets_candidate` with action `excluded_from_records`.
+- The cleaned supplemental bowling output no longer contains a `924` wicket row for H Jolly, so it cannot drive Best Bowling Season or Hall of Fame headline records.
+
 ## Deploy-Safe Supplemental Outputs
 
 - `clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_bowling.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_player_season_summary.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_rejected_rows.csv`
+- `clubs/georges-river-district/data/processed/supplemental/excel_outlier_audit.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_ingestion_summary.csv`
 - `clubs/georges-river-district/data/processed/supplemental/excel_workbook_sheet_audit.csv`

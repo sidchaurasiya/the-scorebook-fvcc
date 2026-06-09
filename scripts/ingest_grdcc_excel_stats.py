@@ -43,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
     workbook = read_xlsx(source_path)
     audit = audit_workbook(workbook)
     rows = ingest_workbook(workbook, source_path.name)
+    rows = validate_and_quarantine_rows(rows)
     output_dir = ROOT / "clubs" / club_id / "data" / "processed" / "supplemental"
     output_dir.mkdir(parents=True, exist_ok=True)
     outputs = write_outputs(output_dir, rows, audit)
@@ -323,9 +324,9 @@ def parse_early_table(
             "matches": value_at(row, indexes.get("GAMES", -1)),
             "bowlingOvers": value_at(row, indexes.get("OVERS", -1)),
             "bowlingMaidens": value_at(row, indexes.get("MDNS", -1)),
-            "bowlingRuns": value_at(row, 11),
-            "bowlingWickets": value_at(row, 12),
-            "bowlingAverage": value_at(row, 13),
+            "bowlingRuns": value_at(row, 12),
+            "bowlingWickets": value_at(row, 13),
+            "bowlingAverage": value_at(row, 14),
             "bowlingBestInnings": "",
             "bowling5WIs": "",
         }
@@ -499,6 +500,191 @@ def summary_values(batting: dict[str, object], bowling: dict[str, object]) -> di
     }
 
 
+def validate_and_quarantine_rows(rows: dict[str, list[dict[str, object]]]) -> dict[str, list[dict[str, object]]]:
+    outliers: list[dict[str, object]] = []
+    clean_batting: list[dict[str, object]] = []
+    clean_bowling: list[dict[str, object]] = []
+
+    for row in rows["batting"]:
+        issues = validate_batting_row(row)
+        outliers.extend(issues)
+        if record_row_allowed(issues):
+            clean_batting.append(row)
+        else:
+            row["data_confidence"] = "low"
+
+    for row in rows["bowling"]:
+        issues = validate_bowling_row(row)
+        outliers.extend(issues)
+        if record_row_allowed(issues):
+            clean_bowling.append(row)
+        else:
+            row["data_confidence"] = "low"
+
+    rows["batting"] = clean_batting
+    rows["bowling"] = clean_bowling
+    rows["outliers"] = outliers
+    return rows
+
+
+def record_row_allowed(issues: list[dict[str, object]]) -> bool:
+    return not any(str(issue.get("action")) == "excluded_from_records" for issue in issues)
+
+
+def validate_batting_row(row: dict[str, object]) -> list[dict[str, object]]:
+    issues: list[dict[str, object]] = []
+    player = clean_text(row.get("player_name"))
+    season = clean_text(row.get("season"))
+    runs = number_or_none(row.get("battingAggregate"))
+    innings = number_or_none(row.get("battingInnings"))
+    not_outs = number_or_none(row.get("battingNotOuts"))
+    high_score = number_or_none(row.get("battingHighScore"))
+    average = number_or_none(row.get("battingAverage"))
+    strike_rate = number_or_none(row.get("battingStrikeRate"))
+    fifties = number_or_none(row.get("batting50s"))
+    hundreds = number_or_none(row.get("batting100s"))
+    ducks = number_or_none(row.get("batting0s"))
+
+    if not player:
+        issues.append(outlier(row, "batting", "player_name", "", "missing_required", "high", "Missing player name."))
+    if is_masked_name(player):
+        issues.append(outlier(row, "batting", "player_name", player, "missing_required", "high", "Masked player name cannot drive records."))
+    if not season:
+        issues.append(outlier(row, "batting", "season", "", "missing_required", "high", "Missing season."))
+    for metric, value in [
+        ("battingAggregate", runs),
+        ("battingInnings", innings),
+        ("battingNotOuts", not_outs),
+        ("battingHighScore", high_score),
+        ("battingAverage", average),
+        ("battingStrikeRate", strike_rate),
+        ("batting50s", fifties),
+        ("batting100s", hundreds),
+        ("batting0s", ducks),
+    ]:
+        if value is not None and value < 0:
+            issues.append(outlier(row, "batting", metric, value, "invalid", "high", "Negative values are invalid."))
+    if runs is not None and runs > 1500:
+        issues.append(outlier(row, "batting", "battingAggregate", runs, "suspicious", "medium", "Season runs above 1500 need manual review."))
+    if innings is not None and innings > 40:
+        issues.append(outlier(row, "batting", "battingInnings", innings, "suspicious", "medium", "Season innings above 40 need manual review."))
+    if average is not None and average > 250:
+        issues.append(outlier(row, "batting", "battingAverage", average, "suspicious", "medium", "Batting average above 250 needs manual review."))
+    if strike_rate is not None and strike_rate > 300:
+        issues.append(outlier(row, "batting", "battingStrikeRate", strike_rate, "suspicious", "medium", "Strike rate above 300 from Excel needs manual review."))
+    for metric, value in [("batting100s", hundreds), ("batting50s", fifties), ("batting0s", ducks)]:
+        if value is not None and innings is not None and value > innings:
+            issues.append(outlier(row, "batting", metric, value, "invalid", "high", f"{metric} cannot exceed innings."))
+    if high_score is not None and runs is not None and high_score > runs:
+        issues.append(outlier(row, "batting", "battingHighScore", high_score, "invalid", "high", "High score cannot exceed aggregate runs."))
+    if innings is not None and not_outs is not None and not_outs > innings:
+        issues.append(outlier(row, "batting", "battingNotOuts", not_outs, "invalid", "high", "Not-outs cannot exceed innings."))
+    return issues
+
+
+def validate_bowling_row(row: dict[str, object]) -> list[dict[str, object]]:
+    issues: list[dict[str, object]] = []
+    player = clean_text(row.get("player_name"))
+    season = clean_text(row.get("season"))
+    matches = number_or_none(row.get("matches"))
+    wickets = number_or_none(row.get("bowlingWickets"))
+    runs = number_or_none(row.get("bowlingRuns"))
+    balls = number_or_none(row.get("bowlingBalls"))
+    maidens = number_or_none(row.get("bowlingMaidens"))
+    five_wickets = number_or_none(row.get("bowling5WIs"))
+    ten_wickets = number_or_none(row.get("bowling10WMs"))
+    average = number_or_none(row.get("bowlingAverage"))
+    strike_rate = number_or_none(row.get("bowlingStrikeRate"))
+    economy = number_or_none(row.get("bowlingEconomyRate"))
+    if economy is None and runs is not None and balls and balls > 0:
+        economy = runs * 6 / balls
+    if strike_rate is None and wickets and wickets > 0 and balls is not None:
+        strike_rate = balls / wickets
+
+    if not player:
+        issues.append(outlier(row, "bowling", "player_name", "", "missing_required", "high", "Missing player name."))
+    if is_masked_name(player):
+        issues.append(outlier(row, "bowling", "player_name", player, "missing_required", "high", "Masked player name cannot drive records."))
+    if not season:
+        issues.append(outlier(row, "bowling", "season", "", "missing_required", "high", "Missing season."))
+    for metric, value in [
+        ("matches", matches),
+        ("bowlingWickets", wickets),
+        ("bowlingRuns", runs),
+        ("bowlingBalls", balls),
+        ("bowlingMaidens", maidens),
+        ("bowling5WIs", five_wickets),
+        ("bowling10WMs", ten_wickets),
+        ("bowlingAverage", average),
+        ("bowlingStrikeRate", strike_rate),
+        ("bowlingEconomyRate", economy),
+    ]:
+        if value is not None and value < 0:
+            issues.append(outlier(row, "bowling", metric, value, "invalid", "high", "Negative values are invalid."))
+    if wickets is not None and wickets > 100:
+        issues.append(outlier(row, "bowling", "bowlingWickets", wickets, "suspicious", "medium", "Season wickets above 100 need manual review."))
+    if wickets is not None and balls is not None and wickets > balls:
+        issues.append(outlier(row, "bowling", "bowlingWickets", wickets, "invalid", "high", "Wickets cannot exceed balls bowled."))
+    if wickets is not None and wickets > 0 and matches is not None and matches <= 0:
+        issues.append(outlier(row, "bowling", "matches", matches, "invalid", "high", "Wickets with zero matches is invalid."))
+    if wickets is not None and wickets > 0 and balls is not None and balls <= 0:
+        issues.append(outlier(row, "bowling", "bowlingBalls", balls, "invalid", "high", "Wickets with zero balls/overs is invalid."))
+    if wickets is not None and matches is not None and matches > 0 and wickets > 10 * matches:
+        issues.append(outlier(row, "bowling", "bowlingWickets", wickets, "suspicious", "medium", "Wickets exceed 10 per recorded match."))
+    if economy is not None and (economy < 0.5 or economy > 15):
+        issues.append(outlier(row, "bowling", "bowlingEconomyRate", round(economy, 4), "suspicious", "medium", "Season economy outside 0.5-15 needs manual review."))
+    if average is not None and average == 0 and wickets and wickets > 0 and runs and runs > 0:
+        issues.append(outlier(row, "bowling", "bowlingAverage", average, "suspicious", "medium", "Bowling average zero with wickets and runs conceded is suspicious."))
+    if strike_rate is not None and (strike_rate < 3 or strike_rate > 300):
+        issues.append(outlier(row, "bowling", "bowlingStrikeRate", round(strike_rate, 4), "suspicious", "medium", "Bowling strike rate outside 3-300 needs manual review."))
+    for metric, value in [("bowling5WIs", five_wickets), ("bowling10WMs", ten_wickets)]:
+        if value is not None and matches is not None and value > matches:
+            issues.append(outlier(row, "bowling", metric, value, "invalid", "high", f"{metric} cannot exceed matches."))
+    if runs is not None and runs >= 900:
+        issues.append(
+            outlier(
+                row,
+                "bowling",
+                "legacy_misaligned_bowling_wickets_candidate",
+                runs,
+                "format_issue",
+                "high",
+                "Very high early-workbook runs value was previously at risk of being misread as wickets; exclude from headline records pending manual review.",
+            )
+        )
+    return issues
+
+
+def outlier(
+    row: dict[str, object],
+    metric_group: str,
+    metric_name: str,
+    metric_value: object,
+    issue_type: str,
+    severity: str,
+    reason: str,
+) -> dict[str, object]:
+    action = "accepted_with_warning" if severity == "low" else "excluded_from_records"
+    if severity == "medium":
+        action = "excluded_from_records"
+    return {
+        "source_file": row.get("source_file", SOURCE_FILE),
+        "source_sheet": row.get("source_sheet", ""),
+        "source_row": row.get("source_row", ""),
+        "player_name": row.get("player_name", ""),
+        "season": row.get("season", ""),
+        "team_or_grade": row.get("grade_name") or row.get("team_name", ""),
+        "metric_group": metric_group,
+        "metric_name": metric_name,
+        "metric_value": metric_value,
+        "issue_type": issue_type,
+        "severity": severity,
+        "reason": reason,
+        "action": action,
+        "data_confidence": "low" if action == "excluded_from_records" else row.get("data_confidence", "medium"),
+    }
+
+
 def write_outputs(output_dir: Path, rows: dict[str, list[dict[str, object]]], audit: dict[str, object]) -> list[Path]:
     outputs = []
     for filename, key in [
@@ -506,6 +692,7 @@ def write_outputs(output_dir: Path, rows: dict[str, list[dict[str, object]]], au
         ("excel_all_seasons_bowling.csv", "bowling"),
         ("excel_player_season_summary.csv", "summary"),
         ("excel_rejected_rows.csv", "rejected"),
+        ("excel_outlier_audit.csv", "outliers"),
     ]:
         path = output_dir / filename
         write_csv(path, rows[key])
@@ -518,6 +705,11 @@ def write_outputs(output_dir: Path, rows: dict[str, list[dict[str, object]]], au
         {"metric": "rows_read", "value": sum(int(sheet["row_count"]) for sheet in audit["sheets"])},
         {"metric": "rows_accepted", "value": len(rows["summary"])},
         {"metric": "rows_rejected", "value": len(rows["rejected"])},
+        {"metric": "rows_flagged", "value": len(rows.get("outliers", []))},
+        {
+            "metric": "rows_excluded_from_records",
+            "value": len({(row.get("source_sheet"), row.get("source_row"), row.get("metric_group")) for row in rows.get("outliers", []) if row.get("action") == "excluded_from_records"}),
+        },
         {"metric": "seasons_detected", "value": len(audit["seasons"])},
         {"metric": "players_detected", "value": len(audit["players"])},
     ]
@@ -549,6 +741,11 @@ def print_summary(audit: dict[str, object], rows: dict[str, list[dict[str, objec
     print(f"rows read: {sum(int(sheet['row_count']) for sheet in audit['sheets'])}")
     print(f"rows accepted: {len(rows['summary'])}")
     print(f"rows rejected: {len(rows['rejected'])}")
+    print(f"rows flagged: {len(rows.get('outliers', []))}")
+    print(
+        "rows excluded from records: "
+        f"{len({(row.get('source_sheet'), row.get('source_row'), row.get('metric_group')) for row in rows.get('outliers', []) if row.get('action') == 'excluded_from_records'})}"
+    )
     print(f"seasons detected: {', '.join(audit['seasons'])}")
     print(f"players detected: {len(audit['players'])}")
     print("outputs written:")
@@ -575,6 +772,11 @@ def clean_number(value: object) -> object:
         return ""
     number = float(match.group())
     return int(number) if number.is_integer() else number
+
+
+def number_or_none(value: object) -> float | None:
+    number = clean_number(value)
+    return None if number == "" else float(number)
 
 
 def high_score_runs(value: object) -> object:
@@ -614,6 +816,11 @@ def is_total_name(first: str, surname: str) -> bool:
 def is_total_text(value: object) -> bool:
     text = clean_text(value).casefold()
     return text in {"total", "totals", "team total", "grand total"} or text.startswith("total ")
+
+
+def is_masked_name(value: object) -> bool:
+    text = clean_text(value)
+    return bool(text) and set(text) <= {"*"}
 
 
 def has_total_rows(rows: list[list[object]]) -> bool:
