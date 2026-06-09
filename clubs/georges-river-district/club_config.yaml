@@ -22,6 +22,7 @@ branding:
   negative_colour: "#B23A48"
   warning_colour: "#D6A732"
   logo_path: clubs/georges-river-district/assets/logo.png
+  logo_scale: 1.12
 
 contact:
   creators:

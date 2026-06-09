@@ -271,8 +271,14 @@ def configured_club_shield_html() -> str:
     logo_path = configured_club_logo_path()
     if logo_path:
         encoded = base64.b64encode(logo_path.read_bytes()).decode("ascii")
+        logo_scale = str(get_branding_value("logo_scale", "1") or "1").strip()
+        try:
+            logo_scale_value = max(0.8, min(1.25, float(logo_scale)))
+        except ValueError:
+            logo_scale_value = 1.0
+        logo_scale_class = " side-shield-logo-zoom" if logo_scale_value > 1.01 else ""
         return (
-            '<div class="side-shield side-shield-logo">'
+            f'<div class="side-shield side-shield-logo{logo_scale_class}">'
             f'<img src="data:image/png;base64,{encoded}" alt="{html.escape(configured_club_short_name(), quote=True)} logo">'
             "</div>"
         )
@@ -6757,14 +6763,13 @@ def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
 
 def compact_premiership_season_link_html(season: object) -> str:
     season_text = safe_season_label(season)
-    label = compact_premiership_season_label(season_text)
     url = season_overview_url(season_text)
     if not url:
-        return f'<span class="hof-season-text">{html.escape(label)}</span>'
+        return f'<span class="hof-season-text">{html.escape(season_text)}</span>'
     return (
         f'<a class="hof-season-text" href="{html.escape(url, quote=True)}" '
         f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
-        f"{html.escape(label)}</a>"
+        f"{html.escape(season_text)}</a>"
     )
 
 
@@ -7012,7 +7017,7 @@ def render_ranked_record_card(
         for rank, (_, row) in enumerate(displayed_rows.iterrows(), start=1)
     )
     st.markdown(
-        f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
+        f'<div class="hof-card performance-card fastest-innings-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
         unsafe_allow_html=True,
     )
     render_hof_expand_control(state_key, expanded, len(rows))
