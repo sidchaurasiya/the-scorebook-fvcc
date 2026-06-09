@@ -283,6 +283,8 @@ def read_processed_table(name: str) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
     frame = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    if name == "all_seasons_bowling":
+        frame = _filter_grdcc_app_facing_bowling_rows(frame)
     return _append_supplemental_processed_rows(name, frame)
 
 
@@ -325,6 +327,36 @@ def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.Da
         frame = frame.copy()
         frame["source_system"] = "playcricket"
     return pd.concat([frame, supplemental], ignore_index=True, sort=False)
+
+
+def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
+    """Exclude impossible GRDCC primary bowling aggregates from client-visible records."""
+    if get_active_club_id() != "georges-river-district" or frame.empty:
+        return frame
+    required = {"bowlingWickets", "bowlingRuns", "bowlingBalls"}
+    if not required.issubset(frame.columns):
+        return frame
+    output = frame.copy()
+    wickets = pd.to_numeric(output["bowlingWickets"], errors="coerce").fillna(0)
+    runs = pd.to_numeric(output["bowlingRuns"], errors="coerce").fillna(0)
+    balls = pd.to_numeric(output["bowlingBalls"], errors="coerce").fillna(0)
+    average = runs.div(wickets.where(wickets > 0))
+    economy = runs.mul(6).div(balls.where(balls > 0))
+    bbi_wickets = output.get("bowlingBestInnings", pd.Series("", index=output.index)).astype(str).str.extract(r"^(\d+)[-/]", expand=False)
+    bbi_wickets = pd.to_numeric(bbi_wickets, errors="coerce")
+
+    invalid = bbi_wickets.gt(wickets) | (
+        (wickets > 0)
+        & (
+            ((balls <= 0) & (wickets > 0))
+            | average.le(0)
+            | ((wickets >= 10) & (runs < wickets))
+            | ((wickets >= 10) & average.lt(1))
+            | ((balls >= 60) & economy.lt(0.5))
+            | wickets.gt(balls)
+        )
+    )
+    return output.loc[~invalid].copy()
 
 
 def _normalise_supplemental_numeric_columns(frame: pd.DataFrame) -> pd.DataFrame:
