@@ -378,6 +378,22 @@ def player_profile_link_html(player_id: object, player_name: object, class_name:
     )
 
 
+def is_masked_player_name(value: object) -> bool:
+    text = str(value or "").strip()
+    return bool(text) and set(text) <= {"*"}
+
+
+def is_internal_player_label(value: object) -> bool:
+    text = str(value or "").strip().casefold()
+    return (
+        not text
+        or text in {"nan", "none", "unknown player", "unknown"}
+        or is_masked_player_name(text)
+        or bool(re.fullmatch(r"raw_[0-9a-f_\\-]+", text))
+        or bool(re.fullmatch(r"[0-9a-f]{8}-[0-9a-f\\-]{27,}", text))
+    )
+
+
 def season_overview_url(season: object) -> str:
     season_text = safe_season_label(season)
     if not season_text:
@@ -6733,10 +6749,34 @@ def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
     if not seasons:
         return ""
     visible = seasons[:visible_limit]
-    links = [season_overview_link_html(season) for season in visible]
+    links = [compact_premiership_season_link_html(season) for season in visible]
     if len(seasons) > visible_limit:
-        links.append(f"+{len(seasons) - visible_limit} more")
+        links.append(f'<span class="premiership-more-seasons">+{len(seasons) - visible_limit} more</span>')
     return ", ".join(links)
+
+
+def compact_premiership_season_link_html(season: object) -> str:
+    season_text = safe_season_label(season)
+    label = compact_premiership_season_label(season_text)
+    url = season_overview_url(season_text)
+    if not url:
+        return f'<span class="hof-season-text">{html.escape(label)}</span>'
+    return (
+        f'<a class="hof-season-text" href="{html.escape(url, quote=True)}" '
+        f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
+        f"{html.escape(label)}</a>"
+    )
+
+
+def compact_premiership_season_label(season: object) -> str:
+    season_text = safe_season_label(season)
+    summer = re.fullmatch(r"Summer\s+(\d{4})/(\d{2})", season_text, flags=re.IGNORECASE)
+    if summer:
+        return f"{summer.group(1)[-2:]}/{summer.group(2)}"
+    winter = re.fullmatch(r"Winter\s+(\d{4})", season_text, flags=re.IGNORECASE)
+    if winter:
+        return f"W{winter.group(1)[-2:]}"
+    return season_text
 
 
 def compact_premiership_list(value: object, limit: int = 2) -> str:
@@ -7318,7 +7358,7 @@ def best_batting_season(df: pd.DataFrame) -> dict[str, object] | None:
         return None
     frame["_player"] = frame[player_source].fillna("").astype(str).str.strip()
     frame["_player_id"] = frame[player_id_source].fillna("").astype(str).str.strip() if player_id_source in frame else ""
-    frame = frame[(frame["_player"] != "") & frame["season"].notna()]
+    frame = frame[(frame["_player"] != "") & ~frame["_player"].map(is_internal_player_label) & frame["season"].notna()]
     if frame.empty:
         return None
 
@@ -7363,7 +7403,7 @@ def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
         return None
     frame["_player"] = frame[player_source].fillna("").astype(str).str.strip()
     frame["_player_id"] = frame[player_id_source].fillna("").astype(str).str.strip() if player_id_source in frame else ""
-    frame = frame[(frame["_player"] != "") & frame["season"].notna()]
+    frame = frame[(frame["_player"] != "") & ~frame["_player"].map(is_internal_player_label) & frame["season"].notna()]
     if frame.empty:
         return None
 
@@ -9766,6 +9806,14 @@ def load_player_profile_index(_local_version: float, _identity_version: float) -
         .drop_duplicates()
         .rename(columns={"canonical_player_id": "id", "canonical_player_name": "name"})
     )
+    index["id"] = index["id"].astype(str).str.strip()
+    index["name"] = index["name"].astype(str).str.strip()
+    index = index[
+        index["id"].ne("")
+        & index["name"].ne("")
+        & ~index["name"].map(is_internal_player_label)
+        & ~index["id"].astype(str).str.fullmatch(r"raw_0+(?:_0+)*", na=False)
+    ].copy()
     index["name_sort"] = index["name"].astype(str).str.casefold()
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
 
