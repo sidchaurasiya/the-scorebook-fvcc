@@ -691,6 +691,19 @@ def inject_theme() -> None:
             width: 46px;
         }
 
+        .side-shield-logo {
+            background: #ffffff;
+            overflow: hidden;
+            padding: 3px;
+        }
+
+        .side-shield-logo img {
+            display: block;
+            height: 100%;
+            object-fit: contain;
+            width: 100%;
+        }
+
         .side-title {
             font-size: 1.35rem;
             font-weight: 900;

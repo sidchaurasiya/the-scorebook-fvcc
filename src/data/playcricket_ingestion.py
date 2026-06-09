@@ -13,7 +13,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from src.config.club_config import get_data_root, get_processed_path
+from src.config.club_config import get_active_club_id, get_data_root, get_processed_dir, get_processed_path
 from src.data.playcricket_public import (
     PLAYCRICKET_PUBLIC_BASE_URL,
     PlayCricketPublicError,
@@ -282,7 +282,8 @@ def read_processed_table(name: str) -> pd.DataFrame:
     path = get_processed_path(f"{name}.csv")
     if not path.exists():
         return pd.DataFrame()
-    return _read_processed_table_cached(str(path), path.stat().st_mtime)
+    frame = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    return _append_supplemental_processed_rows(name, frame)
 
 
 @st.cache_data(show_spinner=False)
@@ -294,6 +295,69 @@ def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.Da
         return pd.read_csv(path)
     except (MemoryError, OSError, pd.errors.ParserError):
         return pd.DataFrame()
+
+
+def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.DataFrame:
+    """Append audited GRDCC historical Excel season summaries to safe aggregate tables."""
+    if get_active_club_id() != "georges-river-district":
+        return frame
+    supplemental_names = {
+        "all_seasons_batting": "excel_all_seasons_batting.csv",
+        "all_seasons_bowling": "excel_all_seasons_bowling.csv",
+    }
+    supplemental_filename = supplemental_names.get(name)
+    if not supplemental_filename:
+        return frame
+
+    path = get_processed_dir() / "supplemental" / supplemental_filename
+    if not path.exists():
+        return frame
+    supplemental = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    if supplemental.empty:
+        return frame
+    supplemental = _normalise_supplemental_numeric_columns(supplemental)
+    if "season" in frame.columns and "season" in supplemental.columns:
+        primary_seasons = set(frame["season"].dropna().astype(str))
+        supplemental = supplemental[~supplemental["season"].astype(str).isin(primary_seasons)]
+    if supplemental.empty:
+        return frame
+    if "source_system" not in frame.columns:
+        frame = frame.copy()
+        frame["source_system"] = "playcricket"
+    return pd.concat([frame, supplemental], ignore_index=True, sort=False)
+
+
+def _normalise_supplemental_numeric_columns(frame: pd.DataFrame) -> pd.DataFrame:
+    numeric_zero_columns = [
+        "matches",
+        "battingInnings",
+        "battingAggregate",
+        "battingNotOuts",
+        "battingBallsFaced",
+        "batting50s",
+        "batting100s",
+        "batting0s",
+        "battingFours",
+        "battingSixes",
+        "battingMinutes",
+        "bowlingWickets",
+        "bowlingMaidens",
+        "bowlingRuns",
+        "bowlingBalls",
+        "bowling5WIs",
+        "bowling10WMs",
+        "bowlingWides",
+        "bowlingNoBalls",
+        "bowlingWicketsUnassisted",
+    ]
+    output = frame.copy()
+    for column in numeric_zero_columns:
+        if column in output.columns:
+            output[column] = pd.to_numeric(output[column], errors="coerce").fillna(0)
+    for column in ["battingHighScore", "battingAverage", "battingStrikeRate", "bowlingAverage"]:
+        if column in output.columns:
+            output[column] = pd.to_numeric(output[column], errors="coerce")
+    return output
 
 
 def active_metadata_path() -> Path:
