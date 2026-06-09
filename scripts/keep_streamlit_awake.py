@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import Page
 from playwright.sync_api import sync_playwright
 
 
@@ -19,21 +20,56 @@ class StreamlitApp:
 # Add FVCC, GRDCC, Southside, and other Streamlit apps here as needed.
 APPS: tuple[StreamlitApp, ...] = (
     StreamlitApp(
+        name="Le Page Park root",
+        url="https://le-page-park-scorebook-demo.streamlit.app/",
+    ),
+    StreamlitApp(
         name="Le Page Park Hall of Fame",
         url="https://le-page-park-scorebook-demo.streamlit.app/?page=hall-of-fame",
     ),
     StreamlitApp(
-        name="FVCC Production",
+        name="FVCC root",
         url="https://the-scorebook-fvcc.streamlit.app/",
+    ),
+    StreamlitApp(
+        name="FVCC Hall of Fame",
+        url="https://the-scorebook-fvcc.streamlit.app/?page=hall-of-fame",
     ),
 )
 
-PAGE_LOAD_TIMEOUT_MS = 60_000
-SESSION_WARMUP_MS = 20_000
+PAGE_LOAD_TIMEOUT_MS = 90_000
+BUTTON_CLICK_TIMEOUT_MS = 5_000
+SESSION_WARMUP_MS = 25_000
 
 
-def visit_app(page, app: StreamlitApp) -> None:
-    print(f"Visiting {app.name}: {app.url}", flush=True)
+def maybe_click_wake_button(page: Page) -> bool:
+    """Click a visible Streamlit wake button when the app is asleep."""
+    button_texts = ("wake", "up", "run", "running", "app", "yes")
+
+    for button in page.locator("button").all():
+        try:
+            if not button.is_visible(timeout=1_000):
+                continue
+
+            label = " ".join(button.inner_text(timeout=1_000).lower().split())
+            if not label:
+                continue
+
+            if any(token in label for token in button_texts):
+                print(f"Wake button detected: {label!r}", flush=True)
+                button.click(timeout=BUTTON_CLICK_TIMEOUT_MS)
+                return True
+        except (PlaywrightError, PlaywrightTimeoutError):
+            continue
+
+    print("Wake button detected: no", flush=True)
+    return False
+
+
+def visit_app(page: Page, app: StreamlitApp) -> bool:
+    print(f"--- Visiting {app.name} ---", flush=True)
+    print(f"URL: {app.url}", flush=True)
+
     response = page.goto(
         app.url,
         wait_until="domcontentloaded",
@@ -44,16 +80,30 @@ def visit_app(page, app: StreamlitApp) -> None:
         raise RuntimeError(f"{app.name} did not return an initial page response")
 
     status = response.status
+    print(f"Initial HTTP status: {status}", flush=True)
+
+    wake_button_clicked = maybe_click_wake_button(page)
+    if wake_button_clicked:
+        page.wait_for_load_state("domcontentloaded", timeout=PAGE_LOAD_TIMEOUT_MS)
+
+    page.wait_for_timeout(SESSION_WARMUP_MS)
+
+    try:
+        title = page.title()
+        print(f"Page title read: yes ({title!r})", flush=True)
+    except (PlaywrightError, PlaywrightTimeoutError) as exc:
+        print(f"Page title read: no ({exc})", flush=True)
+
     if status >= 400:
         raise RuntimeError(f"{app.name} returned HTTP {status}")
 
-    page.wait_for_timeout(SESSION_WARMUP_MS)
-    title = page.title()
-    print(f"Visited {app.name} successfully (HTTP {status}, title={title!r})", flush=True)
+    print(f"Result: success for {app.name}", flush=True)
+    return True
 
 
 def main() -> int:
     failures: list[str] = []
+    successes = 0
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -66,11 +116,12 @@ def main() -> int:
 
             for app in APPS:
                 try:
-                    visit_app(page, app)
+                    if visit_app(page, app):
+                        successes += 1
                 except (PlaywrightError, PlaywrightTimeoutError, RuntimeError) as exc:
                     message = f"{app.name}: {exc}"
                     failures.append(message)
-                    print(f"FAILED {message}", file=sys.stderr, flush=True)
+                    print(f"Result: failure for {app.name}: {exc}", file=sys.stderr, flush=True)
         finally:
             browser.close()
 
@@ -78,9 +129,11 @@ def main() -> int:
         print("One or more Streamlit keep-awake visits failed:", file=sys.stderr)
         for failure in failures:
             print(f"- {failure}", file=sys.stderr)
-        return 1
 
-    print(f"Visited {len(APPS)} Streamlit app(s).", flush=True)
+    if successes == 0:
+        print("WARNING: all Streamlit keep-awake visits failed.", file=sys.stderr)
+
+    print(f"Completed {len(APPS)} visit attempt(s): {successes} succeeded, {len(failures)} failed.", flush=True)
     return 0
 
 
