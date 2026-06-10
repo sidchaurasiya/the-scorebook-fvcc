@@ -88,6 +88,22 @@ def validate_source_split(batting: pd.DataFrame, bowling: pd.DataFrame) -> list[
             actual = sorted(set(source_series(rows)))
             passed = not len(rows) or actual == [expected]
             checks.append(check_row(f"boundary_{season}_{group}", passed, f"{season} {group} resolves to {expected} when rows exist", f"rows={len(rows)} sources={','.join(actual) or 'none'}"))
+
+    bowling_aggregates = aggregate_bowling(bowling)
+    h_jolly_924 = [
+        row for row in bowling_aggregates
+        if normalize_name(row["player_name"]) == "h jolly"
+        and row["season"] == "Summer 1944/45"
+        and row["wickets"] == 924
+    ]
+    nathan_percy_101 = [
+        row for row in bowling_aggregates
+        if normalize_name(row["player_name"]) == "nathan percy"
+        and row["season"] == "Summer 1995/96"
+        and row["wickets"] >= 101
+    ]
+    checks.append(check_row("known_regression_h_jolly_924_wickets", not h_jolly_924, "H Jolly Summer 1944/45 is not exposed with 924 wickets", len(h_jolly_924)))
+    checks.append(check_row("known_regression_nathan_percy_101_wickets", not nathan_percy_101, "Nathan Percy Summer 1995/96 does not aggregate to 101+ wickets", len(nathan_percy_101)))
     return checks
 
 

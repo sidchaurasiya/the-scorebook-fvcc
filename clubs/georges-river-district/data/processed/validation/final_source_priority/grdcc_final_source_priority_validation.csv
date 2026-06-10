@@ -9,3 +9,5 @@ boundary_Summer 1971/72_batting,pass,Summer 1971/72 batting resolves to excel wh
 boundary_Summer 1971/72_bowling,pass,Summer 1971/72 bowling resolves to excel when rows exist,rows=0 sources=none
 boundary_Summer 1972/73_batting,pass,Summer 1972/73 batting resolves to playcricket when rows exist,rows=42 sources=playcricket
 boundary_Summer 1972/73_bowling,pass,Summer 1972/73 bowling resolves to playcricket when rows exist,rows=42 sources=playcricket
+known_regression_h_jolly_924_wickets,pass,H Jolly Summer 1944/45 is not exposed with 924 wickets,0
+known_regression_nathan_percy_101_wickets,pass,Nathan Percy Summer 1995/96 does not aggregate to 101+ wickets,0

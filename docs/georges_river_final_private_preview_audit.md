@@ -33,6 +33,7 @@ Boundary checks:
 - Source-priority validation failures: 0.
 - Odd-stat findings after app-facing filters: 1.
 - Preview-blocking odd-stat findings: 0.
+- Explicit regressions pass: H Jolly is not exposed with 924 wickets, and Nathan Percy does not aggregate to 101 or more wickets in `Summer 1995/96`.
 - The remaining review-later finding is Darren Smith's PlayCricket batting average of 322.00 in `Summer 2013/14`; it is plausible from the supplied aggregate denominators and is not structurally impossible.
 - Invalid player labels, impossible batting denominator relationships and high-severity bowling anomalies are excluded at the GRDCC app-facing loader boundary.
 - Exact match counts remain unavailable because no populated match-level source file exists.
