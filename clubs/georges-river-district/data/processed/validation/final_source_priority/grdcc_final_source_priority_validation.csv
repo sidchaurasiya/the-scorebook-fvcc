@@ -1,0 +1,11 @@
+check_name,status,description,observed_value
+no_modern_excel_batting,pass,Excel batting rows after Summer 1971/72,0
+no_historical_playcricket_batting,pass,PlayCricket batting rows through Summer 1971/72,0
+no_duplicate_source_conflicts_batting,pass,Normalized player-season keys present in both sources for batting,0
+no_modern_excel_bowling,pass,Excel bowling rows after Summer 1971/72,0
+no_historical_playcricket_bowling,pass,PlayCricket bowling rows through Summer 1971/72,0
+no_duplicate_source_conflicts_bowling,pass,Normalized player-season keys present in both sources for bowling,0
+boundary_Summer 1971/72_batting,pass,Summer 1971/72 batting resolves to excel when rows exist,rows=40 sources=excel
+boundary_Summer 1971/72_bowling,pass,Summer 1971/72 bowling resolves to excel when rows exist,rows=0 sources=none
+boundary_Summer 1972/73_batting,pass,Summer 1972/73 batting resolves to playcricket when rows exist,rows=42 sources=playcricket
+boundary_Summer 1972/73_bowling,pass,Summer 1972/73 bowling resolves to playcricket when rows exist,rows=42 sources=playcricket
