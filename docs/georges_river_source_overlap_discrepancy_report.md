@@ -109,3 +109,13 @@
 - Review high-severity overlap discrepancies first.
 - Then decide source priority for overlap seasons.
 - Do not block private preview if discrepancies are not driving headline records.
+
+## True App-Facing Preview Blockers
+
+- Provisional headline discrepancies checked: 77.
+- Rows that contribute to a current visible headline or leaderboard: 29.
+- Confirmed true private-preview blockers: 0.
+- High-priority rows moved to source review later: 371.
+- Overlap discrepancies are source-priority review items, not automatically data errors. In overlap seasons the app uses sane PlayCricket by default and does not sum Excel with PlayCricket.
+- A discrepancy blocks preview only when the selected app-facing PlayCricket row is itself high-severity anomalous, has not already been excluded, and drives a headline output.
+- Review `grdcc_true_preview_blockers.csv` for the visibility trace and `grdcc_overlap_review_later.csv` for deferred source decisions.
