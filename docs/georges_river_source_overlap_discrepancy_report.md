@@ -1,5 +1,9 @@
 # Georges River Source Overlap Discrepancy Report
 
+## Final Source Decision
+
+The overlap decision is now fixed: Historical Excel through `Summer 1971/72`, then PlayCricket / PlayHQ from `Summer 1972/73` onward. The discrepancy exports remain review references and no longer imply that overlap rows should be merged or summed.
+
 ## Executive Summary
 
 - Overlap seasons compared: 50.

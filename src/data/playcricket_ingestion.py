@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import random
+import re
 import time
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
@@ -30,6 +31,9 @@ PROCESSED_DIR = DATA_ROOT / "processed"
 CACHE_DIR = DATA_ROOT / "cache"
 EXPORTS_DIR = DATA_ROOT / "exports"
 METADATA_PATH = DATA_ROOT / "metadata.json"
+
+GRDCC_EXCEL_LAST_SEASON = "Summer 1971/72"
+GRDCC_PLAYCRICKET_FIRST_SEASON = "Summer 1972/73"
 
 DEFAULT_CLUB_ID = "7b78f08d-87d8-eb11-a7ad-2818780da0cc"
 DEFAULT_CLUB_URL = (
@@ -283,9 +287,20 @@ def read_processed_table(name: str) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
     frame = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    if name in {"all_seasons_batting", "all_seasons_bowling", "all_seasons_fielding"}:
+        frame = _filter_grdcc_app_facing_player_rows(frame)
+    if name == "all_seasons_batting":
+        frame = _filter_grdcc_app_facing_batting_rows(frame)
     if name == "all_seasons_bowling":
         frame = _filter_grdcc_app_facing_bowling_rows(frame)
-    return _append_supplemental_processed_rows(name, frame)
+    combined = _append_supplemental_processed_rows(name, frame)
+    if name in {"all_seasons_batting", "all_seasons_bowling"}:
+        combined = _filter_grdcc_app_facing_player_rows(combined)
+    if name == "all_seasons_batting":
+        combined = _filter_grdcc_app_facing_batting_rows(combined)
+    if name == "all_seasons_bowling":
+        combined = _filter_grdcc_app_facing_bowling_rows(combined)
+    return combined
 
 
 @st.cache_data(show_spinner=False)
@@ -300,7 +315,7 @@ def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.Da
 
 
 def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.DataFrame:
-    """Append audited GRDCC historical Excel season summaries to safe aggregate tables."""
+    """Apply the final GRDCC source split to aggregate batting and bowling tables."""
     if get_active_club_id() != "georges-river-district":
         return frame
     supplemental_names = {
@@ -318,15 +333,36 @@ def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.Da
     if supplemental.empty:
         return frame
     supplemental = _normalise_supplemental_numeric_columns(supplemental)
-    if "season" in frame.columns and "season" in supplemental.columns:
-        primary_seasons = set(frame["season"].dropna().astype(str))
-        supplemental = supplemental[~supplemental["season"].astype(str).isin(primary_seasons)]
-    if supplemental.empty:
-        return frame
+    cutoff = _grdcc_season_sort_key(GRDCC_EXCEL_LAST_SEASON)
+    if "season" in frame.columns:
+        frame = frame[frame["season"].map(_grdcc_season_sort_key).gt(cutoff)].copy()
+    if "season" in supplemental.columns:
+        supplemental = supplemental[supplemental["season"].map(_grdcc_season_sort_key).le(cutoff)].copy()
     if "source_system" not in frame.columns:
         frame = frame.copy()
         frame["source_system"] = "playcricket"
+    else:
+        frame["source_system"] = frame["source_system"].fillna("playcricket").replace("", "playcricket")
+    if "source_system" not in supplemental.columns:
+        supplemental = supplemental.copy()
+        supplemental["source_system"] = "excel"
+    if supplemental.empty:
+        return frame
     return pd.concat([frame, supplemental], ignore_index=True, sort=False)
+
+
+def _grdcc_season_sort_key(value: object) -> int:
+    """Return a stable chronological key for GRDCC source-boundary comparisons."""
+    label = str(value or "").strip()
+    match = re.search(r"(19|20)\d{2}", label)
+    if not match:
+        return 999999
+    year = int(match.group())
+    if "winter" in label.casefold():
+        return year * 10 + 1
+    if "summer" in label.casefold():
+        return year * 10 + 2
+    return year * 10
 
 
 def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
@@ -340,12 +376,13 @@ def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
     wickets = pd.to_numeric(output["bowlingWickets"], errors="coerce").fillna(0)
     runs = pd.to_numeric(output["bowlingRuns"], errors="coerce").fillna(0)
     balls = pd.to_numeric(output["bowlingBalls"], errors="coerce").fillna(0)
+    maidens = pd.to_numeric(output.get("bowlingMaidens", pd.Series(0, index=output.index)), errors="coerce").fillna(0)
     average = runs.div(wickets.where(wickets > 0))
     economy = runs.mul(6).div(balls.where(balls > 0))
     bbi_wickets = output.get("bowlingBestInnings", pd.Series("", index=output.index)).astype(str).str.extract(r"^(\d+)[-/]", expand=False)
     bbi_wickets = pd.to_numeric(bbi_wickets, errors="coerce")
 
-    invalid = bbi_wickets.gt(wickets) | (
+    invalid = bbi_wickets.gt(wickets) | ((balls > 0) & maidens.mul(6).gt(balls)) | (
         (wickets > 0)
         & (
             ((balls <= 0) & (wickets > 0))
@@ -357,6 +394,38 @@ def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
         )
     )
     return output.loc[~invalid].copy()
+
+
+def _filter_grdcc_app_facing_batting_rows(frame: pd.DataFrame) -> pd.DataFrame:
+    """Exclude structurally impossible GRDCC batting aggregates from visible records."""
+    if get_active_club_id() != "georges-river-district" or frame.empty:
+        return frame
+    required = {"battingAggregate", "battingInnings", "battingNotOuts"}
+    if not required.issubset(frame.columns):
+        return frame
+    output = frame.copy()
+    runs = pd.to_numeric(output["battingAggregate"], errors="coerce").fillna(0)
+    innings = pd.to_numeric(output["battingInnings"], errors="coerce").fillna(0)
+    not_outs = pd.to_numeric(output["battingNotOuts"], errors="coerce").fillna(0)
+    high_score = pd.to_numeric(output.get("battingHighScore", pd.Series(pd.NA, index=output.index)), errors="coerce")
+    fifties = pd.to_numeric(output.get("batting50s", pd.Series(0, index=output.index)), errors="coerce").fillna(0)
+    hundreds = pd.to_numeric(output.get("batting100s", pd.Series(0, index=output.index)), errors="coerce").fillna(0)
+    invalid = not_outs.gt(innings) | high_score.gt(runs) | hundreds.gt(innings) | (fifties + hundreds).gt(innings)
+    return output.loc[~invalid].copy()
+
+
+def _filter_grdcc_app_facing_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
+    """Remove hidden and structurally invalid GRDCC player labels from visible data."""
+    if get_active_club_id() != "georges-river-district" or frame.empty:
+        return frame
+    name_column = next((column for column in ["canonical_player_name", "player_name", "raw_player_name"] if column in frame.columns), None)
+    if name_column is None:
+        return frame
+    names = frame[name_column].fillna("").astype(str).str.strip()
+    fallback = frame.get("player_name", pd.Series("", index=frame.index)).fillna("").astype(str).str.strip()
+    names = names.where(names.ne(""), fallback)
+    valid = names.str.contains(r"[A-Za-z]", regex=True) & ~names.str.fullmatch(r"\*+") & ~names.str.fullmatch(r"\d+")
+    return frame.loc[valid].copy()
 
 
 def _normalise_supplemental_numeric_columns(frame: pd.DataFrame) -> pd.DataFrame:

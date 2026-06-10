@@ -1,5 +1,9 @@
 # Georges River Data Source Coverage Summary
 
+## Final Source Decision
+
+As of June 10, 2026, the app uses Historical Excel through `Summer 1971/72` and PlayCricket / PlayHQ from `Summer 1972/73` onward. Sources are never summed for the same player-season.
+
 ## Executive Summary
 
 - PlayCricket / PlayHQ provides the primary modern aggregate source for batting, bowling and fielding, but it includes known anomaly rows that must remain filtered or manually reviewed before driving headline records.

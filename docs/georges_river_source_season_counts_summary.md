@@ -1,5 +1,9 @@
 # GRDCC Source Season Counts Summary
 
+## Final Source Decision
+
+Final app-facing priority is Historical Excel through `Summer 1971/72` and PlayCricket / PlayHQ from `Summer 1972/73` onward. Season counts below describe captured source coverage; the app applies the fixed cutoff and never sums overlapping player-seasons.
+
 ## Purpose
 
 This report compares season-level coverage across GRDCC PlayCricket / PlayHQ processed data and the Historical Excel spreadsheet. Counts use source rows as supplied and do not merge or infer missing records.
