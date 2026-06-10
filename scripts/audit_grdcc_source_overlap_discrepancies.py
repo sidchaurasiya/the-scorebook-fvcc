@@ -57,6 +57,20 @@ BOWLING_METRICS = [
     ("10wm", "bowling10WMs", "bowling10WMs"),
 ]
 
+CORE_BATTING_METRICS = {"runs", "innings", "not_outs", "high_score", "batting_average", "50s", "100s", "ducks"}
+HEADLINE_BATTING_METRICS = {"runs", "high_score", "50s", "100s"}
+UNRELIABLE_EXCEL_BATTING_METRICS = {"matches", "balls_faced", "batting_strike_rate", "fours", "sixes"}
+CORE_BOWLING_METRICS = {
+    "wickets",
+    "balls",
+    "overs",
+    "bowling_runs_conceded",
+    "bowling_average",
+    "economy",
+    "bowling_strike_rate",
+}
+HEADLINE_BOWLING_METRICS = {"wickets"}
+
 SUM_COLUMNS = {
     "matches",
     "battingInnings",
@@ -114,6 +128,8 @@ def main() -> int:
         excel_quality,
     )
     recommendations = build_recommendations(batting_discrepancies, bowling_discrepancies)
+    high_priority_review = build_high_priority_review(batting_discrepancies, bowling_discrepancies)
+    priority_rules = build_source_priority_rules()
     summary = build_summary(
         overlap_seasons,
         excel_batting,
@@ -124,13 +140,26 @@ def main() -> int:
         bowling_discrepancies,
         recommendations,
     )
-    markdown = build_report(overlap_seasons, match_audit, batting_discrepancies, bowling_discrepancies, recommendations, summary)
+    review_summary = build_review_summary(summary, high_priority_review)
+    markdown = build_report(
+        overlap_seasons,
+        match_audit,
+        batting_discrepancies,
+        bowling_discrepancies,
+        recommendations,
+        summary,
+        high_priority_review,
+        review_summary,
+    )
 
     write_csv(OUTPUT_DIR / "grdcc_batting_overlap_discrepancies.csv", batting_discrepancies)
     write_csv(OUTPUT_DIR / "grdcc_bowling_overlap_discrepancies.csv", bowling_discrepancies)
     write_csv(OUTPUT_DIR / "grdcc_player_match_overlap_audit.csv", match_audit)
     write_csv(OUTPUT_DIR / "grdcc_overlap_discrepancy_summary.csv", summary)
     write_csv(OUTPUT_DIR / "grdcc_overlap_source_priority_recommendations.csv", recommendations)
+    write_csv(OUTPUT_DIR / "grdcc_overlap_high_priority_review.csv", high_priority_review)
+    write_csv(OUTPUT_DIR / "grdcc_source_priority_rules.csv", priority_rules)
+    write_csv(OUTPUT_DIR / "grdcc_overlap_review_summary.csv", review_summary)
     DOC_PATH.write_text(markdown, encoding="utf-8")
 
     print(f"Overlap seasons count: {len(overlap_seasons)}")
@@ -139,6 +168,12 @@ def main() -> int:
     print(f"High discrepancy count: {count_discrepancies(batting_discrepancies + bowling_discrepancies, 'high')}")
     print(f"Medium discrepancy count: {count_discrepancies(batting_discrepancies + bowling_discrepancies, 'medium')}")
     print(f"Manual review count: {sum(1 for row in recommendations if row['manual_review_required'] == 'yes')}")
+    print(f"High-priority review row count: {len(high_priority_review)}")
+    print(f"P1 count: {sum(1 for row in high_priority_review if row['review_priority'] == 'P1')}")
+    print(f"P2 count: {sum(1 for row in high_priority_review if row['review_priority'] == 'P2')}")
+    print(f"Private preview blocker count: {sum(1 for row in high_priority_review if row['likely_app_impact'] == 'private_preview_blocker')}")
+    print(f"Source priority rules: {(OUTPUT_DIR / 'grdcc_source_priority_rules.csv').relative_to(ROOT)}")
+    print(f"Review summary: {(OUTPUT_DIR / 'grdcc_overlap_review_summary.csv').relative_to(ROOT)}")
     print("outputs:")
     for path in [
         OUTPUT_DIR / "grdcc_batting_overlap_discrepancies.csv",
@@ -146,6 +181,9 @@ def main() -> int:
         OUTPUT_DIR / "grdcc_player_match_overlap_audit.csv",
         OUTPUT_DIR / "grdcc_overlap_discrepancy_summary.csv",
         OUTPUT_DIR / "grdcc_overlap_source_priority_recommendations.csv",
+        OUTPUT_DIR / "grdcc_overlap_high_priority_review.csv",
+        OUTPUT_DIR / "grdcc_source_priority_rules.csv",
+        OUTPUT_DIR / "grdcc_overlap_review_summary.csv",
         DOC_PATH,
     ]:
         print(f"- {path.relative_to(ROOT)}")
@@ -466,6 +504,165 @@ def build_recommendations(*groups: list[dict[str, object]]) -> list[dict[str, ob
     return output
 
 
+def build_high_priority_review(
+    batting: list[dict[str, object]], bowling: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    output = []
+    for metric_group, rows in (("batting", batting), ("bowling", bowling)):
+        core_metrics = CORE_BATTING_METRICS if metric_group == "batting" else CORE_BOWLING_METRICS
+        headline_metrics = HEADLINE_BATTING_METRICS if metric_group == "batting" else HEADLINE_BOWLING_METRICS
+        for row in rows:
+            metric = clean(row["metric"])
+            dtype = clean(row["discrepancy_type"])
+            severity = clean(row["discrepancy_severity"])
+            match_method = clean(row["match_method"])
+            anomaly_status = clean(row["playcricket_anomaly_status"]).lower()
+            identity_ambiguous = match_method == "ambiguous" or clean(row["match_confidence"]) == "low"
+            high_anomaly = "high" in anomaly_status
+            already_excluded = "excluded_from_app" in anomaly_status or "already_excluded" in anomaly_status
+
+            if dtype in {"both_missing", "exact_match", "close_match"} or severity == "low":
+                continue
+            if (
+                metric_group == "batting"
+                and metric in UNRELIABLE_EXCEL_BATTING_METRICS
+                and dtype in {"excel_missing", "playcricket_missing", "source_not_comparable"}
+                and not identity_ambiguous
+                and not high_anomaly
+            ):
+                continue
+            if not (severity == "high" or (severity == "medium" and metric in core_metrics) or identity_ambiguous or high_anomaly):
+                continue
+
+            is_headline = metric in headline_metrics
+            if identity_ambiguous or (severity == "high" and is_headline) or (high_anomaly and is_headline):
+                priority = "P1"
+            elif metric in core_metrics or clean(row["recommended_source"]) in {"excel", "playcricket"}:
+                priority = "P2"
+            else:
+                priority = "P3"
+
+            if already_excluded:
+                app_impact = "already_excluded"
+                suggested_decision = "confirm_existing_exclusion"
+            elif severity == "high" and is_headline:
+                app_impact = "private_preview_blocker"
+                suggested_decision = source_decision(row)
+            elif is_headline:
+                app_impact = "headline_record_review"
+                suggested_decision = source_decision(row)
+            elif metric in core_metrics:
+                app_impact = "core_metric_review"
+                suggested_decision = source_decision(row)
+            else:
+                app_impact = "supporting_metric_review"
+                suggested_decision = source_decision(row)
+
+            output.append(
+                {
+                    "review_priority": priority,
+                    "player_name": row["player_name"],
+                    "season": row["season"],
+                    "metric_group": metric_group,
+                    "metric": metric,
+                    "excel_value": row["excel_value"],
+                    "playcricket_value": row["playcricket_value"],
+                    "absolute_difference": row["absolute_difference"],
+                    "percentage_difference": row["percentage_difference"],
+                    "discrepancy_type": dtype,
+                    "discrepancy_severity": severity,
+                    "recommended_source": row["recommended_source"],
+                    "reason": row["reason"],
+                    "match_method": row["match_method"],
+                    "match_confidence": row["match_confidence"],
+                    "excel_source_row": row["excel_source_row"],
+                    "playcricket_source_row": row["playcricket_source_row"],
+                    "excel_data_confidence": row["excel_data_confidence"],
+                    "playcricket_anomaly_status": row["playcricket_anomaly_status"],
+                    "likely_app_impact": app_impact,
+                    "suggested_decision": suggested_decision,
+                    "reviewer_decision": "",
+                    "reviewer_notes": "",
+                }
+            )
+
+    priority_order = {"P1": 0, "P2": 1, "P3": 2}
+    severity_order = {"high": 0, "medium": 1, "low": 2}
+    return sorted(
+        output,
+        key=lambda row: (
+            priority_order.get(clean(row["review_priority"]), 9),
+            severity_order.get(clean(row["discrepancy_severity"]), 9),
+            clean(row["metric_group"]),
+            season_sort_key(clean(row["season"])),
+            clean(row["player_name"]).lower(),
+            clean(row["metric"]),
+        ),
+    )
+
+
+def source_decision(row: dict[str, object]) -> str:
+    recommended = clean(row["recommended_source"])
+    if clean(row["match_method"]) == "ambiguous" or clean(row["match_confidence"]) == "low":
+        return "manual_identity_review"
+    if recommended == "excel":
+        return "use_excel_for_player_season_metric"
+    if recommended == "playcricket":
+        return "use_playcricket_for_player_season_metric"
+    return "manual_source_priority_review"
+
+
+def build_source_priority_rules() -> list[dict[str, str]]:
+    return [
+        priority_rule("batting", "excel_only", "aggregate batting", "excel", "none", "Use clean Excel for historical seasons absent from PlayCricket.", "Only clean or manually approved rows may feed records."),
+        priority_rule("batting", "playcricket_only", "aggregate batting", "playcricket", "none", "Use sane PlayCricket / PlayHQ data.", "High-severity anomalies remain excluded."),
+        priority_rule("batting", "overlap", "aggregate batting", "playcricket", "excel", "Use sane PlayCricket by default; use Excel when the PlayCricket row is a high-severity anomaly.", "Material core-metric differences require review; never sum both sources for one player-season."),
+        priority_rule("batting", "overlap", "core metrics", "manual_review", "playcricket", "Review material differences in runs, innings, not outs, high score, average, 50s, 100s, or ducks.", "PlayCricket remains the default when both rows are sane and close."),
+        priority_rule("bowling", "excel_only", "aggregate bowling", "excel", "none", "Use clean Excel for historical bowling seasons absent from PlayCricket.", "Excel BBI, 5WI, and 10WM remain unavailable unless explicitly verified."),
+        priority_rule("bowling", "playcricket_only", "aggregate bowling", "playcricket", "none", "Use sane PlayCricket / PlayHQ data, including seasons after Excel bowling coverage ends.", "Exclude high-severity anomalies unless manually approved."),
+        priority_rule("bowling", "overlap", "aggregate bowling", "manual_review", "none", "Do not automatically merge overlap rows; there are currently no matched bowling player-seasons.", "Choose one verified source per player-season and never sum sources."),
+        priority_rule("fielding", "all", "fielding aggregates", "playcricket", "none", "Use PlayCricket / PlayHQ only.", "Historical Excel does not provide an app-facing fielding source."),
+        priority_rule("bbb_only", "all", "delivery-level metrics", "verified_ball_by_ball_only", "none", "Use verified ball-by-ball data only.", "Never derive BBB-only metrics from Excel or aggregate PlayCricket files."),
+    ]
+
+
+def priority_rule(metric_group: str, season_category: str, metric: str, default_source: str, fallback_source: str, rule: str, caveat: str) -> dict[str, str]:
+    return {
+        "metric_group": metric_group,
+        "season_category": season_category,
+        "metric": metric,
+        "default_source": default_source,
+        "fallback_source": fallback_source,
+        "rule": rule,
+        "caveat": caveat,
+    }
+
+
+def build_review_summary(summary: list[dict[str, object]], review: list[dict[str, object]]) -> list[dict[str, object]]:
+    source_summary = {clean(row["metric"]): row["value"] for row in summary}
+    priorities = Counter(clean(row["review_priority"]) for row in review)
+    high_core_batting = sum(
+        1 for row in review if row["metric_group"] == "batting" and row["metric"] in CORE_BATTING_METRICS and row["discrepancy_severity"] == "high"
+    )
+    medium_core_batting = sum(
+        1 for row in review if row["metric_group"] == "batting" and row["metric"] in CORE_BATTING_METRICS and row["discrepancy_severity"] == "medium"
+    )
+    return [
+        {"metric": "total_overlap_metric_comparisons", "value": source_summary.get("total_metric_comparisons", 0)},
+        {"metric": "high_priority_review_rows", "value": len(review)},
+        {"metric": "p1_rows", "value": priorities["P1"]},
+        {"metric": "p2_rows", "value": priorities["P2"]},
+        {"metric": "p3_rows", "value": priorities["P3"]},
+        {"metric": "matched_batting_player_seasons", "value": source_summary.get("matched_player_season_batting_rows", 0)},
+        {"metric": "matched_bowling_player_seasons", "value": source_summary.get("matched_player_season_bowling_rows", 0)},
+        {"metric": "high_core_batting_discrepancies", "value": high_core_batting},
+        {"metric": "medium_core_batting_discrepancies", "value": medium_core_batting},
+        {"metric": "identity_ambiguous_rows", "value": sum(1 for row in review if row["match_method"] == "ambiguous" or row["match_confidence"] == "low")},
+        {"metric": "recommended_default_overlap_source", "value": "playcricket_when_sane"},
+        {"metric": "private_preview_blocker_count", "value": sum(1 for row in review if row["likely_app_impact"] == "private_preview_blocker")},
+    ]
+
+
 def build_summary(
     overlap_seasons: set[str],
     excel_batting: dict[tuple[str, str], dict[str, object]],
@@ -506,8 +703,18 @@ def build_summary(
     ]
 
 
-def build_report(overlap_seasons: set[str], match_audit: list[dict[str, object]], batting: list[dict[str, object]], bowling: list[dict[str, object]], recommendations: list[dict[str, object]], summary: list[dict[str, object]]) -> str:
+def build_report(
+    overlap_seasons: set[str],
+    match_audit: list[dict[str, object]],
+    batting: list[dict[str, object]],
+    bowling: list[dict[str, object]],
+    recommendations: list[dict[str, object]],
+    summary: list[dict[str, object]],
+    high_priority_review: list[dict[str, object]],
+    review_summary: list[dict[str, object]],
+) -> str:
     s = {row["metric"]: row["value"] for row in summary}
+    rs = {row["metric"]: row["value"] for row in review_summary}
     high_batting = [row for row in batting if row["discrepancy_severity"] == "high"][:20]
     high_bowling = [row for row in bowling if row["discrepancy_severity"] == "high"][:20]
     lines = [
@@ -555,6 +762,39 @@ def build_report(overlap_seasons: set[str], match_audit: list[dict[str, object]]
         "- Use Excel when PlayCricket has high-severity anomaly status and Excel is clean and complete.",
         "- Use manual review when values differ materially or identity matching is ambiguous.",
         "- Use neither source for BBB-only metrics unless verified ball-by-ball data exists.",
+        "",
+        "## Why Manual Review Count Is High",
+        "",
+        "- The original recommendation count is player-season level and becomes conservative when any one of many compared fields is missing or differs.",
+        "- Excel does not reliably capture several modern fields such as balls faced, strike rate, fours, sixes, and some match counts, so exhaustive comparison creates noise that does not affect client-visible records.",
+        "- The high-priority export removes exact, close, low-severity, both-missing, and expected non-core Excel gaps.",
+        "",
+        "## What Actually Needs Review Before Preview",
+        "",
+        f"- High-priority discrepancy rows: {rs.get('high_priority_review_rows', 0)}.",
+        f"- P1 rows: {rs.get('p1_rows', 0)}; P2 rows: {rs.get('p2_rows', 0)}; P3 rows: {rs.get('p3_rows', 0)}.",
+        f"- Private preview blockers: {rs.get('private_preview_blocker_count', 0)}.",
+        "- Review P1 headline and identity rows first. P2 rows affect core aggregates or source choice. P3 rows are supporting context.",
+        "",
+        "## Recommended Source Rules",
+        "",
+        "- Excel-only seasons: use clean Excel aggregates.",
+        "- PlayCricket-only seasons: use sane PlayCricket / PlayHQ aggregates.",
+        "- Overlap batting seasons: prefer sane PlayCricket; fall back to clean Excel when PlayCricket has a high-severity anomaly.",
+        "- Material core-metric differences require a source decision, and the two sources must never be summed for the same player-season.",
+        "- Bowling overlap has no matched player-season rows, so do not automatically merge it. Fielding remains PlayCricket-only.",
+        "- BBB-only metrics require verified ball-by-ball data.",
+        "",
+        "## High-Priority Overlap Review File",
+        "",
+        "- Use `grdcc_overlap_high_priority_review.csv` as the working decision file.",
+        "- It contains one row per decision-relevant player-season-metric discrepancy with blank reviewer decision and notes fields.",
+        "- The operating rules are recorded in `grdcc_source_priority_rules.csv`; compact counts are in `grdcc_overlap_review_summary.csv`.",
+        "",
+        "## Private Preview Blocker Definition",
+        "",
+        "- A discrepancy blocks private preview only when it is app-facing, high severity, not already excluded, and affects a headline record metric.",
+        "- Non-headline P2/P3 differences and already excluded anomalies remain review work but do not automatically block preview.",
         "",
         "## Caveats",
         "",

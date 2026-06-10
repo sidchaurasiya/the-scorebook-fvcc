@@ -64,6 +64,39 @@
 - Use manual review when values differ materially or identity matching is ambiguous.
 - Use neither source for BBB-only metrics unless verified ball-by-ball data exists.
 
+## Why Manual Review Count Is High
+
+- The original recommendation count is player-season level and becomes conservative when any one of many compared fields is missing or differs.
+- Excel does not reliably capture several modern fields such as balls faced, strike rate, fours, sixes, and some match counts, so exhaustive comparison creates noise that does not affect client-visible records.
+- The high-priority export removes exact, close, low-severity, both-missing, and expected non-core Excel gaps.
+
+## What Actually Needs Review Before Preview
+
+- High-priority discrepancy rows: 371.
+- P1 rows: 104; P2 rows: 267; P3 rows: 0.
+- Private preview blockers: 77.
+- Review P1 headline and identity rows first. P2 rows affect core aggregates or source choice. P3 rows are supporting context.
+
+## Recommended Source Rules
+
+- Excel-only seasons: use clean Excel aggregates.
+- PlayCricket-only seasons: use sane PlayCricket / PlayHQ aggregates.
+- Overlap batting seasons: prefer sane PlayCricket; fall back to clean Excel when PlayCricket has a high-severity anomaly.
+- Material core-metric differences require a source decision, and the two sources must never be summed for the same player-season.
+- Bowling overlap has no matched player-season rows, so do not automatically merge it. Fielding remains PlayCricket-only.
+- BBB-only metrics require verified ball-by-ball data.
+
+## High-Priority Overlap Review File
+
+- Use `grdcc_overlap_high_priority_review.csv` as the working decision file.
+- It contains one row per decision-relevant player-season-metric discrepancy with blank reviewer decision and notes fields.
+- The operating rules are recorded in `grdcc_source_priority_rules.csv`; compact counts are in `grdcc_overlap_review_summary.csv`.
+
+## Private Preview Blocker Definition
+
+- A discrepancy blocks private preview only when it is app-facing, high severity, not already excluded, and affects a headline record metric.
+- Non-headline P2/P3 differences and already excluded anomalies remain review work but do not automatically block preview.
+
 ## Caveats
 
 - Excel matches are weak/incomplete in some seasons and are grouped by normalized player name, not a manual merge decision.
