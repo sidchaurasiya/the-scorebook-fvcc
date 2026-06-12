@@ -1,0 +1,11 @@
+check,actual,expected,status,details
+premiership_matches_with_player_lists,16,16,pass,
+linked_premiership_matches_without_player_lists,0,0,pass,
+annual_report_only_matches_excluded,6,6,pass,
+player_participation_rows,187,187,pass,
+duplicate_player_match_rows,0,0,pass,
+most_premierships_player_count,116,116,pass,Curtis Cheney (6)
+sorting_descending,True,True,pass,
+explicit_scorecard_sources_only,True,True,pass,
+no_blank_player_names,True,True,pass,
+fvcc_data_unchanged,True,True,pass,

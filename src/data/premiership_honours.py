@@ -41,6 +41,39 @@ def premiership_scorecard_captains_path() -> Path:
     )
 
 
+def grdcc_most_premierships_path() -> Path:
+    return (
+        REPO_ROOT
+        / "clubs"
+        / GRDCC_CLUB_ID
+        / "data"
+        / "processed"
+        / "validation"
+        / "annual_report_2024_25"
+        / "grdcc_most_premierships_calculated.csv"
+    )
+
+
+def load_grdcc_most_premierships(club_id: str | None = None) -> pd.DataFrame:
+    if (club_id or get_active_club_id()) != GRDCC_CLUB_ID:
+        return pd.DataFrame()
+    path = grdcc_most_premierships_path()
+    if not path.exists():
+        return pd.DataFrame()
+    rows = pd.read_csv(path, dtype=str).fillna("")
+    if rows.empty:
+        return rows
+    rows["display_player_name"] = rows["player_name"]
+    rows["canonical_player_name"] = rows["player_name"]
+    rows["canonical_player_id"] = ""
+    rows["grades"] = rows["grades_or_teams"]
+    rows["teams"] = "Georges River"
+    rows["evidence_match_ids"] = rows["scorecard_match_ids"]
+    rows["confidence"] = "high"
+    rows["latest_premiership_season"] = rows["seasons"].str.split(",").str[0].str.strip()
+    return rows
+
+
 def normalize_premiership_grade(value: object) -> str:
     label = re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
     aliases = {
