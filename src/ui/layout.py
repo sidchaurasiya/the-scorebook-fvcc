@@ -50,6 +50,8 @@ from src.data.playcricket_ingestion import (
 from src.data.featured_record_overrides import apply_featured_record_overrides
 from src.data.premiership_honours import (
     annual_report_premiership_path,
+    grdcc_most_premierships_path,
+    load_grdcc_most_premierships,
     merge_grdcc_premiership_honours,
     premiership_match_context_path,
 )
@@ -6591,6 +6593,9 @@ def premiership_records_signature() -> tuple[tuple[str, float], ...]:
         context_path = premiership_match_context_path()
         if context_path.exists():
             signature.append((str(context_path), context_path.stat().st_mtime))
+        leaders_path = grdcc_most_premierships_path()
+        if leaders_path.exists():
+            signature.append((str(leaders_path), leaders_path.stat().st_mtime))
     return tuple(signature)
 
 
@@ -6607,6 +6612,9 @@ def load_premiership_records(signature: tuple[tuple[str, float], ...]) -> tuple[
         if "scoreboard_url" in wins:
             wins["scoreboard_url"] = wins["scoreboard_url"].map(safe_record_text)
     wins = merge_grdcc_premiership_honours(wins)
+    grdcc_players = load_grdcc_most_premierships()
+    if not grdcc_players.empty:
+        players = grdcc_players
     if not players.empty:
         if {"premiership_count", "evidence_match_ids"}.issubset(players.columns):
             players["premiership_count"] = pd.to_numeric(players["premiership_count"], errors="coerce").fillna(0).astype(int)
@@ -6768,7 +6776,7 @@ def player_premiership_row_html(rank: int, row: pd.Series) -> str:
     player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
     player_id = player_id_from_row(row)
     count = safe_record_int(row.get("premiership_count")) or 0
-    details = linked_premiership_seasons(row.get("seasons"))
+    details = linked_premiership_details(row.get("premiership_details")) if safe_record_text(row.get("premiership_details")) else linked_premiership_seasons(row.get("seasons"))
     value = f"{count} premiership{'s' if count != 1 else ''}"
     return (
         '<div class="performance-row premiership-player-row">'
@@ -6791,6 +6799,19 @@ def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
     if len(seasons) > visible_limit:
         links.append(f'<span class="premiership-more-seasons">+{len(seasons) - visible_limit} more</span>')
     return ", ".join(links)
+
+
+def linked_premiership_details(value: object, visible_limit: int = 3) -> str:
+    details = [part.strip() for part in safe_record_text(value).split("|") if part.strip()]
+    visible = details[:visible_limit]
+    rendered = []
+    for detail in visible:
+        season, separator, grade = detail.partition(" — ")
+        season_html = compact_premiership_season_link_html(season)
+        rendered.append(f'{season_html}{html.escape(" — " + grade) if separator else ""}')
+    if len(details) > visible_limit:
+        rendered.append(f'<span class="premiership-more-seasons">+{len(details) - visible_limit} more</span>')
+    return ", ".join(rendered)
 
 
 def compact_premiership_season_link_html(season: object) -> str:
