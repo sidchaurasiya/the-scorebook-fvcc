@@ -2547,7 +2547,7 @@ def inject_theme() -> None:
 
         .premiership-card-scroll {
             flex: 1;
-            max-height: 1180px;
+            max-height: 1137px;
             overflow-y: auto;
             padding-right: 7px;
             scrollbar-color: var(--club-border) transparent;

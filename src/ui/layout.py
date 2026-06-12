@@ -6709,20 +6709,19 @@ def premiership_win_row_html(row: pd.Series) -> str:
     result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
     grade_line = grade or "Grade not recorded"
     is_annual_report = safe_record_text(row.get("source_system")).casefold() == "annual_report"
-    match_context = safe_record_text(row.get("match_context"), "annual_report_only").casefold()
-    if match_context == "last_available_match" and opponent:
-        title_line = f'Last available PlayCricket match: {html.escape(team)} <span>vs {html.escape(opponent)}</span>'
-        captain_line = "Official club honour • supporting match context only"
-        result = f"Last match: {result}" if result else "Last available match"
-        scorecard_label = "View last match ↗"
+    result_key = result.casefold()
+    if opponent and result_key.startswith("won"):
+        title_line = f'{html.escape(team)} <span>defeated {html.escape(opponent)}</span>'
+    elif opponent:
+        title_line = f'{html.escape(team)} <span>vs {html.escape(opponent)}</span>'
     else:
-        title_line = f'{html.escape(team)} <span>defeated {html.escape(opponent)}</span>' if opponent else html.escape(team)
-        captain_line = f"Captain: {captain}" if captain else ("Official club honours list" if is_annual_report else "Captain not recorded")
-        scorecard_label = "View scorecard ↗"
+        title_line = html.escape(team)
+    captain_line = f"Captain: {captain}" if captain else ("Official club honours list" if is_annual_report else "Captain not recorded")
+    result = result[:1].upper() + result[1:] if result else "Premiers"
     scorecard = scorecard_url_link_html(
         row.get("scoreboard_url"),
         row.get("match_id"),
-        label=scorecard_label,
+        label="View scorecard ↗",
         page_slug="hall-of-fame",
         section_name="premiership_wins",
     )

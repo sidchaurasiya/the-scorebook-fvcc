@@ -27,6 +27,8 @@ For Summer 2008/09 onward, the merge checks the local Season by Round scorecard 
 - If no final exists, the latest available match is labelled `Last available PlayCricket match` and is not represented as the premiership final.
 - If no matching local row exists, the honour remains Annual Report-only.
 - Captains are retained only from the existing verified Hall of Fame source; they are not inferred from the fallback match list.
+- Match context and confidence remain in the enrichment audit rather than appearing as noisy UI labels.
+- Supporting rows with a clear win use the standard `defeated`, `Won by` and `View scorecard` presentation. Non-winning or unknown results use neutral `vs` wording.
 
 ## Sorting And UI
 
