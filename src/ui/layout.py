@@ -47,6 +47,7 @@ from src.data.playcricket_ingestion import (
     read_processed_table,
     refresh_playcricket_backup,
 )
+from src.data.featured_record_overrides import apply_featured_record_overrides
 from src.config.club_config import (
     allow_legacy_fallback,
     get_active_club_id,
@@ -139,7 +140,7 @@ SHOW_PLAYER_PROFILE_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
-HALL_OF_FAME_DATA_VERSION = "hof-detail-win-season-label-v1"
+HALL_OF_FAME_DATA_VERSION = "hof-featured-record-overrides-v1"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -4609,6 +4610,7 @@ def hall_of_fame_v2_player_premierships_card_html(players: pd.DataFrame) -> str:
 
 
 def render_hall_of_fame_v2_club_legends(all_time: pd.DataFrame) -> None:
+    all_time = apply_featured_record_overrides(all_time)
     specs = [
         ("Most matches", "Durability Kings", "Matches", "fielding", "matches"),
         ("Most runs", "Run Mountain", "Runs", "batting", "runs"),
@@ -4647,10 +4649,11 @@ def hall_of_fame_v2_legend_card_html(
     rows = []
     for rank, (_, row) in enumerate(leaders.iterrows(), start=1):
         value = safe_record_int(row.get(metric)) or 0
+        source_note = featured_record_source_note_html(row)
         rows.append(
             '<div class="hof-v2-rank-row">'
             f'<span class="hof-v2-rank">{rank}</span>'
-            f"<strong>{player_profile_link_html(player_id_from_row(row), row['Player'])}</strong>"
+            f"<strong>{player_profile_link_html(player_id_from_row(row), row['Player'])}{source_note}</strong>"
             f"<span>{value:,} {html.escape(unit)}</span>"
             "</div>"
         )
@@ -6486,6 +6489,7 @@ def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
 
 
 def render_hall_of_fame_leaders(all_time: pd.DataFrame) -> None:
+    all_time = apply_featured_record_overrides(all_time)
     render_section_heading("All-Time Leaders 👑")
     leader_specs = [
         ("Most Matches", "Matches", "matches", "fielding"),
@@ -6518,10 +6522,11 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
     for rank, (_, row) in enumerate(displayed_leaders.iterrows(), start=1):
         value = float(row[metric])
         width = 0 if not max_value else value / max_value * 100
+        source_note = featured_record_source_note_html(row)
         rows.append(
             '<div class="progress-row hof-progress-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
-            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}</span>'
+            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}{source_note}</span>'
             f'<span class="progress-value"><strong>{int(value):,} {html.escape(suffix)}</strong></span>'
             f'<div class="progress-track"><div style="width:{width:.0f}%"></div></div>'
             "</div>"
@@ -6531,6 +6536,14 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
         unsafe_allow_html=True,
     )
     render_hof_expand_control(state_key, expanded, len(leaders))
+
+
+def featured_record_source_note_html(row: pd.Series) -> str:
+    override_flag = row.get("Featured Record Override", False)
+    if pd.isna(override_flag) or str(override_flag).strip().casefold() not in {"1", "true", "yes"}:
+        return ""
+    source_note = str(row.get("Featured Record Source Note") or "Official Annual Report total")
+    return f'<small class="featured-record-source">{html.escape(source_note)}</small>'
 
 
 def render_hof_expand_control(state_key: str, expanded: bool, row_count: int, collapsed_limit: int = 6) -> None:
