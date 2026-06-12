@@ -1,0 +1,12 @@
+check,actual,expected,status,details
+annual_report_extracted_wins,22,22,pass,
+existing_app_wins,10,10,pass,
+newly_added_wins,12,12,pass,
+final_app_wins,22,22,pass,
+duplicate_season_grade_combinations,0,0,pass,
+sorting_descending,True,True,pass,
+latest_seven_count,7,7,pass,Summer 2024/25 — vintage; Summer 2023/24 — classics; Summer 2023/24 — first grade limited overs; Summer 2023/24 — second grade; Summer 2019/20 — vintage; Summer 2018/19 — frank gray shield; Summer 2017/18 — third grade
+high_confidence_report_wins_missing,0,0,pass,
+annual_report_only_scorecard_links,0,0,pass,
+annual_report_only_match_ids,0,0,pass,
+fvcc_rows_unchanged,True,True,pass,
