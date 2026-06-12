@@ -8,6 +8,7 @@ Decision date: June 10, 2026.
 - PlayCricket / PlayHQ is the source of truth from `Summer 1972/73` onward.
 - Excel and PlayCricket rows are never summed for the same player-season.
 - The rule is applied with chronological season sort keys, not string comparison.
+- Approved Annual Report featured-record overrides sit above this season-source rule only for explicitly documented all-time/career displays; they never alter or sum player-season rows.
 
 ## Reason
 

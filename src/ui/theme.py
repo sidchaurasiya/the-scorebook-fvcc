@@ -2241,6 +2241,15 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .featured-record-source {
+            display: block;
+            margin-top: 0.15rem;
+            color: var(--muted-text);
+            font-size: 0.7rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
         .progress-average {
             color: #858ba6;
             display: block;

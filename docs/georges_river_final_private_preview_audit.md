@@ -48,6 +48,8 @@ Boundary checks:
 
 GRDCC is private-preview ready under the final source rule. The final validation found no source conflicts, no boundary failures and no preview-blocking odd statistics.
 
+Approved GRDCC 2024/25 Annual Report featured-record overrides now supply Harry Milburn's official 10,788 career runs and Gordon Leslie's official 707 career wickets in Hall of Fame featured leader displays. Season-level and detailed source-data outputs remain unchanged.
+
 ## Smoke Results
 
 - GRDCC and FVCC Streamlit servers returned HTTP 200 with no server tracebacks.
