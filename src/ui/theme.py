@@ -2547,21 +2547,7 @@ def inject_theme() -> None:
 
         .premiership-card-scroll {
             flex: 1;
-            padding-right: 5px;
-        }
-
-        .premiership-older-label {
-            color: var(--muted-text);
-            font-size: 0.7rem;
-            font-weight: 850;
-            letter-spacing: 0.04em;
-            margin-top: 12px;
-            padding-top: 11px;
-            text-transform: uppercase;
-        }
-
-        .premiership-older-scroll {
-            max-height: 290px;
+            max-height: 1180px;
             overflow-y: auto;
             padding-right: 7px;
             scrollbar-color: var(--club-border) transparent;

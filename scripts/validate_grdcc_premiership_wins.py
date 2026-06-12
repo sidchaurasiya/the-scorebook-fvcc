@@ -34,6 +34,7 @@ HOF_WINS = ROOT / "clubs" / CLUB_ID / "data" / "processed" / "hall_of_fame" / "p
 OUTPUT_DIR = ROOT / "clubs" / CLUB_ID / "data" / "processed" / "validation" / "annual_report_2024_25"
 EXTRACT_PATH = OUTPUT_DIR / "grdcc_annual_report_premiership_wins_extract.csv"
 VALIDATION_PATH = OUTPUT_DIR / "grdcc_premiership_wins_validation.csv"
+ENRICHMENT_PATH = OUTPUT_DIR / "grdcc_premiership_wins_playcricket_enrichment.csv"
 
 
 def write_csv(path: Path, rows: list[dict[str, object]], columns: list[str]) -> None:
@@ -85,8 +86,62 @@ def main() -> int:
     sort_values = pd.to_numeric(merged["season_sort_key"], errors="coerce").fillna(-1).tolist()
     latest_seven = merged.head(7)
     high_confidence_missing = sorted(report_keys - set(merged_keys))
-    annual_only = merged[merged.get("source_system", pd.Series("", index=merged.index)).eq("annual_report")]
+    post_2008 = merged[pd.to_numeric(merged["season_sort_key"], errors="coerce").ge(2008)].copy()
+    playcricket_enriched = post_2008[post_2008["match_source"].eq("playcricket")]
+    last_available = merged[merged["match_context"].eq("last_available_match")]
+    report_only = merged[merged["match_context"].eq("annual_report_only")]
     fvcc_copy = merge_grdcc_premiership_honours(existing, "fvcc")
+
+    report_lookup = {
+        premiership_key(row["season"], row["grade_or_team"]): row
+        for _, row in report.iterrows()
+    }
+    enrichment_rows = []
+    for _, row in merged.iterrows():
+        key = premiership_key(row["season"], row["grade_name"])
+        report_row = report_lookup.get(key, {})
+        found = str(row.get("match_source", "")).strip() == "playcricket"
+        enrichment_rows.append(
+            {
+                "season": row.get("season", ""),
+                "season_sort_key": row.get("season_sort_key", ""),
+                "grade_or_team": row.get("grade_name", ""),
+                "premiership_label": report_row.get("premiership_label", "Premiers"),
+                "annual_report_page": report_row.get("annual_report_page", ""),
+                "annual_report_source_text": report_row.get("source_text", ""),
+                "already_in_app": "yes" if key in existing_keys else "no",
+                "app_displayed": "yes",
+                "playcricket_match_found": "yes" if found else "no",
+                "playcricket_match_id": row.get("match_id", ""),
+                "playcricket_match_date": row.get("match_date", ""),
+                "playcricket_grade": row.get("grade_name", ""),
+                "opponent": row.get("opponent_team_name", ""),
+                "result_margin": row.get("result_margin_display", ""),
+                "scorecard_url": row.get("scoreboard_url", ""),
+                "match_context": row.get("match_context", "annual_report_only"),
+                "match_confidence": row.get("match_confidence", ""),
+                "enrichment_action": (
+                    "verified_final_retained" if key in existing_keys
+                    else "playcricket_context_added" if found
+                    else "annual_report_only_retained"
+                ),
+                "notes": row.get("match_notes", ""),
+            }
+        )
+    write_csv(
+        ENRICHMENT_PATH,
+        enrichment_rows,
+        [
+            "season", "season_sort_key", "grade_or_team", "premiership_label",
+            "annual_report_page", "annual_report_source_text", "already_in_app",
+            "app_displayed", "playcricket_match_found", "playcricket_match_id",
+            "playcricket_match_date", "playcricket_grade", "opponent", "result_margin",
+            "scorecard_url", "match_context", "match_confidence", "enrichment_action", "notes",
+        ],
+    )
+
+    layout_text = (ROOT / "src" / "ui" / "layout.py").read_text(encoding="utf-8")
+    theme_text = (ROOT / "src" / "ui" / "theme.py").read_text(encoding="utf-8")
 
     checks = [
         ("annual_report_extracted_wins", len(report), "22"),
@@ -97,8 +152,12 @@ def main() -> int:
         ("sorting_descending", sort_values == sorted(sort_values, reverse=True), "True"),
         ("latest_seven_count", len(latest_seven), "7"),
         ("high_confidence_report_wins_missing", len(high_confidence_missing), "0"),
-        ("annual_report_only_scorecard_links", int(annual_only["scoreboard_url"].astype(str).str.strip().ne("").sum()), "0"),
-        ("annual_report_only_match_ids", int(annual_only["match_id"].astype(str).str.strip().ne("").sum()), "0"),
+        ("post_2008_wins_checked", len(post_2008), "16"),
+        ("post_2008_playcricket_enriched", len(playcricket_enriched), "16"),
+        ("last_available_match_fallbacks", len(last_available), "5"),
+        ("annual_report_only_wins", len(report_only), "6"),
+        ("playcricket_context_labels_valid", set(playcricket_enriched["match_context"]).issubset({"grand_final", "final", "last_available_match"}), "True"),
+        ("single_scrollable_list", "premiership-older-scroll" not in layout_text and "overflow-y: auto" in theme_text, "True"),
         ("fvcc_rows_unchanged", len(fvcc_copy) == len(existing), "True"),
     ]
     validation_rows = [
@@ -122,12 +181,17 @@ def main() -> int:
     print(f"Newly added: {sum(row['added_to_app'] == 'yes' for row in extract_rows)}")
     print(f"Final app wins: {len(merged)}")
     print(f"Duplicate season/grade combinations: {duplicate_count}")
+    print(f"Post-2008/09 wins checked: {len(post_2008)}")
+    print(f"PlayCricket-enriched wins: {len(playcricket_enriched)}")
+    print(f"Last-available-match fallbacks: {len(last_available)}")
+    print(f"Annual Report-only wins: {len(report_only)}")
     print("Latest 7:")
     for _, row in latest_seven.iterrows():
         print(f"- {row['season']} — {row['grade_name']}")
     print(f"Validation failures: {len(failures)}")
     print(f"Extract: {EXTRACT_PATH}")
     print(f"Validation: {VALIDATION_PATH}")
+    print(f"Enrichment: {ENRICHMENT_PATH}")
     return 1 if failures else 0
 
 

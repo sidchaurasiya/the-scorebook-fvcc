@@ -11,10 +11,23 @@ from src.config.club_config import REPO_ROOT, get_active_club_id
 
 
 GRDCC_CLUB_ID = "georges-river-district"
+POST_PLAYCRICKET_PREMIERSHIP_YEAR = 2008
 
 
 def annual_report_premiership_path() -> Path:
     return REPO_ROOT / "clubs" / GRDCC_CLUB_ID / "data" / "source" / "annual_report_premiership_wins.csv"
+
+
+def premiership_match_context_path() -> Path:
+    return (
+        REPO_ROOT
+        / "clubs"
+        / GRDCC_CLUB_ID
+        / "data"
+        / "processed"
+        / "season_overview"
+        / "season_by_round_scorecards.csv"
+    )
 
 
 def normalize_premiership_grade(value: object) -> str:
@@ -28,7 +41,23 @@ def normalize_premiership_grade(value: object) -> str:
         "vintage over 60s": "vintage",
         "classics foxs over 50s": "classics",
     }
-    return aliases.get(label, label)
+    if label in aliases:
+        return aliases[label]
+    if "classics" in label:
+        return "classics"
+    if "vintage" in label:
+        return "vintage"
+    if label.startswith("second grade"):
+        return "second grade"
+    if label.startswith("third grade"):
+        return "third grade"
+    if label.startswith("fourth grade"):
+        return "fourth grade"
+    if label.startswith("fifth grade") or "tim creer cup" in label:
+        return "fifth grade"
+    if label.startswith("frank gray shield"):
+        return "frank gray shield"
+    return label
 
 
 def premiership_key(season: object, grade: object) -> str:
@@ -91,6 +120,7 @@ def merge_grdcc_premiership_honours(wins: pd.DataFrame, club_id: str | None = No
         )
     if additions:
         output = pd.concat([output, pd.DataFrame(additions)], ignore_index=True, sort=False)
+    output = enrich_grdcc_premiership_matches(output)
     output["season_sort_key"] = pd.to_numeric(output.get("season_sort_key"), errors="coerce")
     missing_keys = output["season_sort_key"].isna()
     output.loc[missing_keys, "season_sort_key"] = output.loc[missing_keys, "season"].map(season_start_year)
@@ -98,6 +128,85 @@ def merge_grdcc_premiership_honours(wins: pd.DataFrame, club_id: str | None = No
     return output.sort_values(
         ["season_sort_key", "_grade_sort"], ascending=[False, True], na_position="last"
     ).drop(columns="_grade_sort").reset_index(drop=True)
+
+
+def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
+    """Attach local PlayCricket context without changing the honours authority."""
+    output = wins.copy()
+    defaults = {
+        "match_source": "",
+        "match_context": "annual_report_only",
+        "match_confidence": "",
+        "match_notes": "",
+    }
+    for column, default in defaults.items():
+        if column not in output:
+            output[column] = default
+
+    existing_match = output.get("match_id", pd.Series("", index=output.index)).astype(str).str.strip().ne("")
+    output.loc[existing_match, "match_source"] = "playcricket"
+    output.loc[existing_match, "match_context"] = output.loc[existing_match, "round_name"].map(
+        classify_match_context
+    )
+    output.loc[existing_match, "match_confidence"] = output.loc[existing_match, "confidence"].replace("", "high")
+    output.loc[existing_match, "match_notes"] = "Verified finals scorecard retained from current Hall of Fame data."
+
+    path = premiership_match_context_path()
+    if not path.exists():
+        return output
+    matches = pd.read_csv(path, dtype=str).fillna("")
+    if matches.empty:
+        return output
+    matches["_grade_key"] = matches["grade_name"].map(normalize_premiership_grade)
+    matches["_match_date"] = pd.to_datetime(matches["match_date"], errors="coerce", utc=True)
+
+    for index, row in output.loc[~existing_match].iterrows():
+        if (season_start_year(row.get("season")) or 0) < POST_PLAYCRICKET_PREMIERSHIP_YEAR:
+            continue
+        candidates = matches[
+            matches["season"].eq(str(row.get("season", "")))
+            & matches["_grade_key"].eq(normalize_premiership_grade(row.get("grade_name")))
+        ].copy()
+        if candidates.empty:
+            output.at[index, "match_notes"] = "No matching local PlayCricket grade rows were available."
+            continue
+
+        candidates["_context"] = candidates["round_name"].map(classify_match_context)
+        final_rows = candidates[candidates["_context"].isin(["grand_final", "final"])]
+        if not final_rows.empty:
+            selected = final_rows.sort_values("_match_date").iloc[-1]
+            context = str(selected["_context"])
+            confidence = "high" if context == "grand_final" else "medium"
+            notes = "Matched by season and grade to the latest local PlayCricket finals row."
+        else:
+            selected = candidates.sort_values("_match_date").iloc[-1]
+            context = "last_available_match"
+            confidence = "medium"
+            notes = "No final was identified; attached the last available local PlayCricket match as context only."
+
+        match_id = str(selected.get("match_id", "")).strip()
+        output.at[index, "match_id"] = match_id
+        output.at[index, "match_date"] = selected.get("match_date", "")
+        output.at[index, "opponent_team_name"] = selected.get("opponent_name", "")
+        output.at[index, "result_text"] = selected.get("result_text", "") or "Premiers"
+        output.at[index, "result_margin_display"] = selected.get("result_text", "") or "Premiers"
+        output.at[index, "scoreboard_url"] = (
+            f"https://play.cricket.com.au/match/{match_id}?tab=scorecard" if match_id else ""
+        )
+        output.at[index, "match_source"] = "playcricket"
+        output.at[index, "match_context"] = context
+        output.at[index, "match_confidence"] = confidence
+        output.at[index, "match_notes"] = notes
+    return output
+
+
+def classify_match_context(value: object) -> str:
+    label = re.sub(r"\s+", " ", str(value or "").casefold()).strip()
+    if "grand final" in label:
+        return "grand_final"
+    if "final" in label:
+        return "final"
+    return "last_available_match"
 
 
 def season_start_year(value: object) -> int | None:

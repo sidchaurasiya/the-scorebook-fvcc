@@ -18,12 +18,21 @@
 
 ## Data Behaviour
 
-The verified Hall of Fame `premiership_wins.csv` remains unchanged. A separate GRDCC source file contains the official Annual Report honours, and the app merges missing season/grade combinations at display time. Annual Report-only rows do not fabricate opponents, captains, scorecards or match IDs from PlayCricket.
+The verified Hall of Fame `premiership_wins.csv` remains unchanged. A separate GRDCC source file contains the official Annual Report honours, and the app merges missing season/grade combinations at display time. The Annual Report remains authoritative for whether the premiership was won; local PlayCricket data is supporting match context only.
+
+For Summer 2008/09 onward, the merge checks the local Season by Round scorecard data by season and normalized grade:
+
+- A clearly labelled Grand Final retains normal opponent, margin and scorecard treatment.
+- A finals row without an explicit Grand Final label is included with medium confidence.
+- If no final exists, the latest available match is labelled `Last available PlayCricket match` and is not represented as the premiership final.
+- If no matching local row exists, the honour remains Annual Report-only.
+- Captains are retained only from the existing verified Hall of Fame source; they are not inferred from the fallback match list.
 
 ## Sorting And UI
 
 - Premiership wins sort by season descending, latest first.
-- The latest seven wins are immediately visible.
-- The remaining fifteen wins appear in a compact scrollable `Earlier premierships` area.
+- The full list is one continuous scrollable container; no rows are sticky or fixed.
+- The card height exposes approximately the latest seven wins before scrolling.
+- There is no separate `Earlier premierships` subsection.
 - Annual Report-only entries display as official club honours rather than inventing match details.
 - A subtle `Source: GRDCC 2024/25 Annual Report` note appears in the GRDCC card.
