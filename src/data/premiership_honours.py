@@ -138,6 +138,9 @@ def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
         "match_context": "annual_report_only",
         "match_confidence": "",
         "match_notes": "",
+        "captain_source": "",
+        "captain_confidence": "",
+        "captain_notes": "",
     }
     for column, default in defaults.items():
         if column not in output:
@@ -150,6 +153,10 @@ def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
     )
     output.loc[existing_match, "match_confidence"] = output.loc[existing_match, "confidence"].replace("", "high")
     output.loc[existing_match, "match_notes"] = "Verified finals scorecard retained from current Hall of Fame data."
+    explicit_captain = existing_match & output.get("captain_name", pd.Series("", index=output.index)).astype(str).str.strip().ne("")
+    output.loc[explicit_captain, "captain_source"] = "hall_of_fame_premiership_wins"
+    output.loc[explicit_captain, "captain_confidence"] = "high"
+    output.loc[explicit_captain, "captain_notes"] = "Existing match-level captain retained from verified premiership data."
 
     path = premiership_match_context_path()
     if not path.exists():
@@ -197,6 +204,7 @@ def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
         output.at[index, "match_context"] = context
         output.at[index, "match_confidence"] = confidence
         output.at[index, "match_notes"] = notes
+        output.at[index, "captain_notes"] = "Local processed scorecard data does not expose an explicit captain field."
     return output
 
 

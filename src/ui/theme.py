@@ -2547,18 +2547,11 @@ def inject_theme() -> None:
 
         .premiership-card-scroll {
             flex: 1;
-            max-height: 1137px;
+            max-height: 691px;
             overflow-y: auto;
             padding-right: 7px;
             scrollbar-color: var(--club-border) transparent;
             scrollbar-width: thin;
-        }
-
-        .premiership-source-note {
-            color: var(--muted-text);
-            font-size: 0.68rem;
-            font-weight: 650;
-            margin-top: 12px;
         }
 
         .premiership-win-row {
@@ -6759,6 +6752,10 @@ def inject_theme() -> None:
 
             .premiership-season {
                 font-size: 0.98rem;
+            }
+
+            .premiership-card-scroll {
+                max-height: 1119px;
             }
 
             .premiership-title {
