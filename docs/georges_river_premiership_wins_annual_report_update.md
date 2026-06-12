@@ -29,6 +29,8 @@ For Summer 2008/09 onward, the merge checks the local Season by Round scorecard 
 - Captains are retained only from the existing verified Hall of Fame source; they are not inferred from the fallback match list.
 - Match context and confidence remain in the enrichment audit rather than appearing as noisy UI labels.
 - Supporting rows with a clear win use the standard `defeated`, `Won by` and `View scorecard` presentation. Non-winning or unknown results use neutral `vs` wording.
+- Match-level captains are displayed only where explicitly available in verified premiership data. Missing captains render no fallback subline.
+- Captain source, confidence and notes are retained in the enrichment audit.
 
 ## Sorting And UI
 
@@ -36,5 +38,5 @@ For Summer 2008/09 onward, the merge checks the local Season by Round scorecard 
 - The full list is one continuous scrollable container; no rows are sticky or fixed.
 - The card height exposes approximately the latest seven wins before scrolling.
 - There is no separate `Earlier premierships` subsection.
-- Annual Report-only entries display as official club honours rather than inventing match details.
-- A subtle `Source: GRDCC 2024/25 Annual Report` note appears in the GRDCC card.
+- Annual Report-only entries remain in the list without invented match details or fallback sublines.
+- Source and audit notes are not displayed in the card.

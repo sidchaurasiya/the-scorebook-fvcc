@@ -4567,13 +4567,13 @@ def hall_of_fame_v2_premiership_win_row_html(row: pd.Series) -> str:
         section_name="premiership_wall",
         class_name="hof-v2-subtle-link",
     )
-    captain_text = f"Captain: {captain}" if captain else "Captain not recorded"
+    captain_text = f" · Captain: {captain}" if captain else ""
     return (
         '<div class="hof-v2-trophy-row">'
         f'<div class="hof-v2-trophy-year">{season_overview_link_html(season)}</div>'
         '<div class="hof-v2-trophy-main">'
         f"<strong>{html.escape(grade)}</strong>"
-        f"<span>{html.escape(team)} defeated {html.escape(opponent)} · {html.escape(captain_text)}</span>"
+        f"<span>{html.escape(team)} defeated {html.escape(opponent)}{html.escape(captain_text)}</span>"
         "</div>"
         '<div class="hof-v2-trophy-result">'
         f'<span class="hof-v2-result-pill">{html.escape(result)}</span>'
@@ -6687,15 +6687,10 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     )
     rows = rows.sort_values(["_season_sort", "grade_name"], ascending=[False, True], na_position="last")
     rows_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
-    source_note = (
-        '<div class="premiership-source-note">Source: GRDCC 2024/25 Annual Report</div>'
-        if get_active_club_id() == "georges-river-district" else ""
-    )
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
         f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
         f'<div class="premiership-card-scroll">{rows_html}</div>'
-        f"{source_note}"
         "</div>"
     )
 
@@ -6708,7 +6703,6 @@ def premiership_win_row_html(row: pd.Series) -> str:
     captain = safe_record_text(row.get("captain_name"))
     result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
     grade_line = grade or "Grade not recorded"
-    is_annual_report = safe_record_text(row.get("source_system")).casefold() == "annual_report"
     result_key = result.casefold()
     if opponent and result_key.startswith("won"):
         title_line = f'{html.escape(team)} <span>defeated {html.escape(opponent)}</span>'
@@ -6716,7 +6710,7 @@ def premiership_win_row_html(row: pd.Series) -> str:
         title_line = f'{html.escape(team)} <span>vs {html.escape(opponent)}</span>'
     else:
         title_line = html.escape(team)
-    captain_line = f"Captain: {captain}" if captain else ("Official club honours list" if is_annual_report else "Captain not recorded")
+    captain_html = f'<div class="premiership-captain">Captain: {html.escape(captain)}</div>' if captain else ""
     result = result[:1].upper() + result[1:] if result else "Premiers"
     scorecard = scorecard_url_link_html(
         row.get("scoreboard_url"),
@@ -6733,7 +6727,7 @@ def premiership_win_row_html(row: pd.Series) -> str:
         '<div class="premiership-row-copy">'
         f'<div class="premiership-season">{season_overview_link_html(season)}</div>'
         f'<div class="premiership-title">{title_line}</div>'
-        f'<div class="premiership-captain">{html.escape(captain_line)}</div>'
+        f"{captain_html}"
         "</div>"
         '<div class="premiership-sideblock">'
         f'<div class="premiership-result">{html.escape(result)}<span class="premiership-cup">🏆</span></div>'

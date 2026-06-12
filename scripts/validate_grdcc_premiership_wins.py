@@ -120,6 +120,10 @@ def main() -> int:
                 "scorecard_url": row.get("scoreboard_url", ""),
                 "match_context": row.get("match_context", "annual_report_only"),
                 "match_confidence": row.get("match_confidence", ""),
+                "captain": row.get("captain_name", ""),
+                "captain_source": row.get("captain_source", ""),
+                "captain_confidence": row.get("captain_confidence", ""),
+                "captain_notes": row.get("captain_notes", ""),
                 "enrichment_action": (
                     "verified_final_retained" if key in existing_keys
                     else "playcricket_context_added" if found
@@ -136,7 +140,8 @@ def main() -> int:
             "annual_report_page", "annual_report_source_text", "already_in_app",
             "app_displayed", "playcricket_match_found", "playcricket_match_id",
             "playcricket_match_date", "playcricket_grade", "opponent", "result_margin",
-            "scorecard_url", "match_context", "match_confidence", "enrichment_action", "notes",
+            "scorecard_url", "match_context", "match_confidence", "captain", "captain_source",
+            "captain_confidence", "captain_notes", "enrichment_action", "notes",
         ],
     )
 
@@ -147,6 +152,8 @@ def main() -> int:
         "Last match:",
         "View last match",
         "supporting match context only",
+        "Source: GRDCC 2024/25 Annual Report",
+        "Official club honours list",
     ]
 
     checks = [
@@ -164,9 +171,12 @@ def main() -> int:
         ("annual_report_only_wins", len(report_only), "6"),
         ("playcricket_context_labels_valid", set(playcricket_enriched["match_context"]).issubset({"grand_final", "final", "last_available_match"}), "True"),
         ("single_scrollable_list", "premiership-older-scroll" not in layout_text and "overflow-y: auto" in theme_text, "True"),
-        ("ui_visible_row_target", "max-height: 1137px" in theme_text, "True"),
+        ("desktop_visible_row_target", "max-height: 691px" in theme_text, "True"),
+        ("mobile_visible_row_target", "max-height: 1119px" in theme_text, "True"),
         ("banned_ui_phrases_absent", not any(phrase in layout_text for phrase in banned_ui_phrases), "True"),
         ("scorecard_link_wording", "View last match" not in layout_text and "View scorecard ↗" in layout_text, "True"),
+        ("known_captains_have_source", int(merged["captain_name"].astype(str).str.strip().ne("").sum()) == int(merged["captain_source"].astype(str).str.strip().ne("").sum()), "True"),
+        ("rows_without_captain_use_blank_subline", "Captain not recorded" not in layout_text and "Official club honours list" not in layout_text, "True"),
         ("fvcc_rows_unchanged", len(fvcc_copy) == len(existing), "True"),
     ]
     validation_rows = [
