@@ -31,6 +31,7 @@ For Summer 2008/09 onward, the merge checks the local Season by Round scorecard 
 - Supporting rows with a clear win use the standard `defeated`, `Won by` and `View scorecard` presentation. Non-winning or unknown results use neutral `vs` wording.
 - Match-level captains are displayed only where explicitly available in verified premiership data. Missing captains render no fallback subline.
 - Captain source, confidence and notes are retained in the enrichment audit.
+- Missing captains on linked wins are supplemented only from explicit PlayCricket scorecard Summary markers such as `(c)`; no captain is inferred from team order, batting order or wicketkeeping.
 
 ## Sorting And UI
 

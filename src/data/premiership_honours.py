@@ -30,6 +30,17 @@ def premiership_match_context_path() -> Path:
     )
 
 
+def premiership_scorecard_captains_path() -> Path:
+    return (
+        REPO_ROOT
+        / "clubs"
+        / GRDCC_CLUB_ID
+        / "data"
+        / "source"
+        / "premiership_scorecard_captains.csv"
+    )
+
+
 def normalize_premiership_grade(value: object) -> str:
     label = re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
     aliases = {
@@ -140,6 +151,7 @@ def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
         "match_notes": "",
         "captain_source": "",
         "captain_confidence": "",
+        "captain_extraction_method": "not_found",
         "captain_notes": "",
     }
     for column, default in defaults.items():
@@ -156,14 +168,15 @@ def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
     explicit_captain = existing_match & output.get("captain_name", pd.Series("", index=output.index)).astype(str).str.strip().ne("")
     output.loc[explicit_captain, "captain_source"] = "hall_of_fame_premiership_wins"
     output.loc[explicit_captain, "captain_confidence"] = "high"
+    output.loc[explicit_captain, "captain_extraction_method"] = "existing_verified_captain"
     output.loc[explicit_captain, "captain_notes"] = "Existing match-level captain retained from verified premiership data."
 
     path = premiership_match_context_path()
     if not path.exists():
-        return output
+        return apply_scorecard_captains(output)
     matches = pd.read_csv(path, dtype=str).fillna("")
     if matches.empty:
-        return output
+        return apply_scorecard_captains(output)
     matches["_grade_key"] = matches["grade_name"].map(normalize_premiership_grade)
     matches["_match_date"] = pd.to_datetime(matches["match_date"], errors="coerce", utc=True)
 
@@ -205,6 +218,35 @@ def enrich_grdcc_premiership_matches(wins: pd.DataFrame) -> pd.DataFrame:
         output.at[index, "match_confidence"] = confidence
         output.at[index, "match_notes"] = notes
         output.at[index, "captain_notes"] = "Local processed scorecard data does not expose an explicit captain field."
+    return apply_scorecard_captains(output)
+
+
+def apply_scorecard_captains(wins: pd.DataFrame) -> pd.DataFrame:
+    """Apply explicit GRDCC captain markers captured from PlayCricket summaries."""
+    path = premiership_scorecard_captains_path()
+    if not path.exists() or wins.empty:
+        return wins
+    captains = pd.read_csv(path, dtype=str).fillna("")
+    if captains.empty:
+        return wins
+
+    output = wins.copy()
+    lookup = captains.set_index("match_id", drop=False).to_dict("index")
+    for index, row in output.iterrows():
+        if str(row.get("captain_name", "")).strip():
+            continue
+        match_id = str(row.get("match_id", "")).strip()
+        evidence = lookup.get(match_id)
+        if not evidence:
+            continue
+        captain = str(evidence.get("captain", "")).strip()
+        output.at[index, "captain_extraction_method"] = evidence.get("captain_extraction_method", "not_found")
+        output.at[index, "captain_notes"] = evidence.get("captain_notes", "")
+        if not captain:
+            continue
+        output.at[index, "captain_name"] = captain
+        output.at[index, "captain_source"] = evidence.get("captain_source", "playcricket_scorecard_summary")
+        output.at[index, "captain_confidence"] = evidence.get("captain_confidence", "high")
     return output
 
 

@@ -26,6 +26,7 @@ from src.data.premiership_honours import (  # noqa: E402
     merge_grdcc_premiership_honours,
     normalize_premiership_grade,
     premiership_key,
+    premiership_scorecard_captains_path,
 )
 
 
@@ -35,6 +36,7 @@ OUTPUT_DIR = ROOT / "clubs" / CLUB_ID / "data" / "processed" / "validation" / "a
 EXTRACT_PATH = OUTPUT_DIR / "grdcc_annual_report_premiership_wins_extract.csv"
 VALIDATION_PATH = OUTPUT_DIR / "grdcc_premiership_wins_validation.csv"
 ENRICHMENT_PATH = OUTPUT_DIR / "grdcc_premiership_wins_playcricket_enrichment.csv"
+CAPTAIN_AUDIT_PATH = OUTPUT_DIR / "grdcc_premiership_captain_extraction_audit.csv"
 
 
 def write_csv(path: Path, rows: list[dict[str, object]], columns: list[str]) -> None:
@@ -90,7 +92,20 @@ def main() -> int:
     playcricket_enriched = post_2008[post_2008["match_source"].eq("playcricket")]
     last_available = merged[merged["match_context"].eq("last_available_match")]
     report_only = merged[merged["match_context"].eq("annual_report_only")]
+    scorecard_linked = merged[
+        merged["scoreboard_url"].astype(str).str.strip().ne("")
+        | merged["match_id"].astype(str).str.strip().ne("")
+    ].copy()
+    scorecard_captains = scorecard_linked[
+        scorecard_linked["captain_source"].eq("playcricket_scorecard_summary")
+    ]
+    scorecard_missing_captains = scorecard_linked[
+        scorecard_linked["captain_name"].astype(str).str.strip().eq("")
+    ]
     fvcc_copy = merge_grdcc_premiership_honours(existing, "fvcc")
+
+    captain_evidence = pd.read_csv(premiership_scorecard_captains_path(), dtype=str).fillna("")
+    captain_evidence_lookup = captain_evidence.set_index("match_id", drop=False).to_dict("index")
 
     report_lookup = {
         premiership_key(row["season"], row["grade_or_team"]): row
@@ -123,6 +138,7 @@ def main() -> int:
                 "captain": row.get("captain_name", ""),
                 "captain_source": row.get("captain_source", ""),
                 "captain_confidence": row.get("captain_confidence", ""),
+                "captain_extraction_method": row.get("captain_extraction_method", "not_found"),
                 "captain_notes": row.get("captain_notes", ""),
                 "enrichment_action": (
                     "verified_final_retained" if key in existing_keys
@@ -141,7 +157,37 @@ def main() -> int:
             "app_displayed", "playcricket_match_found", "playcricket_match_id",
             "playcricket_match_date", "playcricket_grade", "opponent", "result_margin",
             "scorecard_url", "match_context", "match_confidence", "captain", "captain_source",
-            "captain_confidence", "captain_notes", "enrichment_action", "notes",
+            "captain_confidence", "captain_extraction_method", "captain_notes", "enrichment_action", "notes",
+        ],
+    )
+
+    captain_audit_rows = []
+    for _, row in scorecard_linked.iterrows():
+        match_id = str(row.get("match_id", "")).strip()
+        evidence = captain_evidence_lookup.get(match_id, {})
+        captain = str(row.get("captain_name", "")).strip()
+        captain_audit_rows.append(
+            {
+                "season": row.get("season", ""),
+                "grade_or_team": row.get("grade_name", ""),
+                "scorecard_url": row.get("scoreboard_url", ""),
+                "match_id": match_id,
+                "grdcc_team_label_found": evidence.get("grdcc_team_label_found", "existing verified match row"),
+                "raw_team_list_or_captain_field": evidence.get("raw_team_list_or_captain_field", ""),
+                "extracted_captain": captain,
+                "captain_confidence": row.get("captain_confidence", ""),
+                "captain_extraction_method": row.get("captain_extraction_method", "not_found"),
+                "captain_added_to_app": "yes" if row.get("captain_source", "") == "playcricket_scorecard_summary" else "no",
+                "notes": row.get("captain_notes", ""),
+            }
+        )
+    write_csv(
+        CAPTAIN_AUDIT_PATH,
+        captain_audit_rows,
+        [
+            "season", "grade_or_team", "scorecard_url", "match_id", "grdcc_team_label_found",
+            "raw_team_list_or_captain_field", "extracted_captain", "captain_confidence",
+            "captain_extraction_method", "captain_added_to_app", "notes",
         ],
     )
 
@@ -167,6 +213,10 @@ def main() -> int:
         ("high_confidence_report_wins_missing", len(high_confidence_missing), "0"),
         ("post_2008_wins_checked", len(post_2008), "16"),
         ("post_2008_playcricket_enriched", len(playcricket_enriched), "16"),
+        ("scorecard_linked_rows_checked_for_captain", len(scorecard_linked), "16"),
+        ("captains_extracted_from_scorecard_summary", len(scorecard_captains), "5"),
+        ("scorecard_linked_rows_still_missing_captain", len(scorecard_missing_captains), "1"),
+        ("missing_scorecard_captains_marked_not_found", scorecard_missing_captains["captain_extraction_method"].eq("not_found").all(), "True"),
         ("last_available_match_fallbacks", len(last_available), "5"),
         ("annual_report_only_wins", len(report_only), "6"),
         ("playcricket_context_labels_valid", set(playcricket_enriched["match_context"]).issubset({"grand_final", "final", "last_available_match"}), "True"),
@@ -202,6 +252,9 @@ def main() -> int:
     print(f"Duplicate season/grade combinations: {duplicate_count}")
     print(f"Post-2008/09 wins checked: {len(post_2008)}")
     print(f"PlayCricket-enriched wins: {len(playcricket_enriched)}")
+    print(f"Scorecard-linked wins checked for captain: {len(scorecard_linked)}")
+    print(f"Captains extracted from scorecard summaries: {len(scorecard_captains)}")
+    print(f"Scorecard-linked wins still missing captain: {len(scorecard_missing_captains)}")
     print(f"Last-available-match fallbacks: {len(last_available)}")
     print(f"Annual Report-only wins: {len(report_only)}")
     print("Latest 7:")
@@ -211,6 +264,7 @@ def main() -> int:
     print(f"Extract: {EXTRACT_PATH}")
     print(f"Validation: {VALIDATION_PATH}")
     print(f"Enrichment: {ENRICHMENT_PATH}")
+    print(f"Captain audit: {CAPTAIN_AUDIT_PATH}")
     return 1 if failures else 0
 
 
