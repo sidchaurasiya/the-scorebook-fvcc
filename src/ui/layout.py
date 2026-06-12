@@ -48,7 +48,11 @@ from src.data.playcricket_ingestion import (
     refresh_playcricket_backup,
 )
 from src.data.featured_record_overrides import apply_featured_record_overrides
-from src.data.premiership_honours import annual_report_premiership_path, merge_grdcc_premiership_honours
+from src.data.premiership_honours import (
+    annual_report_premiership_path,
+    merge_grdcc_premiership_honours,
+    premiership_match_context_path,
+)
 from src.config.club_config import (
     allow_legacy_fallback,
     get_active_club_id,
@@ -6584,6 +6588,9 @@ def premiership_records_signature() -> tuple[tuple[str, float], ...]:
     report_path = annual_report_premiership_path()
     if get_active_club_id() == "georges-river-district" and report_path.exists():
         signature.append((str(report_path), report_path.stat().st_mtime))
+        context_path = premiership_match_context_path()
+        if context_path.exists():
+            signature.append((str(context_path), context_path.stat().st_mtime))
     return tuple(signature)
 
 
@@ -6679,15 +6686,7 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
         lambda value: safe_record_int(value) or season_sort_key(value)
     )
     rows = rows.sort_values(["_season_sort", "grade_name"], ascending=[False, True], na_position="last")
-    latest = rows.head(7)
-    older = rows.iloc[7:]
-    latest_html = "".join(premiership_win_row_html(row) for _, row in latest.iterrows())
-    older_html = "".join(premiership_win_row_html(row) for _, row in older.iterrows())
-    older_section = (
-        '<div class="premiership-older-label">Earlier premierships</div>'
-        f'<div class="premiership-older-scroll">{older_html}</div>'
-        if not older.empty else ""
-    )
+    rows_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
     source_note = (
         '<div class="premiership-source-note">Source: GRDCC 2024/25 Annual Report</div>'
         if get_active_club_id() == "georges-river-district" else ""
@@ -6695,9 +6694,8 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
         f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
-        '<div class="premiership-card-scroll">'
-        f"{latest_html}{older_section}{source_note}"
-        "</div>"
+        f'<div class="premiership-card-scroll">{rows_html}</div>'
+        f"{source_note}"
         "</div>"
     )
 
@@ -6709,17 +6707,25 @@ def premiership_win_row_html(row: pd.Series) -> str:
     opponent = clean_opponent_label(row.get("opponent_team_name"), "")
     captain = safe_record_text(row.get("captain_name"))
     result = safe_record_text(row.get("result_margin_display")) or safe_record_text(row.get("result_text"))
+    grade_line = grade or "Grade not recorded"
+    is_annual_report = safe_record_text(row.get("source_system")).casefold() == "annual_report"
+    match_context = safe_record_text(row.get("match_context"), "annual_report_only").casefold()
+    if match_context == "last_available_match" and opponent:
+        title_line = f'Last available PlayCricket match: {html.escape(team)} <span>vs {html.escape(opponent)}</span>'
+        captain_line = "Official club honour • supporting match context only"
+        result = f"Last match: {result}" if result else "Last available match"
+        scorecard_label = "View last match ↗"
+    else:
+        title_line = f'{html.escape(team)} <span>defeated {html.escape(opponent)}</span>' if opponent else html.escape(team)
+        captain_line = f"Captain: {captain}" if captain else ("Official club honours list" if is_annual_report else "Captain not recorded")
+        scorecard_label = "View scorecard ↗"
     scorecard = scorecard_url_link_html(
         row.get("scoreboard_url"),
         row.get("match_id"),
-        label="View scorecard ↗",
+        label=scorecard_label,
         page_slug="hall-of-fame",
         section_name="premiership_wins",
     )
-    grade_line = grade or "Grade not recorded"
-    is_annual_report = safe_record_text(row.get("source_system")).casefold() == "annual_report"
-    captain_line = f"Captain: {captain}" if captain else ("Official club honours list" if is_annual_report else "Captain not recorded")
-    title_line = f'{html.escape(team)} <span>defeated {html.escape(opponent)}</span>' if opponent else html.escape(team)
     scorecard_html = f'<div class="premiership-link">{scorecard}</div>' if scorecard else ""
     return (
         '<div class="premiership-win-row">'
