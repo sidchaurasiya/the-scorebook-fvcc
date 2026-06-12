@@ -142,6 +142,12 @@ def main() -> int:
 
     layout_text = (ROOT / "src" / "ui" / "layout.py").read_text(encoding="utf-8")
     theme_text = (ROOT / "src" / "ui" / "theme.py").read_text(encoding="utf-8")
+    banned_ui_phrases = [
+        "Last available PlayCricket match:",
+        "Last match:",
+        "View last match",
+        "supporting match context only",
+    ]
 
     checks = [
         ("annual_report_extracted_wins", len(report), "22"),
@@ -158,6 +164,9 @@ def main() -> int:
         ("annual_report_only_wins", len(report_only), "6"),
         ("playcricket_context_labels_valid", set(playcricket_enriched["match_context"]).issubset({"grand_final", "final", "last_available_match"}), "True"),
         ("single_scrollable_list", "premiership-older-scroll" not in layout_text and "overflow-y: auto" in theme_text, "True"),
+        ("ui_visible_row_target", "max-height: 1137px" in theme_text, "True"),
+        ("banned_ui_phrases_absent", not any(phrase in layout_text for phrase in banned_ui_phrases), "True"),
+        ("scorecard_link_wording", "View last match" not in layout_text and "View scorecard ↗" in layout_text, "True"),
         ("fvcc_rows_unchanged", len(fvcc_copy) == len(existing), "True"),
     ]
     validation_rows = [
