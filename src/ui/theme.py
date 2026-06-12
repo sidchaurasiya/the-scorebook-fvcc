@@ -2550,6 +2550,31 @@ def inject_theme() -> None:
             padding-right: 5px;
         }
 
+        .premiership-older-label {
+            color: var(--muted-text);
+            font-size: 0.7rem;
+            font-weight: 850;
+            letter-spacing: 0.04em;
+            margin-top: 12px;
+            padding-top: 11px;
+            text-transform: uppercase;
+        }
+
+        .premiership-older-scroll {
+            max-height: 290px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .premiership-source-note {
+            color: var(--muted-text);
+            font-size: 0.68rem;
+            font-weight: 650;
+            margin-top: 12px;
+        }
+
         .premiership-win-row {
             border-bottom: 1px solid #eef0f6;
             padding: 11px 0 12px;
