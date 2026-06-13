@@ -2501,6 +2501,14 @@ def inject_theme() -> None:
             margin: 9px 0;
         }
 
+        .block-container:has(.hall-of-fame-page) .hof-leader-scroll {
+            max-height: calc(var(--hof-visible-rows, 6) * 58px);
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
         .block-container:has(.hall-of-fame-page) .progress-row {
             gap: 12px;
         }

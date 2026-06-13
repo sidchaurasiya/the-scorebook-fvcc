@@ -1,0 +1,13 @@
+check,status,details
+section_present:Most Runs,PASS,configured in leader specs
+section_present:Most Matches,PASS,configured in leader specs
+section_present:Most Wickets,PASS,configured in leader specs
+section_present:Most Catches,PASS,configured in leader specs
+grdcc_scoped,PASS,other clubs retain existing behavior
+top_15_limit,PASS,GRDCC limit is 15
+visible_rows_6,PASS,six-row target configured
+continuous_scroll,PASS,single list container
+scroll_css,PASS,responsive internal scroll
+descending_sort_preserved,PASS,existing sort helper retained
+premiership_wins_untouched,PASS,existing renderer remains present
+most_premierships_untouched,PASS,existing data path remains present

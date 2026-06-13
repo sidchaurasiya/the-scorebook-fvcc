@@ -6498,6 +6498,7 @@ def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
 def render_hall_of_fame_leaders(all_time: pd.DataFrame) -> None:
     all_time = apply_featured_record_overrides(all_time)
     render_section_heading("All-Time Leaders 👑")
+    scrollable_grdcc_lists = get_active_club_id() == "georges-river-district"
     leader_specs = [
         ("Most Matches", "Matches", "matches", "fielding"),
         ("Most Runs", "Runs", "runs", "batting"),
@@ -6508,22 +6509,41 @@ def render_hall_of_fame_leaders(all_time: pd.DataFrame) -> None:
         columns = st.columns(2)
         for column, (title, metric, suffix, mode) in zip(columns, leader_specs[index : index + 2]):
             with column:
-                render_hof_leader_card(title, all_time, metric, suffix, mode)
+                render_hof_leader_card(
+                    title,
+                    all_time,
+                    metric,
+                    suffix,
+                    mode,
+                    limit=15 if scrollable_grdcc_lists else 10,
+                    visible_rows=6,
+                    scrollable=scrollable_grdcc_lists,
+                )
 
 
-def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: str, mode: str) -> None:
+def render_hof_leader_card(
+    title: str,
+    df: pd.DataFrame,
+    metric: str,
+    suffix: str,
+    mode: str,
+    *,
+    limit: int = 10,
+    visible_rows: int = 6,
+    scrollable: bool = False,
+) -> None:
     if metric not in df:
         return
     leaders = df.copy()
     leaders[metric] = pd.to_numeric(leaders[metric], errors="coerce").fillna(0)
     leaders = leaders[leaders[metric] > 0]
-    leaders = sort_hof_leaders(leaders, metric, mode).head(10)
+    leaders = sort_hof_leaders(leaders, metric, mode).head(limit)
     if leaders.empty:
         return
 
     state_key = f"hof_leader_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_leaders = leaders if expanded else leaders.head(6)
+    displayed_leaders = leaders if scrollable or expanded else leaders.head(visible_rows)
     max_value = leaders[metric].max()
     rows = []
     for rank, (_, row) in enumerate(displayed_leaders.iterrows(), start=1):
@@ -6538,11 +6558,18 @@ def render_hof_leader_card(title: str, df: pd.DataFrame, metric: str, suffix: st
             f'<div class="progress-track"><div style="width:{width:.0f}%"></div></div>'
             "</div>"
         )
+    rows_html = "".join(rows)
+    if scrollable:
+        rows_html = (
+            f'<div class="hof-leader-scroll" style="--hof-visible-rows:{visible_rows}">'
+            f"{rows_html}</div>"
+        )
     st.markdown(
-        f'<div class="hof-card"><div class="card-title">{html.escape(title)}</div>{"".join(rows)}</div>',
+        f'<div class="hof-card"><div class="card-title">{html.escape(title)}</div>{rows_html}</div>',
         unsafe_allow_html=True,
     )
-    render_hof_expand_control(state_key, expanded, len(leaders))
+    if not scrollable:
+        render_hof_expand_control(state_key, expanded, len(leaders), collapsed_limit=visible_rows)
 
 
 def featured_record_source_note_html(row: pd.Series) -> str:
