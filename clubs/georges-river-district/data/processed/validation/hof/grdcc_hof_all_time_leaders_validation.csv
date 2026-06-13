@@ -1,0 +1,16 @@
+check,status,count_or_target
+most_runs_rows_included,PASS,83
+most_runs_no_duplicates,PASS,0
+most_runs_display_rule,PASS,83
+most_runs_top15_sorted,PASS,15
+most_wickets_rows_included,PASS,33
+most_wickets_no_duplicates,PASS,0
+most_wickets_display_rule,PASS,33
+most_wickets_top15_sorted,PASS,15
+matches_report_list_absent,PASS,0
+catches_report_list_absent,PASS,0
+visible_rows_6,PASS,6
+top_list_limit_15,PASS,15
+source_note_hidden,PASS,0
+premiership_final_year,PASS,1
+premiership_wins_present,PASS,1
