@@ -2677,13 +2677,13 @@ def inject_theme() -> None:
             padding: 9px 0;
         }
 
-        .grdcc-premiership-player-card .performance-player strong {
+        .compact-year-premiership-player-card .performance-player strong {
             font-size: 0.96rem;
         }
 
         .premiership-year-summary {
             color: var(--club-muted-text, #66758D);
-            display: inline;
+            display: block;
             font-size: 0.72rem;
             font-weight: 750;
         }
@@ -2701,13 +2701,7 @@ def inject_theme() -> None:
         }
 
         .premiership-player-row .performance-player span.premiership-year-summary {
-            display: inline;
-        }
-
-        @media (min-width: 900px) {
-            .grdcc-premiership-player-card .performance-player strong {
-                white-space: nowrap;
-            }
+            display: block;
         }
 
         .premiership-player-row .performance-player span a.season-overview-link,
@@ -2765,6 +2759,16 @@ def inject_theme() -> None:
             padding: 2px 6px;
             text-transform: uppercase;
             vertical-align: middle;
+        }
+
+        @media (max-width: 760px) {
+            .block-container:has(.hall-of-fame-page) .hof-leader-scroll {
+                max-height: calc(5 * 58px);
+            }
+
+            .block-container:has(.hall-of-fame-page) .hof-five-row-scroll {
+                max-height: 360px;
+            }
         }
 
         .premiership-empty p {

@@ -1,0 +1,17 @@
+check,status,details
+grdcc_years_below_name,PASS,
+all_years_no_more,PASS,
+duplicate_year_compression,PASS,
+player_links_new_tab,PASS,
+season_links_new_tab,PASS,
+scorecard_links_new_tab,PASS,
+grdcc_source_boundary,PASS,
+annual_report_overrides,PASS,
+current_higher_rule,PASS,current_higher_rows=6
+hover_not_purple,PASS,
+fvcc_active_badges,PASS,
+cross_club_scroll,PASS,
+mobile_top_five,PASS,
+fvcc_final_year_format,PASS,
+stats_table_preserved,PASS,
+no_raw_sources_changed,PASS,
