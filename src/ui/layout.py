@@ -47,7 +47,7 @@ from src.data.playcricket_ingestion import (
     read_processed_table,
     refresh_playcricket_backup,
 )
-from src.data.featured_record_overrides import apply_featured_record_overrides
+from src.data.featured_record_overrides import apply_featured_record_overrides, normalize_featured_player_name
 from src.data.premiership_honours import (
     annual_report_premiership_path,
     grdcc_most_premierships_path,
@@ -4300,7 +4300,7 @@ def render_hall_of_fame_page() -> None:
     if team_group_slug:
         hall_of_fame_data = filter_hall_of_fame_data_by_team_group(hall_of_fame_data, team_group_slug)
     render_premiership_records(team_group_slug)
-    render_hall_of_fame_leaders(hall_of_fame_data["all_time"])
+    render_hall_of_fame_leaders(hall_of_fame_data["all_time"], active_hof_players(hall_of_fame_data))
     render_match_winning_performances(hall_of_fame_data)
     render_fastest_batting_milestone_records(team_group_slug)
     render_record_holders(hall_of_fame_data)
@@ -6494,7 +6494,31 @@ def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
     st.markdown("<div class='dashboard-spacer'></div>", unsafe_allow_html=True)
 
 
-def render_hall_of_fame_leaders(all_time: pd.DataFrame) -> None:
+def active_hof_players(data: dict[str, object]) -> set[str]:
+    if get_active_club_id() != "georges-river-district":
+        return set()
+    frames = [data.get(key) for key in ["batting_raw", "bowling_raw", "fielding_raw"]]
+    seasons = {
+        safe_season_label(season)
+        for frame in frames
+        if isinstance(frame, pd.DataFrame) and not frame.empty and "season" in frame
+        for season in frame["season"].dropna()
+        if safe_season_label(season)
+    }
+    latest = set(sorted(seasons, key=profile_season_sort_key, reverse=True)[:3])
+    active = set()
+    for frame in frames:
+        if not isinstance(frame, pd.DataFrame) or frame.empty or "season" not in frame:
+            continue
+        player_column = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+        if player_column not in frame:
+            continue
+        recent = frame[frame["season"].map(safe_season_label).isin(latest)]
+        active.update(recent[player_column].map(normalize_featured_player_name).dropna())
+    return {name for name in active if name}
+
+
+def render_hall_of_fame_leaders(all_time: pd.DataFrame, active_players: set[str] | None = None) -> None:
     all_time = apply_featured_record_overrides(all_time)
     render_section_heading("All-Time Leaders 👑")
     scrollable_grdcc_lists = get_active_club_id() == "georges-river-district"
@@ -6517,6 +6541,7 @@ def render_hall_of_fame_leaders(all_time: pd.DataFrame) -> None:
                     limit=15 if scrollable_grdcc_lists else 10,
                     visible_rows=6,
                     scrollable=scrollable_grdcc_lists,
+                    active_players=active_players or set(),
                 )
 
 
@@ -6530,6 +6555,7 @@ def render_hof_leader_card(
     limit: int = 10,
     visible_rows: int = 6,
     scrollable: bool = False,
+    active_players: set[str] | None = None,
 ) -> None:
     if metric not in df:
         return
@@ -6548,10 +6574,15 @@ def render_hof_leader_card(
     for rank, (_, row) in enumerate(displayed_leaders.iterrows(), start=1):
         value = float(row[metric])
         width = 0 if not max_value else value / max_value * 100
+        active_badge = (
+            '<span class="hof-active-badge">Active</span>'
+            if normalize_featured_player_name(row["Player"]) in (active_players or set())
+            else ""
+        )
         rows.append(
             '<div class="progress-row hof-progress-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
-            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}</span>'
+            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}{active_badge}</span>'
             f'<span class="progress-value"><strong>{int(value):,} {html.escape(suffix)}</strong></span>'
             f'<div class="progress-track"><div style="width:{width:.0f}%"></div></div>'
             "</div>"
@@ -6738,7 +6769,8 @@ def premiership_win_row_html(row: pd.Series) -> str:
     grade_line = grade or "Grade not recorded"
     result_key = result.casefold()
     if opponent and result_key.startswith("won"):
-        title_line = f'{html.escape(team)} <span>defeated {html.escape(opponent)}</span>'
+        result_word = "def." if get_active_club_id() == "georges-river-district" else "defeated"
+        title_line = f'{html.escape(team)} <span>{result_word} {html.escape(opponent)}</span>'
     elif opponent:
         title_line = f'{html.escape(team)} <span>vs {html.escape(opponent)}</span>'
     else:
@@ -6787,8 +6819,9 @@ def player_premiership_leaders_card_html(
         player_premiership_row_html(rank, row)
         for rank, (_, row) in enumerate(rows.iterrows(), start=1)
     )
+    grdcc_class = " grdcc-premiership-player-card" if get_active_club_id() == "georges-river-district" else ""
     return (
-        '<div class="hof-card premiership-wall-card performance-card premiership-player-card">'
+        f'<div class="hof-card premiership-wall-card performance-card premiership-player-card{grdcc_class}">'
         '<div class="premiership-card-title">Most Premierships</div>'
         '<div class="premiership-card-scroll">'
         f"{row_html}"
@@ -6801,18 +6834,37 @@ def player_premiership_row_html(rank: int, row: pd.Series) -> str:
     player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
     player_id = player_id_from_row(row)
     count = safe_record_int(row.get("premiership_count")) or 0
-    details = linked_premiership_details(row.get("premiership_details")) if safe_record_text(row.get("premiership_details")) else linked_premiership_seasons(row.get("seasons"))
+    is_grdcc = get_active_club_id() == "georges-river-district"
+    details = compact_premiership_year_summary(row.get("premiership_details") or row.get("seasons")) if is_grdcc else (
+        linked_premiership_details(row.get("premiership_details"))
+        if safe_record_text(row.get("premiership_details"))
+        else linked_premiership_seasons(row.get("seasons"))
+    )
     value = f"{count} premiership{'s' if count != 1 else ''}"
     return (
         '<div class="performance-row premiership-player-row">'
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
-        f'<strong>{player_profile_link_html(player_id, player)}</strong>'
-        f'<span>{details}</span>'
+        f'<strong>{player_profile_link_html(player_id, player)}{f" <span class=\"premiership-year-summary\">({details})</span>" if is_grdcc else ""}</strong>'
+        f'{f"<span>{details}</span>" if not is_grdcc else ""}'
         '</div>'
         f'<div class="performance-value">{html.escape(value)}</div>'
         "</div>"
     )
+
+
+def compact_premiership_year_summary(value: object, visible_limit: int = 3) -> str:
+    raw = safe_record_text(value)
+    parts = [part.strip() for part in (raw.split("|") if "|" in raw else raw.split(",")) if part.strip()]
+    years = [premiership_final_year_label(part.partition(" — ")[0]) for part in parts]
+    visible = years[:visible_limit]
+    compressed = []
+    for year in dict.fromkeys(visible):
+        count = visible.count(year)
+        compressed.append(f"{year} x {count}" if count > 1 else year)
+    if len(years) > visible_limit:
+        compressed.append(f"+{len(years) - visible_limit} more")
+    return ", ".join(compressed)
 
 
 def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
@@ -7113,17 +7165,21 @@ def render_ranked_record_card(
         ascending=[True, False, False],
     ).head(FASTEST_MILESTONE_RECORD_LIMIT)
     state_key = f"hof_ranked_record_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
+    scrollable = get_active_club_id() == "georges-river-district"
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_rows = rows if expanded else rows.head(6)
+    displayed_rows = rows if scrollable or expanded else rows.head(6)
     row_html = "".join(
         milestone_record_row_html(rank, row, value_col, value_suffix)
         for rank, (_, row) in enumerate(displayed_rows.iterrows(), start=1)
     )
+    if scrollable:
+        row_html = f'<div class="hof-five-row-scroll">{row_html}</div>'
     st.markdown(
         f'<div class="hof-card performance-card fastest-innings-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
         unsafe_allow_html=True,
     )
-    render_hof_expand_control(state_key, expanded, len(rows))
+    if not scrollable:
+        render_hof_expand_control(state_key, expanded, len(rows))
 
 
 def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_suffix: str) -> str:
@@ -7155,7 +7211,7 @@ def milestone_record_row_html(rank: int, row: pd.Series, value_col: str, value_s
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
         f'<strong>{player_profile_link_html(player_id, player)}</strong>'
-        f'<span>{html.escape(final_line)}</span>'
+        f'<span class="fastest-final-score">{html.escape(final_line)}</span>'
         f'{meta_html}'
         f'{f"<span>{scorecard_html}</span>" if scorecard_html else ""}'
         '</div>'
@@ -7254,8 +7310,9 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         return
     records = df.head(10).copy()
     state_key = f"hof_performance_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
+    scrollable = get_active_club_id() == "georges-river-district"
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_records = records if expanded else records.head(6)
+    displayed_records = records if scrollable or expanded else records.head(6)
     rows = []
     for rank, (_, row) in enumerate(displayed_records.iterrows(), start=1):
         if mode == "batting":
@@ -7277,11 +7334,15 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
             f'<div class="performance-value">{html.escape(str(value))}</div>'
             "</div>"
         )
+    rows_html = "".join(rows)
+    if scrollable:
+        rows_html = f'<div class="hof-five-row-scroll iconic-performance-scroll">{rows_html}</div>'
     st.markdown(
-        f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{"".join(rows)}</div>',
+        f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{rows_html}</div>',
         unsafe_allow_html=True,
     )
-    render_hof_expand_control(state_key, expanded, len(records))
+    if not scrollable:
+        render_hof_expand_control(state_key, expanded, len(records))
 
 
 def sort_hof_leaders(df: pd.DataFrame, metric: str, mode: str) -> pd.DataFrame:
@@ -7443,6 +7504,7 @@ def render_best_ever_seasons(data: dict[str, object]) -> None:
         batting = best_batting_season(data["batting_raw"])
     if "best_bowling_season" not in data:
         bowling = best_bowling_season(data["bowling_raw"])
+    bowling = repair_grdcc_greatest_season_matches(bowling, data.get("batting_raw"))
     if batting is None and bowling is None:
         return
 
@@ -7453,6 +7515,31 @@ def render_best_ever_seasons(data: dict[str, object]) -> None:
     if bowling is not None:
         cards.append(best_season_card_html("Best bowling season", bowling, "bowling"))
     st.markdown(f'<div class="best-season-grid">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+
+def repair_grdcc_greatest_season_matches(
+    bowling: dict[str, object] | None,
+    batting_raw: object,
+) -> dict[str, object] | None:
+    if not bowling or get_active_club_id() != "georges-river-district":
+        return bowling
+    if normalize_featured_player_name(bowling.get("player")) != "f griggs" or safe_season_label(bowling.get("season")) != "Summer 1932/33":
+        return bowling
+    output = dict(bowling)
+    matches = None
+    if isinstance(batting_raw, pd.DataFrame) and not batting_raw.empty and "season" in batting_raw:
+        player_column = "canonical_player_name" if "canonical_player_name" in batting_raw else "player_name"
+        candidates = batting_raw[
+            batting_raw["season"].map(safe_season_label).eq("Summer 1932/33")
+            & batting_raw[player_column].map(normalize_featured_player_name).eq("f griggs")
+        ]
+        if "matches" in candidates:
+            credible = pd.to_numeric(candidates["matches"], errors="coerce").dropna()
+            credible = credible[credible > 0]
+            if not credible.empty:
+                matches = float(credible.max())
+    output["matches"] = matches
+    return output
 
 
 @st.cache_data(show_spinner=False)
