@@ -157,11 +157,11 @@ def main() -> int:
     checks = [
         ("premiership_wording", 'result_word = "def." if get_active_club_id() == "georges-river-district" else "defeated"' in layout),
         ("premiership_year_brackets", "premiership-year-summary" in layout),
-        ("premiership_years_inline", ".performance-player span.premiership-year-summary" in theme and "display: inline;" in theme),
+        ("premiership_years_below_name", ".performance-player span.premiership-year-summary" in theme and "display: block;" in theme),
         ("premiership_duplicate_years", 'f"{year} x {count}"' in layout),
         ("premiership_all_years", "+{len(years)" not in layout and "visible_limit" not in re.search(r"def compact_premiership_year_summary.*?def linked_premiership_seasons", layout, re.S).group(0)),
         ("premiership_grade_hidden", "compact_premiership_year_summary" in layout),
-        ("premiership_font_increase_preserved", ".grdcc-premiership-player-card .performance-player strong" in theme and "font-size: 0.96rem;" in theme),
+        ("premiership_font_increase_preserved", ".compact-year-premiership-player-card .performance-player strong" in theme and "font-size: 0.96rem;" in theme),
         ("hof_hover_grdcc_blue", ".block-container:has(.hall-of-fame-page) a:hover" in theme and "color: var(--club-link) !important" in theme),
         ("active_indicators", "hof-active-badge" in layout and any(row["active_indicator"] == "yes" for row in active_rows)),
         ("iconic_top10", "records = df.head(10).copy()" in layout),
@@ -173,7 +173,7 @@ def main() -> int:
         ("fastest_score_grey", "fastest-final-score" in layout and "#566074" in theme),
         ("griggs_name_matches", 'output["player"] = "Frank Griggs"' in layout and 'output["matches"] = 13' in layout),
         ("greatest_season_zero_hidden", 'not re.fullmatch(r"0(?:\\.0+)?", str(value).strip())' in layout),
-        ("leaders_scroll_preserved", "visible_rows=6" in layout and "limit=15 if scrollable_grdcc_lists else 10" in layout),
+        ("leaders_scroll_preserved", "visible_rows=6" in layout and "limit=15" in layout and "scrollable=True" in layout),
         ("premiership_sections_present", "premiership_wins_card" in layout and "Most Premierships" in layout),
     ]
     with VALIDATION_OUTPUT.open("w", newline="", encoding="utf-8") as handle:

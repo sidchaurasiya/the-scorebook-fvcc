@@ -1,7 +1,7 @@
 check,status,details
 premiership_wording,PASS,
 premiership_year_brackets,PASS,
-premiership_years_inline,PASS,
+premiership_years_below_name,PASS,
 premiership_duplicate_years,PASS,
 premiership_all_years,PASS,
 premiership_grade_hidden,PASS,

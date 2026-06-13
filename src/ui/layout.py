@@ -385,9 +385,10 @@ def player_profile_link_html(player_id: object, player_name: object, class_name:
     url = player_profile_url(player_id, player_name_text)
     if not url:
         return html.escape(player_name_text)
+    target_attrs = hof_internal_link_target_attrs()
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
-        f'target="_self" title="Open Player Profile for {html.escape(player_name_text, quote=True)}">'
+        f'{target_attrs} title="Open Player Profile for {html.escape(player_name_text, quote=True)}">'
         f"{html.escape(player_name_text)}</a>"
     )
 
@@ -420,11 +421,18 @@ def season_overview_link_html(season: object, class_name: str = "season-overview
     url = season_overview_url(season_text)
     if not url:
         return html.escape(str(season or ""))
+    target_attrs = hof_internal_link_target_attrs()
     return (
         f'<a class="{html.escape(class_name)}" href="{html.escape(url, quote=True)}" '
-        f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
+        f'{target_attrs} title="Open Season Overview for {html.escape(season_text, quote=True)}">'
         f"{html.escape(season_text)}</a>"
     )
+
+
+def hof_internal_link_target_attrs() -> str:
+    if page_slug_from_query() == "hall-of-fame":
+        return 'target="_blank" rel="noopener noreferrer"'
+    return 'target="_self"'
 
 
 def playcricket_scorecard_url(match_id: object) -> str:
@@ -6495,8 +6503,6 @@ def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
 
 
 def active_hof_players(data: dict[str, object]) -> set[str]:
-    if get_active_club_id() != "georges-river-district":
-        return set()
     frames = [data.get(key) for key in ["batting_raw", "bowling_raw", "fielding_raw"]]
     seasons = {
         safe_season_label(season)
@@ -6521,7 +6527,6 @@ def active_hof_players(data: dict[str, object]) -> set[str]:
 def render_hall_of_fame_leaders(all_time: pd.DataFrame, active_players: set[str] | None = None) -> None:
     all_time = apply_featured_record_overrides(all_time)
     render_section_heading("All-Time Leaders 👑")
-    scrollable_grdcc_lists = get_active_club_id() == "georges-river-district"
     leader_specs = [
         ("Most Matches", "Matches", "matches", "fielding"),
         ("Most Runs", "Runs", "runs", "batting"),
@@ -6538,9 +6543,9 @@ def render_hall_of_fame_leaders(all_time: pd.DataFrame, active_players: set[str]
                     metric,
                     suffix,
                     mode,
-                    limit=15 if scrollable_grdcc_lists else 10,
+                    limit=15,
                     visible_rows=6,
-                    scrollable=scrollable_grdcc_lists,
+                    scrollable=True,
                     active_players=active_players or set(),
                 )
 
@@ -6819,9 +6824,9 @@ def player_premiership_leaders_card_html(
         player_premiership_row_html(rank, row)
         for rank, (_, row) in enumerate(rows.iterrows(), start=1)
     )
-    grdcc_class = " grdcc-premiership-player-card" if get_active_club_id() == "georges-river-district" else ""
+    compact_years_class = " compact-year-premiership-player-card"
     return (
-        f'<div class="hof-card premiership-wall-card performance-card premiership-player-card{grdcc_class}">'
+        f'<div class="hof-card premiership-wall-card performance-card premiership-player-card{compact_years_class}">'
         '<div class="premiership-card-title">Most Premierships</div>'
         '<div class="premiership-card-scroll">'
         f"{row_html}"
@@ -6834,19 +6839,14 @@ def player_premiership_row_html(rank: int, row: pd.Series) -> str:
     player = safe_record_text(row.get("display_player_name") or row.get("canonical_player_name"), "Unknown player")
     player_id = player_id_from_row(row)
     count = safe_record_int(row.get("premiership_count")) or 0
-    is_grdcc = get_active_club_id() == "georges-river-district"
-    details = compact_premiership_year_summary(row.get("premiership_details") or row.get("seasons")) if is_grdcc else (
-        linked_premiership_details(row.get("premiership_details"))
-        if safe_record_text(row.get("premiership_details"))
-        else linked_premiership_seasons(row.get("seasons"))
-    )
+    details = compact_premiership_year_links_html(row.get("premiership_details") or row.get("seasons"))
     value = f"{count} premiership{'s' if count != 1 else ''}"
     return (
         '<div class="performance-row premiership-player-row">'
         f'<span class="progress-rank">{rank_badge(rank)}</span>'
         '<div class="performance-player">'
-        f'<strong>{player_profile_link_html(player_id, player)}{f" <span class=\"premiership-year-summary\">({details})</span>" if is_grdcc else ""}</strong>'
-        f'{f"<span>{details}</span>" if not is_grdcc else ""}'
+        f'<strong>{player_profile_link_html(player_id, player)}</strong>'
+        f'<span class="premiership-year-summary">{details}</span>'
         '</div>'
         f'<div class="performance-value">{html.escape(value)}</div>'
         "</div>"
@@ -6866,6 +6866,33 @@ def compact_premiership_year_summary(value: object) -> str:
         count = years.count(year)
         compressed.append(f"{year} x {count}" if count > 1 else year)
     return ", ".join(compressed)
+
+
+def compact_premiership_year_links_html(value: object) -> str:
+    raw = safe_record_text(value)
+    parts = [part.strip() for part in (raw.split("|") if "|" in raw else raw.split(",")) if part.strip()]
+    seasons = [safe_season_label(part.partition(" — ")[0]) for part in parts]
+    years = [premiership_final_year_label(season) for season in seasons]
+    ordered_years = sorted(
+        dict.fromkeys(years),
+        key=lambda year: int(year) if str(year).isdigit() else -1,
+        reverse=True,
+    )
+    rendered = []
+    for year in ordered_years:
+        count = years.count(year)
+        label = f"{year} x {count}" if count > 1 else year
+        season = seasons[years.index(year)]
+        url = season_overview_url(season)
+        if not url:
+            rendered.append(html.escape(label))
+            continue
+        rendered.append(
+            f'<a class="hof-season-text" href="{html.escape(url, quote=True)}" '
+            f'{hof_internal_link_target_attrs()} title="Open Season Overview for {html.escape(season, quote=True)}">'
+            f"{html.escape(label)}</a>"
+        )
+    return ", ".join(rendered)
 
 
 def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
@@ -6899,7 +6926,7 @@ def compact_premiership_final_year_link_html(season: object) -> str:
         return f'<span class="hof-season-text">{html.escape(label)}</span>'
     return (
         f'<a class="hof-season-text" href="{html.escape(url, quote=True)}" '
-        f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
+        f'{hof_internal_link_target_attrs()} title="Open Season Overview for {html.escape(season_text, quote=True)}">'
         f"{html.escape(label)}</a>"
     )
 
@@ -6924,7 +6951,7 @@ def compact_premiership_season_link_html(season: object) -> str:
         return f'<span class="hof-season-text">{html.escape(season_text)}</span>'
     return (
         f'<a class="hof-season-text" href="{html.escape(url, quote=True)}" '
-        f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
+        f'{hof_internal_link_target_attrs()} title="Open Season Overview for {html.escape(season_text, quote=True)}">'
         f"{html.escape(season_text)}</a>"
     )
 

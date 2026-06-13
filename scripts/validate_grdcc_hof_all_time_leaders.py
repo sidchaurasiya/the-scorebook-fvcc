@@ -102,7 +102,7 @@ def main() -> int:
             ("matches_report_list_absent", not rows["section"].eq("most_matches").any(), 0),
             ("catches_report_list_absent", not rows["section"].eq("most_catches").any(), 0),
             ("visible_rows_6", "visible_rows=6" in layout, 6),
-            ("top_list_limit_15", "limit=15 if scrollable_grdcc_lists else 10" in layout, 15),
+            ("top_list_limit_15", "limit=15" in layout and "scrollable=True" in layout, 15),
             ("source_note_hidden", "{source_note}</span>" not in layout and "){source_note}</strong>" not in layout, 0),
             ("premiership_final_year", "rendered.append(compact_premiership_final_year_link_html(season))" in layout, 1),
             ("premiership_wins_present", "premiership_wins_card" in layout, 1),
