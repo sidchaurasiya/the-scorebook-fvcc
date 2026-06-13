@@ -2684,7 +2684,7 @@ def inject_theme() -> None:
         .premiership-year-summary {
             color: var(--club-muted-text, #66758D);
             display: inline;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 750;
         }
 
@@ -2698,6 +2698,16 @@ def inject_theme() -> None:
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+        }
+
+        .premiership-player-row .performance-player span.premiership-year-summary {
+            display: inline;
+        }
+
+        @media (min-width: 900px) {
+            .grdcc-premiership-player-card .performance-player strong {
+                white-space: nowrap;
+            }
         }
 
         .premiership-player-row .performance-player span a.season-overview-link,
@@ -2720,7 +2730,7 @@ def inject_theme() -> None:
         }
 
         .hof-five-row-scroll {
-            max-height: 295px;
+            max-height: 360px;
             overflow-y: auto;
             padding-right: 7px;
             scrollbar-color: var(--club-border) transparent;
@@ -2731,6 +2741,11 @@ def inject_theme() -> None:
         .iconic-performance-scroll .performance-player > span a,
         .iconic-performance-scroll .performance-player > span a:visited {
             color: var(--club-muted-text, #66758D) !important;
+        }
+
+        .iconic-performance-scroll .performance-player > span a.scorecard-link,
+        .iconic-performance-scroll .performance-player > span a.scorecard-link:visited {
+            color: var(--club-link) !important;
         }
 
         .fastest-innings-card .fastest-final-score {
@@ -7678,7 +7693,7 @@ def active_club_theme_css() -> str:
 
         .block-container:has(.hall-of-fame-page) a:hover,
         .block-container:has(.hall-of-fame-page) a:focus-visible {{
-            color: var(--club-primary-dark) !important;
+            color: var(--club-link) !important;
         }}
 
         .club-label,
