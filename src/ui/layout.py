@@ -4656,11 +4656,10 @@ def hall_of_fame_v2_legend_card_html(
     rows = []
     for rank, (_, row) in enumerate(leaders.iterrows(), start=1):
         value = safe_record_int(row.get(metric)) or 0
-        source_note = featured_record_source_note_html(row)
         rows.append(
             '<div class="hof-v2-rank-row">'
             f'<span class="hof-v2-rank">{rank}</span>'
-            f"<strong>{player_profile_link_html(player_id_from_row(row), row['Player'])}{source_note}</strong>"
+            f"<strong>{player_profile_link_html(player_id_from_row(row), row['Player'])}</strong>"
             f"<span>{value:,} {html.escape(unit)}</span>"
             "</div>"
         )
@@ -6549,11 +6548,10 @@ def render_hof_leader_card(
     for rank, (_, row) in enumerate(displayed_leaders.iterrows(), start=1):
         value = float(row[metric])
         width = 0 if not max_value else value / max_value * 100
-        source_note = featured_record_source_note_html(row)
         rows.append(
             '<div class="progress-row hof-progress-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
-            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}{source_note}</span>'
+            f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}</span>'
             f'<span class="progress-value"><strong>{int(value):,} {html.escape(suffix)}</strong></span>'
             f'<div class="progress-track"><div style="width:{width:.0f}%"></div></div>'
             "</div>"
@@ -6822,7 +6820,7 @@ def linked_premiership_seasons(value: object, visible_limit: int = 3) -> str:
     if not seasons:
         return ""
     visible = seasons[:visible_limit]
-    links = [compact_premiership_season_link_html(season) for season in visible]
+    links = [compact_premiership_final_year_link_html(season) for season in visible]
     if len(seasons) > visible_limit:
         links.append(f'<span class="premiership-more-seasons">+{len(seasons) - visible_limit} more</span>')
     return ", ".join(links)
@@ -6833,12 +6831,37 @@ def linked_premiership_details(value: object, visible_limit: int = 3) -> str:
     visible = details[:visible_limit]
     rendered = []
     for detail in visible:
-        season, separator, grade = detail.partition(" — ")
-        season_html = compact_premiership_season_link_html(season)
-        rendered.append(f'{season_html}{html.escape(" — " + grade) if separator else ""}')
+        season, _, _grade = detail.partition(" — ")
+        rendered.append(compact_premiership_final_year_link_html(season))
     if len(details) > visible_limit:
         rendered.append(f'<span class="premiership-more-seasons">+{len(details) - visible_limit} more</span>')
     return ", ".join(rendered)
+
+
+def compact_premiership_final_year_link_html(season: object) -> str:
+    season_text = safe_season_label(season)
+    label = premiership_final_year_label(season_text)
+    url = season_overview_url(season_text)
+    if not url:
+        return f'<span class="hof-season-text">{html.escape(label)}</span>'
+    return (
+        f'<a class="hof-season-text" href="{html.escape(url, quote=True)}" '
+        f'target="_self" title="Open Season Overview for {html.escape(season_text, quote=True)}">'
+        f"{html.escape(label)}</a>"
+    )
+
+
+def premiership_final_year_label(season: object) -> str:
+    season_text = safe_season_label(season)
+    summer = re.fullmatch(r"Summer\s+(\d{4})/(\d{2})", season_text, flags=re.IGNORECASE)
+    if summer:
+        start_year = int(summer.group(1))
+        end_year = (start_year // 100) * 100 + int(summer.group(2))
+        if end_year < start_year:
+            end_year += 100
+        return str(end_year)
+    single_year = re.search(r"(\d{4})", season_text)
+    return single_year.group(1) if single_year else season_text
 
 
 def compact_premiership_season_link_html(season: object) -> str:
