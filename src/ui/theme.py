@@ -2677,6 +2677,17 @@ def inject_theme() -> None:
             padding: 9px 0;
         }
 
+        .grdcc-premiership-player-card .performance-player strong {
+            font-size: 0.96rem;
+        }
+
+        .premiership-year-summary {
+            color: var(--club-muted-text, #66758D);
+            display: inline;
+            font-size: 0.78rem;
+            font-weight: 750;
+        }
+
         .premiership-player-row .performance-value {
             color: var(--club-primary, #4b37d8);
         }
@@ -2706,6 +2717,39 @@ def inject_theme() -> None:
         .fastest-innings-card .performance-player span a.season-overview-link:visited {
             color: var(--club-muted-text, #66758D) !important;
             font-weight: 750;
+        }
+
+        .hof-five-row-scroll {
+            max-height: 295px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .iconic-performance-scroll .performance-player > span,
+        .iconic-performance-scroll .performance-player > span a,
+        .iconic-performance-scroll .performance-player > span a:visited {
+            color: var(--club-muted-text, #66758D) !important;
+        }
+
+        .fastest-innings-card .fastest-final-score {
+            color: #566074;
+        }
+
+        .hof-active-badge {
+            background: rgba(var(--club-secondary-rgb), 0.17);
+            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            border-radius: 999px;
+            color: var(--club-primary-dark);
+            display: inline-flex;
+            font-size: 0.56rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            margin-left: 6px;
+            padding: 2px 6px;
+            text-transform: uppercase;
+            vertical-align: middle;
         }
 
         .premiership-empty p {
@@ -7488,6 +7532,7 @@ def active_club_theme_css() -> str:
         <style>
         :root {{
             --club-primary: {primary};
+            --club-primary-dark: {sidebar_bg};
             --club-secondary: {secondary};
             --club-accent: {accent};
             --club-bg: {background};
@@ -7629,6 +7674,11 @@ def active_club_theme_css() -> str:
         a.season-round-scorecard-link:hover,
         a.full-link:hover {{
             color: var(--club-secondary) !important;
+        }}
+
+        .block-container:has(.hall-of-fame-page) a:hover,
+        .block-container:has(.hall-of-fame-page) a:focus-visible {{
+            color: var(--club-primary-dark) !important;
         }}
 
         .club-label,

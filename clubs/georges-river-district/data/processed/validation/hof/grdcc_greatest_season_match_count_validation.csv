@@ -1,0 +1,2 @@
+player_name,season,previous_display_matches,batting_source_matches,updated_display_matches,source_file,validation_status,notes
+F Griggs,Summer 1932/33,0,,N/A,clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv,PASS,No credible batting matches value exists; display is N/A rather than fabricated zero.
