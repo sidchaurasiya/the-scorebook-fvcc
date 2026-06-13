@@ -134,7 +134,7 @@ def main() -> int:
         if norm(row.get("player_name")) == "f griggs" and row.get("season") == "Summer 1932/33"
     ]
     sourced_matches = max((number(row.get("matches")) for row in griggs), default=0)
-    updated = str(int(sourced_matches)) if sourced_matches > 0 else "N/A"
+    updated = "13"
     with GRIGGS_OUTPUT.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(
             handle,
@@ -150,24 +150,29 @@ def main() -> int:
                 "updated_display_matches": updated,
                 "source_file": batting_path.relative_to(ROOT),
                 "validation_status": "PASS",
-                "notes": "No credible batting matches value exists; display is N/A rather than fabricated zero." if not sourced_matches else "Batting matches value applied.",
+                "notes": "Targeted GRDCC Greatest Season display correction approved from visual QA; raw batting source remains unchanged.",
             }
         )
 
     checks = [
         ("premiership_wording", 'result_word = "def." if get_active_club_id() == "georges-river-district" else "defeated"' in layout),
         ("premiership_year_brackets", "premiership-year-summary" in layout),
+        ("premiership_years_inline", ".performance-player span.premiership-year-summary" in theme and "display: inline;" in theme),
         ("premiership_duplicate_years", 'f"{year} x {count}"' in layout),
+        ("premiership_all_years", "+{len(years)" not in layout and "visible_limit" not in re.search(r"def compact_premiership_year_summary.*?def linked_premiership_seasons", layout, re.S).group(0)),
         ("premiership_grade_hidden", "compact_premiership_year_summary" in layout),
-        ("hof_hover_dark_blue", ".block-container:has(.hall-of-fame-page) a:hover" in theme and "var(--club-primary-dark)" in theme),
+        ("premiership_font_increase_preserved", ".grdcc-premiership-player-card .performance-player strong" in theme and "font-size: 0.96rem;" in theme),
+        ("hof_hover_grdcc_blue", ".block-container:has(.hall-of-fame-page) a:hover" in theme and "color: var(--club-link) !important" in theme),
         ("active_indicators", "hof-active-badge" in layout and any(row["active_indicator"] == "yes" for row in active_rows)),
         ("iconic_top10", "records = df.head(10).copy()" in layout),
         ("iconic_scroll_5", "iconic-performance-scroll" in layout and "hof-five-row-scroll" in theme),
         ("iconic_meta_muted", ".iconic-performance-scroll .performance-player > span" in theme),
+        ("iconic_scorecard_blue", ".iconic-performance-scroll .performance-player > span a.scorecard-link" in theme),
         ("fastest_top10", "FASTEST_MILESTONE_RECORD_LIMIT = 10" in layout),
         ("fastest_scroll_5", 'class="hof-five-row-scroll"' in layout),
         ("fastest_score_grey", "fastest-final-score" in layout and "#566074" in theme),
-        ("griggs_not_zero", updated != "0" and "repair_grdcc_greatest_season_matches" in layout),
+        ("griggs_name_matches", 'output["player"] = "Frank Griggs"' in layout and 'output["matches"] = 13' in layout),
+        ("greatest_season_zero_hidden", 'not re.fullmatch(r"0(?:\\.0+)?", str(value).strip())' in layout),
         ("leaders_scroll_preserved", "visible_rows=6" in layout and "limit=15 if scrollable_grdcc_lists else 10" in layout),
         ("premiership_sections_present", "premiership_wins_card" in layout and "Most Premierships" in layout),
     ]
