@@ -1,0 +1,21 @@
+check,status,detail
+required_outputs_exist,pass,grdcc_annual_report_combined_all_time_runs_wickets.csv; grdcc_annual_report_combined_all_time_by_player.csv; grdcc_all_time_override_decisions.csv; grdcc_annual_report_highest_scores_bbi_extract.csv
+section_rows_unique,pass,duplicate_section_rows=0
+shields_and_frank_gray_present,pass,both report sections extracted
+combined_arithmetic,pass,rows=166
+max_value_decision_rule,pass,decisions=166
+harry_milburn,pass,displayed=10788
+gordon_leslie,pass,displayed=707
+current_higher_case,pass,count=71
+hof_all_time_prepared_before_tables,pass,shared HOF preparation
+hof_stats_table_uses_prepared_all_time,pass,detailed tables built from prepared all_time
+player_profile_career_override,pass,career row only
+career_only_metric_map,pass,no season metric mapping
+no_noisy_source_text,pass,UI template clean
+runtime_grdcc_values,pass,helper applies approved values
+runtime_fvcc_unchanged,pass,club scope enforced
+candidate_schema,pass,rows=455
+highest_score_candidates,pass,count=421
+bbi_candidates,pass,count=34
+candidate_only,pass,no app injection
+raw_sources_unchanged,pass,none
