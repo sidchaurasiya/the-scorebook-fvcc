@@ -4348,7 +4348,9 @@ def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_s
     batting = add_batting_display_columns(combine_player_rows(batting_raw, "batting"))
     bowling = combine_player_rows(bowling_raw, "bowling")
     fielding = add_display_stat_aliases(combine_player_rows(add_display_stat_aliases(fielding_raw), "fielding"))
-    all_time = build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
+    all_time = apply_featured_record_overrides(
+        build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
+    )
     detailed_tables = {
         "batting": format_all_time_batting_table(all_time),
         "bowling": format_all_time_bowling_table(all_time),
@@ -5692,7 +5694,7 @@ def get_hall_of_fame_data(
         return None
 
     started_at = time.perf_counter()
-    all_time = historical_data["all_time"].copy()
+    all_time = apply_featured_record_overrides(historical_data["all_time"].copy())
     log_hof_timing("copy all-time summary", started_at)
 
     started_at = time.perf_counter()
@@ -6604,14 +6606,6 @@ def render_hof_leader_card(
     )
     if not scrollable:
         render_hof_expand_control(state_key, expanded, len(leaders), collapsed_limit=visible_rows)
-
-
-def featured_record_source_note_html(row: pd.Series) -> str:
-    override_flag = row.get("Featured Record Override", False)
-    if pd.isna(override_flag) or str(override_flag).strip().casefold() not in {"1", "true", "yes"}:
-        return ""
-    source_note = str(row.get("Featured Record Source Note") or "Official Annual Report total")
-    return f'<small class="featured-record-source">{html.escape(source_note)}</small>'
 
 
 def render_hof_expand_control(state_key: str, expanded: bool, row_count: int, collapsed_limit: int = 6) -> None:
@@ -10054,6 +10048,7 @@ def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFr
     grade_table = enrich_player_profile_grade_table(grade_table, profile, detail_sources)
     career = build_player_career_totals(season_table, batting, bowling, fielding, profile)
     career = enrich_player_profile_career(career, profile, detail_sources)
+    career = apply_featured_record_overrides(career, add_missing_players=False)
     raw_profiles = build_player_raw_profile_table(batting, bowling, fielding)
     performance_breakdown = player_profile_source_rows(detail_sources.get("performance_breakdown", pd.DataFrame()), profile)
     batting_position = player_profile_source_rows(detail_sources.get("batting_position", pd.DataFrame()), profile)

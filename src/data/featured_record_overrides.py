@@ -20,11 +20,19 @@ ANNUAL_REPORT_LEADER_COLUMNS = {
     "most_runs": "Runs",
     "most_wickets": "Wickets",
 }
+FEATURED_NAME_ALIASES = {
+    "ben vella": "benjamin vella",
+    "pat kennedy": "patrick kennedy",
+    "nicholas henriques": "nick henriques",
+    "christopher diehm": "chris diehm",
+    "nathan e wadds": "nathan wadds",
+}
 
 
 def normalize_featured_player_name(value: object) -> str:
     text = re.sub(r"[^a-z0-9 ]+", " ", str(value or "").casefold())
-    return re.sub(r"\s+", " ", text).strip()
+    normalized = re.sub(r"\s+", " ", text).strip()
+    return FEATURED_NAME_ALIASES.get(normalized, normalized)
 
 
 def featured_record_override_path(club_id: str | None = None) -> Path:
@@ -43,6 +51,34 @@ def annual_report_all_time_leaders_path() -> Path:
         / "annual_report_2024_25"
         / "grdcc_annual_report_all_time_leaders_for_app.csv"
     )
+
+
+def annual_report_override_decisions_path() -> Path:
+    return (
+        REPO_ROOT
+        / "clubs"
+        / GRDCC_CLUB_ID
+        / "data"
+        / "processed"
+        / "validation"
+        / "annual_report_2024_25"
+        / "all_time_overrides"
+        / "grdcc_all_time_override_decisions.csv"
+    )
+
+
+def load_annual_report_override_decisions(club_id: str | None = None) -> pd.DataFrame:
+    active_club_id = normalize_club_id(club_id or get_active_club_id())
+    path = annual_report_override_decisions_path()
+    if active_club_id != GRDCC_CLUB_ID or not path.exists():
+        return pd.DataFrame()
+    rows = pd.read_csv(path, dtype=str).fillna("")
+    required = {"player_name", "normalized_player_name", "metric", "displayed_value", "validation_status"}
+    if not required.issubset(rows.columns):
+        return pd.DataFrame()
+    rows = rows[rows["validation_status"].astype(str).str.casefold().eq("pass")].copy()
+    rows["displayed_value"] = pd.to_numeric(rows["displayed_value"], errors="coerce")
+    return rows[rows["displayed_value"].notna()].reset_index(drop=True)
 
 
 def load_annual_report_all_time_leaders(club_id: str | None = None) -> pd.DataFrame:
@@ -86,7 +122,12 @@ def load_featured_record_overrides(club_id: str | None = None) -> pd.DataFrame:
     return overrides[overrides["authoritative_value"].notna()].reset_index(drop=True)
 
 
-def apply_featured_record_overrides(all_time: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+def apply_featured_record_overrides(
+    all_time: pd.DataFrame,
+    club_id: str | None = None,
+    *,
+    add_missing_players: bool = True,
+) -> pd.DataFrame:
     """Apply approved overrides to a presentation copy of an all-time table."""
     output = all_time.copy()
     if output.empty or "Player" not in output.columns:
@@ -109,15 +150,23 @@ def apply_featured_record_overrides(all_time: pd.DataFrame, club_id: str | None 
         if len(duplicate_indices):
             output = output.drop(index=duplicate_indices)
             normalized_players = output["Player"].map(normalize_featured_player_name)
-        output.loc[featured_index, target_column] = float(override["authoritative_value"])
+        current_value = pd.to_numeric(pd.Series([output.loc[featured_index, target_column]]), errors="coerce").fillna(0).iloc[0]
+        output.loc[featured_index, target_column] = max(float(current_value), float(override["authoritative_value"]))
         output.loc[featured_index, "Featured Record Override"] = True
         output.loc[featured_index, "Featured Record Metric"] = metric
         output.loc[featured_index, "Featured Record Source"] = str(override.get("annual_report_source", ""))
         output.loc[featured_index, "Featured Record Source Note"] = str(override.get("source_note", ""))
 
-    annual_leaders = load_annual_report_all_time_leaders(club_id)
-    for _, leader in annual_leaders.iterrows():
-        target_column = ANNUAL_REPORT_LEADER_COLUMNS.get(str(leader.get("section", "")).strip())
+    decisions = load_annual_report_override_decisions(club_id)
+    if decisions.empty:
+        decisions = load_annual_report_all_time_leaders(club_id).rename(
+            columns={"section": "legacy_section"}
+        )
+    for _, leader in decisions.iterrows():
+        metric = str(leader.get("metric", "")).strip()
+        target_column = METRIC_COLUMNS.get(metric)
+        if target_column is None:
+            target_column = ANNUAL_REPORT_LEADER_COLUMNS.get(str(leader.get("legacy_section", "")).strip())
         if target_column is None or target_column not in output.columns:
             continue
         normalized_name = str(leader.get("normalized_player_name", "")).strip()
@@ -129,13 +178,15 @@ def apply_featured_record_overrides(all_time: pd.DataFrame, club_id: str | None 
             duplicate_indices = matching_rows.index.difference([featured_index])
             if len(duplicate_indices):
                 output = output.drop(index=duplicate_indices)
-        else:
+        elif add_missing_players:
             featured_index = len(output)
             output.loc[featured_index, "Player"] = str(leader.get("player_name", "")).strip()
+        else:
+            continue
         current_value = pd.to_numeric(pd.Series([output.loc[featured_index, target_column]]), errors="coerce").fillna(0).iloc[0]
         output.loc[featured_index, target_column] = max(float(current_value), float(leader["displayed_value"]))
         output.loc[featured_index, "Featured Record Override"] = True
-        output.loc[featured_index, "Featured Record Metric"] = str(leader.get("metric", ""))
+        output.loc[featured_index, "Featured Record Metric"] = metric
         output.loc[featured_index, "Featured Record Source"] = "GRDCC 2024/25 Annual Report"
         normalized_players = output["Player"].map(normalize_featured_player_name)
     return output
