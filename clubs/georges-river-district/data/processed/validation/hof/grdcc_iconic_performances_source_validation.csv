@@ -1,0 +1,21 @@
+candidate_type,player_name,season,source_system,source_rule_bucket,metric,value,included_in_iconic_performances,validation_status,notes
+highest_score,Phil Payne,Summer 1931/32,excel,excel_era,battingHighScore,188.0,yes,pass,Candidate from final source-rule raw dataset.
+highest_score,K Lewis,Summer 1955/56,excel,excel_era,battingHighScore,172.0,yes,pass,Candidate from final source-rule raw dataset.
+highest_score,Don Eldridge,Summer 1954/55,excel,excel_era,battingHighScore,153.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,Bill Edmonds,Summer 1939/40,excel,excel_era,battingHighScore,148.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,G Parsons,Summer 1930/31,excel,excel_era,battingHighScore,141.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,Phil Payne,Summer 1932/33,excel,excel_era,battingHighScore,137.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,E Reid,Summer 1934/35,excel,excel_era,battingHighScore,136.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,J Webb,Summer 1953/54,excel,excel_era,battingHighScore,135.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,Jock Webb,Summer 1961/62,excel,excel_era,battingHighScore,126.0,no,pass,Candidate from final source-rule raw dataset.
+highest_score,Paul Blazely,Summer 1968/69,excel,excel_era,battingHighScore,126.0,no,pass,Candidate from final source-rule raw dataset.
+bbi,F Griggs,Summer 1932/33,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,F Griggs,Summer 1931/32,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,H Jolly,Summer 1944/45,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,F Griggs,Summer 1930/31,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,Keith Trotter,Summer 1951/52,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,Bill Edmonds,Summer 1952/53,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,Ren Bullock,Summer 1933/34,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,W Edmonds,Summer 1953/54,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,R Clarke,Summer 1930/31,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.
+bbi,Bob Bennett,Summer 1938/39,excel,excel_era,bowlingBestInnings,nan,no,pass,Candidate from final source-rule raw dataset.

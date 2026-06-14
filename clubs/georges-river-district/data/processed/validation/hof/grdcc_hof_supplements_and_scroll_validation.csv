@@ -1,0 +1,22 @@
+check,status,detail
+premiership_wins_desktop_visible_target,pass,desktop target 6 rows
+premiership_wins_mobile_visible_target,pass,mobile target 5 rows
+premiership_wins_scroll_enabled,pass,scroll class configured
+premiership_wins_row_renderer_unchanged,pass,row count preserved; no data mutation path
+most_premierships_mobile_visible_target,pass,mobile target 5 rows
+most_premierships_mobile_scroll_enabled,pass,mobile scroll configured
+most_premierships_desktop_unchanged,pass,desktop uses shared height only
+stats_table_blank_runtime_helper,pass,missing HOF detail values blanked
+stats_table_no_na_literal,pass,HOF detail display avoids N/A
+override_players_all_supplemented,pass,missing=0
+matches_proxy_only_with_supporting_inputs,pass,proxy_rows=23
+hs_derived_minimum_marked,pass,hs_derived_rows=49
+harry_override_retained,pass,displayed=10788
+gordon_override_retained,pass,displayed=707
+alias_override_helper_harry,pass,runs=10788
+alias_override_helper_gordon,pass,wickets=707
+player_profile_career_uses_helper,pass,profile career row wired to helper
+iconic_uses_final_source_rule_raw,pass,iconic inputs are final app-facing raw tables
+iconic_excel_rows_present_in_raw,pass,batting=1586 bowling=344
+iconic_no_excel_bbb_fields,pass,Excel candidates limited to aggregate high score / bowling figures
+raw_sources_unchanged,pass,none
