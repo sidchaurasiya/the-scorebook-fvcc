@@ -6753,7 +6753,7 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
         f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
-        f'<div class="premiership-card-scroll">{rows_html}</div>'
+        f'<div class="premiership-card-scroll premiership-wins-scroll">{rows_html}</div>'
         "</div>"
     )
 
@@ -6822,7 +6822,7 @@ def player_premiership_leaders_card_html(
     return (
         f'<div class="hof-card premiership-wall-card performance-card premiership-player-card{compact_years_class}">'
         '<div class="premiership-card-title">Most Premierships</div>'
-        '<div class="premiership-card-scroll">'
+        '<div class="premiership-card-scroll premiership-player-scroll">'
         f"{row_html}"
         "</div>"
         "</div>"
@@ -8488,26 +8488,26 @@ def hof_detail_display_value(column: str, value: object) -> str:
     if column in {"Debut Season", "Latest Season"}:
         return hof_detail_link_cell(value, overview_link_display_pattern())
     if pd.isna(value) or str(value).strip() == "":
-        return "N/A"
+        return ""
     if column == "Win %" or column == "Bat SR":
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+        return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "Econ"}:
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{float(numeric):.2f}"
+        return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
     if column == "Overs":
         balls = cricket_overs_to_balls(value)
-        return "N/A" if balls is None else balls_to_overs_display(balls) or "N/A"
+        return "" if balls is None else balls_to_overs_display(balls) or ""
     if column in {"Seasons", "Seasons Played", "Matches", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "Maidens", "Wickets", "3WI", "5WI", "10WM", "Catches", "Stumpings", "Run Outs", "Dismissals"}:
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{int(numeric):,}"
+        return "" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
-    return html.escape(text if text and text != "—" else "N/A")
+    return html.escape(text if text and text != "—" else "")
 
 
 def hof_detail_link_cell(value: object, display_pattern: str) -> str:
     if pd.isna(value) or str(value).strip() == "":
-        return "N/A"
+        return ""
     text = str(value).strip()
     label = link_display_label(text)
     if is_app_internal_url(text):
@@ -8574,18 +8574,18 @@ def format_table_missing_values(table: pd.DataFrame) -> pd.DataFrame:
     for column in output.columns:
         if column in integer_columns:
             values = pd.to_numeric(output[column], errors="coerce")
-            output[column] = values.map(lambda value: "—" if pd.isna(value) else f"{int(value):,}")
+            output[column] = values.map(lambda value: "" if pd.isna(value) else f"{int(value):,}")
         elif column == "Win %":
             values = pd.to_numeric(output[column], errors="coerce")
-            output[column] = values.map(lambda value: "—" if pd.isna(value) else f"{float(value):.1f}")
+            output[column] = values.map(lambda value: "" if pd.isna(value) else f"{float(value):.1f}")
         elif column == "Bat SR":
             values = pd.to_numeric(output[column], errors="coerce")
-            output[column] = values.map(lambda value: "N/A" if pd.isna(value) else f"{float(value):.1f}")
+            output[column] = values.map(lambda value: "" if pd.isna(value) else f"{float(value):.1f}")
         elif column in decimal_columns:
             values = pd.to_numeric(output[column], errors="coerce")
-            output[column] = values.map(lambda value: "—" if pd.isna(value) else f"{float(value):.2f}")
+            output[column] = values.map(lambda value: "" if pd.isna(value) else f"{float(value):.2f}")
         else:
-            output[column] = output[column].map(lambda value: "—" if pd.isna(value) or str(value).strip() == "" else value)
+            output[column] = output[column].map(lambda value: "" if pd.isna(value) or str(value).strip() == "" else value)
     return output
 
 
@@ -10008,8 +10008,6 @@ def load_player_profile_index(_local_version: float, _identity_version: float) -
     frames = []
     for category in ["batting", "bowling", "fielding"]:
         frame = read_processed_table(f"all_seasons_{category}")
-        if not frame.empty and "source_system" in frame:
-            frame = frame[frame["source_system"].astype(str).str.casefold() != "excel"].copy()
         if not frame.empty:
             frames.append(apply_player_identity_mapping(frame, aliases))
     if not frames:

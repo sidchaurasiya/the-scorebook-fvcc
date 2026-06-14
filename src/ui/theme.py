@@ -2562,6 +2562,10 @@ def inject_theme() -> None:
             scrollbar-width: thin;
         }
 
+        .premiership-wins-scroll {
+            max-height: calc(6 * 82px);
+        }
+
         .premiership-win-row {
             border-bottom: 1px solid #eef0f6;
             padding: 11px 0 12px;
@@ -2768,6 +2772,14 @@ def inject_theme() -> None:
 
             .block-container:has(.hall-of-fame-page) .hof-five-row-scroll {
                 max-height: 360px;
+            }
+
+            .premiership-wins-scroll {
+                max-height: calc(5 * 82px);
+            }
+
+            .premiership-player-scroll {
+                max-height: calc(5 * 58px);
             }
         }
 
