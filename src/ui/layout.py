@@ -6581,6 +6581,10 @@ def render_hof_leader_card(
     for rank, (_, row) in enumerate(displayed_leaders.iterrows(), start=1):
         value = float(row[metric])
         width = 0 if not max_value else value / max_value * 100
+        if metric == "Matches":
+            value_text, _, _ = historical_matches_display_text(row)
+        else:
+            value_text = f"{int(value):,}"
         active_badge = (
             '<span class="hof-active-badge">Active</span>'
             if normalize_featured_player_name(row["Player"]) in (active_players or set())
@@ -6590,7 +6594,7 @@ def render_hof_leader_card(
             '<div class="progress-row hof-progress-row">'
             f'<span class="progress-rank">{rank_badge(rank)}</span>'
             f'<span class="progress-name">{player_profile_link_html(player_id_from_row(row), row["Player"])}{active_badge}</span>'
-            f'<span class="progress-value"><strong>{int(value):,} {html.escape(suffix)}</strong></span>'
+            f'<span class="progress-value"><strong>{html.escape(value_text)} {html.escape(suffix)}</strong></span>'
             f'<div class="progress-track"><div style="width:{width:.0f}%"></div></div>'
             "</div>"
         )
@@ -7655,12 +7659,13 @@ def best_bowling_season(df: pd.DataFrame) -> dict[str, object] | None:
 def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
     if mode == "batting":
         primary = f'{format_int(row["runs"])} runs'
+        matches_text, _, _ = historical_matches_display_text(row, matches_key="matches", innings_key="innings", season_key="season")
         chips = [
-            ("Matches", format_int(row["matches"])),
+            ("Matches", matches_text),
             ("Runs", format_int(row["runs"])),
             ("Avg", format_decimal(row["average"])),
             ("SR", format_decimal(row["strike_rate"])),
-            ("HS", str(row["hs"])),
+            ("HS", format_high_score_text(row.get("hs"))),
             ("50s", format_int(row["50s"])),
             ("100s", format_int(row["100s"])),
             ("4s", format_int(row["4s"])),
@@ -7669,14 +7674,15 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
         ]
     else:
         primary = f'{format_int(row["wickets"])} wickets'
+        matches_text, _, _ = historical_matches_display_text(row, matches_key="matches", innings_key="innings", season_key="season")
         chips = [
-            ("Matches", format_int(row["matches"])),
-            ("Overs", str(row["overs"])),
+            ("Matches", matches_text),
+            ("Overs", safe_record_text(row.get("overs"), "")),
             ("Mdns", format_int(row["maidens"])),
             ("Avg", format_decimal(row["average"])),
             ("Econ", format_decimal(row["economy"])),
             ("SR", format_decimal(row["strike_rate"])),
-            ("BBI", str(row["bbi"])),
+            ("BBI", safe_record_text(row.get("bbi"), "")),
             ("5WI", format_int(row["5wi"])),
             ("10WM", format_int(row["10wm"])),
         ]
@@ -8258,12 +8264,15 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         for index, column in enumerate(columns)
     )
     rows = []
+    matches_proxy_used = False
     for row_index, (_, row) in enumerate(table.iterrows(), start=1):
         cells = [f'<td class="hof-col-rank" data-rank-cell="1">{row_index}</td>']
         for column in columns:
             value = row.get(column)
-            display = hof_detail_display_value(column, value)
-            sort_value, missing = hof_detail_sort_value(column, value)
+            display = hof_detail_display_value(column, value, row)
+            sort_value, missing = hof_detail_sort_value(column, value, row)
+            if column == "Matches" and display.endswith("*"):
+                matches_proxy_used = True
             cells.append(
                 f'<td class="{hof_detail_column_class(column)}" data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
                 f"{display}</td>"
@@ -8388,6 +8397,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         <tbody>{''.join(rows)}</tbody>
       </table>
     </div>
+    {'<div class="page-note hof-matches-footnote">* Innings used where historical match counts are unavailable.</div>' if matches_proxy_used else ''}
     <script>
       (() => {{
         const table = document.getElementById({table_id!r});
@@ -8482,13 +8492,18 @@ def hof_detail_default_sort_dir(column: object) -> str:
     return "asc" if str(column) in {"Player", "Debut Season", "Latest Season"} else "desc"
 
 
-def hof_detail_display_value(column: str, value: object) -> str:
+def hof_detail_display_value(column: str, value: object, row: pd.Series | None = None) -> str:
     if column == "Player":
         return hof_detail_link_cell(value, profile_link_display_pattern())
     if column in {"Debut Season", "Latest Season"}:
         return hof_detail_link_cell(value, overview_link_display_pattern())
     if pd.isna(value) or str(value).strip() == "":
         return ""
+    if column == "Matches" and row is not None:
+        matches_text, _, _ = historical_matches_display_text(row)
+        return matches_text
+    if column == "HS":
+        return format_high_score_text(value)
     if column == "Win %" or column == "Bat SR":
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
@@ -8523,7 +8538,7 @@ def is_app_internal_url(text: object) -> bool:
     return value.startswith("?") or value.startswith("./?") or value.startswith("/?")
 
 
-def hof_detail_sort_value(column: str, value: object) -> tuple[str, bool]:
+def hof_detail_sort_value(column: str, value: object, row: pd.Series | None = None) -> tuple[str, bool]:
     if pd.isna(value) or str(value).strip() in {"", "—", "N/A"}:
         return "", True
     if column == "Player":
@@ -8533,6 +8548,9 @@ def hof_detail_sort_value(column: str, value: object) -> tuple[str, bool]:
     if column == "HS":
         runs, _ = parse_batting_score(value)
         return ("" if runs is None else str(runs), runs is None)
+    if column == "Matches" and row is not None:
+        _, matches_value, missing = historical_matches_display_text(row)
+        return ("" if matches_value is None else str(matches_value)), missing
     if column == "BBI":
         wickets, runs = parse_bowling_figures(value)
         if wickets is None or runs is None:
@@ -9334,9 +9352,10 @@ def render_player_profile_v2_hero(profile_view: dict[str, pd.DataFrame], context
         for badge in unique_preserve_order(badges)[:7]
     )
     signature_title, signature_copy = player_v2_signature_stat(career, context)
+    matches_text, _, _ = historical_matches_display_text(career)
     fact_cards = [
         ("Career span", str(career.get("Career Span", "—") or "—")),
-        ("Matches", format_int(career.get("Matches"))),
+        ("Matches", matches_text or format_int(career.get("Matches"))),
         ("Runs", format_int(career.get("Runs"))),
         ("Wickets", format_int(career.get("Wickets"))),
         ("Catches", format_int(career.get("Catches"))),
@@ -9427,14 +9446,15 @@ def player_v2_best_fit(profile_view: dict[str, pd.DataFrame]) -> str:
 
 
 def render_player_profile_v2_career_strip(career: pd.Series) -> None:
+    matches_text, _, _ = historical_matches_display_text(career)
     cards = [
-        ("Matches", format_int(career.get("Matches"))),
+        ("Matches", matches_text or format_int(career.get("Matches"))),
         ("Runs", format_int(career.get("Runs"))),
         ("Bat Avg", format_decimal(career.get("Bat Avg"))),
-        ("HS", str(career.get("HS", "—") or "—")),
+        ("HS", format_high_score_text(career.get("HS")) or "—"),
         ("Wickets", format_int(career.get("Wickets"))),
         ("Bowl Avg", format_decimal(career.get("Bowl Avg"))),
-        ("BBI", str(career.get("BBI", "—") or "—")),
+        ("BBI", safe_record_text(career.get("BBI"), "")),
         ("Catches", format_int(career.get("Catches"))),
         ("Run Outs", format_int(career.get("Run Outs"))),
         ("Stumpings", format_int(career.get("Stumpings"))),
@@ -10818,10 +10838,11 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
     bowling = profile_view["bowling"]
     cards = []
     leader_counts = player_leader_counts(profile_view)
-    if str(career.get("HS", "—")) != "—":
+    hs_value = format_high_score_text(career.get("HS"))
+    if hs_value:
         row = best_high_score_row(batting)
-        cards.append({"title": "Highest Score", "player": str(career["Player"]), "value": str(career["HS"]), "meta": profile_record_meta_html(row), "meta_html": True, "match_id": scorecard_match_id_for_profile_record(row, "batting")})
-    if str(career.get("BBI", "—")) != "—":
+        cards.append({"title": "Highest Score", "player": str(career["Player"]), "value": hs_value, "meta": profile_record_meta_html(row), "meta_html": True, "match_id": scorecard_match_id_for_profile_record(row, "batting")})
+    if safe_record_text(career.get("BBI"), ""):
         row = best_bowling_row(bowling)
         cards.append({"title": "Best Bowling Figures", "player": str(career["Player"]), "value": str(career["BBI"]), "meta": profile_record_meta_html(row), "meta_html": True, "match_id": scorecard_match_id_for_profile_record(row, "bowling")})
     for title, metric, suffix in [
@@ -12322,12 +12343,15 @@ def profile_performance_table_html(
         for index, column in enumerate(columns)
     )
     body_rows = []
+    matches_proxy_used = False
     for _, row in table.iterrows():
         cells = []
         for column in columns:
             value = row.get(column)
-            display = profile_performance_display_value(column, value, label_column)
-            sort_value, missing = profile_performance_sort_value(column, value, label_column)
+            display = profile_performance_display_value(column, value, label_column, row)
+            sort_value, missing = profile_performance_sort_value(column, value, label_column, row)
+            if column == "Matches" and display.endswith("*"):
+                matches_proxy_used = True
             cells.append(
                 f'<td class="{profile_performance_column_class(column, label_column)}" '
                 f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
@@ -12511,6 +12535,7 @@ def profile_performance_table_html(
         <tbody>{empty_state if table.empty else ''.join(body_rows)}</tbody>
       </table>
     </div>
+    {'<div class="page-note hof-matches-footnote">* Innings used where historical match counts are unavailable.</div>' if matches_proxy_used else ''}
     <script>
       (() => {{
         const table = document.getElementById({safe_table_id!r});
@@ -12591,27 +12616,32 @@ def profile_performance_default_sort_dir(column: object, label_column: str) -> s
     return "asc" if str(column) == str(label_column) else "desc"
 
 
-def profile_performance_display_value(column: str, value: object, label_column: str) -> str:
+def profile_performance_display_value(column: str, value: object, label_column: str, row: pd.Series | None = None) -> str:
     if str(column) == str(label_column):
         return profile_performance_label_cell(value)
     if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
-        return "N/A"
+        return ""
+    if column == "Matches" and row is not None:
+        matches_text, _, _ = historical_matches_display_text(row)
+        return matches_text
+    if column == "HS":
+        return format_high_score_text(value)
     if column == "Strike Rate":
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+        return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Avg", "SR", "Eco"}:
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{float(numeric):.2f}"
+        return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
     if column in {"Inn", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "M", "W", "3WI", "5WI", "Catches", "Stumpings", "RO", "Dismissals"}:
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{int(numeric):,}"
+        return "" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
-    return html.escape(text if text and text.casefold() not in {"none", "nan"} else "N/A")
+    return html.escape(text if text and text.casefold() not in {"none", "nan"} else "")
 
 
 def profile_performance_label_cell(value: object) -> str:
     if pd.isna(value) or str(value).strip() == "":
-        return '<span class="profile-label-text">N/A</span>'
+        return ""
     text = str(value).strip()
     label = link_display_label(text)
     if text.startswith("?"):
@@ -12624,7 +12654,7 @@ def profile_performance_label_cell(value: object) -> str:
     return f'<span class="profile-label-text">{html.escape(label or text)}</span>'
 
 
-def profile_performance_sort_value(column: str, value: object, label_column: str) -> tuple[str, bool]:
+def profile_performance_sort_value(column: str, value: object, label_column: str, row: pd.Series | None = None) -> tuple[str, bool]:
     if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
         return "", True
     if str(column) == str(label_column):
@@ -12634,6 +12664,9 @@ def profile_performance_sort_value(column: str, value: object, label_column: str
         if str(label_column) == "Grade":
             return str(grade_sort_key(label)), False
         return str(label).casefold(), False
+    if column == "Matches" and row is not None:
+        _, matches_value, missing = historical_matches_display_text(row)
+        return ("" if matches_value is None else str(matches_value)), missing
     if column == "HS":
         runs, not_out = parse_batting_score(value)
         if runs is None:
@@ -12917,9 +12950,11 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Overview 🧩")
     keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
+    matches_text, _, _ = historical_matches_display_text(career)
+    batting_matches_value = matches_text or format_int(career.get("Matches"))
     cards = [
-        ("Batting", [("Matches/Innings", f"{format_int(career.get('Matches'))} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", str(career.get("HS", "—")))]),
-        ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", str(career.get("Overs", "—"))), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", str(career.get("BBI", "—")))]),
+        ("Batting", [("Matches/Innings", f"{batting_matches_value} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", format_high_score_text(career.get("HS")) or "")]),
+        ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", safe_record_text(career.get("Overs"), "")), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", safe_record_text(career.get("BBI"), ""))]),
         ("Fielding", [("Catches", format_int(career.get("Catches"))), ("Stumpings", format_int(career.get("Stumpings"))), ("Run Outs", format_int(career.get("Run Outs"))), ("Dismissals", format_int(career.get("Dismissals")))]),
     ]
     columns = st.columns(3)
@@ -13117,7 +13152,7 @@ def player_profile_is_keeper(career: pd.Series) -> bool:
 
 def format_bat_sr_display(value: object) -> str:
     number = pd.to_numeric(value, errors="coerce")
-    return "N/A" if pd.isna(number) else f"{float(number):.1f}%"
+    return "" if pd.isna(number) else f"{float(number):.1f}%"
 
 
 def render_player_milestones(career: pd.Series) -> None:
@@ -13490,17 +13525,67 @@ def format_decimal(value: object) -> str:
     return "—" if pd.isna(number) else f"{float(number):.2f}"
 
 
+def format_high_score_text(value: object) -> str:
+    if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
+        return ""
+    runs, not_out = parse_batting_score(value)
+    if runs is not None:
+        return f"{runs}{'*' if not_out else ''}"
+    numeric = pd.to_numeric(value, errors="coerce")
+    if pd.isna(numeric):
+        text = str(value).strip()
+        return "" if text.casefold() in {"none", "nan"} else text
+    return f"{int(round(float(numeric)))}"
+
+
+def historical_matches_display_text(
+    row: pd.Series,
+    *,
+    matches_key: str = "Matches",
+    innings_key: str = "Innings",
+    season_key: str = "Season",
+) -> tuple[str, int | None, bool]:
+    matches = pd.to_numeric(pd.Series([row.get(matches_key)]), errors="coerce").iloc[0]
+    innings = pd.to_numeric(pd.Series([row.get(innings_key)]), errors="coerce").iloc[0]
+    source = safe_record_text(row.get("Matches Source") or row.get("matches_source") or row.get("Matches Proxy"))
+    proxy_flag = as_bool(row.get("Matches Proxy"))
+    season_text = safe_record_text(row.get(season_key) or row.get(season_key.casefold()) or row.get("season"))
+    historical_cutoff = season_sort_key("Summer 1971/72")
+    is_historical_season = bool(season_text) and season_sort_key(season_text) <= historical_cutoff
+    proxy = proxy_flag or (source.casefold() == "innings_proxy" if source else False)
+    if not proxy and is_historical_season and (pd.isna(matches) or float(matches) <= 0) and pd.notna(innings) and float(innings) > 0:
+        proxy = True
+    if proxy:
+        display_value = int(round(float(innings)))
+        return f"{display_value:,}*", display_value, True
+    if pd.isna(matches):
+        return "", None, False
+    display_value = int(round(float(matches)))
+    return f"{display_value:,}", display_value, False
+
+
+def historical_matches_numeric_value(row: pd.Series, *, matches_key: str = "Matches", innings_key: str = "Innings", season_key: str = "Season") -> int | None:
+    display_text, display_value, _ = historical_matches_display_text(
+        row,
+        matches_key=matches_key,
+        innings_key=innings_key,
+        season_key=season_key,
+    )
+    del display_text
+    return display_value
+
+
 def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
     decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Strike Rate", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
     integer_columns = {"M", "Matches", "Inn", "Innings", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "W", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}
     for column in output.columns:
         if column in decimal_columns:
-            output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "—" if pd.isna(value) else f"{float(value):.2f}")
+            output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "" if pd.isna(value) else f"{float(value):.2f}")
         elif column in integer_columns:
-            output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "—" if pd.isna(value) else f"{int(value):,}")
+            output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "" if pd.isna(value) else f"{int(value):,}")
         else:
-            output[column] = output[column].map(lambda value: "—" if pd.isna(value) or str(value).strip() == "" else value)
+            output[column] = output[column].map(lambda value: "" if pd.isna(value) or str(value).strip() in {"", "—", "N/A"} else value)
     return output
 
 
@@ -13542,7 +13627,7 @@ def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
         elif column in integer_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").round().astype("Int64")
         elif column in text_columns:
-            output[column] = output[column].map(lambda value: "—" if pd.isna(value) or str(value).strip() == "" else str(value))
+            output[column] = output[column].map(lambda value: "" if pd.isna(value) or str(value).strip() in {"", "—", "N/A"} else str(value))
     return output
 
 
@@ -15970,12 +16055,15 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         for index, column in enumerate(columns)
     )
     rows = []
+    matches_proxy_used = False
     for _, row in table.iterrows():
         cells = []
         for column in columns:
             value = row.get(column)
-            display = season_detail_display_value(column, value)
-            sort_value, missing = season_detail_sort_value(column, value)
+            display = season_detail_display_value(column, value, row)
+            sort_value, missing = season_detail_sort_value(column, value, row)
+            if column == "Matches" and display.endswith("*"):
+                matches_proxy_used = True
             cells.append(
                 f'<td class="{season_detail_column_class(column)}" '
                 f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
@@ -16187,6 +16275,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         <tbody>{empty_state if table.empty else ''.join(rows)}</tbody>
       </table>
     </div>
+    {'<div class="page-note hof-matches-footnote">* Innings used where historical match counts are unavailable.</div>' if matches_proxy_used else ''}
     <script>
       (() => {{
         const table = document.getElementById({safe_table_id!r});
@@ -16265,20 +16354,25 @@ def season_detail_default_sort_dir(column: object) -> str:
     return "asc" if str(column) in {"Player", "Team"} else "desc"
 
 
-def season_detail_display_value(column: str, value: object) -> str:
+def season_detail_display_value(column: str, value: object, row: pd.Series | None = None) -> str:
     if column == "Player":
         return season_detail_player_link_cell(value)
     if pd.isna(value) or str(value).strip() == "":
-        return "N/A"
+        return ""
+    if column == "Matches" and row is not None:
+        matches_text, _, _ = historical_matches_display_text(row)
+        return matches_text
+    if column == "HS":
+        return format_high_score_text(value)
     if column == "Bat SR":
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+        return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Bat Avg", "Bowl Avg", "Bowl SR", "Eco"}:
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{float(numeric):.2f}"
+        return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
     if column == "Overs":
         balls = cricket_overs_to_balls(value)
-        return "N/A" if balls is None else balls_to_overs_display(balls) or "N/A"
+        return "" if balls is None else balls_to_overs_display(balls) or ""
     if column in {
         "M",
         "Mat",
@@ -16306,14 +16400,14 @@ def season_detail_display_value(column: str, value: object) -> str:
         "Dis",
     }:
         numeric = pd.to_numeric(value, errors="coerce")
-        return "N/A" if pd.isna(numeric) else f"{int(numeric):,}"
+        return "" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
-    return html.escape(text if text and text not in {"—", "None", "nan"} else "N/A")
+    return html.escape(text if text and text not in {"—", "None", "nan"} else "")
 
 
 def season_detail_player_link_cell(value: object) -> str:
     if pd.isna(value) or str(value).strip() == "":
-        return "N/A"
+        return ""
     text = str(value).strip()
     label = link_display_label(text)
     if is_app_internal_url(text):
@@ -16325,11 +16419,14 @@ def season_detail_player_link_cell(value: object) -> str:
     return html.escape(label or text)
 
 
-def season_detail_sort_value(column: str, value: object) -> tuple[str, bool]:
+def season_detail_sort_value(column: str, value: object, row: pd.Series | None = None) -> tuple[str, bool]:
     if pd.isna(value) or str(value).strip() in {"", "—", "N/A", "None", "nan"}:
         return "", True
     if column in {"Player", "Team"}:
         return link_display_label(value).casefold(), False
+    if column == "Matches" and row is not None:
+        _, matches_value, missing = historical_matches_display_text(row)
+        return ("" if matches_value is None else str(matches_value)), missing
     if column == "HS":
         runs, not_out = parse_batting_score(value)
         if runs is None:

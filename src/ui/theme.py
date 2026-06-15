@@ -2563,7 +2563,7 @@ def inject_theme() -> None:
         }
 
         .premiership-wins-scroll {
-            max-height: calc(6 * 82px);
+            max-height: 660px;
         }
 
         .premiership-win-row {
@@ -6838,7 +6838,15 @@ def inject_theme() -> None:
             }
 
             .premiership-card-scroll {
-                max-height: 1119px;
+                max-height: 820px;
+            }
+
+            .premiership-wins-scroll {
+                max-height: 820px;
+            }
+
+            .premiership-player-scroll {
+                max-height: calc(5 * 58px);
             }
 
             .premiership-title {

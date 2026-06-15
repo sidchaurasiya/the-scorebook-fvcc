@@ -232,6 +232,8 @@ def aggregate_player(player_name: str, normalized_name: str, batting_rows: pd.Da
 
 def build_output() -> pd.DataFrame:
     decisions = read_csv(OVERRIDES)
+    if not decisions.empty and "override_applies" in decisions.columns:
+        decisions = decisions[decisions["override_applies"].astype(str).str.strip().str.casefold().eq("yes")].copy()
     batting = prepare_frame(read_csv(EXCEL_BATTING))
     bowling = prepare_frame(read_csv(EXCEL_BOWLING))
     season_total_matches, season_max_innings = build_season_context(batting, bowling)
