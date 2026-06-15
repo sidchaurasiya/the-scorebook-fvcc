@@ -1,0 +1,3 @@
+player_name,normalized_player_name,source_system,season,team_or_grade,match_count,wickets,balls,overs,row_id_or_source_ref,included_before,included_after,exclusion_or_fix_reason,validation_status,notes
+Rohan Clarke,rohan clarke,override_decision,,,,983,,,decision_row,no,no,override_applies_no; supplement builder excludes non-approved rows,PASS,Decision table confirms Rohan Clarke is not an approved annual-report override and should no longer be supplemented.
+Rohan Clarke,rohan clarke,source_rule_raw,,,51.0,17.0,,,all_time_raw,yes,yes,raw source-rule row retained,PASS,Raw source-rule value is the one the app should keep after suppressing the supplement leak.

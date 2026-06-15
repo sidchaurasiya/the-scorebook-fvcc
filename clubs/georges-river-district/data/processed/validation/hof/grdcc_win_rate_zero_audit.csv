@@ -1,0 +1,2 @@
+player_name,normalized_player_name,matches,wins,losses,draws,win_rate,source_systems,seasons,has_historical_excel_data,has_playcricket_data,expected_issue_type,proposed_fix,fix_applied,validation_status,notes
+Damien Johnson,damien johnson,0,,,,0.0,match_centre_results,,unknown,yes,below_threshold,none,no-op,PASS,Damien Johnson is present but does not meet the 10-match audit threshold in current deploy-safe data.

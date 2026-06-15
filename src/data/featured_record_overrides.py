@@ -263,6 +263,12 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
             output.loc[index, column] = value
         if "Overs" in output.columns and numeric_updates.get("Balls Bowled") is not None:
             output.loc[index, "Overs"] = _balls_to_overs_display(numeric_updates["Balls Bowled"])
+        if str(supplement.get("override_metric", "")).strip() == "career_wickets" and str(supplement.get("override_applies", "")).strip().casefold() == "yes":
+            for column in ["Bowl Avg", "Bowl SR"]:
+                if column in output.columns:
+                    output.loc[index, column] = pd.NA
+        output.loc[index, "Matches Source"] = str(supplement.get("matches_source", "") or "")
+        output.loc[index, "Matches Proxy"] = "Yes" if str(supplement.get("matches_source", "")).strip().casefold() == "innings_proxy" else ""
 
         innings = _supplement_value(supplement, "excel_innings")
         not_outs = _supplement_value(supplement, "excel_not_outs")
