@@ -962,7 +962,8 @@ def render_data_source_panel(
             "name": "All teams",
             "grade": {"id": "__all_grades__", "name": "Whole club"},
         }
-        teams = sort_teams_by_grade_display(teams)
+        teams = filter_empty_grdcc_season_teams(selected_season, teams, local_version)
+        teams = combine_grdcc_duplicate_competition_teams(sort_teams_by_grade_display(teams))
         team_options = [all_teams_option, *teams]
 
         with team_col:
@@ -1155,10 +1156,138 @@ def sort_teams_by_grade_display(teams: list[dict]) -> list[dict]:
     return sorted(
         teams,
         key=lambda team: (
-            grade_sort_key(team_card_title(team)),
+            season_overview_grade_order_key(team_card_title(team)),
             str(team_card_title(team)).casefold(),
         ),
     )
+
+
+def season_overview_grade_order_key(label: object) -> tuple[object, ...]:
+    text = normalize_spaces(clean_grade_name(label)).casefold()
+    preferred = [
+        ("first-grade-limited-overs", ("first grade limited overs", "1st grade limited overs")),
+        ("frank-gray-shield", ("frank gray shield", "frank gray shield u24s")),
+        ("first-grade", ("first grade", "1st grade", "the rb clark cup")),
+        ("second-grade", ("second grade", "2nd grade", "the sj mayne trophy")),
+        ("third-grade", ("third grade", "3rd grade", "the jb hollander cup")),
+        ("fourth-grade", ("fourth grade", "4th grade", "the harry culbert trophy")),
+        ("fifth-grade", ("fifth grade", "5th grade", "the tim creer cup")),
+    ]
+    order = {
+        "first-grade": 0,
+        "second-grade": 1,
+        "third-grade": 2,
+        "fourth-grade": 3,
+        "fifth-grade": 4,
+        "first-grade-limited-overs": 5,
+        "frank-gray-shield": 6,
+    }
+    for key, tokens in preferred:
+        if any(token in text for token in tokens):
+            return (order[key], grade_sort_key(label), text)
+    return (99, grade_sort_key(label), text)
+
+
+def active_club_is_grdcc() -> bool:
+    return get_active_club_id() == "georges-river-district"
+
+
+def team_scope_ids(team: dict) -> list[str]:
+    values = team.get("source_team_ids") or team.get("team_ids") or [team.get("id")]
+    if isinstance(values, str):
+        values = re.split(r"[,;|]", values)
+    return [str(value).strip() for value in values if str(value or "").strip()]
+
+
+def season_overview_combined_grade_label(team: dict) -> str:
+    grade = clean_grade_name(team.get("grade", {}).get("name", ""))
+    return normalize_spaces(grade or team_card_title(team))
+
+
+def season_overview_combined_grade_slug(label: object) -> str:
+    return f"grade_{make_player_slug(clean_grade_name(label) or label or 'grade')}"
+
+
+def combine_grdcc_duplicate_competition_teams(teams: list[dict]) -> list[dict]:
+    if not active_club_is_grdcc():
+        return teams
+    grouped: dict[str, list[dict]] = {}
+    for team in teams:
+        label = season_overview_combined_grade_label(team)
+        key = season_overview_combined_grade_slug(label)
+        grouped.setdefault(key, []).append(team)
+
+    combined: list[dict] = []
+    for key, group in grouped.items():
+        if len(group) == 1:
+            team = group[0].copy()
+            team["combined_grade_slug"] = key
+            team["combined_grade_label"] = season_overview_combined_grade_label(team)
+            combined.append(team)
+            continue
+        label = season_overview_combined_grade_label(group[0])
+        source_ids = [team_id for team in group for team_id in team_scope_ids(team)]
+        combined.append(
+            {
+                "id": key,
+                "name": label,
+                "display_name": label,
+                "source_team_ids": source_ids,
+                "original_teams": group,
+                "combined_grade_slug": key,
+                "combined_grade_label": label,
+                "is_combined_competition": True,
+                "original_team_labels": [team_card_title(team) for team in group],
+                "grade": {
+                    "id": group[0].get("grade", {}).get("id", key),
+                    "name": label,
+                    "owningOrganisation": group[0].get("grade", {}).get("owningOrganisation", {}),
+                },
+            }
+        )
+    return sort_teams_by_grade_display(combined)
+
+
+def expand_combined_teams(teams: list[dict]) -> list[dict]:
+    expanded: list[dict] = []
+    for team in teams:
+        originals = team.get("original_teams")
+        if originals:
+            expanded.extend(originals)
+        else:
+            expanded.append(team)
+    return expanded
+
+
+def filter_empty_grdcc_season_teams(season: dict, teams: list[dict], local_version: float) -> list[dict]:
+    if not active_club_is_grdcc() or not teams:
+        return teams
+    season_id = str(season.get("id", "") or "")
+    season_name = str(season.get("name", "") or "")
+    if not season_id and not season_name:
+        return teams
+
+    meaningful_team_ids: set[str] = set()
+    for category in ["batting", "bowling", "fielding"]:
+        frame = load_local_category_frame(category, season_id, None, local_version, player_aliases_mtime())
+        if not frame.empty and "team_id" in frame:
+            meaningful_team_ids.update(frame["team_id"].dropna().astype(str).str.strip())
+
+    round_rows = load_season_overview_detail_sources(season_overview_detail_source_signature()).get("season_by_round", pd.DataFrame())
+    if not round_rows.empty:
+        scoped = round_rows.copy()
+        if season_id and "season_id" in scoped:
+            scoped = scoped[scoped["season_id"].astype(str) == season_id]
+        elif season_name and "season" in scoped:
+            scoped = scoped[scoped["season"].astype(str).str.casefold() == season_name.casefold()]
+        if "fvcc_team_id" in scoped:
+            meaningful_team_ids.update(scoped["fvcc_team_id"].dropna().astype(str).str.strip())
+        if "source_team_ids" in scoped:
+            for value in scoped["source_team_ids"].dropna().astype(str):
+                meaningful_team_ids.update(token.strip() for token in re.split(r"[,;|]", value) if token.strip())
+
+    filtered = [team for team in teams if set(team_scope_ids(team)) & meaningful_team_ids]
+    return filtered or teams
 
 
 @st.cache_data
@@ -1185,6 +1314,22 @@ def load_local_single_team_frames(
     local_version: float,
 ) -> dict[str, pd.DataFrame]:
     identity_version = player_aliases_mtime()
+    source_team_ids = set(team_scope_ids(team))
+    if len(source_team_ids) > 1 or team.get("is_combined_competition"):
+        batting = frame_for_team_scope("batting", season_id, source_team_ids, local_version, identity_version)
+        bowling = frame_for_team_scope("bowling", season_id, source_team_ids, local_version, identity_version)
+        fielding = frame_for_team_scope("fielding", season_id, source_team_ids, local_version, identity_version)
+        batting_combined = combine_player_rows(batting, "batting")
+        bowling_combined = combine_player_rows(bowling, "bowling")
+        fielding_combined = combine_player_rows(fielding, "fielding")
+        return {
+            "batting": add_batting_display_columns(batting_combined),
+            "bowling": bowling_combined,
+            "fielding": fielding_combined,
+            "team_batting": add_batting_display_columns(batting),
+            "team_bowling": bowling,
+            "team_fielding": fielding,
+        }
     batting = load_local_category_frame("batting", season_id, team["id"], local_version, identity_version)
     bowling = load_local_category_frame("bowling", season_id, team["id"], local_version, identity_version)
     fielding = load_local_category_frame("fielding", season_id, team["id"], local_version, identity_version)
@@ -1203,7 +1348,7 @@ def load_local_all_team_frames(
     teams: list[dict],
     local_version: float,
 ) -> dict[str, pd.DataFrame]:
-    team_ids = {str(team["id"]) for team in teams}
+    team_ids = {team_id for team in teams for team_id in team_scope_ids(team)}
     identity_version = player_aliases_mtime()
     frames = {}
     for category in ["batting", "bowling", "fielding"]:
@@ -1264,7 +1409,7 @@ def add_season_overview_detail_metrics(
 ) -> dict[str, pd.DataFrame]:
     output = {key: value.copy() if isinstance(value, pd.DataFrame) else value for key, value in frames.items()}
     sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
-    team_ids = {str(team.get("id", "")) for team in teams if str(team.get("id", "")).strip()}
+    team_ids = {team_id for team in teams for team_id in team_scope_ids(team)}
     season_id = str(selected_season.get("id", "") or "")
     season_name = str(selected_season.get("name", "") or "")
 
@@ -1428,6 +1573,20 @@ def build_context_description(
 
 
 def load_single_team_frames(team: dict) -> dict[str, pd.DataFrame]:
+    originals = team.get("original_teams") or []
+    if originals:
+        frames = [load_single_team_frames(original) for original in originals]
+        team_batting = combine_frames([frame["team_batting"] for frame in frames])
+        team_bowling = combine_frames([frame["team_bowling"] for frame in frames])
+        team_fielding = combine_frames([frame["team_fielding"] for frame in frames])
+        return {
+            "batting": add_batting_display_columns(combine_player_rows(team_batting, "batting")),
+            "bowling": combine_player_rows(team_bowling, "bowling"),
+            "fielding": combine_player_rows(team_fielding, "fielding"),
+            "team_batting": add_batting_display_columns(team_batting),
+            "team_bowling": team_bowling,
+            "team_fielding": team_fielding,
+        }
     grade = team.get("grade", {})
     batting = load_team_category_frame(team, grade["id"], "batting")
     bowling = load_team_category_frame(team, grade["id"], "bowling")
@@ -1443,6 +1602,7 @@ def load_single_team_frames(team: dict) -> dict[str, pd.DataFrame]:
 
 
 def load_all_team_frames(teams: list[dict]) -> dict[str, pd.DataFrame]:
+    request_teams = expand_combined_teams(teams)
     frames_by_category = {
         "batting": [],
         "bowling": [],
@@ -1450,10 +1610,10 @@ def load_all_team_frames(teams: list[dict]) -> dict[str, pd.DataFrame]:
     }
 
     progress = st.progress(0, text="Loading all teams...")
-    total_requests = len(teams) * len(frames_by_category)
+    total_requests = len(request_teams) * len(frames_by_category)
     completed = 0
 
-    for team in teams:
+    for team in request_teams:
         grade = team.get("grade", {})
         grade_id = grade.get("id")
         if not grade_id:
@@ -1598,7 +1758,7 @@ def selected_season_round_grade_filter(
         "Season by Round grade",
         options,
         key=key,
-        control_key="season_round_grade_folder_tabs",
+        control_key="season_round_grade_filter_control",
     )
     selected_slug = str(selected or st.session_state.get(key) or valid[0])
     if selected_slug not in valid:
@@ -1756,7 +1916,7 @@ def season_round_grade_options(
         (slug, display_label)
         for slug, (display_label, sort_label) in sorted(
             seen.items(),
-            key=lambda item: grade_sort_key(item[1][1]),
+            key=lambda item: season_overview_grade_order_key(item[1][1]),
         )
     ]
 
@@ -1792,14 +1952,18 @@ def season_round_dashboard_team_options(dashboard_data: dict[str, object]) -> li
 def season_round_team_option_lookup(dashboard_data: dict[str, object]) -> dict[str, tuple[str, str]]:
     lookup: dict[str, tuple[str, str]] = {}
     for team in dashboard_data.get("teams", []) or []:
-        team_id = str(team.get("id", "") or "").strip()
-        if not team_id or team_id == "__all_teams__":
+        team_ids = team_scope_ids(team)
+        if not team_ids or str(team.get("id", "")) == "__all_teams__":
             continue
-        lookup[team_id] = (season_round_team_slug(team), team_card_title(team))
+        option = (season_round_team_slug(team), team_card_title(team))
+        for team_id in team_ids:
+            lookup[team_id] = option
     return lookup
 
 
 def season_round_team_slug(team: dict[str, object]) -> str:
+    if team.get("combined_grade_slug"):
+        return str(team.get("combined_grade_slug"))
     team_id = str(team.get("id", "") or "").strip()
     if team_id:
         return f"team_{make_player_slug(team_id)}"
@@ -15137,7 +15301,7 @@ def render_team_leader_card(
     team_batting: pd.DataFrame,
     team_bowling: pd.DataFrame,
 ) -> None:
-    team_id = str(team.get("id"))
+    team_id = "|".join(team_scope_ids(team)) or str(team.get("id"))
     batting_scope = filter_team_frame(team_batting, team_id)
     bowling_scope = filter_team_frame(team_bowling, team_id)
     top_batter = top_team_row(batting_scope, "battingAggregate")
@@ -15176,13 +15340,18 @@ def render_team_leader_card(
 def team_card_title(team: dict) -> str:
     if team.get("id") == "__all_teams__":
         return "All teams - Whole club"
+    if team.get("display_name"):
+        return str(team.get("display_name"))
+    if team.get("combined_grade_label"):
+        return str(team.get("combined_grade_label"))
     return build_team_grade_display(team.get("name", ""), team.get("grade", {}).get("name", ""))
 
 
 def filter_team_frame(frame: pd.DataFrame, team_id: str) -> pd.DataFrame:
     if frame.empty or "team_id" not in frame:
         return frame.head(0)
-    return frame[frame["team_id"].astype(str) == team_id]
+    team_ids = set(re.split(r"[,;|]", str(team_id or "")))
+    return frame[frame["team_id"].astype(str).isin(team_ids)]
 
 
 def estimate_team_matches(frames: list[pd.DataFrame]) -> int:
@@ -16388,6 +16557,8 @@ def season_detail_display_value(column: str, value: object, row: pd.Series | Non
         "Mdns",
         "Wickets",
         "W",
+        "No Balls",
+        "Wides",
         "3WI",
         "5WI",
         "Catches",
@@ -16540,6 +16711,8 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "bowlingStrikeRate",
             "bowlingEconomyRate",
             "bowlingBestInnings",
+            "bowlingNoBalls",
+            "bowlingWides",
             "seasonDetail3WIs",
             "seasonDetail5WIs",
         ],
@@ -16554,6 +16727,8 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Bowl SR",
             "Eco",
             "BBI",
+            "No Balls",
+            "Wides",
             "3WI",
             "5WI",
         ],
@@ -16708,7 +16883,7 @@ def pretty_column_name_map() -> dict[str, str]:
         "seasonDetail5WIs": "5WI",
         "bowling10WMs": "10WM",
         "bowlingWides": "Wides",
-        "bowlingNoBalls": "NB",
+        "bowlingNoBalls": "No Balls",
         "catches": "Catches",
         "fieldingCatches": "Catches",
         "fieldingCatchesNonWK": "Ct Non-WK",
