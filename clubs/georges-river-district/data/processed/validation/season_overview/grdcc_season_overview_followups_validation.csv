@@ -1,0 +1,9 @@
+check,validation_status,details
+season_by_round_horizontal_panels,pass,Season by Round renders horizontal grade panels.
+internal_grade_filter_removed,pass,Render path no longer invokes internal grade filter.
+top_slicers_preserved,pass,Top slicers remain.
+first_grade_order,pass,Preferred grade ordering helper present.
+duplicates_combined,pass,Duplicate same-competition teams combined.
+empty_grades_excluded,pass,Empty grades filtered.
+no_balls_wides_after_5wi,pass,"Bowling order is BBI, 3WI, 5WI, No Balls, Wides."
+no_balls_wides_compact,pass,Compact widths configured.

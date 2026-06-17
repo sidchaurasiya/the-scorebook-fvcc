@@ -2229,6 +2229,21 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .hall-of-fame-page .progress-name a.player-profile-link,
+        .hall-of-fame-page .progress-name a.player-profile-link:visited,
+        .hall-of-fame-page .performance-player strong a.player-profile-link,
+        .hall-of-fame-page .performance-player strong a.player-profile-link:visited,
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link,
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:visited {
+            color: var(--club-link) !important;
+        }
+
+        .hall-of-fame-page .progress-name a.player-profile-link:hover,
+        .hall-of-fame-page .performance-player strong a.player-profile-link:hover,
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:hover {
+            color: var(--club-link) !important;
+        }
+
         .progress-value {
             color: var(--ink);
             font-size: 0.94rem;
@@ -3300,6 +3315,10 @@ def inject_theme() -> None:
             line-height: 1.15;
         }
 
+        .hall-of-fame-page .performance-player strong {
+            color: var(--club-link, var(--ink));
+        }
+
         .performance-player span {
             color: #7a809d;
             display: block;
@@ -4363,8 +4382,25 @@ def inject_theme() -> None:
         .season-round-grade-card {
             border: 1px solid #e8ebf7;
             border-radius: 16px;
+            flex: 0 0 min(980px, 92vw);
             margin-top: 0;
             overflow: hidden;
+        }
+
+        .season-round-panel-strip {
+            display: flex;
+            gap: 14px;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 2px 2px 12px;
+            scroll-snap-type: x proximity;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .season-round-panel-strip .season-round-grade-card {
+            scroll-snap-align: start;
         }
 
         .season-round-grade-head {

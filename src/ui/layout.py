@@ -1719,21 +1719,12 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
     render_section_heading("Season by Round 🗓️")
     sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
     rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
-    options = season_round_grade_options(dashboard_data, rows)
-    selected_slug = options[0][0] if options else ""
-    if len(options) > 1:
-        selected_slug = selected_season_round_grade_filter(options, dashboard_data)
 
     with st.container(key="season_by_round_card"):
-        if not options:
+        if not rows:
             render_season_round_empty_state()
             return
-
-        visible_rows = [row for row in rows if row.get("grade_slug") == selected_slug]
-        if not visible_rows:
-            render_season_round_empty_state("Round-by-round scorecards are not available for this grade yet.")
-            return
-        st.markdown(season_round_cards_html(visible_rows), unsafe_allow_html=True)
+        st.markdown(season_round_cards_html(rows), unsafe_allow_html=True)
 
 
 def render_season_round_empty_state(message: str = "Round-by-round scorecards are not available for this season yet.") -> None:
@@ -1784,11 +1775,7 @@ def build_season_round_rows(
     if rows_frame.empty:
         return []
 
-    team_ids = {
-        str(team.get("id", "") or "").strip()
-        for team in dashboard_data.get("teams", []) or []
-        if str(team.get("id", "") or "").strip()
-    }
+    team_ids = {team_id for team in dashboard_data.get("teams", []) or [] for team_id in team_scope_ids(team)}
     if team_ids:
         scope_mask = pd.Series(False, index=rows_frame.index)
         if "fvcc_team_id" in rows_frame:
@@ -1989,7 +1976,7 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
     for row in rows:
         grouped.setdefault(str(row.get("grade") or "Team"), []).append(row)
     cards = []
-    for grade_label, grade_rows in sorted(grouped.items(), key=lambda item: grade_sort_key(item[0])):
+    for grade_label, grade_rows in sorted(grouped.items(), key=lambda item: season_overview_grade_order_key(item[0])):
         record = season_round_record_label(grade_rows)
         trophy = ' <span class="season-round-grade-trophy">🏆</span>' if any(row.get("is_premiership") for row in grade_rows) else ""
         record_html = f'<span class="season-round-record">{html.escape(record)}</span>' if record else ""
@@ -2011,7 +1998,7 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
             f'<div class="season-round-scroll"><div class="season-round-grid">{head_cols}{row_html}</div></div>'
             '</article>'
         )
-    return "".join(cards)
+    return f'<div class="season-round-panel-strip">{"".join(cards)}</div>'
 
 
 def season_round_row_html(row: dict[str, object], show_grade_column: bool = False) -> str:
@@ -6668,19 +6655,43 @@ def render_hall_of_fame_kpis(data: dict[str, object]) -> None:
     st.markdown("<div class='dashboard-spacer'></div>", unsafe_allow_html=True)
 
 
+GRDCC_ACTIVE_EXCLUDED_GRADE_PATTERN = re.compile(
+    r"\b(?:classics?|vintage|o60s?|o65s?|over\s*60s?|over\s*65s?|owls?|regionals?|veterans?)\b",
+    re.IGNORECASE,
+)
+
+
+def filter_grdcc_active_badge_activity(frame: pd.DataFrame) -> pd.DataFrame:
+    if frame.empty:
+        return frame
+    text_columns = [column for column in ["club_name", "team_name", "grade_name", "competition_name"] if column in frame]
+    if not text_columns:
+        return frame
+    combined = frame[text_columns].fillna("").astype(str).agg(" ".join, axis=1)
+    is_grdcc = combined.str.contains(r"georges river|grdcc|\bgr\b", case=False, regex=True, na=False).any()
+    if not is_grdcc:
+        return frame
+    excluded = combined.str.contains(GRDCC_ACTIVE_EXCLUDED_GRADE_PATTERN, na=False)
+    return frame.loc[~excluded].copy()
+
+
 def active_hof_players(data: dict[str, object]) -> set[str]:
-    frames = [data.get(key) for key in ["batting_raw", "bowling_raw", "fielding_raw"]]
+    frames = [
+        filter_grdcc_active_badge_activity(frame)
+        for frame in [data.get(key) for key in ["batting_raw", "bowling_raw", "fielding_raw"]]
+        if isinstance(frame, pd.DataFrame) and not frame.empty
+    ]
     seasons = {
         safe_season_label(season)
         for frame in frames
-        if isinstance(frame, pd.DataFrame) and not frame.empty and "season" in frame
+        if "season" in frame
         for season in frame["season"].dropna()
         if safe_season_label(season)
     }
-    latest = set(sorted(seasons, key=profile_season_sort_key, reverse=True)[:3])
+    latest = set(sorted(seasons, key=profile_season_sort_key, reverse=True)[:2])
     active = set()
     for frame in frames:
-        if not isinstance(frame, pd.DataFrame) or frame.empty or "season" not in frame:
+        if frame.empty or "season" not in frame:
             continue
         player_column = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
         if player_column not in frame:
@@ -8850,7 +8861,7 @@ def build_approaching_milestone_watchlist(all_time: pd.DataFrame) -> pd.DataFram
     return watchlist.sort_values(["Remaining", "Current Total"], ascending=[True, False])
 
 
-def recent_active_canonical_players(historical_data: dict[str, object], season_count: int = 3) -> set[str]:
+def recent_active_canonical_players(historical_data: dict[str, object], season_count: int = 2) -> set[str]:
     frames = [
         historical_data.get("batting_raw"),
         historical_data.get("bowling_raw"),
@@ -8860,7 +8871,7 @@ def recent_active_canonical_players(historical_data: dict[str, object], season_c
     if not frames:
         return set()
 
-    activity = pd.concat(frames, ignore_index=True, sort=False)
+    activity = filter_grdcc_active_badge_activity(pd.concat(frames, ignore_index=True, sort=False))
     if activity.empty or "canonical_player_name" not in activity:
         return set()
 
@@ -13719,7 +13730,7 @@ def historical_matches_display_text(
     proxy = proxy_flag or (source.casefold() == "innings_proxy" if source else False)
     if not proxy and is_historical_season and (pd.isna(matches) or float(matches) <= 0) and pd.notna(innings) and float(innings) > 0:
         proxy = True
-    if proxy:
+    if proxy and pd.notna(innings) and float(innings) > 0:
         display_value = int(round(float(innings)))
         return f"{display_value:,}*", display_value, True
     if pd.isna(matches):
@@ -16289,6 +16300,8 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
       .season-detail-table col.season-col-6s,
       .season-detail-table col.season-col-3wi,
       .season-detail-table col.season-col-5wi,
+      .season-detail-table col.season-col-no-balls,
+      .season-detail-table col.season-col-wides,
       .season-detail-table col.season-col-dis {{ width: 48px; }}
       .season-detail-table col.season-col-30s,
       .season-detail-table col.season-col-50s,
@@ -16407,7 +16420,9 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         .season-detail-table col.season-col-4s,
         .season-detail-table col.season-col-6s,
         .season-detail-table col.season-col-3wi,
-        .season-detail-table col.season-col-5wi {{ width: 42px; }}
+        .season-detail-table col.season-col-5wi,
+        .season-detail-table col.season-col-no-balls,
+        .season-detail-table col.season-col-wides {{ width: 42px; }}
         .season-detail-table col.season-col-dis {{ width: 46px; }}
         .season-detail-table col.season-col-inn,
         .season-detail-table col.season-col-30s,
@@ -16711,10 +16726,10 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "bowlingStrikeRate",
             "bowlingEconomyRate",
             "bowlingBestInnings",
-            "bowlingNoBalls",
-            "bowlingWides",
             "seasonDetail3WIs",
             "seasonDetail5WIs",
+            "bowlingNoBalls",
+            "bowlingWides",
         ],
         [
             "Player",
@@ -16727,10 +16742,10 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "Bowl SR",
             "Eco",
             "BBI",
-            "No Balls",
-            "Wides",
             "3WI",
             "5WI",
+            "No Balls",
+            "Wides",
         ],
     )
     return output.rename(columns={"M": "Mat", "Maidens": "Mdns", "Wickets": "W"})
