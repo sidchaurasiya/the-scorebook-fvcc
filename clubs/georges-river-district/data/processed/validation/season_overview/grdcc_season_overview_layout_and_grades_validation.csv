@@ -1,0 +1,14 @@
+check,validation_status,details
+season_round_selector_horizontal_scroll,pass,Season by Round uses horizontal scroll control.
+season_round_folder_layout_removed,pass,Season by Round no longer uses folder-tab control key.
+season_and_grade_slicers_preserved,pass,Global dropdown slicers remain.
+duplicate_competitions_detected,pass,61 duplicate same-season/same-grade groups detected.
+chappelow_cup_combined,pass,Summer 2025/26 Chappelow Cup duplicate teams audited.
+team_grade_leaders_combined,pass,Team/Grade Leaders filter combined team IDs.
+grade_ordering_applied,pass,Preferred grade order helper is wired.
+empty_grades_excluded,pass,Empty grade/team options filtered before display.
+o65_regionals_2025_26_excluded_if_empty,pass,O65s Regionals 2025/26 empty audit.
+bowling_no_balls_column,pass,Bowling detailed table includes No Balls.
+bowling_wides_column,pass,Bowling detailed table includes Wides.
+raw_files_unchanged_by_validator,pass,Validator writes validation outputs only.
+fvcc_scope_unchanged,pass,New filtering/combination helpers are GRDCC-gated.

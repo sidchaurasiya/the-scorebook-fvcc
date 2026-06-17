@@ -4263,9 +4263,13 @@ def inject_theme() -> None:
 
         div.st-key-season_round_grade_filter_control {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 8px;
             margin: -2px 0 14px;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 4px;
             width: 100%;
         }
 
@@ -4280,8 +4284,9 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_filter_control div[data-testid="stVerticalBlock"] {
             align-items: stretch;
             display: flex !important;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 8px;
+            min-width: max-content;
         }
 
         div.st-key-season_round_grade_filter_control div[data-testid="stElementContainer"] {
@@ -4338,7 +4343,7 @@ def inject_theme() -> None:
             line-height: 1.14 !important;
             min-height: 42px !important;
             padding: 8px 10px !important;
-            white-space: normal !important;
+            white-space: nowrap !important;
         }
 
         div.st-key-season_round_grade_filter_control button[data-testid="stBaseButton-primary"],
@@ -4352,7 +4357,7 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton"] span {
             line-height: 1.14 !important;
             text-align: center !important;
-            white-space: normal !important;
+            white-space: nowrap !important;
         }
 
         .season-round-grade-card {
@@ -6648,39 +6653,41 @@ def inject_theme() -> None:
             }
 
             div.st-key-season_round_grade_filter_control {
-                display: grid !important;
+                display: flex !important;
                 gap: 8px !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
                 margin: 0 0 14px;
                 max-width: 100%;
-                overflow: visible;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-bottom: 4px;
                 width: 100%;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stHorizontalBlock"] {
-                display: grid !important;
+                display: flex !important;
                 gap: 8px !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                width: 100% !important;
+                min-width: max-content !important;
+                width: max-content !important;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stVerticalBlock"] {
-                display: grid !important;
+                display: flex !important;
                 gap: 8px !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                width: 100% !important;
+                min-width: max-content !important;
+                width: max-content !important;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stElementContainer"] {
                 display: block !important;
-                flex: 1 1 100% !important;
-                max-width: 100% !important;
-                width: 100% !important;
+                flex: 0 0 auto !important;
+                max-width: none !important;
+                width: auto !important;
             }
 
             div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton"] {
                 min-height: 44px !important;
-                width: 100% !important;
+                white-space: nowrap !important;
+                width: auto !important;
             }
 
             .season-round-scroll {
