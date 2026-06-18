@@ -3,7 +3,7 @@ import time
 import streamlit as st
 
 from src.ui.layout import render_page
-from src.utils.performance import record_grdcc_load_profile
+from src.utils.performance import record_club_load_profile
 
 
 def main() -> None:
@@ -15,7 +15,7 @@ def main() -> None:
         initial_sidebar_state="expanded",
     )
     render_page()
-    record_grdcc_load_profile(
+    record_club_load_profile(
         "app_startup_and_render",
         (time.perf_counter() - started_at) * 1000,
         notes="Full Streamlit script run for the selected route.",

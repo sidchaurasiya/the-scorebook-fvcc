@@ -729,11 +729,12 @@ def rebuild_canonical_processed_tables(
     return row_counts
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, persist="disk")
 def get_player_profile_data(
     canonical_player_id: str,
     _local_version: float | None = None,
     _identity_version: float | None = None,
+    club_id: str | None = None,
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
 
@@ -742,13 +743,13 @@ def get_player_profile_data(
     these raw totals to recalculate profile metrics without averaging averages.
     """
     _local_version = metadata_mtime() if _local_version is None else _local_version
-    _identity_version = player_aliases_mtime() if _identity_version is None else _identity_version
-    aliases = load_player_aliases()
+    _identity_version = player_aliases_mtime(club_id=club_id) if _identity_version is None else _identity_version
+    aliases = load_player_aliases(club_id=club_id)
     frames = {}
     for category in ["batting", "bowling", "fielding"]:
         try:
             frame = read_processed_table(f"all_seasons_{category}")
-            frames[category] = apply_player_identity_mapping(frame, aliases) if not frame.empty else frame
+            frames[category] = apply_player_identity_mapping(frame, aliases, club_id=club_id) if not frame.empty else frame
         except MemoryError:
             frames[category] = pd.DataFrame()
 

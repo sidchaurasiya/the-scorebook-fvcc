@@ -113,7 +113,7 @@ from src.utils.analytics import (
     track_event_once,
     track_page_view,
 )
-from src.utils.performance import record_grdcc_load_profile
+from src.utils.performance import record_club_load_profile
 
 
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -199,7 +199,7 @@ def log_hof_timing(
     elapsed_ms = (time.perf_counter() - started_at) * 1000
     if DEBUG_HOF_TIMINGS:
         print(f"[hall-of-fame] {label}: {elapsed_ms:.1f} ms")
-    record_grdcc_load_profile(
+    record_club_load_profile(
         label,
         elapsed_ms,
         rows_loaded=rows_loaded,
@@ -697,7 +697,7 @@ def render_page() -> None:
     render_started_at = time.perf_counter()
     theme_started_at = time.perf_counter()
     inject_theme()
-    record_grdcc_load_profile(
+    record_club_load_profile(
         "club_config_and_theme",
         (time.perf_counter() - theme_started_at) * 1000,
         files_loaded=1,
@@ -711,8 +711,10 @@ def render_page() -> None:
     elif SHOW_HALL_OF_FAME_V2 and selected_page == HALL_OF_FAME_V2_QUERY_PAGE:
         render_hall_of_fame_v2_page()
     elif selected_page == SEASON_OVERVIEW_QUERY_PAGE:
+        route_started_at = time.perf_counter()
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
+        record_club_load_profile("season_overview_build", (time.perf_counter() - route_started_at) * 1000)
     elif SHOW_SEASON_OVERVIEW_V2 and selected_page == SEASON_OVERVIEW_V2_QUERY_PAGE:
         dashboard_data = render_data_source_panel(
             page_slug=SEASON_OVERVIEW_V2_QUERY_PAGE,
@@ -722,9 +724,13 @@ def render_page() -> None:
         )
         render_season_overview_v2(dashboard_data)
     elif selected_page == "milestone":
+        route_started_at = time.perf_counter()
         render_approaching_milestones_page()
+        record_club_load_profile("milestones_build", (time.perf_counter() - route_started_at) * 1000)
     elif selected_page == PLAYER_PROFILE_QUERY_PAGE:
+        route_started_at = time.perf_counter()
         render_player_profile_page()
+        record_club_load_profile("player_profile_build", (time.perf_counter() - route_started_at) * 1000)
     elif SHOW_PLAYER_PROFILE_V2 and selected_page == PLAYER_PROFILE_V2_QUERY_PAGE:
         render_player_profile_v2_page()
     elif SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES and selected_page == "match-insights":
@@ -738,7 +744,7 @@ def render_page() -> None:
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
-    record_grdcc_load_profile(
+    record_club_load_profile(
         f"page_render:{selected_page}",
         (time.perf_counter() - render_started_at) * 1000,
         notes="Top-level route render including shared navigation.",
@@ -893,14 +899,14 @@ def render_data_source_panel(
     try:
         organisation_id = parse_club_url(club_url)
         if using_local_backup:
-            seasons = load_local_playcricket_seasons(local_version)
+            seasons = load_local_playcricket_seasons(get_active_club_id(), local_version)
         else:
             seasons = load_public_playcricket_seasons(organisation_id)
     except PlayCricketPublicError as error:
         if local_backup_available():
             using_local_backup = True
             local_version = metadata_mtime()
-            seasons = load_local_playcricket_seasons(local_version)
+            seasons = load_local_playcricket_seasons(get_active_club_id(), local_version)
             st.warning(f"Using local backup from {backup_timestamp_label()}.")
         else:
             st.error(str(error))
@@ -972,7 +978,7 @@ def render_data_source_panel(
 
         try:
             if using_local_backup:
-                teams = load_local_playcricket_teams(selected_season["id"], local_version)
+                teams = load_local_playcricket_teams(get_active_club_id(), selected_season["id"], local_version)
             else:
                 teams = load_public_playcricket_teams(
                     organisation_id,
@@ -982,7 +988,7 @@ def render_data_source_panel(
             if local_backup_available():
                 using_local_backup = True
                 local_version = metadata_mtime()
-                teams = load_local_playcricket_teams(selected_season["id"], local_version)
+                teams = load_local_playcricket_teams(get_active_club_id(), selected_season["id"], local_version)
                 st.warning(f"Using local backup from {backup_timestamp_label()}.")
             else:
                 st.error(str(error))
@@ -1142,8 +1148,9 @@ def load_public_playcricket_teams(
     return client.get_organisation_teams(organisation_id, season_id)
 
 
-@st.cache_data
-def load_local_playcricket_seasons(_local_version: float) -> list[dict]:
+@st.cache_data(show_spinner=False, persist="disk")
+def load_local_playcricket_seasons(club_id: str, _local_version: float) -> list[dict]:
+    _ = club_id
     seasons_df = read_processed_table("seasons")
     if seasons_df.empty:
         return []
@@ -1161,8 +1168,9 @@ def load_local_playcricket_seasons(_local_version: float) -> list[dict]:
     return seasons
 
 
-@st.cache_data
-def load_local_playcricket_teams(season_id: str, _local_version: float) -> list[dict]:
+@st.cache_data(show_spinner=False, persist="disk")
+def load_local_playcricket_teams(club_id: str, season_id: str, _local_version: float) -> list[dict]:
+    _ = club_id
     teams_df = read_processed_table("teams")
     if teams_df.empty:
         return []
@@ -1225,6 +1233,14 @@ def season_overview_grade_order_key(label: object) -> tuple[object, ...]:
 
 def active_club_is_grdcc() -> bool:
     return get_active_club_id() == "georges-river-district"
+
+
+def active_club_is_fvcc() -> bool:
+    return get_active_club_id() == "fvcc"
+
+
+def runtime_identity_maintenance_enabled() -> bool:
+    return os.getenv("FVCC_RUNTIME_IDENTITY_MAINTENANCE", "").strip() == "1"
 
 
 def team_scope_ids(team: dict) -> list[str]:
@@ -1304,11 +1320,16 @@ def filter_empty_grdcc_season_teams(season: dict, teams: list[dict], local_versi
 
     meaningful_team_ids: set[str] = set()
     for category in ["batting", "bowling", "fielding"]:
-        frame = load_local_category_frame(category, season_id, None, local_version, player_aliases_mtime())
+        frame = load_local_category_frame(
+            get_active_club_id(), category, season_id, None, local_version, player_aliases_mtime()
+        )
         if not frame.empty and "team_id" in frame:
             meaningful_team_ids.update(frame["team_id"].dropna().astype(str).str.strip())
 
-    round_rows = load_season_overview_detail_sources(season_overview_detail_source_signature()).get("season_by_round", pd.DataFrame())
+    round_rows = load_season_overview_detail_sources(
+        get_active_club_id(),
+        season_overview_detail_source_signature(),
+    ).get("season_by_round", pd.DataFrame())
     if not round_rows.empty:
         scoped = round_rows.copy()
         if season_id and "season_id" in scoped:
@@ -1325,14 +1346,16 @@ def filter_empty_grdcc_season_teams(season: dict, teams: list[dict], local_versi
     return filtered or teams
 
 
-@st.cache_data
+@st.cache_data(show_spinner=False, persist="disk")
 def load_local_category_frame(
+    club_id: str,
     category: str,
     season_id: str,
     team_id: str | None,
     _local_version: float,
     _identity_version: float | None = None,
 ) -> pd.DataFrame:
+    _ = club_id
     frame = read_processed_table(f"all_seasons_{category}")
     if frame.empty:
         return frame
@@ -1365,9 +1388,10 @@ def load_local_single_team_frames(
             "team_bowling": bowling,
             "team_fielding": fielding,
         }
-    batting = load_local_category_frame("batting", season_id, team["id"], local_version, identity_version)
-    bowling = load_local_category_frame("bowling", season_id, team["id"], local_version, identity_version)
-    fielding = load_local_category_frame("fielding", season_id, team["id"], local_version, identity_version)
+    club_id = get_active_club_id()
+    batting = load_local_category_frame(club_id, "batting", season_id, team["id"], local_version, identity_version)
+    bowling = load_local_category_frame(club_id, "bowling", season_id, team["id"], local_version, identity_version)
+    fielding = load_local_category_frame(club_id, "fielding", season_id, team["id"], local_version, identity_version)
     return {
         "batting": add_batting_display_columns(batting),
         "bowling": bowling,
@@ -1387,7 +1411,9 @@ def load_local_all_team_frames(
     identity_version = player_aliases_mtime()
     frames = {}
     for category in ["batting", "bowling", "fielding"]:
-        frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
+        frame = load_local_category_frame(
+            get_active_club_id(), category, season_id, None, local_version, identity_version
+        )
         if not frame.empty and "team_id" in frame:
             frame = frame[frame["team_id"].astype(str).isin(team_ids)]
         frames[category] = combine_player_rows(frame, category)
@@ -1409,7 +1435,9 @@ def frame_for_team_scope(
     local_version: float,
     identity_version: float | None = None,
 ) -> pd.DataFrame:
-    frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
+    frame = load_local_category_frame(
+        get_active_club_id(), category, season_id, None, local_version, identity_version
+    )
     if not frame.empty and "team_id" in frame:
         frame = frame[frame["team_id"].astype(str).isin(team_ids)]
     return frame.copy()
@@ -1426,8 +1454,12 @@ def season_overview_detail_source_signature() -> tuple[tuple[str, float], ...]:
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
 
-@st.cache_data(show_spinner=False)
-def load_season_overview_detail_sources(signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+@st.cache_data(show_spinner=False, persist="disk")
+def load_season_overview_detail_sources(
+    club_id: str,
+    signature: tuple[tuple[str, float], ...],
+) -> dict[str, pd.DataFrame]:
+    _ = (club_id, signature)
     return {
         "bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
         "bbb_bowling": read_match_centre_csv(SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH),
@@ -1443,7 +1475,10 @@ def add_season_overview_detail_metrics(
     teams: list[dict],
 ) -> dict[str, pd.DataFrame]:
     output = {key: value.copy() if isinstance(value, pd.DataFrame) else value for key, value in frames.items()}
-    sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
+    sources = load_season_overview_detail_sources(
+        get_active_club_id(),
+        season_overview_detail_source_signature(),
+    )
     team_ids = {team_id for team in teams for team_id in team_scope_ids(team)}
     season_id = str(selected_season.get("id", "") or "")
     season_name = str(selected_season.get("name", "") or "")
@@ -1752,7 +1787,10 @@ def match_centre_sources_for_scorecards() -> dict[str, pd.DataFrame]:
 
 def render_season_by_round(dashboard_data: dict[str, object]) -> None:
     render_section_heading("Season by Round 🗓️")
-    sources = load_season_overview_detail_sources(season_overview_detail_source_signature())
+    sources = load_season_overview_detail_sources(
+        get_active_club_id(),
+        season_overview_detail_source_signature(),
+    )
     rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
 
     with st.container(key="season_by_round_card"):
@@ -2056,7 +2094,7 @@ def season_round_row_html(row: dict[str, object], show_grade_column: bool = Fals
 
 
 def season_round_premiership_match_ids() -> set[str]:
-    wins, _players = load_premiership_records(premiership_records_signature())
+    wins, _players = load_premiership_records(get_active_club_id(), premiership_records_signature())
     if wins.empty or "match_id" not in wins:
         return set()
     return {str(match_id).strip() for match_id in wins["match_id"].dropna() if str(match_id).strip()}
@@ -4474,6 +4512,7 @@ def render_hall_of_fame_page() -> None:
         player_aliases_mtime(),
         HALL_OF_FAME_DATA_VERSION,
         featured_record_overrides_mtime(),
+        club_id=get_active_club_id(),
     )
     log_hof_timing(
         "load prepared Hall of Fame data",
@@ -4501,12 +4540,25 @@ def render_hall_of_fame_page() -> None:
     )
     team_group_slug = render_hall_of_fame_team_group_filter(hall_of_fame_data)
     if team_group_slug:
-        hall_of_fame_data = filter_hall_of_fame_data_by_team_group(hall_of_fame_data, team_group_slug)
+        filter_started_at = time.perf_counter()
+        single_fvcc_group = active_club_is_fvcc() and len(hall_of_fame_team_group_options(hall_of_fame_data)) <= 1
+        if not single_fvcc_group:
+            hall_of_fame_data = filter_hall_of_fame_data_by_team_group(hall_of_fame_data, team_group_slug)
+        log_hof_timing(
+            "Hall of Fame team-group aggregation",
+            filter_started_at,
+            cache_hit=single_fvcc_group,
+            notes="Skipped equivalent FVCC single-group rebuild." if single_fvcc_group else "Applied selected team-group filter.",
+        )
     section_started_at = time.perf_counter()
     render_premiership_records(team_group_slug)
     log_hof_timing("render premiership records", section_started_at)
     section_started_at = time.perf_counter()
-    render_hall_of_fame_leaders(hall_of_fame_data["all_time"], active_hof_players(hall_of_fame_data))
+    prepared_active_players = hall_of_fame_data.get("active_players")
+    render_hall_of_fame_leaders(
+        hall_of_fame_data["all_time"],
+        prepared_active_players if isinstance(prepared_active_players, set) else active_hof_players(hall_of_fame_data),
+    )
     log_hof_timing("render all-time leaders", section_started_at)
     section_started_at = time.perf_counter()
     render_match_winning_performances(hall_of_fame_data)
@@ -4635,6 +4687,7 @@ def render_hall_of_fame_v2_page() -> None:
         player_aliases_mtime(),
         HALL_OF_FAME_DATA_VERSION,
         featured_record_overrides_mtime(),
+        club_id=get_active_club_id(),
     )
     log_hof_timing("load prepared Hall of Fame v2 data", started_at)
     if hall_of_fame_data is None:
@@ -4700,6 +4753,7 @@ def render_hall_of_fame_v2_hero(data: dict[str, object]) -> None:
 def hall_of_fame_v2_verified_fastest_count() -> int:
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(
+        get_active_club_id(),
         str(milestone_path) if milestone_path else None,
         match_centre_milestones_mtime(),
     )
@@ -4743,7 +4797,7 @@ def hof_v2_section_heading_html(section_id: str, title: str, copy: str, badge: s
 
 
 def render_hall_of_fame_v2_premiership_wall() -> None:
-    wins, players = load_premiership_records(premiership_records_signature())
+    wins, players = load_premiership_records(get_active_club_id(), premiership_records_signature())
     st.markdown(
         (
             hof_v2_section_heading_html(
@@ -4974,6 +5028,7 @@ def hall_of_fame_v2_performance_hero_html(records: pd.DataFrame, title: str, mod
 def render_hall_of_fame_v2_fastest_verified() -> None:
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(
+        get_active_club_id(),
         str(milestone_path) if milestone_path else None,
         match_centre_milestones_mtime(),
     )
@@ -5212,7 +5267,11 @@ def render_hall_of_fame_v2_recommendations() -> None:
 
 
 def render_approaching_milestones_page() -> None:
-    historical_data = load_hall_of_fame_data(metadata_mtime(), player_aliases_mtime())
+    historical_data = load_hall_of_fame_data(
+        metadata_mtime(),
+        player_aliases_mtime(),
+        club_id=get_active_club_id(),
+    )
     if historical_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the milestone watchlist.")
         return
@@ -5805,8 +5864,9 @@ def load_hall_of_fame_data(
     local_version: float,
     identity_version: float | None = None,
     data_version: str = HALL_OF_FAME_DATA_VERSION,
+    club_id: str | None = None,
 ) -> dict[str, object] | None:
-    _ = (local_version, identity_version, data_version)
+    _ = (local_version, identity_version, data_version, club_id)
     started_at = time.perf_counter()
     batting_raw = read_processed_table("all_seasons_batting")
     bowling_raw = read_processed_table("all_seasons_bowling")
@@ -5835,7 +5895,7 @@ def load_hall_of_fame_data(
     batting_raw = apply_team_grade_display_columns(batting_raw)
     bowling_raw = apply_team_grade_display_columns(bowling_raw)
     fielding_raw = apply_team_grade_display_columns(fielding_raw)
-    if allow_legacy_fallback():
+    if allow_legacy_fallback() and runtime_identity_maintenance_enabled():
         export_team_grade_display_audit(
             [batting_raw, bowling_raw, fielding_raw],
             path=get_mapping_path("team_grade_display_audit.csv"),
@@ -5848,7 +5908,7 @@ def load_hall_of_fame_data(
         "mapping_rows_added": 0,
         "mapping_conflicts": 0,
     }
-    if allow_legacy_fallback():
+    if allow_legacy_fallback() and runtime_identity_maintenance_enabled():
         started_at = time.perf_counter()
         identity_source = pd.concat(
             [
@@ -5888,7 +5948,7 @@ def load_hall_of_fame_data(
     all_time = build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
     log_hof_timing("build all-time player summary", started_at)
 
-    return {
+    prepared = {
         "batting_raw": add_batting_display_columns(batting_raw),
         "bowling_raw": bowling_raw,
         "fielding_raw": add_display_stat_aliases(fielding_raw),
@@ -5903,6 +5963,7 @@ def load_hall_of_fame_data(
         "total_wickets": int(pd.to_numeric(bowling.get("bowlingWickets"), errors="coerce").sum()) if not bowling.empty else 0,
         "identity_exports": identity_exports,
     }
+    return prepared
 
 
 @st.cache_data(show_spinner=False, persist="disk")
@@ -5911,10 +5972,16 @@ def get_hall_of_fame_data(
     identity_version: float | None = None,
     data_version: str = HALL_OF_FAME_DATA_VERSION,
     override_version: float | None = None,
+    club_id: str | None = None,
 ) -> dict[str, object] | None:
-    _ = override_version
+    _ = (override_version, club_id)
     started_at = time.perf_counter()
-    historical_data = load_hall_of_fame_data(local_version, identity_version, data_version)
+    historical_data = load_hall_of_fame_data(
+        local_version,
+        identity_version,
+        data_version,
+        club_id=club_id,
+    )
     log_hof_timing("load historical data", started_at)
     if historical_data is None:
         return None
@@ -5951,7 +6018,7 @@ def get_hall_of_fame_data(
     }
     log_hof_timing("build Detailed All-Time Records Batting/Bowling/Fielding", started_at)
 
-    return {
+    prepared = {
         "kpis": {
             "total_seasons": historical_data["total_seasons"],
             "total_players": historical_data["total_players"],
@@ -5968,6 +6035,9 @@ def get_hall_of_fame_data(
         "best_bowling_season": best_bowling,
         "detailed_tables": {key: value.copy() for key, value in detailed_tables.items()},
     }
+    if club_id == "fvcc":
+        prepared["active_players"] = active_hof_players(prepared)
+    return prepared
 
 
 def normalise_player_names(df: pd.DataFrame) -> pd.DataFrame:
@@ -6908,9 +6978,12 @@ def premiership_records_signature() -> tuple[tuple[str, float], ...]:
     return tuple(signature)
 
 
-@st.cache_data(show_spinner=False)
-def load_premiership_records(signature: tuple[tuple[str, float], ...]) -> tuple[pd.DataFrame, pd.DataFrame]:
-    _ = signature
+@st.cache_data(show_spinner=False, persist="disk")
+def load_premiership_records(
+    club_id: str,
+    signature: tuple[tuple[str, float], ...],
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    _ = (club_id, signature)
     wins = read_match_centre_csv(HALL_OF_FAME_PREMIERSHIP_WINS_PATH)
     players = read_match_centre_csv(HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH)
     if not wins.empty:
@@ -6964,7 +7037,7 @@ def latest_season_sort_key(value: object) -> int:
 
 
 def render_premiership_records(team_group_slug: str | None = None) -> None:
-    wins, players = load_premiership_records(premiership_records_signature())
+    wins, players = load_premiership_records(get_active_club_id(), premiership_records_signature())
     if team_group_slug in {"men", "women"}:
         wins = filter_hof_team_group_frame(wins, team_group_slug)
         players = filter_hof_team_group_frame(players, team_group_slug)
@@ -7236,7 +7309,11 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
     render_section_heading("Fastest Innings ⚡")
     st.caption("Based on matches with verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
-    milestones = load_batting_milestone_records(str(milestone_path) if milestone_path else None, match_centre_milestones_mtime())
+    milestones = load_batting_milestone_records(
+        get_active_club_id(),
+        str(milestone_path) if milestone_path else None,
+        match_centre_milestones_mtime(),
+    )
     if team_group_slug in {"men", "women"} and not milestones.empty:
         milestones = filter_hof_team_group_frame(milestones, team_group_slug)
     if milestones.empty:
@@ -7266,8 +7343,13 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
         )
 
 
-@st.cache_data(show_spinner=False)
-def load_batting_milestone_records(_path: str | None = None, _mtime: float | None = None) -> pd.DataFrame:
+@st.cache_data(show_spinner=False, persist="disk")
+def load_batting_milestone_records(
+    club_id: str,
+    _path: str | None = None,
+    _mtime: float | None = None,
+) -> pd.DataFrame:
+    _ = club_id
     path = batting_milestones_path()
     if path is None:
         return pd.DataFrame()
@@ -9318,7 +9400,7 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
 
 
 def render_player_profile_page() -> None:
-    index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
+    index = load_player_profile_index(get_active_club_id(), metadata_mtime(), player_aliases_mtime())
     st.markdown(
         f"""
         <div class="player-profile-page"></div>
@@ -9438,7 +9520,12 @@ def render_player_profile_page() -> None:
         )
         return
 
-    profile = get_player_profile_data(selected_id, metadata_mtime(), player_aliases_mtime())
+    profile = get_player_profile_data(
+        selected_id,
+        metadata_mtime(),
+        player_aliases_mtime(),
+        club_id=get_active_club_id(),
+    )
     profile_view = build_player_profile_view(profile)
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
@@ -9475,7 +9562,7 @@ def render_player_profile_page() -> None:
 
 
 def render_player_profile_v2_page() -> None:
-    index = load_player_profile_index(metadata_mtime(), player_aliases_mtime())
+    index = load_player_profile_index(get_active_club_id(), metadata_mtime(), player_aliases_mtime())
     st.markdown('<div class="player-profile-v2-page"></div>', unsafe_allow_html=True)
     st.markdown(
         """
@@ -9522,7 +9609,12 @@ def render_player_profile_v2_page() -> None:
     if selected_id and query_param_value("player_id") != selected_id:
         sync_player_profile_query(selected_id, PLAYER_PROFILE_V2_QUERY_PAGE)
 
-    profile = get_player_profile_data(selected_id, metadata_mtime(), player_aliases_mtime())
+    profile = get_player_profile_data(
+        selected_id,
+        metadata_mtime(),
+        player_aliases_mtime(),
+        club_id=get_active_club_id(),
+    )
     profile_view = build_player_profile_view(profile)
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
@@ -9569,7 +9661,7 @@ def build_player_profile_v2_context(profile_view: dict[str, pd.DataFrame]) -> di
     player_name = str(career.get("Player", "") or "").strip()
     name_key = player_name_match_key(player_name)
     win_row = player_v2_lookup_row(load_deploy_safe_win_rates(player_win_rates_signature()), player_id, name_key)
-    _, premierships = load_premiership_records(premiership_records_signature())
+    _, premierships = load_premiership_records(get_active_club_id(), premiership_records_signature())
     premiership_row = player_v2_lookup_row(premierships, player_id, name_key)
     bbb_row = player_v2_lookup_row(read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH), player_id, name_key)
     return {
@@ -10294,7 +10386,9 @@ def player_v2_percent(value: object) -> str:
     return "—" if pd.isna(number) else f"{float(number):.1f}%"
 
 
-def load_player_profile_index(_local_version: float, _identity_version: float) -> pd.DataFrame:
+@st.cache_data(show_spinner=False, persist="disk")
+def load_player_profile_index(club_id: str, _local_version: float, _identity_version: float) -> pd.DataFrame:
+    _ = club_id
     aliases = load_player_aliases()
     frames = []
     for category in ["batting", "bowling", "fielding"]:
@@ -10325,12 +10419,15 @@ def load_player_profile_index(_local_version: float, _identity_version: float) -
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, persist="disk")
 def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFrame]:
     batting = add_batting_display_columns(apply_team_grade_display_columns(profile.get("batting", pd.DataFrame())))
     bowling = apply_team_grade_display_columns(profile.get("bowling", pd.DataFrame()))
     fielding = add_display_stat_aliases(apply_team_grade_display_columns(profile.get("fielding", pd.DataFrame())))
-    detail_sources = load_player_profile_detail_sources(player_profile_detail_source_signature())
+    detail_sources = load_player_profile_detail_sources(
+        get_active_club_id(),
+        player_profile_detail_source_signature(),
+    )
     season_table = build_player_season_table(batting, bowling, fielding)
     season_table = enrich_player_profile_season_table(season_table, profile, detail_sources)
     grade_table = build_player_grade_table(batting, bowling, fielding)
@@ -10549,8 +10646,12 @@ def player_profile_detail_source_signature() -> tuple[tuple[str, float], ...]:
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
 
-@st.cache_data(show_spinner=False)
-def load_player_profile_detail_sources(_signature: tuple[tuple[str, float], ...]) -> dict[str, pd.DataFrame]:
+@st.cache_data(show_spinner=False, persist="disk")
+def load_player_profile_detail_sources(
+    club_id: str,
+    _signature: tuple[tuple[str, float], ...],
+) -> dict[str, pd.DataFrame]:
+    _ = club_id
     return {
         "career_bbb_batting": read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH),
         "scope_bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
@@ -10995,7 +11096,7 @@ def player_premiership_profile_badges(career: pd.Series) -> list[str]:
     name_key = player_name_match_key(player_name)
     if not name_key:
         return []
-    wins, players = load_premiership_records(premiership_records_signature())
+    wins, players = load_premiership_records(get_active_club_id(), premiership_records_signature())
     badges: list[str] = []
     winner_count = 0
     if not players.empty:
@@ -11174,12 +11275,22 @@ def player_leader_details(profile_view: dict[str, pd.DataFrame]) -> dict[str, li
     player_id = str(career.iloc[0].get("canonical_player_id", "")).strip()
     if not player_id:
         return {}
-    return cached_player_leader_details(player_id, metadata_mtime(), player_aliases_mtime())
+    return cached_player_leader_details(
+        player_id,
+        get_active_club_id(),
+        metadata_mtime(),
+        player_aliases_mtime(),
+    )
 
 
-@st.cache_data
-def cached_player_leader_details(player_id: str, _local_version: float, _identity_version: float) -> dict[str, list[str]]:
-    historical_data = load_hall_of_fame_data(_local_version, _identity_version)
+@st.cache_data(show_spinner=False, persist="disk")
+def cached_player_leader_details(
+    player_id: str,
+    club_id: str,
+    _local_version: float,
+    _identity_version: float,
+) -> dict[str, list[str]]:
+    historical_data = load_hall_of_fame_data(_local_version, _identity_version, club_id=club_id)
     if historical_data is None:
         return {}
     batting = historical_data.get("batting_raw", pd.DataFrame())
@@ -13260,7 +13371,10 @@ def render_player_recent_form(career: pd.Series) -> None:
 def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, object]]]:
     player_id = str(career.get("canonical_player_id", "") or "").strip()
     player_name_key = player_name_match_key(career.get("Player", ""))
-    sources = load_player_profile_detail_sources(player_profile_detail_source_signature())
+    sources = load_player_profile_detail_sources(
+        get_active_club_id(),
+        player_profile_detail_source_signature(),
+    )
     batting = player_recent_form_deploy_rows(sources.get("recent_form_batting", pd.DataFrame()), player_id, player_name_key)
     bowling = player_recent_form_deploy_rows(sources.get("recent_form_bowling", pd.DataFrame()), player_id, player_name_key)
     return {
@@ -13903,7 +14017,11 @@ def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
 
 
 def render_player_merge_audit_page() -> None:
-    historical_data = load_hall_of_fame_data(metadata_mtime(), player_aliases_mtime())
+    historical_data = load_hall_of_fame_data(
+        metadata_mtime(),
+        player_aliases_mtime(),
+        club_id=get_active_club_id(),
+    )
     if historical_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the player merge audit.")
         return
@@ -14872,7 +14990,7 @@ def build_biggest_improvers(dashboard_data: dict[str, object]) -> list[dict[str,
 
 
 def previous_season_for(current_season: dict[str, object]) -> dict[str, object] | None:
-    seasons = load_local_playcricket_seasons(metadata_mtime())
+    seasons = load_local_playcricket_seasons(get_active_club_id(), metadata_mtime())
     if not seasons:
         return None
     current_id = str(current_season.get("id", ""))
@@ -14957,7 +15075,9 @@ def season_player_match_counts(
 ) -> pd.DataFrame:
     frames = []
     for category in ["batting", "bowling", "fielding"]:
-        frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
+        frame = load_local_category_frame(
+            get_active_club_id(), category, season_id, None, local_version, identity_version
+        )
         frame = filter_frame_to_improver_scope(frame, scope)
         if frame.empty or "matches" not in frame:
             continue
@@ -14985,7 +15105,9 @@ def season_metric_totals(
     local_version: float,
     identity_version: float | None,
 ) -> pd.DataFrame:
-    frame = load_local_category_frame(category, season_id, None, local_version, identity_version)
+    frame = load_local_category_frame(
+        get_active_club_id(), category, season_id, None, local_version, identity_version
+    )
     frame = filter_frame_to_improver_scope(frame, scope)
     if frame.empty or value_column not in frame:
         return pd.DataFrame(columns=["player_key", "player_name", value_column])
