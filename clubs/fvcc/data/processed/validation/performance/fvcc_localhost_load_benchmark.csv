@@ -1,0 +1,5 @@
+run_type,total_elapsed_ms,slowest_stage,slowest_stage_ms,cache_state,notes
+before_estimate,18208,load prepared Hall of Fame data,10985,cold memory cache,"Pre-change Streamlit AppTest baseline; used as the baseline estimate because browser profiling was added with the optimization."
+after_first_build,10602,load prepared Hall of Fame data,8261,persistent cache build,"First instrumented Streamlit script run; browser reached Detailed Records in approximately 15328 ms."
+after_restart,2275,app startup and render,988,persistent disk cache hit,"Final-code fresh Streamlit process; measured in the in-app browser."
+after_cached_rerun,2124,app startup and render,841,warm process cache hit,"Final-code same-process browser reload with prepared FVCC data cached."

@@ -8,16 +8,10 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-GRDCC_PROFILE_PATH = (
-    REPO_ROOT
-    / "clubs"
-    / "georges-river-district"
-    / "data"
-    / "processed"
-    / "validation"
-    / "performance"
-    / "grdcc_localhost_load_profile.csv"
-)
+PROFILE_SETTINGS = {
+    "fvcc": ("FVCC_PERF_PROFILE", "fvcc_localhost_load_profile.csv"),
+    "georges-river-district": ("GRDCC_PERF_PROFILE", "grdcc_localhost_load_profile.csv"),
+}
 PROFILE_COLUMNS = [
     "timestamp",
     "stage",
@@ -30,7 +24,7 @@ PROFILE_COLUMNS = [
 _PROFILE_LOCK = threading.Lock()
 
 
-def record_grdcc_load_profile(
+def record_club_load_profile(
     stage: str,
     elapsed_ms: float,
     *,
@@ -40,10 +34,14 @@ def record_grdcc_load_profile(
     notes: str = "",
 ) -> None:
     """Append one opt-in local timing row without affecting normal app runtime."""
-    if os.getenv("CLUB_ID", "").strip() != "georges-river-district":
+    club_id = os.getenv("CLUB_ID", "fvcc").strip() or "fvcc"
+    settings = PROFILE_SETTINGS.get(club_id)
+    if settings is None:
         return
-    if os.getenv("GRDCC_PERF_PROFILE", "").strip() != "1":
+    env_name, filename = settings
+    if os.getenv(env_name, "").strip() != "1":
         return
+    profile_path = REPO_ROOT / "clubs" / club_id / "data" / "processed" / "validation" / "performance" / filename
     row = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "stage": str(stage),
@@ -54,10 +52,15 @@ def record_grdcc_load_profile(
         "notes": str(notes),
     }
     with _PROFILE_LOCK:
-        GRDCC_PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
-        write_header = not GRDCC_PROFILE_PATH.exists()
-        with GRDCC_PROFILE_PATH.open("a", newline="", encoding="utf-8") as handle:
+        profile_path.parent.mkdir(parents=True, exist_ok=True)
+        write_header = not profile_path.exists()
+        with profile_path.open("a", newline="", encoding="utf-8") as handle:
             writer = csv.DictWriter(handle, fieldnames=PROFILE_COLUMNS)
             if write_header:
                 writer.writeheader()
             writer.writerow(row)
+
+
+def record_grdcc_load_profile(*args, **kwargs) -> None:
+    """Backwards-compatible name retained for GRDCC validation tooling."""
+    record_club_load_profile(*args, **kwargs)

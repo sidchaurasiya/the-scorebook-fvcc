@@ -1,0 +1,14 @@
+check,validation_status,details
+no_raw_fvcc_changes,pass,
+grdcc_single_group_path_preserved,pass,GRDCC single-group behavior remains unchanged.
+grdcc_annual_report_scoped,pass,Annual Report override loaders remain GRDCC-only.
+fvcc_prepared_cache,pass,FVCC profile contains a disk-cache hit.
+duplicate_hof_aggregation_avoided,pass,Single FVCC HOF group reuses prepared all-time tables.
+heavy_loaders_cached,pass,"HOF, season detail, profile index/detail, and profile data use persistent caches."
+experimental_loaders_gated,pass,No experimental/match-centre profiling stage ran.
+hof_rows_available,pass,FVCC aggregate HOF sources are non-empty.
+season_overview_rows_available,pass,Season and team data plus route are present.
+player_profile_available,pass,Player index data and route are present.
+milestones_available,pass,Milestone route and candidate builder remain present.
+fvcc_theme_unchanged,pass,FVCC configured colors are unchanged.
+fvcc_core_data_unchanged,pass,
