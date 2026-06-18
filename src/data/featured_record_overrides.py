@@ -257,6 +257,8 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
             "Seasons Played": _supplement_value(supplement, "excel_seasons_count"),
             "Seasons Count": _supplement_value(supplement, "excel_seasons_count"),
         }
+        if numeric_updates.get("Innings") is not None and "Innings" not in output.columns:
+            output["Innings"] = pd.NA
         for column, value in numeric_updates.items():
             if value is None or column not in output.columns:
                 continue

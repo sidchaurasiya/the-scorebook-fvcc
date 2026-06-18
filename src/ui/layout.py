@@ -8162,6 +8162,9 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "0s",
         "4s",
         "6s",
+        "Innings",
+        "Matches Source",
+        "Matches Proxy",
     ]
     table = select_display_columns(all_time, columns).copy()
     if "Runs" in table:
@@ -8194,6 +8197,9 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "3WI",
         "5WI",
         "10WM",
+        "Innings",
+        "Matches Source",
+        "Matches Proxy",
     ]
     table = select_display_columns(source, columns).copy()
     if "Bowl Avg" in source and "Avg" not in table:
@@ -8217,6 +8223,9 @@ def format_all_time_fielding_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Stumpings",
         "Run Outs",
         "Dismissals",
+        "Innings",
+        "Matches Source",
+        "Matches Proxy",
     ]
     table = select_display_columns(all_time, columns).copy()
     if "Catches" in table:
@@ -8431,8 +8440,10 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", key_prefix).strip("-") or "hof-detail-table"
     link_colour = active_club_colour("primary_colour", "#6D4DFF")
     accent_colour = active_club_colour("accent_colour", link_colour)
+    player_link_hover_colour = link_colour if active_club_is_grdcc() else accent_colour
     primary_soft = active_club_colour("background_colour", "#F7F7FC")
-    columns = table.columns.tolist()
+    metadata_columns = {"Innings", "Matches Source", "Matches Proxy"}
+    columns = [column for column in table.columns if column not in metadata_columns]
     header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
         f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
         f'<span>{html.escape(str(column))}<span class="sort-indicator"></span></span></th>'
@@ -8463,6 +8474,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         --hof-soft: {html.escape(primary_soft)};
         --hof-link: {html.escape(link_colour)};
         --hof-link-hover: {html.escape(accent_colour)};
+        --hof-player-link-hover: {html.escape(player_link_hover_colour)};
       }}
       html, body {{
         margin: 0;
@@ -8557,6 +8569,12 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       .hof-detail-sortable a:hover {{
         color: var(--hof-link-hover);
         text-decoration: underline;
+      }}
+      .hof-detail-sortable .hof-col-player a {{
+        color: var(--hof-link);
+      }}
+      .hof-detail-sortable .hof-col-player a:hover {{
+        color: var(--hof-player-link-hover);
       }}
       .hof-detail-sortable tr:hover td {{
         background: var(--hof-soft);
@@ -9030,14 +9048,17 @@ def render_career_milestone_cards(watchlist: pd.DataFrame, hall_of_fame_watch: p
         for category in ["Matches", "Runs", "Wickets", "Catches"]
     )
     club_short_name = html.escape(get_club_short_name())
+    active_player_message = (
+        "Showing active players only — players who have appeared for GRDCC in the last 2 seasons."
+        if active_club_is_grdcc()
+        else f"Showing active players only — players who have appeared for {club_short_name} in the last 3 seasons."
+    )
     render_milestone_view_selector("upcoming")
     with st.container(key="milestone_upcoming_panel"):
         st.markdown(
             (
                 '<div class="milestone-section-heading"><h2>Milestone Watchlist 📍</h2></div>'
-                '<div class="milestone-section-subtitle">'
-                f"Showing active players only — players who have appeared for {club_short_name} in the last 3 seasons."
-                "</div>"
+                f'<div class="milestone-section-subtitle">{active_player_message}</div>'
                 f'<div class="milestone-watch-grid">{category_cards}</div>'
                 f"{hall_of_fame_watch_html(hall_of_fame_watch)}"
             ),
