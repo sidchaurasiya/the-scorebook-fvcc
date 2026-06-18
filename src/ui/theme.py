@@ -2578,7 +2578,7 @@ def inject_theme() -> None:
         }
 
         .premiership-wins-scroll {
-            max-height: 660px;
+            max-height: calc(6 * 111px);
         }
 
         .premiership-win-row {
@@ -2750,6 +2750,10 @@ def inject_theme() -> None:
             scrollbar-width: thin;
         }
 
+        .hof-mobile-five-row-scroll:not(.expanded) .performance-row:nth-child(n + 7) {
+            display: none;
+        }
+
         .iconic-performance-scroll .performance-player > span,
         .iconic-performance-scroll .performance-player > span a,
         .iconic-performance-scroll .performance-player > span a:visited {
@@ -2789,8 +2793,24 @@ def inject_theme() -> None:
                 max-height: 360px;
             }
 
+            .block-container:has(.hall-of-fame-page) .hof-mobile-five-row-scroll {
+                max-height: 504px;
+                overflow-y: auto;
+                padding-right: 7px;
+                scrollbar-color: var(--club-border) transparent;
+                scrollbar-width: thin;
+            }
+
+            .block-container:has(.hall-of-fame-page) .hof-mobile-five-row-scroll .performance-row:nth-child(n + 6) {
+                display: grid;
+            }
+
+            .block-container:has(.hall-of-fame-page) .hof-mobile-five-row-scroll.iconic-performance-scroll {
+                max-height: 395px;
+            }
+
             .premiership-wins-scroll {
-                max-height: calc(5 * 82px);
+                max-height: 824px;
             }
 
             .premiership-player-scroll {
@@ -6885,7 +6905,7 @@ def inject_theme() -> None:
             }
 
             .premiership-wins-scroll {
-                max-height: 820px;
+                max-height: 824px;
             }
 
             .premiership-player-scroll {
