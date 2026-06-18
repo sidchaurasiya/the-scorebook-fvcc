@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
@@ -104,12 +105,36 @@ def override_player_supplements_path() -> Path:
     )
 
 
+def featured_record_overrides_mtime(club_id: str | None = None) -> float:
+    active_club_id = normalize_club_id(club_id or get_active_club_id())
+    if active_club_id != GRDCC_CLUB_ID:
+        path = featured_record_override_path(active_club_id)
+        return path.stat().st_mtime if path.exists() else 0.0
+    paths = [
+        featured_record_override_path(active_club_id),
+        annual_report_all_time_leaders_path(),
+        annual_report_override_decisions_path(),
+        override_player_supplements_path(),
+    ]
+    return max((path.stat().st_mtime for path in paths if path.exists()), default=0.0)
+
+
+@lru_cache(maxsize=16)
+def _read_override_csv(path_value: str, file_version: float) -> pd.DataFrame:
+    del file_version
+    return pd.read_csv(path_value, dtype=str).fillna("")
+
+
+def _load_override_csv(path: Path) -> pd.DataFrame:
+    return _read_override_csv(str(path), path.stat().st_mtime).copy()
+
+
 def load_annual_report_override_decisions(club_id: str | None = None) -> pd.DataFrame:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
     path = annual_report_override_decisions_path()
     if active_club_id != GRDCC_CLUB_ID or not path.exists():
         return pd.DataFrame()
-    rows = pd.read_csv(path, dtype=str).fillna("")
+    rows = _load_override_csv(path)
     required = {"player_name", "normalized_player_name", "metric", "displayed_value", "validation_status"}
     if not required.issubset(rows.columns):
         return pd.DataFrame()
@@ -151,7 +176,7 @@ def load_override_player_supplements(club_id: str | None = None) -> pd.DataFrame
     path = override_player_supplements_path()
     if active_club_id != GRDCC_CLUB_ID or not path.exists():
         return pd.DataFrame()
-    rows = pd.read_csv(path, dtype=str).fillna("")
+    rows = _load_override_csv(path)
     required = {"player_name", "normalized_player_name"}
     if not required.issubset(rows.columns):
         return pd.DataFrame()
@@ -301,7 +326,7 @@ def load_annual_report_all_time_leaders(club_id: str | None = None) -> pd.DataFr
     path = annual_report_all_time_leaders_path()
     if active_club_id != GRDCC_CLUB_ID or not path.exists():
         return pd.DataFrame()
-    rows = pd.read_csv(path, dtype=str).fillna("")
+    rows = _load_override_csv(path)
     required = {"section", "player_name", "normalized_player_name", "displayed_value", "included_in_app"}
     if not required.issubset(rows.columns):
         return pd.DataFrame()
@@ -321,7 +346,7 @@ def load_featured_record_overrides(club_id: str | None = None) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
 
-    overrides = pd.read_csv(path, dtype=str).fillna("")
+    overrides = _load_override_csv(path)
     required = {"club_id", "metric", "player_name", "authoritative_value", "reviewer_status"}
     if not required.issubset(overrides.columns):
         return pd.DataFrame()

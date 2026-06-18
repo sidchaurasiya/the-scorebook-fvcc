@@ -1,0 +1,5 @@
+run_type,total_elapsed_ms,slowest_stage,slowest_stage_ms,notes
+before_cold_browser,100286,duplicate prepared HOF request plus single-group rebuild,49382,Measured before optimization on localhost 8507.
+after_first_build_browser,68757,build all-time player summary,19147,First build populates the persistent Streamlit cache.
+after_persistent_restart_browser,16363,page render and browser hydration,13507,Fresh Streamlit process reused the disk-persisted prepared HOF cache.
+after_cached_rerun_browser,3868,detailed records render,1933,Warmed process and browser rerun.

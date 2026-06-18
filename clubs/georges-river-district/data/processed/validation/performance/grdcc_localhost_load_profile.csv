@@ -1,0 +1,96 @@
+timestamp,stage,elapsed_ms,rows_loaded,files_loaded,cache_hit,notes
+2026-06-18T04:15:36.899953+00:00,club_config_and_theme,131.6,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:15:37.167122+00:00,source data loading,242.1,26813,5,false,
+2026-06-18T04:15:39.857172+00:00,club_config_and_theme,20.6,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:15:41.192196+00:00,apply canonical player and team-grade mapping,4025.0,,,,
+2026-06-18T04:15:54.106404+00:00,build canonical category summaries,12914.2,,,,
+2026-06-18T04:16:13.253873+00:00,build all-time player summary,19147.3,,,,
+2026-06-18T04:16:13.399511+00:00,load historical data,36476.0,,,,
+2026-06-18T04:16:14.225768+00:00,copy all-time summary,826.0,,,,
+2026-06-18T04:16:14.294561+00:00,build Hall of Fame record holders,68.3,,,,
+2026-06-18T04:16:14.445031+00:00,build iconic performances,150.1,,,,
+2026-06-18T04:16:26.586762+00:00,build Greatest Individual Seasons,12141.4,,,,
+2026-06-18T04:16:26.730303+00:00,build Detailed All-Time Records Batting/Bowling/Fielding,142.6,,,,
+2026-06-18T04:16:26.787902+00:00,load prepared Hall of Fame data,49865.9,,,false,
+2026-06-18T04:16:26.811041+00:00,load prepared Hall of Fame data,46751.3,,,false,
+2026-06-18T04:16:40.434422+00:00,render table hof_batting_detail,592.1,,,,
+2026-06-18T04:16:41.170144+00:00,render table hof_bowling_detail,734.0,,,,
+2026-06-18T04:16:41.921037+00:00,render table hof_fielding_detail,748.3,,,,
+2026-06-18T04:16:41.943703+00:00,page_render:hall-of-fame,62109.5,,,,Top-level route render including shared navigation.
+2026-06-18T04:16:41.944262+00:00,app_startup_and_render,62110.3,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:17:48.593117+00:00,club_config_and_theme,70.4,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:17:48.654400+00:00,load prepared Hall of Fame data,35.2,,,true,
+2026-06-18T04:17:51.799549+00:00,club_config_and_theme,6.2,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:17:52.142048+00:00,load prepared Hall of Fame data,153.0,,,true,
+2026-06-18T04:18:03.722779+00:00,render table hof_batting_detail,610.4,,,,
+2026-06-18T04:18:04.575896+00:00,render table hof_bowling_detail,851.3,,,,
+2026-06-18T04:18:05.224077+00:00,render table hof_fielding_detail,631.4,,,,
+2026-06-18T04:18:05.242685+00:00,page_render:hall-of-fame,13449.9,,,,Top-level route render including shared navigation.
+2026-06-18T04:18:05.243068+00:00,app_startup_and_render,13506.6,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:19:01.291726+00:00,club_config_and_theme,6.9,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:19:01.356697+00:00,load prepared Hall of Fame data,32.6,,,true,
+2026-06-18T04:19:01.952982+00:00,render premiership records,17.6,,,,
+2026-06-18T04:19:02.965949+00:00,render all-time leaders,1012.6,,,,
+2026-06-18T04:19:02.972452+00:00,render iconic performances,6.0,,,,
+2026-06-18T04:19:03.016087+00:00,render fastest innings,43.3,,,,
+2026-06-18T04:19:03.017631+00:00,render record holders,0.8,,,,
+2026-06-18T04:19:03.036774+00:00,render greatest seasons,18.8,,,,
+2026-06-18T04:19:04.359859+00:00,club_config_and_theme,7.1,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:19:04.417706+00:00,load prepared Hall of Fame data,35.7,,,true,
+2026-06-18T04:19:04.952911+00:00,render premiership records,10.8,,,,
+2026-06-18T04:19:05.940820+00:00,render all-time leaders,987.1,,,,
+2026-06-18T04:19:05.946069+00:00,render iconic performances,4.7,,,,
+2026-06-18T04:19:05.982531+00:00,render fastest innings,35.9,,,,
+2026-06-18T04:19:05.984210+00:00,render record holders,1.1,,,,
+2026-06-18T04:19:06.000806+00:00,render greatest seasons,16.3,,,,
+2026-06-18T04:19:06.599084+00:00,render table hof_batting_detail,596.7,,,,
+2026-06-18T04:19:07.341054+00:00,render table hof_bowling_detail,740.9,,,,
+2026-06-18T04:19:07.932852+00:00,render table hof_fielding_detail,590.5,,,,
+2026-06-18T04:19:07.934025+00:00,render detailed records,1932.5,,,,
+2026-06-18T04:19:07.940860+00:00,page_render:hall-of-fame,3588.2,,,,Top-level route render including shared navigation.
+2026-06-18T04:19:07.942203+00:00,app_startup_and_render,3589.6,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:21:00.767100+00:00,club_config_and_theme,8.4,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:21:00.860307+00:00,load prepared Hall of Fame data,52.9,,,true,
+2026-06-18T04:21:01.386825+00:00,render premiership records,13.3,,,,
+2026-06-18T04:21:02.442921+00:00,render all-time leaders,1055.1,,,,
+2026-06-18T04:21:02.451253+00:00,render iconic performances,7.5,,,,
+2026-06-18T04:21:02.503626+00:00,render fastest innings,52.0,,,,
+2026-06-18T04:21:02.505327+00:00,render record holders,0.9,,,,
+2026-06-18T04:21:02.522552+00:00,render greatest seasons,16.9,,,,
+2026-06-18T04:21:03.928131+00:00,club_config_and_theme,6.8,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:21:03.978425+00:00,load prepared Hall of Fame data,27.9,,,true,
+2026-06-18T04:21:04.490571+00:00,render premiership records,12.5,,,,
+2026-06-18T04:21:05.474518+00:00,render all-time leaders,983.2,,,,
+2026-06-18T04:21:05.479681+00:00,render iconic performances,4.3,,,,
+2026-06-18T04:21:05.517531+00:00,render fastest innings,37.6,,,,
+2026-06-18T04:21:05.520216+00:00,render record holders,1.9,,,,
+2026-06-18T04:21:05.537354+00:00,render greatest seasons,16.6,,,,
+2026-06-18T04:21:06.186874+00:00,render table hof_batting_detail,647.6,,,,
+2026-06-18T04:21:06.914824+00:00,render table hof_bowling_detail,726.7,,,,
+2026-06-18T04:21:07.454789+00:00,render table hof_fielding_detail,535.5,,,,
+2026-06-18T04:21:07.457129+00:00,render detailed records,1918.9,,,,
+2026-06-18T04:21:07.470593+00:00,page_render:hall-of-fame,3549.4,,,,Top-level route render including shared navigation.
+2026-06-18T04:21:07.471166+00:00,app_startup_and_render,3550.1,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:21:33.003503+00:00,club_config_and_theme,11.2,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:21:35.072577+00:00,page_render:season-overview,2080.4,,,,Top-level route render including shared navigation.
+2026-06-18T04:21:35.073636+00:00,app_startup_and_render,2081.8,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:21:36.096274+00:00,club_config_and_theme,7.5,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:22:57.195843+00:00,club_config_and_theme,9.4,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:22:58.619872+00:00,page_render:season-overview,1433.5,,,,Top-level route render including shared navigation.
+2026-06-18T04:22:58.621606+00:00,app_startup_and_render,1437.3,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:23:14.226300+00:00,club_config_and_theme,8.3,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:23:14.405716+00:00,source data loading,141.1,26813,5,false,
+2026-06-18T04:23:17.106043+00:00,club_config_and_theme,29.1,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:23:18.256508+00:00,apply canonical player and team-grade mapping,3850.6,,,,
+2026-06-18T04:23:31.743426+00:00,build canonical category summaries,13486.9,,,,
+2026-06-18T04:23:51.116883+00:00,build all-time player summary,19373.6,,,,
+2026-06-18T04:24:01.689964+00:00,page_render:milestone,44614.8,,,,Top-level route render including shared navigation.
+2026-06-18T04:24:01.690689+00:00,app_startup_and_render,44615.6,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:24:22.397114+00:00,club_config_and_theme,9.7,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:24:25.694210+00:00,club_config_and_theme,6.5,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:24:33.089394+00:00,page_render:milestone,7402.0,,,,Top-level route render including shared navigation.
+2026-06-18T04:24:33.090528+00:00,app_startup_and_render,7403.3,,,,Full Streamlit script run for the selected route.
+2026-06-18T04:24:52.579152+00:00,club_config_and_theme,9.5,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:24:55.493894+00:00,club_config_and_theme,6.6,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T04:24:59.076649+00:00,page_render:player-profile,3589.5,,,,Top-level route render including shared navigation.
+2026-06-18T04:24:59.077321+00:00,app_startup_and_render,3590.3,,,,Full Streamlit script run for the selected route.
