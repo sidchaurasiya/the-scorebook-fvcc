@@ -11,7 +11,7 @@
 
 ## Skipped GRDCC-specific changes
 
-- GRDCC blue palette and accent treatment: skipped to preserve the FVCC theme.
+- GRDCC blue palette and accent treatment: skipped; FVCC retains its production burgundy, navy, gold, and off-white palette.
 - Annual Report record overrides and supplements: skipped because they are GRDCC data/source behavior.
 - Historical Excel matches proxy behavior: skipped because it changes record sourcing rather than presentation.
 - GRDCC wording and abbreviated premiership result copy: skipped to retain FVCC language.
@@ -20,4 +20,4 @@
 
 ## Behaviour confirmation
 
-FVCC source data, statistical values, calculations, rankings, record ordering, palette, and deployment configuration are unchanged. The only non-visual behavior adjustment is the requested FVCC Milestones active-player window, which now uses the latest three available FVCC seasons dynamically and includes winter cricket.
+FVCC source data, statistical values, calculations, rankings, record ordering, and deployment configuration are unchanged. FVCC's production burgundy/navy palette is enforced by its club-scoped theme resolver. The only non-visual behavior adjustment is the requested FVCC Milestones active-player window, which uses the latest three available FVCC seasons dynamically and includes winter cricket.

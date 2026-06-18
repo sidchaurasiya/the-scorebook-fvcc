@@ -5,7 +5,15 @@ import re
 
 import streamlit as st
 
-from src.config.club_config import get_branding_value
+from src.config.club_config import get_active_club_id, get_branding_value
+
+
+FVCC_PRODUCTION_BRANDING = {
+    "primary_colour": "#A31952",
+    "secondary_colour": "#28485F",
+    "accent_colour": "#D4A83A",
+    "background_colour": "#F6F8FB",
+}
 
 
 def inject_theme() -> None:
@@ -7610,10 +7618,12 @@ def inject_theme() -> None:
 
 
 def active_club_theme_css() -> str:
-    primary = safe_hex_colour(get_branding_value("primary_colour", "#5B4BEB"), "#5B4BEB")
-    secondary = safe_hex_colour(get_branding_value("secondary_colour", "#7C5CFF"), "#7C5CFF")
-    accent = safe_hex_colour(get_branding_value("accent_colour", primary), primary)
-    background = safe_hex_colour(get_branding_value("background_colour", "#F7F8FC"), "#F7F8FC")
+    active_club_id = get_active_club_id()
+    branding = FVCC_PRODUCTION_BRANDING if active_club_id == "fvcc" else {}
+    primary = safe_hex_colour(branding.get("primary_colour", get_branding_value("primary_colour", "#5B4BEB")), "#5B4BEB")
+    secondary = safe_hex_colour(branding.get("secondary_colour", get_branding_value("secondary_colour", "#7C5CFF")), "#7C5CFF")
+    accent = safe_hex_colour(branding.get("accent_colour", get_branding_value("accent_colour", primary)), primary)
+    background = safe_hex_colour(branding.get("background_colour", get_branding_value("background_colour", "#F7F8FC")), "#F7F8FC")
     text = safe_hex_colour(get_branding_value("text_colour", "#080B3F"), "#080B3F")
     muted = safe_hex_colour(get_branding_value("muted_text_colour", "#6D728E"), "#6D728E")
     line = safe_hex_colour(get_branding_value("border_colour", "#E7EAF5"), "#E7EAF5")
@@ -7622,7 +7632,12 @@ def active_club_theme_css() -> str:
     highlight = tint_hex(accent, 0.86)
     primary_soft = tint_hex(primary, 0.90)
     secondary_soft = tint_hex(secondary, 0.88)
-    sidebar_bg = safe_hex_colour(get_branding_value("primary_dark_colour", darken_hex(primary, 0.24)), darken_hex(primary, 0.24))
+    sidebar_start = secondary if active_club_id == "fvcc" else primary
+    sidebar_bg = (
+        darken_hex(secondary, 0.24)
+        if active_club_id == "fvcc"
+        else safe_hex_colour(get_branding_value("primary_dark_colour", darken_hex(primary, 0.24)), darken_hex(primary, 0.24))
+    )
     sidebar_active = primary
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
@@ -7647,6 +7662,7 @@ def active_club_theme_css() -> str:
             --club-primary-soft: {primary_soft};
             --club-secondary-soft: {secondary_soft};
             --club-sidebar-bg: {sidebar_bg};
+            --club-sidebar-start: {sidebar_start};
             --club-sidebar-active: {sidebar_active};
             --club-primary-rgb: {primary_rgb};
             --club-accent-rgb: {accent_rgb};
@@ -7672,7 +7688,7 @@ def active_club_theme_css() -> str:
             background:
                 radial-gradient(circle at 18% 0%, rgba(var(--club-secondary-rgb), 0.22), transparent 14rem),
                 radial-gradient(circle at 80% 42%, rgba(var(--club-secondary-rgb), 0.16), transparent 12rem),
-                linear-gradient(180deg, var(--club-primary) 0%, var(--club-sidebar-bg) 100%) !important;
+                linear-gradient(180deg, var(--club-sidebar-start) 0%, var(--club-sidebar-bg) 100%) !important;
         }}
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
