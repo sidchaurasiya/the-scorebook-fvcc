@@ -1807,30 +1807,6 @@ def render_season_round_empty_state(message: str = "Round-by-round scorecards ar
     )
 
 
-def selected_season_round_grade_filter(
-    options: list[tuple[str, str]],
-    dashboard_data: dict[str, object],
-) -> str:
-    season_id = re.sub(r"[^a-zA-Z0-9_]+", "_", str(dashboard_data.get("season", {}).get("id", "season") or "season"))
-    scope_id = "all" if dashboard_data.get("is_all_teams") else str(dashboard_data.get("team", {}).get("id", "team") or "team")
-    scope_id = re.sub(r"[^a-zA-Z0-9_]+", "_", scope_id)
-    key = f"season_round_grade_filter_{season_id}_{scope_id}"
-    valid = [slug for slug, _label in options]
-    if key not in st.session_state or st.session_state.get(key) not in valid:
-        st.session_state[key] = valid[0]
-    selected = render_folder_tab_widget(
-        "Season by Round grade",
-        options,
-        key=key,
-        control_key="season_round_grade_filter_control",
-    )
-    selected_slug = str(selected or st.session_state.get(key) or valid[0])
-    if selected_slug not in valid:
-        selected_slug = valid[0]
-        st.session_state[key] = selected_slug
-    return selected_slug
-
-
 def build_season_round_rows(
     dashboard_data: dict[str, object],
     source: pd.DataFrame,
@@ -2071,7 +2047,11 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
             f'<div class="season-round-scroll"><div class="season-round-grid">{head_cols}{row_html}</div></div>'
             '</article>'
         )
-    return f'<div class="season-round-panel-strip">{"".join(cards)}</div>'
+    return (
+        '<div class="season-round-panel-strip" '
+        'data-layout="horizontal-grade-panels" data-internal-folder-selector="false">'
+        f'{"".join(cards)}</div>'
+    )
 
 
 def season_round_row_html(row: dict[str, object], show_grade_column: bool = False) -> str:
@@ -6921,7 +6901,8 @@ def render_hof_leader_card(
     rows_html = "".join(rows)
     if scrollable:
         rows_html = (
-            f'<div class="hof-leader-scroll" style="--hof-visible-rows:{visible_rows}">'
+            f'<div class="hof-leader-scroll" style="--hof-visible-rows:{visible_rows}" '
+            'data-mobile-visible-rows="5" data-scroll-enabled="true">'
             f"{rows_html}</div>"
         )
     st.markdown(
@@ -7080,7 +7061,9 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
         f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
-        f'<div class="premiership-card-scroll premiership-wins-scroll">{rows_html}</div>'
+        '<div class="premiership-card-scroll premiership-wins-scroll" '
+        'data-desktop-visible-rows="6" data-mobile-visible-rows="5" data-scroll-enabled="true">'
+        f'{rows_html}</div>'
         "</div>"
     )
 
@@ -7523,20 +7506,28 @@ def render_ranked_record_card(
         ascending=[True, False, False],
     ).head(FASTEST_MILESTONE_RECORD_LIMIT)
     state_key = f"hof_ranked_record_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
-    scrollable = get_active_club_id() == "georges-river-district"
+    grdcc_scroll = get_active_club_id() == "georges-river-district"
+    fvcc_mobile_scroll = active_club_is_fvcc()
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_rows = rows if scrollable or expanded else rows.head(6)
+    displayed_rows = rows if grdcc_scroll or fvcc_mobile_scroll or expanded else rows.head(6)
     row_html = "".join(
         milestone_record_row_html(rank, row, value_col, value_suffix)
         for rank, (_, row) in enumerate(displayed_rows.iterrows(), start=1)
     )
-    if scrollable:
+    if grdcc_scroll:
         row_html = f'<div class="hof-five-row-scroll">{row_html}</div>'
+    elif fvcc_mobile_scroll:
+        expanded_class = " expanded" if expanded else ""
+        row_html = (
+            f'<div class="hof-mobile-five-row-scroll{expanded_class}" '
+            'data-mobile-visible-rows="5" data-scroll-enabled="true">'
+            f'{row_html}</div>'
+        )
     st.markdown(
         f'<div class="hof-card performance-card fastest-innings-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
         unsafe_allow_html=True,
     )
-    if not scrollable:
+    if not grdcc_scroll:
         render_hof_expand_control(state_key, expanded, len(rows))
 
 
@@ -7668,9 +7659,10 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         return
     records = df.head(10).copy()
     state_key = f"hof_performance_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
-    scrollable = get_active_club_id() == "georges-river-district"
+    grdcc_scroll = get_active_club_id() == "georges-river-district"
+    fvcc_mobile_scroll = active_club_is_fvcc()
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_records = records if scrollable or expanded else records.head(6)
+    displayed_records = records if grdcc_scroll or fvcc_mobile_scroll or expanded else records.head(6)
     rows = []
     for rank, (_, row) in enumerate(displayed_records.iterrows(), start=1):
         if mode == "batting":
@@ -7693,13 +7685,20 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
             "</div>"
         )
     rows_html = "".join(rows)
-    if scrollable:
+    if grdcc_scroll:
         rows_html = f'<div class="hof-five-row-scroll iconic-performance-scroll">{rows_html}</div>'
+    elif fvcc_mobile_scroll:
+        expanded_class = " expanded" if expanded else ""
+        rows_html = (
+            f'<div class="hof-mobile-five-row-scroll iconic-performance-scroll{expanded_class}" '
+            'data-mobile-visible-rows="5" data-scroll-enabled="true">'
+            f'{rows_html}</div>'
+        )
     st.markdown(
         f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{rows_html}</div>',
         unsafe_allow_html=True,
     )
-    if not scrollable:
+    if not grdcc_scroll:
         render_hof_expand_control(state_key, expanded, len(records))
 
 
@@ -9036,7 +9035,10 @@ def build_approaching_milestone_watchlist(all_time: pd.DataFrame) -> pd.DataFram
     return watchlist.sort_values(["Remaining", "Current Total"], ascending=[True, False])
 
 
-def recent_active_canonical_players(historical_data: dict[str, object], season_count: int = 2) -> set[str]:
+def recent_active_canonical_players(
+    historical_data: dict[str, object],
+    season_count: int | None = None,
+) -> set[str]:
     frames = [
         historical_data.get("batting_raw"),
         historical_data.get("bowling_raw"),
@@ -9046,7 +9048,12 @@ def recent_active_canonical_players(historical_data: dict[str, object], season_c
     if not frames:
         return set()
 
-    activity = filter_grdcc_active_badge_activity(pd.concat(frames, ignore_index=True, sort=False))
+    club_id = get_active_club_id()
+    if season_count is None:
+        season_count = 3 if club_id == "fvcc" else 2
+    activity = pd.concat(frames, ignore_index=True, sort=False)
+    if club_id == "georges-river-district":
+        activity = filter_grdcc_active_badge_activity(activity)
     if activity.empty or "canonical_player_name" not in activity:
         return set()
 
