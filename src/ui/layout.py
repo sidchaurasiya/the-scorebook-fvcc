@@ -77,7 +77,7 @@ from src.config.club_config import (
 from src.data import player_dna_analytics as player_dna
 from src.data import scorebook_lab_analytics as scorebook_lab
 from src.data import season_story_analytics as season_story
-from src.ui.theme import inject_theme
+from src.ui.theme import FVCC_PRODUCTION_BRANDING, inject_theme
 from src.utils.player_identity import (
     DUPLICATE_AUDIT_PATH,
     EXPORTS_DIR,
@@ -627,6 +627,18 @@ def link_season_columns(table: pd.DataFrame, columns: list[str] | None = None) -
 def active_club_colour(key: str, fallback: str) -> str:
     value = str(get_branding_value(key, fallback) or fallback).strip()
     return value if re.fullmatch(r"#[0-9a-fA-F]{6}", value) else fallback
+
+
+def active_link_colour() -> str:
+    if get_active_club_id() == "fvcc":
+        return FVCC_PRODUCTION_BRANDING["secondary_colour"]
+    return active_club_colour("primary_colour", "#0072CE")
+
+
+def active_link_hover_colour() -> str:
+    if get_active_club_id() == "fvcc":
+        return "#1E3748"
+    return active_club_colour("accent_colour", active_link_colour())
 
 
 def active_chart_primary_colour() -> str:
@@ -8594,8 +8606,8 @@ def apply_hof_table_sorting(table: pd.DataFrame, table_type: str) -> pd.DataFram
 
 def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", key_prefix).strip("-") or "hof-detail-table"
-    link_colour = active_club_colour("primary_colour", "#6D4DFF")
-    accent_colour = active_club_colour("accent_colour", link_colour)
+    link_colour = active_link_colour()
+    accent_colour = active_link_hover_colour()
     player_link_hover_colour = link_colour if active_club_is_grdcc() else accent_colour
     primary_soft = active_club_colour("background_colour", "#F7F7FC")
     metadata_columns = {"Innings", "Matches Source", "Matches Proxy"}
@@ -16443,8 +16455,8 @@ def render_full_stats_table(
 
 def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_id: str) -> str:
     safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "season-detail-table"
-    link_colour = active_club_colour("primary_colour", "#0072CE")
-    accent_colour = active_club_colour("accent_colour", link_colour)
+    link_colour = active_link_colour()
+    accent_colour = active_link_hover_colour()
     soft_colour = active_club_colour("background_colour", "#F7F8FC")
     columns = table.columns.tolist()
     colgroup = "".join(

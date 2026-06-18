@@ -7628,7 +7628,8 @@ def active_club_theme_css() -> str:
     muted = safe_hex_colour(get_branding_value("muted_text_colour", "#6D728E"), "#6D728E")
     line = safe_hex_colour(get_branding_value("border_colour", "#E7EAF5"), "#E7EAF5")
     surface = safe_hex_colour(get_branding_value("surface_colour", "#FFFFFF"), "#FFFFFF")
-    link = primary
+    link = secondary if active_club_id == "fvcc" else primary
+    link_hover = darken_hex(secondary, 0.24) if active_club_id == "fvcc" else secondary
     highlight = tint_hex(accent, 0.86)
     primary_soft = tint_hex(primary, 0.90)
     secondary_soft = tint_hex(secondary, 0.88)
@@ -7658,6 +7659,7 @@ def active_club_theme_css() -> str:
             --club-border: {line};
             --club-surface: {surface};
             --club-link: {link};
+            --club-link-hover: {link_hover};
             --club-highlight: {highlight};
             --club-primary-soft: {primary_soft};
             --club-secondary-soft: {secondary_soft};
@@ -7791,7 +7793,7 @@ def active_club_theme_css() -> str:
         a.scorecard-link:hover,
         a.season-round-scorecard-link:hover,
         a.full-link:hover {{
-            color: var(--club-secondary) !important;
+            color: var(--club-link-hover) !important;
         }}
 
         .block-container:has(.hall-of-fame-page) a:hover,
@@ -7799,8 +7801,6 @@ def active_club_theme_css() -> str:
             color: var(--club-link) !important;
         }}
 
-        .club-label,
-        .page-subtitle strong,
         .premiership-season,
         .premiership-season a,
         .hof-card a.player-profile-link,
@@ -7813,6 +7813,21 @@ def active_club_theme_css() -> str:
         .season-overview-link,
         .player-profile-link {{
             color: var(--club-link) !important;
+        }}
+
+        .block-container:has(.near-milestones-page) a.player-profile-link,
+        .block-container:has(.near-milestones-page) a.player-profile-link:visited {{
+            color: var(--club-link) !important;
+        }}
+
+        .block-container:has(.near-milestones-page) a.player-profile-link:hover,
+        .block-container:has(.near-milestones-page) a.player-profile-link:focus-visible {{
+            color: var(--club-link-hover) !important;
+        }}
+
+        .club-label,
+        .page-subtitle strong {{
+            color: var(--club-primary) !important;
         }}
 
         .mobile-nav-link.active,
@@ -7834,7 +7849,7 @@ def active_club_theme_css() -> str:
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover,
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover * {{
-            color: var(--club-secondary) !important;
+            color: var(--club-link-hover) !important;
         }}
 
         .stButton > button[kind="primary"],
@@ -7924,8 +7939,6 @@ def active_club_theme_css() -> str:
         .hof-v2-trophy-year a,
         .best-season-primary,
         .premiership-player-row .performance-value,
-        .premiership-player-row .performance-player span a.season-overview-link,
-        .premiership-player-row .performance-player span a.season-overview-link:visited,
         .milestone-away,
         .milestone-progress-top span:not(.milestone-row-badge),
         .milestone-group-title,
