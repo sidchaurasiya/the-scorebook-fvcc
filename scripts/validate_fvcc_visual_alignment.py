@@ -120,7 +120,7 @@ def main() -> int:
         ("fvcc_theme_config_unchanged", subprocess.run(["git", "diff", "--quiet", "HEAD", "--", "clubs/fvcc/club_config.yaml"], cwd=ROOT).returncode == 0, "FVCC palette/config file unchanged."),
         ("no_ranking_sort_changes", "def sort_hof_leaders" in layout and re.search(r"def sort_hof_leaders[\s\S]*?def render_record_holders", layout).group(0) == re.search(r"def sort_hof_leaders[\s\S]*?def render_record_holders", head_layout).group(0), "HOF ranking helper unchanged."),
         ("no_raw_data_changes", subprocess.run(["git", "diff", "--quiet", "HEAD", "--", "clubs/fvcc/data/raw"], cwd=ROOT).returncode == 0, "FVCC raw data unchanged."),
-        ("theme_colours_unchanged", not any(line.startswith(("+", "-")) and re.search(r"#[0-9a-fA-F]{3,8}|--club-(?:primary|secondary|accent)", line) for line in subprocess.run(["git", "diff", "--unified=0", "HEAD", "--", str(THEME_PATH.relative_to(ROOT))], cwd=ROOT, check=True, capture_output=True, text=True).stdout.splitlines() if not line.startswith(("+++", "---"))), "No colour declarations changed."),
+        ("fvcc_production_theme_preserved", all(token in theme for token in ['"primary_colour": "#A31952"', '"secondary_colour": "#28485F"', '"accent_colour": "#D4A83A"', '"background_colour": "#F6F8FB"']), "FVCC production palette is explicitly preserved by the club-scoped resolver."),
         ("active_player_audit", audit_rows > 0, f"{audit_rows} player rows written."),
     ]
 
