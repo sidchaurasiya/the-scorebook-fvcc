@@ -16,6 +16,7 @@ SO_VALIDATION = PROCESSED / "validation/season_overview"
 SUPPLEMENTS = PROCESSED / "validation/annual_report_2024_25/all_time_overrides/grdcc_override_player_excel_supplements.csv"
 LAYOUT = ROOT / "src/ui/layout.py"
 THEME = ROOT / "src/ui/theme.py"
+OVERRIDES = ROOT / "src/data/featured_record_overrides.py"
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -172,6 +173,7 @@ def season_panels_audit() -> list[dict[str, object]]:
 def validation_rows(active_rows: list[dict[str, object]], matches_rows: list[dict[str, object]], panel_rows: list[dict[str, object]]) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
     layout = LAYOUT.read_text(encoding="utf-8")
     theme = THEME.read_text(encoding="utf-8")
+    overrides = OVERRIDES.read_text(encoding="utf-8")
     harry = next((row for row in matches_rows if row["normalized_player_name"] == "harry milburn"), {})
     paul = next((row for row in active_rows if row["normalized_player_name"] == "paul thomas"), {})
     bowling_block = re.search(r"def get_bowling_display_df\(.*?def get_fielding_display_df", layout, re.S)
@@ -186,6 +188,16 @@ def validation_rows(active_rows: list[dict[str, object]], matches_rows: list[dic
         ("paul_thomas_inactive", "pass" if paul.get("is_active_after") == "no" else "fail", str(paul)),
         ("milestone_latest_two", "pass" if "def recent_active_canonical_players(historical_data: dict[str, object], season_count: int = 2)" in layout else "fail", "Milestone helper default is latest 2."),
         ("matches_footnote_present", "pass" if "Innings used where historical match counts are unavailable" in layout else "fail", "Footnote template exists."),
+        (
+            "desktop_hof_matches_proxy_metadata",
+            "pass" if 'metadata_columns = {"Innings", "Matches Source", "Matches Proxy"}' in layout and 'output["Innings"] = pd.NA' in overrides else "fail",
+            "Desktop HOF detail tables preserve hidden innings-proxy metadata.",
+        ),
+        (
+            "desktop_hof_player_link_grdcc_blue",
+            "pass" if "player_link_hover_colour = link_colour if active_club_is_grdcc() else accent_colour" in layout and ".hof-detail-sortable .hof-col-player a:hover" in layout else "fail",
+            "Desktop HOF player links keep the GRDCC link blue at rest and on hover.",
+        ),
     ]
     so_checks = [
         ("season_by_round_horizontal_panels", "pass" if "season-round-panel-strip" in layout and ".season-round-panel-strip" in theme else "fail", "Season by Round renders horizontal grade panels."),
@@ -196,6 +208,11 @@ def validation_rows(active_rows: list[dict[str, object]], matches_rows: list[dic
         ("empty_grades_excluded", "pass" if "filter_empty_grdcc_season_teams" in layout else "fail", "Empty grades filtered."),
         ("no_balls_wides_after_5wi", "pass" if bowling_order_ok else "fail", "Bowling order is BBI, 3WI, 5WI, No Balls, Wides."),
         ("no_balls_wides_compact", "pass" if "season-col-no-balls" in layout and "season-col-wides" in layout else "fail", "Compact widths configured."),
+        (
+            "active_player_wording",
+            "pass" if "Showing active players only — players who have appeared for GRDCC in the last 2 seasons." in layout else "fail",
+            "GRDCC active-player wording matches the requested sentence exactly.",
+        ),
     ]
     return (
         [{"check": c, "validation_status": s, "details": d} for c, s, d in hof_checks],

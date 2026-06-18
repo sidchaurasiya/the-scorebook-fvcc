@@ -7,3 +7,4 @@ duplicates_combined,pass,Duplicate same-competition teams combined.
 empty_grades_excluded,pass,Empty grades filtered.
 no_balls_wides_after_5wi,pass,"Bowling order is BBI, 3WI, 5WI, No Balls, Wides."
 no_balls_wides_compact,pass,Compact widths configured.
+active_player_wording,pass,GRDCC active-player wording matches the requested sentence exactly.
