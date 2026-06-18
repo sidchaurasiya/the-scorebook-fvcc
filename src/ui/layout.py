@@ -47,7 +47,11 @@ from src.data.playcricket_ingestion import (
     read_processed_table,
     refresh_playcricket_backup,
 )
-from src.data.featured_record_overrides import apply_featured_record_overrides, normalize_featured_player_name
+from src.data.featured_record_overrides import (
+    apply_featured_record_overrides,
+    featured_record_overrides_mtime,
+    normalize_featured_player_name,
+)
 from src.data.premiership_honours import (
     annual_report_premiership_path,
     grdcc_most_premierships_path,
@@ -109,6 +113,7 @@ from src.utils.analytics import (
     track_event_once,
     track_page_view,
 )
+from src.utils.performance import record_grdcc_load_profile
 
 
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -182,9 +187,26 @@ LEGACY_PAGE_SLUGS = {
 }
 
 
-def log_hof_timing(label: str, started_at: float) -> None:
+def log_hof_timing(
+    label: str,
+    started_at: float,
+    *,
+    rows_loaded: int | None = None,
+    files_loaded: int | None = None,
+    cache_hit: bool | None = None,
+    notes: str = "",
+) -> None:
+    elapsed_ms = (time.perf_counter() - started_at) * 1000
     if DEBUG_HOF_TIMINGS:
-        print(f"[hall-of-fame] {label}: {(time.perf_counter() - started_at) * 1000:.1f} ms")
+        print(f"[hall-of-fame] {label}: {elapsed_ms:.1f} ms")
+    record_grdcc_load_profile(
+        label,
+        elapsed_ms,
+        rows_loaded=rows_loaded,
+        files_loaded=files_loaded,
+        cache_hit=cache_hit,
+        notes=notes,
+    )
 
 
 def get_page_definitions() -> tuple[tuple[str, str, str], ...]:
@@ -672,7 +694,15 @@ def render_routing_debug_line() -> None:
 
 def render_page() -> None:
     """Render the dashboard."""
+    render_started_at = time.perf_counter()
+    theme_started_at = time.perf_counter()
     inject_theme()
+    record_grdcc_load_profile(
+        "club_config_and_theme",
+        (time.perf_counter() - theme_started_at) * 1000,
+        files_loaded=1,
+        notes="Club config is memoized; this includes theme CSS construction.",
+    )
     inject_ga4()
     selected_page = render_sidebar()
     track_page_view(selected_page, page_title_for_slug(selected_page))
@@ -708,6 +738,11 @@ def render_page() -> None:
     else:
         render_hall_of_fame_page()
     render_mobile_page_footer()
+    record_grdcc_load_profile(
+        f"page_render:{selected_page}",
+        (time.perf_counter() - render_started_at) * 1000,
+        notes="Top-level route render including shared navigation.",
+    )
 
 
 def render_sidebar() -> str:
@@ -4434,8 +4469,17 @@ def safe_display(value: object, fallback: str = "-") -> str:
 
 def render_hall_of_fame_page() -> None:
     started_at = time.perf_counter()
-    hall_of_fame_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime(), HALL_OF_FAME_DATA_VERSION)
-    log_hof_timing("load prepared Hall of Fame data", started_at)
+    hall_of_fame_data = get_hall_of_fame_data(
+        metadata_mtime(),
+        player_aliases_mtime(),
+        HALL_OF_FAME_DATA_VERSION,
+        featured_record_overrides_mtime(),
+    )
+    log_hof_timing(
+        "load prepared Hall of Fame data",
+        started_at,
+        cache_hit=(time.perf_counter() - started_at) < 1.0,
+    )
     if hall_of_fame_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the Hall of Fame.")
         return
@@ -4458,18 +4502,36 @@ def render_hall_of_fame_page() -> None:
     team_group_slug = render_hall_of_fame_team_group_filter(hall_of_fame_data)
     if team_group_slug:
         hall_of_fame_data = filter_hall_of_fame_data_by_team_group(hall_of_fame_data, team_group_slug)
+    section_started_at = time.perf_counter()
     render_premiership_records(team_group_slug)
+    log_hof_timing("render premiership records", section_started_at)
+    section_started_at = time.perf_counter()
     render_hall_of_fame_leaders(hall_of_fame_data["all_time"], active_hof_players(hall_of_fame_data))
+    log_hof_timing("render all-time leaders", section_started_at)
+    section_started_at = time.perf_counter()
     render_match_winning_performances(hall_of_fame_data)
+    log_hof_timing("render iconic performances", section_started_at)
+    section_started_at = time.perf_counter()
     render_fastest_batting_milestone_records(team_group_slug)
+    log_hof_timing("render fastest innings", section_started_at)
+    section_started_at = time.perf_counter()
     render_record_holders(hall_of_fame_data)
+    log_hof_timing("render record holders", section_started_at)
+    section_started_at = time.perf_counter()
     render_best_ever_seasons(hall_of_fame_data)
+    log_hof_timing("render greatest seasons", section_started_at)
+    section_started_at = time.perf_counter()
     render_detailed_all_time_records(hall_of_fame_data["detailed_tables"])
+    log_hof_timing("render detailed records", section_started_at)
 
 
 def render_hall_of_fame_team_group_filter(data: dict[str, object]) -> str | None:
     options = hall_of_fame_team_group_options(data)
     if len(options) <= 1:
+        # GRDCC currently has one HOF group. Re-filtering that same group rebuilt
+        # every all-time aggregate and added roughly 46 seconds to the cold load.
+        if active_club_is_grdcc():
+            return None
         return options[0][0] if options else None
     render_profile_segmented_widget(
         "Hall of Fame team group",
@@ -4568,7 +4630,12 @@ def classify_hof_team_group(row: pd.Series) -> str:
 
 def render_hall_of_fame_v2_page() -> None:
     started_at = time.perf_counter()
-    hall_of_fame_data = get_hall_of_fame_data(metadata_mtime(), player_aliases_mtime(), HALL_OF_FAME_DATA_VERSION)
+    hall_of_fame_data = get_hall_of_fame_data(
+        metadata_mtime(),
+        player_aliases_mtime(),
+        HALL_OF_FAME_DATA_VERSION,
+        featured_record_overrides_mtime(),
+    )
     log_hof_timing("load prepared Hall of Fame v2 data", started_at)
     if hall_of_fame_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the Hall of Fame.")
@@ -5733,7 +5800,7 @@ def render_identity_info_note() -> None:
     )
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, persist="disk")
 def load_hall_of_fame_data(
     local_version: float,
     identity_version: float | None = None,
@@ -5746,7 +5813,13 @@ def load_hall_of_fame_data(
     fielding_raw = read_processed_table("all_seasons_fielding")
     seasons = read_processed_table("seasons")
     players = read_processed_table("players")
-    log_hof_timing("load historical local data", started_at)
+    log_hof_timing(
+        "source data loading",
+        started_at,
+        rows_loaded=sum(len(frame) for frame in [batting_raw, bowling_raw, fielding_raw, seasons, players]),
+        files_loaded=5,
+        cache_hit=False,
+    )
 
     if batting_raw.empty and bowling_raw.empty and fielding_raw.empty:
         return None
@@ -5832,12 +5905,14 @@ def load_hall_of_fame_data(
     }
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, persist="disk")
 def get_hall_of_fame_data(
     local_version: float,
     identity_version: float | None = None,
     data_version: str = HALL_OF_FAME_DATA_VERSION,
+    override_version: float | None = None,
 ) -> dict[str, object] | None:
+    _ = override_version
     started_at = time.perf_counter()
     historical_data = load_hall_of_fame_data(local_version, identity_version, data_version)
     log_hof_timing("load historical data", started_at)
