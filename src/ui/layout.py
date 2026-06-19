@@ -152,7 +152,7 @@ SHOW_PLAYER_PROFILE_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
-HALL_OF_FAME_DATA_VERSION = "hof-featured-record-overrides-v1"
+HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v3"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -6089,6 +6089,7 @@ def build_all_time_player_table(
             [
                 "player_key",
                 "battingAggregate",
+                "battingInnings",
                 "battingAverage",
                 "battingStrikeRate",
                 "high_score",
@@ -6188,6 +6189,7 @@ def build_all_time_player_table(
             "matches": "Matches",
             "win_pct": "Win %",
             "battingAggregate": "Runs",
+            "battingInnings": "Innings",
             "battingAverage": "Bat Avg",
             "battingStrikeRate": "Bat SR",
             "high_score": "HS",
@@ -8644,12 +8646,12 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       }}
       html, body {{
         margin: 0;
-        padding: 0;
+        padding: 0 0 4px;
         background: transparent;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }}
       .hof-detail-table-wrap {{
-        height: 548px;
+        height: 500px;
         overflow: auto;
         border: 1px solid var(--hof-grid);
         border-radius: 18px;
@@ -8749,6 +8751,18 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
       .hof-detail-sortable tr:hover td.hof-col-player {{
         background: var(--hof-soft);
       }}
+      .hof-matches-footnote {{
+        box-sizing: border-box;
+        margin: 8px 8px 0;
+        padding: 7px 10px 8px;
+        border-left: 3px solid var(--hof-link);
+        border-radius: 6px;
+        background: var(--hof-soft);
+        color: var(--hof-muted);
+        font-size: 11.5px;
+        font-weight: 600;
+        line-height: 1.35;
+      }}
     </style>
     <div class="hof-detail-table-wrap">
       <table id="{html.escape(table_id, quote=True)}" class="hof-detail-sortable" data-player-column-index="1">
@@ -8756,7 +8770,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         <tbody>{''.join(rows)}</tbody>
       </table>
     </div>
-    {'<div class="page-note hof-matches-footnote">* Innings used where historical match counts are unavailable.</div>' if matches_proxy_used else ''}
+    {'<div class="hof-matches-footnote">* For historical records where match counts were not captured, innings are shown as a match-count proxy.</div>' if matches_proxy_used else ''}
     <script>
       (() => {{
         const table = document.getElementById({table_id!r});
@@ -13951,15 +13965,29 @@ def historical_matches_display_text(
     innings = pd.to_numeric(pd.Series([row.get(innings_key)]), errors="coerce").iloc[0]
     source = safe_record_text(row.get("Matches Source") or row.get("matches_source") or row.get("Matches Proxy"))
     proxy_flag = as_bool(row.get("Matches Proxy"))
-    season_text = safe_record_text(row.get(season_key) or row.get(season_key.casefold()) or row.get("season"))
+    season_text = safe_record_text(
+        row.get(season_key)
+        or row.get(season_key.casefold())
+        or row.get("season")
+        or row.get("Latest Season")
+        or row.get("latest_season")
+    )
+    season_label = link_display_label(season_text)
     historical_cutoff = season_sort_key("Summer 1971/72")
-    is_historical_season = bool(season_text) and season_sort_key(season_text) <= historical_cutoff
+    is_historical_season = bool(season_label) and season_sort_key(season_label) <= historical_cutoff
     proxy = proxy_flag or (source.casefold() == "innings_proxy" if source else False)
     if not proxy and is_historical_season and (pd.isna(matches) or float(matches) <= 0) and pd.notna(innings) and float(innings) > 0:
         proxy = True
     if proxy and pd.notna(innings) and float(innings) > 0:
         display_value = int(round(float(innings)))
         return f"{display_value:,}*", display_value, True
+    real_stat_columns = ["Runs", "runs", "Wickets", "wickets", "Catches", "catches", "Dismissals", "dismissals"]
+    has_real_stats = any(
+        pd.notna(number) and float(number) > 0
+        for number in (pd.to_numeric(pd.Series([row.get(column)]), errors="coerce").iloc[0] for column in real_stat_columns)
+    )
+    if is_historical_season and (pd.isna(matches) or float(matches) <= 0) and has_real_stats:
+        return "", None, False
     if pd.isna(matches):
         return "", None, False
     display_value = int(round(float(matches)))
