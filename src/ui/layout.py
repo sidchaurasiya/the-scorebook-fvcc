@@ -7068,7 +7068,7 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     rows["_season_sort"] = rows.get("season_sort_key", rows.get("season", pd.Series("", index=rows.index))).map(
         lambda value: safe_record_int(value) or season_sort_key(value)
     )
-    rows = rows.sort_values(["_season_sort", "grade_name"], ascending=[False, True], na_position="last")
+    rows = rows.sort_values("_season_sort", ascending=False, na_position="last", kind="mergesort")
     rows_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
@@ -7519,27 +7519,26 @@ def render_ranked_record_card(
     ).head(FASTEST_MILESTONE_RECORD_LIMIT)
     state_key = f"hof_ranked_record_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
     grdcc_scroll = get_active_club_id() == "georges-river-district"
-    fvcc_mobile_scroll = active_club_is_fvcc()
+    fvcc_scroll = active_club_is_fvcc()
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_rows = rows if grdcc_scroll or fvcc_mobile_scroll or expanded else rows.head(6)
+    displayed_rows = rows if grdcc_scroll or fvcc_scroll or expanded else rows.head(6)
     row_html = "".join(
         milestone_record_row_html(rank, row, value_col, value_suffix)
         for rank, (_, row) in enumerate(displayed_rows.iterrows(), start=1)
     )
     if grdcc_scroll:
         row_html = f'<div class="hof-five-row-scroll">{row_html}</div>'
-    elif fvcc_mobile_scroll:
-        expanded_class = " expanded" if expanded else ""
+    elif fvcc_scroll:
         row_html = (
-            f'<div class="hof-mobile-five-row-scroll{expanded_class}" '
-            'data-mobile-visible-rows="5" data-scroll-enabled="true">'
+            '<div class="hof-responsive-record-scroll" '
+            'data-desktop-visible-rows="6" data-mobile-visible-rows="5" data-scroll-enabled="true">'
             f'{row_html}</div>'
         )
     st.markdown(
         f'<div class="hof-card performance-card fastest-innings-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
         unsafe_allow_html=True,
     )
-    if not grdcc_scroll:
+    if not grdcc_scroll and not fvcc_scroll:
         render_hof_expand_control(state_key, expanded, len(rows))
 
 
@@ -7672,9 +7671,9 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
     records = df.head(10).copy()
     state_key = f"hof_performance_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
     grdcc_scroll = get_active_club_id() == "georges-river-district"
-    fvcc_mobile_scroll = active_club_is_fvcc()
+    fvcc_scroll = active_club_is_fvcc()
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_records = records if grdcc_scroll or fvcc_mobile_scroll or expanded else records.head(6)
+    displayed_records = records if grdcc_scroll or fvcc_scroll or expanded else records.head(6)
     rows = []
     for rank, (_, row) in enumerate(displayed_records.iterrows(), start=1):
         if mode == "batting":
@@ -7699,18 +7698,17 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
     rows_html = "".join(rows)
     if grdcc_scroll:
         rows_html = f'<div class="hof-five-row-scroll iconic-performance-scroll">{rows_html}</div>'
-    elif fvcc_mobile_scroll:
-        expanded_class = " expanded" if expanded else ""
+    elif fvcc_scroll:
         rows_html = (
-            f'<div class="hof-mobile-five-row-scroll iconic-performance-scroll{expanded_class}" '
-            'data-mobile-visible-rows="5" data-scroll-enabled="true">'
+            '<div class="hof-responsive-record-scroll iconic-performance-scroll" '
+            'data-desktop-visible-rows="6" data-mobile-visible-rows="5" data-scroll-enabled="true">'
             f'{rows_html}</div>'
         )
     st.markdown(
         f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{rows_html}</div>',
         unsafe_allow_html=True,
     )
-    if not grdcc_scroll:
+    if not grdcc_scroll and not fvcc_scroll:
         render_hof_expand_control(state_key, expanded, len(records))
 
 

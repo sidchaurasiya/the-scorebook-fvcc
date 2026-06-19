@@ -2758,8 +2758,16 @@ def inject_theme() -> None:
             scrollbar-width: thin;
         }
 
-        .hof-mobile-five-row-scroll:not(.expanded) .performance-row:nth-child(n + 7) {
-            display: none;
+        .hof-responsive-record-scroll {
+            max-height: 606px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .hof-responsive-record-scroll.iconic-performance-scroll {
+            max-height: 474px;
         }
 
         .iconic-performance-scroll .performance-player > span,
@@ -2801,24 +2809,20 @@ def inject_theme() -> None:
                 max-height: 360px;
             }
 
-            .block-container:has(.hall-of-fame-page) .hof-mobile-five-row-scroll {
-                max-height: 504px;
+            .block-container:has(.hall-of-fame-page) .hof-responsive-record-scroll {
+                max-height: 505px;
                 overflow-y: auto;
                 padding-right: 7px;
                 scrollbar-color: var(--club-border) transparent;
                 scrollbar-width: thin;
             }
 
-            .block-container:has(.hall-of-fame-page) .hof-mobile-five-row-scroll .performance-row:nth-child(n + 6) {
-                display: grid;
-            }
-
-            .block-container:has(.hall-of-fame-page) .hof-mobile-five-row-scroll.iconic-performance-scroll {
+            .block-container:has(.hall-of-fame-page) .hof-responsive-record-scroll.iconic-performance-scroll {
                 max-height: 395px;
             }
 
             .premiership-wins-scroll {
-                max-height: 824px;
+                max-height: 826px;
             }
 
             .premiership-player-scroll {
@@ -4417,14 +4421,18 @@ def inject_theme() -> None:
 
         .season-round-panel-strip {
             display: flex;
+            flex-wrap: nowrap;
             gap: 14px;
             max-width: 100%;
             overflow-x: auto;
             overflow-y: hidden;
+            overscroll-behavior-inline: contain;
             padding: 2px 2px 12px;
             scroll-snap-type: x proximity;
             scrollbar-color: var(--club-border) transparent;
             scrollbar-width: thin;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         .season-round-panel-strip .season-round-grade-card {
@@ -6913,7 +6921,7 @@ def inject_theme() -> None:
             }
 
             .premiership-wins-scroll {
-                max-height: 824px;
+                max-height: 826px;
             }
 
             .premiership-player-scroll {
