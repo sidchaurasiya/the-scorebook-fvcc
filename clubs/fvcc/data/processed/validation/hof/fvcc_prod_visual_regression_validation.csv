@@ -1,0 +1,18 @@
+check,status,notes
+premiership_reverse_chronological,pass,Stable latest-first season ordering is configured; latest source season is Summer 2024/25.
+premiership_desktop_six,pass,Desktop target is six rows.
+premiership_mobile_five,pass,Mobile target is five measured compact rows.
+premiership_scroll_enabled,pass,One continuous scroll container is present.
+premiership_row_count_unchanged,pass,Source remains unchanged with 8 rows.
+leaders_scroll,pass,All-Time Leaders use the scroll renderer and bypass the expand control.
+fastest_scroll,pass,FVCC Fastest Innings uses responsive scrolling and suppresses the old control.
+iconic_scroll,pass,FVCC Iconic Performances use responsive scrolling and suppress the old control.
+hof_desktop_six,pass,Responsive record lists use measured six-row desktop viewports.
+hof_mobile_five,pass,Leader and record lists use measured five-row mobile viewports.
+season_round_no_folder,pass,Internal folder selector is absent.
+season_round_horizontal_scroll,pass,Horizontal non-wrapping touch scroll is configured.
+season_round_panel_width,pass,Panels retain a fixed scrollable width and snap point.
+global_slicers_preserved,pass,Top season and team/grade slicers remain.
+fvcc_palette_unchanged,pass,FVCC config and production palette tokens are unchanged.
+fvcc_stats_unchanged,pass,FVCC aggregate and Hall of Fame source CSVs are unchanged.
+grdcc_branch_unchanged,pass,GRDCC keeps its existing dedicated scroll branch.
