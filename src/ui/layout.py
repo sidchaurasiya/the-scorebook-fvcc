@@ -152,7 +152,7 @@ SHOW_PLAYER_PROFILE_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
-HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v3"
+HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v4"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -8353,6 +8353,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "canonical_player_id",
         "Player",
         "Seasons Played",
+        "Latest Season",
         "Matches",
         "Win %",
         "Overs",
@@ -8370,6 +8371,7 @@ def format_all_time_bowling_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Matches Proxy",
     ]
     table = select_display_columns(source, columns).copy()
+    table = table.rename(columns={"Latest Season": "Proxy Season"})
     if "Bowl Avg" in source and "Avg" not in table:
         table.insert(table.columns.get_loc("Bowl SR"), "Avg", source.loc[table.index, "Bowl Avg"])
     if "Wickets" in table:
@@ -8610,7 +8612,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     accent_colour = active_link_hover_colour()
     player_link_hover_colour = link_colour if active_club_is_grdcc() else accent_colour
     primary_soft = active_club_colour("background_colour", "#F7F7FC")
-    metadata_columns = {"Innings", "Matches Source", "Matches Proxy"}
+    metadata_columns = {"Innings", "Matches Source", "Matches Proxy", "Proxy Season"}
     columns = [column for column in table.columns if column not in metadata_columns]
     header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
         f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
@@ -13971,6 +13973,7 @@ def historical_matches_display_text(
         or row.get("season")
         or row.get("Latest Season")
         or row.get("latest_season")
+        or row.get("Proxy Season")
     )
     season_label = link_display_label(season_text)
     historical_cutoff = season_sort_key("Summer 1971/72")
@@ -13981,12 +13984,25 @@ def historical_matches_display_text(
     if proxy and pd.notna(innings) and float(innings) > 0:
         display_value = int(round(float(innings)))
         return f"{display_value:,}*", display_value, True
-    real_stat_columns = ["Runs", "runs", "Wickets", "wickets", "Catches", "catches", "Dismissals", "dismissals"]
+    real_stat_columns = [
+        "Runs",
+        "runs",
+        "Wickets",
+        "wickets",
+        "Maidens",
+        "maidens",
+        "Catches",
+        "catches",
+        "Dismissals",
+        "dismissals",
+    ]
     has_real_stats = any(
         pd.notna(number) and float(number) > 0
         for number in (pd.to_numeric(pd.Series([row.get(column)]), errors="coerce").iloc[0] for column in real_stat_columns)
     )
-    if is_historical_season and (pd.isna(matches) or float(matches) <= 0) and has_real_stats:
+    overs_value = row.get("Overs")
+    has_bowling_overs = cricket_overs_to_balls(overs_value) not in {None, 0}
+    if is_historical_season and (pd.isna(matches) or float(matches) <= 0) and (has_real_stats or has_bowling_overs):
         return "", None, False
     if pd.isna(matches):
         return "", None, False

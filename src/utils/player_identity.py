@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.config.club_config import get_mapping_path
+from src.config.club_config import get_active_club_id, get_mapping_path
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
@@ -206,7 +206,7 @@ def apply_player_identity_mapping(
     aliases_df = active_aliases(aliases_df)
 
     if aliases_df.empty:
-        return output
+        return apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
 
     id_map = {}
     name_map = {}
@@ -234,7 +234,58 @@ def apply_player_identity_mapping(
     resolved = output.apply(resolve, axis=1, result_type="expand")
     output["canonical_player_id"] = resolved[0]
     output["canonical_player_name"] = resolved[1]
-    return output
+    return apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+
+
+def apply_grdcc_historical_exact_name_mapping(
+    frame: pd.DataFrame,
+    *,
+    club_id: str | None = None,
+) -> pd.DataFrame:
+    """Merge unambiguous, non-overlapping GRDCC Excel profiles by exact full name."""
+    active_club = str(club_id or get_active_club_id()).strip().casefold()
+    if active_club != "georges-river-district" or frame.empty or "raw_player_id" not in frame:
+        return frame
+
+    output = frame.copy()
+    raw_ids = output["raw_player_id"].fillna("").astype(str)
+    source_system = output.get("source_system", pd.Series("", index=output.index)).fillna("").astype(str)
+    historical = raw_ids.str.startswith("excel_") | source_system.str.casefold().eq("historical_excel")
+    if not historical.any():
+        return output
+
+    name_source = output.get("raw_player_name", output.get("player_name", pd.Series("", index=output.index)))
+    output["_strict_historical_name"] = name_source.map(normalize_player_name_for_strict_merge)
+    season_source = output.get("season", pd.Series("", index=output.index)).fillna("").astype(str)
+    output["_historical_season"] = season_source
+
+    historical_rows = output.loc[historical].copy()
+    for normalized_name, group in historical_rows.groupby("_strict_historical_name", sort=False):
+        tokens = normalized_name.split()
+        if len(tokens) < 2 or any(len(token) == 1 or token.isdigit() for token in tokens):
+            continue
+        grouped_ids = group["raw_player_id"].fillna("").astype(str).unique().tolist()
+        if len(grouped_ids) < 2:
+            continue
+        season_sets = {
+            raw_id: set(group.loc[group["raw_player_id"].astype(str).eq(raw_id), "_historical_season"].dropna().astype(str))
+            for raw_id in grouped_ids
+        }
+        has_overlap = any(
+            season_sets[left] & season_sets[right]
+            for index, left in enumerate(grouped_ids)
+            for right in grouped_ids[index + 1 :]
+        )
+        if has_overlap:
+            continue
+        display_names = name_source.loc[group.index].map(display_player_name)
+        display_name = display_names.mode().iloc[0] if not display_names.mode().empty else display_names.iloc[0]
+        canonical_id = f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
+        merge_mask = historical & output["_strict_historical_name"].eq(normalized_name)
+        output.loc[merge_mask, "canonical_player_id"] = canonical_id
+        output.loc[merge_mask, "canonical_player_name"] = display_name
+
+    return output.drop(columns=["_strict_historical_name", "_historical_season"], errors="ignore")
 
 
 def default_canonical_id(row: pd.Series) -> str:
