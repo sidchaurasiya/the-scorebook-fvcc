@@ -7533,7 +7533,7 @@ def render_ranked_record_card(
     elif fvcc_scroll:
         row_html = (
             '<div class="hof-responsive-record-scroll" '
-            'data-desktop-visible-rows="6" data-mobile-visible-rows="5" data-scroll-enabled="true">'
+            'data-desktop-visible-rows="5" data-mobile-visible-rows="5" data-scroll-enabled="true">'
             f'{row_html}</div>'
         )
     st.markdown(
@@ -10003,11 +10003,11 @@ def player_v2_peer_rows(profile_view: dict[str, pd.DataFrame]) -> dict[str, list
             [
                 ("Batting Avg", "bat_avg", False, "decimal"),
                 ("Boundary Rate", "boundary_rate", False, "decimal"),
-                ("Innings per Duck", "innings_per_duck", False, "decimal"),
+                ("Duck %", "duck_pct", True, "percent"),
             ],
             average_overrides={
                 "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
-                "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
+                "duck_pct": divide_or_none(sum_numeric(batting_rows, "ducks") * 100, sum_numeric(batting_rows, "outs")),
             },
         ),
         "Bowling": build_peer_metric_rows(
@@ -10017,11 +10017,15 @@ def player_v2_peer_rows(profile_view: dict[str, pd.DataFrame]) -> dict[str, list
                 ("Bowling Avg", "bowl_avg", True, "decimal"),
                 ("Bowling SR", "bowl_sr", True, "decimal"),
                 ("Economy", "economy", True, "decimal"),
+                ("Maiden %", "maiden_pct", False, "percent"),
+                ("Extras %", "extras_pct", True, "percent"),
             ],
             average_overrides={
                 "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
                 "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
                 "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
+                "maiden_pct": divide_or_none(sum_numeric(bowling_rows, "maidens") * 100, sum_numeric(bowling_rows, "overs")),
+                "extras_pct": divide_or_none(sum_numeric(bowling_rows, "extras") * 100, sum_numeric(bowling_rows, "balls")),
             },
         ),
     }
@@ -10541,6 +10545,7 @@ def build_player_season_table(
         row["Bowl Avg"] = divide_or_none(row["Runs Against"], row["Wickets"])
         row["Econ"] = divide_or_none(row["Runs Against"] * 6, row["Balls Bowled"])
         row["Bowl SR"] = divide_or_none(row["Balls Bowled"], row["Wickets"])
+        row["Extras %"] = calculate_extras_pct(row["No Balls"], row["Wides"], row["Balls Bowled"])
         row["BBI"] = best_bowling_value(bowl)
         row["Dismissals"] = row["Catches"] + row["Stumpings"] + row["Run Outs"]
         rows.append(row)
@@ -10600,6 +10605,7 @@ def build_player_grade_table(
         row["Bowl Avg"] = divide_or_none(row["Runs Against"], row["Wickets"])
         row["Econ"] = divide_or_none(row["Runs Against"] * 6, row["Balls Bowled"])
         row["Bowl SR"] = divide_or_none(row["Balls Bowled"], row["Wickets"])
+        row["Extras %"] = calculate_extras_pct(row["No Balls"], row["Wides"], row["Balls Bowled"])
         row["BBI"] = best_bowling_value(bowl)
         row["Dismissals"] = row["Catches"] + row["Stumpings"] + row["Run Outs"]
         rows.append(row)
@@ -10659,6 +10665,7 @@ def build_player_career_totals(
     totals["Bowl Avg"] = divide_or_none(totals["Runs Against"], totals["Wickets"])
     totals["Econ"] = divide_or_none(totals["Runs Against"] * 6, totals["Balls Bowled"])
     totals["Bowl SR"] = divide_or_none(totals["Balls Bowled"], totals["Wickets"])
+    totals["Extras %"] = calculate_extras_pct(totals["No Balls"], totals["Wides"], totals["Balls Bowled"])
     totals["Overs"] = format_balls_as_overs(totals["Balls Bowled"]) if totals["Balls Bowled"] else "—"
     return pd.DataFrame([totals])
 
@@ -11792,12 +11799,6 @@ def get_player_peer_comparison(
     batting_rows = aggregate_peer_batting(batting_scope, seasons)
     batting_rows = add_bbb_peer_batting_rates(batting_rows, seasons, peer_scope)
     bowling_rows = aggregate_peer_bowling(bowling_scope, seasons)
-    player_batting_row = batting_rows[batting_rows["canonical_player_id"].astype(str) == player_id] if not batting_rows.empty else pd.DataFrame()
-    player_innings = float(player_batting_row["innings"].iloc[0]) if not player_batting_row.empty and "innings" in player_batting_row else 0.0
-    player_ducks = float(player_batting_row["ducks"].iloc[0]) if not player_batting_row.empty and "ducks" in player_batting_row else 0.0
-    batting_status_overrides: dict[str, str] = {}
-    if player_ducks == 0:
-        batting_status_overrides["innings_per_duck"] = "Better than avg" if player_innings >= 10 else ""
     batting_average_overrides = {
         "bat_avg": divide_or_none(sum_numeric(batting_rows, "runs"), sum_numeric(batting_rows, "outs")),
         "bat_sr": divide_or_none(
@@ -11806,14 +11807,14 @@ def get_player_peer_comparison(
         ),
         "balls_per_dismissal": divide_or_none(sum_numeric(batting_rows, "bbb_balls"), sum_numeric(batting_rows, "bbb_dismissals")),
         "boundary_rate": divide_or_none(sum_numeric(batting_rows, "boundaries"), sum_numeric(batting_rows, "innings")),
-        "innings_per_duck": divide_or_none(sum_numeric(batting_rows, "innings"), sum_numeric(batting_rows, "ducks")),
+        "duck_pct": divide_or_none(sum_numeric(batting_rows, "ducks") * 100, sum_numeric(batting_rows, "outs")),
     }
     bowling_average_overrides = {
         "bowl_avg": divide_or_none(sum_numeric(bowling_rows, "runs_against"), sum_numeric(bowling_rows, "wickets")),
         "bowl_sr": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "wickets")),
         "economy": divide_or_none(sum_numeric(bowling_rows, "runs_against") * 6, sum_numeric(bowling_rows, "balls")),
-        "overs_per_maiden": divide_or_none(sum_numeric(bowling_rows, "overs"), sum_numeric(bowling_rows, "maidens")),
-        "balls_per_extra": divide_or_none(sum_numeric(bowling_rows, "balls"), sum_numeric(bowling_rows, "extras")),
+        "maiden_pct": divide_or_none(sum_numeric(bowling_rows, "maidens") * 100, sum_numeric(bowling_rows, "overs")),
+        "extras_pct": divide_or_none(sum_numeric(bowling_rows, "extras") * 100, sum_numeric(bowling_rows, "balls")),
     }
     batting_metrics = build_peer_metric_rows(
         batting_rows,
@@ -11823,10 +11824,9 @@ def get_player_peer_comparison(
             ("Strike Rate", "bat_sr", False, "percent"),
             ("Balls per Dismissal", "balls_per_dismissal", False, "decimal"),
             ("Boundary Rate", "boundary_rate", False, "decimal"),
-            ("Innings per Duck", "innings_per_duck", False, "decimal"),
+            ("Duck %", "duck_pct", True, "percent"),
         ],
         average_overrides=batting_average_overrides,
-        status_overrides=batting_status_overrides,
     )
     bowling_metrics = build_peer_metric_rows(
         bowling_rows,
@@ -11835,8 +11835,8 @@ def get_player_peer_comparison(
             ("Bowling Avg", "bowl_avg", True, "decimal"),
             ("Bowling SR", "bowl_sr", True, "decimal"),
             ("Economy Rate", "economy", True, "decimal"),
-            ("Overs per Maiden", "overs_per_maiden", True, "decimal"),
-            ("Balls per Extra", "balls_per_extra", False, "decimal"),
+            ("Maiden %", "maiden_pct", False, "percent"),
+            ("Extras %", "extras_pct", True, "percent"),
         ],
         average_overrides=bowling_average_overrides,
     )
@@ -11925,7 +11925,7 @@ def aggregate_peer_batting(batting: pd.DataFrame, seasons: tuple[str, ...]) -> p
                 "boundaries": boundaries,
                 "boundary_rate": divide_or_none(boundaries, innings),
                 "ducks": ducks,
-                "innings_per_duck": divide_or_none(innings, ducks),
+                "duck_pct": calculate_duck_pct(ducks, innings, not_outs),
             }
         )
     return pd.DataFrame(rows)
@@ -12007,8 +12007,12 @@ def aggregate_peer_bowling(bowling: pd.DataFrame, seasons: tuple[str, ...]) -> p
                 "bowl_sr": divide_or_none(balls, wickets),
                 "economy": divide_or_none(runs_against * 6, balls),
                 "maidens": maidens,
-                "overs_per_maiden": divide_or_none(overs, maidens),
-                "balls_per_extra": divide_or_none(balls, extras),
+                "maiden_pct": calculate_maiden_pct(maidens, overs),
+                "extras_pct": calculate_extras_pct(
+                    sum_column(group, "bowlingNoBalls"),
+                    sum_column(group, "bowlingWides"),
+                    balls,
+                ),
                 "unassisted_wicket_pct": divide_or_none(unassisted_wickets * 100, wickets),
             }
         )
@@ -12155,7 +12159,7 @@ def peer_marker_position(value: float | None, minimum: float | None, maximum: fl
 
 def format_peer_metric_value(value: object, value_format: str) -> str:
     if value is None or pd.isna(value):
-        return "N/A"
+        return "" if value_format == "percent" else "N/A"
     numeric = float(value)
     if value_format == "percent":
         return f"{numeric:.1f}%"
@@ -12178,9 +12182,9 @@ def peer_metric_note(label: object) -> str:
         "Strike Rate": "Verified ball-by-ball only",
         "Balls per Dismissal": "Verified BBB balls and BBB dismissals only",
         "Boundary Rate": "4s + 6s per innings",
-        "Innings per Duck": "Higher means fewer ducks",
-        "Overs per Maiden": "Lower means maidens are more frequent",
-        "Balls per Extra": "Higher means fewer wides/no-balls",
+        "Duck %": "Ducks per dismissal",
+        "Maiden %": "Maidens per over bowled",
+        "Extras %": "Wides + no-balls per ball bowled",
     }
     return notes.get(str(label), "")
 
@@ -12445,7 +12449,7 @@ def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -
         if rows.empty:
             render_profile_empty_state(*profile_performance_empty_copy(label, selected_discipline))
             return
-        render_profile_performance_table(rows, label, selected_discipline)
+        render_profile_performance_table(rows, label, selected_discipline, profile_view)
 
 
 def profile_breakdown_options() -> list[tuple[str, str]]:
@@ -12651,7 +12655,12 @@ def profile_performance_empty_copy(label_column: str, discipline: str) -> tuple[
     )
 
 
-def render_profile_performance_table(rows: pd.DataFrame, label_column: str, discipline: str) -> None:
+def render_profile_performance_table(
+    rows: pd.DataFrame,
+    label_column: str,
+    discipline: str,
+    profile_view: dict[str, pd.DataFrame] | None = None,
+) -> None:
     filtered = rows[rows["discipline"].astype(str) == discipline].copy() if "discipline" in rows else rows.head(0)
     filtered = filtered[filtered["breakdown_label"].astype(str).str.strip() != ""].copy() if "breakdown_label" in filtered else filtered
     if filtered.empty:
@@ -12691,7 +12700,8 @@ def render_profile_performance_table(rows: pd.DataFrame, label_column: str, disc
             }
         )
         table["Overs"] = table["balls_bowled"].map(format_balls_as_overs) if "balls_bowled" in table else "—"
-        columns = [label_column, "M", "Overs", "W", "Avg", "SR", "Eco", "BBI", "3WI", "5WI"]
+        table["Extras %"] = profile_breakdown_extras_pct(table, label_column, profile_view)
+        columns = [label_column, "M", "Overs", "W", "Avg", "SR", "Eco", "BBI", "3WI", "5WI", "Extras %"]
         activity_columns = ["W", "balls_bowled", "3WI", "5WI"]
     else:
         table = filtered.rename(
@@ -12734,6 +12744,25 @@ def render_profile_performance_table(rows: pd.DataFrame, label_column: str, disc
         height=height,
         scrolling=False,
     )
+
+
+def profile_breakdown_extras_pct(
+    table: pd.DataFrame,
+    label_column: str,
+    profile_view: dict[str, pd.DataFrame] | None,
+) -> pd.Series:
+    values = pd.to_numeric(table.get("extras_pct"), errors="coerce")
+    if not isinstance(values, pd.Series):
+        values = pd.Series(pd.NA, index=table.index, dtype="Float64")
+    if values.notna().all() or not profile_view or label_column not in {"Season", "Grade"}:
+        return values
+    source_key = "season_table" if label_column == "Season" else "grade_table"
+    source = profile_view.get(source_key, pd.DataFrame())
+    if source.empty or label_column not in source or "Extras %" not in source:
+        return values
+    lookup = source.drop_duplicates(label_column).set_index(label_column)["Extras %"]
+    fallback = table[label_column].map(lookup)
+    return values.where(values.notna(), pd.to_numeric(fallback, errors="coerce"))
 
 
 def profile_performance_table_html(
@@ -13041,7 +13070,7 @@ def profile_performance_display_value(column: str, value: object, label_column: 
         return matches_text
     if column == "HS":
         return format_high_score_text(value)
-    if column == "Strike Rate":
+    if column in {"Strike Rate", "Extras %"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Avg", "SR", "Eco"}:
@@ -13128,7 +13157,7 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
             table = table.rename(columns={"Econ": "Eco"})
             render_profile_season_stat_table(
                 table,
-                ["Season", "Matches", "Overs", "Wickets", "Bowl Avg", "Bowl SR", "Eco", "BBI", "3WI", "5WI"],
+                ["Season", "Matches", "Overs", "Wickets", "Bowl Avg", "Bowl SR", "Eco", "BBI", "3WI", "5WI", "Extras %"],
                 ["Balls Bowled", "Runs Against", "Wickets", "Wides", "No Balls", "3WI", "5WI"],
             )
         with fielding_tab:
@@ -13149,7 +13178,7 @@ def render_player_grade_table(grade_table: pd.DataFrame) -> None:
             table = grade_table.copy()
             table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
             table = table.rename(columns={"Econ": "Eco"})
-            columns = ["Grade", "Matches", "Overs", "Wickets", "Bowl Avg", "Bowl SR", "Eco", "BBI", "3WI", "5WI"]
+            columns = ["Grade", "Matches", "Overs", "Wickets", "Bowl Avg", "Bowl SR", "Eco", "BBI", "3WI", "5WI", "Extras %"]
             render_profile_group_stat_table(
                 table,
                 columns,
@@ -13218,7 +13247,7 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
         "Run Outs",
         "Dismissals",
     }
-    percent_columns = {"Bat SR", "Strike Rate"}
+    percent_columns = {"Bat SR", "Strike Rate", "Extras %"}
     decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "SR", "Econ", "Eco"}
     for column in columns:
         if column == pinned_column:
@@ -13836,6 +13865,42 @@ def divide_or_none(numerator: float, denominator: float) -> float | None:
     if not denominator:
         return None
     return numerator / denominator
+
+
+def calculate_extras_pct(no_balls: object, wides: object, balls_bowled: object) -> float | None:
+    balls = pd.to_numeric(pd.Series([balls_bowled]), errors="coerce").iloc[0]
+    if pd.isna(balls) or float(balls) <= 0:
+        return None
+    no_balls_value = pd.to_numeric(pd.Series([no_balls]), errors="coerce").fillna(0).iloc[0]
+    wides_value = pd.to_numeric(pd.Series([wides]), errors="coerce").fillna(0).iloc[0]
+    return float(no_balls_value + wides_value) * 100 / float(balls)
+
+
+def calculate_maiden_pct(maidens: object, overs_bowled: object) -> float | None:
+    overs = pd.to_numeric(pd.Series([overs_bowled]), errors="coerce").iloc[0]
+    maidens_value = pd.to_numeric(pd.Series([maidens]), errors="coerce").iloc[0]
+    if pd.isna(overs) or float(overs) <= 0 or pd.isna(maidens_value):
+        return None
+    return float(maidens_value) * 100 / float(overs)
+
+
+def calculate_duck_pct(
+    ducks: object,
+    innings: object,
+    not_outs: object | None = None,
+    dismissals: object | None = None,
+) -> float | None:
+    ducks_value = pd.to_numeric(pd.Series([ducks]), errors="coerce").iloc[0]
+    dismissal_value = pd.to_numeric(pd.Series([dismissals]), errors="coerce").iloc[0]
+    if pd.isna(dismissal_value):
+        innings_value = pd.to_numeric(pd.Series([innings]), errors="coerce").iloc[0]
+        not_outs_value = pd.to_numeric(pd.Series([not_outs]), errors="coerce").iloc[0]
+        if pd.isna(innings_value) or pd.isna(not_outs_value):
+            return None
+        dismissal_value = float(innings_value) - float(not_outs_value)
+    if pd.isna(ducks_value) or float(dismissal_value) <= 0:
+        return None
+    return float(ducks_value) * 100 / float(dismissal_value)
 
 
 def best_high_score(df: pd.DataFrame) -> str:
@@ -16234,7 +16299,7 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
     for column in columns:
         if column in integer_columns:
             config[column] = st.column_config.NumberColumn(format="%d")
-        elif column == "Dot Ball %":
+        elif column in {"Dot Ball %", "Extras %"}:
             config[column] = st.column_config.NumberColumn(format="%.1f%%")
         elif column in decimal_columns:
             config[column] = st.column_config.NumberColumn(format="%.2f")
@@ -16827,7 +16892,7 @@ def season_detail_display_value(column: str, value: object, row: pd.Series | Non
         return matches_text
     if column == "HS":
         return format_high_score_text(value)
-    if column == "Bat SR":
+    if column in {"Bat SR", "Extras %"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Bat Avg", "Bowl Avg", "Bowl SR", "Eco"}:
@@ -16992,8 +17057,17 @@ def apply_batting_detail_fallbacks(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
+    source = df.copy()
+    source["seasonDetailExtrasPct"] = source.apply(
+        lambda row: calculate_extras_pct(
+            row.get("bowlingNoBalls"),
+            row.get("bowlingWides"),
+            row.get("bowlingBalls"),
+        ),
+        axis=1,
+    )
     output = prepare_curated_display_frame(
-        df,
+        source,
         [
             "player_name",
             "team_name",
@@ -17009,6 +17083,7 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "seasonDetail5WIs",
             "bowlingNoBalls",
             "bowlingWides",
+            "seasonDetailExtrasPct",
         ],
         [
             "Player",
@@ -17025,6 +17100,7 @@ def get_bowling_display_df(df: pd.DataFrame) -> pd.DataFrame:
             "5WI",
             "No Balls",
             "Wides",
+            "Extras %",
         ],
     )
     return output.rename(columns={"M": "Mat", "Maidens": "Mdns", "Wickets": "W"})
@@ -17178,6 +17254,7 @@ def pretty_column_name_map() -> dict[str, str]:
         "bowling10WMs": "10WM",
         "bowlingWides": "Wides",
         "bowlingNoBalls": "No Balls",
+        "seasonDetailExtrasPct": "Extras %",
         "catches": "Catches",
         "fieldingCatches": "Catches",
         "fieldingCatchesNonWK": "Ct Non-WK",
