@@ -2759,7 +2759,7 @@ def inject_theme() -> None:
         }
 
         .hof-responsive-record-scroll {
-            max-height: 606px;
+            max-height: 505px;
             overflow-y: auto;
             padding-right: 7px;
             scrollbar-color: var(--club-border) transparent;
