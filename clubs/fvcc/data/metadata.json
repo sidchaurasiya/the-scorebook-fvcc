@@ -213,8 +213,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-05-23T07:20:33.876189+00:00",
-  "last_successful_refresh_time": "2026-05-23T07:20:33.876189+00:00",
+  "fetch_date_time": "2026-06-20T09:27:27.205526+00:00",
+  "last_successful_refresh_time": "2026-06-20T09:27:27.205526+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -223,12 +223,12 @@
     "/participants/grades/{grade_id}/fielding-statistics"
   ],
   "matches_fetched": 0,
-  "players_fetched": 331,
+  "players_fetched": 330,
   "teams_fetched": 74,
   "stat_rows": {
-    "batting": 1910,
-    "bowling": 1910,
-    "fielding": 1910
+    "batting": 1912,
+    "bowling": 1912,
+    "fielding": 1912
   },
   "live_requests": 5,
   "cache_hits": 248,

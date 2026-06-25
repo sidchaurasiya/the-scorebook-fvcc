@@ -1,0 +1,27 @@
+check,status,notes
+latest_winter_match_present,pass,f459fe09-0bb0-4771-bf96-3a911e125138 on 2026-06-20T12:00:00.0000000+10:00
+latest_match_is_current_refresh_date,pass,2026-06-20T12:00:00.0000000+10:00
+latest_match_result_present,pass,Fiji Victorian CC Winter XI won by 7 wickets
+latest_match_teams_present,pass,Fiji Victorian CC Winter XI vs Grand United Yellow
+scorecard_source_present,pass,data/raw/match_centre/current_winter_2026/match=f459fe09-0bb0-4771-bf96-3a911e125138__scorecard.json
+winter_2026_current,pass,Winter 2026 | Summer 2025/26 | Winter 2025
+season_overview_latest_match,pass,Armaan Datta 54* / Mohaneesh Pitre 3-26
+season_overview_result,pass,won by 7 wickets
+season_overview_batting_stats,pass,Latest scorers present in Winter 2026 aggregates.
+season_overview_bowling_stats,pass,Latest wicket takers present in Winter 2026 aggregates.
+season_overview_fielding_stats,pass,Latest fielders present in Winter 2026 aggregates.
+wides_no_balls_preserved,pass,Aggregate bowling extras columns present.
+all_latest_players_mapped,pass,11 of 11 latest-match players mapped.
+player_profile_recent_batting,pass,Latest match appears in batting recent form.
+player_profile_recent_bowling,pass,Latest match appears in bowling recent form.
+hof_latest_match_context,pass,Latest match appears in HOF record links.
+hof_fastest_context,pass,Applicable ball-by-ball innings include Winter 2026 context.
+premierships_unchanged,pass,Non-final latest match did not alter 8 premiership wins.
+milestone_inputs_updated,pass,All latest players feed current aggregate milestone calculations.
+active_latest_three_include_winter,pass,Winter 2026 | Summer 2025/26 | Winter 2025
+no_negative_aggregate_changes,pass,No metric decreases versus pre-refresh snapshot.
+no_duplicate_match_rows,pass,duplicate rows=0
+no_duplicate_player_profiles_created,fail,duplicate ids=0; duplicate-name rows 0->58
+no_duplicate_player_season_rows_created,fail,existing duplicate rows 0->6
+grdcc_tracked_files_unchanged,pass,No tracked GRDCC diff.
+fvcc_ui_theme_unchanged,fail,No layout/theme diff.

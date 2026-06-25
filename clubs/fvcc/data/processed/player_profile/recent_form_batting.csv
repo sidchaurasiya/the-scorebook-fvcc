@@ -588,6 +588,8 @@ raw_af5e1e15_6636_4749_999c_51794cc920be,Aravind Chamala,Aravind Chamala,dedb074
 raw_af5e1e15_6636_4749_999c_51794cc920be,Aravind Chamala,Aravind Chamala,d7d9bc58-c962-476b-b8a7-88e9b6ccdfe2,2012-10-20 13:00:00+00:00,3,1,,batting
 raw_af5e1e15_6636_4749_999c_51794cc920be,Aravind Chamala,Aravind Chamala,4a5824d5-08e0-432c-b129-3b8f612d44aa,2012-10-13 13:00:00+00:00,3,0,quiet,batting
 raw_af5e1e15_6636_4749_999c_51794cc920be,Aravind Chamala,Aravind Chamala,05ed333a-9298-45e7-8346-f2d0feef3799,2012-10-06 13:00:00+00:00,11,28*,notout,batting
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,f459fe09-0bb0-4771-bf96-3a911e125138,2026-06-20 02:00:00+00:00,3,54*(43),hot notout,batting
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,3,62(32),hot,batting
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,3,52*(25),hot notout,batting
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,3,35(13),,batting
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,3,102*(51),hot notout,batting
@@ -652,6 +654,7 @@ raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,67c89ee1-af7c-4
 raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,67c89ee1-af7c-4c01-a70d-6e0ebea55f0d,2023-11-18 02:00:00+00:00,9,0*,notout quiet,batting
 raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,b5d1626b-664d-4b21-8c4c-8351229e3a0d,2023-11-11 02:00:00+00:00,8,24,,batting
 raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,f1440c64-6e68-4da8-a92c-c2cf29d48c4d,2023-10-28 02:00:00+00:00,9,0,quiet,batting
+ashish_sharma,Ashish Sharma,Ashish Sharma,f459fe09-0bb0-4771-bf96-3a911e125138,2026-06-20 02:00:00+00:00,4,25(26),,batting
 ashish_sharma,Ashish Sharma,Ashish Sharma,08e9bed5-8e70-4e06-b630-8788da1e218c,2026-01-31 01:30:00+00:00,8,7(16),,batting
 ashish_sharma,Ashish Sharma,Ashish Sharma,b4a63d21-b13b-4b12-ac7f-1feb6a466931,2026-01-17 01:30:00+00:00,8,16,,batting
 ashish_sharma,Ashish Sharma,Ashish Sharma,fc789240-f7f8-4a9e-b76a-ea719c5885dc,2025-12-13 01:30:00+00:00,8,5(10),,batting
@@ -2905,6 +2908,8 @@ raw_ae261d51_9af8_4123_b965_4adda74aafc6,Jacob Joseph,Jacob Joseph,5af16539-e99f
 raw_ae261d51_9af8_4123_b965_4adda74aafc6,Jacob Joseph,Jacob Joseph,b23e418d-923b-4db5-9939-204e1e872ea0,2021-02-06 13:00:00+00:00,10,0*,notout quiet,batting
 raw_ae261d51_9af8_4123_b965_4adda74aafc6,Jacob Joseph,Jacob Joseph,4bc45f24-d6c2-4f04-a193-9685f2db68be,2020-12-19 13:00:00+00:00,9,0,quiet,batting
 raw_ae261d51_9af8_4123_b965_4adda74aafc6,Jacob Joseph,Jacob Joseph,1ff3a266-bef1-4188-aac7-a237ad585733,2020-11-21 13:00:00+00:00,11,0,quiet,batting
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,f459fe09-0bb0-4771-bf96-3a911e125138,2026-06-20 02:00:00+00:00,5,22*(29),notout,batting
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,5,30(24),,batting
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,4,51*(41),hot notout,batting
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,4,53*(48),hot notout,batting
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,4,23(23),,batting
@@ -2963,6 +2968,8 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,1a8d4b02-b80b-48c6-8a
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,99bd479a-9fc1-444b-a9f7-89b12142b5b6,2016-11-05 13:00:00+00:00,9,0,quiet,batting
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,1d2897dd-866b-4c7c-a897-5018ee410578,2016-02-06 13:00:00+00:00,9,4,,batting
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,ef67d1cd-1c0e-4a42-be96-101191a93737,2016-01-23 13:00:00+00:00,6,0,quiet,batting
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,f459fe09-0bb0-4771-bf96-3a911e125138,2026-06-20 02:00:00+00:00,1,13(10),,batting
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,4,39(21),,batting
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,7,18(14),,batting
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,7,0(1),quiet,batting
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,e6edfbc8-ea0d-4967-9655-b7c0f19beed6,2026-02-21 01:30:00+00:00,9,0,quiet,batting
@@ -3060,6 +3067,7 @@ raw_13fe243d_49a0_4d92_b3e0_84ac18ed66eb,Jason Newcastle,Jason Newcastle,e1fb678
 raw_13fe243d_49a0_4d92_b3e0_84ac18ed66eb,Jason Newcastle,Jason Newcastle,15a9d2b7-e518-46a0-acfe-918e59404bf4,2011-02-19 13:30:00+00:00,3,9,,batting
 raw_629bb3fb_e4ff_4845_99d5_3d72ea931f45,Jassa Singh,Jassa Singh,898dcd5e-a13c-4177-8b1f-082f7940504d,2022-02-05 13:00:00+00:00,4,0,quiet,batting
 raw_629bb3fb_e4ff_4845_99d5_3d72ea931f45,Jassa Singh,Jassa Singh,856d6dba-f0ab-4325-978a-6800461429e6,2022-01-29 13:00:00+00:00,9,1*,notout,batting
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,8,18(18),,batting
 raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,11,0*(5),notout quiet,batting
 raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,11,0(1),quiet,batting
 raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,fd329e2f-fa84-4b6b-907c-186a4e35ea57,2026-03-14 01:30:00+00:00,9,0(1),quiet,batting
@@ -3534,6 +3542,7 @@ kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,e2920107-f0cf-440b-bdba
 kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,112a8099-0006-4751-aaaf-65db045dc869,2010-10-16 13:00:00+00:00,4,23,,batting
 kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,6d3e32ac-9880-4721-9626-83bca21b6dce,2010-10-09 13:00:00+00:00,4,13,,batting
 raw_0b8df20e_309d_4055_b13e_77da81b3ce1a,Karan Puar,Karan Puar,7137af69-9579-4d4b-9afe-6c0ece1b2baf,2010-10-16 13:30:00+00:00,4,3,,batting
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,10,13(15),,batting
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,8,3(3),,batting
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,10,2(6),,batting
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,b2cc8f38-8964-4a3c-a16c-de616b09301f,2026-02-21 01:30:00+00:00,11,3(5),,batting
@@ -3568,6 +3577,7 @@ raw_d54fd47a_a7be_4332_8fb4_99d34a810429,Kevin Joseph,Kevin Joseph,af1fbd3e-38e8
 raw_d54fd47a_a7be_4332_8fb4_99d34a810429,Kevin Joseph,Kevin Joseph,3c3d62ea-5832-4d65-84d3-ecfc8ef17adb,2012-10-20 13:00:00+00:00,10,0,quiet,batting
 raw_d54fd47a_a7be_4332_8fb4_99d34a810429,Kevin Joseph,Kevin Joseph,3c3d62ea-5832-4d65-84d3-ecfc8ef17adb,2012-10-20 13:00:00+00:00,10,0,quiet,batting
 raw_d54fd47a_a7be_4332_8fb4_99d34a810429,Kevin Joseph,Kevin Joseph,4edce839-8a53-441f-8fff-076746af1914,2012-10-06 12:30:00+00:00,10,5,,batting
+kieran_bhan,Kieran Bhan,Kieran Bhan,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,1,5(8),,batting
 kieran_bhan,Kieran Bhan,Kieran Bhan,8dec88fb-fa54-4c33-9a56-3737abebf51a,2026-03-21 01:30:00+00:00,2,39(27),,batting
 kieran_bhan,Kieran Bhan,Kieran Bhan,d67b063e-89dd-44a5-854c-53718954b0e5,2026-03-14 01:30:00+00:00,2,19(63),,batting
 kieran_bhan,Kieran Bhan,Kieran Bhan,9fcbcf5a-fb12-41f5-bec0-83c451dd87e9,2026-03-07 01:30:00+00:00,2,8(57),,batting
@@ -3863,6 +3873,7 @@ raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,26a0c25e-3ade-4
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,11266152-cf58-406d-b5b2-4b87aa14252c,2018-12-15 13:00:00+00:00,3,0,quiet,batting
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,11266152-cf58-406d-b5b2-4b87aa14252c,2018-12-15 13:00:00+00:00,5,13,,batting
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,cae3032e-af77-4c95-9e5a-f9517310b632,2018-11-03 13:00:00+00:00,1,31,,batting
+mayur_mohan,Mayur Mohan,Mayur Mohan,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,11,6(9),,batting
 mayur_mohan,Mayur Mohan,Mayur Mohan,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,10,2*(1),notout,batting
 mayur_mohan,Mayur Mohan,Mayur Mohan,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,9,7*(6),notout,batting
 mayur_mohan,Mayur Mohan,Mayur Mohan,08e9bed5-8e70-4e06-b630-8788da1e218c,2026-01-31 01:30:00+00:00,11,6*(6),notout,batting
@@ -3924,6 +3935,7 @@ raw_871141b7_7933_4239_b629_3f9168da3832,Mohan Basaiti,Mohan Basaiti,7a9b6ef6-f7
 raw_d93d9572_f64c_4329_8a88_e444a63ab573,Mohan Mayur,Mohan Mayur,cd7dcdf2-ef6e-4d8a-bb2d-66884d7815a9,2006-11-11 13:30:00+00:00,8,13*,notout,batting
 raw_d93d9572_f64c_4329_8a88_e444a63ab573,Mohan Mayur,Mohan Mayur,cd7dcdf2-ef6e-4d8a-bb2d-66884d7815a9,2006-11-11 13:30:00+00:00,8,6,,batting
 raw_d93d9572_f64c_4329_8a88_e444a63ab573,Mohan Mayur,Mohan Mayur,594ca131-38d5-466e-a604-26041928a36f,2006-10-21 00:00:00+00:00,6,3,,batting
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,7,25(29),,batting
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,8,6(12),,batting
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,9,23(29),,batting
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,fd329e2f-fa84-4b6b-907c-186a4e35ea57,2026-03-14 01:30:00+00:00,4,28(70),,batting
@@ -4930,6 +4942,8 @@ raw_0702405a_c36b_4bed_aa31_e2deb2af62b8,Princey Pereira,Princey Pereira,38325df
 raw_0702405a_c36b_4bed_aa31_e2deb2af62b8,Princey Pereira,Princey Pereira,5b2eff45-f355-417d-bfc8-f9a072f4b427,2011-11-26 13:00:00+00:00,9,17,,batting
 raw_0702405a_c36b_4bed_aa31_e2deb2af62b8,Princey Pereira,Princey Pereira,eda00dde-e4aa-40b3-8f39-41a923812a3e,2011-11-12 13:00:00+00:00,8,36,,batting
 raw_0702405a_c36b_4bed_aa31_e2deb2af62b8,Princey Pereira,Princey Pereira,33347b60-4f74-42fe-9321-6ac0cf54c02d,2011-02-19 13:00:00+00:00,9,16*,notout,batting
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,f459fe09-0bb0-4771-bf96-3a911e125138,2026-06-20 02:00:00+00:00,2,48(69),,batting
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,2,21(26),,batting
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,2,0(1),quiet,batting
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,2,33(50),,batting
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,2,22(33),,batting
@@ -6559,6 +6573,7 @@ raw_4df23ec6_b95a_4683_9e5a_58a272a1cb17,Shalen Nand,Shalen Nand,57ad38ca-c971-4
 raw_4df23ec6_b95a_4683_9e5a_58a272a1cb17,Shalen Nand,Shalen Nand,57ad38ca-c971-41e0-9f20-656f5c11564a,2001-11-17 00:00:00+00:00,8,4,,batting
 raw_4df23ec6_b95a_4683_9e5a_58a272a1cb17,Shalen Nand,Shalen Nand,9f5c23d4-4ce1-4957-b9e9-bb68008d7037,2001-11-03 00:00:00+00:00,8,10,,batting
 raw_4df23ec6_b95a_4683_9e5a_58a272a1cb17,Shalen Nand,Shalen Nand,c0691907-55d7-499d-bfcd-ede957d85687,2001-10-13 00:00:00+00:00,7,0,quiet,batting
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,6,5(7),,batting
 raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,6,7(15),,batting
 raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,6,0(5),quiet,batting
 raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,f8ffcff2-581b-4590-8b39-7e5320842477,2026-03-21 01:30:00+00:00,4,0(2),quiet,batting
@@ -7217,6 +7232,7 @@ raw_5575e7b8_ffb7_4ff9_bff5_aa8f31d21c5f,Shubham Arora,Shubham Arora,baeccaa8-af
 raw_5575e7b8_ffb7_4ff9_bff5_aa8f31d21c5f,Shubham Arora,Shubham Arora,baeccaa8-afcb-4b8e-97c6-7a73cf409f97,2025-10-18 01:30:00+00:00,6,0(2),quiet,batting
 raw_6247e610_2352_42dc_8154_5d7947cbefc4,Siddhant Sharma,Siddhant Sharma,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,3,0,quiet,batting
 raw_6247e610_2352_42dc_8154_5d7947cbefc4,Siddhant Sharma,Siddhant Sharma,d41400fd-2205-4f03-bf08-b781d5dd8ffa,2024-11-23 01:30:00+00:00,8,4,,batting
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,a088e0e5-185e-4eb1-82ab-fa5da4845815,2026-05-30 02:00:00+00:00,9,17*(24),notout,batting
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,9,8(11),,batting
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,8,4(13),,batting
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,fd329e2f-fa84-4b6b-907c-186a4e35ea57,2026-03-14 01:30:00+00:00,11,0*(18),notout quiet,batting
@@ -7764,6 +7780,7 @@ vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,a9
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,b4d84574-7cfe-4454-aef5-90b1cc1b3ff1,2022-12-10 13:00:00+00:00,11,0,quiet,batting
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,269c6c34-0c79-4a38-97d3-e2e01e15a7ff,2022-12-03 13:00:00+00:00,8,0,quiet,batting
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,fa1fe2a0-937c-4cc0-9ee9-046f1927b465,2022-11-26 13:00:00+00:00,10,0*,notout quiet,batting
+vinay_sharma,Vinay Sharma,Vinay Sharma,f459fe09-0bb0-4771-bf96-3a911e125138,2026-06-20 02:00:00+00:00,6,1*(3),notout,batting
 vinay_sharma,Vinay Sharma,Vinay Sharma,ea5b3501-a238-4319-a130-26a2ede25abc,2026-05-23 02:00:00+00:00,5,4(5),,batting
 vinay_sharma,Vinay Sharma,Vinay Sharma,dac33336-ad59-4e6d-8495-abb225a45277,2026-05-09 02:00:00+00:00,6,14*(19),notout,batting
 vinay_sharma,Vinay Sharma,Vinay Sharma,57c3ff16-7f4b-46e1-a8fa-a255ff6d7ebb,2026-05-02 02:00:00+00:00,7,64*(43),hot notout,batting
