@@ -1,0 +1,7 @@
+check_name,local_status,remote_branch_status,expected_prod_status,notes
+cross_club_profile_visual_validation,pass,not_checked_live,unknown,"Local validator passed 29/29 for the uncommitted cross-club profile and milestone visuals."
+winter_2026_latest_match_present,pass,origin/client=no;origin/main=no,unknown,"Latest FVCC Winter 2026 match f459fe09-0bb0-4771-bf96-3a911e125138 dated 2026-06-20 is present locally via commit 365b5dd."
+fvcc_visual_regression_fix_present,pass,origin/client=no;origin/main=no,unknown,"FVCC production visual regression fix commit 702db30 is on the local client branch but not in the stored origin/client or origin/main refs."
+fvcc_navy_link_styling_present,pass,origin/client=yes;origin/main=no,unknown,"Commit 3642f3c is present in stored origin/client but not origin/main."
+fvcc_perf_optimisation_present,pass,origin/client=yes;origin/main=no,unknown,"Commit be3806a is present in stored origin/client but not origin/main."
+production_http_probe,unknown,unknown,unknown,"Direct web fetch of https://the-scorebook-fvcc.streamlit.app/ was not verifiable in this run due Streamlit/web access limits; confirm actual deploy branch in Streamlit Cloud settings."
