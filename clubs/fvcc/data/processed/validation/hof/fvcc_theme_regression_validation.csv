@@ -1,0 +1,15 @@
+check,status,notes
+fvcc_purple_removed,pass,FVCC generated theme contains no purple brand tokens.
+fvcc_burgundy_primary,pass,Production burgundy primary restored.
+fvcc_navy_sidebar,pass,Production navy sidebar gradient restored.
+fvcc_gold_accent,pass,Production gold supporting accent restored.
+fvcc_background,pass,Production background restored.
+fvcc_active_nav,pass,Active navigation remains burgundy/navy.
+grdcc_primary_unchanged,pass,GRDCC primary remains blue.
+grdcc_sidebar_unchanged,pass,GRDCC sidebar tokens unchanged.
+club_configs_unchanged,pass,Deployment config files untouched.
+fvcc_data_unchanged,pass,FVCC source and stat data unchanged.
+premiership_scroll_preserved,pass,Premiership scroll contract retained.
+hof_mobile_scroll_preserved,pass,HOF mobile scroll contract retained.
+season_round_panels_preserved,pass,Season by Round horizontal panels retained.
+fvcc_latest_three_preserved,pass,FVCC latest-three active-player logic retained.

@@ -1,0 +1,19 @@
+check,status,notes
+premiership_desktop_rows,pass,Desktop target is six.
+premiership_mobile_rows,pass,Mobile target is five.
+premiership_scroll,pass,Scrollable container configured.
+premiership_source_unchanged,pass,Source unchanged; 8 rows retained.
+hof_leaders_mobile_rows,pass,Leader cards use five-row mobile height.
+fastest_innings_mobile_rows,pass,Fastest Innings uses responsive five-row wrapper.
+iconic_performances_mobile_rows,pass,Iconic Performances uses responsive five-row wrapper.
+fvcc_latest_three_seasons,pass,Winter 2026 | Summer 2025/26 | Winter 2025
+fvcc_winter_seasons_included,pass,Latest-three ordering includes winter cricket.
+grdcc_active_logic_unchanged,pass,GRDCC remains two seasons with existing exclusions.
+season_round_horizontal_panels,pass,Horizontal strip configured.
+season_round_folder_removed,pass,Internal folder selector removed.
+global_slicers_preserved,pass,Top season and grade/team controls remain.
+fvcc_theme_config_unchanged,pass,FVCC palette/config file unchanged.
+no_ranking_sort_changes,pass,HOF ranking helper unchanged.
+no_raw_data_changes,pass,FVCC raw data unchanged.
+fvcc_production_theme_preserved,pass,FVCC production palette is explicitly preserved by the club-scoped resolver.
+active_player_audit,pass,291 player rows written.

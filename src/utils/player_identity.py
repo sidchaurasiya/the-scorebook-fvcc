@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import re
 import shutil
-import time
 import unicodedata
 from difflib import SequenceMatcher
 from datetime import datetime
@@ -13,7 +12,6 @@ import streamlit as st
 
 from src.config.club_config import get_active_club_id, get_mapping_path
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
-from src.utils.performance import log_timing
 
 DATA_DIR = Path("data")
 EXPORTS_DIR = Path("exports")
@@ -122,27 +120,14 @@ def load_player_aliases(path: str | Path | None = None, *, club_id: str | None =
         aliases.to_csv(path, index=False)
         return aliases
 
-    aliases = _load_player_aliases_cached(str(path), path.stat().st_mtime).copy()
-    original_columns = aliases.columns.tolist()
+    aliases = pd.read_csv(path, dtype=str).fillna("")
     for column in ALIAS_COLUMNS:
         if column not in aliases:
             aliases[column] = ""
     aliases = aliases[ALIAS_COLUMNS]
-    if original_columns != ALIAS_COLUMNS:
+    if list(pd.read_csv(path, nrows=0).columns) != ALIAS_COLUMNS:
         aliases.to_csv(path, index=False)
     return aliases
-
-
-@st.cache_data(show_spinner=False)
-def _load_player_aliases_cached(path_value: str, _file_version: float) -> pd.DataFrame:
-    started_at = time.perf_counter()
-    path = Path(path_value)
-    try:
-        frame = pd.read_csv(path, dtype=str).fillna("")
-        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
-        return frame
-    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
-        return pd.DataFrame(columns=ALIAS_COLUMNS)
 
 
 def load_manual_player_merges(path: str | Path | None = None, *, club_id: str | None = None) -> pd.DataFrame:
@@ -153,27 +138,14 @@ def load_manual_player_merges(path: str | Path | None = None, *, club_id: str | 
         manual.to_csv(path, index=False)
         return manual
 
-    manual = _load_manual_player_merges_cached(str(path), path.stat().st_mtime).copy()
-    original_columns = manual.columns.tolist()
+    manual = pd.read_csv(path, dtype=str).fillna("")
     for column in MANUAL_MERGE_COLUMNS:
         if column not in manual:
             manual[column] = ""
     manual = manual[MANUAL_MERGE_COLUMNS]
-    if original_columns != MANUAL_MERGE_COLUMNS:
+    if list(pd.read_csv(path, nrows=0).columns) != MANUAL_MERGE_COLUMNS:
         manual.to_csv(path, index=False)
     return manual
-
-
-@st.cache_data(show_spinner=False)
-def _load_manual_player_merges_cached(path_value: str, _file_version: float) -> pd.DataFrame:
-    started_at = time.perf_counter()
-    path = Path(path_value)
-    try:
-        frame = pd.read_csv(path, dtype=str).fillna("")
-        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
-        return frame
-    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
-        return pd.DataFrame(columns=MANUAL_MERGE_COLUMNS)
 
 
 def player_aliases_mtime(path: str | Path | None = None, *, club_id: str | None = None) -> float:
@@ -191,23 +163,11 @@ def load_player_merge_validation(path: str | Path | None = None, *, club_id: str
         validation.to_csv(path, index=False)
         return validation
 
-    validation = _load_player_merge_validation_cached(str(path), path.stat().st_mtime).copy()
+    validation = pd.read_csv(path, dtype=str).fillna("")
     for column in VALIDATION_COLUMNS:
         if column not in validation:
             validation[column] = ""
     return validation[VALIDATION_COLUMNS]
-
-
-@st.cache_data(show_spinner=False)
-def _load_player_merge_validation_cached(path_value: str, _file_version: float) -> pd.DataFrame:
-    started_at = time.perf_counter()
-    path = Path(path_value)
-    try:
-        frame = pd.read_csv(path, dtype=str).fillna("")
-        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
-        return frame
-    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
-        return pd.DataFrame(columns=VALIDATION_COLUMNS)
 
 
 def active_aliases(aliases_df: pd.DataFrame) -> pd.DataFrame:
@@ -246,7 +206,7 @@ def apply_player_identity_mapping(
     aliases_df = active_aliases(aliases_df)
 
     if aliases_df.empty:
-        return output
+        return apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
 
     id_map = {}
     name_map = {}
@@ -274,7 +234,58 @@ def apply_player_identity_mapping(
     resolved = output.apply(resolve, axis=1, result_type="expand")
     output["canonical_player_id"] = resolved[0]
     output["canonical_player_name"] = resolved[1]
-    return output
+    return apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+
+
+def apply_grdcc_historical_exact_name_mapping(
+    frame: pd.DataFrame,
+    *,
+    club_id: str | None = None,
+) -> pd.DataFrame:
+    """Merge unambiguous, non-overlapping GRDCC Excel profiles by exact full name."""
+    active_club = str(club_id or get_active_club_id()).strip().casefold()
+    if active_club != "georges-river-district" or frame.empty or "raw_player_id" not in frame:
+        return frame
+
+    output = frame.copy()
+    raw_ids = output["raw_player_id"].fillna("").astype(str)
+    source_system = output.get("source_system", pd.Series("", index=output.index)).fillna("").astype(str)
+    historical = raw_ids.str.startswith("excel_") | source_system.str.casefold().eq("historical_excel")
+    if not historical.any():
+        return output
+
+    name_source = output.get("raw_player_name", output.get("player_name", pd.Series("", index=output.index)))
+    output["_strict_historical_name"] = name_source.map(normalize_player_name_for_strict_merge)
+    season_source = output.get("season", pd.Series("", index=output.index)).fillna("").astype(str)
+    output["_historical_season"] = season_source
+
+    historical_rows = output.loc[historical].copy()
+    for normalized_name, group in historical_rows.groupby("_strict_historical_name", sort=False):
+        tokens = normalized_name.split()
+        if len(tokens) < 2 or any(len(token) == 1 or token.isdigit() for token in tokens):
+            continue
+        grouped_ids = group["raw_player_id"].fillna("").astype(str).unique().tolist()
+        if len(grouped_ids) < 2:
+            continue
+        season_sets = {
+            raw_id: set(group.loc[group["raw_player_id"].astype(str).eq(raw_id), "_historical_season"].dropna().astype(str))
+            for raw_id in grouped_ids
+        }
+        has_overlap = any(
+            season_sets[left] & season_sets[right]
+            for index, left in enumerate(grouped_ids)
+            for right in grouped_ids[index + 1 :]
+        )
+        if has_overlap:
+            continue
+        display_names = name_source.loc[group.index].map(display_player_name)
+        display_name = display_names.mode().iloc[0] if not display_names.mode().empty else display_names.iloc[0]
+        canonical_id = f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
+        merge_mask = historical & output["_strict_historical_name"].eq(normalized_name)
+        output.loc[merge_mask, "canonical_player_id"] = canonical_id
+        output.loc[merge_mask, "canonical_player_name"] = display_name
+
+    return output.drop(columns=["_strict_historical_name", "_historical_season"], errors="ignore")
 
 
 def default_canonical_id(row: pd.Series) -> str:
@@ -515,19 +526,7 @@ def load_duplicate_audit(path: str | Path | None = None, *, club_id: str | None 
     path = Path(path) if path is not None else player_identity_path(DUPLICATE_AUDIT_PATH.name, club_id=club_id)
     if not path.exists():
         return pd.DataFrame()
-    return _load_duplicate_audit_cached(str(path), path.stat().st_mtime).copy()
-
-
-@st.cache_data(show_spinner=False)
-def _load_duplicate_audit_cached(path_value: str, _file_version: float) -> pd.DataFrame:
-    started_at = time.perf_counter()
-    path = Path(path_value)
-    try:
-        frame = pd.read_csv(path, dtype=str).fillna("")
-        log_timing("CSV read", started_at, path=path.name, rows=len(frame))
-        return frame
-    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
-        return pd.DataFrame()
+    return pd.read_csv(path, dtype=str).fillna("")
 
 
 def manual_alias_candidates(
@@ -781,30 +780,12 @@ def rebuild_canonical_processed_tables(
     return row_counts
 
 
-@st.cache_data(show_spinner=False)
-def load_player_profile_source_frames(
-    club_id: str,
-    _local_version: float,
-    _identity_version: float | None,
-) -> dict[str, pd.DataFrame]:
-    started_at = time.perf_counter()
-    aliases = load_player_aliases(club_id=club_id)
-    frames = {}
-    for category in ["batting", "bowling", "fielding"]:
-        try:
-            frame = read_processed_table(f"all_seasons_{category}")
-            frames[category] = apply_player_identity_mapping(frame, aliases, club_id=club_id) if not frame.empty else frame
-        except MemoryError:
-            frames[category] = pd.DataFrame()
-    log_timing("Player Profile source frame mapping", started_at, club_id=club_id)
-    return frames
-
-
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, persist="disk")
 def get_player_profile_data(
     canonical_player_id: str,
     _local_version: float | None = None,
     _identity_version: float | None = None,
+    club_id: str | None = None,
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
 
@@ -813,9 +794,15 @@ def get_player_profile_data(
     these raw totals to recalculate profile metrics without averaging averages.
     """
     _local_version = metadata_mtime() if _local_version is None else _local_version
-    _identity_version = player_aliases_mtime() if _identity_version is None else _identity_version
-    active_club_id = get_active_club_id()
-    frames = load_player_profile_source_frames(active_club_id, _local_version, _identity_version)
+    _identity_version = player_aliases_mtime(club_id=club_id) if _identity_version is None else _identity_version
+    aliases = load_player_aliases(club_id=club_id)
+    frames = {}
+    for category in ["batting", "bowling", "fielding"]:
+        try:
+            frame = read_processed_table(f"all_seasons_{category}")
+            frames[category] = apply_player_identity_mapping(frame, aliases, club_id=club_id) if not frame.empty else frame
+        except MemoryError:
+            frames[category] = pd.DataFrame()
 
     canonical_player_id = str(canonical_player_id).strip()
     scoped = {}
