@@ -1,0 +1,14 @@
+check,validation_status,details
+persistent_hof_cache,pass,Prepared and lower-level HOF caches persist across localhost restarts.
+single_group_rebuild_skipped,pass,GRDCC single-team-group selection no longer rebuilds HOF data.
+source_loader_cached,pass,Processed source reads use the existing cached loader.
+override_lookup_cached,pass,Required Annual Report lookups are cached and included in the HOF cache key.
+profiling_opt_in,pass,CSV profiling is disabled during normal runtime unless explicitly enabled.
+profile_output,pass,Stage profile exists.
+benchmark_output,pass,Before/after benchmark exists.
+annual_report_override_path,pass,HOF and profile override helper remains active.
+season_overview_route,pass,Season Overview route remains present.
+player_profile_route,pass,Player Profile route remains present.
+milestone_route,pass,Milestone route remains present.
+no_raw_source_changes,pass,
+no_fvcc_data_changes,pass,

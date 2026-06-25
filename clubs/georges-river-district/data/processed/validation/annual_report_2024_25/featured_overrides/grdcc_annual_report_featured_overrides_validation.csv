@@ -1,0 +1,18 @@
+check,status,details
+override_file_loads,pass,/Users/preetkaur/Documents/Codex/2026-04-24/you-are-an-expert-full-stack/clubs/georges-river-district/data/source/annual_report_featured_record_overrides.csv
+required_fields_present,pass,"annual_report_source, applies_to_app_sections, authoritative_value, metric, override_reason, record_category, report_year"
+required_values_populated,pass,rows with missing required values: 0
+harry_milburn_career_runs_exists,pass,matching rows: 1
+harry_milburn_career_runs_value,pass,value: 10788
+harry_milburn_career_runs_differs_from_accounted,pass,authoritative=10788; accounted=8865
+gordon_leslie_career_wickets_exists,pass,matching rows: 1
+gordon_leslie_career_wickets_value,pass,value: 707
+gordon_leslie_career_wickets_differs_from_accounted,pass,authoritative=707; accounted=242
+presentation_copy_applies_harry,pass,display value: 10788
+presentation_copy_applies_gordon,pass,display value: 707
+input_dataframe_not_mutated,pass,source frame unchanged
+overridden_display_names_are_unique,pass,one featured row per approved player
+non_grdcc_not_applied,pass,FVCC returns no overrides
+all_overrides_all_time_only,pass,no season-level overrides
+report_scope_excludes_2025_26,pass,all rows use the 2024/25 report
+metrics_are_featured_career_only,pass,"career_runs, career_wickets"

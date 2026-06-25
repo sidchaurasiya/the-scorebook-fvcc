@@ -5,7 +5,15 @@ import re
 
 import streamlit as st
 
-from src.config.club_config import get_branding_value
+from src.config.club_config import get_active_club_id, get_branding_value
+
+
+FVCC_PRODUCTION_BRANDING = {
+    "primary_colour": "#A31952",
+    "secondary_colour": "#28485F",
+    "accent_colour": "#D4A83A",
+    "background_colour": "#F6F8FB",
+}
 
 
 def inject_theme() -> None:
@@ -340,9 +348,9 @@ def inject_theme() -> None:
         .season-v2-hero {
             align-items: stretch;
             background:
-                radial-gradient(circle at 12% 18%, rgba(var(--club-primary-rgb), 0.20), transparent 30%),
+                radial-gradient(circle at 12% 18%, rgba(109, 74, 255, 0.20), transparent 30%),
                 linear-gradient(135deg, #ffffff 0%, #f5f2ff 58%, #fff7fa 100%);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.14);
+            border: 1px solid rgba(109, 74, 255, 0.14);
             border-radius: 24px;
             box-shadow: 0 22px 54px rgba(18, 18, 72, 0.10);
             display: grid;
@@ -376,7 +384,7 @@ def inject_theme() -> None:
         .season-v2-eyebrow,
         .season-v2-card-kicker,
         .season-v2-tile-label {
-            color: var(--club-primary);
+            color: #6d4aff;
             font-size: 0.76rem;
             font-weight: 950;
             letter-spacing: 0.08em;
@@ -581,7 +589,7 @@ def inject_theme() -> None:
         }
 
         .season-v2-depth-track span {
-            background: linear-gradient(90deg, var(--club-primary), #8b2e6b);
+            background: linear-gradient(90deg, #6d4aff, #8b2e6b);
             border-radius: inherit;
             display: block;
             height: 100%;
@@ -673,8 +681,8 @@ def inject_theme() -> None:
         .side-brand {
             display: flex;
             align-items: center;
-            gap: 13px;
-            margin-bottom: 34px;
+            gap: 15px;
+            margin-bottom: 36px;
         }
 
         .side-shield {
@@ -686,9 +694,36 @@ def inject_theme() -> None:
             display: flex;
             font-size: 0.85rem;
             font-weight: 900;
-            height: 56px;
+            height: 58px;
             justify-content: center;
-            width: 46px;
+            width: 48px;
+        }
+
+        .side-shield-logo {
+            background:
+                radial-gradient(circle at 32% 18%, rgba(255,255,255,0.98), rgba(255,255,255,0.88) 58%, rgba(216,232,245,0.98) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.88);
+            border-radius: 19px;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.92),
+                0 16px 34px rgba(0,0,0,0.24),
+                0 0 0 5px rgba(255,255,255,0.10);
+            height: 64px;
+            overflow: hidden;
+            padding: 7px;
+            width: 58px;
+        }
+
+        .side-shield-logo img {
+            display: block;
+            height: 100%;
+            object-fit: contain;
+            transform-origin: center;
+            width: 100%;
+        }
+
+        .side-shield-logo-zoom img {
+            transform: scale(1.12);
         }
 
         .side-title {
@@ -799,7 +834,7 @@ def inject_theme() -> None:
         }
 
         .club-label {
-            color: var(--club-primary);
+            color: var(--club-primary, #5B3DF5);
             font-size: clamp(1.5rem, 1.75vw, 1.75rem);
             font-weight: 800;
             letter-spacing: 0;
@@ -837,7 +872,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.hall-of-fame-page) .club-label {
-            color: var(--club-primary);
+            color: var(--club-primary, #5B3DF5);
             font-weight: 800;
             margin: 0 0 8px;
         }
@@ -1001,7 +1036,7 @@ def inject_theme() -> None:
 
         .hof-v2-record-nav a.active {
             background: var(--club-primary-soft, #f1edff);
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
         }
 
         .hof-v2-section {
@@ -1039,7 +1074,7 @@ def inject_theme() -> None:
             background: #ffffff;
             border: 1px solid #e7e6f5;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             display: inline-flex;
             font-size: 0.78rem;
             font-weight: 900;
@@ -1124,7 +1159,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-trophy-year a {
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 0.9rem;
             font-weight: 950;
             text-decoration: none;
@@ -1165,10 +1200,10 @@ def inject_theme() -> None:
         }
 
         .hof-v2-subtle-link {
-            background: var(--club-primary-soft);
+            background: var(--club-primary-soft, #f8f6ff);
             border: 1px solid rgba(var(--club-primary-rgb, 75, 55, 216), 0.20);
             border-radius: 999px;
-            color: var(--club-link, var(--club-primary)) !important;
+            color: var(--club-link, #4b37d8) !important;
             display: inline-flex;
             font-size: 0.78rem;
             font-weight: 900;
@@ -1201,7 +1236,7 @@ def inject_theme() -> None:
             background: var(--club-primary-soft, #f1edff);
             border: 1px solid rgba(var(--club-primary-rgb, 75, 55, 216), 0.20);
             border-radius: 999px;
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             display: inline-flex;
             font-size: 0.8rem;
             font-weight: 950;
@@ -1311,6 +1346,12 @@ def inject_theme() -> None:
             margin-top: 4px;
         }
 
+        .hof-v2-performance-hero .hof-v2-muted a.season-overview-link,
+        .hof-v2-performance-hero .hof-v2-muted a.season-overview-link:visited {
+            color: var(--club-muted-text, #66758D) !important;
+            font-weight: 800;
+        }
+
         .hof-v2-race-time {
             color: var(--club-secondary-soft, #fff5dd);
             font-size: 0.9rem;
@@ -1323,7 +1364,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-record-value {
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             font-size: 1.8rem;
             font-weight: 950;
             line-height: 1;
@@ -1349,7 +1390,7 @@ def inject_theme() -> None:
         }
 
         .hof-v2-season-score {
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             font-size: 2.2rem;
             font-weight: 950;
             line-height: 1;
@@ -1408,7 +1449,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.seasons-page) .club-label {
-            color: var(--club-primary);
+            color: #5B3DF5;
             font-weight: 800;
             margin: 0 0 8px;
         }
@@ -1704,7 +1745,7 @@ def inject_theme() -> None:
         }
 
         .kpi-card::after {
-            background: radial-gradient(circle, rgba(var(--club-primary-rgb), 0.10), transparent 68%);
+            background: radial-gradient(circle, rgba(109, 77, 255, 0.10), transparent 68%);
             content: "";
             height: 120px;
             position: absolute;
@@ -1714,7 +1755,7 @@ def inject_theme() -> None:
         }
 
         .kpi-card:hover {
-            border-color: rgba(var(--club-primary-rgb), 0.18);
+            border-color: #dddffc;
             box-shadow: var(--card-shadow-hover);
             transform: translateY(-3px);
         }
@@ -1784,7 +1825,7 @@ def inject_theme() -> None:
             width: 32px;
         }
 
-        .kpi-icon.purple { background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)); }
+        .kpi-icon.purple { background: linear-gradient(135deg, #7b42ff, #5b32e8); }
         .kpi-icon.blue { background: linear-gradient(135deg, #6aa9ff, #2f72ff); }
         .kpi-icon.green { background: linear-gradient(135deg, #34d399, #12b981); }
 
@@ -1827,7 +1868,7 @@ def inject_theme() -> None:
             background: transparent !important;
             border: 0 !important;
             box-shadow: none !important;
-            color: var(--club-primary) !important;
+            color: #5B3DF5 !important;
             display: inline-flex !important;
             font-size: 0.82rem !important;
             font-weight: 800 !important;
@@ -1843,7 +1884,7 @@ def inject_theme() -> None:
             background: transparent !important;
             border: 0 !important;
             box-shadow: none !important;
-            color: var(--club-primary) !important;
+            color: #4324D8 !important;
             text-decoration: underline;
             text-underline-offset: 3px;
         }
@@ -1945,7 +1986,7 @@ def inject_theme() -> None:
         div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="]:focus-visible,
         div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"]:hover,
         div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"]:focus-visible {
-            color: var(--club-primary) !important;
+            color: #4b37d8 !important;
             text-decoration: underline !important;
             text-underline-offset: 3px;
         }
@@ -1959,7 +2000,7 @@ def inject_theme() -> None:
         a[href*="page=season_overview"][href*="season="]:focus-visible,
         a[href*="play.cricket.com.au/match/"]:focus-visible {
             border-radius: 4px;
-            outline: 2px solid rgba(var(--club-primary-rgb), 0.35);
+            outline: 2px solid rgba(75, 55, 216, 0.35);
             outline-offset: 2px;
         }
 
@@ -1969,53 +2010,8 @@ def inject_theme() -> None:
         a[href*="play.cricket.com.au/match/"]:visited,
         div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"],
         div[data-testid="stDataFrame"] a[href*="play.cricket.com.au/match/"]:visited {
-            color: var(--club-primary) !important;
+            color: #4b37d8 !important;
             font-weight: 700;
-        }
-
-        .block-container:has(.hall-of-fame-page) a.player-profile-link,
-        .block-container:has(.hall-of-fame-page) a.player-profile-link:visited,
-        .block-container:has(.hall-of-fame-page) a.season-overview-link,
-        .block-container:has(.hall-of-fame-page) a.season-overview-link:visited,
-        .block-container:has(.hall-of-fame-page) .hof-v2-performance-player a,
-        .block-container:has(.hall-of-fame-page) .hof-v2-performance-player a:visited,
-        .block-container:has(.hall-of-fame-page) .hof-v2-record-player a,
-        .block-container:has(.hall-of-fame-page) .hof-v2-record-player a:visited,
-        .block-container:has(.hall-of-fame-page) .hof-v2-trophy-year a,
-        .block-container:has(.hall-of-fame-page) .hof-v2-trophy-year a:visited,
-        .block-container:has(.hall-of-fame-page) .hof-v2-rank-row a,
-        .block-container:has(.hall-of-fame-page) .hof-v2-rank-row a:visited,
-        .block-container:has(.hall-of-fame-page) .hof-card a.player-profile-link,
-        .block-container:has(.hall-of-fame-page) .hof-card a.season-overview-link,
-        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
-        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player_id="],
-        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=season-overview"][href*="season="],
-        .block-container:has(.hall-of-fame-page) div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="] {
-            color: var(--club-secondary) !important;
-        }
-
-        .block-container:has(.hall-of-fame-page) a.scorecard-link,
-        .block-container:has(.hall-of-fame-page) a.scorecard-link:visited,
-        .block-container:has(.hall-of-fame-page) .hof-v2-subtle-link {
-            color: var(--club-primary) !important;
-        }
-
-        .block-container:has(.season-overview-page) a.player-profile-link,
-        .block-container:has(.season-overview-page) a.player-profile-link:visited,
-        .block-container:has(.season-overview-page) a.season-overview-link,
-        .block-container:has(.season-overview-page) a.season-overview-link:visited,
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player_id="],
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season-overview"][href*="season="],
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="] {
-            color: var(--club-secondary) !important;
-        }
-
-        .block-container:has(.season-overview-page) a.scorecard-link,
-        .block-container:has(.season-overview-page) a.scorecard-link:visited,
-        .block-container:has(.season-overview-page) a.season-round-scorecard-link,
-        .block-container:has(.season-overview-page) a.season-round-scorecard-link:visited {
-            color: var(--club-primary) !important;
         }
 
         .improver-gain {
@@ -2186,7 +2182,7 @@ def inject_theme() -> None:
             width: 10px;
         }
 
-        .legend-dot.current { background: var(--club-primary); }
+        .legend-dot.current { background: #6D4DFF; }
         .legend-dot.previous { background: #C7C3FF; }
         .legend-dot.green { background: #10B981; }
         .legend-dot.slate { background: #94A3B8; }
@@ -2241,6 +2237,21 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .hall-of-fame-page .progress-name a.player-profile-link,
+        .hall-of-fame-page .progress-name a.player-profile-link:visited,
+        .hall-of-fame-page .performance-player strong a.player-profile-link,
+        .hall-of-fame-page .performance-player strong a.player-profile-link:visited,
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link,
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:visited {
+            color: var(--club-link) !important;
+        }
+
+        .hall-of-fame-page .progress-name a.player-profile-link:hover,
+        .hall-of-fame-page .performance-player strong a.player-profile-link:hover,
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:hover {
+            color: var(--club-link) !important;
+        }
+
         .progress-value {
             color: var(--ink);
             font-size: 0.94rem;
@@ -2251,6 +2262,15 @@ def inject_theme() -> None:
             display: block;
             font-weight: 900;
             white-space: nowrap;
+        }
+
+        .featured-record-source {
+            display: block;
+            margin-top: 0.15rem;
+            color: var(--muted-text);
+            font-size: 0.7rem;
+            font-weight: 500;
+            line-height: 1.2;
         }
 
         .progress-average {
@@ -2271,7 +2291,7 @@ def inject_theme() -> None:
         }
 
         .progress-track div {
-            background: linear-gradient(90deg, var(--club-primary), #4F46E5);
+            background: linear-gradient(90deg, #8B5CF6, #4F46E5);
             border-radius: 999px;
             height: 100%;
         }
@@ -2295,7 +2315,7 @@ def inject_theme() -> None:
         }
 
         .team-leader-card::before {
-            background: linear-gradient(90deg, var(--club-primary), #3B82F6);
+            background: linear-gradient(90deg, #6D4DFF, #3B82F6);
             content: "";
             height: 4px;
             left: 0;
@@ -2353,9 +2373,9 @@ def inject_theme() -> None:
 
         .mini-icon {
             align-items: center;
-            background: var(--club-primary-soft);
+            background: #F0EDFF;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #6D4DFF;
             display: inline-flex;
             font-size: 0.75rem;
             font-weight: 900;
@@ -2389,7 +2409,7 @@ def inject_theme() -> None:
         }
 
         .mini-stat {
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 0.98rem;
             font-weight: 950;
             white-space: nowrap;
@@ -2416,7 +2436,7 @@ def inject_theme() -> None:
         }
 
         .mini-track div {
-            background: linear-gradient(90deg, var(--club-primary), #3B82F6);
+            background: linear-gradient(90deg, #8B5CF6, #3B82F6);
             border-radius: 999px;
             height: 100%;
         }
@@ -2470,7 +2490,7 @@ def inject_theme() -> None:
         .pill.green,
         .score-dot.green { background: #10B981; }
         .pill.purple,
-        .score-dot.purple { background: var(--club-primary); }
+        .score-dot.purple { background: #6D4DFF; }
         .pill.slate,
         .score-dot.slate,
         .score-dot.muted { background: #94A3B8; }
@@ -2502,6 +2522,14 @@ def inject_theme() -> None:
 
         .block-container:has(.hall-of-fame-page) .hof-progress-row {
             margin: 9px 0;
+        }
+
+        .block-container:has(.hall-of-fame-page) .hof-leader-scroll {
+            max-height: calc(var(--hof-visible-rows, 6) * 58px);
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
         }
 
         .block-container:has(.hall-of-fame-page) .progress-row {
@@ -2550,7 +2578,15 @@ def inject_theme() -> None:
 
         .premiership-card-scroll {
             flex: 1;
-            padding-right: 5px;
+            max-height: 691px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .premiership-wins-scroll {
+            max-height: calc(6 * 111px);
         }
 
         .premiership-win-row {
@@ -2596,7 +2632,7 @@ def inject_theme() -> None:
 
         .premiership-season {
             align-items: center;
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             display: inline-flex;
             font-size: 1.05rem;
             font-weight: 950;
@@ -2668,28 +2704,19 @@ def inject_theme() -> None:
             padding: 9px 0;
         }
 
+        .compact-year-premiership-player-card .performance-player strong {
+            font-size: 0.96rem;
+        }
+
+        .premiership-year-summary {
+            color: var(--club-muted-text, #66758D);
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 750;
+        }
+
         .premiership-player-row .performance-value {
-            color: var(--club-primary);
-        }
-
-        .premiership-player-card .performance-player strong,
-        .premiership-player-card .performance-player strong a,
-        .premiership-player-card .performance-player strong a:visited,
-        .premiership-player-card .hof-season-text,
-        .premiership-player-card .hof-season-text:visited {
-            color: var(--ink) !important;
-        }
-
-        .premiership-player-card .hof-value-text {
-            color: var(--club-primary) !important;
-        }
-
-        .premiership-player-card .performance-player span {
-            font-size: 0.93rem;
-        }
-
-        .premiership-player-card .performance-player strong {
-            font-size: 1.02rem;
+            color: var(--club-primary, #4b37d8);
         }
 
         .premiership-player-row .performance-player span {
@@ -2700,14 +2727,111 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .premiership-player-row .performance-player span.premiership-year-summary {
+            display: block;
+        }
+
+        .premiership-player-row .performance-player span a.season-overview-link,
+        .premiership-player-row .performance-player span a.season-overview-link:visited,
         .premiership-player-row .performance-player span a.hof-season-text,
         .premiership-player-row .performance-player span a.hof-season-text:visited {
-            color: var(--ink) !important;
-            font-weight: 850;
+            color: var(--club-muted-text, #66758D) !important;
+            font-weight: 750;
+        }
+
+        .premiership-player-row .premiership-more-seasons {
+            color: var(--club-muted-text, #66758D);
+            font-weight: 750;
+        }
+
+        .fastest-innings-card .performance-player span a.season-overview-link,
+        .fastest-innings-card .performance-player span a.season-overview-link:visited {
+            color: var(--club-muted-text, #66758D) !important;
+            font-weight: 750;
+        }
+
+        .hof-five-row-scroll {
+            max-height: 360px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .hof-responsive-record-scroll {
+            max-height: 505px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
+        .hof-responsive-record-scroll.iconic-performance-scroll {
+            max-height: 474px;
+        }
+
+        .iconic-performance-scroll .performance-player > span,
+        .iconic-performance-scroll .performance-player > span a,
+        .iconic-performance-scroll .performance-player > span a:visited {
+            color: var(--club-muted-text, #66758D) !important;
+        }
+
+        .iconic-performance-scroll .performance-player > span a.scorecard-link,
+        .iconic-performance-scroll .performance-player > span a.scorecard-link:visited {
+            color: var(--club-link) !important;
+        }
+
+        .fastest-innings-card .fastest-final-score {
+            color: #566074;
+        }
+
+        .hof-active-badge {
+            background: rgba(var(--club-secondary-rgb), 0.17);
+            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            border-radius: 999px;
+            color: var(--club-primary-dark);
+            display: inline-flex;
+            font-size: 0.56rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            margin-left: 6px;
+            padding: 2px 6px;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 760px) {
+            .block-container:has(.hall-of-fame-page) .hof-leader-scroll {
+                max-height: calc(5 * 58px);
+            }
+
+            .block-container:has(.hall-of-fame-page) .hof-five-row-scroll {
+                max-height: 360px;
+            }
+
+            .block-container:has(.hall-of-fame-page) .hof-responsive-record-scroll {
+                max-height: 505px;
+                overflow-y: auto;
+                padding-right: 7px;
+                scrollbar-color: var(--club-border) transparent;
+                scrollbar-width: thin;
+            }
+
+            .block-container:has(.hall-of-fame-page) .hof-responsive-record-scroll.iconic-performance-scroll {
+                max-height: 395px;
+            }
+
+            .premiership-wins-scroll {
+                max-height: 826px;
+            }
+
+            .premiership-player-scroll {
+                max-height: calc(5 * 58px);
+            }
         }
 
         .premiership-empty p {
-            color: #737994;
+            color: var(--muted);
             font-weight: 750;
             margin: 6px 0 0;
         }
@@ -2733,7 +2857,7 @@ def inject_theme() -> None:
         }
 
         .dna-hero-card::before {
-            background: linear-gradient(180deg, #7A1735, var(--club-primary));
+            background: linear-gradient(180deg, #7A1735, #4b37d8);
             content: "";
             height: 100%;
             left: 0;
@@ -2870,7 +2994,7 @@ def inject_theme() -> None:
         .dna-trait-track div,
         .dna-contribution-track div,
         .dna-fingerprint-track div {
-            background: linear-gradient(90deg, #7A1735, var(--club-primary));
+            background: linear-gradient(90deg, #7A1735, #4b37d8);
             border-radius: 999px;
             height: 100%;
         }
@@ -2894,7 +3018,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.player-dna-page) div[data-testid="stProgress"] > div > div > div {
-            background: linear-gradient(90deg, #7A1735, var(--club-primary));
+            background: linear-gradient(90deg, #7A1735, #4b37d8);
         }
 
         .block-container:has(.player-dna-page) div[data-testid="stVerticalBlockBorderWrapper"] {
@@ -2936,7 +3060,7 @@ def inject_theme() -> None:
         }
 
         .dna-rank-value {
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 1.05rem;
             font-weight: 950;
             text-align: right;
@@ -2990,7 +3114,7 @@ def inject_theme() -> None:
         }
 
         .dna-performance-value {
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 1.05rem;
             font-weight: 950;
             text-align: right;
@@ -3009,7 +3133,7 @@ def inject_theme() -> None:
         }
 
         .dna-fingerprint-pct {
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 0.86rem;
             font-weight: 950;
             text-align: right;
@@ -3107,7 +3231,7 @@ def inject_theme() -> None:
         }
 
         .lab-story-row > span {
-            background: linear-gradient(135deg, #7A1735, var(--club-primary));
+            background: linear-gradient(135deg, #7A1735, #4b37d8);
             border: 3px solid #ffffff;
             border-radius: 999px;
             box-shadow: 0 5px 14px rgba(23, 27, 77, 0.16);
@@ -3223,6 +3347,10 @@ def inject_theme() -> None:
             line-height: 1.15;
         }
 
+        .hall-of-fame-page .performance-player strong {
+            color: var(--club-link, var(--ink));
+        }
+
         .performance-player span {
             color: #7a809d;
             display: block;
@@ -3235,7 +3363,7 @@ def inject_theme() -> None:
         }
 
         .performance-value {
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             font-size: 0.95rem;
             font-weight: 950;
             text-align: right;
@@ -3284,7 +3412,7 @@ def inject_theme() -> None:
         }
 
         .best-season-primary {
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             font-size: 1.58rem;
             font-weight: 950;
             margin-top: 16px;
@@ -3382,8 +3510,8 @@ def inject_theme() -> None:
         }
 
         .empty-profile-pill-row span {
-            background: linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.10), rgba(59, 130, 246, 0.08));
-            border: 1px solid rgba(var(--club-primary-rgb), 0.16);
+            background: linear-gradient(135deg, rgba(109, 77, 255, 0.10), rgba(59, 130, 246, 0.08));
+            border: 1px solid rgba(109, 77, 255, 0.16);
             border-radius: 999px;
             color: #45496a;
             display: inline-flex;
@@ -3395,7 +3523,7 @@ def inject_theme() -> None:
         .player-hero-card {
             align-items: flex-start;
             background:
-                radial-gradient(circle at right top, rgba(var(--club-primary-rgb), 0.14), transparent 20rem),
+                radial-gradient(circle at right top, rgba(109, 77, 255, 0.14), transparent 20rem),
                 #ffffff;
             border: 1px solid #e9ebf4;
             border-radius: 18px;
@@ -3412,7 +3540,7 @@ def inject_theme() -> None:
         }
 
         .profile-kicker {
-            color: var(--club-primary);
+            color: #6D4DFF;
             font-size: 0.74rem;
             font-weight: 900;
             letter-spacing: 0.05em;
@@ -3447,10 +3575,10 @@ def inject_theme() -> None:
         }
 
         .profile-badge {
-            background: linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.12), rgba(59,130,246,0.12));
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            background: var(--club-secondary-soft, #eef4f8);
+            border: 1px solid rgba(var(--club-secondary-rgb, 40, 72, 95), 0.22);
             border-radius: 999px;
-            color: var(--club-primary);
+            color: var(--club-link, #28485F);
             font-size: 0.76rem;
             font-weight: 900;
             padding: 8px 11px;
@@ -3473,7 +3601,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.player-profile-page) .club-label {
-            color: var(--club-primary);
+            color: #5B3DF5;
             font-weight: 800;
             margin: 0 0 10px;
         }
@@ -3488,7 +3616,7 @@ def inject_theme() -> None:
 
         div.st-key-player_selector_card {
             background:
-                radial-gradient(circle at 100% 0%, rgba(var(--club-primary-rgb), 0.08), transparent 18rem),
+                radial-gradient(circle at 100% 0%, rgba(109, 77, 255, 0.08), transparent 18rem),
                 #ffffff;
             border: 1px solid #e7e9f4;
             border-radius: 22px;
@@ -3528,7 +3656,7 @@ def inject_theme() -> None:
 
         .profile-kpi-card {
             background:
-                linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.045), rgba(255,255,255,0) 70%),
+                linear-gradient(135deg, rgba(109, 77, 255, 0.045), rgba(255,255,255,0) 70%),
                 #ffffff;
             border: 1px solid #e8eaf5;
             border-radius: 18px;
@@ -3593,7 +3721,7 @@ def inject_theme() -> None:
         }
 
         .profile-season-summary-card span {
-            color: var(--club-primary);
+            color: #6d4dff;
             display: block;
             font-size: 0.74rem;
             font-weight: 950;
@@ -3711,7 +3839,7 @@ def inject_theme() -> None:
 
         .profile-intelligence-intro {
             align-items: center;
-            background: linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.07), rgba(255,255,255,0.78));
+            background: linear-gradient(135deg, rgba(109, 77, 255, 0.07), rgba(255,255,255,0.78));
             border: 1px solid #e7e9f4;
             border-radius: 18px;
             box-shadow: 0 12px 28px rgba(23, 27, 77, 0.045);
@@ -3723,7 +3851,7 @@ def inject_theme() -> None:
         }
 
         .profile-intelligence-intro span {
-            color: var(--club-primary);
+            color: #5b3df5;
             font-size: 0.78rem;
             font-weight: 950;
             letter-spacing: 0.055em;
@@ -3755,10 +3883,10 @@ def inject_theme() -> None:
         }
 
         .profile-intelligence-card-head > span {
-            background: var(--club-primary-soft);
+            background: #f0edff;
             border: 1px solid #dfd8ff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #5b3df5;
             display: inline-flex;
             font-size: 0.66rem;
             font-weight: 950;
@@ -3857,7 +3985,7 @@ def inject_theme() -> None:
         }
 
         .fingerprint-player-pct {
-            color: var(--club-primary);
+            color: #5b3df5;
             font-size: 0.84rem;
             font-weight: 950;
             white-space: nowrap;
@@ -3877,7 +4005,7 @@ def inject_theme() -> None:
             background: #f7f1ff;
             border: 1px solid #ded2ff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #5b3df5;
             font-size: 0.64rem;
             font-weight: 950;
             letter-spacing: 0.04em;
@@ -3900,7 +4028,7 @@ def inject_theme() -> None:
 
         .position-track div,
         .fingerprint-bar {
-            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary));
+            background: linear-gradient(90deg, #6d4dff, #8a63ff);
             border-radius: inherit;
             height: 100%;
         }
@@ -3940,11 +4068,11 @@ def inject_theme() -> None:
         .profile-segment:hover,
         .profile-segment:focus-visible {
             background: #f5f2ff;
-            color: var(--club-primary);
+            color: #5b3df5;
         }
 
         .profile-segment.active {
-            background: var(--club-primary-soft);
+            background: #F0EDFF;
             color: var(--pitch);
             box-shadow: none;
         }
@@ -4024,8 +4152,8 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"],
         div.st-key-milestone_page_view_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"],
         div.st-key-player_profile_breakdown_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"] {
-            background: var(--club-primary-soft) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.18) !important;
+            background: #F0EDFF !important;
+            border-color: #ded8ff !important;
             border-bottom-color: #ffffff !important;
             box-shadow: 0 -7px 18px rgba(91, 61, 245, 0.08) !important;
             color: var(--pitch) !important;
@@ -4103,15 +4231,15 @@ def inject_theme() -> None:
         }
 
         .recent-form-chip.bat {
-            background: var(--club-primary-soft);
-            border-color: rgba(var(--club-primary-rgb), 0.18);
-            color: var(--club-primary);
+            background: var(--club-secondary-soft, #eef4f8);
+            border-color: rgba(var(--club-secondary-rgb, 40, 72, 95), 0.22);
+            color: var(--club-link, #28485F);
         }
 
         .recent-form-chip.bowl {
-            background: #eef8f6;
-            border-color: #cdebe4;
-            color: #116b63;
+            background: var(--club-secondary-soft, #eef4f8);
+            border-color: rgba(var(--club-secondary-rgb, 40, 72, 95), 0.22);
+            color: var(--club-link, #28485F);
         }
 
         .recent-form-chip.hot {
@@ -4186,9 +4314,13 @@ def inject_theme() -> None:
 
         div.st-key-season_round_grade_filter_control {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 8px;
             margin: -2px 0 14px;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 4px;
             width: 100%;
         }
 
@@ -4203,8 +4335,9 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_filter_control div[data-testid="stVerticalBlock"] {
             align-items: stretch;
             display: flex !important;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 8px;
+            min-width: max-content;
         }
 
         div.st-key-season_round_grade_filter_control div[data-testid="stElementContainer"] {
@@ -4245,7 +4378,7 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         div.st-key-season_round_grade_filter_control button[data-testid="stBaseButton-segmented_controlActive"] {
-            background: var(--club-primary-soft) !important;
+            background: #F0EDFF !important;
             box-shadow: none !important;
             color: var(--pitch) !important;
         }
@@ -4261,13 +4394,13 @@ def inject_theme() -> None:
             line-height: 1.14 !important;
             min-height: 42px !important;
             padding: 8px 10px !important;
-            white-space: normal !important;
+            white-space: nowrap !important;
         }
 
         div.st-key-season_round_grade_filter_control button[data-testid="stBaseButton-primary"],
         div.st-key-season_round_grade_filter_control button[kind="primary"] {
-            background: var(--club-primary-soft) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.18) !important;
+            background: #F0EDFF !important;
+            border-color: #ded8ff !important;
             color: var(--pitch) !important;
         }
 
@@ -4275,14 +4408,35 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton"] span {
             line-height: 1.14 !important;
             text-align: center !important;
-            white-space: normal !important;
+            white-space: nowrap !important;
         }
 
         .season-round-grade-card {
             border: 1px solid #e8ebf7;
             border-radius: 16px;
+            flex: 0 0 min(980px, 92vw);
             margin-top: 0;
             overflow: hidden;
+        }
+
+        .season-round-panel-strip {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 14px;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            overscroll-behavior-inline: contain;
+            padding: 2px 2px 12px;
+            scroll-snap-type: x proximity;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .season-round-panel-strip .season-round-grade-card {
+            scroll-snap-align: start;
         }
 
         .season-round-grade-head {
@@ -4304,10 +4458,10 @@ def inject_theme() -> None:
         }
 
         .season-round-grade-head .season-round-record {
-            background: var(--club-primary-soft);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            background: #F0EDFF;
+            border: 1px solid #ded8ff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #5b3df5;
             flex: 0 0 auto;
             font-size: 0.74rem;
             font-weight: 950;
@@ -4425,8 +4579,8 @@ def inject_theme() -> None:
         }
 
         .season-result-pill.none {
-            background: var(--club-primary-soft);
-            color: var(--club-primary);
+            background: #F0EDFF;
+            color: #5b3df5;
         }
 
         .season-round-scorecard-link {
@@ -4547,7 +4701,7 @@ def inject_theme() -> None:
         }
 
         .fingerprint-legend i.player {
-            background: var(--club-primary);
+            background: #6d4dff;
             border-radius: 999px;
             height: 8px;
             width: 20px;
@@ -4687,7 +4841,7 @@ def inject_theme() -> None:
         }
 
         .peer-card h4::before {
-            background: var(--peer-accent, var(--club-primary));
+            background: var(--peer-accent, #6d4dff);
             border-radius: 999px;
             content: "";
             display: inline-block;
@@ -4720,9 +4874,9 @@ def inject_theme() -> None:
         }
 
         .legend-dot {
-            background: var(--club-primary);
+            background: #6d4dff;
             border-radius: 999px;
-            box-shadow: 0 0 0 3px rgba(var(--club-primary-rgb), 0.12);
+            box-shadow: 0 0 0 3px rgba(109, 77, 255, 0.12);
             display: inline-block;
             height: 9px;
             width: 9px;
@@ -4824,7 +4978,7 @@ def inject_theme() -> None:
         }
 
         .peer-fill {
-            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary));
+            background: linear-gradient(90deg, #6d4dff, #8a63ff);
             border-radius: inherit;
             height: 100%;
             left: 0;
@@ -4844,7 +4998,7 @@ def inject_theme() -> None:
         }
 
         .player-marker {
-            background: var(--club-primary);
+            background: #6d4dff;
             box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.95), 0 5px 12px rgba(23, 27, 77, 0.16);
             height: 13px;
             width: 13px;
@@ -4920,7 +5074,7 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid="stBaseButton-segmented_controlActive"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid="stBaseButton-segmented_controlActive"] {
-            background: var(--club-primary-soft) !important;
+            background: #F0EDFF !important;
             box-shadow: none !important;
             color: var(--pitch) !important;
         }
@@ -4962,7 +5116,7 @@ def inject_theme() -> None:
         }
 
         .record-value {
-            color: var(--club-primary);
+            color: var(--club-primary, #4b37d8);
             font-size: 1.38rem;
             font-weight: 950;
             margin-top: 8px;
@@ -4980,6 +5134,37 @@ def inject_theme() -> None:
             font-size: 0.8rem;
             font-weight: 700;
             margin-top: 12px;
+        }
+
+        .leader-highlight-card {
+            min-height: 174px;
+        }
+
+        .leader-highlight-count {
+            color: var(--ink);
+            font-size: 0.92rem;
+            font-weight: 760;
+            margin-top: 14px;
+        }
+
+        .leader-highlight-details {
+            display: grid;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .leader-highlight-details a,
+        .leader-highlight-more {
+            color: var(--club-primary);
+            font-size: 0.82rem;
+            font-weight: 850;
+            line-height: 1.24;
+            text-decoration: none;
+        }
+
+        .leader-highlight-details a:hover {
+            color: var(--club-link-hover);
+            text-decoration: underline;
         }
 
         .milestone-group {
@@ -5059,11 +5244,11 @@ def inject_theme() -> None:
         .milestone-segment:hover,
         .milestone-segment:focus-visible {
             background: var(--club-primary-soft, #f1edff);
-            color: var(--club-primary) !important;
+            color: var(--club-primary, #4b37d8) !important;
         }
 
         .milestone-segment.active {
-            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary));
+            background: linear-gradient(135deg, var(--club-primary, #4b37d8), var(--club-accent, #6d4dff));
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb, 75, 55, 216), 0.18);
             color: #ffffff !important;
         }
@@ -5146,7 +5331,7 @@ def inject_theme() -> None:
         }
 
         .milestone-group-rule {
-            background: var(--club-primary-soft);
+            background: #f8f6ff;
             border: 1px solid #e5e1ff;
             border-radius: 999px;
             color: #5b5f7d;
@@ -5189,10 +5374,10 @@ def inject_theme() -> None:
         }
 
         .milestone-row-badge {
-            background: var(--club-primary-soft);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            background: #eef0ff;
+            border: 1px solid #dfe2ff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #4b37d8;
             display: inline-flex;
             font-size: 0.68rem;
             font-weight: 950;
@@ -5203,7 +5388,7 @@ def inject_theme() -> None:
         }
 
         .milestone-away {
-            color: var(--club-primary);
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.83rem;
             font-weight: 900;
@@ -5224,9 +5409,9 @@ def inject_theme() -> None:
 
         .milestone-hof-watch {
             background:
-                linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.09), rgba(122, 23, 53, 0.05)),
+                linear-gradient(135deg, rgba(75, 55, 216, 0.09), rgba(122, 23, 53, 0.05)),
                 #ffffff;
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            border: 1px solid #e2dfff;
             border-radius: 24px;
             box-shadow: 0 10px 26px rgba(23, 27, 77, 0.055);
             margin-top: 22px;
@@ -5296,7 +5481,7 @@ def inject_theme() -> None:
 
         .achievement-card {
             background:
-                linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.09), rgba(128, 20, 55, 0.06)),
+                linear-gradient(135deg, rgba(109, 77, 255, 0.09), rgba(128, 20, 55, 0.06)),
                 #ffffff;
             border: 1px solid #e9e6fb;
             border-radius: 18px;
@@ -5333,7 +5518,7 @@ def inject_theme() -> None:
         }
 
         .achievement-value {
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 1.08rem;
             font-weight: 950;
             line-height: 1.15;
@@ -5381,7 +5566,11 @@ def inject_theme() -> None:
         .milestone-member-list {
             display: grid;
             gap: 9px;
+            max-height: 259px;
+            overflow-y: auto;
             padding: 14px 17px 17px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
         }
 
         .milestone-member-row {
@@ -5389,6 +5578,7 @@ def inject_theme() -> None:
             display: flex;
             gap: 8px;
             justify-content: space-between;
+            min-height: 38px;
         }
 
         .milestone-member-row span {
@@ -5399,7 +5589,7 @@ def inject_theme() -> None:
         }
 
         .milestone-member-row strong {
-            color: var(--club-primary);
+            color: var(--club-link, #28485F);
             flex: 0 0 auto;
             font-size: 0.86rem;
             font-weight: 950;
@@ -5418,7 +5608,7 @@ def inject_theme() -> None:
             background: transparent !important;
             border: 0 !important;
             box-shadow: none !important;
-            color: var(--club-primary) !important;
+            color: #5B3DF5 !important;
             display: inline-flex !important;
             font-size: 0.82rem !important;
             font-weight: 850 !important;
@@ -5430,7 +5620,7 @@ def inject_theme() -> None:
 
         div[class*="st-key-milestone_club_"][class*="_control"] .stButton > button:hover,
         div[class*="st-key-milestone_club_"][class*="_control"] .stButton > button:focus {
-            color: var(--club-primary) !important;
+            color: #4324D8 !important;
             text-decoration: underline !important;
         }
 
@@ -5441,7 +5631,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.near-milestones-page) .club-label {
-            color: var(--club-primary);
+            color: #5B3DF5;
             font-weight: 800;
             margin: 0;
         }
@@ -5529,7 +5719,7 @@ def inject_theme() -> None:
         }
 
         .milestone-away {
-            color: var(--club-primary);
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.83rem;
             font-weight: 900;
@@ -5557,7 +5747,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-topline {
-            color: var(--club-primary);
+            color: #6d4dff;
             font-size: 0.78rem;
             font-weight: 950;
             letter-spacing: 0.11em;
@@ -5582,16 +5772,16 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.player-profile-v2-page) .club-label {
-            color: var(--club-primary);
+            color: #5B3DF5;
             font-weight: 800;
             margin: 0;
         }
 
         .player-v2-preview-badge {
             background: #f1edff;
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            border: 1px solid #ded8ff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.78rem;
             font-weight: 900;
@@ -5601,7 +5791,7 @@ def inject_theme() -> None:
 
         div.st-key-player_v2_selector_card {
             background:
-                radial-gradient(circle at 100% 0%, rgba(var(--club-primary-rgb), 0.09), transparent 18rem),
+                radial-gradient(circle at 100% 0%, rgba(109, 77, 255, 0.09), transparent 18rem),
                 rgba(255, 255, 255, 0.95);
             border: 1px solid #e7e9f4;
             border-radius: 24px;
@@ -5626,7 +5816,7 @@ def inject_theme() -> None:
         .player-v2-hero {
             background:
                 linear-gradient(135deg, rgba(8, 11, 63, 0.97), rgba(25, 18, 91, 0.95)),
-                radial-gradient(circle at 78% 18%, rgba(var(--club-primary-rgb), 0.32), transparent 24rem),
+                radial-gradient(circle at 78% 18%, rgba(109, 77, 255, 0.32), transparent 24rem),
                 radial-gradient(circle at 98% 75%, rgba(167, 104, 0, 0.20), transparent 22rem);
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 34px;
@@ -5856,7 +6046,7 @@ def inject_theme() -> None:
             background: #ffffff;
             border: 1px solid #e7e6f5;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.78rem;
             font-weight: 900;
@@ -5915,9 +6105,9 @@ def inject_theme() -> None:
 
         .player-v2-traits span {
             background: #f1edff;
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            border: 1px solid #ded8ff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #4b37d8;
             font-size: 0.76rem;
             font-weight: 900;
             padding: 7px 10px;
@@ -5938,7 +6128,7 @@ def inject_theme() -> None:
 
         .player-v2-meter span,
         .player-v2-progress-track span {
-            background: linear-gradient(90deg, var(--club-primary), var(--club-primary));
+            background: linear-gradient(90deg, #4b37d8, #6d4dff);
             border-radius: 999px;
             display: block;
             height: 100%;
@@ -5946,7 +6136,7 @@ def inject_theme() -> None:
 
         .player-v2-coach-card {
             background:
-                linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.055), rgba(255,255,255,0) 72%),
+                linear-gradient(135deg, rgba(109, 77, 255, 0.055), rgba(255,255,255,0) 72%),
                 #ffffff;
         }
 
@@ -6012,7 +6202,7 @@ def inject_theme() -> None:
             width: 16px;
         }
 
-        .player-v2-marker.player { background: var(--club-primary); }
+        .player-v2-marker.player { background: #4b37d8; }
         .player-v2-marker.peer { background: #8a90aa; }
 
         .player-v2-card-head {
@@ -6023,10 +6213,10 @@ def inject_theme() -> None:
         }
 
         .player-v2-card-head span {
-            background: var(--club-primary-soft);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            background: #f8f6ff;
+            border: 1px solid #dfdcff;
             border-radius: 999px;
-            color: var(--club-primary);
+            color: #4b37d8;
             flex: 0 0 auto;
             font-size: 0.72rem;
             font-weight: 900;
@@ -6056,7 +6246,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-break-row div span {
-            background: linear-gradient(90deg, var(--club-primary), var(--club-primary));
+            background: linear-gradient(90deg, #4b37d8, #6d4dff);
             border-radius: 999px;
             display: block;
             height: 100%;
@@ -6071,8 +6261,8 @@ def inject_theme() -> None:
         }
 
         .player-v2-insight {
-            background: var(--club-primary-soft);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            background: #f8f6ff;
+            border: 1px solid #e1ddff;
             border-radius: 18px;
             color: #34395c !important;
             font-size: 0.9rem !important;
@@ -6090,8 +6280,8 @@ def inject_theme() -> None:
         }
 
         .player-v2-mini-grid div {
-            background: var(--club-primary-soft);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.16);
+            background: #f8f6ff;
+            border: 1px solid #e6e2ff;
             border-radius: 18px;
             padding: 13px;
         }
@@ -6119,7 +6309,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-performance-head {
-            background: linear-gradient(135deg, rgba(var(--club-primary-rgb), 0.10), rgba(122, 23, 53, 0.08));
+            background: linear-gradient(135deg, rgba(75, 55, 216, 0.10), rgba(122, 23, 53, 0.08));
             border-bottom: 1px solid #e7e6f5;
             padding: 18px;
         }
@@ -6151,10 +6341,10 @@ def inject_theme() -> None:
         }
 
         .player-v2-subtle-link {
-            background: var(--club-primary-soft);
-            border: 1px solid rgba(var(--club-primary-rgb), 0.18);
+            background: #f8f6ff;
+            border: 1px solid #e1ddff;
             border-radius: 999px;
-            color: var(--club-primary) !important;
+            color: #4b37d8 !important;
             display: inline-flex;
             font-size: 0.78rem;
             font-weight: 900;
@@ -6171,7 +6361,7 @@ def inject_theme() -> None:
 
         .player-v2-pair-avatar {
             align-items: center;
-            background: linear-gradient(135deg, var(--club-primary), #7a1735);
+            background: linear-gradient(135deg, #4b37d8, #7a1735);
             border-radius: 22px;
             color: #ffffff;
             display: flex;
@@ -6201,7 +6391,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-away {
-            color: var(--club-primary);
+            color: #4b37d8;
             display: block;
             font-size: 0.84rem;
             font-weight: 900;
@@ -6274,7 +6464,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-timeline-dot {
-            background: linear-gradient(135deg, var(--club-primary), var(--club-primary));
+            background: linear-gradient(135deg, #4b37d8, #6d4dff);
             border-radius: 999px;
             display: block;
             height: 10px;
@@ -6447,7 +6637,7 @@ def inject_theme() -> None:
 
         .compact-card-header a,
         .full-link {
-            color: var(--club-primary) !important;
+            color: #6738f5 !important;
             font-size: 0.86rem;
             font-weight: 850;
             text-decoration: none;
@@ -6571,39 +6761,41 @@ def inject_theme() -> None:
             }
 
             div.st-key-season_round_grade_filter_control {
-                display: grid !important;
+                display: flex !important;
                 gap: 8px !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
                 margin: 0 0 14px;
                 max-width: 100%;
-                overflow: visible;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-bottom: 4px;
                 width: 100%;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stHorizontalBlock"] {
-                display: grid !important;
+                display: flex !important;
                 gap: 8px !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                width: 100% !important;
+                min-width: max-content !important;
+                width: max-content !important;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stVerticalBlock"] {
-                display: grid !important;
+                display: flex !important;
                 gap: 8px !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                width: 100% !important;
+                min-width: max-content !important;
+                width: max-content !important;
             }
 
             div.st-key-season_round_grade_filter_control div[data-testid="stElementContainer"] {
                 display: block !important;
-                flex: 1 1 100% !important;
-                max-width: 100% !important;
-                width: 100% !important;
+                flex: 0 0 auto !important;
+                max-width: none !important;
+                width: auto !important;
             }
 
             div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton"] {
                 min-height: 44px !important;
-                width: 100% !important;
+                white-space: nowrap !important;
+                width: auto !important;
             }
 
             .season-round-scroll {
@@ -6760,6 +6952,18 @@ def inject_theme() -> None:
                 font-size: 0.98rem;
             }
 
+            .premiership-card-scroll {
+                max-height: 820px;
+            }
+
+            .premiership-wins-scroll {
+                max-height: 826px;
+            }
+
+            .premiership-player-scroll {
+                max-height: calc(5 * 58px);
+            }
+
             .premiership-title {
                 font-size: 0.9rem;
             }
@@ -6914,6 +7118,14 @@ def inject_theme() -> None:
             .milestone-member-row strong {
                 text-align: left;
                 white-space: normal;
+            }
+
+            .milestone-member-list {
+                max-height: 344px;
+            }
+
+            .milestone-member-row {
+                min-height: 55px;
             }
 
             .milestone-group-rule {
@@ -7306,8 +7518,8 @@ def inject_theme() -> None:
 
             div.st-key-mobile_nav_fallback .mobile-info-icon {
                 align-items: center;
-                background: var(--club-primary-soft) !important;
-                border: 1px solid rgba(var(--club-primary-rgb), 0.18) !important;
+                background: #F4F1FF !important;
+                border: 1px solid #DDD7FF !important;
                 border-radius: 999px !important;
                 color: var(--pitch) !important;
                 display: inline-flex;
@@ -7319,8 +7531,8 @@ def inject_theme() -> None:
             }
 
             div.st-key-mobile_nav_fallback .mobile-nav-help-panel {
-                background: var(--club-primary-soft);
-                border: 1px solid rgba(var(--club-primary-rgb), 0.16);
+                background: #F8F7FF;
+                border: 1px solid #E7E2FF;
                 border-radius: 14px;
                 color: #4F5875;
                 font-size: 0.76rem;
@@ -7356,9 +7568,9 @@ def inject_theme() -> None:
             }
 
             div.st-key-mobile_nav_fallback .mobile-nav-link.active {
-                background: var(--club-primary-soft);
-                border-color: rgba(var(--club-primary-rgb), 0.18);
-                color: var(--club-primary) !important;
+                background: #F0EDFF;
+                border-color: #DCD4FF;
+                color: #5B3DF5 !important;
             }
 
             .mobile-page-footer {
@@ -7393,7 +7605,7 @@ def inject_theme() -> None:
             }
 
             .mobile-page-footer .mobile-footer-contact a {
-                color: var(--club-primary);
+                color: #5B3DF5;
                 text-decoration: none;
                 word-break: break-word;
             }
@@ -7458,15 +7670,27 @@ def inject_theme() -> None:
 
 
 def active_club_theme_css() -> str:
-    primary = safe_hex_colour(get_branding_value("primary_colour", "#A31952"), "#A31952")
-    secondary = safe_hex_colour(get_branding_value("secondary_colour", "#28485F"), "#28485F")
-    accent = safe_hex_colour(get_branding_value("accent_colour", primary), primary)
-    background = safe_hex_colour(get_branding_value("background_colour", "#F6F8FB"), "#F6F8FB")
-    link = primary
+    active_club_id = get_active_club_id()
+    branding = FVCC_PRODUCTION_BRANDING if active_club_id == "fvcc" else {}
+    primary = safe_hex_colour(branding.get("primary_colour", get_branding_value("primary_colour", "#5B4BEB")), "#5B4BEB")
+    secondary = safe_hex_colour(branding.get("secondary_colour", get_branding_value("secondary_colour", "#7C5CFF")), "#7C5CFF")
+    accent = safe_hex_colour(branding.get("accent_colour", get_branding_value("accent_colour", primary)), primary)
+    background = safe_hex_colour(branding.get("background_colour", get_branding_value("background_colour", "#F7F8FC")), "#F7F8FC")
+    text = safe_hex_colour(get_branding_value("text_colour", "#080B3F"), "#080B3F")
+    muted = safe_hex_colour(get_branding_value("muted_text_colour", "#6D728E"), "#6D728E")
+    line = safe_hex_colour(get_branding_value("border_colour", "#E7EAF5"), "#E7EAF5")
+    surface = safe_hex_colour(get_branding_value("surface_colour", "#FFFFFF"), "#FFFFFF")
+    link = secondary if active_club_id == "fvcc" else primary
+    link_hover = darken_hex(secondary, 0.24) if active_club_id == "fvcc" else secondary
     highlight = tint_hex(accent, 0.86)
     primary_soft = tint_hex(primary, 0.90)
     secondary_soft = tint_hex(secondary, 0.88)
-    sidebar_bg = darken_hex(secondary, 0.24)
+    sidebar_start = secondary if active_club_id == "fvcc" else primary
+    sidebar_bg = (
+        darken_hex(secondary, 0.24)
+        if active_club_id == "fvcc"
+        else safe_hex_colour(get_branding_value("primary_dark_colour", darken_hex(primary, 0.24)), darken_hex(primary, 0.24))
+    )
     sidebar_active = primary
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
@@ -7478,22 +7702,34 @@ def active_club_theme_css() -> str:
         <style>
         :root {{
             --club-primary: {primary};
+            --club-primary-dark: {sidebar_bg};
             --club-secondary: {secondary};
             --club-accent: {accent};
             --club-bg: {background};
+            --club-text: {text};
+            --club-muted: {muted};
+            --club-border: {line};
+            --club-surface: {surface};
             --club-link: {link};
+            --club-link-hover: {link_hover};
             --club-highlight: {highlight};
             --club-primary-soft: {primary_soft};
             --club-secondary-soft: {secondary_soft};
             --club-sidebar-bg: {sidebar_bg};
+            --club-sidebar-start: {sidebar_start};
             --club-sidebar-active: {sidebar_active};
             --club-primary-rgb: {primary_rgb};
             --club-accent-rgb: {accent_rgb};
             --club-secondary-rgb: {secondary_rgb};
             --club-highlight-rgb: {highlight_rgb};
-            --pitch: var(--club-primary);
-            --pitch-2: var(--club-accent);
+            --ink: var(--club-text);
+            --muted: var(--club-muted);
+            --line: var(--club-border);
+            --surface: var(--club-surface);
             --surface-soft: var(--club-bg);
+            --card-border: var(--club-border);
+            --pitch: var(--club-primary);
+            --pitch-2: var(--club-secondary);
         }}
 
         .stApp {{
@@ -7504,9 +7740,9 @@ def active_club_theme_css() -> str:
 
         section[data-testid="stSidebar"] {{
             background:
-                radial-gradient(circle at 18% 0%, rgba(var(--club-secondary-rgb), 0.20), transparent 14rem),
-                radial-gradient(circle at 80% 42%, rgba(var(--club-primary-rgb), 0.22), transparent 12rem),
-                linear-gradient(180deg, var(--club-secondary) 0%, var(--club-sidebar-bg) 100%) !important;
+                radial-gradient(circle at 18% 0%, rgba(var(--club-secondary-rgb), 0.22), transparent 14rem),
+                radial-gradient(circle at 80% 42%, rgba(var(--club-secondary-rgb), 0.16), transparent 12rem),
+                linear-gradient(180deg, var(--club-sidebar-start) 0%, var(--club-sidebar-bg) 100%) !important;
         }}
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
@@ -7565,7 +7801,12 @@ def active_club_theme_css() -> str:
         }}
 
         div[data-testid="stTabs"] button {{
-            color: rgba(8, 10, 63, 0.68) !important;
+            color: var(--muted) !important;
+        }}
+
+        div[data-testid="stTabs"] [role="tablist"] {{
+            background: var(--surface-soft) !important;
+            border: 1px solid var(--line) !important;
         }}
 
         div[data-testid="stTabs"] button[aria-selected="true"],
@@ -7604,11 +7845,14 @@ def active_club_theme_css() -> str:
         a.scorecard-link:hover,
         a.season-round-scorecard-link:hover,
         a.full-link:hover {{
-            color: var(--club-secondary) !important;
+            color: var(--club-link-hover) !important;
         }}
 
-        .club-label,
-        .page-subtitle strong,
+        .block-container:has(.hall-of-fame-page) a:hover,
+        .block-container:has(.hall-of-fame-page) a:focus-visible {{
+            color: var(--club-link) !important;
+        }}
+
         .premiership-season,
         .premiership-season a,
         .hof-card a.player-profile-link,
@@ -7623,6 +7867,21 @@ def active_club_theme_css() -> str:
             color: var(--club-link) !important;
         }}
 
+        .block-container:has(.near-milestones-page) a.player-profile-link,
+        .block-container:has(.near-milestones-page) a.player-profile-link:visited {{
+            color: var(--club-link) !important;
+        }}
+
+        .block-container:has(.near-milestones-page) a.player-profile-link:hover,
+        .block-container:has(.near-milestones-page) a.player-profile-link:focus-visible {{
+            color: var(--club-link-hover) !important;
+        }}
+
+        .club-label,
+        .page-subtitle strong {{
+            color: var(--club-primary) !important;
+        }}
+
         .mobile-nav-link.active,
         div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
@@ -7632,29 +7891,7 @@ def active_club_theme_css() -> str:
 
         a:focus-visible,
         a.scorecard-link:focus-visible {{
-            outline-color: rgba(var(--club-primary-rgb), 0.44) !important;
-        }}
-
-        .block-container:has(.season-overview-page) a.player-profile-link,
-        .block-container:has(.season-overview-page) a.player-profile-link:visited,
-        .block-container:has(.season-overview-page) a.season-overview-link,
-        .block-container:has(.season-overview-page) a.season-overview-link:visited,
-        .stVerticalBlock.st-key-top_scorers_card a.player-profile-link,
-        .stVerticalBlock.st-key-top_scorers_card a.player-profile-link:visited,
-        .stVerticalBlock.st-key-top_wickets_card a.player-profile-link,
-        .stVerticalBlock.st-key-top_wickets_card a.player-profile-link:visited,
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player="],
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=player-profile"][href*="player_id="],
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season-overview"][href*="season="],
-        .block-container:has(.season-overview-page) div[data-testid="stDataFrame"] a[href*="page=season_overview"][href*="season="] {{
-            color: var(--club-secondary) !important;
-        }}
-
-        .block-container:has(.season-overview-page) a.scorecard-link,
-        .block-container:has(.season-overview-page) a.scorecard-link:visited,
-        .block-container:has(.season-overview-page) a.season-round-scorecard-link,
-        .block-container:has(.season-overview-page) a.season-round-scorecard-link:visited {{
-            color: var(--club-primary) !important;
+            outline-color: rgba(var(--club-secondary-rgb), 0.44) !important;
         }}
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button,
@@ -7664,7 +7901,7 @@ def active_club_theme_css() -> str:
 
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover,
         div[class*="st-key-hof_"][class*="_control"] .stButton > button:hover * {{
-            color: var(--club-secondary) !important;
+            color: var(--club-link-hover) !important;
         }}
 
         .stButton > button[kind="primary"],
@@ -7675,8 +7912,8 @@ def active_club_theme_css() -> str:
 
         .stButton > button:focus-visible,
         .stDownloadButton > button:focus-visible {{
-            box-shadow: 0 0 0 0.2rem rgba(var(--club-primary-rgb), 0.22) !important;
-            border-color: var(--club-primary) !important;
+            box-shadow: 0 0 0 0.2rem rgba(var(--club-secondary-rgb), 0.22) !important;
+            border-color: var(--club-secondary) !important;
         }}
 
         div[data-testid="stMetricValue"],
@@ -7689,7 +7926,7 @@ def active_club_theme_css() -> str:
 
         .cv-hero {{
             background:
-                linear-gradient(135deg, {secondary} 0%, {primary} 100%),
+                linear-gradient(135deg, {primary} 0%, {secondary} 100%),
                 repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 54px) !important;
             box-shadow: 0 22px 52px {sidebar_shadow} !important;
         }}
@@ -7697,7 +7934,7 @@ def active_club_theme_css() -> str:
         .cv-callout,
         .season-detail-card,
         .profile-intelligence-card {{
-            border-color: rgba(var(--club-primary-rgb), 0.28) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.28) !important;
         }}
 
         .position-track div,
@@ -7725,7 +7962,7 @@ def active_club_theme_css() -> str:
         .profile-segment:focus-visible,
         .folder-tab:hover,
         .folder-tab:focus-visible {{
-            border-color: rgba(var(--club-primary-rgb), 0.34) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.34) !important;
             color: var(--club-primary) !important;
         }}
 
@@ -7733,7 +7970,7 @@ def active_club_theme_css() -> str:
         .folder-tab[aria-selected="true"],
         .profile-segment.active {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.38) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.38) !important;
             color: #ffffff !important;
             box-shadow: 0 12px 28px rgba(var(--club-primary-rgb), 0.12) !important;
         }}
@@ -7755,7 +7992,6 @@ def active_club_theme_css() -> str:
         .best-season-primary,
         .premiership-player-row .performance-value,
         .milestone-away,
-        .milestone-progress-top span:not(.milestone-row-badge),
         .milestone-group-title,
         .player-v2-progress-card strong,
         .player-v2-progress-value,
@@ -7765,6 +8001,20 @@ def active_club_theme_css() -> str:
         .profile-phase-value,
         .season-v2-highlight-value {{
             color: var(--club-primary) !important;
+        }}
+
+        .profile-badge,
+        .player-v2-badge,
+        .recent-form-chip.bat,
+        .recent-form-chip.bowl {{
+            background: var(--club-secondary-soft) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.24) !important;
+            color: var(--club-link) !important;
+        }}
+
+        .milestone-progress-top span:not(.milestone-row-badge),
+        .milestone-watch-top span {{
+            color: var(--club-muted) !important;
         }}
 
         .milestone-segment.active,
@@ -7851,70 +8101,6 @@ def active_club_theme_css() -> str:
         .hof-card,
         .record-card {{
             border-color: rgba(var(--club-primary-rgb), 0.16) !important;
-        }}
-
-        .cv-callout,
-        .season-v2-record-badge,
-        .mini-icon,
-        .player-v2-badge,
-        .player-v2-record-pill,
-        .profile-best-badge,
-        .recent-form-chip.batting,
-        .season-round-record,
-        .mobile-info-icon {{
-            background: var(--club-primary-soft) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.18) !important;
-            color: var(--club-primary) !important;
-        }}
-
-        .season-v2-eyebrow,
-        .season-v2-card-kicker,
-        .season-v2-tile-label,
-        .mini-stat,
-        .player-v2-kicker,
-        .player-v2-summary-value,
-        .player-v2-progress-value,
-        .profile-phase-value,
-        .season-v2-highlight-value,
-        .mobile-page-footer a,
-        .mobile-page-footer a:visited {{
-            color: var(--club-primary) !important;
-        }}
-
-        .season-v2-depth-track span,
-        .progress-track div,
-        .mini-track div,
-        .player-v2-progress-track span,
-        .profile-phase-track span,
-        .recent-form-chip.batting.strong {{
-            background: linear-gradient(90deg, var(--club-primary), var(--club-secondary)) !important;
-        }}
-
-        .season-v2-hero {{
-            background:
-                radial-gradient(circle at 12% 18%, rgba(var(--club-primary-rgb), 0.16), transparent 30%),
-                linear-gradient(135deg, #ffffff 0%, var(--club-primary-soft) 58%, var(--club-secondary-soft) 100%) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.16) !important;
-        }}
-
-        .season-v2-hero:after {{
-            background: linear-gradient(180deg, var(--club-primary), var(--club-secondary)) !important;
-        }}
-
-        .kpi-card::after {{
-            background: radial-gradient(circle, rgba(var(--club-secondary-rgb), 0.12), transparent 68%) !important;
-        }}
-
-        div.st-key-mobile_nav_fallback .mobile-info-icon,
-        div.st-key-mobile_nav_fallback .mobile-nav-help-panel {{
-            background: var(--club-primary-soft) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.18) !important;
-        }}
-
-        div.st-key-mobile_nav_fallback .mobile-nav-link.active {{
-            background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
-            border-color: rgba(var(--club-primary-rgb), 0.28) !important;
-            color: #ffffff !important;
         }}
         </style>
     """

@@ -57,6 +57,11 @@ DISMISSAL_ORDER = {"Caught": 1, "Bowled": 2, "LBW": 3, "Run out": 4, "Stumped": 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build deploy-safe Player Profile insight summaries.")
     add_club_args(parser)
+    parser.add_argument(
+        "--performance-breakdown-only",
+        action="store_true",
+        help="Rebuild only the Career Breakdown export.",
+    )
     return parser.parse_args(argv)
 
 
@@ -64,7 +69,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     club_id = resolve_club_id(args.club)
     output_dir = OUTPUT_DIR if args.legacy_output else get_player_profile_dir(club_id=club_id)
-    output_paths = [output_dir / filename for filename in OUTPUT_FILENAMES]
+    output_filenames = ["performance_breakdown_by_dimension.csv"] if args.performance_breakdown_only else OUTPUT_FILENAMES
+    output_paths = [output_dir / filename for filename in output_filenames]
 
     print_club_header("Player Profile deploy-safe insight export builder", club_id)
     print_paths("Inputs", [get_processed_match_centre_dir(club_id=club_id)])
@@ -84,14 +90,17 @@ def main(argv: list[str] | None = None) -> int:
     fielding = prepare_fielding(frames, club_id=club_id)
     balls = prepare_ball_rows(frames, club_id=club_id)
 
-    outputs = {
-        "performance_breakdown_by_dimension.csv": build_performance_breakdown(batting, bowling, fielding, balls),
-        "batting_position_summary.csv": build_batting_position_summary(batting),
-        "bowling_phase_summary.csv": build_bowling_phase_summary(bowling, balls),
-        "dismissal_fingerprint_summary.csv": build_dismissal_fingerprint_summary(batting),
-        "recent_form_batting.csv": build_recent_form_batting(batting),
-        "recent_form_bowling.csv": build_recent_form_bowling(bowling),
-    }
+    outputs = {"performance_breakdown_by_dimension.csv": build_performance_breakdown(batting, bowling, fielding, balls)}
+    if not args.performance_breakdown_only:
+        outputs.update(
+            {
+                "batting_position_summary.csv": build_batting_position_summary(batting),
+                "bowling_phase_summary.csv": build_bowling_phase_summary(bowling, balls),
+                "dismissal_fingerprint_summary.csv": build_dismissal_fingerprint_summary(batting),
+                "recent_form_batting.csv": build_recent_form_batting(batting),
+                "recent_form_bowling.csv": build_recent_form_bowling(bowling),
+            }
+        )
     for filename, frame in outputs.items():
         frame.to_csv(output_dir / filename, index=False)
 
@@ -252,6 +261,8 @@ def prepare_bowling(frames: dict[str, pd.DataFrame], club_id: str | None = None)
     rows = ensure_display_player_name(rows)
     rows["wickets_numeric"] = pd.to_numeric(rows.get("wickets_taken"), errors="coerce").fillna(0)
     rows["runs_against_numeric"] = pd.to_numeric(rows.get("runs_conceded"), errors="coerce").fillna(0)
+    rows["wides_numeric"] = pd.to_numeric(rows.get("wides"), errors="coerce").fillna(0)
+    rows["no_balls_numeric"] = pd.to_numeric(rows.get("no_balls"), errors="coerce").fillna(0)
     rows = filter_plausible_bowling_figures(rows, wickets_column="wickets_numeric", runs_column="runs_against_numeric")
     rows["balls_numeric"] = rows.get("overs_bowled", pd.Series(index=rows.index, dtype="object")).map(layout.cricket_overs_to_balls).fillna(0)
     rows = rows[rows["balls_numeric"].gt(0)].copy()
@@ -483,10 +494,16 @@ def build_bowling_breakdown(bowling: pd.DataFrame, dimension: str, column: str) 
         bbi=("bbi_display", best_bbi_from_labels),
         three_wicket_innings=("is_3wi", "sum"),
         five_wicket_innings=("is_5wi", "sum"),
+        wides=("wides_numeric", "sum"),
+        no_balls=("no_balls_numeric", "sum"),
     )
     grouped["bowl_avg"] = grouped.apply(lambda row: divide_or_none(row["runs_against"], row["wickets"]), axis=1)
     grouped["bowl_sr"] = grouped.apply(lambda row: divide_or_none(row["balls_bowled"], row["wickets"]), axis=1)
     grouped["eco"] = grouped.apply(lambda row: divide_or_none(row["runs_against"] * 6, row["balls_bowled"]), axis=1)
+    grouped["extras_pct"] = grouped.apply(
+        lambda row: layout.calculate_extras_pct(row["no_balls"], row["wides"], row["balls_bowled"]),
+        axis=1,
+    )
     return common_dimension_output(grouped, dimension, column, "Bowling")
 
 

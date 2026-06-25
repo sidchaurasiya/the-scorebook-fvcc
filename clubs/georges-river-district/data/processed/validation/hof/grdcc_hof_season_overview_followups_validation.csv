@@ -1,0 +1,11 @@
+check,validation_status,details
+hof_player_names_grdcc_blue,pass,HOF player links use GRDCC link blue.
+no_purple_hover,pass,HOF hover uses GRDCC link blue.
+harry_milburn_412_proxy,pass,"{'player_name': 'Harry Milburn', 'normalized_player_name': 'harry milburn', 'has_excel_data': 'yes', 'has_playcricket_data': 'review', 'excel_innings': '412', 'excel_matches_raw': '46', 'playcricket_matches': '', 'displayed_matches_numeric_sort_value': '412', 'displayed_matches_text': '412*', 'used_innings_proxy': 'yes', 'proxy_reason': 'innings_proxy', 'affected_tables': 'HOF Stats table; Player Profile; Season Overview stats table where career table is reused', 'validation_status': 'pass', 'notes': 'matches proxy used for 15 season(s); 50s/100s are conservative minimums derived from season HS'}"
+historical_matches_sort_numeric,pass,Harry sort value expected 412.
+active_latest_two_logic,pass,Latest two seasons configured.
+paul_thomas_inactive,pass,"{'player_name': 'Paul Thomas', 'normalized_player_name': 'paul thomas', 'latest_season_played': 'Summer 2021/22', 'latest_two_seasons_used': 'Summer 2025/26; Summer 2024/25', 'was_active_before': 'no', 'is_active_after': 'no', 'affected_sections': 'HOF All-Time Leaders; Milestone tab', 'validation_status': 'pass', 'notes': 'Active uses either of latest two eligible GRDCC seasons; veteran/classics age-group rows do not drive HOF/Milestone active tags.'}"
+milestone_latest_two,pass,Milestone helper default is latest 2.
+matches_footnote_present,pass,Footnote template exists.
+desktop_hof_matches_proxy_metadata,pass,Desktop HOF detail tables preserve hidden innings-proxy metadata.
+desktop_hof_player_link_grdcc_blue,pass,Desktop HOF player links keep the GRDCC link blue at rest and on hover.

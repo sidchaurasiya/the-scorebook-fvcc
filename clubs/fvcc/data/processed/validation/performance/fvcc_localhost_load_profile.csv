@@ -1,0 +1,241 @@
+timestamp,stage,elapsed_ms,rows_loaded,files_loaded,cache_hit,notes
+2026-06-18T07:25:57.997791+00:00,club_config_and_theme,65.9,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:25:58.036005+00:00,source data loading,35.3,6091,5,false,
+2026-06-18T07:25:59.055608+00:00,apply canonical player and team-grade mapping,1019.4,,,,
+2026-06-18T07:26:00.706533+00:00,build canonical category summaries,1650.4,,,,
+2026-06-18T07:26:03.316165+00:00,build all-time player summary,2609.3,,,,
+2026-06-18T07:26:03.342913+00:00,load historical data,5342.5,,,,
+2026-06-18T07:26:03.344318+00:00,copy all-time summary,1.2,,,,
+2026-06-18T07:26:03.364385+00:00,build Hall of Fame record holders,19.9,,,,
+2026-06-18T07:26:03.421829+00:00,build iconic performances,57.2,,,,
+2026-06-18T07:26:06.208980+00:00,build Greatest Individual Seasons,2786.9,,,,
+2026-06-18T07:26:06.250214+00:00,build Detailed All-Time Records Batting/Bowling/Fielding,40.9,,,,
+2026-06-18T07:26:06.260130+00:00,load prepared Hall of Fame data,8260.8,,,false,
+2026-06-18T07:26:06.527856+00:00,Hall of Fame team-group aggregation,121.2,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:26:08.061863+00:00,render premiership records,1533.7,,,,
+2026-06-18T07:26:08.122939+00:00,render all-time leaders,60.7,,,,
+2026-06-18T07:26:08.128063+00:00,render iconic performances,4.4,,,,
+2026-06-18T07:26:08.181792+00:00,render fastest innings,53.2,,,,
+2026-06-18T07:26:08.188054+00:00,render record holders,1.3,,,,
+2026-06-18T07:26:08.196232+00:00,render greatest seasons,2.3,,,,
+2026-06-18T07:26:08.309424+00:00,render table hof_batting_detail,112.2,,,,
+2026-06-18T07:26:08.443603+00:00,render table hof_bowling_detail,133.5,,,,
+2026-06-18T07:26:08.509307+00:00,render table hof_fielding_detail,65.2,,,,
+2026-06-18T07:26:08.510285+00:00,render detailed records,313.7,,,,
+2026-06-18T07:26:08.511566+00:00,page_render:hall-of-fame,10580.1,,,,Top-level route render including shared navigation.
+2026-06-18T07:26:08.511732+00:00,app_startup_and_render,10601.7,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:27:01.315825+00:00,club_config_and_theme,12.4,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:27:01.348546+00:00,load prepared Hall of Fame data,27.4,,,true,
+2026-06-18T07:27:01.652054+00:00,Hall of Fame team-group aggregation,133.1,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:27:01.674107+00:00,render premiership records,21.5,,,,
+2026-06-18T07:27:01.774212+00:00,render all-time leaders,99.8,,,,
+2026-06-18T07:27:01.802940+00:00,render iconic performances,28.4,,,,
+2026-06-18T07:27:01.873997+00:00,render fastest innings,70.3,,,,
+2026-06-18T07:27:01.876311+00:00,render record holders,2.0,,,,
+2026-06-18T07:27:01.878367+00:00,render greatest seasons,1.5,,,,
+2026-06-18T07:27:01.991502+00:00,render table hof_batting_detail,111.6,,,,
+2026-06-18T07:27:02.125676+00:00,render table hof_bowling_detail,133.0,,,,
+2026-06-18T07:27:02.199947+00:00,render table hof_fielding_detail,73.8,,,,
+2026-06-18T07:27:02.200557+00:00,render detailed records,321.4,,,,
+2026-06-18T07:27:02.202949+00:00,page_render:hall-of-fame,899.7,,,,Top-level route render including shared navigation.
+2026-06-18T07:27:02.203206+00:00,app_startup_and_render,900.7,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:27:43.321007+00:00,club_config_and_theme,72.1,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:27:43.338881+00:00,load prepared Hall of Fame data,15.7,,,true,
+2026-06-18T07:27:43.720785+00:00,Hall of Fame team-group aggregation,119.7,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:27:43.748567+00:00,render premiership records,27.4,,,,
+2026-06-18T07:27:43.853000+00:00,render all-time leaders,104.0,,,,
+2026-06-18T07:27:43.860879+00:00,render iconic performances,7.3,,,,
+2026-06-18T07:27:43.908371+00:00,render fastest innings,47.2,,,,
+2026-06-18T07:27:43.910989+00:00,render record holders,2.0,,,,
+2026-06-18T07:27:43.912263+00:00,render greatest seasons,1.0,,,,
+2026-06-18T07:27:44.009190+00:00,render table hof_batting_detail,90.8,,,,
+2026-06-18T07:27:44.131035+00:00,render table hof_bowling_detail,121.4,,,,
+2026-06-18T07:27:44.209442+00:00,render table hof_fielding_detail,77.8,,,,
+2026-06-18T07:27:44.209859+00:00,render detailed records,293.0,,,,
+2026-06-18T07:27:44.211286+00:00,page_render:hall-of-fame,962.4,,,,Top-level route render including shared navigation.
+2026-06-18T07:27:44.211734+00:00,app_startup_and_render,987.6,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:27:53.392317+00:00,club_config_and_theme,8.5,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:27:53.408838+00:00,load prepared Hall of Fame data,13.9,,,true,
+2026-06-18T07:27:53.694279+00:00,Hall of Fame team-group aggregation,107.1,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:27:53.712948+00:00,render premiership records,18.2,,,,
+2026-06-18T07:27:53.810261+00:00,render all-time leaders,96.8,,,,
+2026-06-18T07:27:53.814582+00:00,render iconic performances,4.0,,,,
+2026-06-18T07:27:53.856738+00:00,render fastest innings,41.9,,,,
+2026-06-18T07:27:53.857877+00:00,render record holders,0.9,,,,
+2026-06-18T07:27:53.858773+00:00,render greatest seasons,0.8,,,,
+2026-06-18T07:27:53.950691+00:00,render table hof_batting_detail,90.9,,,,
+2026-06-18T07:27:54.077740+00:00,render table hof_bowling_detail,126.6,,,,
+2026-06-18T07:27:54.221266+00:00,render table hof_fielding_detail,142.9,,,,
+2026-06-18T07:27:54.221776+00:00,render detailed records,362.9,,,,
+2026-06-18T07:27:54.223080+00:00,page_render:hall-of-fame,839.3,,,,Top-level route render including shared navigation.
+2026-06-18T07:27:54.223458+00:00,app_startup_and_render,841.1,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:28:10.515660+00:00,club_config_and_theme,9.3,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:28:10.540266+00:00,load prepared Hall of Fame data,16.0,,,true,
+2026-06-18T07:28:10.839645+00:00,Hall of Fame team-group aggregation,119.0,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:28:10.850662+00:00,render premiership records,10.5,,,,
+2026-06-18T07:28:10.927813+00:00,render all-time leaders,76.8,,,,
+2026-06-18T07:28:10.933438+00:00,render iconic performances,5.3,,,,
+2026-06-18T07:28:11.015829+00:00,render fastest innings,82.1,,,,
+2026-06-18T07:28:11.018444+00:00,render record holders,2.0,,,,
+2026-06-18T07:28:11.020571+00:00,render greatest seasons,1.7,,,,
+2026-06-18T07:28:11.120344+00:00,render table hof_batting_detail,98.3,,,,
+2026-06-18T07:28:11.257503+00:00,render table hof_bowling_detail,136.7,,,,
+2026-06-18T07:28:11.355293+00:00,render table hof_fielding_detail,97.1,,,,
+2026-06-18T07:28:11.355842+00:00,render detailed records,334.7,,,,
+2026-06-18T07:28:11.359178+00:00,page_render:hall-of-fame,852.9,,,,Top-level route render including shared navigation.
+2026-06-18T07:28:11.359578+00:00,app_startup_and_render,854.1,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:28:25.385775+00:00,club_config_and_theme,8.8,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:28:25.398765+00:00,load prepared Hall of Fame data,9.7,,,true,
+2026-06-18T07:28:25.665821+00:00,Hall of Fame team-group aggregation,105.1,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:28:25.675843+00:00,render premiership records,9.6,,,,
+2026-06-18T07:28:25.756004+00:00,render all-time leaders,79.8,,,,
+2026-06-18T07:28:25.767948+00:00,render iconic performances,11.2,,,,
+2026-06-18T07:28:25.858023+00:00,render fastest innings,89.5,,,,
+2026-06-18T07:28:25.859215+00:00,render record holders,0.9,,,,
+2026-06-18T07:28:25.860251+00:00,render greatest seasons,0.9,,,,
+2026-06-18T07:28:25.965179+00:00,render table hof_batting_detail,103.5,,,,
+2026-06-18T07:28:26.093596+00:00,render table hof_bowling_detail,127.8,,,,
+2026-06-18T07:28:26.165174+00:00,render table hof_fielding_detail,71.1,,,,
+2026-06-18T07:28:26.165960+00:00,render detailed records,305.5,,,,
+2026-06-18T07:28:26.168112+00:00,page_render:hall-of-fame,791.2,,,,Top-level route render including shared navigation.
+2026-06-18T07:28:26.168459+00:00,app_startup_and_render,791.9,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:28:27.475736+00:00,club_config_and_theme,7.6,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:28:27.917615+00:00,season_overview_build,438.3,,,,
+2026-06-18T07:28:27.918601+00:00,page_render:season-overview,450.5,,,,Top-level route render including shared navigation.
+2026-06-18T07:28:27.918977+00:00,app_startup_and_render,451.2,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:28:29.283814+00:00,club_config_and_theme,7.4,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:28:29.472603+00:00,player_profile_build,186.4,,,,
+2026-06-18T07:28:29.473188+00:00,page_render:player-profile,196.8,,,,Top-level route render including shared navigation.
+2026-06-18T07:28:29.473548+00:00,app_startup_and_render,197.4,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:28:31.070297+00:00,club_config_and_theme,8.8,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:28:31.095870+00:00,source data loading,20.0,6091,5,false,
+2026-06-18T07:28:32.112985+00:00,apply canonical player and team-grade mapping,1016.5,,,,
+2026-06-18T07:28:33.652026+00:00,build canonical category summaries,1538.4,,,,
+2026-06-18T07:28:36.282418+00:00,build all-time player summary,2630.1,,,,
+2026-06-18T07:28:38.201756+00:00,milestones_build,7127.2,,,,
+2026-06-18T07:28:38.202691+00:00,page_render:milestone,7141.5,,,,Top-level route render including shared navigation.
+2026-06-18T07:28:38.202969+00:00,app_startup_and_render,7141.9,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:35:33.171116+00:00,club_config_and_theme,65.3,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:35:33.216176+00:00,source data loading,41.4,6091,5,false,
+2026-06-18T07:35:34.243124+00:00,apply canonical player and team-grade mapping,1026.7,,,,
+2026-06-18T07:35:35.845054+00:00,build canonical category summaries,1601.5,,,,
+2026-06-18T07:35:38.578027+00:00,build all-time player summary,2732.5,,,,
+2026-06-18T07:35:38.604601+00:00,load historical data,5430.2,,,,
+2026-06-18T07:35:38.606715+00:00,copy all-time summary,1.9,,,,
+2026-06-18T07:35:38.625198+00:00,build Hall of Fame record holders,18.3,,,,
+2026-06-18T07:35:38.681700+00:00,build iconic performances,56.2,,,,
+2026-06-18T07:35:41.645747+00:00,build Greatest Individual Seasons,2963.6,,,,
+2026-06-18T07:35:41.688916+00:00,build Detailed All-Time Records Batting/Bowling/Fielding,42.6,,,,
+2026-06-18T07:35:41.732206+00:00,load prepared Hall of Fame data,8558.9,,,false,
+2026-06-18T07:35:41.968190+00:00,Hall of Fame team-group aggregation,116.4,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:35:41.978080+00:00,render premiership records,9.6,,,,
+2026-06-18T07:35:42.008978+00:00,render all-time leaders,30.2,,,,
+2026-06-18T07:35:42.013773+00:00,render iconic performances,4.5,,,,
+2026-06-18T07:35:42.080390+00:00,render fastest innings,66.0,,,,
+2026-06-18T07:35:42.082990+00:00,render record holders,2.1,,,,
+2026-06-18T07:35:42.087281+00:00,render greatest seasons,3.0,,,,
+2026-06-18T07:35:42.203625+00:00,render table hof_batting_detail,114.9,,,,
+2026-06-18T07:35:42.354516+00:00,render table hof_bowling_detail,150.4,,,,
+2026-06-18T07:35:42.464117+00:00,render table hof_fielding_detail,109.2,,,,
+2026-06-18T07:35:42.464694+00:00,render detailed records,376.9,,,,
+2026-06-18T07:35:42.466875+00:00,page_render:hall-of-fame,9361.4,,,,Top-level route render including shared navigation.
+2026-06-18T07:35:42.467354+00:00,app_startup_and_render,9384.0,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:35:43.281165+00:00,club_config_and_theme,7.6,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:35:43.296730+00:00,load prepared Hall of Fame data,12.1,,,true,
+2026-06-18T07:35:43.598961+00:00,Hall of Fame team-group aggregation,119.6,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:35:43.611658+00:00,render premiership records,12.3,,,,
+2026-06-18T07:35:43.639063+00:00,render all-time leaders,27.0,,,,
+2026-06-18T07:35:43.643486+00:00,render iconic performances,3.9,,,,
+2026-06-18T07:35:43.702197+00:00,render fastest innings,58.3,,,,
+2026-06-18T07:35:43.703660+00:00,render record holders,1.0,,,,
+2026-06-18T07:35:43.705144+00:00,render greatest seasons,1.1,,,,
+2026-06-18T07:35:43.809649+00:00,render table hof_batting_detail,101.7,,,,
+2026-06-18T07:35:43.931459+00:00,render table hof_bowling_detail,121.0,,,,
+2026-06-18T07:35:44.008356+00:00,render table hof_fielding_detail,76.5,,,,
+2026-06-18T07:35:44.008840+00:00,render detailed records,303.0,,,,
+2026-06-18T07:35:44.010291+00:00,page_render:hall-of-fame,736.8,,,,Top-level route render including shared navigation.
+2026-06-18T07:35:44.010762+00:00,app_startup_and_render,739.7,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:36:03.980747+00:00,club_config_and_theme,65.8,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:36:03.992289+00:00,load prepared Hall of Fame data,9.7,,,true,
+2026-06-18T07:36:04.274270+00:00,Hall of Fame team-group aggregation,124.2,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:36:04.291277+00:00,render premiership records,16.6,,,,
+2026-06-18T07:36:04.317400+00:00,render all-time leaders,25.4,,,,
+2026-06-18T07:36:04.328697+00:00,render iconic performances,11.0,,,,
+2026-06-18T07:36:04.386278+00:00,render fastest innings,56.1,,,,
+2026-06-18T07:36:04.387356+00:00,render record holders,0.8,,,,
+2026-06-18T07:36:04.388497+00:00,render greatest seasons,0.9,,,,
+2026-06-18T07:36:04.480873+00:00,render table hof_batting_detail,90.6,,,,
+2026-06-18T07:36:04.597025+00:00,render table hof_bowling_detail,115.6,,,,
+2026-06-18T07:36:04.667988+00:00,render table hof_fielding_detail,70.3,,,,
+2026-06-18T07:36:04.668922+00:00,render detailed records,280.1,,,,
+2026-06-18T07:36:04.670362+00:00,page_render:hall-of-fame,755.5,,,,Top-level route render including shared navigation.
+2026-06-18T07:36:04.670753+00:00,app_startup_and_render,777.7,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:36:11.383916+00:00,club_config_and_theme,8.3,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:36:11.411206+00:00,load prepared Hall of Fame data,23.8,,,true,
+2026-06-18T07:36:11.683283+00:00,Hall of Fame team-group aggregation,109.1,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:36:11.702425+00:00,render premiership records,18.9,,,,
+2026-06-18T07:36:11.728061+00:00,render all-time leaders,25.3,,,,
+2026-06-18T07:36:11.734293+00:00,render iconic performances,5.7,,,,
+2026-06-18T07:36:11.787246+00:00,render fastest innings,52.2,,,,
+2026-06-18T07:36:11.789430+00:00,render record holders,1.5,,,,
+2026-06-18T07:36:11.791678+00:00,render greatest seasons,1.3,,,,
+2026-06-18T07:36:11.878557+00:00,render table hof_batting_detail,86.0,,,,
+2026-06-18T07:36:11.995302+00:00,render table hof_bowling_detail,116.0,,,,
+2026-06-18T07:36:12.064225+00:00,render table hof_fielding_detail,68.1,,,,
+2026-06-18T07:36:12.064865+00:00,render detailed records,273.0,,,,
+2026-06-18T07:36:12.066124+00:00,page_render:hall-of-fame,690.6,,,,Top-level route render including shared navigation.
+2026-06-18T07:36:12.067092+00:00,app_startup_and_render,692.1,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:36:24.650124+00:00,club_config_and_theme,8.0,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:36:24.676689+00:00,load prepared Hall of Fame data,22.7,,,true,
+2026-06-18T07:36:24.965272+00:00,Hall of Fame team-group aggregation,112.0,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:36:24.987562+00:00,render premiership records,21.8,,,,
+2026-06-18T07:36:25.037990+00:00,render all-time leaders,50.1,,,,
+2026-06-18T07:36:25.053784+00:00,render iconic performances,14.7,,,,
+2026-06-18T07:36:25.108930+00:00,render fastest innings,53.8,,,,
+2026-06-18T07:36:25.109998+00:00,render record holders,0.8,,,,
+2026-06-18T07:36:25.110983+00:00,render greatest seasons,0.8,,,,
+2026-06-18T07:36:25.195513+00:00,render table hof_batting_detail,83.8,,,,
+2026-06-18T07:36:25.309655+00:00,render table hof_bowling_detail,113.3,,,,
+2026-06-18T07:36:25.378619+00:00,render table hof_fielding_detail,68.3,,,,
+2026-06-18T07:36:25.378994+00:00,render detailed records,267.8,,,,
+2026-06-18T07:36:25.380504+00:00,page_render:hall-of-fame,738.5,,,,Top-level route render including shared navigation.
+2026-06-18T07:36:25.381082+00:00,app_startup_and_render,739.8,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:44:35.075137+00:00,club_config_and_theme,22.7,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:44:35.164654+00:00,load prepared Hall of Fame data,78.8,,,true,
+2026-06-18T07:44:35.461330+00:00,Hall of Fame team-group aggregation,113.5,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:44:35.486566+00:00,render premiership records,24.9,,,,
+2026-06-18T07:44:35.521663+00:00,render all-time leaders,34.7,,,,
+2026-06-18T07:44:35.548102+00:00,render iconic performances,26.0,,,,
+2026-06-18T07:44:35.646546+00:00,render fastest innings,97.3,,,,
+2026-06-18T07:44:35.650183+00:00,render record holders,3.3,,,,
+2026-06-18T07:44:35.653371+00:00,render greatest seasons,2.5,,,,
+2026-06-18T07:44:35.776391+00:00,render table hof_batting_detail,119.7,,,,
+2026-06-18T07:44:35.920717+00:00,render table hof_bowling_detail,143.2,,,,
+2026-06-18T07:44:36.061087+00:00,render table hof_fielding_detail,139.1,,,,
+2026-06-18T07:44:36.064383+00:00,render detailed records,409.9,,,,
+2026-06-18T07:44:36.067134+00:00,page_render:hall-of-fame,1015.1,,,,Top-level route render including shared navigation.
+2026-06-18T07:44:36.068179+00:00,app_startup_and_render,1022.1,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:44:49.424551+00:00,club_config_and_theme,13.1,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:44:49.493156+00:00,load prepared Hall of Fame data,56.8,,,true,
+2026-06-18T07:44:50.035408+00:00,Hall of Fame team-group aggregation,187.7,,,true,Skipped equivalent FVCC single-group rebuild.
+2026-06-18T07:44:50.102624+00:00,render premiership records,66.3,,,,
+2026-06-18T07:44:50.186339+00:00,render all-time leaders,82.4,,,,
+2026-06-18T07:44:50.200835+00:00,render iconic performances,14.0,,,,
+2026-06-18T07:44:50.465013+00:00,render fastest innings,263.3,,,,
+2026-06-18T07:44:50.468751+00:00,render record holders,1.9,,,,
+2026-06-18T07:44:50.472029+00:00,render greatest seasons,2.6,,,,
+2026-06-18T07:44:50.764240+00:00,render table hof_batting_detail,290.2,,,,
+2026-06-18T07:44:51.069956+00:00,render table hof_bowling_detail,304.0,,,,
+2026-06-18T07:44:51.371658+00:00,club_config_and_theme,8.1,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:44:51.790605+00:00,season_overview_build,412.4,,,,
+2026-06-18T07:44:51.791606+00:00,page_render:season-overview,428.1,,,,Top-level route render including shared navigation.
+2026-06-18T07:44:51.792008+00:00,app_startup_and_render,430.5,,,,Full Streamlit script run for the selected route.
+2026-06-18T07:44:54.357311+00:00,club_config_and_theme,11.1,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:44:55.314702+00:00,source data loading,8.6,6091,5,false,
+2026-06-18T07:44:57.101754+00:00,apply canonical player and team-grade mapping,1786.6,,,,
+2026-06-18T07:44:57.577127+00:00,club_config_and_theme,13.9,,1,,Club config is memoized; this includes theme CSS construction.
+2026-06-18T07:44:59.886757+00:00,build canonical category summaries,2783.9,,,,
+2026-06-18T07:45:02.873813+00:00,build all-time player summary,2986.4,,,,
+2026-06-18T07:45:04.955635+00:00,milestones_build,7233.5,,,,
+2026-06-18T07:45:04.956559+00:00,page_render:milestone,7393.6,,,,Top-level route render including shared navigation.
+2026-06-18T07:45:04.956789+00:00,app_startup_and_render,7399.5,,,,Full Streamlit script run for the selected route.

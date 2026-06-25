@@ -1,0 +1,2 @@
+source_system,player_name,season,metric_group,issue_code,metric_value,severity,reason,preview_blocking,recommended_action
+playcricket,Darren Smith,Summer 2013/14,batting,batting_average_over_300,322.0,medium,Batting average exceeds 300 with at least five innings.,no,review_later

@@ -35,6 +35,7 @@ ashish_sharma,Ashish Sharma,Ashish Sharma,Summer 2009/10,2.0,47.0,2.0,43,43.0,0.
 ashish_sharma,Ashish Sharma,Ashish Sharma,Summer 2024/25,3.0,30.0,3.0,30,30.0,0.0,1.0,0.0,0.0,2.0,7.0,0.0,10.0,30.0,46.0,3.0,3.0,3.0,65.21739130434783,Season,0,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Summer 2025/26,7.0,73.0,6.0,24,24.0,1.0,0.0,0.0,0.0,0.0,8.0,0.0,12.166666666666666,41.0,76.0,4.0,4.0,4.0,53.94736842105263,Season,0,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Winter 2025,7.0,36.0,6.0,17*,17.0,1.0,0.0,0.0,0.0,0.0,4.0,1.0,6.0,19.0,33.0,6.0,6.0,6.0,57.57575757575758,Season,0,Batting,,,,,,,,,,,,,,
+ashish_sharma,Ashish Sharma,Ashish Sharma,Winter 2026,1.0,25.0,1.0,25,25.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,25.0,25.0,26.0,1.0,1.0,1.0,96.15384615384616,Season,0,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Summer 2020/21,8.0,20.0,6.0,10,10.0,1.0,0.0,0.0,0.0,3.0,1.0,0.0,3.3333333333333335,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Summer 2021/22,5.0,20.0,3.0,13*,13.0,1.0,0.0,0.0,0.0,1.0,2.0,0.0,6.666666666666667,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Summer 2022/23,12.0,71.0,8.0,21*,21.0,1.0,0.0,0.0,0.0,1.0,5.0,2.0,8.875,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -170,7 +171,7 @@ janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Summer 2016/17,14.0,486.0,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Summer 2017/18,12.0,232.0,11.0,83*,83.0,1.0,1.0,1.0,0.0,1.0,23.0,2.0,21.09090909090909,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Summer 2020/21,2.0,36.0,2.0,20,20.0,0.0,0.0,0.0,0.0,0.0,2.0,4.0,18.0,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Summer 2025/26,6.0,105.0,6.0,58,58.0,0.0,0.0,1.0,0.0,1.0,11.0,4.0,17.5,47.0,37.0,4.0,4.0,4.0,127.02702702702703,Season,0,Batting,,,,,,,,,,,,,,
-janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Winter 2026,3.0,57.0,3.0,39,39.0,0.0,1.0,0.0,0.0,1.0,6.0,2.0,19.0,18.0,15.0,2.0,2.0,2.0,120.0,Season,0,Batting,,,,,,,,,,,,,,
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Winter 2026,4.0,70.0,4.0,39,39.0,0.0,1.0,0.0,0.0,1.0,6.0,3.0,17.5,31.0,25.0,3.0,3.0,3.0,124.0,Season,0,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Summer 2016/17,10.0,219.0,7.0,60,60.0,1.0,1.0,1.0,0.0,2.0,20.0,4.0,31.285714285714285,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Summer 2017/18,10.0,228.0,9.0,80,80.0,1.0,1.0,2.0,0.0,0.0,24.0,1.0,25.333333333333332,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Summer 2020/21,8.0,101.0,6.0,36,36.0,1.0,1.0,0.0,0.0,1.0,11.0,3.0,16.833333333333332,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -677,7 +678,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2023/24,14.0,2
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2024/25,12.0,295.0,9.0,137*,137.0,1.0,2.0,1.0,1.0,2.0,40.0,0.0,32.77777777777778,58.0,64.0,4.0,4.0,4.0,90.625,Season,0,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2025/26,17.0,377.0,15.0,79,79.0,1.0,3.0,2.0,0.0,2.0,49.0,1.0,25.133333333333333,308.0,605.0,12.0,13.0,12.0,50.90909090909091,Season,0,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2025,8.0,363.0,4.0,67,67.0,1.0,2.0,5.0,0.0,0.0,44.0,1.0,90.75,311.0,283.0,4.0,7.0,7.0,109.89399293286219,Season,0,Batting,,,,,,,,,,,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2026,4.0,157.0,2.0,53*,53.0,1.0,1.0,2.0,0.0,0.0,23.0,0.0,78.5,157.0,136.0,2.0,4.0,4.0,115.44117647058823,Season,0,Batting,,,,,,,,,,,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2026,5.0,179.0,2.0,53*,53.0,1.0,1.0,2.0,0.0,0.0,25.0,0.0,89.5,179.0,165.0,2.0,5.0,5.0,108.48484848484848,Season,0,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2008/09,11.0,136.0,10.0,50,50.0,1.0,0.0,1.0,0.0,1.0,18.0,2.0,13.6,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2009/10,11.0,171.0,9.0,63*,63.0,1.0,1.0,1.0,0.0,1.0,18.0,0.0,19.0,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2010/11,12.0,179.0,11.0,45*,45.0,1.0,3.0,0.0,0.0,1.0,14.0,3.0,16.272727272727273,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -913,7 +914,7 @@ raw_d08c380f_be32_422d_a289_f7dad7020567,Avinash Rugoobur,Avinash Rugoobur,Summe
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Summer 2003/04,4.0,13.0,2.0,10,10.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,6.5,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Summer 2004/05,7.0,31.0,4.0,22,22.0,1.0,0.0,0.0,0.0,2.0,4.0,0.0,7.75,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Winter 2025,4.0,170.0,2.0,65*,65.0,1.0,1.0,2.0,0.0,0.0,21.0,5.0,85.0,149.0,105.0,1.0,3.0,3.0,141.9047619047619,Season,0,Batting,,,,,,,,,,,,,,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Winter 2026,4.0,251.0,2.0,102*,102.0,1.0,1.0,2.0,1.0,0.0,23.0,17.0,125.5,189.0,89.0,1.0,3.0,3.0,212.35955056179776,Season,0,Batting,,,,,,,,,,,,,,
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Winter 2026,5.0,305.0,2.0,102*,102.0,1.0,1.0,3.0,1.0,0.0,24.0,21.0,152.5,189.0,89.0,1.0,3.0,3.0,212.35955056179776,Season,0,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,Summer 2018/19,4.0,53.0,4.0,31,31.0,0.0,1.0,0.0,0.0,1.0,8.0,1.0,13.25,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,Summer 2019/20,13.0,102.0,11.0,31*,31.0,1.0,1.0,0.0,0.0,1.0,8.0,1.0,9.272727272727273,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,Summer 2020/21,13.0,181.0,9.0,39*,39.0,1.0,2.0,0.0,0.0,2.0,16.0,0.0,20.11111111111111,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -1030,7 +1031,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Summer 
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Summer 2024/25,7.0,94.0,7.0,45,45.0,0.0,1.0,0.0,0.0,2.0,9.0,0.0,13.428571428571429,94.0,276.0,6.0,6.0,6.0,34.05797101449275,Season,0,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Summer 2025/26,13.0,236.0,12.0,53,53.0,1.0,3.0,1.0,0.0,1.0,22.0,1.0,19.666666666666668,229.0,442.0,11.0,11.0,11.0,51.80995475113122,Season,0,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Winter 2025,9.0,99.0,9.0,38,38.0,0.0,1.0,0.0,0.0,2.0,8.0,1.0,11.0,80.0,133.0,7.0,7.0,7.0,60.150375939849624,Season,0,Batting,,,,,,,,,,,,,,
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Winter 2026,4.0,76.0,4.0,33,33.0,0.0,1.0,0.0,0.0,1.0,6.0,1.0,19.0,21.0,27.0,2.0,2.0,2.0,77.77777777777777,Season,0,Batting,,,,,,,,,,,,,,
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Winter 2026,5.0,124.0,5.0,48,48.0,0.0,2.0,0.0,0.0,1.0,9.0,1.0,24.8,21.0,27.0,2.0,2.0,2.0,77.77777777777777,Season,0,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,Summer 2023/24,7.0,98.0,7.0,53,53.0,0.0,0.0,1.0,0.0,2.0,10.0,0.0,14.0,3.0,10.0,2.0,2.0,2.0,30.0,Season,0,Batting,,,,,,,,,,,,,,
 raw_f7146b6b_2958_4e25_9dc6_8944c8a40f65,Raj Koni,Raj Koni,Summer 2018/19,4.0,32.0,4.0,22,22.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,8.0,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 raw_f8a8f7e5_bac4_4049_9b66_c8d6be892040,Bobby Malli,Bobby Malli,Summer 2008/09,3.0,45.0,2.0,34,34.0,1.0,1.0,0.0,0.0,0.0,5.0,0.0,22.5,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -1160,7 +1161,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2018/19,3.0,46.0,3.0,27,27.0,0.0,0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2023/24,7.0,122.0,5.0,49*,49.0,1.0,2.0,0.0,0.0,0.0,8.0,0.0,24.4,5.0,17.0,1.0,1.0,1.0,29.41176470588235,Season,0,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2024/25,10.0,90.0,9.0,35*,35.0,1.0,1.0,0.0,0.0,2.0,8.0,0.0,10.0,41.0,104.0,6.0,6.0,6.0,39.42307692307692,Season,0,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2025/26,11.0,184.0,8.0,33,33.0,1.0,3.0,0.0,0.0,0.0,16.0,2.0,23.0,155.0,261.0,7.0,10.0,10.0,59.38697318007663,Season,0,Batting,,,,,,,,,,,,,,
-vinay_sharma,Vinay Sharma,Vinay Sharma,Winter 2026,3.0,82.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,10.0,1.0,82.0,68.0,48.0,1.0,2.0,2.0,141.66666666666666,Season,0,Batting,,,,,,,,,,,,,,
+vinay_sharma,Vinay Sharma,Vinay Sharma,Winter 2026,4.0,83.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,10.0,1.0,83.0,69.0,51.0,1.0,3.0,3.0,135.2941176470588,Season,0,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,Summer 2001/02,7.0,86.0,7.0,23,23.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,12.285714285714286,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,Summer 2002/03,12.0,156.0,12.0,40,40.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,13.0,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,Summer 2003/04,9.0,124.0,9.0,39,39.0,0.0,2.0,0.0,0.0,2.0,0.0,0.0,13.777777777777779,,,,,,,Season,0,Batting,,,,,,,,,,,,,,
@@ -1365,7 +1366,7 @@ mayur_mohan,Mayur Mohan,Mayur Mohan,Summer 2005/06,,,,,,,,,,,,,,,,,,,,Season,0,B
 mayur_mohan,Mayur Mohan,Mayur Mohan,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,102.0,72.0,2.0,2/22,0.0,0.0,36.0,51.0,4.235294117647059,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,210.0,146.0,6.0,2/13,0.0,0.0,24.333333333333332,35.0,4.171428571428572,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,7.0,224.0,217.0,10.0,3/32,1.0,0.0,21.7,22.4,5.8125,,,,
-mayur_mohan,Mayur Mohan,Mayur Mohan,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,126.0,128.0,4.0,2/37,0.0,0.0,32.0,31.5,6.095238095238095,,,,
+mayur_mohan,Mayur Mohan,Mayur Mohan,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,5.0,162.0,184.0,4.0,2/37,0.0,0.0,46.0,40.5,6.814814814814815,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Summer 2016/17,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,9.0,507.0,289.0,21.0,6/49,4.0,1.0,13.761904761904763,24.142857142857142,3.4201183431952664,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Summer 2017/18,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,7.0,390.0,243.0,8.0,4/19,1.0,0.0,30.375,48.75,3.7384615384615385,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Summer 2018/19,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,204.0,92.0,3.0,2/44,0.0,0.0,30.666666666666668,68.0,2.7058823529411766,,,,
@@ -1575,7 +1576,7 @@ raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasi
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,7.0,279.0,171.0,6.0,3/15,1.0,0.0,28.5,46.5,3.6774193548387095,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,8.0,308.0,171.0,13.0,4/11,2.0,0.0,13.153846153846153,23.692307692307693,3.331168831168831,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,8.0,216.0,218.0,10.0,4/44,1.0,0.0,21.8,21.6,6.055555555555555,,,,
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,138.0,105.0,6.0,3/40,1.0,0.0,17.5,23.0,4.565217391304348,,,,
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,5.0,180.0,134.0,8.0,3/40,1.0,0.0,16.75,22.5,4.466666666666667,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,Summer 2018/19,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,5.0,102.0,98.0,1.0,1/42,0.0,0.0,98.0,102.0,5.764705882352941,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,Summer 2019/20,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,18.0,24.0,0.0,0/10,0.0,0.0,,,8.0,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,Summer 2020/21,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,60.0,80.0,2.0,2/35,0.0,0.0,40.0,30.0,8.0,,,,
@@ -1692,7 +1693,7 @@ raw_6f08a796_12f5_40ca_b2dd_a2416dcd927d,Arnaud Hurdoyal,Arnaud Hurdoyal,Summer 
 raw_6f08a796_12f5_40ca_b2dd_a2416dcd927d,Arnaud Hurdoyal,Arnaud Hurdoyal,Summer 2011/12,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,24.0,19.0,0.0,0/19,0.0,0.0,,,4.75,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,174.0,80.0,5.0,3/38,1.0,0.0,16.0,34.8,2.7586206896551726,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,9.0,498.0,305.0,11.0,3/17,1.0,0.0,27.727272727272727,45.27272727272727,3.674698795180723,,,,
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,132.0,69.0,4.0,2/25,0.0,0.0,17.25,33.0,3.1363636363636362,,,,
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,5.0,174.0,88.0,6.0,2/19,0.0,0.0,14.666666666666666,29.0,3.0344827586206895,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,Summer 2012/13,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,12.0,32.0,0.0,0/13,0.0,0.0,,,16.0,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,Summer 2013/14,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,5.0,192.0,161.0,3.0,1/34,0.0,0.0,53.666666666666664,64.0,5.03125,,,,
 raw_739364b3_855b_4915_a172_af834ca51be8,Dennis Subramaniam,Dennis Subramaniam,Summer 2012/13,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,13.0,684.0,386.0,20.0,4/23,2.0,0.0,19.3,34.2,3.3859649122807016,,,,
@@ -1700,7 +1701,7 @@ raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Summer 
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,60.0,43.0,2.0,1/11,0.0,0.0,21.5,30.0,4.3,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,7.0,236.0,149.0,6.0,2/19,0.0,0.0,24.833333333333332,39.333333333333336,3.788135593220339,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,7.0,231.0,185.0,9.0,4/23,2.0,0.0,20.555555555555557,25.666666666666668,4.805194805194805,,,,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,108.0,74.0,3.0,1/8,0.0,0.0,24.666666666666668,36.0,4.111111111111111,,,,
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,144.0,100.0,6.0,3/26,1.0,0.0,16.666666666666668,24.0,4.166666666666667,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Summer 2007/08,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,96.0,115.0,3.0,3/27,1.0,0.0,38.333333333333336,32.0,7.1875,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Summer 2008/09,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,84.0,69.0,0.0,0/26,0.0,0.0,,,4.928571428571429,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Summer 2009/10,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,6.0,249.0,136.0,8.0,2/21,0.0,0.0,17.0,31.125,3.2771084337349397,,,,
@@ -1718,7 +1719,7 @@ raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Summer 2023/24,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2023/24,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,12.0,7.0,0.0,0/7,0.0,0.0,,,3.5,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,12.0,8.0,1.0,1/8,0.0,0.0,8.0,12.0,4.0,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,12.0,14.0,0.0,0/14,0.0,0.0,,,7.0,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,24.0,9.0,3.0,3/9,1.0,0.0,3.0,8.0,2.25,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,42.0,19.0,3.0,3/9,1.0,0.0,6.333333333333333,14.0,2.7142857142857144,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2008/09,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,14.0,901.0,521.0,31.0,5/38,3.0,2.0,16.806451612903224,29.06451612903226,3.469478357380688,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2009/10,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,9.0,642.0,357.0,16.0,4/57,2.0,0.0,22.3125,40.125,3.336448598130841,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2010/11,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,13.0,696.0,405.0,29.0,5/77,2.0,1.0,13.96551724137931,24.0,3.4913793103448274,,,,
@@ -1879,7 +1880,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Summer 2023/2
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,10.0,463.0,271.0,14.0,3/33,1.0,0.0,19.357142857142858,33.07142857142857,3.511879049676026,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,16.0,694.0,366.0,9.0,2/11,0.0,0.0,40.666666666666664,77.11111111111111,3.164265129682997,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,6.0,168.0,182.0,6.0,3/28,1.0,0.0,30.333333333333332,28.0,6.5,,,,
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,2.0,24.0,34.0,1.0,1/14,0.0,0.0,34.0,24.0,8.5,,,,
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,60.0,51.0,2.0,1/14,0.0,0.0,25.5,30.0,5.1,,,,
 raw_c4f4680b_de05_43e8_b4b7_31d28cd72c73,Saurabh Malhotra,Saurabh Malhotra,Summer 2010/11,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,3.0,84.0,61.0,1.0,1/37,0.0,0.0,61.0,84.0,4.357142857142857,,,,
 raw_c9ba183a_666e_4bea_8b80_e056bea26ce6,Syed Hasan,Syed Hasan,Summer 2019/20,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,4.0,94.0,63.0,4.0,2/19,0.0,0.0,15.75,23.5,4.0212765957446805,,,,
 raw_c9ba183a_666e_4bea_8b80_e056bea26ce6,Syed Hasan,Syed Hasan,Summer 2020/21,,,,,,,,,,,,,,,,,,,,Season,0,Bowling,1.0,12.0,7.0,0.0,0/7,0.0,0.0,,,3.5,,,,
@@ -2647,7 +2648,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2023/24,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,8.0,0.0,2.0,10.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,7.0,2.0,3.0,12.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,7.0,0.0,2.0,9.0
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,5.0,0.0,1.0,6.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2008/09,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,6.0,0.0,1.0,7.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2009/10,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Summer 2010/11,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,10.0,0.0,0.0,10.0
@@ -2791,7 +2792,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Summer 2023/2
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,Summer 2022/23,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
 raw_cada42ba_0b29_4d11_b573_60e5f8a4a643,Cameron Nall,Cameron Nall,Summer 2009/10,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_cc529a55_0667_4a60_8b3d_eb93bcc9454f,Shivinder Kanwar,Shivinder Kanwar,Summer 2010/11,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
@@ -2910,6 +2911,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Summer 
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,6.0,0.0,2.0,8.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Winter 2025,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,Summer 2023/24,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f7146b6b_2958_4e25_9dc6_8944c8a40f65,Raj Koni,Raj Koni,Summer 2018/19,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f8a8f7e5_bac4_4049_9b66_c8d6be892040,Bobby Malli,Bobby Malli,Summer 2008/09,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
@@ -3019,7 +3021,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2018/19,,,,,,,,,,,,,,,,,,,,Season,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2023/24,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,9.0,1.0,3.0,13.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2024/25,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,20.0,4.0,8.0,32.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Summer 2025/26,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,14.0,1.0,8.0,23.0
-vinay_sharma,Vinay Sharma,Vinay Sharma,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,6.0,0.0,4.0,10.0
+vinay_sharma,Vinay Sharma,Vinay Sharma,Winter 2026,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,7.0,0.0,4.0,11.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,Summer 2002/03,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,Summer 2003/04,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,Summer 2004/05,,,,,,,,,,,,,,,,,,,,Season,0,Fielding,,,,,,,,,,,7.0,0.0,4.0,11.0
@@ -3068,7 +3070,7 @@ ashish_sharma,Ashish Sharma,Ashish Sharma,DODC - Robert Young Shield,3.0,30.0,3.
 ashish_sharma,Ashish Sharma,Ashish Sharma,E Grade - Les Kemp Shield,10.0,69.0,9.0,19,19.0,1.0,0.0,0.0,0.0,1.0,4.0,0.0,7.666666666666667,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,F Grade North - Dave Manion Shield,3.0,33.0,3.0,32,32.0,0.0,1.0,0.0,0.0,1.0,2.0,3.0,11.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,F Grade South - Harry Torrens Shield,2.0,47.0,2.0,43,43.0,0.0,1.0,0.0,0.0,0.0,4.0,1.0,23.5,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
-ashish_sharma,Ashish Sharma,Ashish Sharma,North Division (Winter),7.0,36.0,6.0,17*,17.0,1.0,0.0,0.0,0.0,0.0,4.0,1.0,6.0,19.0,33.0,6.0,6.0,6.0,57.57575757575758,Grade,1,Batting,,,,,,,,,,,,,,
+ashish_sharma,Ashish Sharma,Ashish Sharma,North Division (Winter),8.0,61.0,7.0,25,25.0,1.0,0.0,0.0,0.0,0.0,6.0,2.0,8.714285714285714,44.0,59.0,7.0,7.0,7.0,74.57627118644068,Grade,1,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,B Grade - John Adams Shield,2.0,14.0,1.0,14*,14.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,14.0,14.0,18.0,1.0,2.0,2.0,77.77777777777777,Grade,1,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Jack Kelly Shield,16.0,81.0,13.0,22,22.0,1.0,0.0,0.0,0.0,4.0,6.0,1.0,6.230769230769231,48.0,75.0,5.0,5.0,5.0,64.0,Grade,1,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Jack Quick Shield,18.0,93.0,12.0,21*,21.0,1.0,0.0,0.0,0.0,2.0,7.0,2.0,7.75,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
@@ -3149,7 +3151,7 @@ janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,E Grade - Les Kemp Shield,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Jack Kelly Shield,13.0,231.0,12.0,83*,83.0,1.0,0.0,1.0,0.0,2.0,24.0,3.0,19.25,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Jack Quick Shield,3.0,24.0,3.0,19,19.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,8.0,24.0,20.0,3.0,3.0,3.0,120.0,Grade,1,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Jika Shield,2.0,23.0,2.0,23,23.0,0.0,0.0,0.0,0.0,1.0,4.0,0.0,11.5,23.0,17.0,1.0,1.0,1.0,135.2941176470588,Grade,1,Batting,,,,,,,,,,,,,,
-janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,North Division (Winter),3.0,57.0,3.0,39,39.0,0.0,1.0,0.0,0.0,1.0,6.0,2.0,19.0,18.0,15.0,2.0,2.0,2.0,120.0,Grade,1,Batting,,,,,,,,,,,,,,
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,North Division (Winter),4.0,70.0,4.0,39,39.0,0.0,1.0,0.0,0.0,1.0,6.0,3.0,17.5,31.0,25.0,3.0,3.0,3.0,124.0,Grade,1,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,D Grade - Bob Herman Shield,14.0,402.0,10.0,80,80.0,1.0,2.0,3.0,0.0,2.0,43.0,5.0,40.2,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,E Grade - Les Kemp Shield,2.0,63.0,1.0,36,36.0,1.0,1.0,0.0,0.0,0.0,7.0,3.0,63.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Jack Kelly Shield,12.0,83.0,11.0,17,17.0,1.0,0.0,0.0,0.0,1.0,5.0,0.0,7.545454545454546,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
@@ -3582,7 +3584,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,F Grade North - Dave 
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,F Grade South - Harry Torrens Shield,2.0,4.0,2.0,4,4.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,2.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jack Quick Shield,24.0,446.0,21.0,137*,137.0,1.0,5.0,0.0,1.0,4.0,50.0,0.0,21.238095238095237,119.0,192.0,7.0,7.0,7.0,61.979166666666664,Grade,1,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jika Shield,17.0,377.0,15.0,79,79.0,1.0,3.0,2.0,0.0,2.0,49.0,1.0,25.133333333333333,308.0,605.0,12.0,13.0,12.0,50.90909090909091,Grade,1,Batting,,,,,,,,,,,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,North Division (Winter),12.0,520.0,6.0,67,67.0,1.0,3.0,7.0,0.0,0.0,67.0,1.0,86.66666666666667,468.0,419.0,6.0,11.0,11.0,111.6945107398568,Grade,1,Batting,,,,,,,,,,,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,North Division (Winter),13.0,542.0,6.0,67,67.0,1.0,3.0,7.0,0.0,0.0,69.0,1.0,90.33333333333333,490.0,448.0,6.0,12.0,12.0,109.375,Grade,1,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,D Grade - Bob Herman Shield,3.0,24.0,3.0,11,11.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,8.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,F Grade North - Dave Manion Shield,2.0,51.0,2.0,32,32.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,25.5,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Jack Kelly Shield,29.0,411.0,25.0,63*,63.0,1.0,3.0,2.0,0.0,3.0,47.0,5.0,16.44,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
@@ -3804,7 +3806,7 @@ raw_d08c380f_be32_422d_a289_f7dad7020567,Avinash Rugoobur,Avinash Rugoobur,F Gra
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,B Grade - John Adams Shield,6.0,9.0,3.0,7*,7.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,3.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,C Grade - Les Horne Shield,4.0,13.0,2.0,10,10.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,6.5,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,E Grade - Les Kemp Shield,1.0,22.0,1.0,22,22.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,22.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,North Division (Winter),8.0,421.0,4.0,102*,102.0,1.0,2.0,4.0,1.0,0.0,44.0,22.0,105.25,338.0,194.0,2.0,6.0,6.0,174.22680412371133,Grade,1,Batting,,,,,,,,,,,,,,
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,North Division (Winter),9.0,475.0,4.0,102*,102.0,1.0,2.0,5.0,1.0,0.0,45.0,26.0,118.75,338.0,194.0,2.0,6.0,6.0,174.22680412371133,Grade,1,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,D Grade - Bob Herman Shield,4.0,53.0,4.0,31,31.0,0.0,1.0,0.0,0.0,1.0,8.0,1.0,13.25,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,E Grade - Les Kemp Shield,1.0,16.0,1.0,16,16.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,16.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,Jack Kelly Shield,25.0,267.0,19.0,39*,39.0,1.0,3.0,0.0,0.0,3.0,24.0,1.0,14.052631578947368,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
@@ -3909,7 +3911,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,DODC - 
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,E Grade - Les Kemp Shield,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jack Quick Shield,3.0,18.0,2.0,14,14.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,9.0,18.0,54.0,2.0,2.0,2.0,33.333333333333336,Grade,1,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jika Shield,8.0,143.0,8.0,53,53.0,0.0,1.0,1.0,0.0,1.0,12.0,0.0,17.875,136.0,283.0,7.0,7.0,7.0,48.0565371024735,Grade,1,Batting,,,,,,,,,,,,,,
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,North Division (Winter),13.0,175.0,13.0,38,38.0,0.0,2.0,0.0,0.0,3.0,14.0,2.0,13.461538461538462,101.0,160.0,9.0,9.0,9.0,63.125,Grade,1,Batting,,,,,,,,,,,,,,
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,North Division (Winter),14.0,223.0,14.0,48,48.0,0.0,3.0,0.0,0.0,3.0,17.0,2.0,15.928571428571429,101.0,160.0,9.0,9.0,9.0,63.125,Grade,1,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,B Grade - John Adams Shield,3.0,29.0,3.0,28,28.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,9.666666666666666,1.0,6.0,1.0,1.0,1.0,16.666666666666668,Grade,1,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,C Grade - Les Horne Shield,2.0,53.0,2.0,53,53.0,0.0,0.0,1.0,0.0,1.0,7.0,0.0,26.5,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,Jack Quick Shield,2.0,16.0,2.0,14,14.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,8.0,2.0,4.0,1.0,1.0,1.0,50.0,Grade,1,Batting,,,,,,,,,,,,,,
@@ -4007,7 +4009,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,F Grade South - Harry Torrens Shield,12.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jack Kelly Shield,47.0,532.0,41.0,57,57.0,1.0,4.0,1.0,0.0,9.0,55.0,1.0,12.975609756097562,41.0,104.0,6.0,6.0,6.0,39.42307692307692,Grade,1,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jack Quick Shield,20.0,221.0,10.0,43*,43.0,1.0,3.0,0.0,0.0,2.0,19.0,0.0,22.1,122.0,231.0,6.0,9.0,9.0,52.81385281385281,Grade,1,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Les Horne Memorial Shield,1.0,103.0,1.0,103,103.0,0.0,0.0,0.0,1.0,0.0,6.0,6.0,103.0,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
-vinay_sharma,Vinay Sharma,Vinay Sharma,North Division (Winter),3.0,82.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,10.0,1.0,82.0,68.0,48.0,1.0,2.0,2.0,141.66666666666666,Grade,1,Batting,,,,,,,,,,,,,,
+vinay_sharma,Vinay Sharma,Vinay Sharma,North Division (Winter),4.0,83.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,10.0,1.0,83.0,69.0,51.0,1.0,3.0,3.0,135.2941176470588,Grade,1,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,B Grade - John Adams Shield,13.0,275.0,13.0,43,43.0,0.0,4.0,0.0,0.0,0.0,19.0,2.0,21.153846153846153,33.0,26.0,1.0,1.0,1.0,126.92307692307692,Grade,1,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,C Grade - Les Horne Shield,43.0,659.0,43.0,58,58.0,0.0,6.0,1.0,0.0,5.0,41.0,3.0,15.325581395348838,61.0,101.0,2.0,2.0,2.0,60.396039603960396,Grade,1,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,D Grade - Bob Herman Shield,21.0,379.0,20.0,47,47.0,1.0,5.0,0.0,0.0,1.0,33.0,1.0,18.95,,,,,,,Grade,1,Batting,,,,,,,,,,,,,,
@@ -4139,7 +4141,7 @@ mayur_mohan,Mayur Mohan,Mayur Mohan,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,102.0,72.0,2.0,2/22,0.0,0.0,36.0,51.0,4.235294117647059,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,E Grade - Les Kemp Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,468.0,149.0,6.0,3/16,1.0,0.0,24.833333333333332,78.0,1.9102564102564104,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,F Grade North - Dave Manion Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,150.0,61.0,3.0,1/12,0.0,0.0,20.333333333333332,50.0,2.44,,,,
-mayur_mohan,Mayur Mohan,Mayur Mohan,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,11.0,350.0,345.0,14.0,3/32,1.0,0.0,24.642857142857142,25.0,5.914285714285715,,,,
+mayur_mohan,Mayur Mohan,Mayur Mohan,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,12.0,386.0,401.0,14.0,3/32,1.0,0.0,28.642857142857142,27.571428571428573,6.233160621761658,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,B Grade - John Adams Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,78.0,27.0,1.0,1/20,0.0,0.0,27.0,78.0,2.076923076923077,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,90.0,26.0,2.0,2/14,0.0,0.0,13.0,45.0,1.7333333333333334,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,78.0,44.0,2.0,2/44,0.0,0.0,22.0,39.0,3.3846153846153846,,,,
@@ -4329,7 +4331,7 @@ raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasi
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,E Grade - Les Kemp Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,156.0,130.0,3.0,3/46,1.0,0.0,43.333333333333336,52.0,5.0,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,F Grade - Syd Sault Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,42.0,40.0,0.0,0/7,0.0,0.0,,,5.714285714285714,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,42.0,49.0,0.0,0/49,0.0,0.0,,,7.0,,,,
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,12.0,354.0,323.0,16.0,4/44,2.0,0.0,20.1875,22.125,5.47457627118644,,,,
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,13.0,396.0,352.0,18.0,4/44,2.0,0.0,19.555555555555557,22.0,5.333333333333333,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,102.0,98.0,1.0,1/42,0.0,0.0,98.0,102.0,5.764705882352941,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,60.0,80.0,2.0,2/35,0.0,0.0,40.0,30.0,8.0,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,E Grade - Les Kemp Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,72.0,84.0,2.0,1/18,0.0,0.0,42.0,36.0,7.0,,,,
@@ -4430,7 +4432,7 @@ raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,B G
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,132.0,42.0,2.0,1/14,0.0,0.0,21.0,66.0,1.9090909090909092,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,42.0,38.0,3.0,3/38,1.0,0.0,12.666666666666666,14.0,5.428571428571429,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,84.0,69.0,2.0,1/20,0.0,0.0,34.5,42.0,4.928571428571429,,,,
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,132.0,69.0,4.0,2/25,0.0,0.0,17.25,33.0,3.1363636363636362,,,,
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,174.0,88.0,6.0,2/19,0.0,0.0,14.666666666666666,29.0,3.0344827586206895,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,192.0,161.0,3.0,1/34,0.0,0.0,53.666666666666664,64.0,5.03125,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,12.0,32.0,0.0,0/13,0.0,0.0,,,16.0,,,,
 raw_739364b3_855b_4915_a172_af834ca51be8,Dennis Subramaniam,Dennis Subramaniam,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,42.0,23.0,4.0,4/23,1.0,0.0,5.75,10.5,3.2857142857142856,,,,
@@ -4439,7 +4441,7 @@ raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,B Grade
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,9.0,282.0,179.0,8.0,2/19,0.0,0.0,22.375,35.25,3.8085106382978724,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,6.0,120.0,121.0,4.0,1/15,0.0,0.0,30.25,30.0,6.05,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,5.0,7.0,0.0,0/7,0.0,0.0,,,8.4,,,,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,10.0,339.0,259.0,12.0,4/23,2.0,0.0,21.583333333333332,28.25,4.584070796460177,,,,
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,11.0,375.0,285.0,15.0,4/23,3.0,0.0,19.0,25.0,4.56,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,8.0,351.0,222.0,7.0,2/21,0.0,0.0,31.714285714285715,50.142857142857146,3.7948717948717947,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Jack Kelly Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,78.0,98.0,4.0,3/27,1.0,0.0,24.5,19.5,7.538461538461538,,,,
 raw_772017c0_ffec_4dd7_992a_665e05833c20,Prajapati Manubhai,Prajapati Manubhai,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,138.0,82.0,3.0,2/46,0.0,0.0,27.333333333333332,46.0,3.5652173913043477,,,,
@@ -4455,7 +4457,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Jika Shield,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,84.0,79.0,5.0,3/40,1.0,0.0,15.8,16.8,5.642857142857143,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,54.0,53.0,2.0,1/17,0.0,0.0,26.5,27.0,5.888888888888889,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,24.0,15.0,1.0,1/8,0.0,0.0,15.0,24.0,3.75,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,2.0,36.0,23.0,3.0,3/9,1.0,0.0,7.666666666666667,12.0,3.8333333333333335,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,54.0,33.0,3.0,3/9,1.0,0.0,11.0,18.0,3.6666666666666665,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,102.0,34.0,2.0,2/34,0.0,0.0,17.0,51.0,2.0,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,F Grade North - Dave Manion Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,1.0,108.0,94.0,1.0,1/94,0.0,0.0,94.0,108.0,5.222222222222222,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Jack Kelly Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,34.0,2029.0,1155.0,73.0,5/38,7.0,3.0,15.821917808219178,27.794520547945204,3.4154756037456875,,,,
@@ -4611,7 +4613,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,DODC - Robert
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jack Kelly Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,7.0,379.0,218.0,11.0,3/33,1.0,0.0,19.818181818181817,34.45454545454545,3.451187335092348,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,264.0,121.0,3.0,2/11,0.0,0.0,40.333333333333336,88.0,2.75,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jika Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,11.0,430.0,245.0,6.0,2/20,0.0,0.0,40.833333333333336,71.66666666666667,3.4186046511627906,,,,
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,8.0,192.0,216.0,7.0,3/28,1.0,0.0,30.857142857142858,27.428571428571427,6.75,,,,
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,9.0,228.0,233.0,8.0,3/28,1.0,0.0,29.125,28.5,6.131578947368421,,,,
 raw_c4f4680b_de05_43e8_b4b7_31d28cd72c73,Saurabh Malhotra,Saurabh Malhotra,F Grade North - Dave Manion Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,3.0,84.0,61.0,1.0,1/37,0.0,0.0,61.0,84.0,4.357142857142857,,,,
 raw_c9ba183a_666e_4bea_8b80_e056bea26ce6,Syed Hasan,Syed Hasan,E Grade - Les Kemp Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,5.0,106.0,70.0,4.0,2/19,0.0,0.0,17.5,26.5,3.9622641509433962,,,,
 raw_c9e16142_3bba_44ab_8fad_4610a7f7f885,Suryakumar Patti,Suryakumar Patti,F Grade - Syd Sault Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Bowling,4.0,113.0,67.0,8.0,4/29,1.0,0.0,8.375,14.125,3.5575221238938055,,,,
@@ -5165,7 +5167,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,DODC - Robert Young S
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,F Grade North - Dave Manion Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,28.0,4.0,9.0,41.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jika Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,7.0,2.0,3.0,12.0
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,12.0,0.0,2.0,14.0
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,12.0,0.0,3.0,15.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Jack Kelly Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,18.0,0.0,1.0,19.0
 raw_7f47871d_71d2_4c20_941e_b9b9b5164c8a,Pratik Shah,Pratik Shah,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
@@ -5296,7 +5298,7 @@ raw_c22122d8_931d_4003_ace2_b76201b8eec1,Abhishek Bhardwaj,Abhishek Bhardwaj,D G
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,E Grade - Les Kemp Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
 raw_cada42ba_0b29_4d11_b573_60e5f8a4a643,Cameron Nall,Cameron Nall,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_cada42ba_0b29_4d11_b573_60e5f8a4a643,Cameron Nall,Cameron Nall,F Grade South - Harry Torrens Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -5394,7 +5396,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,B Grade
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,4.0,0.0,2.0,6.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,DODC - Robert Young Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jika Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f7146b6b_2958_4e25_9dc6_8944c8a40f65,Raj Koni,Raj Koni,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f8a8f7e5_bac4_4049_9b66_c8d6be892040,Bobby Malli,Bobby Malli,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -5468,7 +5470,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,F Grade South - Harry Torrens Shield,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jack Kelly Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,58.0,14.0,16.0,88.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jack Quick Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,34.0,1.0,0.0,35.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Les Horne Memorial Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,3.0,1.0,9.0,13.0
-vinay_sharma,Vinay Sharma,Vinay Sharma,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,6.0,0.0,4.0,10.0
+vinay_sharma,Vinay Sharma,Vinay Sharma,North Division (Winter),,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,7.0,0.0,4.0,11.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,B Grade - John Adams Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,9.0,0.0,4.0,13.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,C Grade - Les Horne Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,11.0,0.0,0.0,11.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,D Grade - Bob Herman Shield,,,,,,,,,,,,,,,,,,,,Grade,1,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
@@ -5548,6 +5550,7 @@ ashish_sharma,Ashish Sharma,Ashish Sharma,Cameron Cricket Club,2.0,3.0,2.0,2,2.0
 ashish_sharma,Ashish Sharma,Ashish Sharma,Camrea Cricket Club,2.0,30.0,2.0,30,30.0,0.0,1.0,0.0,0.0,1.0,7.0,0.0,15.0,30.0,42.0,1.0,1.0,1.0,71.42857142857143,Opponent,2,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Darebin Chargers Cricket Club,1.0,17.0,0.0,17*,17.0,1.0,0.0,0.0,0.0,0.0,2.0,1.0,,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,East Brunswick Cricket Club,1.0,8.0,1.0,8,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,8.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+ashish_sharma,Ashish Sharma,Ashish Sharma,Grand United Yellow Cricket Club,1.0,25.0,1.0,25,25.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,25.0,25.0,26.0,1.0,1.0,1.0,96.15384615384616,Opponent,2,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Holy Trinity Cricket Club,1.0,32.0,1.0,32,32.0,0.0,1.0,0.0,0.0,0.0,2.0,3.0,32.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Ivanhoe Mavericks Cricket Club,1.0,3.0,1.0,3,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,7.0,1.0,1.0,1.0,42.857142857142854,Opponent,2,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Jafari Sports Club,1.0,4.0,1.0,4,4.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,4.0,4.0,3.0,1.0,1.0,1.0,133.33333333333334,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -5857,6 +5860,7 @@ janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Dennis Cricket Club,1.0,24
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Donath Cricket Club,4.0,106.0,4.0,60,60.0,0.0,0.0,1.0,0.0,0.0,14.0,0.0,26.5,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Fairfield Cricket Club,2.0,16.0,2.0,9,9.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,8.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Fairfield Senior Mixed Cricket Club,1.0,39.0,1.0,39,39.0,0.0,1.0,0.0,0.0,0.0,3.0,2.0,39.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Grand United Yellow Cricket Club,1.0,13.0,1.0,13,13.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,13.0,13.0,10.0,1.0,1.0,1.0,130.0,Opponent,2,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,North Alphington Cricket Club,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,0.0,Opponent,2,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Northern Socials Cricket Club,1.0,58.0,1.0,58,58.0,0.0,0.0,1.0,0.0,0.0,5.0,3.0,58.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Old Ivanhoe Cricket Club,2.0,111.0,2.0,96,96.0,0.0,0.0,1.0,0.0,0.0,11.0,1.0,55.5,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -7189,6 +7193,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Dennis Cricket Club,2
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Donath Cricket Club,4.0,77.0,3.0,32,32.0,1.0,2.0,0.0,0.0,0.0,3.0,0.0,25.666666666666668,63.0,157.0,2.0,2.0,2.0,40.12738853503185,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Fairfield Cricket Club,5.0,106.0,4.0,46,46.0,1.0,2.0,0.0,0.0,0.0,8.0,0.0,26.5,46.0,41.0,1.0,1.0,1.0,112.1951219512195,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Fairfield Senior Mixed Cricket Club,1.0,30.0,1.0,30,30.0,0.0,1.0,0.0,0.0,0.0,3.0,0.0,30.0,30.0,24.0,1.0,1.0,1.0,125.0,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Grand United Yellow Cricket Club,1.0,22.0,0.0,22*,22.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,,22.0,29.0,0.0,1.0,1.0,75.86206896551724,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Holy Trinity Cricket Club,4.0,54.0,3.0,50*,50.0,1.0,0.0,1.0,0.0,2.0,9.0,0.0,18.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Ivanhoe Mavericks Cricket Club,1.0,53.0,0.0,53*,53.0,1.0,0.0,1.0,0.0,0.0,8.0,0.0,,53.0,44.0,0.0,1.0,1.0,120.45454545454545,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jafari Sports Club,2.0,119.0,1.0,67,67.0,1.0,0.0,2.0,0.0,0.0,19.0,1.0,119.0,67.0,70.0,1.0,1.0,1.0,95.71428571428571,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -7930,6 +7935,7 @@ raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,West Pr
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Brunswick Cricket Club,1.0,102.0,0.0,102*,102.0,1.0,0.0,0.0,1.0,0.0,10.0,6.0,,102.0,51.0,0.0,1.0,1.0,200.0,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Darebin Chargers Cricket Club,1.0,52.0,0.0,52*,52.0,1.0,0.0,1.0,0.0,0.0,9.0,1.0,,52.0,25.0,0.0,1.0,1.0,208.0,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Fairfield Senior Mixed Cricket Club,1.0,62.0,1.0,62,62.0,0.0,0.0,1.0,0.0,0.0,4.0,6.0,62.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Grand United Yellow Cricket Club,1.0,54.0,0.0,54*,54.0,1.0,0.0,1.0,0.0,0.0,1.0,4.0,,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Jafari Sports Club,2.0,52.0,2.0,31,31.0,0.0,1.0,0.0,0.0,0.0,6.0,2.0,26.0,31.0,24.0,1.0,1.0,1.0,129.16666666666666,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,North Alphington Cricket Club,1.0,35.0,1.0,35,35.0,0.0,1.0,0.0,0.0,0.0,0.0,4.0,35.0,35.0,13.0,1.0,1.0,1.0,269.2307692307692,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Reservoir Cobras Cricket Club,2.0,118.0,0.0,65*,65.0,1.0,0.0,2.0,0.0,0.0,15.0,3.0,,118.0,81.0,0.0,2.0,2.0,145.679012345679,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -8240,6 +8246,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Darebin
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Donath Cricket Club,3.0,105.0,3.0,53,53.0,0.0,1.0,1.0,0.0,0.0,7.0,0.0,35.0,98.0,192.0,2.0,2.0,2.0,51.041666666666664,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Fairfield Cricket Club,1.0,2.0,1.0,2,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Fairfield Senior Mixed Cricket Club,1.0,21.0,1.0,21,21.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,21.0,21.0,26.0,1.0,1.0,1.0,80.76923076923077,Opponent,2,Batting,,,,,,,,,,,,,,
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Grand United Yellow Cricket Club,1.0,48.0,1.0,48,48.0,0.0,1.0,0.0,0.0,0.0,3.0,0.0,48.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Ivanhoe Mavericks Cricket Club,2.0,10.0,1.0,10*,10.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,10.0,0.0,8.0,1.0,1.0,1.0,0.0,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jafari Sports Club,2.0,11.0,2.0,10,10.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,5.5,1.0,4.0,1.0,1.0,1.0,25.0,Opponent,2,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Kinglake Cricket Club,1.0,5.0,1.0,5,5.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,5.0,5.0,5.0,1.0,1.0,1.0,100.0,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -8556,6 +8563,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,Dennis Cricket Club,14.0,255.0,10.0,43*,4
 vinay_sharma,Vinay Sharma,Vinay Sharma,Donath Cricket Club,6.0,108.0,5.0,47,47.0,1.0,1.0,0.0,0.0,0.0,7.0,1.0,21.6,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,East Brunswick Cricket Club,2.0,21.0,2.0,21,21.0,0.0,0.0,0.0,0.0,1.0,3.0,0.0,10.5,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Fairfield Cricket Club,11.0,227.0,9.0,55*,55.0,1.0,2.0,1.0,0.0,3.0,0.0,0.0,25.22222222222222,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
+vinay_sharma,Vinay Sharma,Vinay Sharma,Grand United Yellow Cricket Club,1.0,1.0,0.0,1*,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,1.0,3.0,0.0,1.0,1.0,33.333333333333336,Opponent,2,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Heidelberg West Cricket Club,2.0,23.0,1.0,23,23.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,23.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Holy Trinity Cricket Club,2.0,49.0,2.0,31,31.0,0.0,1.0,0.0,0.0,0.0,5.0,1.0,24.5,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Hygrade Cricket Club,2.0,28.0,2.0,15,15.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,14.0,,,,,,,Opponent,2,Batting,,,,,,,,,,,,,,
@@ -9018,6 +9026,7 @@ mayur_mohan,Mayur Mohan,Mayur Mohan,Darebin Chargers Cricket Club,,,,,,,,,,,,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Dennis Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,66.0,43.0,1.0,1/24,0.0,0.0,43.0,66.0,3.909090909090909,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,East Brunswick Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,12.0,16.0,0.0,0/16,0.0,0.0,,,8.0,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Fairfield Senior Mixed Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,24.0,1.0,1/24,0.0,0.0,24.0,24.0,6.0,,,,
+mayur_mohan,Mayur Mohan,Mayur Mohan,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,36.0,56.0,0.0,0/56,0.0,0.0,,,9.333333333333334,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Hygrade Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,22.0,1.0,1/22,0.0,0.0,22.0,42.0,3.142857142857143,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,20.0,21.0,2.0,2/21,0.0,0.0,10.5,10.0,6.3,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,39.0,1.0,1/39,0.0,0.0,39.0,42.0,5.571428571428571,,,,
@@ -9554,6 +9563,7 @@ raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasi
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Dennis Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,3.0,72.0,58.0,1.0,1/14,0.0,0.0,58.0,72.0,4.833333333333333,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,3.0,60.0,39.0,3.0,2/7,0.0,0.0,13.0,20.0,3.9,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Fairfield Senior Mixed Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,21.0,1.0,1/21,0.0,0.0,21.0,24.0,5.25,,,,
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,29.0,2.0,2/29,0.0,0.0,14.5,21.0,4.142857142857143,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Holy Trinity Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,66.0,35.0,1.0,1/2,0.0,0.0,35.0,66.0,3.1818181818181817,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,12.0,17.0,0.0,0/17,0.0,0.0,,,8.5,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,18.0,30.0,2.0,2/30,0.0,0.0,15.0,9.0,10.0,,,,
@@ -9844,6 +9854,7 @@ raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Cam
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Darebin Chargers Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,27.0,2.0,2/27,0.0,0.0,13.5,21.0,3.857142857142857,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,102.0,46.0,1.0,1/28,0.0,0.0,46.0,102.0,2.7058823529411766,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Fairfield Senior Mixed Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,6.0,0.0,0/6,0.0,0.0,,,1.5,,,,
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,19.0,2.0,2/19,0.0,0.0,9.5,21.0,2.7142857142857144,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,North Alphington Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,25.0,2.0,2/25,0.0,0.0,12.5,21.0,3.5714285714285716,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Northern Socials Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,174.0,83.0,3.0,1/13,0.0,0.0,27.666666666666668,58.0,2.8620689655172415,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Royal Park Reds Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,60.0,14.0,1.0,1/14,0.0,0.0,14.0,60.0,1.4,,,,
@@ -9870,6 +9881,7 @@ raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Darebin
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Dennis Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,18.0,21.0,1.0,1/21,0.0,0.0,21.0,18.0,7.0,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,30.0,21.0,0.0,0/6,0.0,0.0,,,4.2,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Fairfield Senior Mixed Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,8.0,1.0,1/8,0.0,0.0,8.0,24.0,2.0,,,,
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,36.0,26.0,3.0,3/26,1.0,0.0,8.666666666666666,12.0,4.333333333333333,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Holy Trinity Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,15.0,1.0,1/15,0.0,0.0,15.0,24.0,3.75,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,26.0,1.0,1/26,0.0,0.0,26.0,30.0,5.2,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,42.0,31.0,3.0,3/31,1.0,0.0,10.333333333333334,14.0,4.428571428571429,,,,
@@ -9919,6 +9931,7 @@ raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Dennis Cricket 
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,54.0,39.0,2.0,2/39,0.0,0.0,19.5,27.0,4.333333333333333,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,40.0,3.0,3/40,1.0,0.0,13.333333333333334,10.0,8.0,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Fairfield Senior Mixed Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,9.0,3.0,3/9,1.0,0.0,3.0,8.0,2.25,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,18.0,10.0,0.0,0/10,0.0,0.0,,,3.3333333333333335,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Holy Trinity Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,12.0,7.0,0.0,0/7,0.0,0.0,,,3.5,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Preston YCW District Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,12.0,8.0,1.0,1/8,0.0,0.0,8.0,12.0,4.0,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Reservoir Cobras Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,12.0,14.0,0.0,0/14,0.0,0.0,,,7.0,,,,
@@ -10395,6 +10408,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Darebin Charg
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Dennis Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,21.0,1.0,1/21,0.0,0.0,21.0,30.0,4.2,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Donath Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,2.0,78.0,40.0,1.0,1/16,0.0,0.0,40.0,78.0,3.076923076923077,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,3.0,96.0,62.0,4.0,2/35,0.0,0.0,15.5,24.0,3.875,,,,
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,36.0,17.0,1.0,1/17,0.0,0.0,17.0,36.0,2.8333333333333335,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Holy Trinity Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,24.0,11.0,0.0,0/11,0.0,0.0,,,2.75,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,3.0,162.0,124.0,3.0,2/54,0.0,0.0,41.333333333333336,54.0,4.592592592592593,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Bowling,1.0,30.0,28.0,3.0,3/28,1.0,0.0,9.333333333333334,10.0,5.6,,,,
@@ -11911,6 +11925,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Dennis Cricket Club,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Donath Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,4.0,3.0,2.0,9.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,8.0,1.0,2.0,11.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Fairfield Senior Mixed Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Holy Trinity Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,4.0,0.0,2.0,6.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
@@ -12210,6 +12225,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Bellfield Cri
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Cameron Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Darebin Chargers Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,North Alphington Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Preston YCW District Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -12437,6 +12453,7 @@ raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,West Presto
 raw_f4f5e31e_fc86_42e3_a4ad_8d044676b58b,Wirantha Munesingha,Wirantha Munesingha,Rivergum Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Bellfield Rocketz Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Darebin Chargers Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jafari Sports Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Northern Socials Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -12606,6 +12623,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,Darebin Chargers Cricket Club,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Dennis Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,19.0,2.0,4.0,25.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Donath Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,6.0,2.0,0.0,8.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Fairfield Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,17.0,2.0,3.0,22.0
+vinay_sharma,Vinay Sharma,Vinay Sharma,Grand United Yellow Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Heidelberg West Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Hygrade Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Ivanhoe Mavericks Cricket Club,,,,,,,,,,,,,,,,,,,,Opponent,2,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
@@ -12712,7 +12730,7 @@ ashish_sharma,Ashish Sharma,Ashish Sharma,H.L.T. Oulten Park,3.0,16.0,2.0,16,16.
 ashish_sharma,Ashish Sharma,Ashish Sharma,Kinglake Memorial Reserve,1.0,0.0,1.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,1.0,1.0,1.0,0.0,Ground,3,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Parker Reserve,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,1.0,1.0,50.0,Ground,3,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Poplar Oval,1.0,5.0,1.0,5,5.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,5.0,5.0,9.0,1.0,1.0,1.0,55.55555555555556,Ground,3,Batting,,,,,,,,,,,,,,
-ashish_sharma,Ashish Sharma,Ashish Sharma,T.W. Blake Park,5.0,31.0,4.0,17*,17.0,1.0,0.0,0.0,0.0,0.0,3.0,1.0,7.75,14.0,28.0,4.0,4.0,4.0,50.0,Ground,3,Batting,,,,,,,,,,,,,,
+ashish_sharma,Ashish Sharma,Ashish Sharma,T.W. Blake Park,6.0,56.0,5.0,25,25.0,1.0,0.0,0.0,0.0,0.0,5.0,2.0,11.2,39.0,54.0,5.0,5.0,5.0,72.22222222222223,Ground,3,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Thomastown East Reserve,1.0,4.0,1.0,4,4.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,4.0,4.0,3.0,1.0,1.0,1.0,133.33333333333334,Ground,3,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Unknown ground,26.0,230.0,25.0,43,43.0,1.0,2.0,0.0,0.0,5.0,10.0,4.0,9.2,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,C.H. Sullivan Memorial Park,19.0,149.0,15.0,39,39.0,1.0,2.0,0.0,0.0,2.0,11.0,1.0,9.933333333333334,48.0,37.0,3.0,4.0,4.0,129.72972972972974,Ground,3,Batting,,,,,,,,,,,,,,
@@ -12883,7 +12901,7 @@ janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Edgars Creek Secondary Col
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,H.P. Zwar Park,1.0,19.0,1.0,19,19.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,19.0,19.0,16.0,1.0,1.0,1.0,118.75,Ground,3,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,I.W. Dole Reserve,1.0,20.0,1.0,20,20.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,20.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Shelley Park,1.0,23.0,1.0,23,23.0,0.0,0.0,0.0,0.0,0.0,4.0,0.0,23.0,23.0,17.0,1.0,1.0,1.0,135.2941176470588,Ground,3,Batting,,,,,,,,,,,,,,
-janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,T.W. Blake Park,2.0,39.0,2.0,39,39.0,0.0,1.0,0.0,0.0,1.0,3.0,2.0,19.5,0.0,1.0,1.0,1.0,1.0,0.0,Ground,3,Batting,,,,,,,,,,,,,,
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,T.W. Blake Park,3.0,52.0,3.0,39,39.0,0.0,1.0,0.0,0.0,1.0,3.0,3.0,17.333333333333332,13.0,11.0,2.0,2.0,2.0,118.18181818181819,Ground,3,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Unknown ground,26.0,718.0,25.0,108,108.0,1.0,1.0,4.0,1.0,2.0,69.0,13.0,28.72,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,W. Ruthven VC Reserve,1.0,58.0,1.0,58,58.0,0.0,0.0,1.0,0.0,0.0,5.0,3.0,58.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,C.H. Sullivan Memorial Park,21.0,270.0,17.0,91*,91.0,1.0,0.0,1.0,0.0,1.0,26.0,5.0,15.882352941176471,45.0,92.0,5.0,6.0,6.0,48.91304347826087,Ground,3,Batting,,,,,,,,,,,,,,
@@ -13553,7 +13571,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Olympic Park (West He
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Parker Reserve,1.0,50.0,0.0,50*,50.0,1.0,0.0,1.0,0.0,0.0,4.0,0.0,,50.0,56.0,0.0,1.0,1.0,89.28571428571429,Ground,3,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Shelley Park,3.0,43.0,3.0,21,21.0,0.0,0.0,0.0,0.0,0.0,4.0,0.0,14.333333333333334,43.0,66.0,3.0,3.0,3.0,65.15151515151516,Ground,3,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Strathewen Reserve,2.0,164.0,1.0,137*,137.0,1.0,0.0,0.0,1.0,0.0,29.0,0.0,164.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,T.W. Blake Park,8.0,345.0,4.0,66*,66.0,1.0,3.0,4.0,0.0,0.0,42.0,1.0,86.25,293.0,243.0,4.0,7.0,7.0,120.57613168724279,Ground,3,Batting,,,,,,,,,,,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,T.W. Blake Park,9.0,367.0,4.0,66*,66.0,1.0,3.0,4.0,0.0,0.0,44.0,1.0,91.75,315.0,272.0,4.0,8.0,8.0,115.80882352941177,Ground,3,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Thomastown East Reserve,1.0,67.0,1.0,67,67.0,0.0,0.0,1.0,0.0,0.0,10.0,0.0,67.0,67.0,70.0,1.0,1.0,1.0,95.71428571428571,Ground,3,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Unknown ground,4.0,14.0,3.0,10*,10.0,1.0,0.0,0.0,0.0,2.0,0.0,0.0,4.666666666666667,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,W. Ruthven VC Reserve,3.0,81.0,3.0,79,79.0,0.0,0.0,1.0,0.0,1.0,13.0,0.0,27.0,81.0,141.0,3.0,3.0,3.0,57.4468085106383,Ground,3,Batting,,,,,,,,,,,,,,
@@ -13911,7 +13929,7 @@ raw_cf23e6e4_a7c2_46f7_a84f_832ed7cf6c77,Andrew Mackenzie,Andrew Mackenzie,Unkno
 raw_d08c380f_be32_422d_a289_f7dad7020567,Avinash Rugoobur,Avinash Rugoobur,Unknown ground,51.0,872.0,49.0,141,141.0,1.0,9.0,2.0,1.0,10.0,30.0,1.0,17.79591836734694,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Unknown ground,11.0,44.0,6.0,22,22.0,1.0,0.0,0.0,0.0,3.0,4.0,0.0,7.333333333333333,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Edgars Creek Secondary College,1.0,52.0,0.0,52*,52.0,1.0,0.0,1.0,0.0,0.0,9.0,1.0,,52.0,25.0,0.0,1.0,1.0,208.0,Ground,3,Batting,,,,,,,,,,,,,,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,T.W. Blake Park,6.0,338.0,3.0,102*,102.0,1.0,1.0,3.0,1.0,0.0,30.0,20.0,112.66666666666667,255.0,145.0,1.0,4.0,4.0,175.86206896551724,Ground,3,Batting,,,,,,,,,,,,,,
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,T.W. Blake Park,7.0,392.0,3.0,102*,102.0,1.0,1.0,4.0,1.0,0.0,31.0,24.0,130.66666666666666,255.0,145.0,1.0,4.0,4.0,175.86206896551724,Ground,3,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Thomastown East Reserve,1.0,31.0,1.0,31,31.0,0.0,1.0,0.0,0.0,0.0,5.0,1.0,31.0,31.0,24.0,1.0,1.0,1.0,129.16666666666666,Ground,3,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,C.T. Barling Reserve,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,9.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,H.P. Zwar Park,2.0,13.0,2.0,13,13.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,6.5,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
@@ -14064,7 +14082,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Kinglak
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Parker Reserve,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,9.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Poplar Oval,2.0,17.0,1.0,14,14.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,17.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Shelley Park,3.0,16.0,3.0,11,11.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,5.333333333333333,11.0,28.0,2.0,2.0,2.0,39.285714285714285,Ground,3,Batting,,,,,,,,,,,,,,
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,T.W. Blake Park,9.0,144.0,9.0,38,38.0,0.0,2.0,0.0,0.0,2.0,11.0,1.0,16.0,79.0,132.0,6.0,6.0,6.0,59.84848484848485,Ground,3,Batting,,,,,,,,,,,,,,
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,T.W. Blake Park,10.0,192.0,10.0,48,48.0,0.0,3.0,0.0,0.0,2.0,14.0,1.0,19.2,79.0,132.0,6.0,6.0,6.0,59.84848484848485,Ground,3,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Thomastown East Reserve,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,4.0,1.0,1.0,1.0,25.0,Ground,3,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,W. Ruthven VC Reserve,1.0,23.0,1.0,23,23.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,23.0,23.0,44.0,1.0,1.0,1.0,52.27272727272727,Ground,3,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,C.H. Sullivan Memorial Park,3.0,81.0,3.0,53,53.0,0.0,0.0,1.0,0.0,1.0,9.0,0.0,27.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
@@ -14218,7 +14236,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,J.E. Moore Park,1.0,4.0,1.0,4,4.0,0.0,0.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Olympic Park (West Heidelberg),1.0,8.0,1.0,8,8.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,8.0,8.0,22.0,1.0,1.0,1.0,36.36363636363637,Ground,3,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Shelley Park,1.0,5.0,1.0,5,5.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5.0,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Strathewen Reserve,1.0,30.0,0.0,30*,30.0,1.0,1.0,0.0,0.0,0.0,3.0,0.0,,30.0,48.0,0.0,1.0,1.0,62.5,Ground,3,Batting,,,,,,,,,,,,,,
-vinay_sharma,Vinay Sharma,Vinay Sharma,T.W. Blake Park,3.0,105.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,13.0,1.0,105.0,64.0,43.0,0.0,1.0,1.0,148.8372093023256,Ground,3,Batting,,,,,,,,,,,,,,
+vinay_sharma,Vinay Sharma,Vinay Sharma,T.W. Blake Park,4.0,106.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,13.0,1.0,106.0,65.0,46.0,0.0,2.0,2.0,141.30434782608697,Ground,3,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Unknown ground,177.0,3394.0,140.0,125,125.0,1.0,27.0,9.0,2.0,21.0,292.0,22.0,24.242857142857144,,,,,,,Ground,3,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,W. Ruthven VC Reserve,3.0,6.0,3.0,6,6.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,2.0,0.0,11.0,2.0,2.0,2.0,0.0,Ground,3,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,C.H. Sullivan Memorial Park,29.0,361.0,26.0,48,48.0,1.0,3.0,0.0,0.0,3.0,29.0,0.0,13.884615384615385,120.0,235.0,7.0,8.0,8.0,51.06382978723404,Ground,3,Batting,,,,,,,,,,,,,,
@@ -14438,7 +14456,7 @@ mayur_mohan,Mayur Mohan,Mayur Mohan,Edgars Creek Secondary College,,,,,,,,,,,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,H.L.T. Oulten Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,132.0,90.0,2.0,2/56,0.0,0.0,45.0,66.0,4.090909090909091,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Kinglake Memorial Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,22.0,2.0,2/22,0.0,0.0,11.0,21.0,3.142857142857143,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Parker Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,24.0,29.0,1.0,1/29,0.0,0.0,29.0,24.0,7.25,,,,
-mayur_mohan,Mayur Mohan,Mayur Mohan,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,8.0,254.0,240.0,10.0,3/32,1.0,0.0,24.0,25.4,5.669291338582677,,,,
+mayur_mohan,Mayur Mohan,Mayur Mohan,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,9.0,290.0,296.0,10.0,3/32,1.0,0.0,29.6,29.0,6.124137931034483,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Thomastown East Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,39.0,1.0,1/39,0.0,0.0,39.0,42.0,5.571428571428571,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,18.0,1110.0,480.0,21.0,3/16,3.0,0.0,22.857142857142858,52.857142857142854,2.5945945945945947,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,17.0,852.0,441.0,28.0,5/14,1.0,2.0,15.75,30.428571428571427,3.1056338028169015,,,,
@@ -14742,7 +14760,7 @@ raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasi
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Poplar Oval,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,18.0,15.0,1.0,1/15,0.0,0.0,15.0,18.0,5.0,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Shelley Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,24.0,12.0,0.0,0/12,0.0,0.0,,,3.0,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Strathewen Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,49.0,0.0,0/49,0.0,0.0,,,7.0,,,,
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,9.0,282.0,254.0,13.0,4/44,2.0,0.0,19.53846153846154,21.692307692307693,5.404255319148936,,,,
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,10.0,324.0,283.0,15.0,4/44,2.0,0.0,18.866666666666667,21.6,5.2407407407407405,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Thomastown East Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,18.0,30.0,2.0,2/30,0.0,0.0,15.0,9.0,10.0,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,W. Ruthven VC Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,24.0,11.0,1.0,1/11,0.0,0.0,11.0,24.0,2.75,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,6.0,150.0,160.0,2.0,1/42,0.0,0.0,80.0,75.0,6.4,,,,
@@ -14855,7 +14873,7 @@ raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Edg
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Epping Recreation Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,120.0,85.0,3.0,2/50,0.0,0.0,28.333333333333332,40.0,4.25,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,J.E. Moore Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,20.0,1.0,1/20,0.0,0.0,20.0,42.0,2.857142857142857,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Olympic Park (West Heidelberg),,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,33.0,0.0,0/33,0.0,0.0,,,4.714285714285714,,,,
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,3.0,90.0,42.0,2.0,2/25,0.0,0.0,21.0,45.0,2.8,,,,
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,4.0,132.0,61.0,4.0,2/19,0.0,0.0,15.25,33.0,2.772727272727273,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,W. Ruthven VC Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,108.0,43.0,2.0,1/13,0.0,0.0,21.5,54.0,2.388888888888889,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,7.0,204.0,193.0,3.0,1/34,0.0,0.0,64.33333333333333,68.0,5.676470588235294,,,,
 raw_739364b3_855b_4915_a172_af834ca51be8,Dennis Subramaniam,Dennis Subramaniam,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,13.0,684.0,386.0,20.0,4/23,2.0,0.0,19.3,34.2,3.3859649122807016,,,,
@@ -14870,7 +14888,7 @@ raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Parker 
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Poplar Oval,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,19.0,2.0,2/19,0.0,0.0,9.5,21.0,2.7142857142857144,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Shelley Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,30.0,35.0,1.0,1/35,0.0,0.0,35.0,30.0,7.0,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Strathewen Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,5.0,7.0,0.0,0/7,0.0,0.0,,,8.4,,,,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,9.0,285.0,213.0,10.0,4/23,2.0,0.0,21.3,28.5,4.484210526315789,,,,
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,10.0,321.0,239.0,13.0,4/23,3.0,0.0,18.384615384615383,24.692307692307693,4.4672897196261685,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,12.0,429.0,320.0,11.0,3/27,1.0,0.0,29.09090909090909,39.0,4.475524475524476,,,,
 raw_772017c0_ffec_4dd7_992a_665e05833c20,Prajapati Manubhai,Prajapati Manubhai,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,84.0,58.0,3.0,2/37,0.0,0.0,19.333333333333332,28.0,4.142857142857143,,,,
 raw_772017c0_ffec_4dd7_992a_665e05833c20,Prajapati Manubhai,Prajapati Manubhai,C.T. Barling Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,48.0,46.0,2.0,2/46,0.0,0.0,23.0,24.0,5.75,,,,
@@ -14899,7 +14917,7 @@ raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Chelsworth Park
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Fairfield Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,54.0,39.0,2.0,2/39,0.0,0.0,19.5,27.0,4.333333333333333,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,J.C. Donath Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,30.0,36.0,1.0,1/36,0.0,0.0,36.0,30.0,7.2,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,24.0,15.0,1.0,1/8,0.0,0.0,15.0,24.0,3.75,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,36.0,23.0,3.0,3/9,1.0,0.0,7.666666666666667,12.0,3.8333333333333335,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,3.0,54.0,33.0,3.0,3/9,1.0,0.0,11.0,18.0,3.6666666666666665,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,36.0,2239.0,1283.0,76.0,5/38,7.0,3.0,16.88157894736842,29.460526315789473,3.4381420276909336,,,,
 raw_7e210a03_42e8_4dcf_ba0f_18b330f7a6f6,Mukul Sharma,Mukul Sharma,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,24.0,11.0,1.0,1/11,0.0,0.0,11.0,24.0,2.75,,,,
 raw_7e210a03_42e8_4dcf_ba0f_18b330f7a6f6,Mukul Sharma,Mukul Sharma,H.P. Zwar Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,30.0,11.0,2.0,2/11,0.0,0.0,5.5,15.0,2.2,,,,
@@ -15153,7 +15171,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Parker Reserv
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Poplar Oval,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,61.0,21.0,3.0,2/12,0.0,0.0,7.0,20.333333333333332,2.0655737704918034,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Shelley Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,2.0,48.0,54.0,2.0,2/35,0.0,0.0,27.0,24.0,6.75,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Strathewen Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,42.0,48.0,0.0,0/48,0.0,0.0,,,6.857142857142857,,,,
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,7.0,168.0,169.0,6.0,2/23,0.0,0.0,28.166666666666668,28.0,6.035714285714286,,,,
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,8.0,204.0,186.0,7.0,2/23,0.0,0.0,26.571428571428573,29.142857142857142,5.470588235294118,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Thomastown East Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,1.0,30.0,28.0,3.0,3/28,1.0,0.0,9.333333333333334,10.0,5.6,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,W. Ruthven VC Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,4.0,162.0,84.0,1.0,1/12,0.0,0.0,84.0,162.0,3.111111111111111,,,,
 raw_c4f4680b_de05_43e8_b4b7_31d28cd72c73,Saurabh Malhotra,Saurabh Malhotra,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Bowling,3.0,84.0,61.0,1.0,1/37,0.0,0.0,61.0,84.0,4.357142857142857,,,,
@@ -15834,7 +15852,7 @@ raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Olympic Park (West He
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Parker Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Shelley Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Strathewen Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,6.0,0.0,2.0,8.0
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,6.0,0.0,3.0,9.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Thomastown East Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,W. Ruthven VC Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
@@ -15990,7 +16008,7 @@ raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Edgars Creek 
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Ford Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,J.C. Donath Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Poplar Oval,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Thomastown East Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,H.L.T. Oulten Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -16091,7 +16109,7 @@ raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,C.T. Ba
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Epping Recreation Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,H.L.T. Oulten Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,I.W. Dole Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Thomastown East Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f7146b6b_2958_4e25_9dc6_8944c8a40f65,Raj Koni,Raj Koni,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
@@ -16165,7 +16183,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,I.W. Dole Reserve,,,,,,,,,,,,,,,,,,,,Grou
 vinay_sharma,Vinay Sharma,Vinay Sharma,J.C. Donath Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,4.0,3.0,0.0,7.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,J.E. Moore Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,0.0,1.0,0.0,1.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Shelley Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-vinay_sharma,Vinay Sharma,Vinay Sharma,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,7.0,0.0,4.0,11.0
+vinay_sharma,Vinay Sharma,Vinay Sharma,T.W. Blake Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,8.0,0.0,4.0,12.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Unknown ground,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,231.0,24.0,44.0,299.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,W. Ruthven VC Reserve,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,2.0,0.0,2.0,4.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,C.H. Sullivan Memorial Park,,,,,,,,,,,,,,,,,,,,Ground,3,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
@@ -16192,7 +16210,7 @@ amresh_bhan,Amresh Bhan,Amresh Bhan,Home,72.0,793.0,47.0,91*,91.0,1.0,4.0,3.0,0.
 aravind_boddula,Aravind Boddula,Aravind Boddula,Away,10.0,146.0,8.0,62*,62.0,1.0,1.0,1.0,0.0,1.0,18.0,1.0,18.25,9.0,19.0,3.0,3.0,3.0,47.36842105263158,H/A,4,Batting,,,,,,,,,,,,,,
 aravind_boddula,Aravind Boddula,Aravind Boddula,Home,13.0,106.0,10.0,39*,39.0,1.0,1.0,0.0,0.0,6.0,7.0,2.0,10.6,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Away,19.0,121.0,17.0,32,32.0,1.0,1.0,0.0,0.0,5.0,10.0,3.0,7.117647058823529,12.0,23.0,6.0,6.0,6.0,52.17391304347826,H/A,4,Batting,,,,,,,,,,,,,,
-ashish_sharma,Ashish Sharma,Ashish Sharma,Home,24.0,248.0,23.0,43,43.0,1.0,2.0,0.0,0.0,2.0,19.0,2.0,10.782608695652174,78.0,132.0,7.0,7.0,7.0,59.09090909090909,H/A,4,Batting,,,,,,,,,,,,,,
+ashish_sharma,Ashish Sharma,Ashish Sharma,Home,25.0,273.0,24.0,43,43.0,1.0,2.0,0.0,0.0,2.0,21.0,3.0,11.375,103.0,158.0,8.0,8.0,8.0,65.18987341772151,H/A,4,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Away,31.0,264.0,23.0,30,30.0,1.0,1.0,0.0,0.0,6.0,36.0,4.0,11.478260869565217,153.0,200.0,12.0,14.0,13.0,76.5,H/A,4,Batting,,,,,,,,,,,,,,
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Home,20.0,149.0,16.0,39,39.0,1.0,2.0,0.0,0.0,3.0,11.0,1.0,9.3125,48.0,37.0,3.0,4.0,4.0,129.72972972972974,H/A,4,Batting,,,,,,,,,,,,,,
 baurel_d_mello,Baurel D'Mello,Baurel D'Mello,Away,61.0,1967.0,57.0,130,130.0,1.0,14.0,11.0,2.0,2.0,237.0,31.0,34.50877192982456,533.0,588.0,11.0,13.0,12.0,90.64625850340136,H/A,4,Batting,,,,,,,,,,,,,,
@@ -16214,7 +16232,7 @@ gopi_krishna,Gopi Krishna,Gopi Krishna,Home,14.0,297.0,13.0,75,75.0,1.0,1.0,3.0,
 ibad_mohammed,Ibad Mohammed,Ibad Mohammed,Away,32.0,764.0,26.0,86*,86.0,1.0,1.0,6.0,0.0,2.0,64.0,7.0,29.384615384615383,126.0,214.0,3.0,4.0,3.0,58.87850467289719,H/A,4,Batting,,,,,,,,,,,,,,
 ibad_mohammed,Ibad Mohammed,Ibad Mohammed,Home,31.0,476.0,27.0,65*,65.0,1.0,4.0,1.0,0.0,3.0,42.0,7.0,17.62962962962963,149.0,210.0,4.0,5.0,5.0,70.95238095238095,H/A,4,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Away,18.0,476.0,17.0,108,108.0,1.0,1.0,2.0,1.0,2.0,47.0,15.0,28.0,60.0,47.0,3.0,3.0,3.0,127.65957446808511,H/A,4,Batting,,,,,,,,,,,,,,
-janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Home,19.0,440.0,19.0,96,96.0,0.0,1.0,3.0,0.0,2.0,41.0,8.0,23.157894736842106,5.0,5.0,3.0,3.0,3.0,100.0,H/A,4,Batting,,,,,,,,,,,,,,
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Home,20.0,453.0,20.0,96,96.0,0.0,1.0,3.0,0.0,2.0,41.0,9.0,22.65,18.0,15.0,4.0,4.0,4.0,120.0,H/A,4,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Away,39.0,683.0,27.0,80,80.0,1.0,6.0,2.0,0.0,4.0,67.0,10.0,25.296296296296298,262.0,363.0,6.0,12.0,12.0,72.1763085399449,H/A,4,Batting,,,,,,,,,,,,,,
 jimmy_sharma,Jimmy Sharma,Jimmy Sharma,Home,34.0,497.0,26.0,91*,91.0,1.0,0.0,3.0,0.0,3.0,41.0,6.0,19.115384615384617,48.0,106.0,7.0,8.0,8.0,45.283018867924525,H/A,4,Batting,,,,,,,,,,,,,,
 kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,Away,99.0,2462.0,92.0,83*,83.0,1.0,19.0,17.0,0.0,8.0,233.0,81.0,26.76086956521739,348.0,341.0,12.0,13.0,12.0,102.05278592375366,H/A,4,Batting,,,,,,,,,,,,,,
@@ -16453,7 +16471,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Home,15.0,317.0
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Away,4.0,31.0,4.0,19,19.0,0.0,0.0,0.0,0.0,1.0,3.0,0.0,7.75,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Home,1.0,12.0,1.0,12,12.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,12.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Away,28.0,780.0,24.0,137*,137.0,1.0,3.0,5.0,1.0,2.0,104.0,1.0,32.5,564.0,893.0,17.0,20.0,19.0,63.1578947368421,H/A,4,Batting,,,,,,,,,,,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Home,31.0,680.0,21.0,66*,66.0,1.0,8.0,6.0,0.0,6.0,78.0,1.0,32.38095238095238,331.0,323.0,8.0,11.0,11.0,102.47678018575851,H/A,4,Batting,,,,,,,,,,,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Home,32.0,702.0,21.0,66*,66.0,1.0,8.0,6.0,0.0,6.0,80.0,1.0,33.42857142857143,353.0,352.0,8.0,12.0,12.0,100.2840909090909,H/A,4,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Away,18.0,183.0,16.0,45*,45.0,1.0,2.0,0.0,0.0,2.0,13.0,3.0,11.4375,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Home,16.0,303.0,14.0,63*,63.0,1.0,2.0,2.0,0.0,1.0,37.0,2.0,21.642857142857142,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_7e210a03_42e8_4dcf_ba0f_18b330f7a6f6,Mukul Sharma,Mukul Sharma,Away,1.0,8.0,1.0,8,8.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,8.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
@@ -16598,7 +16616,7 @@ raw_d08c380f_be32_422d_a289_f7dad7020567,Avinash Rugoobur,Avinash Rugoobur,Home,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Away,8.0,33.0,4.0,22,22.0,1.0,0.0,0.0,0.0,2.0,4.0,0.0,8.25,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Home,3.0,11.0,2.0,10,10.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,5.5,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Away,3.0,148.0,1.0,65*,65.0,1.0,1.0,2.0,0.0,0.0,20.0,5.0,148.0,148.0,94.0,1.0,3.0,3.0,157.4468085106383,H/A,4,Batting,,,,,,,,,,,,,,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Home,5.0,273.0,3.0,102*,102.0,1.0,1.0,2.0,1.0,0.0,24.0,17.0,91.0,190.0,100.0,1.0,3.0,3.0,190.0,H/A,4,Batting,,,,,,,,,,,,,,
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Home,6.0,327.0,3.0,102*,102.0,1.0,1.0,3.0,1.0,0.0,25.0,21.0,109.0,190.0,100.0,1.0,3.0,3.0,190.0,H/A,4,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,Away,3.0,44.0,3.0,31,31.0,0.0,1.0,0.0,0.0,1.0,6.0,1.0,14.666666666666666,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,Home,1.0,9.0,1.0,9,9.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,9.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,Away,52.0,897.0,47.0,64,64.0,1.0,6.0,4.0,0.0,2.0,103.0,14.0,19.085106382978722,158.0,378.0,13.0,13.0,12.0,41.7989417989418,H/A,4,Batting,,,,,,,,,,,,,,
@@ -16660,7 +16678,7 @@ raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Away,53.0,9
 raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Home,51.0,851.0,45.0,53,53.0,1.0,11.0,3.0,0.0,5.0,65.0,1.0,18.91111111111111,110.0,206.0,5.0,5.0,5.0,53.398058252427184,H/A,4,Batting,,,,,,,,,,,,,,
 raw_f4f5e31e_fc86_42e3_a4ad_8d044676b58b,Wirantha Munesingha,Wirantha Munesingha,Home,2.0,37.0,1.0,35*,35.0,1.0,1.0,0.0,0.0,0.0,2.0,3.0,37.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Away,24.0,333.0,21.0,53,53.0,1.0,3.0,1.0,0.0,4.0,33.0,2.0,15.857142857142858,290.0,630.0,15.0,15.0,15.0,46.03174603174603,H/A,4,Batting,,,,,,,,,,,,,,
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Home,18.0,232.0,17.0,45,45.0,1.0,3.0,0.0,0.0,3.0,15.0,1.0,13.647058823529411,134.0,248.0,11.0,11.0,11.0,54.03225806451613,H/A,4,Batting,,,,,,,,,,,,,,
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Home,19.0,280.0,18.0,48,48.0,1.0,4.0,0.0,0.0,3.0,18.0,1.0,15.555555555555555,134.0,248.0,11.0,11.0,11.0,54.03225806451613,H/A,4,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,Away,4.0,17.0,4.0,14,14.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,4.25,3.0,10.0,2.0,2.0,2.0,30.0,H/A,4,Batting,,,,,,,,,,,,,,
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,Home,3.0,81.0,3.0,53,53.0,0.0,0.0,1.0,0.0,1.0,9.0,0.0,27.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 raw_f7146b6b_2958_4e25_9dc6_8944c8a40f65,Raj Koni,Raj Koni,Away,1.0,10.0,1.0,10,10.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,10.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
@@ -16700,7 +16718,7 @@ vijay_sandepudi,Vijay Sandepudi,Vijay Sandepudi,Home,15.0,190.0,14.0,51,51.0,1.0
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,Away,4.0,6.0,2.0,4,4.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,Home,3.0,0.0,2.0,0*,0.0,1.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,,,,,,,H/A,4,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Away,109.0,1927.0,91.0,125,125.0,1.0,14.0,4.0,1.0,11.0,167.0,7.0,21.175824175824175,111.0,240.0,10.0,11.0,11.0,46.25,H/A,4,Batting,,,,,,,,,,,,,,
-vinay_sharma,Vinay Sharma,Vinay Sharma,Home,102.0,1991.0,75.0,103,103.0,1.0,19.0,6.0,1.0,12.0,170.0,18.0,26.546666666666667,158.0,190.0,5.0,8.0,8.0,83.15789473684211,H/A,4,Batting,,,,,,,,,,,,,,
+vinay_sharma,Vinay Sharma,Vinay Sharma,Home,103.0,1992.0,75.0,103,103.0,1.0,19.0,6.0,1.0,12.0,170.0,18.0,26.56,159.0,193.0,5.0,9.0,9.0,82.38341968911917,H/A,4,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,Away,126.0,1671.0,110.0,88,88.0,1.0,13.0,2.0,0.0,13.0,128.0,6.0,15.190909090909091,123.0,278.0,11.0,11.0,10.0,44.24460431654676,H/A,4,Batting,,,,,,,,,,,,,,
 vinit_naidu,Vinit Naidu,Vinit Naidu,Home,126.0,1618.0,113.0,168,168.0,1.0,11.0,1.0,1.0,14.0,116.0,12.0,14.31858407079646,120.0,235.0,7.0,8.0,8.0,51.06382978723404,H/A,4,Batting,,,,,,,,,,,,,,
 vishnu_para,Vishnu Para,Vishnu Para,Away,36.0,554.0,33.0,96*,96.0,1.0,4.0,2.0,0.0,4.0,43.0,25.0,16.78787878787879,114.0,205.0,9.0,9.0,9.0,55.609756097560975,H/A,4,Batting,,,,,,,,,,,,,,
@@ -16739,7 +16757,7 @@ kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,Home,,,,,,,,,,,,,,,,,,,
 kieran_bhan,Kieran Bhan,Kieran Bhan,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,15.0,414.0,338.0,9.0,5/31,0.0,1.0,37.55555555555556,46.0,4.898550724637682,,,,
 kieran_bhan,Kieran Bhan,Kieran Bhan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,20.0,555.0,344.0,25.0,5/7,4.0,1.0,13.76,22.2,3.718918918918919,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,17.0,888.0,491.0,24.0,3/16,3.0,0.0,20.458333333333332,37.0,3.3175675675675675,,,,
-mayur_mohan,Mayur Mohan,Mayur Mohan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,19.0,884.0,552.0,19.0,3/76,1.0,0.0,29.05263157894737,46.526315789473685,3.746606334841629,,,,
+mayur_mohan,Mayur Mohan,Mayur Mohan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,20.0,920.0,608.0,19.0,3/76,1.0,0.0,32.0,48.421052631578945,3.965217391304348,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,35.0,1720.0,1064.0,53.0,6/49,7.0,1.0,20.07547169811321,32.45283018867924,3.7116279069767444,,,,
 nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,24.0,1314.0,676.0,44.0,6/49,4.0,3.0,15.363636363636363,29.863636363636363,3.08675799086758,,,,
 phanindra_padigella,Phanindra Padigella,Phanindra Padigella,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,4.0,114.0,111.0,7.0,3/19,1.0,0.0,15.857142857142858,16.285714285714285,5.842105263157895,,,,
@@ -16850,7 +16868,7 @@ raw_3d096713_4cc8_4c75_8012_2af29191dd45,Lahiru Weerasinghe,Lahiru Weerasinghe,H
 raw_3d9fa6ce_5eda_431f_bd3c_dd553676da9a,Bikesh Shrestha,Bikesh Shrestha,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,2.0,60.0,69.0,1.0,1/43,0.0,0.0,69.0,60.0,6.9,,,,
 raw_3dfa0dea_884b_4796_ad97_a36c652b3012,Sravan Kumar Saka,Sravan Kumar Saka,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,3.0,3.0,0.0,0/3,0.0,0.0,,,6.0,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,27.0,876.0,643.0,30.0,4/31,4.0,0.0,21.433333333333334,29.2,4.404109589041096,,,,
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,17.0,563.0,398.0,19.0,4/11,3.0,0.0,20.94736842105263,29.63157894736842,4.241563055062167,,,,
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,18.0,605.0,427.0,21.0,4/11,3.0,0.0,20.333333333333332,28.80952380952381,4.234710743801653,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,42.0,48.0,1.0,1/18,0.0,0.0,48.0,42.0,6.857142857142857,,,,
 raw_41319ce2_d210_43f3_83ea_be2dee71ddea,Haider Ali,Haider Ali,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,8.0,192.0,214.0,4.0,2/35,0.0,0.0,53.5,48.0,6.6875,,,,
 raw_42163535_aadc_4c2c_853a_e472db8423a1,Nick Lal,Nick Lal,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,3.0,30.0,24.0,1.0,1/8,0.0,0.0,24.0,30.0,4.8,,,,
@@ -16921,13 +16939,13 @@ raw_6ef71daf_6cad_4dc0_b015_98867864722f,Rahul Naidu,Rahul Naidu,Away,,,,,,,,,,,
 raw_6f08a796_12f5_40ca_b2dd_a2416dcd927d,Arnaud Hurdoyal,Arnaud Hurdoyal,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,102.0,69.0,2.0,1/10,0.0,0.0,34.5,51.0,4.0588235294117645,,,,
 raw_6f08a796_12f5_40ca_b2dd_a2416dcd927d,Arnaud Hurdoyal,Arnaud Hurdoyal,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,6.0,126.0,114.0,3.0,1/14,0.0,0.0,38.0,42.0,5.428571428571429,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,6.0,354.0,208.0,8.0,2/27,0.0,0.0,26.0,44.25,3.5254237288135593,,,,
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,10.0,450.0,246.0,12.0,3/17,2.0,0.0,20.5,37.5,3.28,,,,
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,11.0,492.0,265.0,14.0,3/17,2.0,0.0,18.928571428571427,35.142857142857146,3.231707317073171,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,132.0,133.0,2.0,1/34,0.0,0.0,66.5,66.0,6.045454545454546,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,2.0,72.0,60.0,1.0,1/38,0.0,0.0,60.0,72.0,5.0,,,,
 raw_739364b3_855b_4915_a172_af834ca51be8,Dennis Subramaniam,Dennis Subramaniam,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,7.0,408.0,232.0,10.0,3/21,1.0,0.0,23.2,40.8,3.411764705882353,,,,
 raw_739364b3_855b_4915_a172_af834ca51be8,Dennis Subramaniam,Dennis Subramaniam,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,6.0,276.0,154.0,10.0,4/23,1.0,0.0,15.4,27.6,3.347826086956522,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,14.0,314.0,257.0,14.0,4/23,1.0,0.0,18.357142857142858,22.428571428571427,4.910828025477707,,,,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,13.0,441.0,315.0,10.0,3/31,1.0,0.0,31.5,44.1,4.285714285714286,,,,
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,14.0,477.0,341.0,13.0,3/26,2.0,0.0,26.23076923076923,36.69230769230769,4.289308176100629,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,168.0,151.0,3.0,1/24,0.0,0.0,50.333333333333336,56.0,5.392857142857143,,,,
 raw_75b794ea_e102_491c_8135_150f55e19aec,Nakul Kedar,Nakul Kedar,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,7.0,261.0,169.0,8.0,3/27,1.0,0.0,21.125,32.625,3.8850574712643677,,,,
 raw_772017c0_ffec_4dd7_992a_665e05833c20,Prajapati Manubhai,Prajapati Manubhai,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,239.0,144.0,11.0,6/17,0.0,1.0,13.090909090909092,21.727272727272727,3.6150627615062763,,,,
@@ -16941,7 +16959,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Away,,,,,,,,,,,
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,16.0,828.0,375.0,20.0,3/12,2.0,0.0,18.75,41.4,2.717391304347826,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,3.0,108.0,92.0,4.0,2/39,0.0,0.0,23.0,27.0,5.111111111111111,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,30.0,40.0,3.0,3/40,1.0,0.0,13.333333333333334,10.0,8.0,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,4.0,60.0,38.0,4.0,3/9,1.0,0.0,9.5,15.0,3.8,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,5.0,78.0,48.0,4.0,3/9,1.0,0.0,12.0,19.5,3.6923076923076925,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,20.0,1179.0,661.0,43.0,5/38,4.0,1.0,15.372093023255815,27.41860465116279,3.3638676844783717,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,16.0,1060.0,622.0,33.0,5/45,3.0,2.0,18.848484848484848,32.121212121212125,3.520754716981132,,,,
 raw_7e210a03_42e8_4dcf_ba0f_18b330f7a6f6,Mukul Sharma,Mukul Sharma,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,30.0,11.0,2.0,2/11,0.0,0.0,5.5,15.0,2.2,,,,
@@ -17036,7 +17054,7 @@ raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar 
 raw_c22122d8_931d_4003_ace2_b76201b8eec1,Abhishek Bhardwaj,Abhishek Bhardwaj,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,24.0,22.0,1.0,1/22,0.0,0.0,22.0,24.0,5.5,,,,
 raw_c32081a0_d09b_4da6_941d_0e89680da2a6,Aman Kumar,Aman Kumar,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,42.0,40.0,1.0,1/40,0.0,0.0,40.0,42.0,5.714285714285714,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,26.0,1159.0,662.0,29.0,3/28,2.0,0.0,22.82758620689655,39.96551724137931,3.4270923209663504,,,,
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,20.0,605.0,434.0,16.0,2/17,0.0,0.0,27.125,37.8125,4.304132231404958,,,,
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,21.0,641.0,451.0,17.0,2/17,0.0,0.0,26.529411764705884,37.705882352941174,4.221528861154447,,,,
 raw_c4f4680b_de05_43e8_b4b7_31d28cd72c73,Saurabh Malhotra,Saurabh Malhotra,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,2.0,60.0,38.0,1.0,1/37,0.0,0.0,38.0,60.0,3.8,,,,
 raw_c4f4680b_de05_43e8_b4b7_31d28cd72c73,Saurabh Malhotra,Saurabh Malhotra,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,1.0,24.0,23.0,0.0,0/23,0.0,0.0,,,5.75,,,,
 raw_c9ba183a_666e_4bea_8b80_e056bea26ce6,Syed Hasan,Syed Hasan,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Bowling,2.0,36.0,39.0,1.0,1/32,0.0,0.0,39.0,36.0,6.5,,,,
@@ -17341,7 +17359,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Away,,,,,,,,,,,
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,5.0,0.0,2.0,7.0
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,25.0,2.0,7.0,34.0
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,24.0,4.0,7.0,35.0
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,24.0,4.0,8.0,36.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,12.0,0.0,1.0,13.0
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
 raw_7f47871d_71d2_4c20_941e_b9b9b5164c8a,Pratik Shah,Pratik Shah,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,16.0,0.0,1.0,17.0
@@ -17425,7 +17443,7 @@ raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar 
 raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,19.0,0.0,3.0,22.0
 raw_c22122d8_931d_4003_ace2_b76201b8eec1,Abhishek Bhardwaj,Abhishek Bhardwaj,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,5.0,0.0,0.0,5.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 raw_cada42ba_0b29_4d11_b573_60e5f8a4a643,Cameron Nall,Cameron Nall,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
@@ -17483,7 +17501,7 @@ raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Away,,,,,,,
 raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,28.0,0.0,5.0,33.0
 raw_f4f5e31e_fc86_42e3_a4ad_8d044676b58b,Wirantha Munesingha,Wirantha Munesingha,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,12.0,0.0,2.0,14.0
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
 raw_f70da7a3_d303_4ef0_8b35_ec6f69e0685a,Bibek Neupane,Bibek Neupane,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f7146b6b_2958_4e25_9dc6_8944c8a40f65,Raj Koni,Raj Koni,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
 raw_f8a8f7e5_bac4_4049_9b66_c8d6be892040,Bobby Malli,Bobby Malli,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,14.0,0.0,4.0,18.0
@@ -17515,7 +17533,7 @@ vijay_sandepudi,Vijay Sandepudi,Vijay Sandepudi,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fi
 vijay_sandepudi,Vijay Sandepudi,Vijay Sandepudi,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,17.0,0.0,4.0,21.0
 vinay_kumar_reddy_kontham,Vinay Kumar Reddy Kontham,Vinay Kumar Reddy Kontham,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,127.0,18.0,25.0,170.0
-vinay_sharma,Vinay Sharma,Vinay Sharma,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,154.0,12.0,42.0,208.0
+vinay_sharma,Vinay Sharma,Vinay Sharma,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,155.0,12.0,42.0,209.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,43.0,0.0,1.0,44.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,Home,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,38.0,0.0,8.0,46.0
 vishnu_para,Vishnu Para,Vishnu Para,Away,,,,,,,,,,,,,,,,,,,,H/A,4,Fielding,,,,,,,,,,,12.0,0.0,2.0,14.0
@@ -17549,7 +17567,7 @@ aravind_boddula,Aravind Boddula,Aravind Boddula,Vineeth Yamani,1.0,26.0,1.0,26,2
 ashish_sharma,Ashish Sharma,Ashish Sharma,Abcin Thomas,1.0,2.0,1.0,2,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,5.0,1.0,1.0,1.0,40.0,Captain,5,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Amresh Bhan,9.0,77.0,9.0,20,20.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,8.555555555555555,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Aryan Datta,1.0,30.0,1.0,30,30.0,0.0,1.0,0.0,0.0,0.0,7.0,0.0,30.0,30.0,42.0,1.0,1.0,1.0,71.42857142857143,Captain,5,Batting,,,,,,,,,,,,,,
-ashish_sharma,Ashish Sharma,Ashish Sharma,Jai Bhan,5.0,33.0,4.0,17*,17.0,1.0,0.0,0.0,0.0,0.0,4.0,1.0,8.25,16.0,26.0,4.0,4.0,4.0,61.53846153846154,Captain,5,Batting,,,,,,,,,,,,,,
+ashish_sharma,Ashish Sharma,Ashish Sharma,Jai Bhan,6.0,58.0,5.0,25,25.0,1.0,0.0,0.0,0.0,0.0,6.0,2.0,11.6,41.0,52.0,5.0,5.0,5.0,78.84615384615384,Captain,5,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Padmanabhan Srinivasan,9.0,73.0,8.0,24,24.0,1.0,0.0,0.0,0.0,2.0,8.0,0.0,9.125,41.0,80.0,6.0,6.0,6.0,51.25,Captain,5,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Ricky Singh,4.0,37.0,4.0,32,32.0,0.0,1.0,0.0,0.0,1.0,2.0,3.0,9.25,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 ashish_sharma,Ashish Sharma,Ashish Sharma,Sachin Chand,10.0,69.0,9.0,19,19.0,1.0,0.0,0.0,0.0,1.0,4.0,0.0,7.666666666666667,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
@@ -17699,7 +17717,7 @@ janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Amresh Bhan,12.0,514.0,11.
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Damandeep Sehra,1.0,58.0,1.0,58,58.0,0.0,0.0,1.0,0.0,0.0,5.0,3.0,58.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Damien Vikash,2.0,15.0,2.0,15,15.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,7.5,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Danny Singh,6.0,82.0,6.0,27,27.0,0.0,0.0,0.0,0.0,1.0,7.0,1.0,13.666666666666666,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
-janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Jai Bhan,3.0,57.0,3.0,39,39.0,0.0,1.0,0.0,0.0,1.0,6.0,2.0,19.0,18.0,15.0,2.0,2.0,2.0,120.0,Captain,5,Batting,,,,,,,,,,,,,,
+janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Jai Bhan,4.0,70.0,4.0,39,39.0,0.0,1.0,0.0,0.0,1.0,6.0,3.0,17.5,31.0,25.0,3.0,3.0,3.0,124.0,Captain,5,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Jason Ferreira,2.0,47.0,2.0,41,41.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,23.5,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Reuel Sharan,4.0,48.0,4.0,24,24.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,12.0,24.0,20.0,3.0,3.0,3.0,120.0,Captain,5,Batting,,,,,,,,,,,,,,
 janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,Sajendra Shrestha,2.0,23.0,2.0,23,23.0,0.0,0.0,0.0,0.0,1.0,4.0,0.0,11.5,23.0,17.0,1.0,1.0,1.0,135.2941176470588,Captain,5,Batting,,,,,,,,,,,,,,
@@ -18372,7 +18390,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Sajendra Shrest
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Jacob Joseph,2.0,19.0,2.0,19,19.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,9.5,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Vineeth Yamani,3.0,24.0,3.0,12,12.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,8.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Aryan Datta,1.0,53.0,0.0,53*,53.0,1.0,0.0,1.0,0.0,0.0,8.0,0.0,,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jai Bhan,13.0,545.0,7.0,67,67.0,1.0,3.0,7.0,0.0,0.0,74.0,2.0,77.85714285714286,418.0,363.0,6.0,10.0,10.0,115.15151515151516,Captain,5,Batting,,,,,,,,,,,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jai Bhan,14.0,567.0,7.0,67,67.0,1.0,3.0,7.0,0.0,0.0,76.0,2.0,81.0,440.0,392.0,6.0,11.0,11.0,112.24489795918367,Captain,5,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Ricky Singh,2.0,10.0,1.0,10*,10.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,10.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Sajendra Shrestha,36.0,750.0,31.0,137*,137.0,1.0,7.0,2.0,1.0,6.0,93.0,0.0,24.193548387096776,395.0,739.0,18.0,19.0,18.0,53.45060893098782,Captain,5,Batting,,,,,,,,,,,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Shalen Nand,2.0,4.0,2.0,4,4.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,2.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
@@ -18704,7 +18722,7 @@ raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Amresh 
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Pramen Nand,6.0,9.0,3.0,7*,7.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,3.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_d1c3c811_f2ad_41ad_8167_79990d858a5a,Vassili Kitsios,Vassili Kitsios,Sachin Chand,1.0,22.0,1.0,22,22.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,22.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Abcin Thomas,1.0,65.0,0.0,65*,65.0,1.0,0.0,1.0,0.0,0.0,6.0,3.0,,65.0,45.0,0.0,1.0,1.0,144.44444444444446,Captain,5,Batting,,,,,,,,,,,,,,
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Jai Bhan,7.0,356.0,4.0,102*,102.0,1.0,2.0,3.0,1.0,0.0,38.0,19.0,89.0,273.0,149.0,2.0,5.0,5.0,183.2214765100671,Captain,5,Batting,,,,,,,,,,,,,,
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,Jai Bhan,8.0,410.0,4.0,102*,102.0,1.0,2.0,4.0,1.0,0.0,39.0,23.0,102.5,273.0,149.0,2.0,5.0,5.0,183.2214765100671,Captain,5,Batting,,,,,,,,,,,,,,
 raw_d1ffbe0c_479d_4e5b_a85b_02ac404c06e2,Mark Youhan,Mark Youhan,Jason Newcastle,4.0,53.0,4.0,31,31.0,0.0,1.0,0.0,0.0,1.0,8.0,1.0,13.25,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,Akshat Bodele,1.0,1.0,1.0,1,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,Harish Kumar,21.0,445.0,18.0,64,64.0,1.0,2.0,4.0,0.0,2.0,53.0,6.0,24.72222222222222,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
@@ -18838,7 +18856,7 @@ raw_f4f5e31e_fc86_42e3_a4ad_8d044676b58b,Wirantha Munesingha,Wirantha Munesingha
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Abcin Thomas,1.0,17.0,1.0,17,17.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,17.0,17.0,30.0,1.0,1.0,1.0,56.666666666666664,Captain,5,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Damandeep Sehra,2.0,75.0,2.0,45,45.0,0.0,2.0,0.0,0.0,0.0,9.0,1.0,37.5,75.0,105.0,2.0,2.0,2.0,71.42857142857143,Captain,5,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jacob Joseph,4.0,30.0,4.0,14,14.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,7.5,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jai Bhan,11.0,149.0,11.0,38,38.0,0.0,2.0,0.0,0.0,3.0,10.0,2.0,13.545454545454545,84.0,130.0,8.0,8.0,8.0,64.61538461538461,Captain,5,Batting,,,,,,,,,,,,,,
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jai Bhan,12.0,197.0,12.0,48,48.0,0.0,3.0,0.0,0.0,3.0,13.0,2.0,16.416666666666668,84.0,130.0,8.0,8.0,8.0,64.61538461538461,Captain,5,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Padmanabhan Srinivasan,3.0,69.0,3.0,45,45.0,0.0,1.0,0.0,0.0,0.0,8.0,0.0,23.0,69.0,110.0,3.0,3.0,3.0,62.72727272727273,Captain,5,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Reuben Sharan,4.0,25.0,4.0,13,13.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,6.25,25.0,166.0,3.0,3.0,3.0,15.060240963855422,Captain,5,Batting,,,,,,,,,,,,,,
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Reuel Sharan,3.0,18.0,2.0,14,14.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,9.0,18.0,54.0,2.0,2.0,2.0,33.333333333333336,Captain,5,Batting,,,,,,,,,,,,,,
@@ -19003,7 +19021,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,Damien Vikash,8.0,88.0,8.0,45,45.0,0.0,1.
 vinay_sharma,Vinay Sharma,Vinay Sharma,Danny Singh,29.0,439.0,22.0,57,57.0,1.0,2.0,2.0,0.0,3.0,44.0,1.0,19.954545454545453,5.0,17.0,1.0,1.0,1.0,29.41176470588235,Captain,5,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Feroz Hassan,1.0,10.0,1.0,10,10.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,10.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jacob Joseph,2.0,11.0,2.0,6,6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5.5,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
-vinay_sharma,Vinay Sharma,Vinay Sharma,Jai Bhan,3.0,82.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,10.0,1.0,82.0,68.0,48.0,1.0,2.0,2.0,141.66666666666666,Captain,5,Batting,,,,,,,,,,,,,,
+vinay_sharma,Vinay Sharma,Vinay Sharma,Jai Bhan,4.0,83.0,1.0,64*,64.0,1.0,0.0,1.0,0.0,0.0,10.0,1.0,83.0,69.0,51.0,1.0,3.0,3.0,135.2941176470588,Captain,5,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jason Ferreira,1.0,4.0,1.0,4,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jason Newcastle,2.0,44.0,2.0,27,27.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,22.0,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
 vinay_sharma,Vinay Sharma,Vinay Sharma,Pramen Nand,7.0,97.0,5.0,49,49.0,1.0,2.0,0.0,0.0,1.0,7.0,2.0,19.4,,,,,,,Captain,5,Batting,,,,,,,,,,,,,,
@@ -19239,7 +19257,7 @@ kieran_bhan,Kieran Bhan,Kieran Bhan,Vineeth Yamani,,,,,,,,,,,,,,,,,,,,Captain,5,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Abcin Thomas,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,42.0,32.0,3.0,3/32,1.0,0.0,10.666666666666666,14.0,4.571428571428571,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Amresh Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,7.0,288.0,183.0,6.0,3/76,1.0,0.0,30.5,48.0,3.8125,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Aryan Datta,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,24.0,16.0,0.0,0/16,0.0,0.0,,,4.0,,,,
-mayur_mohan,Mayur Mohan,Mayur Mohan,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,9.0,284.0,284.0,10.0,2/21,0.0,0.0,28.4,28.4,6.0,,,,
+mayur_mohan,Mayur Mohan,Mayur Mohan,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,10.0,320.0,340.0,10.0,2/21,0.0,0.0,34.0,32.0,6.375,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Padmanabhan Srinivasan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,6.0,288.0,202.0,8.0,2/13,0.0,0.0,25.25,36.0,4.208333333333333,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Pramen Nand,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,3.0,204.0,87.0,6.0,3/20,1.0,0.0,14.5,34.0,2.5588235294117645,,,,
 mayur_mohan,Mayur Mohan,Mayur Mohan,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,3.0,150.0,61.0,3.0,1/12,0.0,0.0,20.333333333333332,50.0,2.44,,,,
@@ -19523,7 +19541,7 @@ raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasi
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Damandeep Sehra,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,7.0,266.0,122.0,13.0,4/11,2.0,0.0,9.384615384615385,20.46153846153846,2.7518796992481205,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Feroz Hassan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,156.0,130.0,3.0,3/46,1.0,0.0,43.333333333333336,52.0,5.0,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Jacob Joseph,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,8.0,192.0,149.0,5.0,1/14,0.0,0.0,29.8,38.4,4.65625,,,,
-raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,11.0,342.0,284.0,14.0,4/44,2.0,0.0,20.285714285714285,24.428571428571427,4.982456140350878,,,,
+raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,12.0,384.0,313.0,16.0,4/44,2.0,0.0,19.5625,24.0,4.890625,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Padmanabhan Srinivasan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,78.0,36.0,1.0,1/15,0.0,0.0,36.0,78.0,2.769230769230769,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Rama Suravajjula,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,42.0,40.0,0.0,0/7,0.0,0.0,,,5.714285714285714,,,,
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,5.0,201.0,135.0,5.0,3/15,1.0,0.0,27.0,40.2,4.029850746268656,,,,
@@ -19675,7 +19693,7 @@ raw_6f08a796_12f5_40ca_b2dd_a2416dcd927d,Arnaud Hurdoyal,Arnaud Hurdoyal,Vinay S
 raw_6f08a796_12f5_40ca_b2dd_a2416dcd927d,Arnaud Hurdoyal,Arnaud Hurdoyal,Vinit Naidu,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,18.0,23.0,1.0,1/23,0.0,0.0,23.0,18.0,7.666666666666667,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Aryan Datta,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,42.0,38.0,3.0,3/38,1.0,0.0,12.666666666666666,14.0,5.428571428571429,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Damandeep Sehra,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,7.0,414.0,236.0,9.0,3/17,1.0,0.0,26.22222222222222,46.0,3.420289855072464,,,,
-raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,132.0,69.0,4.0,2/25,0.0,0.0,17.25,33.0,3.1363636363636362,,,,
+raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,5.0,174.0,88.0,6.0,2/19,0.0,0.0,14.666666666666666,29.0,3.0344827586206895,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,132.0,42.0,2.0,1/14,0.0,0.0,21.0,66.0,1.9090909090909092,,,,
 raw_71ca36a8_b853_449e_b7fd_ac601222e885,Kartik Nallepalli,Kartik Nallepalli,Reuel Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,84.0,69.0,2.0,1/20,0.0,0.0,34.5,42.0,4.928571428571429,,,,
 raw_72198299_b5dc_4e2e_992e_4bd3e8f60c03,Ajay Maharia,Ajay Maharia,Danny Singh,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,3.0,114.0,89.0,1.0,1/35,0.0,0.0,89.0,114.0,4.684210526315789,,,,
@@ -19687,7 +19705,7 @@ raw_739364b3_855b_4915_a172_af834ca51be8,Dennis Subramaniam,Dennis Subramaniam,V
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Abcin Thomas,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,42.0,23.0,4.0,4/23,1.0,0.0,5.75,10.5,3.2857142857142856,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Damandeep Sehra,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,9.0,6.0,0.0,0/6,0.0,0.0,,,4.0,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Jacob Joseph,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,5.0,108.0,108.0,4.0,1/15,0.0,0.0,27.0,27.0,6.0,,,,
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,8.0,273.0,212.0,7.0,3/31,1.0,0.0,30.285714285714285,39.0,4.65934065934066,,,,
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,9.0,309.0,238.0,10.0,3/26,2.0,0.0,23.8,30.9,4.621359223300971,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Padmanabhan Srinivasan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,5.0,222.0,136.0,6.0,2/19,0.0,0.0,22.666666666666668,37.0,3.675675675675676,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,60.0,43.0,2.0,1/11,0.0,0.0,21.5,30.0,4.3,,,,
 raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,Reuel Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,5.0,7.0,0.0,0/7,0.0,0.0,,,8.4,,,,
@@ -19713,7 +19731,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Sajendra Shrest
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Jacob Joseph,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,54.0,53.0,2.0,1/17,0.0,0.0,26.5,27.0,5.888888888888889,,,,
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Vineeth Yamani,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,84.0,79.0,5.0,3/40,1.0,0.0,15.8,16.8,5.642857142857143,,,,
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Aryan Datta,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,12.0,8.0,1.0,1/8,0.0,0.0,8.0,12.0,4.0,,,,
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,3.0,48.0,30.0,3.0,3/9,1.0,0.0,10.0,16.0,3.75,,,,
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,66.0,40.0,3.0,3/9,1.0,0.0,13.333333333333334,22.0,3.6363636363636362,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Damien Vikash,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,150.0,77.0,5.0,5/77,0.0,1.0,15.4,30.0,3.08,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Danny Singh,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,14.0,901.0,521.0,31.0,5/38,3.0,2.0,16.806451612903224,29.06451612903226,3.469478357380688,,,,
 raw_7dca5758_5687_4ef9_975b_6a594740bbd0,Syamjith Harikumar,Syamjith Harikumar,Feroz Hassan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,108.0,94.0,1.0,1/94,0.0,0.0,94.0,108.0,5.222222222222222,,,,
@@ -19920,7 +19938,7 @@ raw_c32081a0_d09b_4da6_941d_0e89680da2a6,Aman Kumar,Aman Kumar,Aryan Datta,,,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Abcin Thomas,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,12.0,5.0,0.0,0/5,0.0,0.0,,,2.5,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Aryan Datta,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,1.0,24.0,9.0,0.0,0/9,0.0,0.0,,,2.25,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jacob Joseph,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,7.0,241.0,151.0,10.0,2/18,0.0,0.0,15.1,24.1,3.759336099585062,,,,
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,7.0,168.0,180.0,7.0,3/28,1.0,0.0,25.714285714285715,24.0,6.428571428571429,,,,
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,8.0,204.0,197.0,8.0,3/28,1.0,0.0,24.625,25.5,5.794117647058823,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,2.0,60.0,44.0,3.0,2/31,0.0,0.0,14.666666666666666,20.0,4.4,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Reuel Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,4.0,222.0,73.0,3.0,2/11,0.0,0.0,24.333333333333332,74.0,1.972972972972973,,,,
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Sajendra Shrestha,,,,,,,,,,,,,,,,,,,,Captain,5,Bowling,10.0,408.0,207.0,6.0,2/20,0.0,0.0,34.5,68.0,3.0441176470588234,,,,
@@ -20735,7 +20753,7 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Jai Bhan,,,,,,,
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Reuel Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,Sajendra Shrestha,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,9.0,0.0,4.0,13.0
 raw_7c6d53e3_6a85_43ef_81ae_907aa37b1946,Mehdi Abidi,Mehdi Abidi,Vineeth Yamani,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,12.0,0.0,2.0,14.0
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,12.0,0.0,3.0,15.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Ricky Singh,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Sajendra Shrestha,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,29.0,4.0,11.0,44.0
 raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,Shaun Vikash,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,0.0,0.0,1.0,1.0
@@ -20899,7 +20917,7 @@ raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar 
 raw_c22122d8_931d_4003_ace2_b76201b8eec1,Abhishek Bhardwaj,Abhishek Bhardwaj,Amresh Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Aryan Datta,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jacob Joseph,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,6.0,0.0,0.0,6.0
+raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Reuel Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,Vineeth Yamani,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_c6d38c3f_e05c_4cf3_9aee_d541fc674107,Anurag Rangineni,Anurag Rangineni,Feroz Hassan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -21027,7 +21045,7 @@ raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Syed Shabbi
 raw_f4f5e31e_fc86_42e3_a4ad_8d044676b58b,Wirantha Munesingha,Wirantha Munesingha,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Abcin Thomas,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Damandeep Sehra,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,7.0,0.0,0.0,7.0
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,4.0,0.0,0.0,4.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Padmanabhan Srinivasan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,3.0,0.0,0.0,3.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Reuben Sharan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,2.0,0.0,2.0,4.0
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,Sajendra Shrestha,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
@@ -21127,7 +21145,7 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,Clint Fernandes,,,,,,,,,,,,,,,,,,,,Captai
 vinay_sharma,Vinay Sharma,Vinay Sharma,Damien Vikash,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,15.0,5.0,0.0,20.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Danny Singh,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,27.0,5.0,10.0,42.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jacob Joseph,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
-vinay_sharma,Vinay Sharma,Vinay Sharma,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,6.0,0.0,4.0,10.0
+vinay_sharma,Vinay Sharma,Vinay Sharma,Jai Bhan,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,7.0,0.0,4.0,11.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Jason Newcastle,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,1.0,0.0,0.0,1.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Pramen Nand,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,2.0,0.0,0.0,2.0
 vinay_sharma,Vinay Sharma,Vinay Sharma,Pratik Shah,,,,,,,,,,,,,,,,,,,,Captain,5,Fielding,,,,,,,,,,,6.0,1.0,0.0,7.0

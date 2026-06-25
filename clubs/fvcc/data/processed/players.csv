@@ -1,13 +1,14 @@
 player_id,player_name,seasons_played,teams_played_for
 d1ed36b2-499d-4b65-95a3-6f3f51177415,Armaan Datta,Winter 2025 | Winter 2026,Winter XI
 7cccf3c2-52d5-4dfc-91c8-9664f27ac72b,Jai Bhan,Summer 2015/16 | Summer 2016/17 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,"Fiji Victorian CC 1st XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | NMCA - ""F"" Grade North - Manion Shield | NMCA - ""F"" Grade South - Torrens Shield | NMCA - Bob Herman Shield - ""D"" Grade | Winter XI"
-48e8fdbd-e7b0-494e-a10b-6171895884c5,Vinay Sharma,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2026,Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | Winter XI
 f6dd9552-fbc5-4490-ac27-b50ff948f8f5,Priyanshu Tomar,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,"Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | NMCA - Les Kemp Shield - ""E"" Grade | Winter XI"
+48e8fdbd-e7b0-494e-a10b-6171895884c5,Vinay Sharma,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2026,Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | Winter XI
 b526b847-27fe-48ee-adb2-e5a6a8941340,Janaka Wijayakoon,Summer 2025/26 | Winter 2026,Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Winter XI
 7512873c-b6b6-49fe-80ff-3733b5abd044,Mohaneesh Pitre,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC 4th XI | Fiji Victorian CC OD | Winter XI
 9070b54a-0677-4338-8bc3-bb7ca2aa65b8,Anurag Joshi,Summer 2025/26 | Winter 2026,Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Winter XI
 c3a31191-6c5e-438e-9288-354845031832,Abcin Thomas,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | Winter XI
 400e4752-f236-4ca7-93e9-fd8ebee6735e,Siddhanth Chaurasiya,Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,"Fiji Victorian CC 1st XI | Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | NMCA - Les Kemp Shield - ""E"" Grade | NMCA - Syd Sault Shield - ""F"" Grade | Winter XI"
+1213eb90-9ab2-42db-b52a-865b0dfa7ea3,Ashish Sharma,Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,Fiji Victorian CC 4th XI | Fiji Victorian CC OD | Winter XI
 71ca36a8-b853-449e-b7fd-ac601222e885,Kartik Nallepalli,Summer 2024/25 | Summer 2025/26 | Winter 2026,Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC OD | Winter XI
 e76d9035-6b7f-48f7-8b69-e8b983e82080,Jayasuriya Sathiaseelan,Summer 2025/26 | Winter 2026,Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Winter XI
 7cffb99e-40e6-4c91-846f-2e5b755ecd0a,Mayur Mohan,Summer 2024/25 | Summer 2025/26 | Winter 2025 | Winter 2026,Fiji Victorian CC 4th XI | Fiji Victorian CC OD | Winter XI
@@ -50,7 +51,6 @@ a0711994-f960-4c71-bea5-c9dd9f3edd83,Bikash Naik,Summer 2023/24 | Summer 2024/25
 d85e62da-da5e-4829-b59d-2c857218554f,Ricky Singh,Summer 2024/25 | Summer 2025/26,Fiji Victorian CC 3rd XI | Fiji Victorian CC 4th XI | Fiji Victorian CC OD
 7b92ef0e-f100-4c46-8f95-2dd4d29654d6,Feroz Hassan,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Fiji Victorian CC 2nd XI | Fiji Victorian CC 3rd XI | Fiji Victorian CC 4th XI | Fiji Victorian CC OD
 4c9e3082-4034-4e6d-9142-5a76549bd6be,Mohammed Adnanuddin,Summer 2025/26,Fiji Victorian CC 3rd XI | Fiji Victorian CC 4th XI
-1213eb90-9ab2-42db-b52a-865b0dfa7ea3,Ashish Sharma,Summer 2024/25 | Summer 2025/26 | Winter 2025,Fiji Victorian CC 4th XI | Fiji Victorian CC OD | Winter XI
 5575e7b8-ffb7-4ff9-bff5-aa8f31d21c5f,Shubham Arora,Summer 2025/26,Fiji Victorian CC 4th XI
 1876a444-275e-4ae9-92aa-1eebf5760833,Syedzainulla Abedin,Summer 2025/26,Fiji Victorian CC 4th XI
 8d406a25-db4b-4b64-b592-84d73e3ad834,Sainath Jamsandekar,Summer 2025/26,Fiji Victorian CC 4th XI

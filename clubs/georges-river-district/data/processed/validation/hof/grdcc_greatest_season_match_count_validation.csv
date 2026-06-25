@@ -1,0 +1,2 @@
+player_name,season,previous_display_matches,batting_source_matches,updated_display_matches,source_file,validation_status,notes
+F Griggs,Summer 1932/33,0,,13,clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv,PASS,Targeted GRDCC Greatest Season display correction approved from visual QA; raw batting source remains unchanged.

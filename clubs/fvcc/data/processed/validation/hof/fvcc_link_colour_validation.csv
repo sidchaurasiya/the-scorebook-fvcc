@@ -1,0 +1,16 @@
+check,status,notes
+premiership_season_navy,pass,Premiership season links resolve to FVCC navy.
+hof_player_links_navy,pass,HOF player links resolve to FVCC navy.
+hof_player_hover_navy,pass,HOF player hover resolves to dark navy.
+hof_season_links_navy,pass,HOF season columns share the navy link token.
+season_stats_links_navy,pass,Season Overview stats links resolve to FVCC navy.
+season_stats_hover_navy,pass,Season Overview stats hover resolves to dark navy.
+player_profile_links_navy,pass,Player Profile links use the navy content-link token.
+milestone_links_navy,pass,Milestones player links use the navy content-link token with page-scoped specificity.
+no_purple_fvcc_links,pass,Generated FVCC link styles contain no purple.
+no_burgundy_player_links,pass,Player/season link tokens are not burgundy.
+active_nav_burgundy_preserved,pass,FVCC active navigation remains burgundy.
+grdcc_theme_unchanged,pass,GRDCC page link tokens unchanged.
+grdcc_tables_unchanged,pass,GRDCC table link tokens unchanged.
+fvcc_data_unchanged,pass,FVCC data/stat sources unchanged.
+layout_scroll_preserved,pass,Recent FVCC scroll contracts retained.

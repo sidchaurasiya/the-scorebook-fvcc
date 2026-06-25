@@ -1,0 +1,16 @@
+metric,value
+total_overlap_metric_comparisons,33345
+high_priority_review_rows,371
+p1_rows,104
+p2_rows,267
+p3_rows,0
+matched_batting_player_seasons,2565
+matched_bowling_player_seasons,0
+high_core_batting_discrepancies,118
+medium_core_batting_discrepancies,238
+identity_ambiguous_rows,39
+recommended_default_overlap_source,playcricket_when_sane
+private_preview_blocker_count,0
+provisional_preview_blocker_count,77
+app_visible_provisional_rows,29
+review_later_count,371

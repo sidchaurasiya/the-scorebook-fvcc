@@ -1,0 +1,23 @@
+check,status,details
+premiership_wins_desktop_6,PASS,desktop 6 visible
+premiership_wins_mobile_5,PASS,mobile 5 visible
+premiership_wins_scroll,PASS,scroll enabled
+premiership_row_count_unchanged,PASS,row renderer intact
+most_premierships_mobile_5,PASS,mobile 5 visible
+most_premierships_desktop_unchanged,PASS,desktop unchanged
+hof_scroll_list_6_visible,PASS,all-time leaders keep 6 visible
+hof_scroll_list_top15,PASS,top 15 list limit
+profile_performance_blank_missing,PASS,blank missing values
+season_detail_blank_missing,PASS,blank missing values
+hof_detail_blank_missing,PASS,blank missing values
+bat_sr_blank,PASS,Bat SR blanks
+historical_proxy_rows,PASS,proxy_rows=19
+win_rate_zero_rows,PASS,zero_rows=0
+damien_audited,PASS,Damien Johnson included
+rohan_final_matches_wickets,PASS,final=51.0 / 17.0
+rohan_fix_applied,PASS,supplement leak removed; source-rule row retained
+bowling_duplicate_audit_rows,PASS,rows=6
+wickets_overs_audit_rows,PASS,rows=3
+iconic_considers_excel,PASS,excel_hits=2
+all_time_overrides_rows,PASS,runs=67 wickets=28
+raw_sources_unchanged,PASS,none

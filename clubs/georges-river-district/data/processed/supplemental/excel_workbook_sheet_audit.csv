@@ -1,0 +1,95 @@
+sheet_name,row_count,max_columns,column_names,detected_season,detected_grades,detected_players,contains_batting,contains_bowling,contains_fielding,contains_match_results,contains_scorecards
+Intro,16,2,,,,0,False,False,False,False,False
+1929-30,63,26, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  |  |  |  |  |  |  |  | ,Summer 1929/30,,46,True,True,False,False,False
+1930-31,59,27, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  |  |  |  |  |  |  |  |  | ,Summer 1930/31,,43,True,True,False,False,False
+1931-32,54,27, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  |  |  |  |  |  |  |  |  | ,Summer 1931/32,,43,True,True,False,False,False
+1932-33,55,27, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  | ,Summer 1932/33,,43,True,True,False,False,False
+1933-34,61,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  | ,Summer 1933/34,,49,True,True,False,False,False
+1934-35,52,21, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1934/35,,39,True,True,False,False,False
+1935-36,59,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1935/36,,41,True,True,False,False,False
+1936-37,53,27, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  |  |  |  |  |  |  |  |  | ,Summer 1936/37,,40,True,True,False,False,False
+1937-38,61,26, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ,Summer 1937/38,,45,True,True,False,False,False
+1938-39,59,27, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  |  |  |  |  |  |  |  |  | ,Summer 1938/39,,48,True,True,False,False,False
+1939-40,66,27, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave |  |  |  |  |  |  |  |  |  |  |  | ,Summer 1939/40,,49,True,True,False,False,False
+1940-41,59,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1940/41,,43,True,True,False,False,False
+1941-42,0,0,,Summer 1941/42,,0,False,False,False,False,False
+1942-43,0,0,,Summer 1942/43,,0,False,False,False,False,False
+1943-44,0,0,,Summer 1943/44,,0,False,False,False,False,False
+1944-45,69,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1944/45,,53,True,True,False,False,False
+1945-46,0,0,,Summer 1945/46,,0,False,False,False,False,False
+1946-47,48,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1946/47,,38,True,True,False,False,False
+1947-48,68,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1947/48,,53,True,True,False,False,False
+1948-49,50,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1948/49,,43,True,True,False,False,False
+1949-50,89,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1949/50,,57,True,True,False,False,False
+1950-51,84,18, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1950/51,,61,True,True,False,False,False
+1951-52,81,18, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1951/52,,61,True,True,False,False,False
+1952-53,59,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1952/53,,49,True,True,False,False,False
+1953-54,46,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1953/54,,38,True,True,False,False,False
+1954-55,61,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1954/55,,48,True,True,True,False,False
+1955-56,60,19, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1955/56,,47,True,True,True,False,False
+1956-57,57,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1956/57,,44,True,True,True,False,False
+1957-58,46,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1957/58,,37,True,True,True,False,False
+1958-59,54,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1958/59,,42,True,True,True,False,False
+1959-60,54,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1959/60,,45,True,True,True,False,False
+1960-61,63,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1960/61,,49,True,True,True,False,False
+1961-62,53,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1961/62,,43,True,True,True,False,False
+1962-63,56,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1962/63,,44,True,True,True,False,False
+1963-64,52,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1963/64,,38,True,True,True,False,False
+1964-65,67,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1964/65,,49,True,True,True,False,False
+1965-66,67,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1965/66,,50,True,True,True,False,False
+1966-67,59,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1966/67,,41,True,True,True,False,False
+1967-68,58,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1967/68,,46,True,True,True,False,False
+1968-69,59,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1968/69,,42,True,True,True,False,False
+1969-70,61,20, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1969/70,,43,True,True,True,False,False
+1970-71,54,21, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1970/71,,44,True,True,True,False,False
+1971-72,47,21, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1971/72,,34,True,True,True,False,False
+1972-73,48,21, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1972/73,,37,True,True,True,False,False
+1973-74,48,21, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1973/74,,34,True,True,True,False,False
+1974-75,50,21, | First Name | Surname | Games | Inns | NO | HS | Total | Ave | Catches |  | Overs | Mdns | Runs | Wkts | Ave,Summer 1974/75,,34,True,True,True,False,False
+1975-76,29,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1975/76,,28,True,False,False,False,False
+1976-77,38,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1976/77,,37,True,False,False,False,False
+1977-78,34,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1977/78,,33,True,False,False,False,False
+1978-79,33,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1978/79,,32,True,False,False,False,False
+1979-80,28,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1979/80,,27,True,False,False,False,False
+1980-81,36,15, | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1980/81,,35,True,False,False,False,False
+1981-82,38,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1981/82,,37,True,False,False,False,False
+1982-83,33,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1982/83,,32,True,False,False,False,False
+1983-84,32,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1983/84,,31,True,False,False,False,False
+1984-85,37,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1984/85,,36,True,False,False,False,False
+1985-86,48,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1985/86,,47,True,False,False,False,False
+1986-87,53,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1986/87,,52,True,False,False,False,False
+1987-88,64,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1987/88,,63,True,False,False,False,False
+1988-89,70,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1988/89,,69,True,False,False,False,False
+1989-90,75,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1989/90,,74,True,False,False,False,False
+1990-91,63,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1990/91,,62,True,False,False,False,False
+1991-92,64,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1991/92,,63,True,False,False,False,False
+1992-93,67,15, | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1992/93,,66,True,False,False,False,False
+1993-94,62,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1993/94,,61,True,False,False,False,False
+1994-95,64,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1994/95,,63,True,False,False,False,False
+1995-96,83,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1995/96,,82,True,False,False,False,False
+1996-97,65,15, | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1996/97,,64,True,False,False,False,False
+1997-98,72,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1997/98,,71,True,False,False,False,False
+1998-99,70,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1998/99,,69,True,False,False,False,False
+1999-00,85,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 1999/00,,84,True,False,False,False,False
+2000-01,82,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2000/01,,81,True,False,False,False,False
+2001-02,86,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2001/02,,85,True,False,False,False,False
+2002-03,96,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2002/03,,95,True,False,False,False,False
+2003-04,71,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2003/04,,70,True,False,False,False,False
+2004-05,86,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2004/05,,85,True,False,False,False,False
+2005-06,78,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2005/06,,77,True,False,False,False,False
+2006-07,71,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2006/07,,70,True,False,False,False,False
+2007-08,77,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2007/08,,76,True,False,False,False,False
+2008-09,77,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2008/09,,76,True,False,False,False,False
+2009-10,96,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2009/10,,95,True,False,False,False,False
+2010-11,106,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2010/11,,105,True,False,False,False,False
+2011-12,93,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2011/12,,92,True,False,False,False,False
+2012-13,105,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2012/13,,104,True,False,False,False,False
+2013-14,125,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2013/14,,124,True,False,False,False,False
+2014-15,129,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2014/15,,128,True,False,False,False,False
+2015-16,162,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2015/16,,161,True,False,False,False,False
+2016-17,131,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2016/17,,130,True,False,False,False,False
+2017-18,185,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2017/18,,184,True,False,False,False,False
+2018-19,166,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2018/19,,165,True,False,False,False,False
+2019-20,148,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2019/20,,147,True,False,False,False,False
+2020-21,131,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2020/21,,130,True,False,False,False,False
+2021-22,140,16, |  | PLAYER | MAT | INN | NO | 100S | 50S | 0S | 4S | 6S | MINS | HS | RUNS | AVE. | STR.,Summer 2021/22,,139,True,False,False,False,False

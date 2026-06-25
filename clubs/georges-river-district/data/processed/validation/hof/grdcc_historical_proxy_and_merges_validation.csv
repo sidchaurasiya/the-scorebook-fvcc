@@ -1,0 +1,12 @@
+check,validation_status,details
+bowling_examples_proxy,pass,"{'D Morton': ['20*', '8*'], 'D Murden': ['10*'], 'D Warburton': ['13*'], 'D Winspear': ['15*']}"
+bowling_proxy_numeric_sort,pass,rows=190
+bowling_no_proxy_blank,pass,Unsupported historical rows are blank.
+harry_412_proxy,pass,412*
+footnote_preserved,pass,Footnote wording and styling remain.
+alan_cox_merged,pass,rows=1
+alan_ferguson_merged,pass,rows=1
+overlap_not_merged,pass,incorrect=0
+merge_decisions_audited,pass,candidates=120
+no_raw_source_changes,pass,
+fvcc_unchanged,pass,

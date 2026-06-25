@@ -1,0 +1,7 @@
+section,link_type,label,target_url_or_query,opens_new_tab,expected_source_bucket,validated_source_bucket,annual_report_override_applies,validation_status,notes
+Hall of Fame,season,Summer 1971/72,./?page=season-overview&season=Summer%201971%2F72,yes,excel_era,excel_era,no,PASS,Source bucket is enforced by the existing GRDCC aggregate loader boundary.
+Hall of Fame,player,Max Allen,./?page=player-profile&player=Max%20Allen,yes,excel_era,excel_era,no,PASS,Player Profile reads the same final source-priority aggregate tables.
+Hall of Fame,season,Summer 1972/73,./?page=season-overview&season=Summer%201972%2F73,yes,playcricket_era,playcricket_era,no,PASS,Source bucket is enforced by the existing GRDCC aggregate loader boundary.
+Hall of Fame,player,Peter Huthnance,./?page=player-profile&player=Peter%20Huthnance,yes,playcricket_era,playcricket_era,no,PASS,Player Profile reads the same final source-priority aggregate tables.
+All-Time Leaders,featured_record,Harry Milburn,./?page=player-profile&player=Harry%20Milburn,yes,annual_report_override,annual_report_override,yes,PASS,Expected authoritative value 10788.
+All-Time Leaders,featured_record,Gordon Leslie,./?page=player-profile&player=Gordon%20Leslie,yes,annual_report_override,annual_report_override,yes,PASS,Expected authoritative value 707.

@@ -1,0 +1,433 @@
+season,grade_or_team,match_rows,batting_rows,bowling_rows,fielding_rows,included_before,included_after,exclusion_reason,validation_status,notes
+Summer 2025/26,Georges River Sharks - Chappelow Cup,16,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,Georges River Stingrays - Chappelow Cup,13,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GR Legends - O65s Regionals,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GR Vintage - O60s Regionals,2,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC Classics - Classics FOXS,9,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC Masters - Masters OWLS,9,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC Vintage - Vintage,9,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,Frank Gray Shield - Frank Gray Shield (U24's),6,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,Georges River 1st Grade L/O - First Grade Limited Overs,5,13,13,13,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC 1st Grade - First Grade (The RB Clark Cup),12,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC 2nd Grade - Second Grade (The SJ Mayne Trophy),10,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC 3rd Grade - Third Grade (The JB Hollander Cup),12,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC 4th Grade - Fourth Grade (The Harry Culbert Trophy),9,37,37,37,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2025/26,GRDCC 5th Grade - Fifth Grade (The Tim Creer Cup),15,43,43,43,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,Georges River DCC - Metropolitan Cup,12,33,33,33,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC - Chappelow Cup,16,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,Georges River District Cricket Club - NSW Community Cup 2024/25,2,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC Vintage - O60s - Thomas-Latto Trophy,1,14,14,14,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC Classics - Classics FOXS,9,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC Vintage - Vintage,11,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,Frank Gray Shield - Frank Gray Shield (U24's),4,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,Georges River 1st Grade L/O - First Grade Limited Overs,3,0,0,0,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC 1st Grade - First Grade (The RB Clark Cup),10,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC 2nd Grade - Second Grade (The SJ Mayne Trophy),14,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC 3rd Grade - Third Grade (The JB Hollander Cup),10,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC 4th Grade - Fourth Grade (The Harry Culbert Trophy),10,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2024/25,GRDCC 5th Grade - Fifth Grade (The Tim Creer Cup),18,14,14,14,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,Georges River DCC - Metropolitan Cup,13,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC - Chappelow Cup,17,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,Georges River District Cricket Club - NSW Community Cup 2023/24,1,11,11,11,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC Prime - Regional O55s,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC Vintage - Regional O65s,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC Vintage - Regional O60s,1,13,13,13,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC Classics - Classics - OWLS,9,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC Vintage - Vintage,9,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,Frank Gray Shield - Frank Gray Shield (U24's),3,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,Georges River 1st Grade L/O - First Grade Limited Overs,7,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC 1st Grade - First Grade (The RB Clark Cup),15,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC 2nd Grade - Second Grade (The SJ Mayne Trophy),15,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC 3rd Grade - Third Grade (The JB Hollander Cup),12,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC 4th Grade - Fourth Grade (The Harry Culbert Trophy),12,31,31,31,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2023/24,GRDCC 5th Grade - Fifth Grade (The Tim Creer Cup),17,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC Prime - Regional - Mens O55s - Southern Challenge,1,11,11,11,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC Vintage - Regionals - Mens O60s,1,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,T/ L - Regionals - Mens O60s - Thomas-Latto Trophy,1,11,11,11,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC Classics - Classics,11,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC Masters - Masters,10,14,14,14,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC Vintage - Vintage,9,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC 1st Grade - First Grade (The RB Clark Cup),11,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC 2nd Grade - Second Grade (The SJ Mayne Trophy),13,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC 3rd Grade - Third Grade (The JB Hollander Cup),10,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC 4th Grade - Fourth Grade (The Harry Culbert Trophy),10,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC 5th Grade - Fifth Grade (The Tim Creer Cup),18,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2022/23,GRDCC FGS - Frank Gray Shield (Thunder Conference),4,12,12,12,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,NSW O60s Regional - NSW O60s Regional,6,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Sydney Classics Over 50s - Sydney Classics Over 50s,9,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Sydney Masters Over 40's - Sydney Masters Over 40's,9,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Sydney Vintage (Over 60's) Competition - Sydney Vintage (Over 60's) Competition,9,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Metropolitan Cup - Metropolitan Cup,16,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Fifth Grade - Fifth Grade,15,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,First Grade - First Grade,13,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Fourth Grade - Fourth Grade,13,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Frank Gray Shield - Frank Gray Shield,6,13,13,13,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Second Grade - Second Grade,14,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2021/22,Third Grade - Third Grade,13,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Sydney Classics Over 50s - Sydney Classics Over 50s,9,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Sydney Masters Over 40's - Sydney Masters Over 40's,10,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Sydney Vintage (Over 60's) Competition - Sydney Vintage (Over 60's) Competition,9,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Metropolitan Cup - Metropolitan Cup,14,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Fifth Grade - Fifth Grade,16,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,First Grade - First Grade,13,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Fourth Grade - Fourth Grade,14,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Frank Gray Shield - Frank Gray Shield,6,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Second Grade - Second Grade,13,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2020/21,Third Grade - Third Grade,13,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Sydney Classics Over 50s - Sydney Classics Over 50s,11,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Sydney Masters Over 40's - Sydney Masters Over 40's,11,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Sydney Masters Over 40's - Sydney Masters Over 40's,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Sydney Vintage (Over 60's) Competition - Sydney Vintage (Over 60's) Competition,8,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Metropolitan Cup - Metropolitan Cup,15,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Fifth Grade - Fifth Grade,25,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,First Grade - First Grade,14,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Fourth Grade - Fourth Grade,14,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Frank Gray Shield - Frank Gray Shield,9,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Second Grade - Second Grade,14,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2019/20,Third Grade - Third Grade,14,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Sydney Classics Over 50s - Sydney Classics Over 50s,11,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Sydney Masters Over 40's - Sydney Masters Over 40's,11,31,31,31,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Sydney Vintage (Over 60's) Competition - Sydney Vintage (Over 60's) Competition,6,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Metropolitan Cup - Metropolitan Cup,16,58,58,58,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Metropolitan Cup - Metropolitan Cup,16,62,62,62,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,First Grade - First Grade,14,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Fourth Grade - Fourth Grade,13,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Frank Gray Shield - Frank Gray Shield,9,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Second Grade - Second Grade,15,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2018/19,Third Grade - Third Grade,15,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Sydney Classics Over 50s - Sydney Classics Over 50s,11,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Sydney Masters Over 40's - Sydney Masters Over 40's,11,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Sydney Vintage (Over 60's) Competition - Sydney Vintage (Over 60's) Competition,3,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Chappelow Cup - Chappelow Cup,23,36,36,36,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Metropolitan Cup - Metropolitan Cup,17,44,44,44,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Tim Creer Cup A Division - Tim Creer Cup A Division,22,80,80,80,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,First Grade - First Grade,14,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Fourth Grade - Fourth Grade,16,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Frank Gray Shield - Frank Gray Shield,7,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Second Grade - Second Grade,14,38,38,38,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2017/18,Third Grade - Third Grade,16,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Sydney Classics Over 50s - Sydney Classics Over 50s,11,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Sydney Masters Over 40's - Sydney Masters Over 40's,11,36,36,36,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Metropolitan Cup - Metropolitan Cup,15,35,35,35,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Sportswave T20 Cup - Sportswave T20 Cup,5,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Tim Creer Cup A Division - Tim Creer Cup A Division,22,34,34,34,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,First Grade - First Grade,15,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Fourth Grade - Fourth Grade,15,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Frank Gray Shield - Frank Gray Shield,9,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Second Grade - Second Grade,13,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2016/17,Third Grade - Third Grade,16,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Sydney Classics Over 50s - Sydney Classics Over 50s,11,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Sydney Masters Over 40's - Sydney Masters Over 40's,11,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Metropolitan Cup - Metropolitan Cup,15,40,40,40,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Tim Creer Cup A Division - Tim Creer Cup A Division,22,78,78,78,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Tim Creer Cup A Division - Tim Creer Cup A Division,22,72,72,72,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,First Grade - First Grade,15,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Fourth Grade - Fourth Grade,14,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Frank Gray Shield - Frank Gray Shield,9,14,14,14,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Second Grade - Second Grade,15,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2015/16,Third Grade - Third Grade,14,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Sydney Classics Over 50s - Sydney Classics Over 50s,11,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Sydney Masters Over 40's - Sydney Masters Over 40's,11,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Tim Creer Cup A Division - Tim Creer Cup A Division,25,45,45,45,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Tim Creer Cup A Division - Tim Creer Cup A Division,23,50,50,50,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,First Grade - First Grade,15,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Fourth Grade - Fourth Grade,15,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Frank Gray Shield - Frank Gray Shield,10,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Second Grade - Second Grade,15,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2014/15,Third Grade - Third Grade,15,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Sydney Masters Over 40's - Sydney Masters Over 40's,11,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Tim Creer Cup A Division - Tim Creer Cup A Division,22,60,60,60,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Tim Creer Cup A Division - Tim Creer Cup A Division,23,51,51,51,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,First Grade - First Grade,14,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Fourth Grade - Fourth Grade,17,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Frank Gray Shield - Frank Gray Shield,10,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Second Grade - Second Grade,14,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2013/14,Third Grade - Third Grade,14,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,Tim Creer Cup A Division - Tim Creer Cup A Division,22,68,68,68,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,Tim Creer Cup A Division - Tim Creer Cup A Division,22,51,51,51,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,First Grade - First Grade,14,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,Fourth Grade - Fourth Grade,17,36,36,36,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,Frank Gray Shield - Frank Gray Shield,7,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,Second Grade - Second Grade,14,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2012/13,Third Grade - Third Grade,15,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,Tim Creer Cup A Division - Tim Creer Cup A Division,23,46,46,46,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,Tim Creer Cup A Division - Tim Creer Cup A Division,25,51,51,51,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,First Grade - First Grade,14,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,Fourth Grade - Fourth Grade,14,46,46,46,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,Frank Gray Shield - Frank Gray Shield,7,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,Second Grade - Second Grade,14,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2011/12,Third Grade - Third Grade,14,39,39,39,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,Tim Creer Cup A Division - Tim Creer Cup A Division,23,57,57,57,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,Tim Creer Cup A Division - Tim Creer Cup A Division,22,54,54,54,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,First Grade - First Grade,14,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,Fourth Grade - Fourth Grade,14,45,45,45,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,Frank Gray Shield - Frank Gray Shield,7,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,Second Grade - Second Grade,14,38,38,38,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2010/11,Third Grade - Third Grade,14,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Metropolitan Cup - Metropolitan Cup,15,42,42,42,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Tim Creer Cup A Division - Tim Creer Cup A Division,22,43,43,43,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,First Grade - First Grade,13,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Fourth Grade - Fourth Grade,14,35,35,35,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Frank Gray Shield - Frank Gray Shield,7,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Second Grade - Second Grade,13,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Third Grade - Third Grade,15,35,35,35,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2009/10,Tim Creer Cup - Tim Creer Cup,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2008/09,First Grade - First Grade,13,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2008/09,Fourth Grade - Fourth Grade,15,34,34,34,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2008/09,Frank Gray Shield - Frank Gray Shield,7,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2008/09,Second Grade - Second Grade,14,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2008/09,Third Grade - Third Grade,16,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2008/09,Tim Creer Cup - Tim Creer Cup,21,37,37,37,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2007/08,1st Grade - First Grade,13,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2007/08,2nd Grade - Second Grade,13,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2007/08,3rd Grade - Third Grade,13,31,31,31,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2007/08,4th Grade - Fourth Grade,15,36,36,36,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2007/08,Frank Gray Shield (U/24's) - Frank Gray Shield,9,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2007/08,Tim Creer Cup - 5th Grade - Tim Creer Cup,23,43,43,43,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2006/07,1st Grade - First Grade,13,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2006/07,2nd Grade - Second Grade,13,33,33,33,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2006/07,3rd Grade - Third Grade,13,31,31,31,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2006/07,4th Grade - Fourth Grade,13,42,42,42,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2006/07,Frank Gray Shield (U/24's) - Frank Gray Shield,9,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2005/06,1st Grade - First Grade,13,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2005/06,2nd Grade - Second Grade,13,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2005/06,3rd Grade - Third Grade,13,35,35,35,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2005/06,4th Grade - Fourth Grade,13,47,47,47,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2005/06,Club Championship - CLUB CHAMPIONSHIP,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2005/06,Under 24's - Frank Gray Shield,7,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2004/05,1st Grade - First Grade,13,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2004/05,2nd Grade - Second Grade,13,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2004/05,3rd Grade - Third Grade,13,36,36,36,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2004/05,4th Grade - Fourth Grade,13,39,39,39,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2004/05,5th Grade - Tim Creer Cup,14,43,43,43,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2004/05,Under 24's - Frank Gray Shield,7,15,15,15,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,Met Cup Navy - Metropolitan Shield,13,0,0,0,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,Met Cup Royal - Metropolitan Shield,13,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,First Grade - First Grade,13,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,Fourth Grade - Fourth Grade,13,37,37,37,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,Frank Gray Shield - Frank Gray Shield,8,13,13,13,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,Second Grade - Second Grade,13,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2003/04,Third Grade - Third Grade,13,0,0,0,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,Metropolitan Plate - Metropolitan Plate,0,11,11,11,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,Metropolitan Shield - Metropolitan Shield,0,45,45,45,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,First Grade - First Grade,13,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,Fourth Grade - Fourth Grade,13,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,Frank Gray Shield - Frank Gray Shield,7,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,Second Grade - Second Grade,13,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2002/03,Third Grade - Third Grade,13,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2001/02,First Grade - First Grade,0,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2001/02,Fourth Grade - Fourth Grade,0,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2001/02,Frank Gray Shield - Frank Gray Shield,0,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2001/02,Second Grade - Second Grade,0,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2001/02,Third Grade - Third Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2000/01,First Grade - First Grade,0,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2000/01,Fourth Grade - Fourth Grade,0,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2000/01,Frank Gray Shield - Frank Gray Shield,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 2000/01,Second Grade - Second Grade,0,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 2000/01,Third Grade - Third Grade,0,33,33,33,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1999/00,First Grade - First Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1999/00,Fourth Grade - Fourth Grade,0,35,35,35,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1999/00,Frank Gray Shield - Frank Gray Shield,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1999/00,Second Grade - Second Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1999/00,Third Grade - Third Grade,0,29,29,29,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,First Grade - First Grade,0,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Fourth Grade - Fourth Grade,0,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Second Grade - Second Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1997/98,Third Grade - Third Grade,0,31,31,31,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,First Grade - First Grade,0,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Fourth Grade - Fourth Grade,0,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Second Grade - Second Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Third Grade - Third Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1996/97,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1995/96,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1995/96,First Grade - First Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1995/96,Fourth Grade - Fourth Grade,0,31,31,31,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1995/96,Second Grade - Second Grade,0,39,39,39,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1995/96,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1995/96,Third Grade - Third Grade,0,38,38,38,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,First Grade - First Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Fourth Grade - Fourth Grade,0,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Second Grade - Second Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1994/95,Third Grade - Third Grade,0,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,First Grade - First Grade,0,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Fourth Grade - Fourth Grade,0,30,30,30,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Second Grade - Second Grade,0,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Third Grade - Third Grade,0,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1993/94,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,First Grade - First Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Fourth Grade - Fourth Grade,0,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Second Grade - Second Grade,0,28,28,28,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1992/93,Third Grade - Third Grade,0,36,36,36,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Fourth Grade - Fourth Grade,0,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Second Grade - Second Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Third Grade - Third Grade,0,35,35,35,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1991/92,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,First Grade - First Grade,0,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Fourth Grade - Fourth Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Second Grade - Second Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Third Grade - Third Grade,0,32,32,32,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1990/91,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,First Grade - First Grade,0,18,18,18,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Fourth Grade - Fourth Grade,0,34,34,34,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Second Grade - Second Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1989/90,Third Grade - Third Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,First Grade - First Grade,0,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Fourth Grade - Fourth Grade,0,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Second Grade - Second Grade,0,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1988/89,Third Grade - Third Grade,0,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Fourth Grade - Fourth Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Second Grade - Second Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Third Grade - Third Grade,0,27,27,27,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1987/88,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,First Grade - First Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,Second Grade - Second Grade,0,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1986/87,Third Grade - Third Grade,0,34,34,34,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,First Grade - First Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,Second Grade - Second Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1985/86,Third Grade - Third Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1984/85,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1984/85,First Grade - First Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1984/85,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1984/85,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1984/85,Second Grade - Second Grade,0,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1984/85,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1983/84,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1983/84,First Grade - First Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1983/84,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1983/84,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1983/84,Second Grade - Second Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1983/84,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1982/83,First Grade - First Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1982/83,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1982/83,Second Grade - Second Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1982/83,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1981/82,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1981/82,First Grade - First Grade,0,21,21,21,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1981/82,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1981/82,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1981/82,Second Grade - Second Grade,0,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1981/82,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1980/81,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1980/81,First Grade - First Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1980/81,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1980/81,Second Grade - Second Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1980/81,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1980/81,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1979/80,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1979/80,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1979/80,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1979/80,Second Grade - Second Grade,0,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1979/80,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1979/80,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1978/79,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1978/79,First Grade - First Grade,0,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1978/79,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1978/79,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1978/79,Second Grade - Second Grade,0,22,22,22,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1978/79,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1977/78,First Grade - First Grade,0,20,20,20,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1977/78,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1977/78,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1977/78,Second Grade - Second Grade,0,19,19,19,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1977/78,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1976/77,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1976/77,First Grade - First Grade,0,23,23,23,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1976/77,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1976/77,Second Grade - Second Grade,0,26,26,26,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1976/77,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1976/77,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1975/76,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1975/76,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1975/76,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1975/76,Second Grade - Second Grade,0,16,16,16,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1975/76,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1975/76,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1974/75,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1974/75,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1974/75,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1974/75,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1974/75,Second Grade - Second Grade,0,24,24,24,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1974/75,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1973/74,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1973/74,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1973/74,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1973/74,Second Grade - Second Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1973/74,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1973/74,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1972/73,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1972/73,First Grade - First Grade,0,17,17,17,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1972/73,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1972/73,Second Grade - Second Grade,0,25,25,25,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1972/73,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1972/73,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1971/72,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1971/72,First Grade - First Grade,0,1,1,1,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1971/72,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1971/72,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1971/72,Second Grade - Second Grade,0,1,1,1,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1971/72,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1970/71,First Grade - First Grade,0,2,2,2,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1970/71,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1970/71,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1969/70,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1969/70,First Grade - First Grade,0,1,1,1,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1969/70,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1969/70,Second Grade - Second Grade,0,1,1,1,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1969/70,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1969/70,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1968/69,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1968/69,First Grade - First Grade,0,1,1,1,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1968/69,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1968/69,Second Grade - Second Grade,0,1,1,1,yes,yes,,pass,Display exclusion only; source rows remain unchanged.
+Summer 1968/69,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1968/69,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1967/68,Fifth Grade - Fifth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1967/68,First Grade - First Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1967/68,Fourth Grade - Fourth Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1967/68,Second Grade - Second Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.
+Summer 1967/68,Third Grade - Third Grade,0,0,0,0,yes,no,"no matches, player stats, or meaningful rows for selected season",pass,Display exclusion only; source rows remain unchanged.

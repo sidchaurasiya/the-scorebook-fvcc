@@ -1,0 +1,24 @@
+metric,value
+final_source_rule,Excel through Summer 1971/72; PlayCricket from Summer 1972/73
+excel_batting_rows_kept,1586
+excel_bowling_rows_kept,344
+playcricket_batting_rows_kept,7735
+playcricket_bowling_rows_kept,7681
+playcricket_fielding_rows_kept,7746
+excel_seasons,39
+playcricket_seasons,53
+total_app_facing_batting_seasons,92
+total_app_facing_bowling_seasons,77
+total_app_facing_fielding_seasons,57
+summer_1971_72_batting_rows,40
+summer_1971_72_batting_source,excel
+summer_1971_72_bowling_rows,0
+summer_1971_72_bowling_source,none
+summer_1972_73_batting_rows,42
+summer_1972_73_batting_source,playcricket
+summer_1972_73_bowling_rows,42
+summer_1972_73_bowling_source,playcricket
+duplicate_source_conflicts,0
+odd_stat_findings,1
+preview_blocking_odd_stats,0
+validation_failures,0

@@ -162,6 +162,7 @@ def main() -> int:
     payloads = load_match_payloads(raw_dir, scorecard_paths)
     frames = parse_payloads(payloads)
     add_source_team_ids(frames["all_matches"], source_team_map)
+    add_source_season_context(frames["all_matches"], args.season_id, team_metadata)
     for name, frame in frames.items():
         frame.to_csv(processed_dir / f"{name}.csv", index=False)
 
@@ -259,6 +260,23 @@ def add_source_team_ids(matches: pd.DataFrame, source_team_map: dict[str, list[s
     matches["source_team_ids"] = matches["match_id"].astype(str).map(
         lambda match_id: " | ".join(source_team_map.get(match_id, []))
     )
+
+
+def add_source_season_context(
+    matches: pd.DataFrame,
+    season_id: str,
+    team_metadata: dict[str, dict[str, str]],
+) -> None:
+    if matches.empty:
+        matches["season_id"] = []
+        matches["season"] = []
+        return
+    season_name = next(
+        (str(metadata.get("season") or "").strip() for metadata in team_metadata.values() if metadata.get("season")),
+        "",
+    )
+    matches["season_id"] = str(season_id)
+    matches["season"] = season_name
 
 
 def build_refresh_summary(

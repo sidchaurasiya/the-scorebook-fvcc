@@ -1,0 +1,34 @@
+metric,value
+rows_scanned:clubs/georges-river-district/data/processed/all_seasons_batting.csv,7789
+rows_scanned:clubs/georges-river-district/data/processed/all_seasons_bowling.csv,7789
+rows_scanned:clubs/georges-river-district/data/processed/all_seasons_fielding.csv,7789
+rows_scanned:clubs/georges-river-district/data/processed/all_seasons_matches.csv,0
+severity:high,295
+severity:medium,1428
+issue_code:duplicate_batting_player_season_grade,472
+issue_code:duplicate_bowling_player_season_grade,352
+issue_code:batting_strike_rate_gt_300,335
+issue_code:duplicate_fielding_player_season_grade,202
+issue_code:invalid_player_name,129
+issue_code:app_facing_primary_bowling_excluded,57
+issue_code:bowling_average_gt_100,41
+issue_code:bbi_wickets_gt_total_wickets,32
+issue_code:balls_lt_wickets_x2,20
+issue_code:wickets_gt_balls,16
+issue_code:wickets_with_zero_overs,16
+issue_code:same_name_season_multiple_canonical_ids,13
+issue_code:strike_rate_lt_3,7
+issue_code:bowling_average_lt_1,5
+issue_code:economy_lt_0_5,5
+issue_code:runs_lte_wickets_high_workload,4
+issue_code:high_score_gt_runs,3
+issue_code:bbi_runs_gt_total_runs,3
+issue_code:batting_average_gt_250,2
+issue_code:maidens_gt_overs,2
+issue_code:strike_rate_gt_300,2
+issue_code:wickets_ge_50_runs_le_10,2
+issue_code:wickets_gt_80,2
+issue_code:runs_with_zero_innings,1
+app_facing_dangerous_records,57
+nathan_percy_status,raw rows=2 raw_wickets=101 app_facing_after_filter=11
+john_young_status,rows=2 app_facing_wickets=80

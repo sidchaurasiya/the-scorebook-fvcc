@@ -1,0 +1,10 @@
+metric_group,season_category,metric,default_source,fallback_source,rule,caveat
+batting,excel_only,aggregate batting,excel,none,Use clean Excel for historical seasons absent from PlayCricket.,Only clean or manually approved rows may feed records.
+batting,playcricket_only,aggregate batting,playcricket,none,Use sane PlayCricket / PlayHQ data.,High-severity anomalies remain excluded.
+batting,overlap,aggregate batting,playcricket,excel,Use sane PlayCricket by default; use Excel when the PlayCricket row is a high-severity anomaly.,Material core-metric differences require review; never sum both sources for one player-season.
+batting,overlap,core metrics,manual_review,playcricket,"Review material differences in runs, innings, not outs, high score, average, 50s, 100s, or ducks.",PlayCricket remains the default when both rows are sane and close.
+bowling,excel_only,aggregate bowling,excel,none,Use clean Excel for historical bowling seasons absent from PlayCricket.,"Excel BBI, 5WI, and 10WM remain unavailable unless explicitly verified."
+bowling,playcricket_only,aggregate bowling,playcricket,none,"Use sane PlayCricket / PlayHQ data, including seasons after Excel bowling coverage ends.",Exclude high-severity anomalies unless manually approved.
+bowling,overlap,aggregate bowling,manual_review,none,Do not automatically merge overlap rows; there are currently no matched bowling player-seasons.,Choose one verified source per player-season and never sum sources.
+fielding,all,fielding aggregates,playcricket,none,Use PlayCricket / PlayHQ only.,Historical Excel does not provide an app-facing fielding source.
+bbb_only,all,delivery-level metrics,verified_ball_by_ball_only,none,Use verified ball-by-ball data only.,Never derive BBB-only metrics from Excel or aggregate PlayCricket files.

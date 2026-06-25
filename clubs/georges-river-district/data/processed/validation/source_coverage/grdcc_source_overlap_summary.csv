@@ -1,0 +1,16 @@
+metric,value
+total_seasons,93
+excel_only_seasons,36
+playcricket_only_seasons,7
+both_source_seasons,50
+excel_batting_only_seasons,36
+excel_bowling_only_seasons,30
+playcricket_batting_only_seasons,7
+playcricket_bowling_only_seasons,55
+seasons_with_batting_overlap,50
+seasons_with_bowling_overlap,2
+seasons_with_playcricket_fielding_only,7
+seasons_needing_manual_source_priority_review,50
+players_excel_only,694
+players_playcricket_only,464
+players_in_both_sources,1097

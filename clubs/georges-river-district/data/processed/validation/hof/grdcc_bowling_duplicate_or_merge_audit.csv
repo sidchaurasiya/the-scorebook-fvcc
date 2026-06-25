@@ -1,0 +1,7 @@
+player_name,normalized_player_name,derived_matches_before,derived_wickets_before,derived_matches_after,derived_wickets_after,suspected_issue,fix_applied,validation_status,notes
+Rohan Clarke,rohan clarke,14,0,14,0,duplicate_merge_or_supplement_leak,yes,PASS,Summer 1987/88; 2 source rows
+Rohan Clarke,rohan clarke,14,0,14,0,duplicate_merge_or_supplement_leak,yes,PASS,Summer 1986/87; 2 source rows
+Rohan Clarke,rohan clarke,12,17,12,17,duplicate_merge_or_supplement_leak,yes,PASS,Summer 1985/86; 2 source rows
+Brian White,brian white,13,10,13,10,career_override_with_incomplete_overs,review,PASS,Summer 1978/79; 2 source rows
+Brian White,brian white,14,23,14,23,career_override_with_incomplete_overs,review,PASS,Summer 1976/77; 2 source rows
+Brian White,brian white,13,25,13,25,career_override_with_incomplete_overs,review,PASS,Summer 1972/73; 2 source rows

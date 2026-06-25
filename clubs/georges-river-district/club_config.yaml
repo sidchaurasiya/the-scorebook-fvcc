@@ -1,18 +1,28 @@
 club:
   club_id: georges-river-district
   name: Georges River Cricket Club
-  short_name: GRCC
-  display_name: Georges River Cricket Club
+  short_name: GRDCC
+  display_name: Georges River District Cricket Club
   app_name: The Scorebook
   playcricket_club_id: a115d93f-87d8-eb11-a7ad-2818780da0cc
+  established_year: 1929
   default_page: hall-of-fame
 
 branding:
-  primary_colour: "#0F3B66"
-  secondary_colour: "#F0B429"
-  background_colour: "#F6F8FB"
-  accent_colour: "#2F80C0"
-  logo_path: null
+  primary_colour: "#0B3F9F"
+  primary_dark_colour: "#082A66"
+  secondary_colour: "#79C8EE"
+  accent_colour: "#D7193F"
+  background_colour: "#F3F9FD"
+  surface_colour: "#FFFFFF"
+  text_colour: "#061A3D"
+  muted_text_colour: "#66758D"
+  border_colour: "#D8E8F5"
+  positive_colour: "#1B8A5A"
+  negative_colour: "#B23A48"
+  warning_colour: "#D6A732"
+  logo_path: clubs/georges-river-district/assets/logo.png
+  logo_scale: 1.12
 
 contact:
   creators:
