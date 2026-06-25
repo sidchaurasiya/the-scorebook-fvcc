@@ -3575,10 +3575,10 @@ def inject_theme() -> None:
         }
 
         .profile-badge {
-            background: linear-gradient(135deg, rgba(109,77,255,0.12), rgba(59,130,246,0.12));
-            border: 1px solid rgba(109, 77, 255, 0.18);
+            background: var(--club-secondary-soft, #eef4f8);
+            border: 1px solid rgba(var(--club-secondary-rgb, 40, 72, 95), 0.22);
             border-radius: 999px;
-            color: #4b37d8;
+            color: var(--club-link, #28485F);
             font-size: 0.76rem;
             font-weight: 900;
             padding: 8px 11px;
@@ -4231,15 +4231,15 @@ def inject_theme() -> None:
         }
 
         .recent-form-chip.bat {
-            background: #F0EDFF;
-            border-color: #ded8ff;
-            color: #5b3df5;
+            background: var(--club-secondary-soft, #eef4f8);
+            border-color: rgba(var(--club-secondary-rgb, 40, 72, 95), 0.22);
+            color: var(--club-link, #28485F);
         }
 
         .recent-form-chip.bowl {
-            background: #eef8f6;
-            border-color: #cdebe4;
-            color: #116b63;
+            background: var(--club-secondary-soft, #eef4f8);
+            border-color: rgba(var(--club-secondary-rgb, 40, 72, 95), 0.22);
+            color: var(--club-link, #28485F);
         }
 
         .recent-form-chip.hot {
@@ -5136,6 +5136,37 @@ def inject_theme() -> None:
             margin-top: 12px;
         }
 
+        .leader-highlight-card {
+            min-height: 174px;
+        }
+
+        .leader-highlight-count {
+            color: var(--ink);
+            font-size: 0.92rem;
+            font-weight: 760;
+            margin-top: 14px;
+        }
+
+        .leader-highlight-details {
+            display: grid;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .leader-highlight-details a,
+        .leader-highlight-more {
+            color: var(--club-primary);
+            font-size: 0.82rem;
+            font-weight: 850;
+            line-height: 1.24;
+            text-decoration: none;
+        }
+
+        .leader-highlight-details a:hover {
+            color: var(--club-link-hover);
+            text-decoration: underline;
+        }
+
         .milestone-group {
             border-bottom: 1px solid #eef0f6;
             padding: 14px 0;
@@ -5535,7 +5566,11 @@ def inject_theme() -> None:
         .milestone-member-list {
             display: grid;
             gap: 9px;
+            max-height: 259px;
+            overflow-y: auto;
             padding: 14px 17px 17px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
         }
 
         .milestone-member-row {
@@ -5543,6 +5578,7 @@ def inject_theme() -> None:
             display: flex;
             gap: 8px;
             justify-content: space-between;
+            min-height: 38px;
         }
 
         .milestone-member-row span {
@@ -5553,7 +5589,7 @@ def inject_theme() -> None:
         }
 
         .milestone-member-row strong {
-            color: #4b37d8;
+            color: var(--club-link, #28485F);
             flex: 0 0 auto;
             font-size: 0.86rem;
             font-weight: 950;
@@ -7084,6 +7120,14 @@ def inject_theme() -> None:
                 white-space: normal;
             }
 
+            .milestone-member-list {
+                max-height: 344px;
+            }
+
+            .milestone-member-row {
+                min-height: 55px;
+            }
+
             .milestone-group-rule {
                 white-space: normal;
             }
@@ -7948,7 +7992,6 @@ def active_club_theme_css() -> str:
         .best-season-primary,
         .premiership-player-row .performance-value,
         .milestone-away,
-        .milestone-progress-top span:not(.milestone-row-badge),
         .milestone-group-title,
         .player-v2-progress-card strong,
         .player-v2-progress-value,
@@ -7958,6 +8001,20 @@ def active_club_theme_css() -> str:
         .profile-phase-value,
         .season-v2-highlight-value {{
             color: var(--club-primary) !important;
+        }}
+
+        .profile-badge,
+        .player-v2-badge,
+        .recent-form-chip.bat,
+        .recent-form-chip.bowl {{
+            background: var(--club-secondary-soft) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.24) !important;
+            color: var(--club-link) !important;
+        }}
+
+        .milestone-progress-top span:not(.milestone-row-badge),
+        .milestone-watch-top span {{
+            color: var(--club-muted) !important;
         }}
 
         .milestone-segment.active,
