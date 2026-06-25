@@ -7,8 +7,8 @@ Repository:
 - Same GitHub repository as FVCC
 
 Branch:
-- `client/georges-river-district-build`
-- If Streamlit Cloud is later confirmed to deploy from `main`, switch to the deployed branch only after the same GRDCC/FVCC commits land there.
+- `main`
+- `client/georges-river-district-build` is also valid if branch-specific deployment is preferred, but `main` now contains the synced tested state.
 
 Main file:
 - `app.py`
@@ -34,6 +34,7 @@ Deployment checklist:
 1. Create a new Streamlit Cloud app
 2. Select the existing GitHub repository
 3. Select branch `client/georges-river-district-build`
+   - or select `main` to mirror the now-synced FVCC production branch
 4. Set main file to `app.py`
 5. Add `CLUB_ID=georges-river-district`
 6. Add `SHOW_EXPERIMENTAL_MATCH_CENTRE_PAGES=false`
