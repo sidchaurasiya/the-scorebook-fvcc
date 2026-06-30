@@ -152,7 +152,8 @@ SHOW_PLAYER_PROFILE_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
-HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v4"
+HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v5"
+PLAYER_PROFILE_INDEX_VERSION = "grdcc-player-identity-v2"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -1165,8 +1166,8 @@ def load_public_playcricket_teams(
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_local_playcricket_seasons(club_id: str, _local_version: float) -> list[dict]:
-    _ = club_id
+def load_local_playcricket_seasons(club_id: str, local_version: float) -> list[dict]:
+    _ = (club_id, local_version)
     seasons_df = read_processed_table("seasons")
     if seasons_df.empty:
         return []
@@ -1185,8 +1186,8 @@ def load_local_playcricket_seasons(club_id: str, _local_version: float) -> list[
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_local_playcricket_teams(club_id: str, season_id: str, _local_version: float) -> list[dict]:
-    _ = club_id
+def load_local_playcricket_teams(club_id: str, season_id: str, local_version: float) -> list[dict]:
+    _ = (club_id, local_version)
     teams_df = read_processed_table("teams")
     if teams_df.empty:
         return []
@@ -1368,10 +1369,10 @@ def load_local_category_frame(
     category: str,
     season_id: str,
     team_id: str | None,
-    _local_version: float,
-    _identity_version: float | None = None,
+    local_version: float,
+    identity_version: float | None = None,
 ) -> pd.DataFrame:
-    _ = club_id
+    _ = (club_id, local_version, identity_version)
     frame = read_processed_table(f"all_seasons_{category}")
     if frame.empty:
         return frame
@@ -1776,9 +1777,10 @@ def all_available_match_centre_signature() -> tuple[tuple[str, float], ...]:
 
 @st.cache_data(show_spinner=False)
 def load_all_available_match_centre_sources(
-    _signature: tuple[tuple[str, float], ...],
-    _identity_version: float | None = None,
+    signature: tuple[tuple[str, float], ...],
+    identity_version: float | None = None,
 ) -> dict[str, pd.DataFrame]:
+    _ = (signature, identity_version)
     scope = all_available_match_centre_scope()
     if not scope.exists():
         return {"matches": pd.DataFrame(), "batting": pd.DataFrame(), "bowling": pd.DataFrame()}
@@ -1814,6 +1816,7 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
             render_season_round_empty_state()
             return
         st.markdown(season_round_cards_html(rows), unsafe_allow_html=True)
+        components.html(season_round_scroll_script_html(), height=0, scrolling=False)
 
 
 def render_season_round_empty_state(message: str = "Round-by-round scorecards are not available for this season yet.") -> None:
@@ -2064,10 +2067,34 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
             '</article>'
         )
     return (
+        '<div class="season-round-scroll-shell" data-season-round-scroll-shell="true">'
         '<div class="season-round-panel-strip" '
         'data-layout="horizontal-grade-panels" data-internal-folder-selector="false">'
-        f'{"".join(cards)}</div>'
+        f'{"".join(cards)}</div></div>'
     )
+
+
+def season_round_scroll_script_html() -> str:
+    return """
+    <script>
+    (() => {
+      const doc = window.parent && window.parent.document ? window.parent.document : document;
+      doc.querySelectorAll('[data-season-round-scroll-shell="true"]').forEach((shell) => {
+        if (shell.dataset.wheelBound === 'true') return;
+        shell.dataset.wheelBound = 'true';
+        const strip = shell.querySelector('.season-round-panel-strip');
+        if (!strip) return;
+        shell.addEventListener('wheel', (event) => {
+          const maxScroll = strip.scrollWidth - strip.clientWidth;
+          if (maxScroll <= 0 || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+          const before = strip.scrollLeft;
+          strip.scrollLeft = Math.max(0, Math.min(maxScroll, strip.scrollLeft + event.deltaY));
+          if (strip.scrollLeft !== before) event.preventDefault();
+        }, { passive: false });
+      });
+    })();
+    </script>
+    """
 
 
 def season_round_row_html(row: dict[str, object], show_grade_column: bool = False) -> str:
@@ -2838,10 +2865,11 @@ def render_player_dna_page() -> None:
 
 @st.cache_data(show_spinner=False)
 def load_player_dna_cached(
-    _local_version: float,
-    _identity_version: float | None,
-    _signature: tuple[tuple[str, float], ...],
+    local_version: float,
+    identity_version: float | None,
+    signature: tuple[tuple[str, float], ...],
 ) -> dict[str, object]:
+    _ = (local_version, identity_version, signature)
     return player_dna.load_player_dna_data(APP_ROOT)
 
 
@@ -3210,10 +3238,11 @@ def render_scorebook_lab_page() -> None:
 
 @st.cache_data(show_spinner=False)
 def load_scorebook_lab_cached(
-    _local_version: float,
-    _identity_version: float | None,
-    _signature: tuple[tuple[str, float], ...],
+    local_version: float,
+    identity_version: float | None,
+    signature: tuple[tuple[str, float], ...],
 ) -> dict[str, object]:
+    _ = (local_version, identity_version, signature)
     return scorebook_lab.load_scorebook_lab_data(APP_ROOT)
 
 
@@ -6183,7 +6212,7 @@ def build_all_time_player_table(
         if column in base:
             base[column] = pd.to_numeric(base[column], errors="coerce").fillna(0).astype(int)
 
-    return base.rename(
+    all_time = base.rename(
         columns={
             "player_name": "Player",
             "teams_grades": "Teams/Grades",
@@ -6219,6 +6248,154 @@ def build_all_time_player_table(
             "dismissals_display": "Dismissals",
         }
     )
+    return coalesce_grdcc_exact_name_nonoverlap_all_time(all_time)
+
+
+def coalesce_grdcc_exact_name_nonoverlap_all_time(all_time: pd.DataFrame) -> pd.DataFrame:
+    if all_time.empty or get_active_club_id() != "georges-river-district" or "Player" not in all_time:
+        return all_time
+    rows: list[pd.Series] = []
+    for _, group in all_time.groupby(all_time["Player"].map(player_name_match_key), sort=False, dropna=False):
+        if len(group) <= 1:
+            rows.extend(row for _, row in group.iterrows())
+            continue
+        components: list[list[int]] = []
+        component_seasons: list[set[int]] = []
+        for index, row in group.iterrows():
+            seasons = all_time_row_season_range(row)
+            placed = False
+            for pos, existing in enumerate(component_seasons):
+                if seasons and existing and seasons.isdisjoint(existing):
+                    components[pos].append(index)
+                    existing.update(seasons)
+                    placed = True
+                    break
+            if not placed:
+                components.append([index])
+                component_seasons.append(set(seasons))
+        for component in components:
+            subset = group.loc[component]
+            if len(subset) == 1:
+                rows.append(subset.iloc[0])
+            else:
+                rows.append(aggregate_grdcc_exact_name_component(subset))
+    if not rows:
+        return all_time
+    return pd.DataFrame(rows, columns=all_time.columns).reset_index(drop=True)
+
+
+def all_time_row_season_range(row: pd.Series) -> set[int]:
+    start = season_sort_value(row.get("Debut Season"))
+    end = season_sort_value(row.get("Latest Season"))
+    if start <= 0 and end <= 0:
+        return set()
+    if start <= 0:
+        start = end
+    if end <= 0:
+        end = start
+    lo, hi = sorted([int(start), int(end)])
+    return set(range(lo, hi + 1))
+
+
+def aggregate_grdcc_exact_name_component(component: pd.DataFrame) -> pd.Series:
+    output = component.iloc[0].copy()
+    player = safe_record_text(output.get("Player"), "Unknown player")
+    output["canonical_player_id"] = f"grdcc_exact_name_{make_player_slug(player)}"
+    output["player_key"] = output["canonical_player_id"]
+    output["Player"] = player
+    if "Teams/Grades" in component:
+        output["Teams/Grades"] = join_unique_csv(component["Teams/Grades"])
+    seasons = set()
+    for _, row in component.iterrows():
+        seasons.update(all_time_row_season_range(row))
+    if seasons:
+        output["Seasons Played"] = len(seasons)
+        output["Debut Season"] = season_label_from_sort(min(seasons))
+        output["Latest Season"] = season_label_from_sort(max(seasons))
+    elif "Seasons Played" in component:
+        output["Seasons Played"] = pd.to_numeric(component["Seasons Played"], errors="coerce").fillna(0).sum()
+
+    for column in [
+        "Matches",
+        "Innings",
+        "Runs",
+        "30s",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+        "Wickets",
+        "Balls Bowled",
+        "Maidens",
+        "3WI",
+        "5WI",
+        "10WM",
+        "Catches",
+        "Stumpings",
+        "Run Outs",
+        "Dismissals",
+        "Matches Proxy",
+        "Win Matches",
+        "Win Count",
+    ]:
+        if column in component:
+            output[column] = pd.to_numeric(component[column], errors="coerce").fillna(0).sum()
+    if "HS" in component:
+        output["HS"] = best_high_score_label(component["HS"])
+    if "BBI" in component:
+        output["BBI"] = best_bowling_figures_label(component["BBI"])
+
+    runs = pd.to_numeric(pd.Series([output.get("Runs")]), errors="coerce").iloc[0]
+    innings = pd.to_numeric(pd.Series([output.get("Innings")]), errors="coerce").iloc[0]
+    wickets = pd.to_numeric(pd.Series([output.get("Wickets")]), errors="coerce").iloc[0]
+    balls = pd.to_numeric(pd.Series([output.get("Balls Bowled")]), errors="coerce").iloc[0]
+    bowling_runs = pd.to_numeric(component.get("bowlingRuns", pd.Series(dtype="float64")), errors="coerce").fillna(0).sum()
+    if pd.notna(runs) and pd.notna(innings) and innings > 0 and "Bat Avg" in output:
+        output["Bat Avg"] = runs / innings
+    if pd.notna(wickets) and wickets > 0 and bowling_runs > 0 and "Bowl Avg" in output:
+        output["Bowl Avg"] = bowling_runs / wickets
+    if pd.notna(wickets) and wickets > 0 and pd.notna(balls) and balls > 0 and "Bowl SR" in output:
+        output["Bowl SR"] = balls / wickets
+    if "Matches Source" in output:
+        output["Matches Source"] = "historical_exact_name_nonoverlap_merge"
+    return output
+
+
+def season_label_from_sort(value: int) -> str:
+    if value <= 0:
+        return ""
+    return f"Summer {value}/{str(value + 1)[-2:]}"
+
+
+def best_high_score_label(values: pd.Series) -> str:
+    best_label = ""
+    best_score = -1
+    best_not_out = False
+    for value in values.dropna().astype(str):
+        score = parse_high_score_value(value)
+        if score[0] > best_score or (score[0] == best_score and score[1] and not best_not_out):
+            best_score, best_not_out, best_label = score[0], score[1], value
+    return best_label
+
+
+def parse_high_score_value(value: str) -> tuple[int, bool]:
+    match = re.search(r"\d+", value)
+    return (int(match.group(0)) if match else -1, "*" in value)
+
+
+def best_bowling_figures_label(values: pd.Series) -> str:
+    best_label = ""
+    best_wickets = -1
+    best_runs = 10**9
+    for value in values.dropna().astype(str):
+        match = re.search(r"(\d+)\s*[-/]\s*(\d+)", value)
+        if not match:
+            continue
+        wickets, runs = int(match.group(1)), int(match.group(2))
+        if wickets > best_wickets or (wickets == best_wickets and runs < best_runs):
+            best_wickets, best_runs, best_label = wickets, runs, value
+    return best_label
 
 
 
@@ -7647,10 +7824,54 @@ def canonical_app_opponent_label(value: object, fallback: str = "Unknown opposit
 
 def canonical_grdcc_profile_opponent(value: object) -> str:
     text = safe_record_text(value, "Unknown opponent")
+    key = re.sub(r"\s+", " ", text.casefold().replace("–", "-").replace("—", "-")).strip()
+    explicit_merges = {
+        "balmain south sydney 1st grade cricket club": "Balmain South Sydney Cricket Club",
+        "balmain south sydney 2nd grade cricket club": "Balmain South Sydney Cricket Club",
+        "balmain south sydney cricket club": "Balmain South Sydney Cricket Club",
+        "burwood briars 1st grade cricket club": "Burwood Briars Cricket Club",
+        "burwood briars 2nd grade cricket club": "Burwood Briars Cricket Club",
+        "burwood briars cricket club": "Burwood Briars Cricket Club",
+        "epping bulls 1st grade cricket club": "Epping Bulls Cricket Club",
+        "epping bulls 1st grade l/o cricket club": "Epping Bulls Cricket Club",
+        "epping bulls cricket club": "Epping Bulls Cricket Club",
+        "lane cove 1st grade cricket club": "Lane Cove Cricket Club",
+        "lane cove 2nd grade cricket club": "Lane Cove Cricket Club",
+        "lane cove cricket club": "Lane Cove Cricket Club",
+        "lindfield 1st grade cricket club": "Lindfield Cricket Club",
+        "lindfield 2nd grade cricket club": "Lindfield Cricket Club",
+        "lindfield cricket club": "Lindfield Cricket Club",
+        "mt pritchard southern districts 1st grade cricket club": "Mt Pritchard-Southern Districts Cricket Club",
+        "mt pritchard southern districts 2nd grade cricket club": "Mt Pritchard-Southern Districts Cricket Club",
+        "mt pritchard-southern districts cricket club": "Mt Pritchard-Southern Districts Cricket Club",
+        "north west sydney 1st grade cricket club": "North West Sydney Cricket Club",
+        "north west sydney 2nd grade cricket club": "North West Sydney Cricket Club",
+        "north west sydney cricket club": "North West Sydney Cricket Club",
+        "pennant hills 1st grade cricket club": "Pennant Hills Cricket Club",
+        "pennant hills 2nd grade cricket club": "Pennant Hills Cricket Club",
+        "pennant hills cricket club": "Pennant Hills Cricket Club",
+        "roseville 1st grade cricket club": "Roseville Cricket Club",
+        "roseville cricket club": "Roseville Cricket Club",
+        "strathfield 1st grade cricket club": "Strathfield Cricket Club",
+        "strathfield 2nd grade cricket club": "Strathfield Cricket Club",
+        "strathfield cricket club": "Strathfield Cricket Club",
+    }
+    canonical = explicit_merges.get(key)
+    if canonical:
+        return canonical
     if re.fullmatch(r"Warringah [1-5](?:st|nd|rd|th) Grade(?: L/O)? Cricket Club", text, flags=re.IGNORECASE):
         return "Warringah Cricket Club"
-    if re.fullmatch(r"Auburn [1-5](?:st|nd|rd|th) Grade Cricket Club", text, flags=re.IGNORECASE):
+    if re.fullmatch(r"Auburn [1-5](?:st|nd|rd|th) Grade(?: L/O)? Cricket Club", text, flags=re.IGNORECASE):
         return "Auburn Cricket Club"
+    grade_team_pattern = re.compile(
+        r"^(?P<club>.+?)\s+(?:(?:1st|2nd|3rd|4th|5th|first|second|third|fourth|fifth)\s+grade)(?:\s+(?:l/o|limited\s+overs))?\s+cricket\s+club$",
+        flags=re.IGNORECASE,
+    )
+    match = grade_team_pattern.match(text)
+    if match:
+        club = re.sub(r"\s+", " ", match.group("club")).strip()
+        if club:
+            return f"{club} Cricket Club"
     return text
 
 
@@ -8125,11 +8346,14 @@ def record_card_html(card: dict[str, object]) -> str:
         record_label = season_overview_link_html(card["player"])
     else:
         record_label = player_profile_link_html(card.get("player_id"), card["player"])
+    card_class = str(card.get("card_class") or "record-card")
+    value = str(card.get("value", ""))
+    value_html = value if card.get("value_html") else html.escape(value)
     return (
-        '<div class="record-card">'
+        f'<div class="{html.escape(card_class)}">'
         f'<div class="record-label">{html.escape(card["title"])}</div>'
         f'<div class="record-player">{record_label}</div>'
-        f'<div class="record-value">{html.escape(card["value"])}</div>'
+        f'<div class="record-value">{value_html}</div>'
         f"{meta}"
         f"{scorecard_meta}"
         "</div>"
@@ -8786,7 +9010,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         <tbody>{''.join(rows)}</tbody>
       </table>
     </div>
-    {'<div class="hof-matches-footnote">* For historical records where match counts were not captured, innings are shown as a match-count proxy.</div>' if matches_proxy_used else ''}
+    {'<div class="hof-matches-footnote">* For players where match counts were not captured, innings are shown as a match-count proxy.</div>' if matches_proxy_used else ''}
     <script>
       (() => {{
         const table = document.getElementById({table_id!r});
@@ -10438,14 +10662,14 @@ def player_v2_percent(value: object) -> str:
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_player_profile_index(club_id: str, _local_version: float, _identity_version: float) -> pd.DataFrame:
-    _ = club_id
-    aliases = load_player_aliases()
+def load_player_profile_index(club_id: str, local_version: float, identity_version: float) -> pd.DataFrame:
+    _ = (club_id, local_version, identity_version, PLAYER_PROFILE_INDEX_VERSION)
+    aliases = load_player_aliases(club_id=club_id)
     frames = []
     for category in ["batting", "bowling", "fielding"]:
         frame = read_processed_table(f"all_seasons_{category}")
         if not frame.empty:
-            frames.append(apply_player_identity_mapping(frame, aliases))
+            frames.append(apply_player_identity_mapping(frame, aliases, club_id=club_id))
     if not frames:
         return pd.DataFrame(columns=["id", "name"])
 
@@ -11017,7 +11241,8 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     club_legend = matches >= 200 or runs >= 4000 or wickets >= 250
     genuine_all_rounder = runs >= 1000 and wickets >= 100
     all_round_contributor = matches_30 and bat_avg > 12 and runs >= 300 and wickets >= 30
-    upcoming_star = matches_20 and matches < 50 and (
+    recently_active = player_active_in_latest_club_seasons(season_table, season_count=2)
+    upcoming_star = recently_active and matches_20 and matches < 50 and (
         bat_avg > 20 or (0 < bowl_avg < 20 and wickets >= 15)
     )
     mr_consistent = player_has_consistent_seasons(season_table)
@@ -11126,7 +11351,7 @@ def base_badge_label(label: str) -> str:
 
 def profile_badge_class(label: str) -> str:
     base = base_badge_label(label)
-    if base in {"Premiership Winner", "Premiership Winning Captain"}:
+    if base.casefold().startswith("premiership"):
         return "profile-badge profile-badge-gold"
     return "profile-badge"
 
@@ -11169,8 +11394,38 @@ def player_premiership_profile_badges(career: pd.Series) -> list[str]:
     if captain_count > 0:
         badges.append(counted_profile_badge("Premiership Winning Captain", captain_count))
     if winner_count > 0:
-        badges.append(counted_profile_badge("Premiership Winner", winner_count))
+        badges.append(counted_profile_badge("Premiership Winning Player", winner_count))
     return badges
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def latest_profile_activity_seasons(club_id: str, local_version: float) -> tuple[str, ...]:
+    _ = (club_id, local_version)
+    seasons: set[str] = set()
+    for category in ["batting", "bowling", "fielding"]:
+        frame = read_processed_table(f"all_seasons_{category}")
+        if frame.empty or "season" not in frame:
+            continue
+        seasons.update(
+            safe_season_label(season)
+            for season in frame["season"].dropna()
+            if safe_season_label(season)
+        )
+    return tuple(sorted(seasons, key=profile_season_sort_key, reverse=True))
+
+
+def player_active_in_latest_club_seasons(season_table: pd.DataFrame, season_count: int = 2) -> bool:
+    if season_table.empty or "Season" not in season_table:
+        return False
+    latest = set(latest_profile_activity_seasons(get_active_club_id(), metadata_mtime())[:season_count])
+    if not latest:
+        return False
+    player_seasons = {
+        safe_season_label(season)
+        for season in season_table["Season"].dropna()
+        if safe_season_label(season)
+    }
+    return bool(player_seasons & latest)
 
 
 def select_profile_badges(candidates: list[dict[str, object]]) -> list[str]:
@@ -11187,7 +11442,7 @@ def profile_badge_sort_key(candidate: dict[str, object]) -> tuple[int, int]:
     base = base_badge_label(str(candidate.get("label", "")))
     if base == "Premiership Winning Captain":
         return (0, int(candidate["priority"]))
-    if base == "Premiership Winner":
+    if base in {"Premiership Winner", "Premiership Winning Player"}:
         return (1, int(candidate["priority"]))
     return (2, int(candidate["priority"]))
 
@@ -11281,20 +11536,40 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
             output = output[output[metric] > 0].sort_values(metric, ascending=False)
             if not output.empty:
                 row = output.iloc[0]
-                cards.append({"title": title, "player": str(row["Season"]), "value": f"{int(row[metric]):,} {suffix}", "meta": str(row.get("Teams/Grades", "")), "link_type": "season"})
+                cards.append(
+                    {
+                        "title": title,
+                        "player": str(row["Season"]),
+                        "value": f"{int(row[metric]):,} {suffix}",
+                        "meta": clean_highlight_context_label(row.get("Teams/Grades", "")),
+                        "link_type": "season",
+                    }
+                )
     fifties = int(numeric_value(career, "50s"))
     hundreds = int(numeric_value(career, "100s"))
     if fifties or hundreds:
         if fifties and hundreds:
             title = "Total 50s/100s"
-            value = f"{fifties:,} fifties / {hundreds:,} hundreds"
+            value = f"{fifties:,} {plural_word(fifties, 'fifty', 'fifties')} /<br>{hundreds:,} {plural_word(hundreds, 'hundred', 'hundreds')}"
+            value_html = True
         elif fifties:
             title = "Total 50s"
-            value = f"{fifties:,} fifties"
+            value = f"{fifties:,} {plural_word(fifties, 'fifty', 'fifties')}"
+            value_html = False
         else:
             title = "Total 100s"
-            value = f"{hundreds:,} hundreds"
-        cards.append({"title": title, "player": str(career["Player"]), "value": value, "meta": ""})
+            value = f"{hundreds:,} {plural_word(hundreds, 'hundred', 'hundreds')}"
+            value_html = False
+        cards.append(
+            {
+                "title": title,
+                "player": str(career["Player"]),
+                "value": value,
+                "value_html": value_html,
+                "meta": "",
+                "card_class": "record-card record-card-compact-value",
+            }
+        )
     five_wicket_hauls = int(numeric_value(career, "5WI"))
     if five_wicket_hauls > 0:
         cards.append({"title": "Total 5-Wicket Hauls", "player": str(career["Player"]), "value": f"{five_wicket_hauls:,} five-wicket hauls", "meta": ""})
@@ -11308,7 +11583,10 @@ def player_highlight_cards(profile_view: dict[str, pd.DataFrame]) -> list[dict[s
         value = int(leader_counts.get(key, 0))
         if value > 0:
             details = leader_details.get(key, [])
-            label = suffix if value == 1 else f"{suffix}s"
+            if "grade" in key:
+                label = "grade-leading season" if value == 1 else "grade-leading seasons"
+            else:
+                label = "club-leading season" if value == 1 else "club-leading seasons"
             cards.append(
                 {
                     "title": title,
@@ -11330,14 +11608,28 @@ def leader_highlight_card_html(card: dict[str, object]) -> str:
         key=lambda value: profile_season_sort_key(value.partition(" · ")[0]),
         reverse=True,
     )
-    visible = details[:3]
+    visible = details[:2]
     detail_rows = []
     for detail in visible:
         season, separator, grade = detail.partition(" · ")
-        display = f"{grade.strip()} - {season.strip()}" if by_grade and separator else season.strip()
+        grade_label = clean_highlight_context_label(grade)
+        title = f"{grade_label} - {season.strip()}" if by_grade and separator and grade_label else season.strip()
+        chip_grade = compact_leader_highlight_label(grade_label)
+        season_label = season.strip()
+        chip_content = (
+            '<span class="leader-highlight-chip-grade">'
+            f'{html.escape(chip_grade)}'
+            '</span>'
+            '<span class="leader-highlight-chip-season">'
+            f'{html.escape(season_label)}'
+            '</span>'
+            if by_grade and separator and chip_grade
+            else f'<span class="leader-highlight-chip-grade">{html.escape(season_label)}</span>'
+        )
         detail_rows.append(
-            f'<a href="{html.escape(season_overview_url(season), quote=True)}" target="_blank" rel="noopener noreferrer">'
-            f'{html.escape(display)}</a>'
+            f'<a class="leader-highlight-chip" href="{html.escape(season_overview_url(season), quote=True)}" '
+            f'target="_blank" rel="noopener noreferrer" title="{html.escape(title, quote=True)}">'
+            f'{chip_content}</a>'
         )
     remaining = len(details) - len(visible)
     if remaining > 0:
@@ -11349,6 +11641,40 @@ def leader_highlight_card_html(card: dict[str, object]) -> str:
         f'<div class="leader-highlight-details">{"".join(detail_rows)}</div>'
         '</div>'
     )
+
+
+def plural_word(count: int, singular: str, plural: str) -> str:
+    return singular if int(count) == 1 else plural
+
+
+def clean_highlight_context_label(value: object) -> str:
+    text = safe_record_text(value, "")
+    if not text:
+        return ""
+    parts = [
+        part.strip()
+        for part in re.split(r"\s+-\s+", text)
+        if part.strip() and part.strip().casefold() != "historical club summary"
+    ]
+    if not parts and text.casefold() == "historical club summary":
+        return ""
+    cleaned = " - ".join(parts) if parts else text
+    if get_active_club_id() == "georges-river-district":
+        return clean_profile_grade_label(cleaned)
+    return cleaned
+
+
+def compact_leader_highlight_label(value: object) -> str:
+    label = safe_record_text(value, "")
+    compact = {
+        "First Grade The RB Clark Cup": "First Grade",
+        "Second Grade The SJ Mayne Trophy": "Second Grade",
+        "Third Grade The JB Hollander Cup": "Third Grade",
+        "Fourth Grade The Harry Culbert Trophy": "Fourth Grade",
+        "Fifth Grade The Tim Creer Cup": "Fifth Grade",
+        "Vintage / Over 60s": "Vintage",
+    }
+    return compact.get(label, label)
 
 
 def player_leader_counts(profile_view: dict[str, pd.DataFrame]) -> dict[str, int]:
@@ -11383,10 +11709,10 @@ def player_leader_details(profile_view: dict[str, pd.DataFrame]) -> dict[str, li
 def cached_player_leader_details(
     player_id: str,
     club_id: str,
-    _local_version: float,
-    _identity_version: float,
+    local_version: float,
+    identity_version: float,
 ) -> dict[str, list[str]]:
-    historical_data = load_hall_of_fame_data(_local_version, _identity_version, club_id=club_id)
+    historical_data = load_hall_of_fame_data(local_version, identity_version, club_id=club_id)
     if historical_data is None:
         return {}
     batting = historical_data.get("batting_raw", pd.DataFrame())
@@ -11519,12 +11845,6 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
     rows["average"] = pd.to_numeric(rows.get("average"), errors="coerce")
     rows = rows.sort_values("position_order")
     best = profile_best_position_label(rows)
-    minimum_innings = player_best_position_min_innings(rows["innings"].sum())
-    best_note = (
-        f'<p class="profile-intelligence-note profile-position-footnote">Best fit requires {minimum_innings}+ innings in a position.</p>'
-        if best
-        else f'<p class="profile-intelligence-note profile-position-footnote">Best fit needs {minimum_innings}+ innings in a position.</p>'
-    )
     max_runs = max(1.0, float(rows["runs"].max()))
     row_html = []
     for _, row in rows.iterrows():
@@ -11557,7 +11877,6 @@ def render_batting_position_intelligence(profile_view: dict[str, pd.DataFrame]) 
             '<div class="profile-card-title">Batting Position</div>'
             '</div>'
             f'{"".join(row_html)}'
-            f'{best_note}'
             '</article>'
         ),
         unsafe_allow_html=True,
@@ -11657,10 +11976,17 @@ def profile_best_phase_label(rows: pd.DataFrame) -> str:
     if rows.empty:
         return ""
     output = rows.copy()
-    output["_wickets_sort"] = pd.to_numeric(output.get("wickets"), errors="coerce").fillna(0)
-    output["_eco_sort"] = pd.to_numeric(output.get("eco"), errors="coerce").fillna(999)
     output["_balls_sort"] = pd.to_numeric(output.get("legal_balls"), errors="coerce").fillna(0)
-    output = output.sort_values(["_wickets_sort", "_eco_sort", "_balls_sort"], ascending=[False, True, False])
+    output["_avg_sort"] = pd.to_numeric(output.get("avg"), errors="coerce")
+    output = output[
+        (output["_balls_sort"] >= 60)
+        & output["_avg_sort"].notna()
+        & output["_avg_sort"].map(lambda value: math.isfinite(float(value)) if pd.notna(value) else False)
+    ].copy()
+    if output.empty:
+        return ""
+    output["_phase_order_sort"] = pd.to_numeric(output.get("phase_order"), errors="coerce").fillna(99)
+    output = output.sort_values(["_avg_sort", "_phase_order_sort", "_balls_sort"], ascending=[True, True, False])
     return str(output.iloc[0].get("phase", ""))
 
 
@@ -11823,7 +12149,8 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
     if not player_id or not seasons:
         return
 
-    comparison = get_player_peer_comparison(player_id, seasons, peer_scope, metadata_mtime(), player_aliases_mtime())
+    club_id = get_active_club_id()
+    comparison = get_player_peer_comparison(player_id, seasons, peer_scope, metadata_mtime(), player_aliases_mtime(), club_id)
     if not comparison.get("batting") and not comparison.get("bowling"):
         return
 
@@ -11841,10 +12168,11 @@ def render_player_peer_comparison(profile_view: dict[str, pd.DataFrame]) -> None
         unsafe_allow_html=True,
     )
     columns = st.columns(2)
+    peer_accent = active_chart_primary_colour()
     with columns[0]:
-        render_peer_comparison_card("Batting", comparison.get("batting", []), active_chart_primary_colour())
+        render_peer_comparison_card("Batting", comparison.get("batting", []), peer_accent)
     with columns[1]:
-        render_peer_comparison_card("Bowling", comparison.get("bowling", []), active_chart_secondary_colour())
+        render_peer_comparison_card("Bowling", comparison.get("bowling", []), peer_accent)
 
 
 @st.cache_data(show_spinner=False)
@@ -11854,11 +12182,12 @@ def get_player_peer_comparison(
     peer_scope: tuple[str, ...],
     local_version: float,
     identity_version: float,
+    club_id: str,
 ) -> dict[str, list[dict[str, object]]]:
-    _ = (local_version, identity_version)
-    aliases = load_player_aliases()
-    batting = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_batting"), aliases))
-    bowling = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_bowling"), aliases))
+    _ = (local_version, identity_version, club_id)
+    aliases = load_player_aliases(club_id=club_id)
+    batting = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_batting"), aliases, club_id=club_id))
+    bowling = apply_team_grade_display_columns(apply_player_identity_mapping(read_processed_table("all_seasons_bowling"), aliases, club_id=club_id))
     batting_scope = filter_peer_scope(batting, seasons, peer_scope)
     bowling_scope = filter_peer_scope(bowling, seasons, peer_scope)
     batting_rows = aggregate_peer_batting(batting_scope, seasons)
@@ -12501,21 +12830,72 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
 
 def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -> None:
     source = profile_view.get("performance_breakdown", pd.DataFrame()).copy()
-    if source.empty:
-        return
-    source = normalize_player_profile_breakdown_groups(source)
     render_section_heading("Career Breakdown 🧭")
     selected = selected_profile_breakdown_view()
     selected_discipline = selected_profile_discipline_view()
     render_profile_breakdown_tabs()
     with st.container(key="player_profile_performance_breakdown"):
         render_profile_breakdown_controls(profile_view, selected, selected_discipline)
+        if source.empty:
+            render_profile_breakdown_fallback_table(profile_view, selected, selected_discipline)
+            return
+        source = normalize_player_profile_breakdown_groups(source)
         label = profile_breakdown_label(selected)
         rows = source[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
         if rows.empty:
-            render_profile_empty_state(*profile_performance_empty_copy(label, selected_discipline))
+            render_profile_breakdown_fallback_table(profile_view, selected, selected_discipline)
             return
         render_profile_performance_table(rows, label, selected_discipline, profile_view)
+
+
+def render_profile_breakdown_fallback_table(
+    profile_view: dict[str, pd.DataFrame],
+    selected_breakdown: str,
+    selected_discipline: str,
+) -> None:
+    label = profile_breakdown_label(selected_breakdown)
+    if selected_breakdown == "season":
+        rows = profile_view.get("season_table", pd.DataFrame()).copy()
+        if not rows.empty:
+            if selected_discipline == "Batting":
+                columns = ["Season", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+                render_profile_season_stat_table(rows, columns, ["Innings", "Runs", "30s", "50s", "100s"])
+                return
+            if selected_discipline == "Bowling":
+                table = rows.copy()
+                table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
+                table = table.rename(columns={"Econ": "Eco"})
+                render_profile_season_stat_table(
+                    table,
+                    ["Season", "Matches", "Overs", "Wickets", "Bowl Avg", "Bowl SR", "Eco", "BBI", "3WI", "5WI", "Extras %"],
+                    ["Balls Bowled", "Runs Against", "Wickets", "Wides", "No Balls", "3WI", "5WI"],
+                )
+                return
+            columns = ["Season", "Matches", "Catches", "Stumpings", "Run Outs", "Dismissals"]
+            render_profile_season_stat_table(rows, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"])
+            return
+    if selected_breakdown == "grade":
+        rows = profile_view.get("grade_table", pd.DataFrame()).copy()
+        if not rows.empty:
+            if selected_discipline == "Batting":
+                columns = ["Grade", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+                render_profile_group_stat_table(rows, columns, ["Innings", "Runs", "30s", "50s", "100s"], "Grade")
+                return
+            if selected_discipline == "Bowling":
+                table = rows.copy()
+                table["Overs"] = table["Balls Bowled"].map(format_balls_as_overs) if "Balls Bowled" in table else "—"
+                table = table.rename(columns={"Econ": "Eco"})
+                render_profile_group_stat_table(
+                    table,
+                    ["Grade", "Matches", "Overs", "Wickets", "Bowl Avg", "Bowl SR", "Eco", "BBI", "3WI", "5WI", "Extras %"],
+                    ["Balls Bowled", "Runs Against", "Wickets", "Wides", "No Balls", "3WI", "5WI"],
+                    "Grade",
+                )
+                return
+            columns = ["Grade", "Matches", "Catches", "Stumpings", "Run Outs", "Dismissals"]
+            render_profile_group_stat_table(rows, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"], "Grade")
+            return
+    render_profile_empty_state(*profile_performance_empty_copy(label, selected_discipline))
 
 
 def profile_breakdown_options() -> list[tuple[str, str]]:
@@ -12581,10 +12961,9 @@ def normalize_player_profile_breakdown_groups(source: pd.DataFrame) -> pd.DataFr
         )
     if get_active_club_id() == "georges-river-district":
         grade_mask = output["dimension"].astype(str).eq("Grade")
-        community_cup = grade_mask & output["breakdown_label"].astype(str).str.contains(
-            r"\bNSW Community Cup\b", case=False, regex=True, na=False
+        output.loc[grade_mask, "breakdown_label"] = output.loc[grade_mask, "breakdown_label"].map(
+            clean_profile_grade_label
         )
-        output.loc[community_cup, "breakdown_label"] = "NSW Community Cup"
     return output
 
 
@@ -13284,13 +13663,35 @@ def sort_profile_performance_table(table: pd.DataFrame, label_column: str, disci
     if label_column == "Season":
         return output.sort_values(label_column, key=lambda series: series.map(profile_season_sort_key), ascending=False)
     if label_column == "Grade":
-        output["_sort_key"] = output[label_column].map(grade_sort_key)
+        sort_function = grdcc_career_breakdown_grade_sort_key if get_active_club_id() == "georges-river-district" else grade_sort_key
+        output["_sort_key"] = output[label_column].map(sort_function)
         return output.sort_values("_sort_key").drop(columns="_sort_key")
     numeric_sort = "Runs" if discipline == "Batting" and "Runs" in output else "W" if discipline == "Bowling" and "W" in output else "Dismissals"
     if numeric_sort in output:
         output["_sort_key"] = pd.to_numeric(output[numeric_sort], errors="coerce").fillna(0)
         return output.sort_values(["_sort_key", label_column], ascending=[False, True]).drop(columns="_sort_key")
     return output.sort_values(label_column)
+
+
+GRDCC_CAREER_BREAKDOWN_GRADE_ORDER = [
+    "First Grade",
+    "Second Grade",
+    "Third Grade",
+    "Fourth Grade",
+    "Fifth Grade",
+    "First Grade Limited Overs",
+    "Frank Gray Shield",
+]
+
+
+def grdcc_career_breakdown_grade_sort_key(value: object) -> tuple[int, str]:
+    label = clean_profile_grade_label(value)
+    normalized = re.sub(r"[^a-z0-9]+", " ", str(label or "").casefold()).strip()
+    for index, grade in enumerate(GRDCC_CAREER_BREAKDOWN_GRADE_ORDER):
+        grade_key = re.sub(r"[^a-z0-9]+", " ", grade.casefold()).strip()
+        if normalized == grade_key or normalized.startswith(f"{grade_key} "):
+            return (index, normalized)
+    return (len(GRDCC_CAREER_BREAKDOWN_GRADE_ORDER), normalized)
 
 
 def render_player_season_table(season_table: pd.DataFrame) -> None:
@@ -13918,8 +14319,8 @@ def clean_profile_grade_label(value: object) -> str:
 
 def canonical_profile_grade_label(value: object) -> str:
     text = safe_record_text(value, "")
-    if get_active_club_id() == "georges-river-district" and re.search(r"\bNSW Community Cup\b", text, flags=re.IGNORECASE):
-        return "NSW Community Cup"
+    if get_active_club_id() == "georges-river-district":
+        return clean_grade_name(text)
     return text
 
 
@@ -14104,6 +14505,7 @@ def profile_record_meta_html(row: pd.Series) -> str:
     if pd.notna(season):
         parts.append(season_overview_link_html(season))
     grade = row.get("canonical_grade_label") or canonical_grade_label(row.get("team_name", ""), row.get("grade_name", ""))
+    grade = clean_highlight_context_label(grade)
     if grade and grade != "—":
         parts.append(html.escape(str(grade)))
     return " - ".join(parts)
@@ -14224,6 +14626,11 @@ def historical_matches_display_text(
     overs_value = row.get("Overs")
     has_bowling_overs = cricket_overs_to_balls(overs_value) not in {None, 0}
     if is_historical_season and (pd.isna(matches) or float(matches) <= 0) and (has_real_stats or has_bowling_overs):
+        if has_bowling_overs:
+            overs_number = pd.to_numeric(pd.Series([overs_value]), errors="coerce").iloc[0]
+            if pd.notna(overs_number) and float(overs_number) > 0:
+                display_value = int(round(float(overs_number)))
+                return f"{display_value:,}*", display_value, True
         return "", None, False
     if pd.isna(matches):
         return "", None, False
@@ -16730,7 +17137,8 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         (
             f'<th class="{season_detail_column_class(column)}" data-column="{index}" '
             f'data-default-dir="{season_detail_default_sort_dir(column)}">'
-            f'<button type="button">{html.escape(str(column))}<span class="sort-indicator"></span></button></th>'
+            f'<button type="button">{html.escape(season_detail_header_label(column))}'
+            f'<span class="sort-indicator"></span></button></th>'
         )
         for index, column in enumerate(columns)
     )
@@ -16802,7 +17210,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
       .season-detail-table col.season-col-5wi,
       .season-detail-table col.season-col-no-balls,
       .season-detail-table col.season-col-wides,
-      .season-detail-table col.season-col-dis {{ width: 48px; }}
+      .season-detail-table col.season-col-dis {{ width: 44px; }}
       .season-detail-table col.season-col-30s,
       .season-detail-table col.season-col-50s,
       .season-detail-table col.season-col-100s {{ width: 54px; }}
@@ -16821,7 +17229,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
       .season-detail-table col.season-col-bowl-avg,
       .season-detail-table col.season-col-bowl-sr,
       .season-detail-table col.season-col-total-dismissals {{ width: 82px; }}
-      .season-detail-table col.season-col-extras {{ width: 66px; }}
+      .season-detail-table col.season-col-extras {{ width: 58px; }}
       .season-detail-table th,
       .season-detail-table td {{
         background: #ffffff;
@@ -16923,7 +17331,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         .season-detail-table col.season-col-3wi,
         .season-detail-table col.season-col-5wi,
         .season-detail-table col.season-col-no-balls,
-        .season-detail-table col.season-col-wides {{ width: 42px; }}
+        .season-detail-table col.season-col-wides {{ width: 38px; }}
         .season-detail-table col.season-col-dis {{ width: 46px; }}
         .season-detail-table col.season-col-inn,
         .season-detail-table col.season-col-30s,
@@ -16944,7 +17352,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         .season-detail-table col.season-col-bat-sr,
         .season-detail-table col.season-col-bowl-avg,
         .season-detail-table col.season-col-bowl-sr {{ width: 72px; }}
-        .season-detail-table col.season-col-extras {{ width: 60px; }}
+        .season-detail-table col.season-col-extras {{ width: 54px; }}
         .season-detail-table th,
         .season-detail-table td {{
           padding: 7px 6px;
@@ -17034,6 +17442,13 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
 def season_detail_column_class(column: object) -> str:
     text = re.sub(r"[^a-zA-Z0-9]+", "-", str(column).strip().casefold()).strip("-")
     return f"season-col-{text or 'column'}"
+
+
+def season_detail_header_label(column: object) -> str:
+    return {
+        "No Balls": "NB",
+        "Wides": "Wd",
+    }.get(str(column), str(column))
 
 
 def season_detail_default_sort_dir(column: object) -> str:

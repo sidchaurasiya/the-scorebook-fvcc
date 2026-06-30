@@ -1,0 +1,11 @@
+check_name,status,notes
+best fit requirement text removed,pass,The batting-position threshold still exists in player_best_position_min_innings.
+leader KPI overflow-safe chip spans present,pass,Grade and season are rendered separately inside each chip.
+leader KPI overflow-safe CSS present,pass,Chip grade text can ellipsize while season stays visible.
+SBR mobile result right column CSS present,pass,Mobile round rows keep result badge and summary on the right.
+milestone mobile tabs one-row CSS present,pass,Three milestone folders fit in one compact row on mobile.
+career breakdown mobile tabs two-row CSS present,pass,Six Career Breakdown folders render as three columns by two rows on mobile.
+GRDCC Career Breakdown grade order present,pass,Requested grade order is applied to GRDCC Career Breakdown display sorting.
+bowling phase chooses lowest average after 10 overs,pass,New Ball 33.0 overs at 16.20 should beat Older Ball 38.0 overs at 18.29.
+bowling phase suppresses best phase below 10 overs,pass,No phase has 60 legal balls.
+bowling phase ignores invalid averages,pass,Null or infinite averages are not eligible.

@@ -2291,7 +2291,7 @@ def inject_theme() -> None:
         }
 
         .progress-track div {
-            background: linear-gradient(90deg, #8B5CF6, #4F46E5);
+            background: linear-gradient(90deg, var(--club-primary, #4b37d8), var(--club-link-hover, var(--club-accent, #6d4dff)));
             border-radius: 999px;
             height: 100%;
         }
@@ -2315,7 +2315,7 @@ def inject_theme() -> None:
         }
 
         .team-leader-card::before {
-            background: linear-gradient(90deg, #6D4DFF, #3B82F6);
+            background: linear-gradient(90deg, var(--club-primary, #4b37d8), var(--club-link-hover, var(--club-accent, #6d4dff)));
             content: "";
             height: 4px;
             left: 0;
@@ -2373,9 +2373,9 @@ def inject_theme() -> None:
 
         .mini-icon {
             align-items: center;
-            background: #F0EDFF;
+            background: var(--club-primary-soft, #F0EDFF);
             border-radius: 999px;
-            color: #6D4DFF;
+            color: var(--club-primary, #6D4DFF);
             display: inline-flex;
             font-size: 0.75rem;
             font-weight: 900;
@@ -2409,7 +2409,7 @@ def inject_theme() -> None:
         }
 
         .mini-stat {
-            color: #4b37d8;
+            color: var(--club-primary, #4b37d8);
             font-size: 0.98rem;
             font-weight: 950;
             white-space: nowrap;
@@ -2436,7 +2436,7 @@ def inject_theme() -> None:
         }
 
         .mini-track div {
-            background: linear-gradient(90deg, #8B5CF6, #3B82F6);
+            background: linear-gradient(90deg, var(--club-primary, #4b37d8), var(--club-link-hover, var(--club-accent, #6d4dff)));
             border-radius: 999px;
             height: 100%;
         }
@@ -3510,8 +3510,8 @@ def inject_theme() -> None:
         }
 
         .empty-profile-pill-row span {
-            background: linear-gradient(135deg, rgba(109, 77, 255, 0.10), rgba(59, 130, 246, 0.08));
-            border: 1px solid rgba(109, 77, 255, 0.16);
+            background: linear-gradient(135deg, rgba(var(--club-primary-rgb, 11, 63, 159), 0.10), rgba(var(--club-secondary-rgb, 121, 200, 238), 0.08));
+            border: 1px solid rgba(var(--club-primary-rgb, 11, 63, 159), 0.16);
             border-radius: 999px;
             color: #45496a;
             display: inline-flex;
@@ -3523,7 +3523,7 @@ def inject_theme() -> None:
         .player-hero-card {
             align-items: flex-start;
             background:
-                radial-gradient(circle at right top, rgba(109, 77, 255, 0.14), transparent 20rem),
+                radial-gradient(circle at right top, rgba(var(--club-primary-rgb, 11, 63, 159), 0.14), transparent 20rem),
                 #ffffff;
             border: 1px solid #e9ebf4;
             border-radius: 18px;
@@ -3540,7 +3540,7 @@ def inject_theme() -> None:
         }
 
         .profile-kicker {
-            color: #6D4DFF;
+            color: var(--club-primary, #0B3F9F);
             font-size: 0.74rem;
             font-weight: 900;
             letter-spacing: 0.05em;
@@ -3586,9 +3586,10 @@ def inject_theme() -> None:
         }
 
         .profile-badge-gold {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.20), rgba(245, 158, 11, 0.12));
-            border-color: rgba(180, 83, 9, 0.24);
-            color: #8a4b0f;
+            background: linear-gradient(135deg, #fff4bf, #f7c948 52%, #d99a12) !important;
+            border-color: rgba(180, 83, 9, 0.42) !important;
+            box-shadow: 0 10px 22px rgba(217, 154, 18, 0.18) !important;
+            color: #6f3d00 !important;
         }
 
         .block-container:has(.player-profile-page) {
@@ -3601,7 +3602,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.player-profile-page) .club-label {
-            color: #5B3DF5;
+            color: var(--club-primary, #0B3F9F);
             font-weight: 800;
             margin: 0 0 10px;
         }
@@ -3616,7 +3617,7 @@ def inject_theme() -> None:
 
         div.st-key-player_selector_card {
             background:
-                radial-gradient(circle at 100% 0%, rgba(109, 77, 255, 0.08), transparent 18rem),
+                radial-gradient(circle at 100% 0%, rgba(var(--club-primary-rgb, 11, 63, 159), 0.08), transparent 18rem),
                 #ffffff;
             border: 1px solid #e7e9f4;
             border-radius: 22px;
@@ -4417,6 +4418,13 @@ def inject_theme() -> None:
             flex: 0 0 min(980px, 92vw);
             margin-top: 0;
             overflow: hidden;
+            min-width: 0;
+        }
+
+        .season-round-scroll-shell {
+            max-width: 100%;
+            overflow: visible;
+            width: 100%;
         }
 
         .season-round-panel-strip {
@@ -4447,6 +4455,7 @@ def inject_theme() -> None:
             gap: 12px;
             justify-content: space-between;
             padding: 12px 14px;
+            min-width: 0;
         }
 
         .season-round-grade-head h3 {
@@ -4455,6 +4464,8 @@ def inject_theme() -> None:
             font-weight: 950;
             line-height: 1.16;
             margin: 0;
+            min-width: 0;
+            overflow-wrap: anywhere;
         }
 
         .season-round-grade-head .season-round-record {
@@ -4466,6 +4477,7 @@ def inject_theme() -> None:
             font-size: 0.74rem;
             font-weight: 950;
             padding: 6px 9px;
+            white-space: nowrap;
         }
 
         .season-round-grade-trophy {
@@ -4701,7 +4713,7 @@ def inject_theme() -> None:
         }
 
         .fingerprint-legend i.player {
-            background: #6d4dff;
+            background: var(--club-primary, #0B3F9F);
             border-radius: 999px;
             height: 8px;
             width: 20px;
@@ -4841,7 +4853,7 @@ def inject_theme() -> None:
         }
 
         .peer-card h4::before {
-            background: var(--peer-accent, #6d4dff);
+            background: var(--peer-accent, var(--club-primary, #28485F));
             border-radius: 999px;
             content: "";
             display: inline-block;
@@ -4874,9 +4886,9 @@ def inject_theme() -> None:
         }
 
         .legend-dot {
-            background: #6d4dff;
+            background: var(--club-primary, #28485F);
             border-radius: 999px;
-            box-shadow: 0 0 0 3px rgba(109, 77, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(var(--club-primary-rgb), 0.12);
             display: inline-block;
             height: 9px;
             width: 9px;
@@ -4978,7 +4990,7 @@ def inject_theme() -> None:
         }
 
         .peer-fill {
-            background: linear-gradient(90deg, #6d4dff, #8a63ff);
+            background: linear-gradient(90deg, var(--club-primary, #28485F), var(--club-link, #0B4EA2));
             border-radius: inherit;
             height: 100%;
             left: 0;
@@ -4998,7 +5010,7 @@ def inject_theme() -> None:
         }
 
         .player-marker {
-            background: #6d4dff;
+            background: var(--club-primary, #28485F);
             box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.95), 0 5px 12px rgba(23, 27, 77, 0.16);
             height: 13px;
             width: 13px;
@@ -5122,6 +5134,14 @@ def inject_theme() -> None:
             margin-top: 8px;
         }
 
+        .record-card-compact-value .record-value {
+            color: var(--club-primary, #4b37d8);
+            font-size: 1.08rem;
+            font-weight: 950;
+            line-height: 1.32;
+            margin-top: 10px;
+        }
+
         .table-total-line {
             color: #747b98;
             font-size: 0.84rem;
@@ -5142,29 +5162,69 @@ def inject_theme() -> None:
 
         .leader-highlight-count {
             color: var(--ink);
-            font-size: 0.92rem;
-            font-weight: 760;
-            margin-top: 14px;
+            font-size: 1.08rem;
+            font-weight: 950;
+            line-height: 1.18;
+            margin-top: 16px;
         }
 
         .leader-highlight-details {
-            display: grid;
-            gap: 4px;
+            align-items: flex-start;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
             margin-top: 10px;
         }
 
         .leader-highlight-details a,
         .leader-highlight-more {
-            color: var(--club-primary);
-            font-size: 0.82rem;
-            font-weight: 850;
-            line-height: 1.24;
+            color: var(--club-link, var(--club-primary));
+            font-size: 0.74rem;
+            font-weight: 950 !important;
+            line-height: 1.1;
             text-decoration: none;
         }
 
         .leader-highlight-details a:hover {
             color: var(--club-link-hover);
             text-decoration: underline;
+        }
+
+        .leader-highlight-chip,
+        .leader-highlight-more {
+            background: rgba(var(--club-primary-rgb, 16, 74, 168), 0.08);
+            border: 1px solid rgba(var(--club-primary-rgb, 16, 74, 168), 0.16);
+            border-radius: 999px;
+            max-width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            padding: 6px 8px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .leader-highlight-chip {
+            display: inline-grid;
+            gap: 5px;
+            grid-template-columns: minmax(0, 1fr) auto;
+        }
+
+        .leader-highlight-more {
+            display: inline-flex;
+        }
+
+        .leader-highlight-chip-grade {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .leader-highlight-chip-season {
+            color: var(--ink);
+            font-size: 0.68rem;
+            font-weight: 950;
+            white-space: nowrap;
         }
 
         .milestone-group {
@@ -5593,6 +5653,12 @@ def inject_theme() -> None:
             flex: 0 0 auto;
             font-size: 0.86rem;
             font-weight: 950;
+        }
+
+        .milestone-progress-top a,
+        .milestone-watch-top a,
+        .milestone-member-row a {
+            color: #000000 !important;
         }
 
         div[class*="st-key-milestone_club_"][class*="_control"] {
@@ -6104,10 +6170,10 @@ def inject_theme() -> None:
         }
 
         .player-v2-traits span {
-            background: #f1edff;
-            border: 1px solid #ded8ff;
+            background: var(--club-primary-soft, #EAF3FF);
+            border: 1px solid rgba(var(--club-primary-rgb, 11, 63, 159), 0.16);
             border-radius: 999px;
-            color: #4b37d8;
+            color: var(--club-primary, #0B3F9F);
             font-size: 0.76rem;
             font-weight: 900;
             padding: 7px 10px;
@@ -6128,7 +6194,7 @@ def inject_theme() -> None:
 
         .player-v2-meter span,
         .player-v2-progress-track span {
-            background: linear-gradient(90deg, #4b37d8, #6d4dff);
+            background: linear-gradient(90deg, var(--club-primary, #0B3F9F), var(--club-secondary, #79C8EE));
             border-radius: 999px;
             display: block;
             height: 100%;
@@ -6136,7 +6202,7 @@ def inject_theme() -> None:
 
         .player-v2-coach-card {
             background:
-                linear-gradient(135deg, rgba(109, 77, 255, 0.055), rgba(255,255,255,0) 72%),
+                linear-gradient(135deg, rgba(var(--club-primary-rgb, 11, 63, 159), 0.055), rgba(255,255,255,0) 72%),
                 #ffffff;
         }
 
@@ -6202,7 +6268,7 @@ def inject_theme() -> None:
             width: 16px;
         }
 
-        .player-v2-marker.player { background: #4b37d8; }
+        .player-v2-marker.player { background: var(--club-primary, #0B3F9F); }
         .player-v2-marker.peer { background: #8a90aa; }
 
         .player-v2-card-head {
@@ -6213,10 +6279,10 @@ def inject_theme() -> None:
         }
 
         .player-v2-card-head span {
-            background: #f8f6ff;
-            border: 1px solid #dfdcff;
+            background: var(--club-primary-soft, #EAF3FF);
+            border: 1px solid rgba(var(--club-primary-rgb, 11, 63, 159), 0.16);
             border-radius: 999px;
-            color: #4b37d8;
+            color: var(--club-primary, #0B3F9F);
             flex: 0 0 auto;
             font-size: 0.72rem;
             font-weight: 900;
@@ -6246,7 +6312,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-break-row div span {
-            background: linear-gradient(90deg, #4b37d8, #6d4dff);
+            background: linear-gradient(90deg, var(--club-primary, #0B3F9F), var(--club-secondary, #79C8EE));
             border-radius: 999px;
             display: block;
             height: 100%;
@@ -6750,6 +6816,11 @@ def inject_theme() -> None:
                 width: 100% !important;
             }
 
+            div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"] > div,
+            div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] > div {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+
             div.st-key-season_round_grade_folder_tabs button[data-testid^="stBaseButton"],
             div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton"],
             div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton"] {
@@ -6758,6 +6829,14 @@ def inject_theme() -> None:
                 text-align: center !important;
                 white-space: normal !important;
                 width: 100% !important;
+            }
+
+            div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton"],
+            div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton"] {
+                font-size: 0.72rem !important;
+                min-height: 38px !important;
+                padding: 7px 5px 6px !important;
+                white-space: nowrap !important;
             }
 
             div.st-key-season_round_grade_filter_control {
@@ -6799,13 +6878,38 @@ def inject_theme() -> None:
             }
 
             .season-round-scroll {
-                max-height: 372px;
+                max-height: 560px;
+                overflow-x: hidden;
             }
 
             .season-round-grid {
                 display: grid;
                 gap: 9px;
                 padding: 10px;
+            }
+
+            .season-round-panel-strip {
+                gap: 10px;
+                padding: 2px 0 12px;
+            }
+
+            .season-round-grade-card {
+                flex-basis: min(100%, calc(100vw - 32px));
+                width: min(100%, calc(100vw - 32px));
+            }
+
+            .season-round-grade-head {
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .season-round-grade-head h3 {
+                font-size: 0.94rem;
+            }
+
+            .season-round-grade-head .season-round-record {
+                font-size: 0.66rem;
+                padding: 5px 7px;
             }
 
             .season-round-head {
@@ -6816,7 +6920,8 @@ def inject_theme() -> None:
             .season-round-grade-card.single-grade .season-round-row {
                 border: 1px solid #e8ebf7;
                 border-radius: 15px;
-                grid-template-columns: minmax(0, 1fr) 94px;
+                column-gap: 9px;
+                grid-template-columns: minmax(0, 1fr) minmax(78px, 31%);
                 min-height: 0;
                 padding: 10px;
             }
@@ -6844,7 +6949,18 @@ def inject_theme() -> None:
                 grid-column: 2;
                 grid-row: 1 / span 3;
                 justify-content: flex-start;
+                min-width: 0;
                 text-align: right;
+            }
+
+            .season-round-result .season-result-pill {
+                align-self: flex-end;
+            }
+
+            .season-round-result span:not(.season-result-pill) {
+                line-height: 1.2;
+                overflow-wrap: anywhere;
+                white-space: normal;
             }
 
             .season-round-scorecard {
@@ -6857,6 +6973,22 @@ def inject_theme() -> None:
             .season-round-scorecard-link {
                 font-size: 0.76rem !important;
                 white-space: normal;
+            }
+
+            .leader-highlight-card {
+                min-height: 150px;
+            }
+
+            .leader-highlight-count {
+                font-size: 1rem;
+                margin-top: 12px;
+            }
+
+            .leader-highlight-chip,
+            .leader-highlight-more {
+                font-size: 0.68rem;
+                max-width: 100%;
+                padding: 5px 7px;
             }
 
             .mobile-label {
@@ -7868,13 +8000,16 @@ def active_club_theme_css() -> str:
         }}
 
         .block-container:has(.near-milestones-page) a.player-profile-link,
-        .block-container:has(.near-milestones-page) a.player-profile-link:visited {{
-            color: var(--club-link) !important;
+        .block-container:has(.near-milestones-page) a.player-profile-link:visited,
+        .block-container:has(.near-milestones-page) .milestone-progress-top a,
+        .block-container:has(.near-milestones-page) .milestone-watch-top a,
+        .block-container:has(.near-milestones-page) .milestone-member-row a {{
+            color: #000000 !important;
         }}
 
         .block-container:has(.near-milestones-page) a.player-profile-link:hover,
         .block-container:has(.near-milestones-page) a.player-profile-link:focus-visible {{
-            color: var(--club-link-hover) !important;
+            color: #000000 !important;
         }}
 
         .club-label,
@@ -8012,18 +8147,33 @@ def active_club_theme_css() -> str:
             color: var(--club-link) !important;
         }}
 
+        .profile-badge.profile-badge-gold {{
+            background: linear-gradient(135deg, #fff4bf, #f7c948 52%, #d99a12) !important;
+            border-color: rgba(180, 83, 9, 0.42) !important;
+            box-shadow: 0 10px 22px rgba(217, 154, 18, 0.18) !important;
+            color: #6f3d00 !important;
+        }}
+
         .milestone-progress-top span:not(.milestone-row-badge),
         .milestone-watch-top span {{
             color: var(--club-muted) !important;
         }}
 
         .milestone-segment.active,
-        .player-v2-marker.player,
-        .player-marker,
         .impact-marker,
         .peer-marker,
         .profile-best-dot {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
+            color: #ffffff !important;
+        }}
+
+        .player-v2-marker.player {{
+            background: var(--club-primary) !important;
+            color: #ffffff !important;
+        }}
+
+        .player-marker {{
+            background: var(--club-primary) !important;
             color: #ffffff !important;
         }}
 
