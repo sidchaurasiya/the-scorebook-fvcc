@@ -65,6 +65,7 @@ from src.config.club_config import (
     get_branding_value,
     get_club_name,
     get_club_short_name,
+    get_feature_flag,
     get_hall_of_fame_path,
     get_mapping_path,
     get_processed_dir,
@@ -6252,7 +6253,12 @@ def build_all_time_player_table(
 
 
 def coalesce_grdcc_exact_name_nonoverlap_all_time(all_time: pd.DataFrame) -> pd.DataFrame:
-    if all_time.empty or get_active_club_id() != "georges-river-district" or "Player" not in all_time:
+    if (
+        all_time.empty
+        or get_active_club_id() != "georges-river-district"
+        or not get_feature_flag("enable_exact_name_nonoverlap_merge", False)
+        or "Player" not in all_time
+    ):
         return all_time
     rows: list[pd.Series] = []
     for _, group in all_time.groupby(all_time["Player"].map(player_name_match_key), sort=False, dropna=False):
@@ -14601,8 +14607,17 @@ def historical_matches_display_text(
     season_label = link_display_label(season_text)
     historical_cutoff = season_sort_key("Summer 1971/72")
     is_historical_season = bool(season_label) and season_sort_key(season_label) <= historical_cutoff
-    proxy = proxy_flag or (source.casefold() == "innings_proxy" if source else False)
-    if not proxy and is_historical_season and (pd.isna(matches) or float(matches) <= 0) and pd.notna(innings) and float(innings) > 0:
+    proxy = get_feature_flag("enable_match_proxy", False) and (
+        proxy_flag or (source.casefold() == "innings_proxy" if source else False)
+    )
+    if (
+        not proxy
+        and get_feature_flag("enable_match_proxy", False)
+        and is_historical_season
+        and (pd.isna(matches) or float(matches) <= 0)
+        and pd.notna(innings)
+        and float(innings) > 0
+    ):
         proxy = True
     if proxy and pd.notna(innings) and float(innings) > 0:
         display_value = int(round(float(innings)))

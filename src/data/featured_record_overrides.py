@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config.club_config import REPO_ROOT, get_active_club_id, normalize_club_id
+from src.config.club_config import REPO_ROOT, get_active_club_id, get_feature_flag, normalize_club_id
 
 
 GRDCC_CLUB_ID = "georges-river-district"
@@ -107,7 +107,11 @@ def override_player_supplements_path() -> Path:
 
 def featured_record_overrides_mtime(club_id: str | None = None) -> float:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
-    if active_club_id != GRDCC_CLUB_ID:
+    if active_club_id != GRDCC_CLUB_ID or not get_feature_flag(
+        "has_annual_report_overrides",
+        False,
+        club_id=active_club_id,
+    ):
         path = featured_record_override_path(active_club_id)
         return path.stat().st_mtime if path.exists() else 0.0
     paths = [
@@ -132,7 +136,11 @@ def _load_override_csv(path: Path) -> pd.DataFrame:
 def load_annual_report_override_decisions(club_id: str | None = None) -> pd.DataFrame:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
     path = annual_report_override_decisions_path()
-    if active_club_id != GRDCC_CLUB_ID or not path.exists():
+    if (
+        active_club_id != GRDCC_CLUB_ID
+        or not get_feature_flag("has_annual_report_overrides", False, club_id=active_club_id)
+        or not path.exists()
+    ):
         return pd.DataFrame()
     rows = _load_override_csv(path)
     required = {"player_name", "normalized_player_name", "metric", "displayed_value", "validation_status"}
@@ -174,7 +182,11 @@ def _match_player_variants(normalized_players: pd.Series, variants: set[str]) ->
 def load_override_player_supplements(club_id: str | None = None) -> pd.DataFrame:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
     path = override_player_supplements_path()
-    if active_club_id != GRDCC_CLUB_ID or not path.exists():
+    if (
+        active_club_id != GRDCC_CLUB_ID
+        or not get_feature_flag("has_annual_report_overrides", False, club_id=active_club_id)
+        or not path.exists()
+    ):
         return pd.DataFrame()
     rows = _load_override_csv(path)
     required = {"player_name", "normalized_player_name"}
@@ -324,7 +336,11 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
 def load_annual_report_all_time_leaders(club_id: str | None = None) -> pd.DataFrame:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
     path = annual_report_all_time_leaders_path()
-    if active_club_id != GRDCC_CLUB_ID or not path.exists():
+    if (
+        active_club_id != GRDCC_CLUB_ID
+        or not get_feature_flag("has_annual_report_overrides", False, club_id=active_club_id)
+        or not path.exists()
+    ):
         return pd.DataFrame()
     rows = _load_override_csv(path)
     required = {"section", "player_name", "normalized_player_name", "displayed_value", "included_in_app"}
@@ -339,7 +355,11 @@ def load_annual_report_all_time_leaders(club_id: str | None = None) -> pd.DataFr
 def load_featured_record_overrides(club_id: str | None = None) -> pd.DataFrame:
     """Return approved featured records for the active club, or an empty frame."""
     active_club_id = normalize_club_id(club_id or get_active_club_id())
-    if active_club_id != GRDCC_CLUB_ID:
+    if active_club_id != GRDCC_CLUB_ID or not get_feature_flag(
+        "has_annual_report_overrides",
+        False,
+        club_id=active_club_id,
+    ):
         return pd.DataFrame()
 
     path = featured_record_override_path(active_club_id)
