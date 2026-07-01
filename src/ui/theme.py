@@ -3540,7 +3540,7 @@ def inject_theme() -> None:
         }
 
         .profile-kicker {
-            color: var(--club-primary, #0B3F9F);
+            color: var(--club-primary, #6D4DFF);
             font-size: 0.74rem;
             font-weight: 900;
             letter-spacing: 0.05em;
@@ -3602,7 +3602,7 @@ def inject_theme() -> None:
         }
 
         .block-container:has(.player-profile-page) .club-label {
-            color: var(--club-primary, #0B3F9F);
+            color: var(--club-primary, #6D4DFF);
             font-weight: 800;
             margin: 0 0 10px;
         }
@@ -4713,7 +4713,7 @@ def inject_theme() -> None:
         }
 
         .fingerprint-legend i.player {
-            background: var(--club-primary, #0B3F9F);
+            background: var(--club-primary, #6D4DFF);
             border-radius: 999px;
             height: 8px;
             width: 20px;
@@ -6173,7 +6173,7 @@ def inject_theme() -> None:
             background: var(--club-primary-soft, #EAF3FF);
             border: 1px solid rgba(var(--club-primary-rgb, 11, 63, 159), 0.16);
             border-radius: 999px;
-            color: var(--club-primary, #0B3F9F);
+            color: var(--club-primary, #6D4DFF);
             font-size: 0.76rem;
             font-weight: 900;
             padding: 7px 10px;
@@ -6194,7 +6194,7 @@ def inject_theme() -> None:
 
         .player-v2-meter span,
         .player-v2-progress-track span {
-            background: linear-gradient(90deg, var(--club-primary, #0B3F9F), var(--club-secondary, #79C8EE));
+            background: linear-gradient(90deg, var(--club-primary, #6D4DFF), var(--club-secondary, #22c7dc));
             border-radius: 999px;
             display: block;
             height: 100%;
@@ -6268,7 +6268,7 @@ def inject_theme() -> None:
             width: 16px;
         }
 
-        .player-v2-marker.player { background: var(--club-primary, #0B3F9F); }
+        .player-v2-marker.player { background: var(--club-primary, #6D4DFF); }
         .player-v2-marker.peer { background: #8a90aa; }
 
         .player-v2-card-head {
@@ -6282,7 +6282,7 @@ def inject_theme() -> None:
             background: var(--club-primary-soft, #EAF3FF);
             border: 1px solid rgba(var(--club-primary-rgb, 11, 63, 159), 0.16);
             border-radius: 999px;
-            color: var(--club-primary, #0B3F9F);
+            color: var(--club-primary, #6D4DFF);
             flex: 0 0 auto;
             font-size: 0.72rem;
             font-weight: 900;
@@ -6312,7 +6312,7 @@ def inject_theme() -> None:
         }
 
         .player-v2-break-row div span {
-            background: linear-gradient(90deg, var(--club-primary, #0B3F9F), var(--club-secondary, #79C8EE));
+            background: linear-gradient(90deg, var(--club-primary, #6D4DFF), var(--club-secondary, #22c7dc));
             border-radius: 999px;
             display: block;
             height: 100%;

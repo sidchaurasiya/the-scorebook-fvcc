@@ -5,6 +5,9 @@ club:
   display_name: Georges River District Cricket Club
   app_name: The Scorebook
   playcricket_club_id: a115d93f-87d8-eb11-a7ad-2818780da0cc
+  slug: georges-river-district
+  streamlit_entrypoint: app_grdcc.py
+  ga4_club_name: Georges River District Cricket Club
   established_year: 1929
   default_page: hall-of-fame
 
@@ -21,6 +24,9 @@ branding:
   positive_colour: "#1B8A5A"
   negative_colour: "#B23A48"
   warning_colour: "#D6A732"
+  link_colour: "#0B3F9F"
+  link_hover_colour: "#082A66"
+  nav_active_colour: "#0B3F9F"
   logo_path: clubs/georges-river-district/assets/logo.png
   logo_scale: 1.12
 
@@ -37,9 +43,18 @@ features:
   season_overview_enabled: true
   milestone_enabled: true
   player_profile_enabled: true
+  has_historical_excel: true
+  has_annual_report_overrides: true
+  enable_match_proxy: true
+  enable_exact_name_nonoverlap_merge: true
+  enable_grade_opponent_normalisation: true
 
 data:
   root_dir: clubs/georges-river-district/data
+  source_systems:
+    - PlayCricket / PlayHQ
+    - Historical Excel
+    - Annual Report overrides
   processed_dir: clubs/georges-river-district/data/processed
   hall_of_fame_dir: clubs/georges-river-district/data/processed/hall_of_fame
   season_overview_dir: clubs/georges-river-district/data/processed/season_overview

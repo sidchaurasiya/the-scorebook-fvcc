@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config.club_config import REPO_ROOT, get_active_club_id
+from src.config.club_config import REPO_ROOT, get_active_club_id, get_feature_flag
 
 
 GRDCC_CLUB_ID = "georges-river-district"
@@ -55,7 +55,8 @@ def grdcc_most_premierships_path() -> Path:
 
 
 def load_grdcc_most_premierships(club_id: str | None = None) -> pd.DataFrame:
-    if (club_id or get_active_club_id()) != GRDCC_CLUB_ID:
+    active_club = club_id or get_active_club_id()
+    if active_club != GRDCC_CLUB_ID or not get_feature_flag("has_annual_report_overrides", False, club_id=active_club):
         return pd.DataFrame()
     path = grdcc_most_premierships_path()
     if not path.exists():
@@ -109,7 +110,8 @@ def premiership_key(season: object, grade: object) -> str:
 
 
 def load_annual_report_premierships(club_id: str | None = None) -> pd.DataFrame:
-    if (club_id or get_active_club_id()) != GRDCC_CLUB_ID:
+    active_club = club_id or get_active_club_id()
+    if active_club != GRDCC_CLUB_ID or not get_feature_flag("has_annual_report_overrides", False, club_id=active_club):
         return pd.DataFrame()
     path = annual_report_premiership_path()
     if not path.exists():
@@ -120,7 +122,7 @@ def load_annual_report_premierships(club_id: str | None = None) -> pd.DataFrame:
 
 def merge_grdcc_premiership_honours(wins: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     active_club = club_id or get_active_club_id()
-    if active_club != GRDCC_CLUB_ID:
+    if active_club != GRDCC_CLUB_ID or not get_feature_flag("has_annual_report_overrides", False, club_id=active_club):
         return wins
     report_rows = load_annual_report_premierships(active_club)
     if report_rows.empty:

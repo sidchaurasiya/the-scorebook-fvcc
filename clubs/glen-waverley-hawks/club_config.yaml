@@ -4,14 +4,22 @@ club:
   short_name: GWHCC
   display_name: Glen Waverley Hawks Cricket Club
   app_name: The Scorebook
-  playcricket_club_id: 50f7f1e3-86d8-eb11-a7ad-2818780da0cc
+  slug: glen-waverley-hawks
+  playcricket_club_id: null
+  playhq_club_id: null
+  playhq_org_id: null
+  streamlit_entrypoint: null
+  ga4_club_name: Glen Waverley Hawks Cricket Club
   default_page: hall-of-fame
 
 branding:
-  primary_colour: "#0B4F2F"
-  secondary_colour: "#D6A732"
-  background_colour: "#F6F8F5"
-  accent_colour: "#4A8F45"
+  primary_colour: null
+  secondary_colour: null
+  background_colour: null
+  accent_colour: null
+  link_colour: null
+  link_hover_colour: null
+  nav_active_colour: null
   logo_path: null
 
 contact:
@@ -27,9 +35,16 @@ features:
   season_overview_enabled: true
   milestone_enabled: true
   player_profile_enabled: true
+  has_historical_excel: false
+  has_annual_report_overrides: false
+  enable_match_proxy: false
+  enable_exact_name_nonoverlap_merge: false
+  enable_grade_opponent_normalisation: false
 
 data:
   root_dir: clubs/glen-waverley-hawks/data
+  source_systems:
+    - PlayHQ
   processed_dir: clubs/glen-waverley-hawks/data/processed
   hall_of_fame_dir: clubs/glen-waverley-hawks/data/processed/hall_of_fame
   season_overview_dir: clubs/glen-waverley-hawks/data/processed/season_overview

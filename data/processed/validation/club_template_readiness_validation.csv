@@ -1,0 +1,13 @@
+check_name,validation_status,notes
+shared_ui_no_grdcc_colour_literals,pass,"Shared UI should use club CSS variables and config colours, not GRDCC literal palette values."
+shared_ui_grdcc_branches_scoped,pass,Remaining GRDCC layout branches are scoped to the active club and exact-name merge is feature-gated.
+grdcc_config_resolves_template_schema,pass,GRDCC config keeps current historical feature flags enabled.
+fvcc_config_resolves_template_schema,pass,FVCC config keeps optional historical GRDCC modules disabled.
+glen_waverley_hawks_scaffold_exists,pass,Glen Waverley Hawks scaffold exists with IDs TBD and optional historical modules off.
+typed_template_config_available,pass,Typed club template config wrapper is available for future template code.
+optional_historical_rules_gated,pass,"Excel, Annual Report, exact-name merge, and match proxy paths are feature-gated."
+onboarding_docs_exist,pass,New-club and Glen Waverley Hawks onboarding docs exist.
+playhq_pipeline_template_doc_exists,pass,PlayHQ pipeline template doc exists.
+dedicated_entrypoint_pattern_documented,pass,Dedicated Streamlit entrypoint pattern is documented.
+responsive_components_theme_driven,pass,"Season by Round, folder tabs, and shared visual styles are reusable through club theme variables."
+ga4_club_metadata_supported,pass,GA4 events include club_id and club_name metadata; club configs include GA display metadata.

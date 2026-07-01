@@ -93,6 +93,7 @@ def main() -> int:
     rows: list[dict[str, str]] = []
     layout = read_text("src/ui/layout.py")
     theme = read_text("src/ui/theme.py")
+    grdcc_config = read_text("clubs/georges-river-district/club_config.yaml")
 
     add(
         rows,
@@ -142,8 +143,12 @@ def main() -> int:
     add(
         rows,
         "fvcc_theme_tokens_preserved",
-        "#A31952" in theme and "#28485F" in theme and "#0B3F9F" in theme,
-        "FVCC production burgundy/navy tokens and GRDCC tokens remain separate in club-aware theme.",
+        "#A31952" in theme
+        and "#28485F" in theme
+        and "#0B3F9F" not in theme
+        and 'primary_colour: "#0B3F9F"' in grdcc_config
+        and "var(--club-primary" in theme,
+        "FVCC production tokens remain in shared theme; GRDCC tokens live in club config and flow through variables.",
     )
     add(
         rows,

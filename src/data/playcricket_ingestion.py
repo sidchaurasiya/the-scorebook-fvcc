@@ -14,7 +14,13 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from src.config.club_config import get_active_club_id, get_data_root, get_processed_dir, get_processed_path
+from src.config.club_config import (
+    get_active_club_id,
+    get_data_root,
+    get_feature_flag,
+    get_processed_dir,
+    get_processed_path,
+)
 from src.data.playcricket_public import (
     PLAYCRICKET_PUBLIC_BASE_URL,
     PlayCricketPublicError,
@@ -316,7 +322,7 @@ def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.Da
 
 def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.DataFrame:
     """Apply the final GRDCC source split to aggregate batting and bowling tables."""
-    if get_active_club_id() != "georges-river-district":
+    if not get_feature_flag("has_historical_excel", False):
         return frame
     supplemental_names = {
         "all_seasons_batting": "excel_all_seasons_batting.csv",
@@ -367,7 +373,7 @@ def _grdcc_season_sort_key(value: object) -> int:
 
 def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
     """Exclude impossible GRDCC primary bowling aggregates from client-visible records."""
-    if get_active_club_id() != "georges-river-district" or frame.empty:
+    if not get_feature_flag("has_historical_excel", False) or frame.empty:
         return frame
     required = {"bowlingWickets", "bowlingRuns", "bowlingBalls"}
     if not required.issubset(frame.columns):
@@ -398,7 +404,7 @@ def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
 
 def _filter_grdcc_app_facing_batting_rows(frame: pd.DataFrame) -> pd.DataFrame:
     """Exclude structurally impossible GRDCC batting aggregates from visible records."""
-    if get_active_club_id() != "georges-river-district" or frame.empty:
+    if not get_feature_flag("has_historical_excel", False) or frame.empty:
         return frame
     required = {"battingAggregate", "battingInnings", "battingNotOuts"}
     if not required.issubset(frame.columns):
@@ -416,7 +422,7 @@ def _filter_grdcc_app_facing_batting_rows(frame: pd.DataFrame) -> pd.DataFrame:
 
 def _filter_grdcc_app_facing_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
     """Remove hidden and structurally invalid GRDCC player labels from visible data."""
-    if get_active_club_id() != "georges-river-district" or frame.empty:
+    if not get_feature_flag("has_historical_excel", False) or frame.empty:
         return frame
     name_column = next((column for column in ["canonical_player_name", "player_name", "raw_player_name"] if column in frame.columns), None)
     if name_column is None:

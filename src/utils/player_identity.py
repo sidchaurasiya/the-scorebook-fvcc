@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.config.club_config import get_active_club_id, get_mapping_path
+from src.config.club_config import get_active_club_id, get_feature_flag, get_mapping_path
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
@@ -244,7 +244,12 @@ def apply_grdcc_historical_exact_name_mapping(
 ) -> pd.DataFrame:
     """Merge unambiguous, non-overlapping GRDCC Excel profiles by exact full name."""
     active_club = str(club_id or get_active_club_id()).strip().casefold()
-    if active_club != "georges-river-district" or frame.empty or "raw_player_id" not in frame:
+    if (
+        active_club != "georges-river-district"
+        or not get_feature_flag("enable_exact_name_nonoverlap_merge", False, club_id=active_club)
+        or frame.empty
+        or "raw_player_id" not in frame
+    ):
         return frame
 
     output = frame.copy()
