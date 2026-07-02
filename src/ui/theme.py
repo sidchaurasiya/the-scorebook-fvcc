@@ -710,7 +710,7 @@ def inject_theme() -> None:
                 0 0 0 5px rgba(255,255,255,0.10);
             height: 64px;
             overflow: hidden;
-            padding: 7px;
+            padding: 5px;
             width: 58px;
         }
 
@@ -814,6 +814,15 @@ def inject_theme() -> None:
             color: rgba(255, 255, 255, 0.84);
             text-decoration: none;
             word-break: normal;
+        }
+
+        .side-build-marker {
+            color: rgba(255, 255, 255, 0.46);
+            font-size: 0.52rem;
+            font-weight: 650;
+            line-height: 1.35;
+            margin-top: 12px;
+            overflow-wrap: anywhere;
         }
 
         .routing-debug {
@@ -5209,6 +5218,19 @@ def inject_theme() -> None:
             grid-template-columns: minmax(0, 1fr) auto;
         }
 
+        .leader-highlight-chip-stacked {
+            align-items: center;
+            border-radius: 18px;
+            display: inline-flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+            min-width: min(160px, 100%);
+            padding: 7px 10px;
+            text-align: center;
+            white-space: normal;
+        }
+
         .leader-highlight-more {
             display: inline-flex;
         }
@@ -5220,11 +5242,34 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .leader-highlight-chip-stacked .leader-highlight-chip-grade {
+            display: -webkit-box;
+            font-size: 0.72rem;
+            line-height: 1.1;
+            max-width: 100%;
+            overflow: hidden;
+            overflow-wrap: anywhere;
+            text-overflow: ellipsis;
+            white-space: normal;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
         .leader-highlight-chip-season {
             color: var(--ink);
             font-size: 0.68rem;
             font-weight: 950;
             white-space: nowrap;
+        }
+
+        .leader-highlight-chip-stacked .leader-highlight-chip-season {
+            color: var(--club-link, var(--club-primary));
+            display: block;
+            font-size: 0.64rem;
+            line-height: 1.05;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .milestone-group {
@@ -6989,6 +7034,19 @@ def inject_theme() -> None:
                 font-size: 0.68rem;
                 max-width: 100%;
                 padding: 5px 7px;
+            }
+
+            .leader-highlight-chip-stacked {
+                min-width: min(142px, 100%);
+                padding: 6px 8px;
+            }
+
+            .leader-highlight-chip-stacked .leader-highlight-chip-grade {
+                font-size: 0.66rem;
+            }
+
+            .leader-highlight-chip-stacked .leader-highlight-chip-season {
+                font-size: 0.6rem;
             }
 
             .mobile-label {

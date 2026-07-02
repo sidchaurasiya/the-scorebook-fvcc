@@ -1,0 +1,370 @@
+check_name,validation_status,player_name,details
+dropdown_single_canonical_name,pass,A Clarkson,count=1; ids=grdcc_excel_exact_a_clarkson
+dropdown_single_canonical_name,pass,A Ferguson,count=1; ids=grdcc_excel_exact_a_ferguson
+dropdown_single_canonical_name,pass,A Howard,count=1; ids=grdcc_excel_exact_a_howard
+dropdown_single_canonical_name,pass,A Mailey,count=0; ids=
+dropdown_single_canonical_name,pass,A Mostyn,count=1; ids=grdcc_excel_exact_a_mostyn
+dropdown_single_canonical_name,pass,A Randall,count=1; ids=grdcc_excel_exact_a_randall
+dropdown_single_canonical_name,pass,A Randall (jnr),count=1; ids=grdcc_excel_exact_a_randall_jnr
+dropdown_single_canonical_name,pass,A Ridge,count=1; ids=grdcc_excel_exact_a_ridge
+dropdown_single_canonical_name,pass,A Ryan,count=1; ids=grdcc_excel_exact_a_ryan
+dropdown_single_canonical_name,pass,A Seddon,count=1; ids=grdcc_excel_exact_a_seddon
+dropdown_single_canonical_name,pass,A Sloan,count=1; ids=grdcc_excel_exact_a_sloan
+dropdown_single_canonical_name,pass,Alan Cox,count=1; ids=grdcc_excel_exact_alan_cox
+dropdown_single_canonical_name,pass,Alan Ferguson,count=1; ids=grdcc_excel_exact_alan_ferguson
+dropdown_single_canonical_name,pass,Alan Mashman,count=1; ids=grdcc_excel_exact_alan_mashman
+dropdown_single_canonical_name,pass,Alan Randall,count=1; ids=grdcc_excel_exact_alan_randall
+dropdown_single_canonical_name,pass,Alex M Scott,count=0; ids=
+dropdown_single_canonical_name,pass,Alex Z Denton,count=0; ids=
+dropdown_single_canonical_name,pass,Alf Randall,count=1; ids=grdcc_excel_exact_alf_randall
+dropdown_single_canonical_name,pass,Alf Randle,count=1; ids=grdcc_excel_exact_alf_randle
+dropdown_single_canonical_name,pass,Allan Randall (jnr),count=1; ids=grdcc_excel_exact_allan_randall_jnr
+dropdown_single_canonical_name,pass,Andrew B Balding,count=0; ids=
+dropdown_single_canonical_name,pass,Andrew G Ellis,count=0; ids=
+dropdown_single_canonical_name,pass,Andrew Gunaratnam,count=1; ids=grdcc_excel_exact_andrew_gunaratnam
+dropdown_single_canonical_name,pass,Andrew J Julian,count=0; ids=
+dropdown_single_canonical_name,pass,Andrew M Merriman,count=0; ids=
+dropdown_single_canonical_name,pass,Anthony L Ward,count=0; ids=
+dropdown_single_canonical_name,pass,Arthur Sommerlad,count=1; ids=grdcc_excel_exact_arthur_sommerlad
+dropdown_single_canonical_name,pass,B Bullock,count=1; ids=grdcc_excel_exact_b_bullock
+dropdown_single_canonical_name,pass,B Carrington,count=0; ids=
+dropdown_single_canonical_name,pass,B Davey,count=1; ids=grdcc_excel_exact_b_davey
+dropdown_single_canonical_name,pass,B Kelly,count=1; ids=grdcc_excel_exact_b_kelly
+dropdown_single_canonical_name,pass,B Smith,count=1; ids=grdcc_excel_exact_b_smith
+dropdown_single_canonical_name,pass,B Trevillion,count=1; ids=grdcc_excel_exact_b_trevillion
+dropdown_single_canonical_name,pass,B White,count=1; ids=grdcc_excel_exact_b_white
+dropdown_single_canonical_name,pass,Barry Davey,count=1; ids=grdcc_excel_exact_barry_davey
+dropdown_single_canonical_name,pass,Barry Trevillion,count=1; ids=grdcc_excel_exact_barry_trevillion
+dropdown_single_canonical_name,pass,Ben Vella,count=0; ids=
+dropdown_single_canonical_name,pass,Benjamin Jeffrey,count=0; ids=
+dropdown_single_canonical_name,pass,Benjamin R Whitehouse,count=0; ids=
+dropdown_single_canonical_name,pass,Benjamin Worger,count=0; ids=
+dropdown_single_canonical_name,pass,Bevan B Taylor,count=0; ids=
+dropdown_single_canonical_name,pass,Bill Cromer,count=1; ids=grdcc_excel_exact_bill_cromer
+dropdown_single_canonical_name,pass,Bill Edmonds,count=1; ids=grdcc_excel_exact_bill_edmonds
+dropdown_single_canonical_name,pass,Bill Wade,count=1; ids=grdcc_excel_exact_bill_wade
+dropdown_single_canonical_name,pass,Billy H Smith,count=0; ids=
+dropdown_single_canonical_name,pass,Bob Bennett,count=1; ids=grdcc_excel_exact_bob_bennett
+dropdown_single_canonical_name,pass,Bob Bigelow,count=1; ids=grdcc_excel_exact_bob_bigelow
+dropdown_single_canonical_name,pass,Bob Dixon,count=1; ids=grdcc_excel_exact_bob_dixon
+dropdown_single_canonical_name,pass,Bob Ross,count=1; ids=grdcc_excel_exact_bob_ross
+dropdown_single_canonical_name,pass,Brendan J Napier,count=0; ids=
+dropdown_single_canonical_name,pass,Brett J Hudson,count=0; ids=
+dropdown_single_canonical_name,pass,Bruce Shade,count=1; ids=grdcc_excel_exact_bruce_shade
+dropdown_single_canonical_name,pass,Bushy Pillay,count=1; ids=grdcc_excel_exact_bushy_pillay
+dropdown_single_canonical_name,pass,C Austin,count=1; ids=grdcc_excel_exact_c_austin
+dropdown_single_canonical_name,pass,C Avern,count=1; ids=grdcc_excel_exact_c_avern
+dropdown_single_canonical_name,pass,C Gietz,count=1; ids=grdcc_excel_exact_c_gietz
+dropdown_single_canonical_name,pass,C Mcconechy,count=1; ids=grdcc_excel_exact_c_mcconechy
+dropdown_single_canonical_name,pass,C Robinson,count=1; ids=grdcc_excel_exact_c_robinson
+dropdown_single_canonical_name,pass,C Warren,count=1; ids=grdcc_excel_exact_c_warren
+dropdown_single_canonical_name,pass,Cameron D Jenkins,count=0; ids=
+dropdown_single_canonical_name,pass,Carl Demarco,count=1; ids=grdcc_excel_exact_carl_demarco
+dropdown_single_canonical_name,pass,Chas Gray,count=1; ids=grdcc_excel_exact_chas_gray
+dropdown_single_canonical_name,pass,Chris Jurgeit,count=1; ids=grdcc_excel_exact_chris_jurgeit
+dropdown_single_canonical_name,pass,Chris Thanos,count=0; ids=
+dropdown_single_canonical_name,pass,Christopher J Diehm,count=0; ids=
+dropdown_single_canonical_name,pass,Christopher J Morris,count=0; ids=
+dropdown_single_canonical_name,pass,Clyde Eastman,count=1; ids=grdcc_excel_exact_clyde_eastman
+dropdown_single_canonical_name,pass,Craig Tilley,count=1; ids=grdcc_excel_exact_craig_tilley
+dropdown_single_canonical_name,pass,D Anderson,count=1; ids=grdcc_excel_exact_d_anderson
+dropdown_single_canonical_name,pass,D Morton,count=1; ids=grdcc_excel_exact_d_morton
+dropdown_single_canonical_name,pass,D Murden,count=1; ids=grdcc_excel_exact_d_murden
+dropdown_single_canonical_name,pass,D Towey,count=1; ids=grdcc_excel_exact_d_towey
+dropdown_single_canonical_name,pass,D Warburton,count=1; ids=grdcc_excel_exact_d_warburton
+dropdown_single_canonical_name,pass,Daniel J Wynn,count=0; ids=
+dropdown_single_canonical_name,pass,Danny Lee,count=1; ids=grdcc_excel_exact_danny_lee
+dropdown_single_canonical_name,pass,Darren S Smith,count=0; ids=
+dropdown_single_canonical_name,pass,Dave Winspear,count=1; ids=grdcc_excel_exact_dave_winspear
+dropdown_single_canonical_name,pass,David A Goddard,count=0; ids=
+dropdown_single_canonical_name,pass,David A White,count=0; ids=
+dropdown_single_canonical_name,pass,David Boughton,count=1; ids=grdcc_excel_exact_david_boughton
+dropdown_single_canonical_name,pass,Dayle H Carew,count=0; ids=
+dropdown_single_canonical_name,pass,Des King,count=1; ids=grdcc_excel_exact_des_king
+dropdown_single_canonical_name,pass,Don Crew,count=1; ids=grdcc_excel_exact_don_crew
+dropdown_single_canonical_name,pass,Don Eldridge,count=1; ids=grdcc_excel_exact_don_eldridge
+dropdown_single_canonical_name,pass,Dylan Devoy Paino,count=1; ids=grdcc_excel_exact_dylan_devoy_paino
+dropdown_single_canonical_name,pass,Dylan M Minehan,count=0; ids=
+dropdown_single_canonical_name,pass,E Bowen,count=1; ids=grdcc_excel_exact_e_bowen
+dropdown_single_canonical_name,pass,E Fairfax,count=1; ids=grdcc_excel_exact_e_fairfax
+dropdown_single_canonical_name,pass,E Lowe,count=1; ids=grdcc_excel_exact_e_lowe
+dropdown_single_canonical_name,pass,E Mealey,count=1; ids=grdcc_excel_exact_e_mealey
+dropdown_single_canonical_name,pass,E Reid,count=1; ids=grdcc_excel_exact_e_reid
+dropdown_single_canonical_name,pass,E Weatherhead,count=1; ids=grdcc_excel_exact_e_weatherhead
+dropdown_single_canonical_name,pass,E Williams,count=1; ids=grdcc_excel_exact_e_williams
+dropdown_single_canonical_name,pass,Emmanuel P Tsardoulias,count=0; ids=
+dropdown_single_canonical_name,pass,Eric Bates,count=1; ids=grdcc_excel_exact_eric_bates
+dropdown_single_canonical_name,pass,Eric Lewis,count=1; ids=grdcc_excel_exact_eric_lewis
+dropdown_single_canonical_name,pass,F Griggs,count=1; ids=grdcc_excel_exact_f_griggs
+dropdown_single_canonical_name,pass,F Heather,count=1; ids=grdcc_excel_exact_f_heather
+dropdown_single_canonical_name,pass,F Hurst,count=1; ids=grdcc_excel_exact_f_hurst
+dropdown_single_canonical_name,pass,F Mcdarra,count=1; ids=grdcc_excel_exact_f_mcdarra
+dropdown_single_canonical_name,pass,F Osborne,count=1; ids=grdcc_excel_exact_f_osborne
+dropdown_single_canonical_name,pass,F Richards,count=1; ids=grdcc_excel_exact_f_richards
+dropdown_single_canonical_name,pass,F Townsend,count=1; ids=grdcc_excel_exact_f_townsend
+dropdown_single_canonical_name,pass,F Winspear,count=1; ids=grdcc_excel_exact_f_winspear
+dropdown_single_canonical_name,pass,Frank Osborne,count=1; ids=grdcc_excel_exact_frank_osborne
+dropdown_single_canonical_name,pass,Frank Roach,count=1; ids=grdcc_excel_exact_frank_roach
+dropdown_single_canonical_name,pass,Fred Lark,count=1; ids=grdcc_excel_exact_fred_lark
+dropdown_single_canonical_name,pass,G Aldrich,count=1; ids=grdcc_excel_exact_g_aldrich
+dropdown_single_canonical_name,pass,G Butt,count=0; ids=
+dropdown_single_canonical_name,pass,G Gilbert,count=1; ids=grdcc_excel_exact_g_gilbert
+dropdown_single_canonical_name,pass,G Leslie,count=1; ids=grdcc_excel_exact_g_leslie
+dropdown_single_canonical_name,pass,G Parsons,count=1; ids=grdcc_excel_exact_g_parsons
+dropdown_single_canonical_name,pass,G Price,count=1; ids=grdcc_excel_exact_g_price
+dropdown_single_canonical_name,pass,G Toddie,count=1; ids=grdcc_excel_exact_g_toddie
+dropdown_single_canonical_name,pass,Gabriel R Lattouf,count=0; ids=
+dropdown_single_canonical_name,pass,Games Wo,count=0; ids=
+dropdown_single_canonical_name,pass,Gary White,count=1; ids=grdcc_excel_exact_gary_white
+dropdown_single_canonical_name,pass,Geoff Morgan,count=1; ids=grdcc_excel_exact_geoff_morgan
+dropdown_single_canonical_name,pass,George Edwards,count=1; ids=grdcc_excel_exact_george_edwards
+dropdown_single_canonical_name,pass,George Toddie,count=1; ids=grdcc_excel_exact_george_toddie
+dropdown_single_canonical_name,pass,Glenn A Ross,count=0; ids=
+dropdown_single_canonical_name,pass,Glenn Ross,count=1; ids=grdcc_excel_exact_glenn_ross
+dropdown_single_canonical_name,pass,Gordon Leslie,count=1; ids=grdcc_excel_exact_gordon_leslie
+dropdown_single_canonical_name,pass,Graham Hampton,count=1; ids=grdcc_excel_exact_graham_hampton
+dropdown_single_canonical_name,pass,Graham Hicks,count=1; ids=grdcc_excel_exact_graham_hicks
+dropdown_single_canonical_name,pass,Graham Mcdonald,count=1; ids=grdcc_excel_exact_graham_mcdonald
+dropdown_single_canonical_name,pass,Graham Walker,count=1; ids=grdcc_excel_exact_graham_walker
+dropdown_single_canonical_name,pass,Grant A Rowe,count=0; ids=
+dropdown_single_canonical_name,pass,Grant C Carter,count=0; ids=
+dropdown_single_canonical_name,pass,Grant Pirois,count=1; ids=grdcc_excel_exact_grant_pirois
+dropdown_single_canonical_name,pass,Greg Ings,count=0; ids=
+dropdown_single_canonical_name,pass,Gus Kelly,count=0; ids=
+dropdown_single_canonical_name,pass,H Clapham,count=1; ids=grdcc_excel_exact_h_clapham
+dropdown_single_canonical_name,pass,H Ferguson,count=1; ids=grdcc_excel_exact_h_ferguson
+dropdown_single_canonical_name,pass,H Jesson,count=1; ids=grdcc_excel_exact_h_jesson
+dropdown_single_canonical_name,pass,H Jolly,count=1; ids=grdcc_excel_exact_h_jolly
+dropdown_single_canonical_name,pass,Harrison D Morton,count=0; ids=
+dropdown_single_canonical_name,pass,Harry Milburn,count=1; ids=grdcc_excel_exact_harry_milburn
+dropdown_single_canonical_name,pass,Henry James,count=1; ids=grdcc_excel_exact_henry_james
+dropdown_single_canonical_name,pass,Howard Boughton,count=1; ids=grdcc_excel_exact_howard_boughton
+dropdown_single_canonical_name,pass,Howard Cooper,count=1; ids=grdcc_excel_exact_howard_cooper
+dropdown_single_canonical_name,pass,I Campbell,count=1; ids=grdcc_excel_exact_i_campbell
+dropdown_single_canonical_name,pass,I Findlay,count=1; ids=grdcc_excel_exact_i_findlay
+dropdown_single_canonical_name,pass,I Fleming,count=1; ids=grdcc_excel_exact_i_fleming
+dropdown_single_canonical_name,pass,Ian M Edwards,count=0; ids=
+dropdown_single_canonical_name,pass,Ian Sharp,count=1; ids=grdcc_excel_exact_ian_sharp
+dropdown_single_canonical_name,pass,Ian Woodbury,count=1; ids=grdcc_excel_exact_ian_woodbury
+dropdown_single_canonical_name,pass,J Dixon,count=1; ids=grdcc_excel_exact_j_dixon
+dropdown_single_canonical_name,pass,J Edmonds,count=1; ids=grdcc_excel_exact_j_edmonds
+dropdown_single_canonical_name,pass,J Farthing,count=1; ids=grdcc_excel_exact_j_farthing
+dropdown_single_canonical_name,pass,J Gardiner,count=1; ids=grdcc_excel_exact_j_gardiner
+dropdown_single_canonical_name,pass,J George,count=1; ids=grdcc_excel_exact_j_george
+dropdown_single_canonical_name,pass,J George (jnr),count=1; ids=grdcc_excel_exact_j_george_jnr
+dropdown_single_canonical_name,pass,J Lloyd,count=1; ids=grdcc_excel_exact_j_lloyd
+dropdown_single_canonical_name,pass,J Lynch,count=1; ids=grdcc_excel_exact_j_lynch
+dropdown_single_canonical_name,pass,J Mcguiness,count=1; ids=grdcc_excel_exact_j_mcguiness
+dropdown_single_canonical_name,pass,J Mckay,count=1; ids=grdcc_excel_exact_j_mckay
+dropdown_single_canonical_name,pass,J Rayment,count=1; ids=grdcc_excel_exact_j_rayment
+dropdown_single_canonical_name,pass,J Ross,count=1; ids=grdcc_excel_exact_j_ross
+dropdown_single_canonical_name,pass,J Smith,count=1; ids=grdcc_excel_exact_j_smith
+dropdown_single_canonical_name,pass,J Sutton,count=1; ids=grdcc_excel_exact_j_sutton
+dropdown_single_canonical_name,pass,J Webb,count=1; ids=grdcc_excel_exact_j_webb
+dropdown_single_canonical_name,pass,J Winspear,count=1; ids=grdcc_excel_exact_j_winspear
+dropdown_single_canonical_name,pass,J Young,count=0; ids=
+dropdown_single_canonical_name,pass,Jack Farthing,count=1; ids=grdcc_excel_exact_jack_farthing
+dropdown_single_canonical_name,pass,Jack Lloyd,count=1; ids=grdcc_excel_exact_jack_lloyd
+dropdown_single_canonical_name,pass,Jake A Matuzic,count=0; ids=
+dropdown_single_canonical_name,pass,Jakob F Lindberg,count=0; ids=
+dropdown_single_canonical_name,pass,Jakob Lindberg,count=1; ids=grdcc_excel_exact_jakob_lindberg
+dropdown_single_canonical_name,pass,James C Whitney,count=0; ids=
+dropdown_single_canonical_name,pass,James P Davies,count=0; ids=
+dropdown_single_canonical_name,pass,Jason Hillman,count=1; ids=grdcc_excel_exact_jason_hillman
+dropdown_single_canonical_name,pass,Jason M Hillman,count=0; ids=
+dropdown_single_canonical_name,pass,Jason Z Bowler,count=0; ids=
+dropdown_single_canonical_name,pass,Jeffrey Boothe,count=1; ids=grdcc_excel_exact_jeffrey_boothe
+dropdown_single_canonical_name,pass,Jeremy C Berenger,count=0; ids=
+dropdown_single_canonical_name,pass,Jim George,count=1; ids=grdcc_excel_exact_jim_george
+dropdown_single_canonical_name,pass,Jim George (jnr),count=1; ids=grdcc_excel_exact_jim_george_jnr
+dropdown_single_canonical_name,pass,Jim George (snr),count=1; ids=grdcc_excel_exact_jim_george_snr
+dropdown_single_canonical_name,pass,Jock Webb,count=1; ids=grdcc_excel_exact_jock_webb
+dropdown_single_canonical_name,pass,Joe Gazzi,count=1; ids=grdcc_excel_exact_joe_gazzi
+dropdown_single_canonical_name,pass,John Haigh,count=1; ids=grdcc_excel_exact_john_haigh
+dropdown_single_canonical_name,pass,John Justice,count=1; ids=grdcc_excel_exact_john_justice
+dropdown_single_canonical_name,pass,John Mckay,count=1; ids=grdcc_excel_exact_john_mckay
+dropdown_single_canonical_name,pass,John Mesar,count=1; ids=grdcc_excel_exact_john_mesar
+dropdown_single_canonical_name,pass,John Moffat,count=1; ids=grdcc_excel_exact_john_moffat
+dropdown_single_canonical_name,pass,John Rogers,count=1; ids=grdcc_excel_exact_john_rogers
+dropdown_single_canonical_name,pass,John S Eden,count=0; ids=
+dropdown_single_canonical_name,pass,John Whigham,count=1; ids=grdcc_excel_exact_john_whigham
+dropdown_single_canonical_name,pass,Johnny J Konstas,count=0; ids=
+dropdown_single_canonical_name,pass,Justin L Drinkwater,count=0; ids=
+dropdown_single_canonical_name,pass,K Aird,count=0; ids=
+dropdown_single_canonical_name,pass,K Arter,count=1; ids=grdcc_excel_exact_k_arter
+dropdown_single_canonical_name,pass,K Grant,count=1; ids=grdcc_excel_exact_k_grant
+dropdown_single_canonical_name,pass,K Ives,count=1; ids=grdcc_excel_exact_k_ives
+dropdown_single_canonical_name,pass,K Lewis,count=1; ids=grdcc_excel_exact_k_lewis
+dropdown_single_canonical_name,pass,K Muhling,count=1; ids=grdcc_excel_exact_k_muhling
+dropdown_single_canonical_name,pass,K Murden,count=1; ids=grdcc_excel_exact_k_murden
+dropdown_single_canonical_name,pass,K Trotter,count=1; ids=grdcc_excel_exact_k_trotter
+dropdown_single_canonical_name,pass,Keith Perry,count=1; ids=grdcc_excel_exact_keith_perry
+dropdown_single_canonical_name,pass,Keith Trotter,count=1; ids=grdcc_excel_exact_keith_trotter
+dropdown_single_canonical_name,pass,Ken Boyton,count=1; ids=grdcc_excel_exact_ken_boyton
+dropdown_single_canonical_name,pass,Ken Grant,count=1; ids=grdcc_excel_exact_ken_grant
+dropdown_single_canonical_name,pass,Ken Honeywell,count=1; ids=grdcc_excel_exact_ken_honeywell
+dropdown_single_canonical_name,pass,Ken Hughes,count=1; ids=grdcc_excel_exact_ken_hughes
+dropdown_single_canonical_name,pass,Ken Thorne,count=1; ids=grdcc_excel_exact_ken_thorne
+dropdown_single_canonical_name,pass,Kevin Croom,count=1; ids=grdcc_excel_exact_kevin_croom
+dropdown_single_canonical_name,pass,Kevin J Croom,count=0; ids=
+dropdown_single_canonical_name,pass,Kevin Shearman,count=1; ids=grdcc_excel_exact_kevin_shearman
+dropdown_single_canonical_name,pass,Kieran P Mantle,count=0; ids=
+dropdown_single_canonical_name,pass,Kim A Smith,count=0; ids=
+dropdown_single_canonical_name,pass,Kingsley Osborne,count=1; ids=grdcc_excel_exact_kingsley_osborne
+dropdown_single_canonical_name,pass,L Bower,count=1; ids=grdcc_excel_exact_l_bower
+dropdown_single_canonical_name,pass,L Duly,count=1; ids=grdcc_excel_exact_l_duly
+dropdown_single_canonical_name,pass,L Holdsworth,count=1; ids=grdcc_excel_exact_l_holdsworth
+dropdown_single_canonical_name,pass,L Hunt,count=1; ids=grdcc_excel_exact_l_hunt
+dropdown_single_canonical_name,pass,L Hutchinson,count=1; ids=grdcc_excel_exact_l_hutchinson
+dropdown_single_canonical_name,pass,L Lee,count=1; ids=grdcc_excel_exact_l_lee
+dropdown_single_canonical_name,pass,L Scott,count=1; ids=grdcc_excel_exact_l_scott
+dropdown_single_canonical_name,pass,L Tustin,count=1; ids=grdcc_excel_exact_l_tustin
+dropdown_single_canonical_name,pass,Len Mcdonald,count=1; ids=grdcc_excel_exact_len_mcdonald
+dropdown_single_canonical_name,pass,Liam T Sparke,count=0; ids=
+dropdown_single_canonical_name,pass,Luke M Hams,count=0; ids=
+dropdown_single_canonical_name,pass,M Binns,count=1; ids=grdcc_excel_exact_m_binns
+dropdown_single_canonical_name,pass,M Jones,count=1; ids=grdcc_excel_exact_m_jones
+dropdown_single_canonical_name,pass,M Lamb,count=1; ids=grdcc_excel_exact_m_lamb
+dropdown_single_canonical_name,pass,M Leigh,count=0; ids=
+dropdown_single_canonical_name,pass,M Leslie,count=1; ids=grdcc_excel_exact_m_leslie
+dropdown_single_canonical_name,pass,Malcolm Bower,count=1; ids=grdcc_excel_exact_malcolm_bower
+dropdown_single_canonical_name,pass,Mark A Devine,count=0; ids=
+dropdown_single_canonical_name,pass,Mark Q Mitchell,count=0; ids=
+dropdown_single_canonical_name,pass,Matthew H Stanton,count=0; ids=
+dropdown_single_canonical_name,pass,Matthew J Beer,count=0; ids=
+dropdown_single_canonical_name,pass,Matthew J Fulcher,count=0; ids=
+dropdown_single_canonical_name,pass,Matthew J Grealy,count=0; ids=
+dropdown_single_canonical_name,pass,Matthew L Simpkins,count=0; ids=
+dropdown_single_canonical_name,pass,Matthew P Morgan,count=0; ids=
+dropdown_single_canonical_name,pass,Max Allen,count=1; ids=grdcc_excel_exact_max_allen
+dropdown_single_canonical_name,pass,Max Gosling,count=1; ids=grdcc_excel_exact_max_gosling
+dropdown_single_canonical_name,pass,Meville A Fernando,count=0; ids=
+dropdown_single_canonical_name,pass,Michael C Dettman-Campbell,count=0; ids=
+dropdown_single_canonical_name,pass,Michael J Bladen,count=0; ids=
+dropdown_single_canonical_name,pass,Mick Lamb,count=1; ids=grdcc_excel_exact_mick_lamb
+dropdown_single_canonical_name,pass,Mick Stone,count=1; ids=grdcc_excel_exact_mick_stone
+dropdown_single_canonical_name,pass,Muhammad S Fayyaz,count=0; ids=
+dropdown_single_canonical_name,pass,Muhammad Zeeshan,count=1; ids=grdcc_excel_exact_muhammad_zeeshan
+dropdown_single_canonical_name,pass,Murray J Stanton,count=0; ids=
+dropdown_single_canonical_name,pass,Musab B Muhammad,count=0; ids=
+dropdown_single_canonical_name,pass,N Davidson,count=1; ids=grdcc_excel_exact_n_davidson
+dropdown_single_canonical_name,pass,N Nosworthy,count=1; ids=grdcc_excel_exact_n_nosworthy
+dropdown_single_canonical_name,pass,Nathan E Wadds,count=0; ids=
+dropdown_single_canonical_name,pass,Neville Collins,count=1; ids=grdcc_excel_exact_neville_collins
+dropdown_single_canonical_name,pass,Neville Judd,count=1; ids=grdcc_excel_exact_neville_judd
+dropdown_single_canonical_name,pass,Norm Nosworthy,count=1; ids=grdcc_excel_exact_norm_nosworthy
+dropdown_single_canonical_name,pass,P Cripps,count=0; ids=
+dropdown_single_canonical_name,pass,P Gibson,count=0; ids=
+dropdown_single_canonical_name,pass,P Harfield,count=0; ids=
+dropdown_single_canonical_name,pass,P Huthnance,count=0; ids=
+dropdown_single_canonical_name,pass,P Murphy,count=1; ids=grdcc_excel_exact_p_murphy
+dropdown_single_canonical_name,pass,P Osborne,count=0; ids=
+dropdown_single_canonical_name,pass,P Rowe,count=0; ids=
+dropdown_single_canonical_name,pass,P Westwood,count=1; ids=grdcc_excel_exact_p_westwood
+dropdown_single_canonical_name,pass,Paul Blazely,count=1; ids=grdcc_excel_exact_paul_blazely
+dropdown_single_canonical_name,pass,Paul C Bristow,count=0; ids=
+dropdown_single_canonical_name,pass,Paul E Thomas,count=0; ids=
+dropdown_single_canonical_name,pass,Paul M Younger,count=0; ids=
+dropdown_single_canonical_name,pass,Paul P O'Brien,count=0; ids=
+dropdown_single_canonical_name,pass,Percy Eldridge,count=1; ids=grdcc_excel_exact_percy_eldridge
+dropdown_single_canonical_name,pass,Peter A Mcgann,count=0; ids=
+dropdown_single_canonical_name,pass,Peter Brunton,count=1; ids=grdcc_excel_exact_peter_brunton
+dropdown_single_canonical_name,pass,Peter C Lanham,count=0; ids=
+dropdown_single_canonical_name,pass,Peter C Rose,count=0; ids=
+dropdown_single_canonical_name,pass,Peter G Dick,count=0; ids=
+dropdown_single_canonical_name,pass,Peter J Bugeia,count=0; ids=
+dropdown_single_canonical_name,pass,Peter J Francis,count=0; ids=
+dropdown_single_canonical_name,pass,Peter Lanham,count=1; ids=grdcc_excel_exact_peter_lanham
+dropdown_single_canonical_name,pass,Peter Leslie,count=1; ids=grdcc_excel_exact_peter_leslie
+dropdown_single_canonical_name,pass,Peter Rowe,count=1; ids=grdcc_excel_exact_peter_rowe
+dropdown_single_canonical_name,pass,Phil Payne,count=1; ids=grdcc_excel_exact_phil_payne
+dropdown_single_canonical_name,pass,Played Wo,count=0; ids=
+dropdown_single_canonical_name,pass,R Avern,count=1; ids=grdcc_excel_exact_r_avern
+dropdown_single_canonical_name,pass,R Bartley,count=1; ids=grdcc_excel_exact_r_bartley
+dropdown_single_canonical_name,pass,R Brand,count=1; ids=grdcc_excel_exact_r_brand
+dropdown_single_canonical_name,pass,R Bullock,count=1; ids=grdcc_excel_exact_r_bullock
+dropdown_single_canonical_name,pass,R Clarke,count=1; ids=grdcc_excel_exact_r_clarke
+dropdown_single_canonical_name,pass,R Coleman,count=1; ids=grdcc_excel_exact_r_coleman
+dropdown_single_canonical_name,pass,R Fox,count=1; ids=grdcc_excel_exact_r_fox
+dropdown_single_canonical_name,pass,R Gonella,count=0; ids=
+dropdown_single_canonical_name,pass,R Gray,count=1; ids=grdcc_excel_exact_r_gray
+dropdown_single_canonical_name,pass,R Green,count=1; ids=grdcc_excel_exact_r_green
+dropdown_single_canonical_name,pass,R Lamb,count=1; ids=grdcc_excel_exact_r_lamb
+dropdown_single_canonical_name,pass,R Learmonth,count=1; ids=grdcc_excel_exact_r_learmonth
+dropdown_single_canonical_name,pass,R Maher,count=1; ids=grdcc_excel_exact_r_maher
+dropdown_single_canonical_name,pass,R Mclean,count=1; ids=grdcc_excel_exact_r_mclean
+dropdown_single_canonical_name,pass,R Morrison,count=1; ids=grdcc_excel_exact_r_morrison
+dropdown_single_canonical_name,pass,R Norman,count=1; ids=grdcc_excel_exact_r_norman
+dropdown_single_canonical_name,pass,R Ramsay,count=1; ids=grdcc_excel_exact_r_ramsay
+dropdown_single_canonical_name,pass,R Robertson,count=1; ids=grdcc_excel_exact_r_robertson
+dropdown_single_canonical_name,pass,R Scott,count=1; ids=grdcc_excel_exact_r_scott
+dropdown_single_canonical_name,pass,R Warren,count=1; ids=grdcc_excel_exact_r_warren
+dropdown_single_canonical_name,pass,R Whelan,count=1; ids=grdcc_excel_exact_r_whelan
+dropdown_single_canonical_name,pass,Ray Gray,count=1; ids=grdcc_excel_exact_ray_gray
+dropdown_single_canonical_name,pass,Raymond N Buchanan,count=0; ids=
+dropdown_single_canonical_name,pass,Reg Jones,count=1; ids=grdcc_excel_exact_reg_jones
+dropdown_single_canonical_name,pass,Reg Sommerlad,count=1; ids=grdcc_excel_exact_reg_sommerlad
+dropdown_single_canonical_name,pass,Ren Bullock,count=1; ids=grdcc_excel_exact_ren_bullock
+dropdown_single_canonical_name,pass,Rhys N Brett-Bowen,count=0; ids=
+dropdown_single_canonical_name,pass,Richard Wales,count=1; ids=grdcc_excel_exact_richard_wales
+dropdown_single_canonical_name,pass,Robert J Southwell,count=0; ids=
+dropdown_single_canonical_name,pass,Ron Cook,count=1; ids=grdcc_excel_exact_ron_cook
+dropdown_single_canonical_name,pass,Ron Gnaden,count=1; ids=grdcc_excel_exact_ron_gnaden
+dropdown_single_canonical_name,pass,Ron Gray,count=1; ids=grdcc_excel_exact_ron_gray
+dropdown_single_canonical_name,pass,Ron Lamb,count=1; ids=grdcc_excel_exact_ron_lamb
+dropdown_single_canonical_name,pass,Ron Phillips,count=1; ids=grdcc_excel_exact_ron_phillips
+dropdown_single_canonical_name,pass,Ross Hunter,count=1; ids=grdcc_excel_exact_ross_hunter
+dropdown_single_canonical_name,pass,Ross Turnbull,count=1; ids=grdcc_excel_exact_ross_turnbull
+dropdown_single_canonical_name,pass,Roy Menzies,count=1; ids=grdcc_excel_exact_roy_menzies
+dropdown_single_canonical_name,pass,S Douglas,count=1; ids=grdcc_excel_exact_s_douglas
+dropdown_single_canonical_name,pass,S Fuller,count=1; ids=grdcc_excel_exact_s_fuller
+dropdown_single_canonical_name,pass,S Glasspool,count=1; ids=grdcc_excel_exact_s_glasspool
+dropdown_single_canonical_name,pass,Safwan A Shaikh,count=0; ids=
+dropdown_single_canonical_name,pass,Sam Burtenshaw,count=1; ids=grdcc_excel_exact_sam_burtenshaw
+dropdown_single_canonical_name,pass,Samad K Shaikh,count=0; ids=
+dropdown_single_canonical_name,pass,Scott D Aitchison,count=0; ids=
+dropdown_single_canonical_name,pass,Sean M Mantle,count=0; ids=
+dropdown_single_canonical_name,pass,Sean Mantle,count=1; ids=grdcc_excel_exact_sean_mantle
+dropdown_single_canonical_name,pass,Sean P Bugeia,count=0; ids=
+dropdown_single_canonical_name,pass,Simon J Jasper,count=0; ids=
+dropdown_single_canonical_name,pass,Stan Towner,count=1; ids=grdcc_excel_exact_stan_towner
+dropdown_single_canonical_name,pass,Steve A Smith,count=0; ids=
+dropdown_single_canonical_name,pass,Steve Fuller,count=1; ids=grdcc_excel_exact_steve_fuller
+dropdown_single_canonical_name,pass,Steve Lucas,count=1; ids=grdcc_excel_exact_steve_lucas
+dropdown_single_canonical_name,pass,Steve W Lucas,count=0; ids=
+dropdown_single_canonical_name,pass,Steven Jones,count=1; ids=grdcc_excel_exact_steven_jones
+dropdown_single_canonical_name,pass,Steven M Jones,count=0; ids=
+dropdown_single_canonical_name,pass,Stuart C Aley,count=0; ids=
+dropdown_single_canonical_name,pass,T Davies,count=0; ids=
+dropdown_single_canonical_name,pass,T Harfield,count=0; ids=
+dropdown_single_canonical_name,pass,T O'Neill,count=1; ids=grdcc_excel_exact_t_oneill
+dropdown_single_canonical_name,pass,T Osborne,count=1; ids=grdcc_excel_exact_t_osborne
+dropdown_single_canonical_name,pass,T Squires,count=1; ids=grdcc_excel_exact_t_squires
+dropdown_single_canonical_name,pass,T Trotter,count=1; ids=grdcc_excel_exact_t_trotter
+dropdown_single_canonical_name,pass,T Whitaker,count=1; ids=grdcc_excel_exact_t_whitaker
+dropdown_single_canonical_name,pass,Ted Bennett,count=1; ids=grdcc_excel_exact_ted_bennett
+dropdown_single_canonical_name,pass,Terry Brennan,count=1; ids=grdcc_excel_exact_terry_brennan
+dropdown_single_canonical_name,pass,Theo Papanikoloau,count=0; ids=
+dropdown_single_canonical_name,pass,Thomas D Gilmour,count=0; ids=
+dropdown_single_canonical_name,pass,Tim J Marsh,count=0; ids=
+dropdown_single_canonical_name,pass,Toby Mackenzie,count=1; ids=grdcc_excel_exact_toby_mackenzie
+dropdown_single_canonical_name,pass,Tom Mooney,count=1; ids=grdcc_excel_exact_tom_mooney
+dropdown_single_canonical_name,pass,Tom Payne,count=1; ids=grdcc_excel_exact_tom_payne
+dropdown_single_canonical_name,pass,Tony A Murphy,count=0; ids=
+dropdown_single_canonical_name,pass,Trent M Power,count=0; ids=
+dropdown_single_canonical_name,pass,V Mahoney,count=1; ids=grdcc_excel_exact_v_mahoney
+dropdown_single_canonical_name,pass,Vic Winspear,count=1; ids=grdcc_excel_exact_vic_winspear
+dropdown_single_canonical_name,pass,W Dixon,count=1; ids=grdcc_excel_exact_w_dixon
+dropdown_single_canonical_name,pass,W Edmonds,count=1; ids=grdcc_excel_exact_w_edmonds
+dropdown_single_canonical_name,pass,W Gietz,count=1; ids=grdcc_excel_exact_w_gietz
+dropdown_single_canonical_name,pass,W Melluish,count=1; ids=grdcc_excel_exact_w_melluish
+dropdown_single_canonical_name,pass,W Murray,count=1; ids=grdcc_excel_exact_w_murray
+dropdown_single_canonical_name,pass,W Rolph,count=1; ids=grdcc_excel_exact_w_rolph
+dropdown_single_canonical_name,pass,W Vale,count=1; ids=grdcc_excel_exact_w_vale
+dropdown_single_canonical_name,pass,Wade A Ryan,count=0; ids=
+dropdown_single_canonical_name,pass,Warwick Gietz,count=1; ids=grdcc_excel_exact_warwick_gietz
+dropdown_single_canonical_name,pass,Wilf Roden,count=1; ids=grdcc_excel_exact_wilf_roden
+total_duplicate_exact_name_no_overlap_count,pass,,0
+canonical_players_merged_count,pass,,365
+canonical_players_merged_list,pass,,A Clarkson; A Ferguson; A Howard; A Mailey; A Mostyn; A Randall; A Randall (jnr); A Ridge; A Ryan; A Seddon; A Sloan; Alan Cox; Alan Ferguson; Alan Mashman; Alan Randall; Alex M Scott; Alex Z Denton; Alf Randall; Alf Randle; Allan Randall (jnr); Andrew B Balding; Andrew G Ellis; Andrew Gunaratnam; Andrew J Julian; Andrew M Merriman; Anthony L Ward; Arthur Sommerlad; B Bullock; B Carrington; B Davey; B Kelly; B Smith; B Trevillion; B White; Barry Davey; Barry Trevillion; Ben Vella; Benjamin Jeffrey; Benjamin R Whitehouse; Benjamin Worger; Bevan B Taylor; Bill Cromer; Bill Edmonds; Bill Wade; Billy H Smith; Bob Bennett; Bob Bigelow; Bob Dixon; Bob Ross; Brendan J Napier; Brett J Hudson; Bruce Shade; Bushy Pillay; C Austin; C Avern; C Gietz; C Mcconechy; C Robinson; C Warren; Cameron D Jenkins; Carl Demarco; Chas Gray; Chris Jurgeit; Chris Thanos; Christopher J Diehm; Christopher J Morris; Clyde Eastman; Craig Tilley; D Anderson; D Morton; D Murden; D Towey; D Warburton; Daniel J Wynn; Danny Lee; Darren S Smith; Dave Winspear; David A Goddard; David A White; David Boughton; Dayle H Carew; Des King; Don Crew; Don Eldridge; Dylan Devoy Paino; Dylan M Minehan; E Bowen; E Fairfax; E Lowe; E Mealey; E Reid; E Weatherhead; E Williams; Emmanuel P Tsardoulias; Eric Bates; Eric Lewis; F Griggs; F Heather; F Hurst; F Mcdarra; F Osborne; F Richards; F Townsend; F Winspear; Frank Osborne; Frank Roach; Fred Lark; G Aldrich; G Butt; G Gilbert; G Leslie; G Parsons; G Price; G Toddie; Gabriel R Lattouf; Games Wo; Gary White; Geoff Morgan; George Edwards; George Toddie; Glenn A Ross; Glenn Ross; Gordon Leslie; Graham Hampton; Graham Hicks; Graham Mcdonald; Graham Walker; Grant A Rowe; Grant C Carter; Grant Pirois; Greg Ings; Gus Kelly; H Clapham; H Ferguson; H Jesson; H Jolly; Harrison D Morton; Harry Milburn; Henry James; Howard Boughton; Howard Cooper; I Campbell; I Findlay; I Fleming; Ian M Edwards; Ian Sharp; Ian Woodbury; J Dixon; J Edmonds; J Farthing; J Gardiner; J George; J George (jnr); J Lloyd; J Lynch; J Mcguiness; J Mckay; J Rayment; J Ross; J Smith; J Sutton; J Webb; J Winspear; J Young; Jack Farthing; Jack Lloyd; Jake A Matuzic; Jakob F Lindberg; Jakob Lindberg; James C Whitney; James P Davies; Jason Hillman; Jason M Hillman; Jason Z Bowler; Jeffrey Boothe; Jeremy C Berenger; Jim George; Jim George (jnr); Jim George (snr); Jock Webb; Joe Gazzi; John Haigh; John Justice; John Mckay; John Mesar; John Moffat; John Rogers; John S Eden; John Whigham; Johnny J Konstas; Justin L Drinkwater; K Aird; K Arter; K Grant; K Ives; K Lewis; K Muhling; K Murden; K Trotter; Keith Perry; Keith Trotter; Ken Boyton; Ken Grant; Ken Honeywell; Ken Hughes; Ken Thorne; Kevin Croom; Kevin J Croom; Kevin Shearman; Kieran P Mantle; Kim A Smith; Kingsley Osborne; L Bower; L Duly; L Holdsworth; L Hunt; L Hutchinson; L Lee; L Scott; L Tustin; Len Mcdonald; Liam T Sparke; Luke M Hams; M Binns; M Jones; M Lamb; M Leigh; M Leslie; Malcolm Bower; Mark A Devine; Mark Q Mitchell; Matthew H Stanton; Matthew J Beer; Matthew J Fulcher; Matthew J Grealy; Matthew L Simpkins; Matthew P Morgan; Max Allen; Max Gosling; Meville A Fernando; Michael C Dettman-Campbell; Michael J Bladen; Mick Lamb; Mick Stone; Muhammad S Fayyaz; Muhammad Zeeshan; Murray J Stanton; Musab B Muhammad; N Davidson; N Nosworthy; Nathan E Wadds; Neville Collins; Neville Judd; Norm Nosworthy; P Cripps; P Gibson; P Harfield; P Huthnance; P Murphy; P Osborne; P Rowe; P Westwood; Paul Blazely; Paul C Bristow; Paul E Thomas; Paul M Younger; Paul P O'Brien; Percy Eldridge; Peter A Mcgann; Peter Brunton; Peter C Lanham; Peter C Rose; Peter G Dick; Peter J Bugeia; Peter J Francis; Peter Lanham; Peter Leslie; Peter Rowe; Phil Payne; Played Wo; R Avern; R Bartley; R Brand; R Bullock; R Clarke; R Coleman; R Fox; R Gonella; R Gray; R Green; R Lamb; R Learmonth; R Maher; R Mclean; R Morrison; R Norman; R Ramsay; R Robertson; R Scott; R Warren; R Whelan; Ray Gray; Raymond N Buchanan; Reg Jones; Reg Sommerlad; Ren Bullock; Rhys N Brett-Bowen; Richard Wales; Robert J Southwell; Ron Cook; Ron Gnaden; Ron Gray; Ron Lamb; Ron Phillips; Ross Hunter; Ross Turnbull; Roy Menzies; S Douglas; S Fuller; S Glasspool; Safwan A Shaikh; Sam Burtenshaw; Samad K Shaikh; Scott D Aitchison; Sean M Mantle; Sean Mantle; Sean P Bugeia; Simon J Jasper; Stan Towner; Steve A Smith; Steve Fuller; Steve Lucas; Steve W Lucas; Steven Jones; Steven M Jones; Stuart C Aley; T Davies; T Harfield; T O'Neill; T Osborne; T Squires; T Trotter; T Whitaker; Ted Bennett; Terry Brennan; Theo Papanikoloau; Thomas D Gilmour; Tim J Marsh; Toby Mackenzie; Tom Mooney; Tom Payne; Tony A Murphy; Trent M Power; V Mahoney; Vic Winspear; W Dixon; W Edmonds; W Gietz; W Melluish; W Murray; W Rolph; W Vale; Wade A Ryan; Warwick Gietz; Wilf Roden
+exact_name_duplicates_left_unmerged_due_to_overlap,pass,,Graham Butt; Paul Thomas; Peter Francis; Peter Thomas; Peter Trajkovski; Ranganatha Rangappa; Robert Stares

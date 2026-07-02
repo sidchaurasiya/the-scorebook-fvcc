@@ -95,7 +95,12 @@ def load_season_overview(club_id: str) -> dict[str, pd.DataFrame]:
 
 
 def sample_player_id(club_id: str) -> str:
-    index = layout.load_player_profile_index(club_id, metadata_mtime(), player_aliases_mtime(club_id=club_id))
+    index = layout.load_player_profile_index(
+        club_id,
+        metadata_mtime(),
+        player_aliases_mtime(club_id=club_id),
+        layout.PLAYER_PROFILE_INDEX_VERSION,
+    )
     if index.empty:
         return ""
     preferred = "A Clarkson" if club_id == "georges-river-district" else "Siddhanth Chaurasiya"
@@ -133,7 +138,17 @@ def profile_club(club_id: str) -> list[dict[str, object]]:
     rows = [
         profile_component(club_id, "HOF data build", lambda: load_hof(club_id), "get_hall_of_fame_data"),
         profile_component(club_id, "Season Overview data build", lambda: load_season_overview(club_id), "local all-team frames + detail metrics"),
-        profile_component(club_id, "Player Profile index build", lambda: layout.load_player_profile_index(club_id, metadata_mtime(), player_aliases_mtime(club_id=club_id)), "dropdown source"),
+        profile_component(
+            club_id,
+            "Player Profile index build",
+            lambda: layout.load_player_profile_index(
+                club_id,
+                metadata_mtime(),
+                player_aliases_mtime(club_id=club_id),
+                layout.PLAYER_PROFILE_INDEX_VERSION,
+            ),
+            "dropdown source",
+        ),
         profile_component(club_id, "Player Profile selected-player build", lambda: profile_player(club_id), "sample canonical player"),
         profile_component(club_id, "Milestone Upcoming build", lambda: profile_milestones(club_id, "upcoming"), "selected tab only"),
         profile_component(club_id, "Milestone Achieved build", lambda: profile_milestones(club_id, "achieved"), "selected tab only"),

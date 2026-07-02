@@ -65,5 +65,7 @@ Deployment checklist:
 3. Select branch `main`
 4. Set main file to `app_grdcc.py`
 5. Paste the GRDCC Streamlit Secrets TOML above
-7. Deploy
-8. Smoke test Hall of Fame, Season Overview, Player Profile, and Milestones
+6. Deploy
+7. Reboot the app after deployment if stale player/profile data appears
+8. Confirm the sidebar footer build marker shows the latest commit and `Identity: 2026-07-identity-v4`
+9. Smoke test Hall of Fame, Season Overview, Player Profile, and Milestones

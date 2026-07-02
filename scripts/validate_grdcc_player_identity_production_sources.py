@@ -17,7 +17,12 @@ if str(ROOT) not in sys.path:
 os.environ["CLUB_ID"] = "georges-river-district"
 
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table  # noqa: E402
-from src.ui.layout import load_hall_of_fame_data, load_player_profile_index, player_name_match_key  # noqa: E402
+from src.ui.layout import (  # noqa: E402
+    PLAYER_PROFILE_INDEX_VERSION,
+    load_hall_of_fame_data,
+    load_player_profile_index,
+    player_name_match_key,
+)
 from src.utils.player_identity import (  # noqa: E402
     apply_player_identity_mapping,
     display_player_name,
@@ -139,7 +144,12 @@ def main() -> int:
     fixed_players = fixed_players_from_map(raw_source)
     overlap_left = overlap_unmerged_names(raw_source)
 
-    index = load_player_profile_index(CLUB_ID, metadata_mtime(), player_aliases_mtime(club_id=CLUB_ID))
+    index = load_player_profile_index(
+        CLUB_ID,
+        metadata_mtime(),
+        player_aliases_mtime(club_id=CLUB_ID),
+        PLAYER_PROFILE_INDEX_VERSION,
+    )
     hof = load_hall_of_fame_data(metadata_mtime(), player_aliases_mtime(club_id=CLUB_ID), club_id=CLUB_ID)
     all_time = hof.get("all_time", pd.DataFrame()) if hof else pd.DataFrame()
     frames = mapped_frames()
