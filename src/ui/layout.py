@@ -4633,6 +4633,7 @@ def hall_of_fame_team_group_options(data: dict[str, object]) -> list[tuple[str, 
 def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_slug: str) -> dict[str, object]:
     if team_group_slug not in {"men", "women"}:
         return data
+    club_id = get_active_club_id()
     batting_raw = filter_hof_team_group_frame(data.get("batting_raw", pd.DataFrame()), team_group_slug)
     bowling_raw = filter_hof_team_group_frame(data.get("bowling_raw", pd.DataFrame()), team_group_slug)
     fielding_raw = filter_hof_team_group_frame(data.get("fielding_raw", pd.DataFrame()), team_group_slug)
@@ -4640,7 +4641,8 @@ def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_s
     bowling = combine_player_rows(bowling_raw, "bowling")
     fielding = add_display_stat_aliases(combine_player_rows(add_display_stat_aliases(fielding_raw), "fielding"))
     all_time = apply_featured_record_overrides(
-        build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
+        build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding),
+        club_id=club_id,
     )
     detailed_tables = {
         "batting": format_all_time_batting_table(all_time),
@@ -4925,7 +4927,7 @@ def hall_of_fame_v2_player_premierships_card_html(players: pd.DataFrame) -> str:
 
 
 def render_hall_of_fame_v2_club_legends(all_time: pd.DataFrame) -> None:
-    all_time = apply_featured_record_overrides(all_time)
+    all_time = apply_featured_record_overrides(all_time, club_id=get_active_club_id())
     specs = [
         ("Most matches", "Durability Kings", "Matches", "fielding", "matches"),
         ("Most runs", "Run Mountain", "Runs", "batting", "runs"),
@@ -6000,20 +6002,21 @@ def get_hall_of_fame_data(
     override_version: float | None = None,
     club_id: str | None = None,
 ) -> dict[str, object] | None:
-    _ = (override_version, club_id)
+    active_club_id = club_id or get_active_club_id()
+    _ = override_version
     started_at = time.perf_counter()
     historical_data = load_hall_of_fame_data(
         local_version,
         identity_version,
         data_version,
-        club_id=club_id,
+        club_id=active_club_id,
     )
     log_hof_timing("load historical data", started_at)
     if historical_data is None:
         return None
 
     started_at = time.perf_counter()
-    all_time = apply_featured_record_overrides(historical_data["all_time"].copy())
+    all_time = apply_featured_record_overrides(historical_data["all_time"].copy(), club_id=active_club_id)
     log_hof_timing("copy all-time summary", started_at)
 
     started_at = time.perf_counter()
@@ -7028,7 +7031,7 @@ def active_hof_players(data: dict[str, object]) -> set[str]:
 
 
 def render_hall_of_fame_leaders(all_time: pd.DataFrame, active_players: set[str] | None = None) -> None:
-    all_time = apply_featured_record_overrides(all_time)
+    all_time = apply_featured_record_overrides(all_time, club_id=get_active_club_id())
     render_section_heading("All-Time Leaders 👑")
     leader_specs = [
         ("Most Matches", "Matches", "matches", "fielding"),
@@ -10715,7 +10718,7 @@ def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFr
     grade_table = enrich_player_profile_grade_table(grade_table, profile, detail_sources)
     career = build_player_career_totals(season_table, batting, bowling, fielding, profile)
     career = enrich_player_profile_career(career, profile, detail_sources)
-    career = apply_featured_record_overrides(career, add_missing_players=False)
+    career = apply_featured_record_overrides(career, club_id=get_active_club_id(), add_missing_players=False)
     raw_profiles = build_player_raw_profile_table(batting, bowling, fielding)
     performance_breakdown = player_profile_source_rows(detail_sources.get("performance_breakdown", pd.DataFrame()), profile)
     batting_position = player_profile_source_rows(detail_sources.get("batting_position", pd.DataFrame()), profile)
