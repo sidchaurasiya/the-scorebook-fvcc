@@ -8086,11 +8086,28 @@ def active_club_theme_css() -> str:
         }}
 
         .team-leader-card::before,
+        .team-leader-card .mini-track div,
         .kpi-icon.purple,
         .pill.purple,
         .score-dot.purple,
         .legend-dot.current {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
+        }}
+
+        .team-leader-card .mini-icon {{
+            background: var(--club-primary-soft) !important;
+            border-color: rgba(var(--club-primary-rgb), 0.22) !important;
+            color: var(--club-primary) !important;
+        }}
+
+        .team-leader-card .mini-stat {{
+            color: var(--club-primary) !important;
+        }}
+
+        .team-leader-card .team-card-meta {{
+            background: var(--club-secondary-soft) !important;
+            border-color: rgba(var(--club-secondary-rgb), 0.24) !important;
+            color: var(--club-secondary) !important;
         }}
 
         .profile-segment:hover,

@@ -74,7 +74,9 @@ def validate_bowling_phase(rows: list[dict[str, str]]) -> None:
 
 
 def validate_fvcc_data_propagation(rows: list[dict[str, str]]) -> None:
-    propagation_path = ROOT / "clubs" / "fvcc" / "data" / "processed" / "validation" / "fvcc_full_data_propagation_validation.csv"
+    propagation_path = ROOT / "clubs" / "fvcc" / "data" / "processed" / "validation" / "fvcc_winter_2026_full_propagation_validation.csv"
+    if not propagation_path.exists():
+        propagation_path = ROOT / "clubs" / "fvcc" / "data" / "processed" / "validation" / "fvcc_full_data_propagation_validation.csv"
     if not propagation_path.exists():
         add(rows, "fvcc_full_data_propagation_output_exists", False, str(propagation_path))
         return
