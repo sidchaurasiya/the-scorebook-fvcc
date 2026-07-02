@@ -1,26 +1,33 @@
 club:
   club_id: glen-waverley-hawks
   name: Glen Waverley Hawks Cricket Club
-  short_name: GWHCC
+  short_name: Glen Waverley Hawks
   display_name: Glen Waverley Hawks Cricket Club
   app_name: The Scorebook
   slug: glen-waverley-hawks
-  playcricket_club_id: null
-  playhq_club_id: null
+  playcricket_club_id: 50f7f1e3-86d8-eb11-a7ad-2818780da0cc
+  playhq_club_id: 50f7f1e3-86d8-eb11-a7ad-2818780da0cc
   playhq_org_id: null
-  streamlit_entrypoint: null
+  streamlit_entrypoint: app_gwhcc.py
   ga4_club_name: Glen Waverley Hawks Cricket Club
   default_page: hall-of-fame
 
 branding:
-  primary_colour: null
-  secondary_colour: null
-  background_colour: null
-  accent_colour: null
-  link_colour: null
-  link_hover_colour: null
-  nav_active_colour: null
-  logo_path: null
+  primary_colour: "#FCD207"
+  secondary_colour: "#280B04"
+  background_colour: "#FFF8D8"
+  accent_colour: "#62431A"
+  muted_accent_colour: "#B39125"
+  cream_accent_colour: "#EDC778"
+  primary_dark_colour: "#280B04"
+  text_colour: "#280B04"
+  muted_text_colour: "#62431A"
+  border_colour: "#EDC778"
+  surface_colour: "#FFFFFF"
+  link_colour: "#280B04"
+  link_hover_colour: "#000000"
+  nav_active_colour: "#FCD207"
+  logo_path: clubs/glen-waverley-hawks/assets/logo.png
 
 contact:
   creators:
