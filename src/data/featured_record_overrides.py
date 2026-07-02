@@ -260,6 +260,57 @@ def _supplement_value(row: pd.Series, column: str) -> float | None:
     return float(numeric)
 
 
+def _is_missing_override_value(value: object) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, (dict, list, tuple, set)):
+        return False
+    try:
+        missing = pd.isna(value)
+    except (TypeError, ValueError):
+        return False
+    if isinstance(missing, bool):
+        return missing
+    return False
+
+
+def _format_override_string(value: object) -> str:
+    numeric = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if not pd.isna(numeric) and float(numeric).is_integer():
+        return str(int(numeric))
+    return str(value)
+
+
+def _coerce_override_value_for_column(value: object, target_series: pd.Series | None) -> object:
+    if _is_missing_override_value(value):
+        return pd.NA
+    if target_series is None:
+        return value
+
+    dtype = target_series.dtype
+    if pd.api.types.is_bool_dtype(dtype):
+        if isinstance(value, str):
+            return value.strip().casefold() in {"1", "true", "yes", "y"}
+        return bool(value)
+    if pd.api.types.is_numeric_dtype(dtype):
+        numeric = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+        return pd.NA if pd.isna(numeric) else numeric
+    if pd.api.types.is_string_dtype(dtype) or str(dtype).startswith("string"):
+        return _format_override_string(value)
+    return value
+
+
+def _assign_override_value(output: pd.DataFrame, index: object, column: str, value: object) -> None:
+    target_series = output[column] if column in output.columns else None
+    coerced = _coerce_override_value_for_column(value, target_series)
+    if column in output.columns and (
+        pd.api.types.is_string_dtype(output[column].dtype)
+        or str(output[column].dtype).startswith("string")
+    ):
+        output[column] = output[column].astype(object)
+    output.loc[index, column] = coerced
+
+
 def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     output = all_time.copy()
     if output.empty or "Player" not in output.columns:
@@ -299,37 +350,42 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
         for column, value in numeric_updates.items():
             if value is None or column not in output.columns:
                 continue
-            output.loc[index, column] = value
+            _assign_override_value(output, index, column, value)
         if "Overs" in output.columns and numeric_updates.get("Balls Bowled") is not None:
-            output.loc[index, "Overs"] = _balls_to_overs_display(numeric_updates["Balls Bowled"])
+            _assign_override_value(output, index, "Overs", _balls_to_overs_display(numeric_updates["Balls Bowled"]))
         if str(supplement.get("override_metric", "")).strip() == "career_wickets" and str(supplement.get("override_applies", "")).strip().casefold() == "yes":
             for column in ["Bowl Avg", "Bowl SR"]:
                 if column in output.columns:
-                    output.loc[index, column] = pd.NA
-        output.loc[index, "Matches Source"] = str(supplement.get("matches_source", "") or "")
-        output.loc[index, "Matches Proxy"] = "Yes" if str(supplement.get("matches_source", "")).strip().casefold() == "innings_proxy" else ""
+                    _assign_override_value(output, index, column, pd.NA)
+        _assign_override_value(output, index, "Matches Source", str(supplement.get("matches_source", "") or ""))
+        _assign_override_value(
+            output,
+            index,
+            "Matches Proxy",
+            "Yes" if str(supplement.get("matches_source", "")).strip().casefold() == "innings_proxy" else "",
+        )
 
         innings = _supplement_value(supplement, "excel_innings")
         not_outs = _supplement_value(supplement, "excel_not_outs")
         if innings is not None and not_outs is not None and "Outs" in output.columns:
-            output.loc[index, "Outs"] = max(float(innings) - float(not_outs), 0.0)
+            _assign_override_value(output, index, "Outs", max(float(innings) - float(not_outs), 0.0))
 
         seasons_text = _first_non_empty(pd.Series([supplement.get("excel_seasons", "")]))
         seasons = sorted(_season_list(seasons_text), key=_season_sort_key)
         if seasons_text and "Seasons" in output.columns:
-            output.loc[index, "Seasons"] = seasons_text
+            _assign_override_value(output, index, "Seasons", seasons_text)
         if seasons:
             if "Debut Season" in output.columns:
-                output.loc[index, "Debut Season"] = seasons[0]
+                _assign_override_value(output, index, "Debut Season", seasons[0])
             if "Latest Season" in output.columns:
-                output.loc[index, "Latest Season"] = seasons[-1]
+                _assign_override_value(output, index, "Latest Season", seasons[-1])
             if "Career Span" in output.columns:
-                output.loc[index, "Career Span"] = _career_span_from_seasons(seasons_text)
+                _assign_override_value(output, index, "Career Span", _career_span_from_seasons(seasons_text))
         if "Featured Record Source" in output.columns:
-            output.loc[index, "Featured Record Source"] = "GRDCC 2024/25 Annual Report"
+            _assign_override_value(output, index, "Featured Record Source", "GRDCC 2024/25 Annual Report")
         preferred_name = str(supplement.get("player_name", "") or "").strip()
         if preferred_name:
-            output.loc[index, "Player"] = preferred_name
+            _assign_override_value(output, index, "Player", preferred_name)
     return output
 
 
@@ -424,12 +480,12 @@ def apply_featured_record_overrides(
         current_value = pd.to_numeric(pd.Series([output.loc[featured_index, target_column]]), errors="coerce").fillna(0).iloc[0]
         preferred_name = str(override.get("player_name", "") or "").strip()
         if preferred_name:
-            output.loc[featured_index, "Player"] = preferred_name
-        output.loc[featured_index, target_column] = max(float(current_value), float(override["authoritative_value"]))
-        output.loc[featured_index, "Featured Record Override"] = True
-        output.loc[featured_index, "Featured Record Metric"] = metric
-        output.loc[featured_index, "Featured Record Source"] = str(override.get("annual_report_source", ""))
-        output.loc[featured_index, "Featured Record Source Note"] = str(override.get("source_note", ""))
+            _assign_override_value(output, featured_index, "Player", preferred_name)
+        _assign_override_value(output, featured_index, target_column, max(float(current_value), float(override["authoritative_value"])))
+        _assign_override_value(output, featured_index, "Featured Record Override", True)
+        _assign_override_value(output, featured_index, "Featured Record Metric", metric)
+        _assign_override_value(output, featured_index, "Featured Record Source", str(override.get("annual_report_source", "")))
+        _assign_override_value(output, featured_index, "Featured Record Source Note", str(override.get("source_note", "")))
         normalized_players = output["Player"].map(normalize_featured_player_name)
 
     decisions = load_annual_report_override_decisions(club_id)
@@ -459,16 +515,16 @@ def apply_featured_record_overrides(
                 output = output.drop(index=duplicate_indices)
         elif add_missing_players:
             featured_index = len(output)
-            output.loc[featured_index, "Player"] = str(leader.get("player_name", "")).strip()
+            _assign_override_value(output, featured_index, "Player", str(leader.get("player_name", "")).strip())
         else:
             continue
         current_value = pd.to_numeric(pd.Series([output.loc[featured_index, target_column]]), errors="coerce").fillna(0).iloc[0]
         preferred_name = str(leader.get("player_name", "") or "").strip()
         if preferred_name:
-            output.loc[featured_index, "Player"] = preferred_name
-        output.loc[featured_index, target_column] = max(float(current_value), float(leader["displayed_value"]))
-        output.loc[featured_index, "Featured Record Override"] = True
-        output.loc[featured_index, "Featured Record Metric"] = metric
-        output.loc[featured_index, "Featured Record Source"] = "GRDCC 2024/25 Annual Report"
+            _assign_override_value(output, featured_index, "Player", preferred_name)
+        _assign_override_value(output, featured_index, target_column, max(float(current_value), float(leader["displayed_value"])))
+        _assign_override_value(output, featured_index, "Featured Record Override", True)
+        _assign_override_value(output, featured_index, "Featured Record Metric", metric)
+        _assign_override_value(output, featured_index, "Featured Record Source", "GRDCC 2024/25 Annual Report")
         normalized_players = output["Player"].map(normalize_featured_player_name)
     return apply_override_player_supplements(output, club_id)
