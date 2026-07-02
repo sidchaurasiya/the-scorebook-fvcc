@@ -5,9 +5,9 @@ season_by_round_mobile_result_alignment_shared,pass,Mobile SBR uses left content
 season_by_round_hover_scroll_shared,pass,SBR hover wheel handler is injected from shared render path.
 milestone_mobile_tabs_one_line_shared,pass,Three milestone tabs fit one mobile row.
 career_breakdown_mobile_tabs_two_rows_shared,pass,Six Career Breakdown tabs render as three columns by two rows.
-fvcc_theme_tokens_preserved,pass,FVCC production burgundy/navy tokens and GRDCC tokens remain separate in club-aware theme.
+fvcc_theme_tokens_preserved,pass,FVCC production tokens remain in shared theme; GRDCC tokens live in club config and flow through variables.
 grdcc_specific_historical_rules_not_added_to_fvcc_validator,pass,FVCC parity validator excludes GRDCC historical/proxy/source-priority cases.
 bowling_phase_best_phase_lowest_average_after_10_overs,pass,33.0 overs at 16.20 should beat 38.0 overs at 18.29.
 bowling_phase_requires_10_overs,pass,59 balls is below the 60-ball eligibility threshold.
 bowling_phase_ignores_invalid_average,pass,Null or infinite averages should not win BEST PHASE.
-fvcc_full_data_propagation_passes,pass,35/35 checks passed
+fvcc_full_data_propagation_passes,pass,39/39 checks passed
