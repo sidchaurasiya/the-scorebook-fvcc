@@ -27,8 +27,8 @@ branding:
   link_colour: "#0B3F9F"
   link_hover_colour: "#082A66"
   nav_active_colour: "#0B3F9F"
-  logo_path: clubs/georges-river-district/assets/logo.png
-  logo_scale: 1.12
+  logo_path: clubs/georges-river-district/assets/logo_trimmed.png
+  logo_scale: 1.04
 
 contact:
   creators:

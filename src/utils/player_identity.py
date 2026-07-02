@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.config.club_config import get_active_club_id, get_feature_flag, get_mapping_path
+from src.config.club_config import get_active_club_id, get_feature_flag, get_mapping_path, get_processed_path
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
@@ -76,6 +76,16 @@ def normalize_player_name_for_strict_merge(name: object) -> str:
         elif character.isspace() or unicodedata.category(character) == "Pd":
             characters.append(" ")
     return re.sub(r"\s+", " ", "".join(characters)).strip()
+
+
+GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES = {
+    "h milburn": ("grdcc_excel_exact_harry_milburn", "Harry Milburn"),
+    "harry milburn": ("grdcc_excel_exact_harry_milburn", "Harry Milburn"),
+}
+
+
+def grdcc_manual_canonical_name_override(name: object) -> tuple[str, str] | None:
+    return GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES.get(normalize_player_name_for_strict_merge(name))
 
 
 def display_player_name(name: object) -> str:
@@ -242,7 +252,7 @@ def apply_grdcc_historical_exact_name_mapping(
     *,
     club_id: str | None = None,
 ) -> pd.DataFrame:
-    """Merge unambiguous, non-overlapping GRDCC Excel profiles by exact full name."""
+    """Merge unambiguous, non-overlapping GRDCC profiles by exact name."""
     active_club = str(club_id or get_active_club_id()).strip().casefold()
     if (
         active_club != "georges-river-district"
@@ -254,26 +264,54 @@ def apply_grdcc_historical_exact_name_mapping(
 
     output = frame.copy()
     raw_ids = output["raw_player_id"].fillna("").astype(str)
-    source_system = output.get("source_system", pd.Series("", index=output.index)).fillna("").astype(str)
-    historical = raw_ids.str.startswith("excel_") | source_system.str.casefold().eq("historical_excel")
-    if not historical.any():
+    merge_candidates = raw_ids.ne("")
+    if not merge_candidates.any():
         return output
+
+    global_map = grdcc_exact_name_nonoverlap_canonical_map(active_club, metadata_mtime())
+    if global_map:
+        mapped_mask = raw_ids.isin(global_map)
+        if mapped_mask.any():
+            mapped = raw_ids.loc[mapped_mask].map(global_map)
+            output.loc[mapped_mask, "canonical_player_id"] = mapped.map(lambda value: value[0])
+            output.loc[mapped_mask, "canonical_player_name"] = mapped.map(lambda value: value[1])
 
     name_source = output.get("raw_player_name", output.get("player_name", pd.Series("", index=output.index)))
     output["_strict_historical_name"] = name_source.map(normalize_player_name_for_strict_merge)
     season_source = output.get("season", pd.Series("", index=output.index)).fillna("").astype(str)
     output["_historical_season"] = season_source
 
-    historical_rows = output.loc[historical].copy()
-    for normalized_name, group in historical_rows.groupby("_strict_historical_name", sort=False):
-        tokens = normalized_name.split()
-        if len(tokens) < 2 or any(len(token) == 1 or token.isdigit() for token in tokens):
+    manual_mask = output["_strict_historical_name"].isin(GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES)
+    if manual_mask.any():
+        mapped = output.loc[manual_mask, "_strict_historical_name"].map(GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES)
+        output.loc[manual_mask, "canonical_player_id"] = mapped.map(lambda value: value[0])
+        output.loc[manual_mask, "canonical_player_name"] = mapped.map(lambda value: value[1])
+
+    def safe_exact_name_tokens(tokens: list[str]) -> bool:
+        if len(tokens) < 2 or any(token.isdigit() for token in tokens):
+            return False
+        one_letter_tokens = sum(1 for token in tokens if len(token) == 1)
+        if one_letter_tokens == 0:
+            return True
+        return one_letter_tokens == 1 and len(tokens[-1]) > 1
+
+    def logical_raw_id(value: object) -> str:
+        text = str(value or "").strip()
+        return text[4:] if text.startswith("raw_excel_") else text
+
+    candidate_rows = output.loc[merge_candidates & output["_strict_historical_name"].ne("")].copy()
+    candidate_rows["_logical_raw_id"] = candidate_rows["raw_player_id"].map(logical_raw_id)
+    for normalized_name, group in candidate_rows.groupby("_strict_historical_name", sort=False):
+        if normalized_name in GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES:
             continue
-        grouped_ids = group["raw_player_id"].fillna("").astype(str).unique().tolist()
+        tokens = normalized_name.split()
+        if not safe_exact_name_tokens(tokens):
+            continue
+        grouped_ids = group["_logical_raw_id"].fillna("").astype(str).unique().tolist()
         if len(grouped_ids) < 2:
             continue
         season_sets = {
-            raw_id: set(group.loc[group["raw_player_id"].astype(str).eq(raw_id), "_historical_season"].dropna().astype(str))
+            raw_id: set(group.loc[group["_logical_raw_id"].astype(str).eq(raw_id), "_historical_season"].dropna().astype(str))
             for raw_id in grouped_ids
         }
         has_overlap = any(
@@ -286,11 +324,106 @@ def apply_grdcc_historical_exact_name_mapping(
         display_names = name_source.loc[group.index].map(display_player_name)
         display_name = display_names.mode().iloc[0] if not display_names.mode().empty else display_names.iloc[0]
         canonical_id = f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
-        merge_mask = historical & output["_strict_historical_name"].eq(normalized_name)
+        merge_mask = merge_candidates & output["_strict_historical_name"].eq(normalized_name)
         output.loc[merge_mask, "canonical_player_id"] = canonical_id
         output.loc[merge_mask, "canonical_player_name"] = display_name
 
     return output.drop(columns=["_strict_historical_name", "_historical_season"], errors="ignore")
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def grdcc_exact_name_nonoverlap_canonical_map(
+    club_id: str,
+    local_version: float | None = None,
+) -> dict[str, tuple[str, str]]:
+    _ = local_version
+    active_club = str(club_id or "").strip().casefold()
+    if active_club != "georges-river-district" or not get_feature_flag(
+        "enable_exact_name_nonoverlap_merge",
+        False,
+        club_id=active_club,
+    ):
+        return {}
+
+    frames: list[pd.DataFrame] = []
+    processed_root = get_processed_path("", club_id=active_club)
+    table_paths = [
+        get_processed_path("all_seasons_batting.csv", club_id=active_club),
+        get_processed_path("all_seasons_bowling.csv", club_id=active_club),
+        get_processed_path("all_seasons_fielding.csv", club_id=active_club),
+        processed_root / "supplemental" / "excel_all_seasons_batting.csv",
+        processed_root / "supplemental" / "excel_all_seasons_bowling.csv",
+    ]
+    for path in table_paths:
+        if not path.exists():
+            continue
+        try:
+            frame = pd.read_csv(path, low_memory=False)
+        except Exception:
+            continue
+        if frame.empty or "raw_player_id" not in frame:
+            continue
+        columns = [column for column in ["raw_player_id", "raw_player_name", "player_name", "season"] if column in frame]
+        if "raw_player_name" not in columns and "player_name" not in columns:
+            continue
+        frames.append(frame[columns].copy())
+
+    if not frames:
+        return {}
+
+    combined = pd.concat(frames, ignore_index=True)
+    raw_ids = combined["raw_player_id"].fillna("").astype(str).str.strip()
+    name_source = combined.get("raw_player_name", combined.get("player_name", pd.Series("", index=combined.index)))
+    combined["_strict_name"] = name_source.map(normalize_player_name_for_strict_merge)
+    combined["_season"] = combined.get("season", pd.Series("", index=combined.index)).fillna("").astype(str).str.strip()
+    combined = combined[raw_ids.ne("") & combined["_strict_name"].ne("")].copy()
+    if combined.empty:
+        return {}
+
+    def safe_exact_name_tokens(tokens: list[str]) -> bool:
+        if len(tokens) < 2 or any(token.isdigit() for token in tokens):
+            return False
+        one_letter_tokens = sum(1 for token in tokens if len(token) == 1)
+        if one_letter_tokens == 0:
+            return True
+        return one_letter_tokens == 1 and len(tokens[-1]) > 1
+
+    def logical_raw_id(value: object) -> str:
+        text = str(value or "").strip()
+        return text[4:] if text.startswith("raw_excel_") else text
+
+    combined["_logical_raw_id"] = combined["raw_player_id"].map(logical_raw_id)
+    canonical_map: dict[str, tuple[str, str]] = {}
+    for strict_name, canonical in GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES.items():
+        manual_rows = combined[combined["_strict_name"].eq(strict_name)]
+        for raw_id in manual_rows["raw_player_id"].fillna("").astype(str).str.strip().unique().tolist():
+            canonical_map[raw_id] = canonical
+
+    for normalized_name, group in combined.groupby("_strict_name", sort=False):
+        if normalized_name in GRDCC_MANUAL_CANONICAL_NAME_OVERRIDES:
+            continue
+        if not safe_exact_name_tokens(normalized_name.split()):
+            continue
+        grouped_ids = group["_logical_raw_id"].fillna("").astype(str).str.strip().unique().tolist()
+        if len(grouped_ids) < 2:
+            continue
+        season_sets = {
+            raw_id: set(group.loc[group["_logical_raw_id"].astype(str).eq(raw_id), "_season"].dropna().astype(str))
+            for raw_id in grouped_ids
+        }
+        has_overlap = any(
+            season_sets[left] & season_sets[right]
+            for index, left in enumerate(grouped_ids)
+            for right in grouped_ids[index + 1 :]
+        )
+        if has_overlap:
+            continue
+        display_names = name_source.loc[group.index].map(display_player_name)
+        display_name = display_names.mode().iloc[0] if not display_names.mode().empty else display_names.iloc[0]
+        canonical_id = f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
+        for raw_id in group["raw_player_id"].fillna("").astype(str).str.strip().unique().tolist():
+            canonical_map[raw_id] = (canonical_id, display_name)
+    return canonical_map
 
 
 def default_canonical_id(row: pd.Series) -> str:
@@ -788,8 +921,8 @@ def rebuild_canonical_processed_tables(
 @st.cache_data(show_spinner=False, persist="disk")
 def get_player_profile_data(
     canonical_player_id: str,
-    _local_version: float | None = None,
-    _identity_version: float | None = None,
+    local_version: float | None = None,
+    identity_version: float | None = None,
     club_id: str | None = None,
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
@@ -798,8 +931,9 @@ def get_player_profile_data(
     rows, and team/grade breakdown for one canonical player. The caller can use
     these raw totals to recalculate profile metrics without averaging averages.
     """
-    _local_version = metadata_mtime() if _local_version is None else _local_version
-    _identity_version = player_aliases_mtime(club_id=club_id) if _identity_version is None else _identity_version
+    local_version = metadata_mtime() if local_version is None else local_version
+    identity_version = player_aliases_mtime(club_id=club_id) if identity_version is None else identity_version
+    _ = (local_version, identity_version)
     aliases = load_player_aliases(club_id=club_id)
     frames = {}
     for category in ["batting", "bowling", "fielding"]:
@@ -810,12 +944,34 @@ def get_player_profile_data(
             frames[category] = pd.DataFrame()
 
     canonical_player_id = str(canonical_player_id).strip()
+    selected_ids = {canonical_player_id}
+    if str(club_id or get_active_club_id()).strip().casefold() == "georges-river-district":
+        selected_names: set[str] = set()
+        for frame in frames.values():
+            if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
+                continue
+            matches = frame["canonical_player_id"].fillna("").astype(str).str.strip().eq(canonical_player_id)
+            selected_names.update(
+                frame.loc[matches, "canonical_player_name"]
+                .dropna()
+                .map(normalize_player_name_for_strict_merge)
+                .loc[lambda series: series.ne("")]
+                .tolist()
+            )
+        if selected_names:
+            for frame in frames.values():
+                if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
+                    continue
+                same_name = frame["canonical_player_name"].map(normalize_player_name_for_strict_merge).isin(selected_names)
+                selected_ids.update(frame.loc[same_name, "canonical_player_id"].fillna("").astype(str).str.strip().tolist())
+        selected_ids.discard("")
+
     scoped = {}
     for category, frame in frames.items():
         if frame.empty or "canonical_player_id" not in frame:
             scoped[category] = frame.head(0).copy()
         else:
-            scoped[category] = frame[frame["canonical_player_id"].astype(str) == canonical_player_id].copy()
+            scoped[category] = frame[frame["canonical_player_id"].fillna("").astype(str).str.strip().isin(selected_ids)].copy()
     all_rows = pd.concat([frame for frame in scoped.values() if not frame.empty], ignore_index=True) if any(not frame.empty for frame in scoped.values()) else pd.DataFrame()
     info = {
         "canonical_player_id": canonical_player_id,

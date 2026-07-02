@@ -154,7 +154,8 @@ FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
-PLAYER_PROFILE_INDEX_VERSION = "grdcc-player-identity-v3"
+PLAYER_PROFILE_INDEX_VERSION = "2026-07-identity-v4"
+PERFORMANCE_CACHE_VERSION = "2026-07-performance-v2"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -655,6 +656,12 @@ def active_chart_secondary_colour() -> str:
     return active_club_colour("secondary_colour", "#10B981")
 
 
+def active_wickets_chart_colour() -> str:
+    if get_active_club_id() == "fvcc":
+        return active_club_colour("primary_colour", FVCC_PRODUCTION_BRANDING["primary_colour"])
+    return active_chart_secondary_colour()
+
+
 def add_missing_canonical_player_ids(table: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     if table.empty or "canonical_player_id" in table:
         return table
@@ -693,6 +700,16 @@ def app_build_commit() -> str:
     except Exception:
         return "unknown"
     return result.stdout.strip() or "unknown"
+
+
+def app_build_marker_html() -> str:
+    return (
+        f'<div class="side-build-marker">'
+        f'Build: {html.escape(app_build_commit())} · '
+        f'Club: {html.escape(get_active_club_id())} · '
+        f'Identity: {html.escape(PLAYER_PROFILE_INDEX_VERSION)}'
+        f'</div>'
+    )
 
 
 def render_routing_debug_line() -> None:
@@ -855,6 +872,7 @@ def render_sidebar() -> str:
                 <div>For feedback/enquiries:</div>
                 <a href="mailto:{html.escape(configured_feedback_email())}">{configured_feedback_email_html()}</a>
             </div>
+            {app_build_marker_html()}
         </div>
         """,
         unsafe_allow_html=True,
@@ -9685,7 +9703,12 @@ def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
 
 
 def render_player_profile_page() -> None:
-    index = load_player_profile_index(get_active_club_id(), metadata_mtime(), player_aliases_mtime())
+    index = load_player_profile_index(
+        get_active_club_id(),
+        metadata_mtime(),
+        player_aliases_mtime(),
+        PLAYER_PROFILE_INDEX_VERSION,
+    )
     st.markdown(
         f"""
         <div class="player-profile-page"></div>
@@ -9847,7 +9870,12 @@ def render_player_profile_page() -> None:
 
 
 def render_player_profile_v2_page() -> None:
-    index = load_player_profile_index(get_active_club_id(), metadata_mtime(), player_aliases_mtime())
+    index = load_player_profile_index(
+        get_active_club_id(),
+        metadata_mtime(),
+        player_aliases_mtime(),
+        PLAYER_PROFILE_INDEX_VERSION,
+    )
     st.markdown('<div class="player-profile-v2-page"></div>', unsafe_allow_html=True)
     st.markdown(
         """
@@ -10676,8 +10704,13 @@ def player_v2_percent(value: object) -> str:
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_player_profile_index(club_id: str, local_version: float, identity_version: float) -> pd.DataFrame:
-    _ = (club_id, local_version, identity_version, PLAYER_PROFILE_INDEX_VERSION)
+def load_player_profile_index(
+    club_id: str,
+    local_version: float,
+    identity_version: float,
+    cache_version: str = PLAYER_PROFILE_INDEX_VERSION,
+) -> pd.DataFrame:
+    _ = (club_id, local_version, identity_version, cache_version)
     aliases = load_player_aliases(club_id=club_id)
     frames = []
     for category in ["batting", "bowling", "fielding"]:
@@ -10705,6 +10738,13 @@ def load_player_profile_index(club_id: str, local_version: float, identity_versi
         & ~index["id"].astype(str).str.fullmatch(r"raw_0+(?:_0+)*", na=False)
     ].copy()
     index["name_sort"] = index["name"].astype(str).str.casefold()
+    if str(club_id).strip().casefold() == "georges-river-district":
+        index["profile_source_priority"] = index["id"].astype(str).str.startswith("grdcc_excel_exact_").map({True: 0, False: 1})
+        index = (
+            index.sort_values(["name_sort", "profile_source_priority", "id"])
+            .drop_duplicates("name_sort", keep="first")
+            .drop(columns=["profile_source_priority"])
+        )
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
 
 
@@ -11654,7 +11694,8 @@ def leader_highlight_card_html(card: dict[str, object]) -> str:
             else f'<span class="leader-highlight-chip-grade">{html.escape(season_label)}</span>'
         )
         detail_rows.append(
-            f'<a class="leader-highlight-chip" href="{html.escape(season_overview_url(season), quote=True)}" '
+            f'<a class="leader-highlight-chip{" leader-highlight-chip-stacked" if by_grade else ""}" '
+            f'href="{html.escape(season_overview_url(season), quote=True)}" '
             f'target="_blank" rel="noopener noreferrer" title="{html.escape(title, quote=True)}">'
             f'{chip_content}</a>'
         )
@@ -12686,7 +12727,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
     chart_data = season_table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=True)
     specs = [
         ("Runs by Season", "Runs", active_runs_chart_colour()),
-        ("Wickets by Season", "Wickets", active_chart_secondary_colour()),
+        ("Wickets by Season", "Wickets", active_wickets_chart_colour()),
     ]
     for index in range(0, len(specs), 2):
         columns = st.columns(2)
@@ -13646,7 +13687,12 @@ def profile_player_id_for_name(player_name: object) -> str:
     name_key = player_name_match_key(player_name)
     if not name_key:
         return ""
-    index = load_player_profile_index(get_active_club_id(), metadata_mtime(), player_aliases_mtime())
+    index = load_player_profile_index(
+        get_active_club_id(),
+        metadata_mtime(),
+        player_aliases_mtime(),
+        PLAYER_PROFILE_INDEX_VERSION,
+    )
     if index.empty:
         return ""
     matched = index[index["name"].map(player_name_match_key) == name_key]

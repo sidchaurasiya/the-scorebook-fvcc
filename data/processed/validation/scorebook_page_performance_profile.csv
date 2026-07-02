@@ -1,15 +1,15 @@
 club_id,page_or_component,first_run_seconds,cached_run_seconds,rows_processed,notes
-georges-river-district,HOF data build,47.872,0.023,33244,get_hall_of_fame_data
-georges-river-district,Season Overview data build,1.535,1.022,1443,local all-team frames + detail metrics
-georges-river-district,Player Profile index build,1.873,0.001,2065,dropdown source
-georges-river-district,Player Profile selected-player build,4.103,0.011,24,sample canonical player
-georges-river-district,Milestone Upcoming build,43.633,0.185,15,selected tab only
-georges-river-district,Milestone Achieved build,36.02,0.088,14,selected tab only
-georges-river-district,Milestone Exclusive Club build,34.785,0.022,2033,selected tab only
-fvcc,HOF data build,8.279,0.004,6920,get_hall_of_fame_data
-fvcc,Season Overview data build,0.146,0.095,96,local all-team frames + detail metrics
-fvcc,Player Profile index build,0.136,0.0,291,dropdown source
-fvcc,Player Profile selected-player build,0.498,0.01,227,sample canonical player
-fvcc,Milestone Upcoming build,5.256,0.014,9,selected tab only
-fvcc,Milestone Achieved build,6.444,0.032,15,selected tab only
-fvcc,Milestone Exclusive Club build,5.193,0.005,291,selected tab only
+georges-river-district,HOF data build,48.81,0.02,33244,get_hall_of_fame_data
+georges-river-district,Season Overview data build,1.363,0.926,1443,local all-team frames + detail metrics
+georges-river-district,Player Profile index build,1.686,0.001,2040,dropdown source
+georges-river-district,Player Profile selected-player build,3.707,0.014,24,sample canonical player
+georges-river-district,Milestone Upcoming build,35.937,0.184,15,selected tab only
+georges-river-district,Milestone Achieved build,36.514,0.086,14,selected tab only
+georges-river-district,Milestone Exclusive Club build,34.226,0.023,2033,selected tab only
+fvcc,HOF data build,7.794,0.005,6920,get_hall_of_fame_data
+fvcc,Season Overview data build,0.144,0.095,96,local all-team frames + detail metrics
+fvcc,Player Profile index build,0.133,0.0,291,dropdown source
+fvcc,Player Profile selected-player build,0.471,0.009,227,sample canonical player
+fvcc,Milestone Upcoming build,5.088,0.014,9,selected tab only
+fvcc,Milestone Achieved build,6.291,1.291,15,selected tab only
+fvcc,Milestone Exclusive Club build,5.039,0.005,291,selected tab only
