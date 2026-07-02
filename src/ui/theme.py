@@ -7812,8 +7812,20 @@ def active_club_theme_css() -> str:
     muted = safe_hex_colour(get_branding_value("muted_text_colour", "#6D728E"), "#6D728E")
     line = safe_hex_colour(get_branding_value("border_colour", "#E7EAF5"), "#E7EAF5")
     surface = safe_hex_colour(get_branding_value("surface_colour", "#FFFFFF"), "#FFFFFF")
-    link = secondary if active_club_id == "fvcc" else primary
-    link_hover = darken_hex(secondary, 0.24) if active_club_id == "fvcc" else secondary
+    link = safe_hex_colour(
+        branding.get("link_colour", get_branding_value("link_colour", secondary if active_club_id == "fvcc" else primary)),
+        secondary if active_club_id == "fvcc" else primary,
+    )
+    link_hover = safe_hex_colour(
+        branding.get(
+            "link_hover_colour",
+            get_branding_value(
+                "link_hover_colour",
+                darken_hex(secondary, 0.24) if active_club_id == "fvcc" else secondary,
+            ),
+        ),
+        darken_hex(secondary, 0.24) if active_club_id == "fvcc" else secondary,
+    )
     highlight = tint_hex(accent, 0.86)
     primary_soft = tint_hex(primary, 0.90)
     secondary_soft = tint_hex(secondary, 0.88)
@@ -7823,7 +7835,10 @@ def active_club_theme_css() -> str:
         if active_club_id == "fvcc"
         else safe_hex_colour(get_branding_value("primary_dark_colour", darken_hex(primary, 0.24)), darken_hex(primary, 0.24))
     )
-    sidebar_active = primary
+    sidebar_active = safe_hex_colour(
+        branding.get("nav_active_colour", get_branding_value("nav_active_colour", primary)),
+        primary,
+    )
     primary_rgb = hex_to_rgb(primary)
     accent_rgb = hex_to_rgb(accent)
     secondary_rgb = hex_to_rgb(secondary)

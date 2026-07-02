@@ -1,0 +1,31 @@
+area,metric,value,status,notes
+readiness,readiness_status,ready_for_local_smoke,pass,Derived from GWHCC template validator.
+coverage,seasons_found,36,available,Summer 1991/92; Summer 1992/93; Summer 1993/94; Summer 1994/95; Summer 1995/96; Summer 1996/97; Summer 1997/98; Summer 1998/99; Summer 1999/00; Summer 2000/01; Summer 2001/02; Summer 2002/03
+coverage,teams_or_grades_found,120,available,"1 - Ray McIntosh Shield (80 Overs, 11 Players); 2 - Howard Wilson Shield (80 Overs, 11 Players); 2nd Grade; 3. Compare & Conect Dorothy McIntosh Shield; A Grade (12 Player Grade - 80 Overs); A Grade (80 Overs, 12 Players); A1 Grade; A2 Grade; A3 Grade; Anklbytrs (Black); Anklbytrs (Blue); Anklbytrs (Gold)"
+coverage,match_count,3475,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_matches.csv
+coverage,scorecard_match_coverage,59353,available,All-seasons scorecard batting/bowling/fielding rows combined.
+coverage,bbb_match_coverage,4661,available,Processed BBB summary rows; unavailable is acceptable when source lacks BBB.
+coverage,players_found,1288,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/players.csv
+dataset,matches,3475,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_matches.csv
+dataset,batting_aggregate,5669,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_batting.csv
+dataset,bowling_aggregate,5669,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_bowling.csv
+dataset,fielding_aggregate,5669,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_fielding.csv
+dataset,scorecard_batting,31430,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_scorecard_batting.csv
+dataset,scorecard_bowling,20615,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_scorecard_bowling.csv
+dataset,scorecard_fielding,7308,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/all_seasons_scorecard_fielding.csv
+dataset,players,1288,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/players.csv
+dataset,seasons,36,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/seasons.csv
+dataset,teams,330,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/teams.csv
+dataset,hof_win_rates,1222,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_win_rates.csv
+dataset,hof_milestones,1198,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_scorecard_milestones.csv
+dataset,hof_fastest_batting,730,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/hall_of_fame/fastest_batting_milestones.csv
+dataset,hof_bbb_batting,450,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_bbb_batting_rates.csv
+dataset,season_by_round,3475,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/season_overview/season_by_round_scorecards.csv
+dataset,season_batting_scope,5603,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/season_overview/scorecard_batting_milestones_by_scope.csv
+dataset,season_bowling_scope,4379,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/season_overview/scorecard_bowling_milestones_by_scope.csv
+dataset,season_bbb_batting,1348,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/season_overview/bbb_batting_rates_by_scope.csv
+dataset,season_bbb_bowling,1321,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/season_overview/bbb_bowling_dot_rates_by_scope.csv
+dataset,player_profile_breakdown,76982,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/player_profile/performance_breakdown_by_dimension.csv
+dataset,player_profile_bowling_phase,1542,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/player_profile/bowling_phase_summary.csv
+dataset,player_profile_recent_batting,26423,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/player_profile/recent_form_batting.csv
+dataset,player_profile_recent_bowling,20204,available,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/player_profile/recent_form_bowling.csv

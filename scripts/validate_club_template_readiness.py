@@ -77,13 +77,16 @@ def main() -> int:
         "FVCC config keeps optional historical GRDCC modules disabled.",
     ))
     rows.append(status_row(
-        "glen_waverley_hawks_scaffold_exists",
+        "glen_waverley_hawks_config_exists",
         "club_id: glen-waverley-hawks" in hawks
-        and "playhq_club_id: null" in hawks
-        and "playhq_org_id: null" in hawks
+        and "playcricket_club_id: 50f7f1e3-86d8-eb11-a7ad-2818780da0cc" in hawks
+        and "playhq_club_id: 50f7f1e3-86d8-eb11-a7ad-2818780da0cc" in hawks
+        and "logo_path: clubs/glen-waverley-hawks/assets/logo.png" in hawks
         and has_flag(hawks, "has_historical_excel", False)
-        and has_flag(hawks, "has_annual_report_overrides", False),
-        "Glen Waverley Hawks scaffold exists with IDs TBD and optional historical modules off.",
+        and has_flag(hawks, "has_annual_report_overrides", False)
+        and has_flag(hawks, "enable_match_proxy", False)
+        and has_flag(hawks, "enable_exact_name_nonoverlap_merge", False),
+        "Glen Waverley Hawks config has the confirmed club UUID, branding path, and optional historical modules off.",
     ))
     rows.append(status_row(
         "typed_template_config_available",
