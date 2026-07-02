@@ -153,8 +153,8 @@ SHOW_PLAYER_PROFILE_V2 = os.getenv("FVCC_SHOW_EXPERIMENTAL") == "1"
 FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
-HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v5"
-PLAYER_PROFILE_INDEX_VERSION = "grdcc-player-identity-v2"
+HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
+PLAYER_PROFILE_INDEX_VERSION = "grdcc-player-identity-v3"
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -5304,14 +5304,6 @@ def render_approaching_milestones_page() -> None:
         st.info("Historical data is not available yet. Refresh local backup to build the milestone watchlist.")
         return
 
-    active_players = recent_active_canonical_players(historical_data)
-    watchlist = build_approaching_milestone_watchlist(historical_data["all_time"])
-    if active_players:
-        watchlist = watchlist[watchlist["Player"].isin(active_players)].copy()
-    season_window = milestone_achievement_season_window(historical_data)
-    achieved = build_achieved_milestones(historical_data, season_window)
-    hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
-    hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
     selected_view = selected_milestone_page_view()
     st.markdown(
         f"""
@@ -5322,10 +5314,18 @@ def render_approaching_milestones_page() -> None:
         unsafe_allow_html=True,
     )
     if selected_view == "achieved":
+        season_window = milestone_achievement_season_window(historical_data)
+        achieved = build_achieved_milestones(historical_data, season_window)
+        hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
     elif selected_view == "exclusive":
         render_milestone_club(historical_data["all_time"], selected_milestone_club_category())
     else:
+        active_players = recent_active_canonical_players(historical_data)
+        watchlist = build_approaching_milestone_watchlist(historical_data["all_time"])
+        if active_players:
+            watchlist = watchlist[watchlist["Player"].isin(active_players)].copy()
+        hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
         render_career_milestone_cards(watchlist, hall_of_fame_watch)
 
 
@@ -5486,6 +5486,7 @@ def milestone_achievement_specs() -> list[dict[str, object]]:
     ]
 
 
+@st.cache_data(show_spinner=False, persist="disk")
 def build_achieved_milestones(
     historical_data: dict[str, object],
     season_window: list[str],
@@ -5558,6 +5559,7 @@ def build_achieved_milestones(
     return output.drop(columns=["category_order"], errors="ignore")[columns]
 
 
+@st.cache_data(show_spinner=False, persist="disk")
 def build_hall_of_fame_watch(all_time: pd.DataFrame, active_players: set[str] | None = None) -> pd.DataFrame:
     columns = [
         "Player",
@@ -5624,6 +5626,7 @@ def build_hall_of_fame_watch(all_time: pd.DataFrame, active_players: set[str] | 
     return output.drop(columns=["category_order"], errors="ignore")[columns]
 
 
+@st.cache_data(show_spinner=False, persist="disk")
 def build_hall_of_fame_movements(
     historical_data: dict[str, object],
     season_window: list[str],
@@ -5697,6 +5700,7 @@ def build_hall_of_fame_movements(
     return output.drop(columns=["category_order"], errors="ignore")[columns]
 
 
+@st.cache_data(show_spinner=False, persist="disk")
 def build_milestone_period_totals(
     historical_data: dict[str, object],
     season_window: list[str],
@@ -5731,6 +5735,7 @@ def build_milestone_period_totals(
     return output
 
 
+@st.cache_data(show_spinner=False, persist="disk")
 def build_milestone_period_totals_by_season(
     historical_data: dict[str, object],
     season_window: list[str],
@@ -9288,7 +9293,7 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
     return config
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, persist="disk")
 def build_approaching_milestone_watchlist(all_time: pd.DataFrame) -> pd.DataFrame:
     specs = [
         ("Matches", "Matches", 100, 10, "matches", "Career Milestones"),
@@ -9806,7 +9811,7 @@ def render_player_profile_page() -> None:
         player_aliases_mtime(),
         club_id=get_active_club_id(),
     )
-    profile_view = build_player_profile_view(profile)
+    profile_view = build_player_profile_view(profile, player_profile_view_signature())
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
         return
@@ -9895,7 +9900,7 @@ def render_player_profile_v2_page() -> None:
         player_aliases_mtime(),
         club_id=get_active_club_id(),
     )
-    profile_view = build_player_profile_view(profile)
+    profile_view = build_player_profile_view(profile, player_profile_view_signature())
     if profile_view["career"].empty:
         st.info("No local historical data is available for this player yet.")
         return
@@ -10703,8 +10708,21 @@ def load_player_profile_index(club_id: str, local_version: float, identity_versi
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
 
 
+def player_profile_view_signature() -> tuple[tuple[str, float], ...]:
+    paths = [
+        get_processed_path("all_seasons_batting.csv"),
+        get_processed_path("all_seasons_bowling.csv"),
+        get_processed_path("all_seasons_fielding.csv"),
+    ]
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + player_profile_detail_source_signature()
+
+
 @st.cache_data(show_spinner=False, persist="disk")
-def build_player_profile_view(profile: dict[str, object]) -> dict[str, pd.DataFrame]:
+def build_player_profile_view(
+    profile: dict[str, object],
+    data_signature: tuple[tuple[str, float], ...] | None = None,
+) -> dict[str, pd.DataFrame]:
+    _ = data_signature
     batting = add_batting_display_columns(apply_team_grade_display_columns(profile.get("batting", pd.DataFrame())))
     bowling = apply_team_grade_display_columns(profile.get("bowling", pd.DataFrame()))
     fielding = add_display_stat_aliases(apply_team_grade_display_columns(profile.get("fielding", pd.DataFrame())))
@@ -10936,9 +10954,9 @@ def player_profile_detail_source_signature() -> tuple[tuple[str, float], ...]:
 @st.cache_data(show_spinner=False, persist="disk")
 def load_player_profile_detail_sources(
     club_id: str,
-    _signature: tuple[tuple[str, float], ...],
+    signature: tuple[tuple[str, float], ...],
 ) -> dict[str, pd.DataFrame]:
-    _ = club_id
+    _ = (club_id, signature)
     return {
         "career_bbb_batting": read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH),
         "scope_bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
