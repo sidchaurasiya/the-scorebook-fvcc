@@ -5250,15 +5250,16 @@ def inject_theme() -> None:
         }
 
         .leader-highlight-chip-stacked {
-            align-items: center;
+            align-items: flex-start;
             border-radius: 18px;
             display: inline-flex;
             flex-direction: column;
             gap: 2px;
             max-width: 100%;
-            min-width: min(160px, 100%);
-            padding: 7px 10px;
-            text-align: center;
+            min-width: 0;
+            padding: 7px 9px;
+            text-align: left;
+            width: 100%;
             white-space: normal;
         }
 
@@ -5274,16 +5275,14 @@ def inject_theme() -> None:
         }
 
         .leader-highlight-chip-stacked .leader-highlight-chip-grade {
-            display: -webkit-box;
-            font-size: 0.72rem;
+            display: block;
+            font-size: 0.66rem;
             line-height: 1.1;
             max-width: 100%;
             overflow: hidden;
             overflow-wrap: anywhere;
-            text-overflow: ellipsis;
+            text-overflow: clip;
             white-space: normal;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
         }
 
         .leader-highlight-chip-season {
@@ -5296,11 +5295,12 @@ def inject_theme() -> None:
         .leader-highlight-chip-stacked .leader-highlight-chip-season {
             color: var(--club-link, var(--club-primary));
             display: block;
-            font-size: 0.64rem;
+            font-size: 0.62rem;
             line-height: 1.05;
             max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .milestone-group {
@@ -7934,6 +7934,17 @@ def active_club_theme_css() -> str:
     highlight_rgb = hex_to_rgb(highlight)
     sidebar_shadow = rgba(primary_rgb, 0.34)
     active_shadow = rgba(primary_rgb, 0.32)
+    fvcc_only_css = (
+        """
+        .block-container:has(.player-profile-page) .recent-form-label,
+        .block-container:has(.player-profile-page) .recent-form-chip.bat,
+        .block-container:has(.player-profile-page) .recent-form-chip.bowl {
+            color: var(--club-link) !important;
+        }
+        """
+        if active_club_id == "fvcc"
+        else ""
+    )
     return f"""
         <style>
         :root {{
@@ -7967,6 +7978,8 @@ def active_club_theme_css() -> str:
             --pitch: var(--club-primary);
             --pitch-2: var(--club-secondary);
         }}
+
+        {fvcc_only_css}
 
         .stApp {{
             background:
