@@ -702,11 +702,19 @@ def app_build_commit() -> str:
     return result.stdout.strip() or "unknown"
 
 
+def app_data_version_label() -> str:
+    try:
+        return str(int(metadata_mtime()))
+    except Exception:
+        return "unknown"
+
+
 def app_build_marker_html() -> str:
     return (
         f'<div class="side-build-marker">'
         f'Build: {html.escape(app_build_commit())} · '
         f'Club: {html.escape(get_active_club_id())} · '
+        f'Data: {html.escape(app_data_version_label())} · '
         f'Identity: {html.escape(PLAYER_PROFILE_INDEX_VERSION)}'
         f'</div>'
     )
