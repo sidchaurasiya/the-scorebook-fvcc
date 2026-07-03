@@ -13,6 +13,8 @@ FVCC_PRODUCTION_BRANDING = {
     "secondary_colour": "#28485F",
     "accent_colour": "#D4A83A",
     "background_colour": "#F6F8FB",
+    "link_colour": "#28485F",
+    "link_hover_colour": "#1E3748",
 }
 
 
@@ -2251,13 +2253,42 @@ def inject_theme() -> None:
         .hall-of-fame-page .performance-player strong a.player-profile-link,
         .hall-of-fame-page .performance-player strong a.player-profile-link:visited,
         .hall-of-fame-page .hof-v2-performance-player a.player-profile-link,
-        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:visited {
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:visited,
+        .hall-of-fame-page .hof-v2-record-player a.player-profile-link,
+        .hall-of-fame-page .hof-v2-record-player a.player-profile-link:visited,
+        .hall-of-fame-page .hof-v2-rank-row strong,
+        .hall-of-fame-page .hof-v2-rank-row strong a,
+        .hall-of-fame-page .hof-v2-rank-row strong a:visited,
+        .hall-of-fame-page .hof-v2-race-row strong,
+        .hall-of-fame-page .hof-v2-race-row strong a,
+        .hall-of-fame-page .hof-v2-race-row strong a:visited,
+        .hall-of-fame-page .premiership-season,
+        .hall-of-fame-page .premiership-season a,
+        .hall-of-fame-page .premiership-season a:visited {
             color: var(--club-link) !important;
         }
 
         .hall-of-fame-page .progress-name a.player-profile-link:hover,
         .hall-of-fame-page .performance-player strong a.player-profile-link:hover,
-        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:hover {
+        .hall-of-fame-page .hof-v2-performance-player a.player-profile-link:hover,
+        .hall-of-fame-page .hof-v2-record-player a.player-profile-link:hover,
+        .hall-of-fame-page .hof-v2-rank-row strong a:hover,
+        .hall-of-fame-page .hof-v2-race-row strong a:hover,
+        .hall-of-fame-page .premiership-season a:hover {
+            color: var(--club-link) !important;
+        }
+
+        .seasons-page .progress-name,
+        .seasons-page .progress-name a.player-profile-link,
+        .seasons-page .progress-name a.player-profile-link:visited,
+        .block-container:has(.seasons-page) .progress-name,
+        .block-container:has(.seasons-page) .progress-name a.player-profile-link,
+        .block-container:has(.seasons-page) .progress-name a.player-profile-link:visited {
+            color: var(--club-link) !important;
+        }
+
+        .seasons-page .progress-name a.player-profile-link:hover,
+        .block-container:has(.seasons-page) .progress-name a.player-profile-link:hover {
             color: var(--club-link) !important;
         }
 
