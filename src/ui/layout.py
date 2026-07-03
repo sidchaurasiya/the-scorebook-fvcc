@@ -682,7 +682,6 @@ def add_missing_canonical_player_ids(table: pd.DataFrame, club_id: str | None = 
     return output
 
 
-@st.cache_data(show_spinner=False)
 def app_build_commit() -> str:
     for env_name in ("STREAMLIT_GIT_COMMIT", "COMMIT_SHA", "GIT_COMMIT", "SOURCE_VERSION"):
         value = str(os.getenv(env_name, "") or "").strip()
