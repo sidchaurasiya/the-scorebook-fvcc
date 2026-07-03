@@ -1,0 +1,12 @@
+layer,status,value,notes
+player_profile_index,present,raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya
+career_summary,present,Matches=59.0 Wickets=53.0,App-facing career row
+career_breakdown_season,present,Matches=6.0 Wickets=10.0,Winter 2026
+recent_form_bowling,present,2/50 | 2/29 | 1/21 | 2/18 | 0/26,Latest bowling chip should include latest match
+recent_form_batting,present,7 | 17*(24) | 8(11) | 4(13) | 0*(18),Latest batting chips from app-facing source
+competition_grade,present,"[{'Grade': 'North Division (Winter)', 'Matches': 14, 'Innings': 8.0, 'Runs': 71.0, 'BF': 90.0, 'NO': 5.0, '50s': 0.0, '100s': 0.0, '0s': 0.0, '4s': 5.0, '6s': 0.0, 'Wickets': 20.0, 'Runs Against': 402.0, 'Balls Bowled': 432.0, 'Maidens': 3.0, 'Wides': 11.0, 'No Balls': 5.0, '5WI': 0.0, 'Catches': 4.0, 'Stumpings': 0.0, 'Run Outs': 1.0, 'Outs': 3.0, 'Bat Avg': 23.666666666666668, 'HS': '18*', 'Bowl Avg': 20.1, 'Econ': 5.583333333333333, 'Bowl SR': 21.6, 'Extras %': 3.7037037037037037, 'BBI': '4-44', 'Dismissals': 5.0, 'BBB Runs': 64.0, 'BBB Balls': 90.0, 'BBB Innings': 6.0, 'BBB Matches': 6.0, 'Bat SR': 71.11111111111111, '30s': 0, '3WI': 2}]",Grade table rows containing Winter
+player_dna_batting_position,present,9,App-facing batting-position source rows
+player_dna_bowling_phase,present,5,App-facing bowling-phase source rows
+player_dna_dismissal_fingerprint,present,4,App-facing dismissal fingerprint rows
+player_vs_peers,present,batting=5 bowling=5,Peer comparison computed from updated seasons/grades
+season_trends,present,rows=7,Season Trends uses Player Profile season table
