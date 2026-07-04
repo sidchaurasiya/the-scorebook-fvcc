@@ -93,13 +93,13 @@ def build_checks() -> list[dict[str, object]]:
 
     checks.extend(
         [
-            _check("career_breakdown_winter_2026_matches", winter_matches == 6, winter_matches, 6),
-            _check("career_breakdown_winter_2026_wickets", winter_wickets == 10, winter_wickets, 10),
+            _check("career_breakdown_winter_2026_matches", winter_matches == 7, winter_matches, 7),
+            _check("career_breakdown_winter_2026_wickets", winter_wickets == 11, winter_wickets, 11),
             _check(
                 "recent_form_latest_bowling_present",
-                bool(recent.get("bowling")) and str(recent["bowling"][0].get("label")) == "2/50",
+                bool(recent.get("bowling")) and str(recent["bowling"][0].get("label")) == "1/10",
                 " | ".join(str(item.get("label")) for item in recent.get("bowling", [])[:5]),
-                "first bowling chip 2/50",
+                "first bowling chip 1/10",
             ),
             _check(
                 "recent_form_batting_present",
@@ -118,9 +118,9 @@ def build_checks() -> list[dict[str, object]]:
                     ],
                     errors="coerce",
                 ).fillna(0).max()
-                >= 10,
-                "winter grade max wickets >= 10",
-                ">=10 wickets in Winter grade row",
+                >= 11,
+                "winter grade max wickets >= 11",
+                ">=11 wickets in Winter grade row",
             ),
             _check(
                 "player_dna_batting_position_source_present",
@@ -148,9 +148,9 @@ def build_checks() -> list[dict[str, object]]:
             ),
             _check(
                 "season_trends_winter_2026_matches_current",
-                winter_matches == 6,
+                winter_matches == 7,
                 winter_matches,
-                6,
+                7,
                 "Season Trends uses the same season table as Career Breakdown",
             ),
             _check(

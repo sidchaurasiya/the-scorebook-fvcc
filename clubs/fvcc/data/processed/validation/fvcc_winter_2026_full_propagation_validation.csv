@@ -1,40 +1,39 @@
 check_name,validation_status,details
-winter_2026_round5_in_season_by_round,pass,season_by_round_scorecards.csv
-round5_match_id_present,pass,014fc508-cd2e-4672-abb4-5b4aea4d613f
-round5_date_after_round4,pass,2026-06-27 02:00:00+00:00
-round5_opponent_present,pass,La Trobe University Cricket Club
-round5_result_present,pass,lost by 101 runs
+winter_2026_latest_match_in_season_by_round,pass,season_by_round_scorecards.csv
+latest_match_id_present,pass,15444ed2-30b9-4f4b-bdf6-0989519af7c5
+latest_match_date_after_previous_refresh,pass,2026-07-04 02:00:00+00:00
+latest_match_opponent_present,pass,Reservoir Cobras Cricket Club
+latest_match_result_present,pass,lost by 6 wickets
 winter_bowling_aggregate_rows,pass,16 rows
 winter_batting_aggregate_rows,pass,16 rows
 winter_fielding_aggregate_rows,pass,16 rows
 aggregate_bowling_Siddhanth Chaurasiya_row_present,pass,aggregate_bowling
-aggregate_bowling_Siddhanth Chaurasiya_matches,pass,Mat=6; expected=6
-aggregate_bowling_Siddhanth Chaurasiya_wickets,pass,W=10; expected=10
+aggregate_bowling_Siddhanth Chaurasiya_matches,pass,Mat=7; expected=7
+aggregate_bowling_Siddhanth Chaurasiya_wickets,pass,W=11; expected=11
 aggregate_bowling_Kartik Nallepalli_row_present,pass,aggregate_bowling
-aggregate_bowling_Kartik Nallepalli_matches,pass,Mat=6; expected=6
+aggregate_bowling_Kartik Nallepalli_matches,pass,Mat=7; expected=7
 aggregate_bowling_Kartik Nallepalli_wickets,pass,W=7; expected=7
 season_overview_detailed_stats_Siddhanth Chaurasiya_row_present,pass,season_overview_detailed_stats
-season_overview_detailed_stats_Siddhanth Chaurasiya_matches,pass,Mat=6; expected=6
-season_overview_detailed_stats_Siddhanth Chaurasiya_wickets,pass,W=10; expected=10
+season_overview_detailed_stats_Siddhanth Chaurasiya_matches,pass,Mat=7; expected=7
+season_overview_detailed_stats_Siddhanth Chaurasiya_wickets,pass,W=11; expected=11
 season_overview_detailed_stats_Kartik Nallepalli_row_present,pass,season_overview_detailed_stats
-season_overview_detailed_stats_Kartik Nallepalli_matches,pass,Mat=6; expected=6
+season_overview_detailed_stats_Kartik Nallepalli_matches,pass,Mat=7; expected=7
 season_overview_detailed_stats_Kartik Nallepalli_wickets,pass,W=7; expected=7
-no_stale_five_match_siddhanth_or_kartik_rows,pass,none
-round5_in_player_profile_recent_form_batting.csv,pass,8457 rows; match_id=014fc508-cd2e-4672-abb4-5b4aea4d613f
-round5_Siddhanth Chaurasiya_in_recent_form_batting.csv,pass,Siddhanth Chaurasiya
-round5_Kartik Nallepalli_in_recent_form_batting.csv,pass,Kartik Nallepalli
-round5_in_player_profile_recent_form_bowling.csv,pass,5510 rows; match_id=014fc508-cd2e-4672-abb4-5b4aea4d613f
-round5_Siddhanth Chaurasiya_in_recent_form_bowling.csv,pass,Siddhanth Chaurasiya
-round5_Kartik Nallepalli_in_recent_form_bowling.csv,pass,Kartik Nallepalli
+no_stale_pre_latest_match_siddhanth_or_kartik_rows,pass,none
+latest_match_in_player_profile_recent_form_batting.csv,pass,8468 rows; match_id=15444ed2-30b9-4f4b-bdf6-0989519af7c5
+latest_match_Siddhanth Chaurasiya_in_recent_form_batting.csv,pass,Siddhanth Chaurasiya
+latest_match_in_player_profile_recent_form_bowling.csv,pass,5516 rows; match_id=15444ed2-30b9-4f4b-bdf6-0989519af7c5
+latest_match_Siddhanth Chaurasiya_in_recent_form_bowling.csv,pass,Siddhanth Chaurasiya
+latest_match_Kartik Nallepalli_in_recent_form_bowling.csv,pass,Kartik Nallepalli
 profile_source_Siddhanth Chaurasiya_available,pass,get_player_profile_data
 profile_career_breakdown_Siddhanth Chaurasiya_winter_row,pass,Player Profile season_table
-profile_career_breakdown_Siddhanth Chaurasiya_matches,pass,Mat=6; expected=6
-profile_career_breakdown_Siddhanth Chaurasiya_wickets,pass,W=10; expected=10
+profile_career_breakdown_Siddhanth Chaurasiya_matches,pass,Mat=7; expected=7
+profile_career_breakdown_Siddhanth Chaurasiya_wickets,pass,W=11; expected=11
 profile_source_Kartik Nallepalli_available,pass,get_player_profile_data
 profile_career_breakdown_Kartik Nallepalli_winter_row,pass,Player Profile season_table
-profile_career_breakdown_Kartik Nallepalli_matches,pass,Mat=6; expected=6
+profile_career_breakdown_Kartik Nallepalli_matches,pass,Mat=7; expected=7
 profile_career_breakdown_Kartik Nallepalli_wickets,pass,W=7; expected=7
-round5_in_hof_scorecard_links,pass,13991 rows
+latest_match_in_hof_scorecard_links,pass,14008 rows
 hof_all_time_available,pass,291 rows
 hof_all_time_Siddhanth Chaurasiya_present,pass,all_time
 hof_all_time_Kartik Nallepalli_present,pass,all_time

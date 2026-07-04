@@ -1,15 +1,15 @@
 check_name,status,actual,expected,notes
 siddhanth_winter_2026_row_present,pass,present,present,
-career_breakdown_winter_2026_matches,pass,6.0,6,
-career_breakdown_winter_2026_wickets,pass,10.0,10,
-recent_form_latest_bowling_present,pass,2/50 | 2/29 | 1/21 | 2/18 | 0/26,first bowling chip 2/50,
-recent_form_batting_present,pass,7 | 17*(24) | 8(11) | 4(13) | 0*(18),at least one batting chip,
-competition_grade_winter_updated,pass,winter grade max wickets >= 10,>=10 wickets in Winter grade row,
+career_breakdown_winter_2026_matches,pass,7.0,7,
+career_breakdown_winter_2026_wickets,pass,11.0,11,
+recent_form_latest_bowling_present,pass,1/10 | 2/50 | 2/29 | 1/21 | 2/18,first bowling chip 1/10,
+recent_form_batting_present,pass,1*(17) | 7 | 17*(24) | 8(11) | 4(13),at least one batting chip,
+competition_grade_winter_updated,pass,winter grade max wickets >= 11,>=11 wickets in Winter grade row,
 player_dna_batting_position_source_present,pass,9,>0 rows,
 player_dna_bowling_phase_source_present,pass,5,>0 rows,
 player_dna_dismissal_source_present,pass,4,>0 rows,
 player_vs_peers_source_present,pass,batting=5 bowling=5,batting and bowling peer rows,
-season_trends_winter_2026_matches_current,pass,6.0,6,Season Trends uses the same season table as Career Breakdown
+season_trends_winter_2026_matches_current,pass,7.0,7,Season Trends uses the same season table as Career Breakdown
 wickets_by_season_uses_fvcc_burgundy,pass,#A31952,#A31952,
 audit_layers_present,pass,player_profile_index=present; career_summary=present; career_breakdown_season=present; recent_form_bowling=present; recent_form_batting=present; competition_grade=present; player_dna_batting_position=present; player_dna_bowling_phase=present; player_dna_dismissal_fingerprint=present; player_vs_peers=present; season_trends=present,all app-facing PP audit layers present,
 no_stale_winter_2026_5_match_or_8_wicket_row,pass,0,0,
