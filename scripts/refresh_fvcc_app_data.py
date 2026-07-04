@@ -4,11 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+VERSION_PATH = ROOT / "clubs" / "fvcc" / "data" / "processed" / "metadata" / "fvcc_data_version.json"
+VALIDATION_PATH = ROOT / "clubs" / "fvcc" / "data" / "processed" / "validation" / "fvcc_app_wide_refresh_consistency_validation.csv"
 
 
 def parse_args() -> argparse.Namespace:
@@ -32,7 +36,9 @@ def main() -> int:
         [
             [python, "scripts/refresh_club_outputs.py", "--club", "fvcc"],
             [python, "scripts/audit_fvcc_player_refresh_propagation.py"],
+            [python, "scripts/audit_fvcc_latest_winter_2026_refresh.py"],
             [python, "scripts/validate_fvcc_app_wide_refresh_propagation.py"],
+            [python, "scripts/validate_fvcc_app_wide_refresh_consistency.py"],
         ]
     )
 
@@ -45,9 +51,47 @@ def main() -> int:
     if args.dry_run:
         return 0
 
-    for command in commands:
-        subprocess.run(command, cwd=ROOT, check=True)
+    status = "pass"
+    failed_command = ""
+    try:
+        for command in commands:
+            subprocess.run(command, cwd=ROOT, check=True)
+    except subprocess.CalledProcessError as exc:
+        status = "fail"
+        failed_command = " ".join(str(part) for part in exc.cmd)
+        write_data_version_marker(status=status, failed_command=failed_command)
+        raise
+
+    write_data_version_marker(status=status, failed_command=failed_command)
     return 0
+
+
+def write_data_version_marker(*, status: str, failed_command: str = "") -> None:
+    """Persist a scalar cache/version marker for production Streamlit caches."""
+    VERSION_PATH.parent.mkdir(parents=True, exist_ok=True)
+    existing: dict[str, object] = {}
+    if VERSION_PATH.exists():
+        try:
+            existing = json.loads(VERSION_PATH.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            existing = {}
+    latest_match = {key: existing.get(key, "") for key in [
+        "latest_match_id",
+        "latest_match_date",
+        "latest_match_round",
+        "latest_match_opponent",
+        "latest_match_result",
+    ]}
+    payload = {
+        **latest_match,
+        "club_id": "fvcc",
+        "latest_refresh_timestamp": datetime.now(UTC).isoformat(),
+        "generated_app_facing_data_version": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
+        "validator_status": status,
+        "validator_output": str(VALIDATION_PATH.relative_to(ROOT)),
+        "failed_command": failed_command,
+    }
+    VERSION_PATH.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

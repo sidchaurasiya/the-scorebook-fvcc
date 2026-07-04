@@ -268,8 +268,11 @@ def local_backup_available() -> bool:
 
 
 def metadata_mtime() -> float:
-    path = active_metadata_path()
-    return path.stat().st_mtime if path.exists() else 0.0
+    paths = [active_metadata_path()]
+    data_version_marker = get_processed_path("metadata", "fvcc_data_version.json")
+    if data_version_marker.exists():
+        paths.append(data_version_marker)
+    return max((path.stat().st_mtime for path in paths if path.exists()), default=0.0)
 
 
 def read_metadata() -> dict[str, Any]:
@@ -278,7 +281,8 @@ def read_metadata() -> dict[str, Any]:
 
 
 @st.cache_data(show_spinner=False)
-def _read_metadata_cached(path_value: str, _metadata_version: float) -> dict[str, Any]:
+def _read_metadata_cached(path_value: str, metadata_version: float) -> dict[str, Any]:
+    _ = metadata_version
     path = Path(path_value)
     if not path.exists():
         return {}
@@ -310,7 +314,8 @@ def read_processed_table(name: str) -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def _read_processed_table_cached(path_value: str, _file_version: float) -> pd.DataFrame:
+def _read_processed_table_cached(path_value: str, file_version: float) -> pd.DataFrame:
+    _ = file_version
     path = Path(path_value)
     if not path.exists():
         return pd.DataFrame()

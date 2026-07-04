@@ -1,0 +1,14 @@
+{
+  "club_id": "fvcc",
+  "generated_app_facing_data_version": "20260704T085018Z",
+  "latest_match_date": "2026-07-04 02:00:00+00:00",
+  "latest_match_id": "15444ed2-30b9-4f4b-bdf6-0989519af7c5",
+  "latest_match_opponent": "Reservoir Cobras Cricket Club",
+  "latest_match_result": "lost by 6 wickets",
+  "latest_match_round": "R7",
+  "latest_refresh_timestamp": "2026-07-04T08:50:18.964431+00:00",
+  "source_data_mtime": 1783154213.1727893,
+  "validator_checks": 52,
+  "validator_failures": 0,
+  "validator_status": "pass"
+}
