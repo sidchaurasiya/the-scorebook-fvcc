@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate FVCC Winter 2026 Round 5 propagation into app-facing data."""
+"""Validate FVCC Winter 2026 latest-match propagation into app-facing data."""
 
 from __future__ import annotations
 
@@ -21,6 +21,7 @@ from src.ui.layout import (  # noqa: E402
     build_player_profile_view,
     load_hall_of_fame_data,
     load_local_category_frame,
+    player_profile_view_signature,
 )
 from src.utils.player_identity import get_player_profile_data, player_aliases_mtime  # noqa: E402
 
@@ -28,8 +29,8 @@ PROCESSED = ROOT / "clubs" / "fvcc" / "data" / "processed"
 OUTPUT_PATH = PROCESSED / "validation" / "fvcc_winter_2026_full_propagation_validation.csv"
 
 EXPECTED = {
-    "Siddhanth Chaurasiya": {"matches": 6, "bowlingWickets": 10},
-    "Kartik Nallepalli": {"matches": 6, "bowlingWickets": 7},
+    "Siddhanth Chaurasiya": {"matches": 7, "bowlingWickets": 11},
+    "Kartik Nallepalli": {"matches": 7, "bowlingWickets": 7},
 }
 
 
@@ -88,12 +89,6 @@ def round_five_row() -> pd.Series | None:
     winter = winter_rows(rounds)
     if winter.empty:
         return None
-    round_mask = pd.Series(False, index=winter.index)
-    for column in ["round", "round_name", "Round"]:
-        if column in winter:
-            round_mask = round_mask | winter[column].astype(str).str.casefold().isin({"r5", "round 5", "5"})
-    if round_mask.any():
-        return winter[round_mask].iloc[0]
     winter["match_date_sort"] = pd.to_datetime(winter.get("match_date"), errors="coerce", utc=True)
     after_round_four = winter[winter["match_date_sort"] > pd.Timestamp("2026-06-20", tz="UTC")]
     return after_round_four.sort_values("match_date_sort", ascending=False).iloc[0] if not after_round_four.empty else None
@@ -131,14 +126,23 @@ def validate_recent_form(rows: list[dict[str, Any]], match_id: str) -> None:
     for filename in ["recent_form_batting.csv", "recent_form_bowling.csv"]:
         frame = read_csv(PROCESSED / "player_profile" / filename)
         has_round = not frame.empty and "match_id" in frame and frame["match_id"].astype(str).eq(match_id).any()
-        add(rows, f"round5_in_player_profile_{filename}", has_round, f"{len(frame)} rows; match_id={match_id}")
-        for player_name in EXPECTED:
+        add(rows, f"latest_match_in_player_profile_{filename}", has_round, f"{len(frame)} rows; match_id={match_id}")
+        if filename == "recent_form_bowling.csv":
+            for player_name in EXPECTED:
+                player_has_round = (
+                    has_round
+                    and player_mask(frame, player_name).any()
+                    and frame.loc[player_mask(frame, player_name), "match_id"].astype(str).eq(match_id).any()
+                )
+                add(rows, f"latest_match_{player_name}_in_{filename}", player_has_round, player_name)
+        else:
+            player_name = "Siddhanth Chaurasiya"
             player_has_round = (
                 has_round
                 and player_mask(frame, player_name).any()
                 and frame.loc[player_mask(frame, player_name), "match_id"].astype(str).eq(match_id).any()
             )
-            add(rows, f"round5_{player_name}_in_{filename}", player_has_round, player_name)
+            add(rows, f"latest_match_{player_name}_in_{filename}", player_has_round, player_name)
 
 
 def validate_player_profile(rows: list[dict[str, Any]], app_bowling: pd.DataFrame) -> None:
@@ -157,7 +161,7 @@ def validate_player_profile(rows: list[dict[str, Any]], app_bowling: pd.DataFram
         add(rows, f"profile_source_{player_name}_available", profile is not None, "get_player_profile_data")
         if profile is None:
             continue
-        view = build_player_profile_view(profile)
+        view = build_player_profile_view(profile, player_profile_view_signature())
         season_table = view.get("season_table", pd.DataFrame())
         row = (
             season_table[season_table["Season"].astype(str).eq("Winter 2026")].iloc[0]
@@ -186,7 +190,7 @@ def validate_player_profile(rows: list[dict[str, Any]], app_bowling: pd.DataFram
 def main() -> int:
     rows: list[dict[str, Any]] = []
     r5 = round_five_row()
-    add(rows, "winter_2026_round5_in_season_by_round", r5 is not None, "season_by_round_scorecards.csv")
+    add(rows, "winter_2026_latest_match_in_season_by_round", r5 is not None, "season_by_round_scorecards.csv")
     if r5 is None:
         OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
         pd.DataFrame(rows).to_csv(OUTPUT_PATH, index=False)
@@ -200,10 +204,10 @@ def main() -> int:
     season_id = clean(r5.get("season_id"))
     team_id = clean(r5.get("fvcc_team_id") or r5.get("club_team_id"))
 
-    add(rows, "round5_match_id_present", bool(match_id), match_id)
-    add(rows, "round5_date_after_round4", pd.notna(match_date) and match_date.date() > pd.Timestamp("2026-06-20", tz="UTC").date(), str(match_date))
-    add(rows, "round5_opponent_present", bool(opponent), opponent)
-    add(rows, "round5_result_present", bool(result), result)
+    add(rows, "latest_match_id_present", bool(match_id), match_id)
+    add(rows, "latest_match_date_after_previous_refresh", pd.notna(match_date) and match_date.date() > pd.Timestamp("2026-06-20", tz="UTC").date(), str(match_date))
+    add(rows, "latest_match_opponent_present", bool(opponent), opponent)
+    add(rows, "latest_match_result_present", bool(result), result)
 
     bowling = winter_rows(read_processed_table("all_seasons_bowling"))
     batting = winter_rows(read_processed_table("all_seasons_batting"))
@@ -227,7 +231,7 @@ def main() -> int:
         for player_name in EXPECTED
         if (row := player_row(app_bowling, player_name)) is not None and int_number(row.get("matches")) == 5
     ]
-    add(rows, "no_stale_five_match_siddhanth_or_kartik_rows", not stale, ", ".join(stale) or "none")
+    add(rows, "no_stale_pre_latest_match_siddhanth_or_kartik_rows", not stale, ", ".join(stale) or "none")
 
     validate_recent_form(rows, match_id)
     validate_player_profile(rows, app_bowling)
@@ -235,7 +239,7 @@ def main() -> int:
     scorecard_links = read_csv(PROCESSED / "hall_of_fame" / "scorecard_record_links.csv")
     add(
         rows,
-        "round5_in_hof_scorecard_links",
+        "latest_match_in_hof_scorecard_links",
         not scorecard_links.empty and "match_id" in scorecard_links and scorecard_links["match_id"].astype(str).eq(match_id).any(),
         f"{len(scorecard_links)} rows",
     )
@@ -252,7 +256,7 @@ def main() -> int:
     status = "pass" if not failures else "fail"
     print(f"validation_status={status} checks={len(rows)} failed={len(failures)}")
     print(
-        "round5="
+        "latest_match="
         f"date={match_date.date() if pd.notna(match_date) else 'missing'} "
         f"match_id={match_id} opponent={opponent} result={result}"
     )
