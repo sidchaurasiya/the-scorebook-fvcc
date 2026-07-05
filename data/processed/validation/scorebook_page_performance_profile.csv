@@ -1,15 +1,8 @@
 club_id,page_or_component,first_run_seconds,cached_run_seconds,rows_processed,notes
-georges-river-district,HOF data build,48.81,0.02,33244,get_hall_of_fame_data
-georges-river-district,Season Overview data build,1.363,0.926,1443,local all-team frames + detail metrics
-georges-river-district,Player Profile index build,1.686,0.001,2040,dropdown source
-georges-river-district,Player Profile selected-player build,3.707,0.014,24,sample canonical player
-georges-river-district,Milestone Upcoming build,35.937,0.184,15,selected tab only
-georges-river-district,Milestone Achieved build,36.514,0.086,14,selected tab only
-georges-river-district,Milestone Exclusive Club build,34.226,0.023,2033,selected tab only
-fvcc,HOF data build,7.794,0.005,6920,get_hall_of_fame_data
-fvcc,Season Overview data build,0.144,0.095,96,local all-team frames + detail metrics
-fvcc,Player Profile index build,0.133,0.0,291,dropdown source
-fvcc,Player Profile selected-player build,0.471,0.009,227,sample canonical player
-fvcc,Milestone Upcoming build,5.088,0.014,9,selected tab only
-fvcc,Milestone Achieved build,6.291,1.291,15,selected tab only
-fvcc,Milestone Exclusive Club build,5.039,0.005,291,selected tab only
+glen-waverley-hawks,HOF data build,29.117,0.013,21999,get_hall_of_fame_data
+glen-waverley-hawks,Season Overview data build,0.038,0.004,0,local all-team frames + detail metrics
+glen-waverley-hawks,Player Profile index build,0.426,0.001,1239,dropdown source
+glen-waverley-hawks,Player Profile selected-player build,1.07,0.01,47,sample canonical player
+glen-waverley-hawks,Milestone Upcoming build,20.373,0.031,15,selected tab only
+glen-waverley-hawks,Milestone Achieved build,20.524,0.062,0,selected tab only
+glen-waverley-hawks,Milestone Exclusive Club build,20.37,0.014,1243,selected tab only

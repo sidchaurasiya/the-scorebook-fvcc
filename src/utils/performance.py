@@ -13,6 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 PROFILE_SETTINGS = {
     "fvcc": ("FVCC_PERF_PROFILE", "fvcc_localhost_load_profile.csv"),
     "georges-river-district": ("GRDCC_PERF_PROFILE", "grdcc_localhost_load_profile.csv"),
+    "glen-waverley-hawks": ("GWHCC_PERF_PROFILE", "gwhcc_localhost_load_profile.csv"),
 }
 PROFILE_COLUMNS = [
     "timestamp",

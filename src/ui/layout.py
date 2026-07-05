@@ -1282,6 +1282,10 @@ def active_club_is_fvcc() -> bool:
     return get_active_club_id() == "fvcc"
 
 
+def active_club_uses_premium_hof_scroll() -> bool:
+    return get_active_club_id() in {"georges-river-district", "fvcc", "glen-waverley-hawks"}
+
+
 def runtime_identity_maintenance_enabled() -> bool:
     return os.getenv("FVCC_RUNTIME_IDENTITY_MAINTENANCE", "").strip() == "1"
 
@@ -5848,7 +5852,7 @@ def render_achieved_milestones_view(
         groups.append(
             '<div class="milestone-achievement-group">'
             f"<h3>{html.escape(category)}</h3>"
-            f'<div class="achievement-grid">{cards}</div>'
+            f'<div class="achievement-grid milestone-achievement-scroll" data-scroll-enabled="true">{cards}</div>'
             "</div>"
         )
 
@@ -5862,7 +5866,7 @@ def render_achieved_milestones_view(
     groups.append(
         '<div class="milestone-achievement-group">'
         "<h3>Hall of Fame Movement</h3>"
-        f'<div class="achievement-grid">{movement_cards}</div>'
+        f'<div class="achievement-grid milestone-achievement-scroll" data-scroll-enabled="true">{movement_cards}</div>'
         "</div>"
     )
 
@@ -7152,7 +7156,7 @@ def render_hof_expand_control(state_key: str, expanded: bool, row_count: int, co
         return
     with st.container(key=f"{state_key}_control"):
         if st.button(
-            "Show less ↑" if expanded else "Show top 10 ↓",
+            "Show less ↑" if expanded else "Show more ↓",
             key=f"{state_key}_toggle",
         ):
             st.session_state[state_key] = not expanded
@@ -7741,16 +7745,16 @@ def render_ranked_record_card(
     ).head(FASTEST_MILESTONE_RECORD_LIMIT)
     state_key = f"hof_ranked_record_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
     grdcc_scroll = get_active_club_id() == "georges-river-district"
-    fvcc_scroll = active_club_is_fvcc()
+    premium_scroll = active_club_uses_premium_hof_scroll()
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_rows = rows if grdcc_scroll or fvcc_scroll or expanded else rows.head(6)
+    displayed_rows = rows if premium_scroll or expanded else rows.head(6)
     row_html = "".join(
         milestone_record_row_html(rank, row, value_col, value_suffix)
         for rank, (_, row) in enumerate(displayed_rows.iterrows(), start=1)
     )
     if grdcc_scroll:
         row_html = f'<div class="hof-five-row-scroll">{row_html}</div>'
-    elif fvcc_scroll:
+    elif premium_scroll:
         row_html = (
             '<div class="hof-responsive-record-scroll" '
             'data-desktop-visible-rows="5" data-mobile-visible-rows="5" data-scroll-enabled="true">'
@@ -7760,7 +7764,7 @@ def render_ranked_record_card(
         f'<div class="hof-card performance-card fastest-innings-card"><div class="card-title">{html.escape(title)}</div>{row_html}</div>',
         unsafe_allow_html=True,
     )
-    if not grdcc_scroll and not fvcc_scroll:
+    if not premium_scroll:
         render_hof_expand_control(state_key, expanded, len(rows))
 
 
@@ -7961,9 +7965,9 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
     records = df.head(10).copy()
     state_key = f"hof_performance_expanded_{re.sub(r'[^a-z0-9]+', '_', title.casefold()).strip('_')}"
     grdcc_scroll = get_active_club_id() == "georges-river-district"
-    fvcc_scroll = active_club_is_fvcc()
+    premium_scroll = active_club_uses_premium_hof_scroll()
     expanded = bool(st.session_state.get(state_key, False))
-    displayed_records = records if grdcc_scroll or fvcc_scroll or expanded else records.head(6)
+    displayed_records = records if premium_scroll or expanded else records.head(6)
     rows = []
     for rank, (_, row) in enumerate(displayed_records.iterrows(), start=1):
         if mode == "batting":
@@ -7988,7 +7992,7 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
     rows_html = "".join(rows)
     if grdcc_scroll:
         rows_html = f'<div class="hof-five-row-scroll iconic-performance-scroll">{rows_html}</div>'
-    elif fvcc_scroll:
+    elif premium_scroll:
         rows_html = (
             '<div class="hof-responsive-record-scroll iconic-performance-scroll" '
             'data-desktop-visible-rows="6" data-mobile-visible-rows="5" data-scroll-enabled="true">'
@@ -7998,7 +8002,7 @@ def render_performance_card(title: str, df: pd.DataFrame, mode: str) -> None:
         f'<div class="hof-card performance-card"><div class="card-title">{html.escape(title)}</div>{rows_html}</div>',
         unsafe_allow_html=True,
     )
-    if not grdcc_scroll and not fvcc_scroll:
+    if not premium_scroll:
         render_hof_expand_control(state_key, expanded, len(records))
 
 
@@ -9539,7 +9543,8 @@ def milestone_progress_group_html(watchlist: pd.DataFrame, category: str) -> str
     if rows.empty:
         body = f'<div class="milestone-empty-card">{html.escape(milestone_empty_message(category))}</div>'
     else:
-        body = "".join(milestone_progress_card_html(row) for _, row in rows.head(6).iterrows())
+        cards = "".join(milestone_progress_card_html(row) for _, row in rows.iterrows())
+        body = f'<div class="milestone-progress-list" data-visible-rows="6" data-scroll-enabled="true">{cards}</div>'
     return (
         '<article class="milestone-group-card">'
         '<div class="milestone-group-head">'
@@ -9595,7 +9600,7 @@ def hall_of_fame_watch_html(hall_of_fame_watch: pd.DataFrame) -> str:
     if hall_of_fame_watch.empty:
         cards = '<div class="milestone-empty-card">No active players are currently close to entering an all-time top 5.</div>'
     else:
-        cards = "".join(hall_of_fame_watch_card_html(row) for _, row in hall_of_fame_watch.head(8).iterrows())
+        cards = "".join(hall_of_fame_watch_card_html(row) for _, row in hall_of_fame_watch.iterrows())
     return (
         '<aside class="milestone-hof-watch">'
         '<div class="milestone-group-head">'
@@ -9605,7 +9610,7 @@ def hall_of_fame_watch_html(hall_of_fame_watch: pd.DataFrame) -> str:
         "</div>"
         '<div class="milestone-group-rule">top 5 movement</div>'
         "</div>"
-        f'<div class="milestone-mini-grid">{cards}</div>'
+        f'<div class="milestone-mini-grid milestone-mini-scroll" data-visible-rows="6" data-scroll-enabled="true">{cards}</div>'
         "</aside>"
     )
 

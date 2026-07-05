@@ -2672,7 +2672,7 @@ def inject_theme() -> None:
 
         .premiership-season {
             align-items: center;
-            color: var(--club-primary, #4b37d8);
+            color: var(--club-value, var(--club-primary, #4b37d8));
             display: inline-flex;
             font-size: 1.05rem;
             font-weight: 950;
@@ -2703,7 +2703,7 @@ def inject_theme() -> None:
         }
 
         .premiership-title span {
-            color: #737994;
+            color: var(--club-secondary);
             font-weight: 850;
         }
 
@@ -2717,7 +2717,7 @@ def inject_theme() -> None:
 
         .premiership-result {
             align-items: center;
-            color: #7a1f3d;
+            color: var(--club-secondary);
             display: inline-flex;
             font-size: 0.88rem;
             font-weight: 950;
@@ -2756,7 +2756,7 @@ def inject_theme() -> None:
         }
 
         .premiership-player-row .performance-value {
-            color: var(--club-primary, #4b37d8);
+            color: var(--club-value, var(--club-primary, #4b37d8));
         }
 
         .premiership-player-row .performance-player span {
@@ -5486,6 +5486,14 @@ def inject_theme() -> None:
             padding: 15px;
         }
 
+        .milestone-progress-list {
+            max-height: calc(6 * 98px);
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
+        }
+
         .milestone-progress-top {
             align-items: flex-start;
             display: flex;
@@ -5576,6 +5584,15 @@ def inject_theme() -> None:
             display: grid;
             gap: 14px;
             grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .milestone-mini-scroll,
+        .milestone-achievement-scroll {
+            max-height: 392px;
+            overflow-y: auto;
+            padding-right: 7px;
+            scrollbar-color: var(--club-border) transparent;
+            scrollbar-width: thin;
         }
 
         .milestone-mini-card {
@@ -7345,6 +7362,12 @@ def inject_theme() -> None:
                 max-height: 344px;
             }
 
+            .milestone-progress-list,
+            .milestone-mini-scroll,
+            .milestone-achievement-scroll {
+                max-height: 430px;
+            }
+
             .milestone-member-row {
                 min-height: 55px;
             }
@@ -7901,6 +7924,10 @@ def active_club_theme_css() -> str:
     muted = safe_hex_colour(get_branding_value("muted_text_colour", "#6D728E"), "#6D728E")
     line = safe_hex_colour(get_branding_value("border_colour", "#E7EAF5"), "#E7EAF5")
     surface = safe_hex_colour(get_branding_value("surface_colour", "#FFFFFF"), "#FFFFFF")
+    value_colour = safe_hex_colour(
+        branding.get("value_colour", get_branding_value("value_colour", primary)),
+        primary,
+    )
     link = safe_hex_colour(
         branding.get("link_colour", get_branding_value("link_colour", secondary if active_club_id == "fvcc" else primary)),
         secondary if active_club_id == "fvcc" else primary,
@@ -7959,6 +7986,7 @@ def active_club_theme_css() -> str:
             --club-surface: {surface};
             --club-link: {link};
             --club-link-hover: {link_hover};
+            --club-value: {value_colour};
             --club-highlight: {highlight};
             --club-primary-soft: {primary_soft};
             --club-secondary-soft: {secondary_soft};
@@ -7995,8 +8023,14 @@ def active_club_theme_css() -> str:
         }}
 
         section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {{
-            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-secondary)) !important;
-            box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.04)),
+                linear-gradient(135deg, var(--club-sidebar-active), var(--club-sidebar-bg)) !important;
+            border: 1px solid rgba(var(--club-primary-rgb), 0.58) !important;
+            box-shadow:
+                0 16px 34px {active_shadow},
+                0 0 0 1px rgba(255,255,255,0.10),
+                inset 0 1px 0 rgba(255,255,255,0.26) !important;
         }}
 
         section[data-testid="stSidebar"] .side-nav-item,
@@ -8024,8 +8058,14 @@ def active_club_theme_css() -> str:
         }}
 
         section[data-testid="stSidebar"] .side-nav-item.active {{
-            background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-secondary)) !important;
-            box-shadow: 0 16px 34px {active_shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.04)),
+                linear-gradient(135deg, var(--club-sidebar-active), var(--club-sidebar-bg)) !important;
+            border: 1px solid rgba(var(--club-primary-rgb), 0.58) !important;
+            box-shadow:
+                0 16px 34px {active_shadow},
+                0 0 0 1px rgba(255,255,255,0.10),
+                inset 0 1px 0 rgba(255,255,255,0.26) !important;
         }}
 
         section[data-testid="stSidebar"] .side-nav-item:not(.active):hover,
@@ -8104,6 +8144,10 @@ def active_club_theme_css() -> str:
 
         .premiership-season,
         .premiership-season a,
+        .premiership-season a:visited {{
+            color: var(--club-value) !important;
+        }}
+
         .hof-card a.player-profile-link,
         .hof-card a.season-overview-link,
         .hof-card a.scorecard-link,
@@ -8131,7 +8175,7 @@ def active_club_theme_css() -> str:
 
         .club-label,
         .page-subtitle strong {{
-            color: var(--club-primary) !important;
+            color: var(--club-value) !important;
         }}
 
         .mobile-nav-link.active,
@@ -8173,7 +8217,7 @@ def active_club_theme_css() -> str:
         .fingerprint-player-pct,
         .profile-best-badge,
         .mobile-info-icon {{
-            color: var(--club-primary) !important;
+            color: var(--club-value) !important;
         }}
 
         .cv-hero {{
@@ -8214,11 +8258,11 @@ def active_club_theme_css() -> str:
         .team-leader-card .mini-icon {{
             background: var(--club-primary-soft) !important;
             border-color: rgba(var(--club-primary-rgb), 0.22) !important;
-            color: var(--club-primary) !important;
+            color: var(--club-value) !important;
         }}
 
         .team-leader-card .mini-stat {{
-            color: var(--club-primary) !important;
+            color: var(--club-value) !important;
         }}
 
         .team-leader-card .team-card-meta {{
@@ -8269,7 +8313,7 @@ def active_club_theme_css() -> str:
         .player-v2-summary-value,
         .profile-phase-value,
         .season-v2-highlight-value {{
-            color: var(--club-primary) !important;
+            color: var(--club-value) !important;
         }}
 
         .profile-badge,

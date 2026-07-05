@@ -19,6 +19,7 @@ branding:
   accent_colour: "#62431A"
   muted_accent_colour: "#B39125"
   cream_accent_colour: "#EDC778"
+  value_colour: "#A87500"
   primary_dark_colour: "#280B04"
   text_colour: "#280B04"
   muted_text_colour: "#62431A"
@@ -26,7 +27,7 @@ branding:
   surface_colour: "#FFFFFF"
   link_colour: "#280B04"
   link_hover_colour: "#000000"
-  nav_active_colour: "#FCD207"
+  nav_active_colour: "#A87500"
   logo_path: clubs/glen-waverley-hawks/assets/logo.png
 
 contact:

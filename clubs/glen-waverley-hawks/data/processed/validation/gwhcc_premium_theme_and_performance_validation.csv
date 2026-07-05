@@ -1,0 +1,13 @@
+check_name,validation_status,notes
+gwhcc_config_resolves,pass,GWHCC config loads and resolves the expected club id.
+gwhcc_readable_gold_value_token,pass,Readable dark-gold value token exists and does not reuse bright logo gold.
+selected_sidebar_premium_active_style,pass,Selected sidebar state uses layered glass/gold active styling.
+hof_player_names_and_values_use_readable_tokens,pass,HOF values use readable club value token; player links stay on club link token.
+premiership_result_text_uses_brown,pass,Premiership result text resolves to GWHCC dark brown.
+premiership_season_text_uses_dark_gold,pass,Premiership season text resolves to the dark gold value token.
+hof_top_10_controls_absent,pass,Legacy HOF top-10 control wording is absent.
+milestone_top_10_controls_absent,pass,Milestone page does not expose top-10 controls.
+hof_sections_scrollable,pass,"Premiership, leaders, iconic performances, and fastest innings use scroll containers."
+milestone_long_sections_scrollable,pass,"Upcoming, achieved, HOF watch, and exclusive milestone sections use scroll containers."
+gwhcc_page_performance_profile_exists,pass,"GWHCC profile rows=7; found=['HOF data build', 'Milestone Achieved build', 'Milestone Exclusive Club build', 'Milestone Upcoming build', 'Player Profile index build', 'Player Profile selected-player build', 'Season Overview data build']"
+grdcc_fvcc_theme_tokens_not_modified_accidentally,pass,FVCC/GRDCC config tokens remain separate; readable-gold token is GWHCC-scoped.
