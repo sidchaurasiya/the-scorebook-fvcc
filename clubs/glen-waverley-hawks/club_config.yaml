@@ -49,6 +49,12 @@ features:
   enable_exact_name_nonoverlap_merge: false
   enable_grade_opponent_normalisation: false
 
+match_count_policy:
+  t20_weight: 0.5
+  default_played_weight: 1.0
+  no_play_weight: 0.0
+  no_play_detection: activity_based
+
 data:
   root_dir: clubs/glen-waverley-hawks/data
   source_systems:

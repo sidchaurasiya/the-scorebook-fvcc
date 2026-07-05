@@ -1,0 +1,13 @@
+check_name,validation_status,actual,expected,notes
+t20_matches_count_as_half,pass,[0.5],0.5,T20 matches=90
+non_t20_played_matches_count_as_one,pass,[1.0],1.0,Non-T20 played matches=3201
+no_play_matches_count_as_zero,pass,[0.0],0.0,No-play matches=184
+selected_squad_only_no_play_excluded,pass,0.0,0,Selected-player no-play rows=1695
+player_season_weighted_counts_match_policy,pass,0.0,0,Player-season policy rows=5725
+career_weighted_counts_equal_season_sum,pass,1288,non-empty career source,Career match totals are sourced from weighted season aggregate files.
+hof_win_rates_use_weighted_source,pass,1273,weighted policy source note,HOF player win rates were rebuilt after policy application.
+player_profile_sources_rebuilt,pass,76982,profile rows with matches column,Player Profile Career Breakdown source exists after refresh.
+milestone_match_counts_use_weighted_aggregates,pass,19.0,0.5-step weighted aggregate matches,Milestone page reads the weighted all_seasons batting/bowling/fielding aggregates.
+season_overview_coverage_audit_exists,pass,35,season coverage rows,Season Overview comparison has match-policy audit coverage available.
+no_grdcc_fvcc_data_changes_required,pass,glen-waverley-hawks,glen-waverley-hawks only,Policy helper and scripts are Hawks-specific and do not run for GRDCC/FVCC.
+impact_examples_written,pass,1293,raw vs weighted player impact rows,Output=/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_match_count_policy_player_impact.csv
