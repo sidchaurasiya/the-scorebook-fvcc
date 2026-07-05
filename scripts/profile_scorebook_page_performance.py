@@ -6,6 +6,7 @@ from __future__ import annotations
 import os
 import sys
 import time
+import argparse
 from pathlib import Path
 from typing import Callable
 
@@ -20,7 +21,7 @@ from src.ui import layout  # noqa: E402
 from src.utils.player_identity import get_player_profile_data, player_aliases_mtime  # noqa: E402
 
 OUTPUT = ROOT / "data/processed/validation/scorebook_page_performance_profile.csv"
-CLUBS = ["georges-river-district", "fvcc"]
+CLUBS = ["georges-river-district", "fvcc", "glen-waverley-hawks"]
 
 
 def timed(fn: Callable[[], object]) -> tuple[float, object]:
@@ -103,7 +104,12 @@ def sample_player_id(club_id: str) -> str:
     )
     if index.empty:
         return ""
-    preferred = "A Clarkson" if club_id == "georges-river-district" else "Siddhanth Chaurasiya"
+    preferred_by_club = {
+        "georges-river-district": "A Clarkson",
+        "fvcc": "Siddhanth Chaurasiya",
+        "glen-waverley-hawks": "Paul Young",
+    }
+    preferred = preferred_by_club.get(club_id, "")
     scoped = index[index["name"].astype(str).str.casefold().eq(preferred.casefold())]
     return str((scoped if not scoped.empty else index).iloc[0]["id"])
 
@@ -157,9 +163,23 @@ def profile_club(club_id: str) -> list[dict[str, object]]:
     return rows
 
 
+def selected_clubs(value: str | None) -> list[str]:
+    if not value:
+        return CLUBS
+    requested = [part.strip() for part in value.split(",") if part.strip()]
+    valid = set(CLUBS)
+    unknown = [club for club in requested if club not in valid]
+    if unknown:
+        raise SystemExit(f"Unknown club id(s): {', '.join(unknown)}")
+    return requested
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Profile production-relevant Scorebook page data preparation.")
+    parser.add_argument("--club", default=None, help="Optional club id, or comma-separated club ids. Defaults to all profiled clubs.")
+    args = parser.parse_args()
     rows: list[dict[str, object]] = []
-    for club_id in CLUBS:
+    for club_id in selected_clubs(args.club):
         rows.extend(profile_club(club_id))
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(OUTPUT, index=False)
