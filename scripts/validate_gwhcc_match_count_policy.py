@@ -19,10 +19,12 @@ from src.data.gwhcc_match_policy import (  # noqa: E402
     player_season_weights,
     read_csv,
     selected_player_rows,
+    weighted_win_source_rows,
 )
 
 OUTPUT = PROCESSED / "validation" / "gwhcc_match_count_policy_validation.csv"
 RAW_VS_WEIGHTED = PROCESSED / "validation" / "gwhcc_match_count_policy_player_impact.csv"
+WIN_EXAMPLES = PROCESSED / "validation" / "gwhcc_weighted_win_policy_examples.csv"
 
 
 def status_row(check_name: str, ok: bool, actual: object, expected: object, notes: str) -> dict[str, object]:
@@ -79,6 +81,65 @@ def impact_examples(weights: pd.DataFrame) -> pd.DataFrame:
     return impact
 
 
+def write_weighted_win_examples(win_rows: pd.DataFrame, selected: pd.DataFrame) -> pd.DataFrame:
+    examples = []
+    if not win_rows.empty:
+        t20_wins = win_rows[
+            win_rows["detected_match_format"].eq("T20")
+            & pd.to_numeric(win_rows["raw_win"], errors="coerce").eq(1)
+            & pd.to_numeric(win_rows["weighted_win"], errors="coerce").eq(0.5)
+        ].copy()
+        for _, row in t20_wins.head(20).iterrows():
+            examples.append(
+                {
+                    "example_type": "t20_win_half_weighted",
+                    "player_name": row.get("player_name", ""),
+                    "match_id": row.get("match_id", ""),
+                    "season": row.get("season", ""),
+                    "detected_match_format": row.get("detected_match_format", ""),
+                    "raw_match": 1,
+                    "weighted_match": row.get("match_weight", ""),
+                    "raw_win": row.get("raw_win", ""),
+                    "weighted_win": row.get("weighted_win", ""),
+                    "notes": "T20 win changes from raw 1 to weighted 0.5.",
+                }
+            )
+    if not selected.empty:
+        no_play = selected[selected["is_no_play"]].copy()
+        for _, row in no_play.head(20).iterrows():
+            examples.append(
+                {
+                    "example_type": "selected_squad_no_play_zero_weighted",
+                    "player_name": row.get("player_name", ""),
+                    "match_id": row.get("match_id", ""),
+                    "season": row.get("season", ""),
+                    "detected_match_format": row.get("detected_match_format", ""),
+                    "raw_match": 1,
+                    "weighted_match": row.get("match_weight", ""),
+                    "raw_win": 0,
+                    "weighted_win": 0,
+                    "notes": "Selected-squad no-play match changes from raw selected match to 0.",
+                }
+            )
+    frame = pd.DataFrame(
+        examples,
+        columns=[
+            "example_type",
+            "player_name",
+            "match_id",
+            "season",
+            "detected_match_format",
+            "raw_match",
+            "weighted_match",
+            "raw_win",
+            "weighted_win",
+            "notes",
+        ],
+    )
+    frame.to_csv(WIN_EXAMPLES, index=False)
+    return frame
+
+
 def main() -> int:
     policy = build_match_policy_table()
     selected = selected_player_rows(policy)
@@ -89,7 +150,9 @@ def main() -> int:
     hof_win = read_csv(PROCESSED / "hall_of_fame" / "player_win_rates.csv")
     profile = read_csv(PROCESSED / "player_profile" / "performance_breakdown_by_dimension.csv")
     coverage = read_csv(PROCESSED / "validation" / "gwhcc_playhq_season_coverage_audit.csv")
+    win_rows = weighted_win_source_rows(policy)
     impact = impact_examples(weights)
+    win_examples = write_weighted_win_examples(win_rows, selected)
 
     rows: list[dict[str, object]] = []
     t20_policy = policy[policy["detected_match_format"].eq("T20") & (~policy["is_no_play"])]
@@ -130,6 +193,45 @@ def main() -> int:
             float(selected_no_play["match_weight"].sum()) if not selected_no_play.empty else 0,
             0,
             f"Selected-player no-play rows={len(selected_no_play)}",
+        )
+    )
+    t20_win_rows = win_rows[
+        win_rows["detected_match_format"].eq("T20")
+        & pd.to_numeric(win_rows["raw_win"], errors="coerce").eq(1)
+        & (~win_rows["is_no_play"].astype(bool))
+    ]
+    rows.append(
+        status_row(
+            "t20_wins_count_as_half_win",
+            not t20_win_rows.empty and pd.to_numeric(t20_win_rows["weighted_win"], errors="coerce").eq(0.5).all(),
+            sorted(pd.to_numeric(t20_win_rows["weighted_win"], errors="coerce").dropna().unique().tolist())[:5],
+            0.5,
+            f"T20 win rows={len(t20_win_rows)}",
+        )
+    )
+    non_t20_win_rows = win_rows[
+        ~win_rows["detected_match_format"].eq("T20")
+        & pd.to_numeric(win_rows["raw_win"], errors="coerce").eq(1)
+        & (~win_rows["is_no_play"].astype(bool))
+    ]
+    rows.append(
+        status_row(
+            "non_t20_wins_count_as_one_win",
+            not non_t20_win_rows.empty and pd.to_numeric(non_t20_win_rows["weighted_win"], errors="coerce").eq(1.0).all(),
+            sorted(pd.to_numeric(non_t20_win_rows["weighted_win"], errors="coerce").dropna().unique().tolist())[:5],
+            1.0,
+            f"Non-T20 win rows={len(non_t20_win_rows)}",
+        )
+    )
+    no_play_selected = selected[selected["is_no_play"]] if not selected.empty else pd.DataFrame()
+    rows.append(
+        status_row(
+            "no_play_match_and_win_count_as_zero",
+            no_play["match_weight"].eq(0.0).all()
+            and (no_play_selected.empty or pd.to_numeric(no_play_selected["match_weight"], errors="coerce").fillna(0).eq(0).all()),
+            f"matches={len(no_play)} selected_rows={len(no_play_selected)}",
+            "0 match and 0 win",
+            "No-play rows are excluded from weighted match and win totals.",
         )
     )
     grouped_from_selected = (
@@ -176,10 +278,31 @@ def main() -> int:
         status_row(
             "hof_win_rates_use_weighted_source",
             not hof_win.empty
-            and hof_win.get("source_coverage_note", pd.Series(dtype=str)).astype(str).str.contains("weighted match-count policy", case=False).any(),
+            and hof_win.get("source_coverage_note", pd.Series(dtype=str)).astype(str).str.contains("weighted match/win policy", case=False).any(),
             len(hof_win),
             "weighted policy source note",
             "HOF player win rates were rebuilt after policy application.",
+        )
+    )
+    if not hof_win.empty:
+        calc = hof_win.copy()
+        calc["expected_win_pct"] = pd.to_numeric(calc["wins"], errors="coerce") * 100 / pd.to_numeric(
+            calc["matches_with_result"],
+            errors="coerce",
+        )
+        pct_delta = (
+            pd.to_numeric(calc["win_pct"], errors="coerce").fillna(0)
+            - pd.to_numeric(calc["expected_win_pct"], errors="coerce").fillna(0)
+        ).abs().max()
+    else:
+        pct_delta = 999
+    rows.append(
+        status_row(
+            "win_pct_uses_weighted_wins_over_weighted_matches",
+            pct_delta < 0.0001,
+            round(float(pct_delta), 8),
+            0,
+            "HOF win_pct must equal weighted wins / weighted matches.",
         )
     )
     rows.append(
@@ -226,6 +349,16 @@ def main() -> int:
             len(impact),
             "raw vs weighted player impact rows",
             f"Output={RAW_VS_WEIGHTED}",
+        )
+    )
+    rows.append(
+        status_row(
+            "weighted_win_examples_written",
+            not win_examples.empty
+            and {"t20_win_half_weighted", "selected_squad_no_play_zero_weighted"}.issubset(set(win_examples["example_type"])),
+            len(win_examples),
+            "T20 win and no-play examples",
+            f"Output={WIN_EXAMPLES}",
         )
     )
 

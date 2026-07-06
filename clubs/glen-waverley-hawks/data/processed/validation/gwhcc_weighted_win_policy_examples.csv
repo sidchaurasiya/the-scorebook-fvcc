@@ -1,0 +1,41 @@
+example_type,player_name,match_id,season,detected_match_format,raw_match,weighted_match,raw_win,weighted_win,notes
+t20_win_half_weighted,Greg McCormick,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Simon Gordon,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Max Taborsky,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Kashif Javed,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Andrew Robjant,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Jaimee Ellwood,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Liam O'Rourke,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Evan Miller,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Mohd Shuraque Jahan,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Noel Blacker,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Thomas Kuiper,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Paul Young,03927867-e54d-439c-abf2-35b79d3d13f6,Summer 2022/23,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Simon Gordon,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Kashif Javed,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Greg McCormick,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Noel Blacker,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Thomas Kuiper,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Brendan Coull,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,James Anderson,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+t20_win_half_weighted,Reece Anderson,044b1343-35e0-4fa2-a5de-848682dd0f6c,Summer 2020/21,T20,1,0.5,1.0,0.5,T20 win changes from raw 1 to weighted 0.5.
+selected_squad_no_play_zero_weighted,Ben Aartsen,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Mark Bolitho,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Ayush Dutta,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Bathusan Elango,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Sachith Prasad,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Ben Wheeler,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Zaron Chanel,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Suppun Wathukarage,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,James Prendergast,0205bda9-b921-4449-bf36-73f8da4fff29,Summer 2010/11,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Syon Neel,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Gookul Guhan,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Aryan Patel,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Vimal Kewada,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,ilakkiyan yathavan,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,William Hodder,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Anhad Kohli,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Dhruv Nanda,02f1bb01-b47a-4a9f-86dd-99eba8f15e9f,Summer 2016/17,One Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Glen Powell,0448854e-775b-4062-ba31-c0d93071c926,Summer 2016/17,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Liam Powell,0448854e-775b-4062-ba31-c0d93071c926,Summer 2016/17,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
+selected_squad_no_play_zero_weighted,Cooper George,0448854e-775b-4062-ba31-c0d93071c926,Summer 2016/17,Two Day,1,0.0,0.0,0.0,Selected-squad no-play match changes from raw selected match to 0.
