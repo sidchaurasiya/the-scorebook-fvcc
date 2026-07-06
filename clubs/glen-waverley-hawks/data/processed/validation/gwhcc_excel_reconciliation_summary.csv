@@ -1,0 +1,2 @@
+area,status,playhq_value,excel_value,difference,suggested_action,confidence,notes
+workbook,not_run,,,,review_excel,not_applicable,Excel file not found: /tmp/nonexistent-gwhcc-poc.xlsx

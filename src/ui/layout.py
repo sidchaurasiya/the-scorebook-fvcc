@@ -156,6 +156,7 @@ PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
 PLAYER_PROFILE_INDEX_VERSION = "2026-07-identity-v4"
 PERFORMANCE_CACHE_VERSION = "2026-07-performance-v2"
+HAWKS_MATCH_COUNT_FOOTNOTE = "* Hawks match counts apply club rules: T20 = 0.5 match; no-play games are excluded."
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
 PLAYER_PROFILE_QUERY_PAGE = "player-profile"
 PLAYER_PROFILE_V2_QUERY_PAGE = "player-profile-v2"
@@ -188,6 +189,17 @@ PLAYER_PROFILE_V2_PAGE_DEFINITIONS = (
 LEGACY_PAGE_SLUGS = {
     "season_overview": SEASON_OVERVIEW_QUERY_PAGE,
 }
+
+
+def render_hawks_match_count_footnote() -> None:
+    if get_active_club_id() != "glen-waverley-hawks":
+        return
+    st.markdown(
+        '<div class="scorebook-subtle-footnote" '
+        'style="margin:4px 0 12px;color:#62431A;font-size:12px;line-height:1.45;opacity:.86;">'
+        f"{html.escape(HAWKS_MATCH_COUNT_FOOTNOTE)}</div>",
+        unsafe_allow_html=True,
+    )
 
 
 def log_hof_timing(
@@ -8449,6 +8461,7 @@ def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matc
             '<div class="milestone-section-heading"><h2>Exclusive Clubs 💎</h2></div>',
             unsafe_allow_html=True,
         )
+        render_hawks_match_count_footnote()
         render_milestone_club_selector(selected_category)
         if not club_entries:
             st.markdown(
@@ -8525,6 +8538,7 @@ def highest_reached_threshold(value: object, thresholds: list[int]) -> int | Non
 
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed Records 📊")
+    render_hawks_match_count_footnote()
     if isinstance(all_time_or_tables, dict):
         tables = {
             "batting": all_time_or_tables["batting"].copy(),
@@ -9674,6 +9688,7 @@ def milestone_category_rows(watchlist: pd.DataFrame, category: str) -> pd.DataFr
 
 def render_milestone_watchlist_table(watchlist: pd.DataFrame) -> None:
     render_section_heading("Milestone Watchlist")
+    render_hawks_match_count_footnote()
     if watchlist.empty:
         st.info("No players are currently within milestone range for this category.")
         return
@@ -12911,6 +12926,7 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
 def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -> None:
     source = profile_view.get("performance_breakdown", pd.DataFrame()).copy()
     render_section_heading("Career Breakdown 🧭")
+    render_hawks_match_count_footnote()
     selected = selected_profile_breakdown_view()
     selected_discipline = selected_profile_discipline_view()
     render_profile_breakdown_tabs()
@@ -14028,6 +14044,7 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 
 def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Overview 🧩")
+    render_hawks_match_count_footnote()
     keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
     matches_text, _, _ = historical_matches_display_text(career)
     batting_matches_value = matches_text or format_int(career.get("Matches"))
@@ -14242,6 +14259,7 @@ def render_player_milestones(career: pd.Series) -> None:
     if not milestones:
         return
     render_section_heading("Milestone Watch 🎯")
+    render_hawks_match_count_footnote()
     rows = []
     for milestone in milestones:
         rows.append(
@@ -16616,6 +16634,7 @@ def rank_badge(rank: int) -> str:
 def render_full_stats_section(dashboard_data: dict[str, object]) -> None:
     st.markdown('<div id="full-stats"></div>', unsafe_allow_html=True)
     render_section_heading("Detailed Stats 📊")
+    render_hawks_match_count_footnote()
     with st.container(key="full_stats_card"):
         tabs = ["Batting", "Bowling", "Fielding"]
         batting_tab, bowling_tab, fielding_tab = st.tabs(tabs)

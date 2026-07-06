@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 
@@ -80,11 +81,20 @@ def clean_team_name(value: object) -> str:
 
 
 def clean_grade_name(value: object) -> str:
+    from src.config.club_config import get_feature_flag
+
     label = clean_label(value)
     label = strip_leading_association(label)
     label = re.sub(r"^\d+\s*[-–]\s*", "", label).strip()
     label = label.replace("Designated One Day Comp.", "DODC")
-    return canonicalize_grade_label(normalize_spaces(label))
+    label = canonicalize_grade_label(normalize_spaces(label))
+    if active_club_id() == "glen-waverley-hawks" and get_feature_flag(
+        "enable_grade_opponent_normalisation",
+        False,
+        club_id="glen-waverley-hawks",
+    ):
+        return canonicalize_gwhcc_grade_label(label)
+    return label
 
 
 def canonicalize_grade_label(label: str) -> str:
@@ -112,6 +122,18 @@ def canonicalize_grade_label(label: str) -> str:
         "north division sunday winter": "North Division - SUNDAY (Winter)",
     }
     return grade_aliases.get(normalized, label)
+
+
+def canonicalize_gwhcc_grade_label(label: str) -> str:
+    try:
+        from src.data.gwhcc_governance import mapping_lookup
+
+        mapping = mapping_lookup().get(clean_label(label))
+        if mapping:
+            return str(mapping.get("display_grade_name") or label)
+    except Exception:
+        pass
+    return label
 
 
 def clean_label(value: object) -> str:
@@ -208,6 +230,15 @@ def build_team_grade_display(team_name: object, grade_name: object) -> str:
 def grade_sort_key(value: object) -> tuple[int, str]:
     label = clean_grade_name(extract_grade_for_sort(value))
     normalized = normalized_name(label)
+    if active_club_id() == "glen-waverley-hawks":
+        try:
+            from src.data.gwhcc_governance import mapping_lookup
+
+            mapping = mapping_lookup().get(clean_label(extract_grade_for_sort(value))) or mapping_lookup().get(label)
+            if mapping:
+                return (int(float(mapping.get("display_order") or 999)), label.casefold())
+        except Exception:
+            pass
     for index, grade in enumerate(GRADE_ORDER):
         if normalized == grade:
             return (index, label.casefold())
@@ -307,3 +338,12 @@ def comparison_key(value: object) -> str:
 
 def normalize_spaces(value: str) -> str:
     return re.sub(r"\s+", " ", str(value)).strip()
+
+
+def active_club_id() -> str:
+    try:
+        from src.config.club_config import get_active_club_id
+
+        return get_active_club_id()
+    except Exception:
+        return str(os.getenv("CLUB_ID", "fvcc")).strip().casefold().replace(" ", "-") or "fvcc"
