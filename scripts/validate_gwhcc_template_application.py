@@ -159,9 +159,9 @@ def main() -> int:
             "has_annual_report_overrides",
             "enable_match_proxy",
             "enable_exact_name_nonoverlap_merge",
-            "enable_grade_opponent_normalisation",
         )
     )
+    grade_normalisation_path = ROOT / "clubs" / CLUB_ID / "data" / "source" / "gwhcc_grade_competition_normalisation.csv"
 
     rows = [
         row(
@@ -259,7 +259,12 @@ def main() -> int:
         row(
             "grdcc_only_rules_disabled",
             optional_flags_off,
-            "GWHCC keeps GRDCC historical/manual feature flags disabled.",
+            "GWHCC keeps GRDCC historical/manual feature flags disabled; Hawks grade normalisation is governed by a club-local CSV.",
+        ),
+        row(
+            "gwhcc_grade_normalisation_is_club_local",
+            bool(features.get("enable_grade_opponent_normalisation")) and grade_normalisation_path.exists(),
+            "Hawks grade normalisation may be enabled only with the club-local mapping CSV.",
         ),
         row(
             "no_grdcc_labels_in_gwhcc_config",

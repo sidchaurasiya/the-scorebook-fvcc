@@ -1,0 +1,12 @@
+check_name,validation_status,actual,expected,notes
+grade_normalisation_file_exists,pass,121,non-empty mapping,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/source/gwhcc_grade_competition_normalisation.csv
+every_raw_grade_has_mapping,pass,0,0,Raw grades are sourced from Hawks processed and match-centre data.
+display_order_populated,pass,121,121,Every mapping needs deterministic grade ordering.
+uncertain_mappings_flagged,pass,15,review flags available,"Review flags are expected for typo-like, legacy, or ambiguous labels."
+t20_reconciliation_explained,pass,8,no unexplained mismatch,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_t20_count_reconciliation.csv
+match_count_policy_footnote_present,pass,* Hawks match counts apply club rules: T20 = 0.5 match; no-play games are excluded.,present in app-facing metadata,UI can surface this note where match count is central.
+review_required_match_export_exists,pass,785,review rows,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_matches_needing_review.csv
+excel_reconciliation_script_has_path_arg,pass,True,True,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/scripts/reconcile_gwhcc_poc_excel.py
+bbb_player_dna_coverage_exists,pass,3738,coverage rows,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_bbb_player_dna_coverage.csv
+source_quality_dashboard_exists,pass,35,season rows,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_source_quality_dashboard.csv
+no_grdcc_fvcc_behaviour_changed,pass,hawks-only scripts/config,no shared data mutation,Shared grade display change is gated by active club and Hawks feature flag.
