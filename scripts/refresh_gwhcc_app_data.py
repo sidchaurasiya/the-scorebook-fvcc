@@ -12,6 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.data.gwhcc_match_policy import CLUB_ID, apply_hawks_match_policy_to_app_data  # noqa: E402
+from src.data.gwhcc_document_overrides import extract_documents  # noqa: E402
 
 
 def run_script(name: str, *args: str) -> None:
@@ -35,8 +36,17 @@ def main() -> int:
 
     run_script("refresh_club_outputs.py", "--club", CLUB_ID)
     apply_hawks_match_policy_to_app_data()
+    extraction = extract_documents()
+    print(
+        "Applied Hawks document override extraction "
+        f"(raw_files={extraction['raw_files']}, record_overrides={extraction['record_overrides']}, "
+        f"premierships={extraction['premierships']})"
+    )
     run_script("audit_gwhcc_playhq_season_coverage.py")
     run_script("validate_gwhcc_match_count_policy.py")
+    run_script("export_gwhcc_matches_needing_review.py")
+    run_script("validate_gwhcc_data_governance.py")
+    run_script("validate_gwhcc_document_overrides.py")
     run_script("validate_gwhcc_template_application.py")
     print("GWHCC refresh complete.")
     return 0

@@ -422,28 +422,20 @@ def apply_hawks_match_policy_to_app_data() -> dict[str, object]:
 
 
 def write_weighted_win_rates(policy: pd.DataFrame | None = None) -> pd.DataFrame:
-    policy = policy if policy is not None else build_match_policy_table()
-    selected = selected_player_rows(policy)
-    if selected.empty:
-        return pd.DataFrame()
-    outcomes = policy[["match_id", "result_text", "home_team_name", "away_team_name", "club_team_id", "home_team_id", "away_team_id"]].copy()
-    outcomes["match_id"] = outcomes["match_id"].astype(str)
-    outcomes["win"] = outcomes.apply(classify_hawks_win, axis=1)
-    selected = selected.merge(outcomes[["match_id", "win"]], on="match_id", how="left")
-    selected = selected[selected["win"].notna() & selected["match_weight"].gt(0)].copy()
+    selected = weighted_win_source_rows(policy)
     if selected.empty:
         return pd.DataFrame()
     selected = apply_identity_lookup(selected)
-    selected["weighted_win"] = selected["match_weight"] * selected["win"].astype(float)
     grouped = selected.groupby(["canonical_player_id", "canonical_player_name", "display_player_name"], as_index=False).agg(
         matches_with_result=("match_weight", "sum"),
         wins=("weighted_win", "sum"),
+        raw_wins=("raw_win", "sum"),
     )
     grouped["losses"] = grouped["matches_with_result"] - grouped["wins"]
     grouped["win_pct"] = grouped.apply(lambda row: row["wins"] * 100 / row["matches_with_result"] if row["matches_with_result"] else pd.NA, axis=1)
     grouped["player_key"] = grouped["canonical_player_id"]
     grouped["player_name_key"] = grouped["display_player_name"].astype(str).str.casefold().str.replace(r"[^a-z0-9]+", " ", regex=True).str.strip()
-    grouped["source_coverage_note"] = "Hawks weighted match-count policy: T20=0.5, played non-T20=1, no-play=0."
+    grouped["source_coverage_note"] = "Hawks weighted match/win policy: T20=0.5, played non-T20=1, no-play=0."
     output = grouped[
         [
             "player_key",
@@ -455,6 +447,7 @@ def write_weighted_win_rates(policy: pd.DataFrame | None = None) -> pd.DataFrame
             "wins",
             "losses",
             "win_pct",
+            "raw_wins",
             "source_coverage_note",
         ]
     ].sort_values("display_player_name")
@@ -462,6 +455,41 @@ def write_weighted_win_rates(policy: pd.DataFrame | None = None) -> pd.DataFrame
     out_path.parent.mkdir(parents=True, exist_ok=True)
     output.to_csv(out_path, index=False)
     return output
+
+
+def weighted_win_source_rows(policy: pd.DataFrame | None = None) -> pd.DataFrame:
+    policy = policy if policy is not None else build_match_policy_table()
+    selected = selected_player_rows(policy)
+    if selected.empty:
+        return pd.DataFrame()
+    outcomes = policy[
+        [
+            "match_id",
+            "result_text",
+            "home_team_name",
+            "away_team_name",
+            "club_team_id",
+            "home_team_id",
+            "away_team_id",
+            "detected_match_format",
+            "is_no_play",
+            "match_weight",
+        ]
+    ].copy()
+    outcomes["match_id"] = outcomes["match_id"].astype(str)
+    outcomes["win"] = outcomes.apply(classify_hawks_win, axis=1)
+    selected = selected.merge(
+        outcomes[["match_id", "win", "detected_match_format", "is_no_play", "match_weight"]],
+        on="match_id",
+        how="left",
+        suffixes=("", "_policy"),
+    )
+    selected["match_weight"] = pd.to_numeric(selected.get("match_weight_policy", selected.get("match_weight")), errors="coerce").fillna(0)
+    selected["raw_win"] = pd.to_numeric(selected["win"], errors="coerce").fillna(0)
+    selected["weighted_win"] = selected["match_weight"] * selected["raw_win"]
+    selected.loc[selected.get("is_no_play_policy", selected.get("is_no_play", False)).astype(bool), ["match_weight", "weighted_win"]] = 0.0
+    selected = selected[selected["win"].notna()].copy()
+    return selected
 
 
 def apply_identity_lookup(frame: pd.DataFrame) -> pd.DataFrame:

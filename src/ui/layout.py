@@ -52,6 +52,11 @@ from src.data.featured_record_overrides import (
     featured_record_overrides_mtime,
     normalize_featured_player_name,
 )
+from src.data.gwhcc_document_overrides import (
+    apply_record_overrides as apply_gwhcc_record_overrides,
+    document_override_signature as gwhcc_document_override_signature,
+    merge_premiership_overrides as merge_gwhcc_premiership_overrides,
+)
 from src.data.premiership_honours import (
     annual_report_premiership_path,
     grdcc_most_premierships_path,
@@ -4685,6 +4690,8 @@ def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_s
         build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding),
         club_id=club_id,
     )
+    if club_id == "glen-waverley-hawks":
+        all_time = apply_gwhcc_record_overrides(all_time, write_decisions=False)
     detailed_tables = {
         "batting": format_all_time_batting_table(all_time),
         "bowling": format_all_time_bowling_table(all_time),
@@ -4968,7 +4975,10 @@ def hall_of_fame_v2_player_premierships_card_html(players: pd.DataFrame) -> str:
 
 
 def render_hall_of_fame_v2_club_legends(all_time: pd.DataFrame) -> None:
-    all_time = apply_featured_record_overrides(all_time, club_id=get_active_club_id())
+    active_club_id = get_active_club_id()
+    all_time = apply_featured_record_overrides(all_time, club_id=active_club_id)
+    if active_club_id == "glen-waverley-hawks":
+        all_time = apply_gwhcc_record_overrides(all_time, write_decisions=False)
     specs = [
         ("Most matches", "Durability Kings", "Matches", "fielding", "matches"),
         ("Most runs", "Run Mountain", "Runs", "batting", "runs"),
@@ -6063,6 +6073,8 @@ def get_hall_of_fame_data(
 
     started_at = time.perf_counter()
     all_time = apply_featured_record_overrides(historical_data["all_time"].copy(), club_id=active_club_id)
+    if active_club_id == "glen-waverley-hawks":
+        all_time = apply_gwhcc_record_overrides(all_time)
     log_hof_timing("copy all-time summary", started_at)
 
     started_at = time.perf_counter()
@@ -7077,7 +7089,10 @@ def active_hof_players(data: dict[str, object]) -> set[str]:
 
 
 def render_hall_of_fame_leaders(all_time: pd.DataFrame, active_players: set[str] | None = None) -> None:
-    all_time = apply_featured_record_overrides(all_time, club_id=get_active_club_id())
+    active_club_id = get_active_club_id()
+    all_time = apply_featured_record_overrides(all_time, club_id=active_club_id)
+    if active_club_id == "glen-waverley-hawks":
+        all_time = apply_gwhcc_record_overrides(all_time, write_decisions=False)
     render_section_heading("All-Time Leaders 👑")
     leader_specs = [
         ("Most Matches", "Matches", "matches", "fielding"),
@@ -7206,6 +7221,8 @@ def premiership_records_signature() -> tuple[tuple[str, float], ...]:
         leaders_path = grdcc_most_premierships_path()
         if leaders_path.exists():
             signature.append((str(leaders_path), leaders_path.stat().st_mtime))
+    if get_active_club_id() == "glen-waverley-hawks":
+        signature.extend(gwhcc_document_override_signature())
     return tuple(signature)
 
 
@@ -7228,14 +7245,16 @@ def load_premiership_records(
     grdcc_players = load_grdcc_most_premierships()
     if not grdcc_players.empty:
         players = grdcc_players
+    if club_id == "glen-waverley-hawks":
+        wins, players = merge_gwhcc_premiership_overrides(wins, players)
     if not players.empty:
         if {"premiership_count", "evidence_match_ids"}.issubset(players.columns):
             players["premiership_count"] = pd.to_numeric(players["premiership_count"], errors="coerce").fillna(0).astype(int)
+            evidence_counts = players["evidence_match_ids"].map(
+                lambda value: len({part.strip() for part in str(value).split(",") if part.strip()})
+            )
             players = players[
-                players.apply(
-                    lambda row: int(row["premiership_count"]) == len({part.strip() for part in str(row["evidence_match_ids"]).split(",") if part.strip()}),
-                    axis=1,
-                )
+                evidence_counts.eq(0) | players["premiership_count"].eq(evidence_counts)
             ]
         name_column = "display_player_name" if "display_player_name" in players else "canonical_player_name"
         players["_premiership_matches_sort"] = 0
@@ -10803,7 +10822,10 @@ def build_player_profile_view(
     grade_table = enrich_player_profile_grade_table(grade_table, profile, detail_sources)
     career = build_player_career_totals(season_table, batting, bowling, fielding, profile)
     career = enrich_player_profile_career(career, profile, detail_sources)
-    career = apply_featured_record_overrides(career, club_id=get_active_club_id(), add_missing_players=False)
+    active_club_id = get_active_club_id()
+    career = apply_featured_record_overrides(career, club_id=active_club_id, add_missing_players=False)
+    if active_club_id == "glen-waverley-hawks":
+        career = apply_gwhcc_record_overrides(career, write_decisions=False)
     raw_profiles = build_player_raw_profile_table(batting, bowling, fielding)
     performance_breakdown = player_profile_source_rows(detail_sources.get("performance_breakdown", pd.DataFrame()), profile)
     batting_position = player_profile_source_rows(detail_sources.get("batting_position", pd.DataFrame()), profile)
