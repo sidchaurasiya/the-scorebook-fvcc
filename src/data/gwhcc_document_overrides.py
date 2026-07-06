@@ -251,18 +251,20 @@ def build_combined_premiership_players(players: pd.DataFrame, doc_players: pd.Da
     for column in PREMIERSHIP_PLAYER_COLUMNS:
         if column not in doc_players:
             doc_players[column] = ""
-    rows = []
-    if not players.empty:
-        rows.append(players.copy())
-    document_rows = []
+    confidence = doc_players["confidence"].astype(str).str.casefold().str.strip()
+    doc_players = doc_players[confidence.isin({"approved", "high"})].copy()
+    document_rows: list[dict[str, object]] = []
     for name, group in doc_players.groupby("player_name", dropna=False):
+        player_name = str(name or "").strip()
+        if not player_name:
+            continue
         seasons = sorted({str(value).strip() for value in group["season"] if str(value).strip()})
         grades = sorted({str(value).strip() for value in group["grade_name"] if str(value).strip()})
         document_rows.append(
             {
-                "canonical_player_id": f"doc_{normalize_name(name).replace(' ', '_')}",
-                "canonical_player_name": name,
-                "display_player_name": name,
+                "canonical_player_id": f"doc_{normalize_name(player_name).replace(' ', '_')}",
+                "canonical_player_name": player_name,
+                "display_player_name": player_name,
                 "premiership_count": len(group.drop_duplicates(["season", "grade_name"])),
                 "seasons": ", ".join(seasons),
                 "grades": ", ".join(grades),
@@ -273,13 +275,52 @@ def build_combined_premiership_players(players: pd.DataFrame, doc_players: pd.Da
                 "source": "document",
             }
         )
+
+    rows = []
+    if not players.empty:
+        base = players.copy()
+        name_column = "display_player_name" if "display_player_name" in base else "canonical_player_name"
+        if name_column in base:
+            base["display_player_name"] = base[name_column]
+            base["_player_key"] = base["display_player_name"].map(normalize_name)
+            rows.append(base)
     if document_rows:
-        rows.append(pd.DataFrame(document_rows))
+        document = pd.DataFrame(document_rows)
+        document["_player_key"] = document["display_player_name"].map(normalize_name)
+        rows.append(document)
     if not rows:
         return pd.DataFrame()
     combined = pd.concat(rows, ignore_index=True, sort=False)
     combined["premiership_count"] = pd.to_numeric(combined["premiership_count"], errors="coerce").fillna(0).astype(int)
-    return combined.sort_values(["premiership_count", "display_player_name"], ascending=[False, True])
+    if "_player_key" not in combined:
+        combined["_player_key"] = combined.get("display_player_name", pd.Series("", index=combined.index)).map(normalize_name)
+
+    merged_rows = []
+    for _key, group in combined.groupby("_player_key", dropna=False):
+        if not str(_key or "").strip():
+            continue
+        group = group.copy()
+        doc_group = group[group.get("source", pd.Series("", index=group.index)).astype(str).eq("document")]
+        play_group = group[~group.index.isin(doc_group.index)]
+        best = group.sort_values("premiership_count", ascending=False).iloc[0].to_dict()
+        play_count = int(pd.to_numeric(play_group.get("premiership_count"), errors="coerce").fillna(0).max()) if not play_group.empty else 0
+        doc_count = int(pd.to_numeric(doc_group.get("premiership_count"), errors="coerce").fillna(0).max()) if not doc_group.empty else 0
+        best["premiership_count"] = max(play_count, doc_count)
+        if play_count and doc_count:
+            best["source"] = "combined"
+        elif doc_count:
+            best["source"] = "document"
+        else:
+            best["source"] = best.get("source", "playcricket") or "playcricket"
+        best["document_premiership_count"] = doc_count
+        best["playcricket_premiership_count"] = play_count
+        best["premiership_count_source"] = "document" if doc_count > play_count else "playcricket"
+        if not doc_group.empty and str(doc_group.iloc[0].get("seasons", "")).strip():
+            best["document_seasons"] = doc_group.iloc[0].get("seasons", "")
+            best["document_grades"] = doc_group.iloc[0].get("grades", "")
+        merged_rows.append(best)
+    output = pd.DataFrame(merged_rows).drop(columns=["_player_key"], errors="ignore")
+    return output.sort_values(["premiership_count", "display_player_name"], ascending=[False, True])
 
 
 def extract_documents() -> dict[str, object]:
@@ -288,6 +329,7 @@ def extract_documents() -> dict[str, object]:
     raw_files = [path for path in RAW_DIR.glob("*") if path.is_file() and not path.name.startswith(".")]
     extracted_records = []
     extracted_premierships = []
+    extracted_premiership_players = []
     for path in raw_files:
         text = extract_text(path)
         if not text:
@@ -295,14 +337,24 @@ def extract_documents() -> dict[str, object]:
         (EXTRACTED_DIR / f"{path.stem}.txt").write_text(text, encoding="utf-8")
         extracted_records.extend(parse_record_lines(text, path.name))
         extracted_premierships.extend(parse_premiership_lines(text, path.name))
+        extracted_premiership_players.extend(parse_premiership_player_lines(text, path.name))
     if extracted_records:
-        pd.DataFrame(extracted_records, columns=RECORD_COLUMNS).to_csv(RECORD_OVERRIDES, index=False)
+        pd.DataFrame(extracted_records, columns=RECORD_COLUMNS).drop_duplicates().to_csv(RECORD_OVERRIDES, index=False)
+    else:
+        pd.DataFrame(columns=RECORD_COLUMNS).to_csv(RECORD_OVERRIDES, index=False)
     if extracted_premierships:
-        pd.DataFrame(extracted_premierships, columns=PREMIERSHIP_COLUMNS).to_csv(PREMIERSHIPS, index=False)
+        pd.DataFrame(extracted_premierships, columns=PREMIERSHIP_COLUMNS).drop_duplicates().to_csv(PREMIERSHIPS, index=False)
+    else:
+        pd.DataFrame(columns=PREMIERSHIP_COLUMNS).to_csv(PREMIERSHIPS, index=False)
+    if extracted_premiership_players:
+        pd.DataFrame(extracted_premiership_players, columns=PREMIERSHIP_PLAYER_COLUMNS).drop_duplicates().to_csv(PREMIERSHIP_PLAYERS, index=False)
+    else:
+        pd.DataFrame(columns=PREMIERSHIP_PLAYER_COLUMNS).to_csv(PREMIERSHIP_PLAYERS, index=False)
     return {
         "raw_files": len(raw_files),
         "record_overrides": len(extracted_records),
         "premierships": len(extracted_premierships),
+        "premiership_players": len(extracted_premiership_players),
     }
 
 
@@ -327,6 +379,8 @@ def extract_text(path: Path) -> str:
 
 def parse_record_lines(text: str, source_name: str) -> list[dict[str, object]]:
     rows = []
+    if "Leading Players" in source_name or "TOP 10 BATSMEN IN CLUB HISTORY" in text:
+        rows.extend(parse_leading_player_records(source_name))
     for line in text.splitlines():
         match = re.search(r"([A-Za-z][A-Za-z .'-]{2,})\s+(\d{2,5})\s+(games|matches|runs|wickets|catches)\b", line, flags=re.IGNORECASE)
         if not match:
@@ -345,6 +399,8 @@ def parse_record_lines(text: str, source_name: str) -> list[dict[str, object]]:
 
 
 def parse_premiership_lines(text: str, source_name: str) -> list[dict[str, object]]:
+    if "PREMIERSHIP PLAYERS LIST" in text:
+        return []
     rows = []
     for line in text.splitlines():
         if not re.search(r"premier|premiership|grand final", line, flags=re.IGNORECASE):
@@ -367,3 +423,194 @@ def parse_premiership_lines(text: str, source_name: str) -> list[dict[str, objec
             }
         )
     return rows
+
+
+def parse_leading_player_records(source_name: str) -> list[dict[str, object]]:
+    source = source_name or "gwhcc_leading_players_source"
+    note = "Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use."
+    rows: list[dict[str, object]] = []
+    values = {
+        "runs": [
+            ("G. Mahoney", 11040),
+            ("S. Somaia", 9621),
+            ("S. Wynd", 9205),
+            ("G. McCormick", 8664),
+            ("B. Calder", 7636),
+            ("J. Greaves", 7098),
+            ("C. Briginshaw", 7051),
+            ("B. Powell", 6490),
+            ("G. Cuddon", 6311),
+            ("G. Haye", 6215),
+        ],
+        "wickets": [
+            ("M. Briginshaw", 533),
+            ("A. Dale", 456),
+            ("N. Bungey", 408),
+            ("G. McCormick", 393),
+            ("C. Perkins", 377),
+            ("L. Galle", 357),
+            ("S. Wynd", 349),
+            ("A. Chelvan", 339),
+            ("J. Goddard (Justin)", 333),
+            ("H. Bristow", 318),
+            ("T. Medina", 300),
+        ],
+        "games": [
+            ("G. McCormick", 427),
+            ("C. Briginshaw", 390.5),
+            ("N. Bungey", 338),
+            ("G. Powell", 337),
+            ("S. Somaia", 322),
+            ("B. Calder", 304),
+            ("M. Briginshaw", 296),
+            ("C. Perkins", 264),
+        ],
+    }
+    for metric, metric_rows in values.items():
+        for player_name, value in metric_rows:
+            rows.append(
+                {
+                    "player_name": player_name,
+                    "metric": metric,
+                    "document_value": value,
+                    "source_document": source,
+                    "confidence": "review",
+                    "notes": note,
+                }
+            )
+    return rows
+
+
+def parse_premiership_player_lines(text: str, source_name: str) -> list[dict[str, object]]:
+    if "PREMIERSHIP PLAYERS LIST" not in text:
+        return []
+    compact = re.sub(r"\s+", " ", text)
+    compact = re.sub(r"GWH Premiership list 2026.*?WS2 12", " ", compact)
+    known_names = [
+        "J Greaves",
+        "B. Powell",
+        "N. Bungey",
+        "M. Briginshaw",
+        "J. Davies",
+        "G. Mahoney",
+        "S. Somaia",
+        "B Calder",
+        "A. Chelvan",
+        "P. Eldridge",
+        "L. Galle",
+        "B. James",
+        "K. Javed",
+        "S. Quinn",
+        "P. Stokes",
+        "G. Haye",
+        "S. Mills",
+        "A. Medina",
+        "A. Newman",
+        "C. Perkins",
+        "D. Perkins",
+        "S. Perkins",
+        "G. Powell",
+        "N. Powell",
+        "M. Ratnayake",
+        "R. Sipthorpe",
+        "S. Smoothey",
+        "M. Taborsky",
+        "S Zachariassen",
+        "M. Annard",
+        "V. Bhat",
+        "C. Briginshaw",
+        "D. Byrns",
+        "C. Chamberlain",
+        "S. Clarke",
+        "S. Cocks",
+        "J. Cousins",
+        "D. Crisp",
+        "A. Dale",
+        "Dennis Davidson",
+        "G. Davies",
+        "I. Davies",
+        "T. Doig",
+        "W.de Fraga",
+        "B Hocking",
+        "D. Holden",
+        "C. Hutchins",
+        "C. Jackson",
+        "M. S. Jahan",
+        "V. Joshi",
+        "N. Kale",
+        "S. Kandala",
+        "M. Kohne",
+        "B. Little",
+        "K. Logan",
+        "T. Loucas",
+        "G. McCormick",
+        "A. McDonald",
+        "P. McGloin",
+        "R. McGloin",
+        "S. Melag",
+        "Harindra Mendu",
+        "E. Miller",
+        "R. Mulleriyawa",
+        "P. Negi",
+        "P. Nelluri",
+        "L. O’Rourke",
+        "P. Pancholi",
+        "A. Pandya",
+        "C. Patel",
+        "S. Patel",
+        "O. Parashar",
+        "S. Parashar",
+        "D. Paulin",
+        "L. Paulin",
+        "R. Paulin",
+        "R. Pike",
+        "L. Powell",
+        "T. Rolfe",
+        "A. Sarve (Snr)",
+        "A. Sarve (Jnr)",
+        "V. Shah",
+        "A. Sivakumaran",
+        "J. Stevenson",
+        "M. Stevenson",
+        "J. Storan",
+        "A. Thakar",
+    ]
+    name_pattern = "|".join(re.escape(name) for name in sorted(known_names, key=len, reverse=True))
+    matches = list(re.finditer(name_pattern, compact))
+    rows: list[dict[str, object]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for index, match in enumerate(matches):
+        name = match.group(0).replace("J Greaves", "J. Greaves").strip()
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(compact)
+        segment = compact[match.end() : end]
+        for event in parse_premiership_events(segment):
+            key = (name, event["season"], event["grade_name"])
+            if key in seen:
+                continue
+            seen.add(key)
+            rows.append(
+                {
+                    "season": event["season"],
+                    "grade_name": event["grade_name"],
+                    "player_name": name,
+                    "source_document": source_name,
+                    "confidence": "review",
+                    "notes": "Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.",
+                }
+            )
+    return rows
+
+
+def parse_premiership_events(segment: str) -> list[dict[str, str]]:
+    pattern = re.compile(
+        r"(?P<grade>U/\d{2}[A-Z]?|U/\d{2}\s*A|U/\d{2}\s*B|U/\d{2}|A\s*One|B\s*One|One\s*Day|T20(?:\s*\(\d\))?|WS2?|A1|A2|A23|A100|C25|C1|D1|[A-F])\s*"
+        r"(?P<start>\d{2})\s*(?:-|–)?\s*(?P<end>\d{2})",
+        flags=re.IGNORECASE,
+    )
+    events = []
+    for match in pattern.finditer(segment):
+        grade = re.sub(r"\s+", " ", match.group("grade")).strip().replace("One", "One Day")
+        start = match.group("start")
+        end = match.group("end")
+        events.append({"grade_name": grade, "season": f"{start}-{end}"})
+    return events

@@ -20,6 +20,7 @@ def main() -> int:
         f"raw_files={result['raw_files']} "
         f"record_overrides={result['record_overrides']} "
         f"premierships={result['premierships']} "
+        f"premiership_players={result.get('premiership_players', 0)} "
         f"raw_dir={RAW_DIR}"
     )
     return 0
