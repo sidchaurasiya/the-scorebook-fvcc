@@ -22,6 +22,7 @@ VALIDATION_DIR = PROCESSED / "validation"
 RECORD_OVERRIDES = SOURCE_ROOT / "gwhcc_record_overrides.csv"
 PREMIERSHIPS = SOURCE_ROOT / "gwhcc_premierships.csv"
 PREMIERSHIP_PLAYERS = SOURCE_ROOT / "gwhcc_premiership_players.csv"
+PLAYER_ALIASES = SOURCE_ROOT / "gwhcc_document_player_aliases.csv"
 DECISIONS = VALIDATION_DIR / "gwhcc_document_override_decisions.csv"
 VALIDATION = VALIDATION_DIR / "gwhcc_document_override_validation.csv"
 
@@ -39,6 +40,7 @@ PREMIERSHIP_COLUMNS = [
     "notes",
 ]
 PREMIERSHIP_PLAYER_COLUMNS = ["season", "grade_name", "player_name", "source_document", "confidence", "notes"]
+PLAYER_ALIAS_COLUMNS = ["document_player_name", "playcricket_player_name", "scope", "confidence", "notes"]
 DECISION_COLUMNS = [
     "player_name",
     "metric",
@@ -66,7 +68,7 @@ def ensure_document_override_dirs() -> None:
 
 
 def document_override_signature() -> tuple[tuple[str, float], ...]:
-    paths = [RECORD_OVERRIDES, PREMIERSHIPS, PREMIERSHIP_PLAYERS]
+    paths = [RECORD_OVERRIDES, PREMIERSHIPS, PREMIERSHIP_PLAYERS, PLAYER_ALIASES]
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
 
@@ -91,6 +93,27 @@ def unique_alias_lookup(names: pd.Series) -> dict[str, str]:
         if alias and normalized:
             pairs.setdefault(alias, set()).add(normalized)
     return {alias: next(iter(values)) for alias, values in pairs.items() if len(values) == 1}
+
+
+def load_document_player_aliases(scope: str = "") -> dict[str, str]:
+    if not PLAYER_ALIASES.exists():
+        return {}
+    aliases = read_csv(PLAYER_ALIASES)
+    for column in PLAYER_ALIAS_COLUMNS:
+        if column not in aliases:
+            aliases[column] = ""
+    aliases = aliases[aliases["confidence"].astype(str).str.casefold().isin({"confirmed", "approved", "high"})].copy()
+    if scope:
+        scope_key = scope.casefold().strip()
+        alias_scopes = aliases["scope"].astype(str).str.casefold().str.strip()
+        aliases = aliases[alias_scopes.isin({"", "all", scope_key})].copy()
+    mapping: dict[str, str] = {}
+    for row in aliases.to_dict("records"):
+        document_key = normalize_name(row.get("document_player_name"))
+        playcricket_key = normalize_name(row.get("playcricket_player_name"))
+        if document_key and playcricket_key:
+            mapping[document_key] = playcricket_key
+    return mapping
 
 
 def numeric_value(value: object) -> float | None:
@@ -136,6 +159,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
 
     output["_player_key_for_doc_override"] = output["Player"].map(normalize_name)
     alias_lookup = unique_alias_lookup(output["Player"])
+    manual_aliases = load_document_player_aliases("records")
     for _, override in overrides.iterrows():
         metric_key = str(override.get("metric_key") or "").strip()
         column = METRIC_TO_COLUMN.get(metric_key)
@@ -151,6 +175,10 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
             alias_player_key = alias_lookup.get(alias_key, "")
             if alias_player_key:
                 mask = output["_player_key_for_doc_override"].eq(alias_player_key)
+        if not mask.any():
+            manual_player_key = manual_aliases.get(player_key, "")
+            if manual_player_key:
+                mask = output["_player_key_for_doc_override"].eq(manual_player_key)
         if not mask.any():
             decisions.append(decision_row(override, metric_key, None, document_value, document_value, "missing_from_playcricket", False))
             continue
@@ -315,9 +343,11 @@ def build_combined_premiership_players(players: pd.DataFrame, doc_players: pd.Da
         if rows:
             base = rows[0]
             alias_lookup = unique_alias_lookup(base["display_player_name"]) if "display_player_name" in base else {}
+            manual_aliases = load_document_player_aliases("premierships")
             base_by_key = base.drop_duplicates("_player_key").set_index("_player_key").to_dict("index") if "_player_key" in base else {}
             for index, row in document.iterrows():
-                base_key = alias_lookup.get(initial_surname_key(row.get("display_player_name")))
+                document_key = normalize_name(row.get("display_player_name"))
+                base_key = manual_aliases.get(document_key) or alias_lookup.get(initial_surname_key(row.get("display_player_name")))
                 base_row = base_by_key.get(base_key or "")
                 if not base_row:
                     continue
