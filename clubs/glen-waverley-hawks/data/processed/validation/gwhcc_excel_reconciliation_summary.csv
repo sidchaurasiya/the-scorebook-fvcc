@@ -1,2 +1,10 @@
-area,status,playhq_value,excel_value,difference,suggested_action,confidence,notes
-workbook,not_run,,,,review_excel,not_applicable,Excel file not found: /tmp/nonexistent-gwhcc-poc.xlsx
+area,status,current_value,excel_value,difference,suggested_action,confidence,notes
+player_metric,identity_review_required,,,9624,identity_review_required,,9624 metric rows
+player_metric,manual_override_candidate,,,764,manual_override_candidate,,764 metric rows
+player_metric,matches_current,,,1692,matches_current,,1692 metric rows
+player_metric,missing_from_current_app,,,106,missing_from_current_app,,106 metric rows
+player_metric,missing_from_excel,,,5639,missing_from_excel,,5639 metric rows
+player_metric,no_value,,,1248,no_value,,1248 metric rows
+player_metric,review_difference,,,2671,review_difference,,2671 metric rows
+workbook,completed,1220,906,-314,review_excel,medium,Parsed Sheet1 career totals. Review player differences before approving overrides.
+identity,unmatched_excel_players,,401,,identity_review_required,low,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_excel_reconciliation_unmatched_players.csv
