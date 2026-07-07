@@ -43,7 +43,7 @@ def sample_all_time() -> pd.DataFrame:
     if not batting.empty:
         frames.append(
             batting.groupby("canonical_player_name", as_index=False).agg(
-                Matches=("matches", "max"),
+                Matches=("matches", "sum"),
                 Runs=("battingAggregate", "sum"),
             )
         )

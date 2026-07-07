@@ -1,30 +1,30 @@
 player_name,metric,playcricket_value,document_value,display_value,display_source,override_applied,confidence,notes
-G. Mahoney,runs,,11040.0,11040.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-S. Somaia,runs,,9621.0,9621.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-S. Wynd,runs,,9205.0,9205.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-G. McCormick,runs,,8664.0,8664.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-B. Calder,runs,,7636.0,7636.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-J. Greaves,runs,,7098.0,7098.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-C. Briginshaw,runs,,7051.0,7051.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-B. Powell,runs,,6490.0,6490.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-G. Cuddon,runs,,6311.0,6311.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-G. Haye,runs,,6215.0,6215.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-M. Briginshaw,wickets,,533.0,533.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-A. Dale,wickets,,456.0,456.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-N. Bungey,wickets,,408.0,408.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-G. McCormick,wickets,,393.0,393.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-C. Perkins,wickets,,377.0,377.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-L. Galle,wickets,,357.0,357.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-S. Wynd,wickets,,349.0,349.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-A. Chelvan,wickets,,339.0,339.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-J. Goddard (Justin),wickets,,333.0,333.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-H. Bristow,wickets,,318.0,318.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-T. Medina,wickets,,300.0,300.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-G. McCormick,games,,427.0,427.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-C. Briginshaw,games,,390.5,390.5,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-N. Bungey,games,,338.0,338.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-G. Powell,games,,337.0,337.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-S. Somaia,games,,322.0,322.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-B. Calder,games,,304.0,304.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-M. Briginshaw,games,,296.0,296.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
-C. Perkins,games,,264.0,264.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use.
+G. Mahoney,runs,7734.0,11040.0,11040.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+S. Somaia,runs,,9621.0,9621.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+S. Wynd,runs,6993.0,9205.0,9205.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. McCormick,runs,6278.0,8664.0,8664.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+B. Calder,runs,5956.0,7636.0,7636.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+J. Greaves,runs,5196.0,7098.0,7098.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+C. Briginshaw,runs,5995.0,7051.0,7051.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+B. Powell,runs,2776.0,6490.0,6490.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. Cuddon,runs,3950.0,6311.0,6311.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. Haye,runs,,6215.0,6215.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+M. Briginshaw,wickets,414.0,533.0,533.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+A. Dale,wickets,120.0,456.0,456.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+N. Bungey,wickets,386.0,408.0,408.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. McCormick,wickets,230.0,393.0,393.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+C. Perkins,wickets,303.0,377.0,377.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+L. Galle,wickets,334.0,357.0,357.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+S. Wynd,wickets,312.0,349.0,349.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+A. Chelvan,wickets,330.0,339.0,339.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+J. Goddard (Justin),wickets,,333.0,333.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+H. Bristow,wickets,,318.0,318.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+T. Medina,wickets,,300.0,300.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. McCormick,games,359.0,427.0,427.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+C. Briginshaw,games,333.5,390.5,390.5,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+N. Bungey,games,304.0,338.0,338.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. Powell,games,199.0,337.0,337.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+S. Somaia,games,,322.0,322.0,missing_from_playcricket,no,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+B. Calder,games,227.5,304.0,304.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+M. Briginshaw,games,225.0,296.0,296.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+C. Perkins,games,180.0,264.0,264.0,document_override,yes,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.

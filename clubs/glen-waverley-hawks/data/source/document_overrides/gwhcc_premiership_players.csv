@@ -1,273 +1,530 @@
 season,grade_name,player_name,source_document,confidence,notes
-93-94,U/16,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-95-96,A1,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,J. Greaves,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-86-87,U/16,B. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-95-96,A1,B. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,B. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,B. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,B. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,B. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-93-94,U/16,N. Bungey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,N. Bungey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,N. Bungey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,N. Bungey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,N. Bungey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,M. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-95-96,A1,M. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,M. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,M. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,M. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,M. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,J. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,J. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,J. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-84-85,D,J. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,F,J. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-95-96,A1,G. Mahoney,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,G. Mahoney,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,G. Mahoney,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,G. Mahoney,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,G. Mahoney,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,S. Somaia,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,S. Somaia,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,S. Somaia,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,S. Somaia,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,S. Somaia,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,B Calder,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,B Calder,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,B Calder,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,B Calder,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,B Calder,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/12,A. Chelvan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,A One Day,A. Chelvan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,A. Chelvan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,A. Chelvan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,P. Eldridge,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,P. Eldridge,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,P. Eldridge,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,P. Eldridge,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14A,L. Galle,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16A,L. Galle,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,L. Galle,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,L. Galle,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,B. James,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,B. James,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,B. James,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-84-85,D,B. James,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,B One Day,K. Javed,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,K. Javed,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,T20(2),K. Javed,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,K. Javed,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/14,S. Quinn,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,S. Quinn,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,S. Quinn,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,S. Quinn,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,S. Quinn,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,S. Quinn,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,G. Haye,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,G. Haye,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,G. Haye,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14A,S. Mills,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16A,S. Mills,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,S. Mills,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,A. Medina,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,A. Medina,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,A. Medina,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,A. Newman,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-84-85,D,A. Newman,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-87-88,A2,A. Newman,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-94-95,U/16,C. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,C. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/14,D. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,D. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,D. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,U/12,S. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,S. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,A1,S. Perkins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,G. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,G. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,G. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,N. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,N. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-84-85,D,N. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,M. Ratnayake,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,M. Ratnayake,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,M. Ratnayake,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,R. Sipthorpe,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,F,R. Sipthorpe,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-92-93,D1,S. Smoothey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-95-96,A1,S. Smoothey,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-96-97,U/14,S Zachariassen,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-97-98,U/14,S Zachariassen,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/16,S Zachariassen,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/12,M. Annard,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14,M. Annard,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-21-22,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,C. Briginshaw,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,D. Byrns,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,D. Byrns,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-97-98,U/14,C. Chamberlain,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/16,C. Chamberlain,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14 A,S. Clarke,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16 A,S. Clarke,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14 A,J. Cousins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16 A,J. Cousins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14 A,D. Crisp,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16 A,D. Crisp,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,A. Dale,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-92-93,D1,A. Dale,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,Dennis Davidson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-87-88,A2,Dennis Davidson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,U/12,G. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-86-87,U/16,G. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,I. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,I. Davies,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12A,T. Doig,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,T. Doig,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14 A,B Hocking,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16 A,B Hocking,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-03-04,A1,D. Holden,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,A One Day,D. Holden,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-86-87,U/16,C. Hutchins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,F,C. Hutchins,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-87-88,A2,C. Jackson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-95-96,A1,C. Jackson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-21-22,U/16,M. S. Jahan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,T20(2),M. S. Jahan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-21-22,U/16,V. Joshi,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,V. Joshi,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,U/12,N. Kale,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,N. Kale,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,S. Kandala,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,S. Kandala,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,U/16,M. Kohne,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,M. Kohne,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,B. Little,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,B. Little,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/14,K. Logan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,K. Logan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-93-94,U/16,T. Loucas,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-94-95,U/16,T. Loucas,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,One Day Day,G. McCormick,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,T20 (2),G. McCormick,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,A. McDonald,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,A. McDonald,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-93-94,U/16,P. McGloin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-94-95,U/16,P. McGloin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-93-94,U/16,R. McGloin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-94-95,U/16,R. McGloin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,U/12,S. Melag,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-25,U/14B,S. Melag,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-21-22,U/16,Harindra Mendu,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,Harindra Mendu,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,E. Miller,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,T20(2),E. Miller,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,R. Mulleriyawa,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,R. Mulleriyawa,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,P. Negi,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,P. Negi,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-21-22,U/16,P. Nelluri,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,P. Nelluri,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,T20(2),L. O’Rourke,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,L. O’Rourke,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,U/12A,P. Pancholi,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,U/14A,P. Pancholi,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,U/12,A. Pandya,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,A. Pandya,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-97-98,U/14,C. Patel,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/16,C. Patel,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,S. Patel,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,S. Patel,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,U/12,O. Parashar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12A,O. Parashar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,U/12,S. Parashar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,S. Parashar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,U/12,D. Paulin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,D. Paulin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,U/12,L. Paulin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,L. Paulin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-81-82,D,R. Paulin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,F,R. Paulin,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,U/12,R. Pike,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,R. Pike,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,U/12A,L. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,U/14A,L. Powell,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14A,T. Rolfe,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16A,T. Rolfe,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,T. Rolfe,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,B One Day,T. Rolfe,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,A. Sarve (Jnr),gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,A. Sarve (Jnr),gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,A. Sivakumaran,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-17-18,WS,A. Sivakumaran,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14A,J. Stevenson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-02-03,U/16A,J. Stevenson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,M. Stevenson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,M. Stevenson,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,J. Storan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,T20,J. Storan,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,U/12,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-96-97,U/14,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-97-98,U/14,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,C,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12A,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,U/12,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-88-89,U/16,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/14,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,B One Day,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,U/12A,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,A,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-83-84,B,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-87-88,A2,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,F,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,U/14A,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-21-22,U/16,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-86-87,U/16,A. Thakar,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-92-93,D1,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-22-23,T20(2),V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,A One Day,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-84-85,D,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,A,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-93-94,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-94-95,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-97-98,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-86-87,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,U/12,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12A,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-97-98,U/14,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/12,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-12-13,WS2,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-88-89,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/12C,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-00-01,U/14A,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,U/12A,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-23-24,U/12,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/14,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/13,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-87-88,A2,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-16-17,U/14A,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-11-12,WS2,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-85-86,F,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-14-15,B One Day,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-08-09,C1,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-90-91,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-82-83,C,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-99-00,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-96-97,U/14,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-89-90,U/16,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
-25-26,U/14B,V. Bhat,gwhcc_premierships_source_accessibility.txt,review,Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.
+93-94,U/16,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,J. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,B. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,B. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,B. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,B. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,B. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,B. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,N. Bungey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,N. Bungey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,N. Bungey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,N. Bungey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,N. Bungey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,N. Bungey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,M. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,M. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,M. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,M. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,M. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,M. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,J. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,J. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,J. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,J. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,J. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,G. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,G. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,G. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,G. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,G. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,S. Somaia,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,S. Somaia,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,S. Somaia,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,S. Somaia,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,S. Somaia,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,B. Calder,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,B. Calder,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,B. Calder,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,B. Calder,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,A. Chelvan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,A. Chelvan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,A. Chelvan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,A. Chelvan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,P. Eldridge,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,P. Eldridge,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,P. Eldridge,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,P. Eldridge,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,L. Galle,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,L. Galle,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,L. Galle,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,L. Galle,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,B. James,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,B. James,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,B. James,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,B. James,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,K. Javed,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,K. Javed,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),K. Javed,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,K. Javed,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,S. Quinn,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,S. Quinn,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,S. Quinn,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,S. Quinn,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,P. Stokes,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,P. Stokes,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,P. Stokes,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,P. Stokes,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,P. N. Young,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,P. N. Young,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,P. N. Young,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,P. N. Young,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,M. Armstrong,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,M. Armstrong,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,M. Armstrong,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,R. R. Balamurugan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,R. R. Balamurugan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,R. R. Balamurugan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,M. Brennan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,M. Brennan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,M. Brennan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/14A,W. Bromley,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,W. Bromley,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,W. Bromley,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,B. Coull,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,B. Coull,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,B. Coull,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,M. Fleming,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,M. Fleming,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,M. Fleming,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,John Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,John Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,John Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,Justin Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,Justin Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,Justin Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,C. Hocart,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,C. Hocart,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,C. Hocart,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,G. Haye,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,G. Haye,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,G. Haye,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,S. Mills,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,S. Mills,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,S. Mills,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,A. Medina,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,A. Medina,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,A. Medina,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,A. Newman,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,A. Newman,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,A. Newman,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,C. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,C. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,D. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,D. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,D. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,S. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,S. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,S. Perkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,G. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,G. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,G. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,N. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,N. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,N. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,M. Ratnayake,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,M. Ratnayake,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,M. Ratnayake,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,R. Sipthorpe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,R. Sipthorpe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,R. Sipthorpe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,S. Smoothey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,S. Smoothey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,S. Smoothey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,M. Taborsky,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),M. Taborsky,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,M. Taborsky,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,A. Tellis,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,A. Tellis,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,A. Tellis,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,S. Wynd,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,S. Wynd,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,S. Wynd,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,S Zachariassen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,S Zachariassen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,S Zachariassen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,M. Annard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14,M. Annard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,V. Bhat,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,V. Bhat,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,C. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,C. Briginshaw,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,D. Byrns,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,D. Byrns,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,C. Chamberlain,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,C. Chamberlain,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,S. Clarke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,S. Clarke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,S. Cocks,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,J. Cousins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,J. Cousins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,D. Crisp,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,D. Crisp,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,A. Dale,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,A. Dale,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,Dennis Davidson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,Dennis Davidson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,U/12,G. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,G. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,I. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,I. Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,T. Doig,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,T. Doig,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,W. de Fraga,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,W. de Fraga,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12(Blue),J. Ellwood,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),J. Ellwood,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,G. Gannon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,G. Gannon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,C. George (Jnr),gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,C. George (Jnr),gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,R. Gopiraj,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,R. Gopiraj,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,I. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,I. Greaves,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+07-08,U/14C,Pulkit Gupta,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,Pulkit Gupta,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,S. Hansen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,S. Hansen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,J. Haines,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,J. Haines,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,D. Hoare,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,B. Hocking,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,B. Hocking,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+03-04,A1,D. Holden,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,D. Holden,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,C. Hutchins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,C. Hutchins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,C. Jackson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,C. Jackson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,M. S. Jahan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),M. S. Jahan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,V. Joshi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,V. Joshi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,N. Kale,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,N. Kale,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,S. Kandala,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,S. Kandala,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,M. Kohne,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,M. Kohne,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,B. Little,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,B. Little,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,K. Logan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,K. Logan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,T. Loucas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,T. Loucas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,One Day,G. McCormick,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),G. McCormick,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,A. McDonald,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,A. McDonald,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,P. McGloin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,P. McGloin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,R. McGloin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,R. McGloin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,S. Melag,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-25,U/14B,S. Melag,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,Harindra Mendu,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,Harindra Mendu,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,E. Miller,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),E. Miller,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,R. Mulleriyawa,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,R. Mulleriyawa,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,P. Negi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,P. Negi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,P. Nelluri,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,P. Nelluri,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),L. O’Rourke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,L. O’Rourke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,P. Pancholi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,P. Pancholi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,U/12,A. Pandya,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,A. Pandya,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,C. Patel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,C. Patel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,S. Patel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,S. Patel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,O. Parashar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,O. Parashar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,S. Parashar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,S. Parashar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,D. Paulin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,D. Paulin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,L. Paulin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,L. Paulin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,R. Paulin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,R. Paulin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,R. Pike,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,R. Pike,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,L. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,L. Powell,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,T. Rolfe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,T. Rolfe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,A. Sarve (Snr),gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,A. Sarve (Snr),gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,A. Sarve (Jnr),gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,A. Sarve (Jnr),gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,V. Shah,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,V. Shah,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,D. Sidebottom,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,D. Sidebottom,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,M. Silva,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,M. Silva,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,A. Silveria,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,A. Silveria,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,A. Sivakumaran,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,A. Sivakumaran,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,J. Stevenson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,J. Stevenson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,M. Stevenson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,M. Stevenson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,J. Storan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,T20,J. Storan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,A. Thakar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,A. Thakar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,S. Thomas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,S. Thomas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,I. Towers,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,I. Towers,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,V. Trivedi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,V. Trivedi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,H. Tyssen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,H. Tyssen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,D. Walker,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,D. Walker,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,T. Waters,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,T. Waters,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,E. Webb,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,E. Webb,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,S. Abhayaratne,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,M. Allen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,S. Almy,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,R. D. Anderson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,B. Armfield,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,P. Armstrong,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,R. Arora,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,R. Ashmore,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,R. Bahri,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,M. Bailey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,B. Ball,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,M. Ball,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,D. Barker,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,J. Barker,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,K. Berberich,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,Raghu Bharadwaj,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,S. Bhattacharjee,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,Y. Bilagi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,H. Billing,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,Kevin Billing,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),N. Blacker,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,S. Brady,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,N. Brennan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,H. Bristow,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,G. Broadley,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,A. Bromley,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,G. Brown,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,T. Cameron,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,N. Cameron,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/16,C. Cameron,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,D. Carter,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,C. Chalmers,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,A. Cheema,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),T. Cherukavada,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,S. Chitrala,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,C. Clarke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,P. Clarke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,J. Condon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+12-13,WS2,B. Coster,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,S. Craig,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12C,N. Chowkidar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12C,R. Crowkidar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,B. Cuddon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,G. Cuddon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,N. Darce,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,V. Dasanayake,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,Steve Davies,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,E. Delahenty,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,D. Dempsey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,P. Denton,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,T. De Silva,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,K. Dhakshnumoorthy,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,G. Dickenson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,R. Dias,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,D. Dineshkumar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,J. Disken,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,C. Doyle,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,S. Dutta,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,J. Ebinger,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,L. Edge,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,C. Efstathiou,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,J. Egan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,D. Elliott,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,M. Elliott,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,R. Emslie,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,B. Eppis,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,J. Feenstra,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,S. Fernando,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,A. Floyd,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,L. Floyd,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,P. Ford,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,L. Forer,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,C. Forster,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,L. Fraser,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,D. Freeman,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+17-18,WS,A. Gadhia,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,D. Galagadera,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,G. Galagadera,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,C. George,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,M. Goddard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),J. Goel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,P. Gopiraj,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),S. Gordon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,C. Gray,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),G. Guhan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-08,U/16,G. Gulkinson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,A. Gupta,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,Pralabh Gupta,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,F. Hall,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,D. Hamilton,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,A. Harris,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,D. Hawley,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+02-03,U/16A,J. Haye,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,M. Heath,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,D. Hendrick,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,B. Hickey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,A. Hirani,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,C. Hoare,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,A. Howard,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+87-88,A2,D. Huntington,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,T. Ivory,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,P. Jain,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,S. James,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,R. Jayaratne,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,K. Jayasuriya,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+11-12,WS2,D. Johnson,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,L. Johnston,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,P. Joy,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,C. Jung,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,O. Kalaiarul,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12C,P. Kalaiarul,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12C,N. Kancharla,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,A. Kanav,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),K. Kapur,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),V. Kapur,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,Y. Karunitileke,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,B. Kellam,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),V. Kewada,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,D. Kothari,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,S. Krishna,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),T. Kuiper,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,A. Kuganesian,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),A. Kulkarni,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,D. Ladd,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,S. Laughton,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,S. Leaver,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,M. Leong,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,D. Livingstone,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,P. Long,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,J. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+83-84,B,P. Mahoney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,A,B. Mahendrajah,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,Y. Mandala,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,A. Mantripragada,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,M. Mamesh,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,S. Manjunath,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,S. Mapa,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B(Blue),G. Sandra Marakkalage,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,T. Mathews,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,R. Martin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,I. McMillan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,D. McNeil,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,Matthew McCrae,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,R. Mehra,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,T. Merkins,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,N. Monga,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,H. Morgan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,S. Moturi,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,K. Myagerimath,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,N. Munasinghe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),A. Nathoo,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+81-82,D,I. North,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/16,A. Nye,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,R. Ogeil,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,M. Oregan,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,T. Pai,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,R. Pandya,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,A-One Day,A. Pappa,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),A. Patel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,A. Patel,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+84-85,D,N. Paulsen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,J. Penney,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,U/12A,J. Pereira,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/14A,D. Petric,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,R. Philpoit,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,C. Piplios,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+07-08,U/14C,R. Poorun,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,J. Polgar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+89-90,U/14,G. Porter,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,A. Price,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,T. S. Priya,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,H. Rambhatla,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+19-20,U/12B (Blue),H. Ranawalage,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+90-91,U/16,D. Randall,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+88-89,U/16,K. Randall,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,S. Randall,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+95-96,A1,C. Reidy,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,S. Ritchie,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,S. Robbie,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),A. Robjant,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,H. Roberts,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,Sancheti,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/12,P. Seddon,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,V. Senthill,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,C,D. Seth,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,G. Sharkey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12,S. Sharma,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/13,V. Shirguppe,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+92-93,D1,J. Silvey,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,J. Singh,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+21-22,U/16,S. Singh,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,U/12,V. Singh,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,D. Singhal,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,Y. Sivakumar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,K. Skandakumar,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,F,S. Smith,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+96-97,U/14,J. Splatt,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+85-86,U/12,R. Stopjanik,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+86-87,U/16,Q. Suckling,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,A. Suraweera,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,S. Surenarn,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+07-08,U/14C,D. Tambiah,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,A. Thantaratnam,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,B. Thiele,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,A. Thoman,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/12A,V. Tomer,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,U/16,G. Towers,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/16,A. Tuangaratnam,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+23-24,A,S. Tummalapalli,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+82-83,C,N. Tucker,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+25-26,U/14B,J. Tyssen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+07-08,U/14C,A. Uday,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,J. Valentine,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+08-09,C1,S. Vanin,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,U/14A,K. Varatharajat,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+16-17,U/16,J. Vas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+94-95,U/16,A. Virdee,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,A. Voulanas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+93-94,B3,N. Voulanas,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+14-15,B-One,V. Wagh,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+22-23,T20(2),P. N. Young,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+00-01,A1,R. Young,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+99-00,U/12,T. Zachariassen,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+07-08,U/14C,T. Zahoor,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.
+97-98,U/14,S. Zikman,gwhcc_premierships_source.pdf,high,Extracted from GWH Premiership list 2026 PDF text; requires review before customer use.

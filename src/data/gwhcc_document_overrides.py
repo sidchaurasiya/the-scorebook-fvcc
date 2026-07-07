@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -74,6 +75,24 @@ def normalize_name(value: object) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+def initial_surname_key(value: object) -> str:
+    text = re.sub(r"\([^)]*\)", " ", str(value or ""))
+    words = re.findall(r"[A-Za-z]+", text)
+    if len(words) < 2:
+        return ""
+    return f"{words[0][0].casefold()} {words[-1].casefold()}"
+
+
+def unique_alias_lookup(names: pd.Series) -> dict[str, str]:
+    pairs: dict[str, set[str]] = {}
+    for value in names.dropna().astype(str):
+        alias = initial_surname_key(value)
+        normalized = normalize_name(value)
+        if alias and normalized:
+            pairs.setdefault(alias, set()).add(normalized)
+    return {alias: next(iter(values)) for alias, values in pairs.items() if len(values) == 1}
+
+
 def numeric_value(value: object) -> float | None:
     number = pd.to_numeric(value, errors="coerce")
     if pd.isna(number):
@@ -116,6 +135,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
         return output
 
     output["_player_key_for_doc_override"] = output["Player"].map(normalize_name)
+    alias_lookup = unique_alias_lookup(output["Player"])
     for _, override in overrides.iterrows():
         metric_key = str(override.get("metric_key") or "").strip()
         column = METRIC_TO_COLUMN.get(metric_key)
@@ -126,6 +146,11 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
         if not player_key or document_value is None:
             continue
         mask = output["_player_key_for_doc_override"].eq(player_key)
+        if not mask.any():
+            alias_key = initial_surname_key(override.get("player_name"))
+            alias_player_key = alias_lookup.get(alias_key, "")
+            if alias_player_key:
+                mask = output["_player_key_for_doc_override"].eq(alias_player_key)
         if not mask.any():
             decisions.append(decision_row(override, metric_key, None, document_value, document_value, "missing_from_playcricket", False))
             continue
@@ -287,6 +312,19 @@ def build_combined_premiership_players(players: pd.DataFrame, doc_players: pd.Da
     if document_rows:
         document = pd.DataFrame(document_rows)
         document["_player_key"] = document["display_player_name"].map(normalize_name)
+        if rows:
+            base = rows[0]
+            alias_lookup = unique_alias_lookup(base["display_player_name"]) if "display_player_name" in base else {}
+            base_by_key = base.drop_duplicates("_player_key").set_index("_player_key").to_dict("index") if "_player_key" in base else {}
+            for index, row in document.iterrows():
+                base_key = alias_lookup.get(initial_surname_key(row.get("display_player_name")))
+                base_row = base_by_key.get(base_key or "")
+                if not base_row:
+                    continue
+                for column in ["canonical_player_id", "canonical_player_name", "display_player_name"]:
+                    if column in base_row:
+                        document.at[index, column] = base_row[column]
+                document.at[index, "_player_key"] = base_key
         rows.append(document)
     if not rows:
         return pd.DataFrame()
@@ -326,7 +364,7 @@ def build_combined_premiership_players(players: pd.DataFrame, doc_players: pd.Da
 def extract_documents() -> dict[str, object]:
     ensure_document_override_dirs()
     write_empty_source_files()
-    raw_files = [path for path in RAW_DIR.glob("*") if path.is_file() and not path.name.startswith(".")]
+    raw_files = document_source_files()
     extracted_records = []
     extracted_premierships = []
     extracted_premiership_players = []
@@ -365,23 +403,41 @@ def extract_text(path: Path) -> str:
             with zipfile.ZipFile(path) as archive:
                 raw = archive.read("word/document.xml").decode("utf-8", errors="ignore")
             return re.sub(r"<[^>]+>", " ", raw)
+        if suffix == ".doc":
+            return subprocess.check_output(["textutil", "-convert", "txt", "-stdout", str(path)], text=True, stderr=subprocess.DEVNULL)
         if suffix in {".txt", ".csv"}:
             return path.read_text(encoding="utf-8", errors="ignore")
         if suffix in {".xlsx", ".xls"}:
             sheets = pd.read_excel(path, sheet_name=None)
             return "\n".join(frame.to_csv(index=False) for frame in sheets.values())
         if suffix == ".pdf":
-            return ""
+            from pypdf import PdfReader
+
+            reader = PdfReader(str(path))
+            return "\n".join(page.extract_text() or "" for page in reader.pages)
     except Exception:
         return ""
     return ""
+
+
+def document_source_files() -> list[Path]:
+    raw_files = [path for path in RAW_DIR.glob("*") if path.is_file() and not path.name.startswith(".")]
+    has_canonical_download = any(
+        path.suffix.casefold() in {".pdf", ".doc", ".docx", ".xlsx", ".xls"} for path in raw_files
+    )
+    if has_canonical_download:
+        raw_files = [path for path in raw_files if not path.name.endswith("_accessibility.txt")]
+    return sorted(raw_files)
 
 
 def parse_record_lines(text: str, source_name: str) -> list[dict[str, object]]:
     rows = []
     if "Leading Players" in source_name or "TOP 10 BATSMEN IN CLUB HISTORY" in text:
         rows.extend(parse_leading_player_records(source_name))
+        return rows
     for line in text.splitlines():
+        if re.search(r"\bTOP\s+\d+\b", line, flags=re.IGNORECASE):
+            continue
         match = re.search(r"([A-Za-z][A-Za-z .'-]{2,})\s+(\d{2,5})\s+(games|matches|runs|wickets|catches)\b", line, flags=re.IGNORECASE)
         if not match:
             continue
@@ -427,7 +483,7 @@ def parse_premiership_lines(text: str, source_name: str) -> list[dict[str, objec
 
 def parse_leading_player_records(source_name: str) -> list[dict[str, object]]:
     source = source_name or "gwhcc_leading_players_source"
-    note = "Extracted from GWHCC Leading Players 2025-26 browser accessibility text; requires review before customer use."
+    note = "Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use."
     rows: list[dict[str, object]] = []
     values = {
         "runs": [
@@ -484,106 +540,33 @@ def parse_leading_player_records(source_name: str) -> list[dict[str, object]]:
 def parse_premiership_player_lines(text: str, source_name: str) -> list[dict[str, object]]:
     if "PREMIERSHIP PLAYERS LIST" not in text:
         return []
-    compact = re.sub(r"\s+", " ", text)
-    compact = re.sub(r"GWH Premiership list 2026.*?WS2 12", " ", compact)
-    known_names = [
-        "J Greaves",
-        "B. Powell",
-        "N. Bungey",
-        "M. Briginshaw",
-        "J. Davies",
-        "G. Mahoney",
-        "S. Somaia",
-        "B Calder",
-        "A. Chelvan",
-        "P. Eldridge",
-        "L. Galle",
-        "B. James",
-        "K. Javed",
-        "S. Quinn",
-        "P. Stokes",
-        "G. Haye",
-        "S. Mills",
-        "A. Medina",
-        "A. Newman",
-        "C. Perkins",
-        "D. Perkins",
-        "S. Perkins",
-        "G. Powell",
-        "N. Powell",
-        "M. Ratnayake",
-        "R. Sipthorpe",
-        "S. Smoothey",
-        "M. Taborsky",
-        "S Zachariassen",
-        "M. Annard",
-        "V. Bhat",
-        "C. Briginshaw",
-        "D. Byrns",
-        "C. Chamberlain",
-        "S. Clarke",
-        "S. Cocks",
-        "J. Cousins",
-        "D. Crisp",
-        "A. Dale",
-        "Dennis Davidson",
-        "G. Davies",
-        "I. Davies",
-        "T. Doig",
-        "W.de Fraga",
-        "B Hocking",
-        "D. Holden",
-        "C. Hutchins",
-        "C. Jackson",
-        "M. S. Jahan",
-        "V. Joshi",
-        "N. Kale",
-        "S. Kandala",
-        "M. Kohne",
-        "B. Little",
-        "K. Logan",
-        "T. Loucas",
-        "G. McCormick",
-        "A. McDonald",
-        "P. McGloin",
-        "R. McGloin",
-        "S. Melag",
-        "Harindra Mendu",
-        "E. Miller",
-        "R. Mulleriyawa",
-        "P. Negi",
-        "P. Nelluri",
-        "L. O’Rourke",
-        "P. Pancholi",
-        "A. Pandya",
-        "C. Patel",
-        "S. Patel",
-        "O. Parashar",
-        "S. Parashar",
-        "D. Paulin",
-        "L. Paulin",
-        "R. Paulin",
-        "R. Pike",
-        "L. Powell",
-        "T. Rolfe",
-        "A. Sarve (Snr)",
-        "A. Sarve (Jnr)",
-        "V. Shah",
-        "A. Sivakumaran",
-        "J. Stevenson",
-        "M. Stevenson",
-        "J. Storan",
-        "A. Thakar",
-    ]
-    name_pattern = "|".join(re.escape(name) for name in sorted(known_names, key=len, reverse=True))
-    matches = list(re.finditer(name_pattern, compact))
     rows: list[dict[str, object]] = []
     seen: set[tuple[str, str, str]] = set()
-    for index, match in enumerate(matches):
-        name = match.group(0).replace("J Greaves", "J. Greaves").strip()
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(compact)
-        segment = compact[match.end() : end]
-        for event in parse_premiership_events(segment):
+    confidence = "high" if source_name.casefold().endswith(".pdf") else "review"
+    note_source = "PDF text" if confidence == "high" else "browser accessibility text"
+    current_name = ""
+    cleaned_text = re.sub(r"-\s*\n\s*(\d{1,2})", r"-\1", text.replace("–", "-"))
+    for raw_line in cleaned_text.splitlines():
+        line = re.sub(r"\s+", " ", raw_line).strip()
+        if not line or re.search(r"premiership players list|up to 1980", line, flags=re.IGNORECASE):
+            continue
+        events = parse_premiership_events(line)
+        if not events:
+            continue
+        first_event = first_premiership_event(line)
+        prefix = line[: first_event.start()].strip(" ,") if first_event else ""
+        prefix = re.sub(r"^\d+\s+", "", prefix).strip()
+        if prefix and re.search(r"[A-Za-z]", prefix):
+            current_name = normalize_player_label(prefix)
+        if not current_name:
+            continue
+        for event in events:
+            season = event["season"]
+            if not re.fullmatch(r"\d{2}-\d{2}", season):
+                continue
+            if season.endswith("-00") and "03-0" in line:
+                continue
+            name = current_name
             key = (name, event["season"], event["grade_name"])
             if key in seen:
                 continue
@@ -594,23 +577,49 @@ def parse_premiership_player_lines(text: str, source_name: str) -> list[dict[str
                     "grade_name": event["grade_name"],
                     "player_name": name,
                     "source_document": source_name,
-                    "confidence": "review",
-                    "notes": "Extracted from GWH Premiership list 2026 browser accessibility text; requires review before customer use.",
+                    "confidence": confidence,
+                    "notes": f"Extracted from GWH Premiership list 2026 {note_source}; requires review before customer use.",
                 }
             )
     return rows
 
 
+def first_premiership_event(segment: str) -> re.Match[str] | None:
+    return premiership_event_pattern().search(segment)
+
+
 def parse_premiership_events(segment: str) -> list[dict[str, str]]:
-    pattern = re.compile(
-        r"(?P<grade>U/\d{2}[A-Z]?|U/\d{2}\s*A|U/\d{2}\s*B|U/\d{2}|A\s*One|B\s*One|One\s*Day|T20(?:\s*\(\d\))?|WS2?|A1|A2|A23|A100|C25|C1|D1|[A-F])\s*"
-        r"(?P<start>\d{2})\s*(?:-|–)?\s*(?P<end>\d{2})",
-        flags=re.IGNORECASE,
-    )
     events = []
-    for match in pattern.finditer(segment):
-        grade = re.sub(r"\s+", " ", match.group("grade")).strip().replace("One", "One Day")
+    for match in premiership_event_pattern().finditer(segment.replace("–", "-")):
+        grade = normalize_grade_label(match.group("grade"))
         start = match.group("start")
-        end = match.group("end")
+        end = match.group("end").zfill(2)
         events.append({"grade_name": grade, "season": f"{start}-{end}"})
     return events
+
+
+def premiership_event_pattern() -> re.Pattern[str]:
+    return re.compile(
+        r"(?P<grade>U/?\.?\d{2}(?:[A-Z])?(?:\s*\([^)]+\))?|A\s*-\s*One(?:\s*Day)?|A\s*One(?:\s*Day)?|B\s*-\s*One|B\s*One|One\s*Day|T20(?:\s*\(\d\))?|WS2?|B3|A1|A2|C1|D1|[A-F])\s*"
+        r"(?P<start>\d{2})\s*(?:-|/)?\s*(?P<end>\d{1,2})",
+        flags=re.IGNORECASE,
+    )
+
+
+def normalize_player_label(value: str) -> str:
+    text = re.sub(r"\s+", " ", value).strip(" ,")
+    text = re.sub(r"\b([A-Z])\s+\.", r"\1.", text)
+    text = re.sub(r"\b([A-Z])\.([A-Za-z])", r"\1. \2", text)
+    return text
+
+
+def normalize_grade_label(value: str) -> str:
+    text = re.sub(r"\s+", " ", value).strip()
+    text = text.replace("U/.", "U/")
+    text = re.sub(r"U/?(\d{2})", r"U/\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bA\s*-\s*One(?:\s*Day)?\b", "A-One Day", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bA\s*One(?:\s*Day)?\b", "A-One Day", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bB\s*-\s*One\b", "B-One", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bB\s*One\b", "B-One", text, flags=re.IGNORECASE)
+    text = re.sub(r"T20\s*\(\s*(\d+)\s*\)", r"T20(\1)", text, flags=re.IGNORECASE)
+    return text
