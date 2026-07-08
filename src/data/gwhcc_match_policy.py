@@ -8,7 +8,11 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import yaml
+
+try:
+    import yaml
+except ModuleNotFoundError:  # Streamlit Cloud may boot before optional deps are available.
+    yaml = None
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -77,7 +81,12 @@ def match_format(row: pd.Series) -> str:
 
 def load_config_policy() -> dict[str, float | str]:
     path = ROOT / "clubs" / CLUB_ID / "club_config.yaml"
-    config = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if yaml is not None:
+        config = yaml.safe_load(path.read_text(encoding="utf-8"))
+    else:
+        from src.config.club_config import load_club_config
+
+        config = load_club_config(CLUB_ID)
     return config.get("match_count_policy", {})
 
 
