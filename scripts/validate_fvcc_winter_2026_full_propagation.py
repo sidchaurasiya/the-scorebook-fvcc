@@ -26,12 +26,9 @@ from src.ui.layout import (  # noqa: E402
 from src.utils.player_identity import get_player_profile_data, player_aliases_mtime  # noqa: E402
 
 PROCESSED = ROOT / "clubs" / "fvcc" / "data" / "processed"
+MATCH_CENTRE = ROOT / "data" / "processed" / "match_centre" / "current_winter_2026"
 OUTPUT_PATH = PROCESSED / "validation" / "fvcc_winter_2026_full_propagation_validation.csv"
-
-EXPECTED = {
-    "Siddhanth Chaurasiya": {"matches": 7, "bowlingWickets": 11},
-    "Kartik Nallepalli": {"matches": 7, "bowlingWickets": 7},
-}
+TARGET_PLAYERS = ("Siddhanth Chaurasiya", "Kartik Nallepalli")
 
 
 def clean(value: object) -> str:
@@ -74,6 +71,26 @@ def player_row(frame: pd.DataFrame, player_name: str) -> pd.Series | None:
         return None
     scoped = frame[player_mask(frame, player_name)]
     return scoped.iloc[0] if not scoped.empty else None
+
+
+def current_expected_bowling_totals() -> dict[str, dict[str, int]]:
+    """Build current season expectations from refreshed match-centre scorecards."""
+    batting = read_csv(MATCH_CENTRE / "all_scorecard_batting.csv")
+    bowling = read_csv(MATCH_CENTRE / "all_scorecard_bowling.csv")
+    expected: dict[str, dict[str, int]] = {}
+    for player_name in TARGET_PLAYERS:
+        batting_rows = batting[player_mask(batting, player_name)] if not batting.empty else pd.DataFrame()
+        bowling_rows = bowling[player_mask(bowling, player_name)] if not bowling.empty else pd.DataFrame()
+        expected[player_name] = {
+            "matches": int(batting_rows["match_id"].nunique()) if "match_id" in batting_rows else 0,
+            "bowlingWickets": int(pd.to_numeric(bowling_rows.get("wickets_taken"), errors="coerce").fillna(0).sum())
+            if not bowling_rows.empty
+            else 0,
+        }
+    return expected
+
+
+EXPECTED = current_expected_bowling_totals()
 
 
 def winter_rows(frame: pd.DataFrame) -> pd.DataFrame:

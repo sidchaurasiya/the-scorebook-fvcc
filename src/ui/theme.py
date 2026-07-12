@@ -185,7 +185,7 @@ def inject_theme() -> None:
             letter-spacing: -0.02em;
         }
 
-        div[data-testid="stTabs"] button {
+        div[data-testid="stTabs"] [role="tab"] {
             border-radius: 999px;
             color: #737998;
             font-weight: 750;
@@ -194,7 +194,7 @@ def inject_theme() -> None:
             padding: 8px 16px;
         }
 
-        div[data-testid="stTabs"] button[aria-selected="true"] {
+        div[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
             background: linear-gradient(135deg, var(--club-primary, var(--pitch)), var(--club-accent, var(--pitch-2)));
             color: #ffffff;
             border-bottom-color: transparent;
@@ -8089,7 +8089,7 @@ def active_club_theme_css() -> str:
             color: #ffffff !important;
         }}
 
-        div[data-testid="stTabs"] button {{
+        div[data-testid="stTabs"] [role="tab"] {{
             color: var(--muted) !important;
         }}
 
@@ -8098,14 +8098,14 @@ def active_club_theme_css() -> str:
             border: 1px solid var(--line) !important;
         }}
 
-        div[data-testid="stTabs"] button[aria-selected="true"],
+        div[data-testid="stTabs"] [role="tab"][aria-selected="true"],
         .profile-segment.active {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             color: #ffffff !important;
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.22) !important;
         }}
 
-        div[data-testid="stTabs"] button[aria-selected="true"] *,
+        div[data-testid="stTabs"] [role="tab"][aria-selected="true"] *,
         .profile-segment.active * {{
             color: #ffffff !important;
         }}
