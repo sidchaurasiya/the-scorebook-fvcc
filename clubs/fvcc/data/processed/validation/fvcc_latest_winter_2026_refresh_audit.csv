@@ -1,14 +1,14 @@
 layer,status,details,match_id,date,opponent,result,round,expected
-latest_match,pass,latest Winter 2026 match,15444ed2-30b9-4f4b-bdf6-0989519af7c5,2026-07-04 02:00:00+00:00,Reservoir Cobras Cricket Club,lost by 6 wickets,Round 7,
-scorecard_batting_rows,pass,24 latest-match batting rows,15444ed2-30b9-4f4b-bdf6-0989519af7c5,,,,,
-scorecard_bowling_rows,pass,12 latest-match bowling rows,15444ed2-30b9-4f4b-bdf6-0989519af7c5,,,,,
-scorecard_fielding_rows,pass,3 latest-match fielding rows,15444ed2-30b9-4f4b-bdf6-0989519af7c5,,,,,
-ball_by_ball_rows,pass,328 latest-match ball rows,15444ed2-30b9-4f4b-bdf6-0989519af7c5,,,,,
-siddhanth_latest_bowling_figures,pass,1/10 off 3.1,15444ed2-30b9-4f4b-bdf6-0989519af7c5,,,,,
-player_season_aggregate,pass,Mat=7 W=11,,,,,,Mat=7 W=11
-season_overview_detailed_stats,pass,Mat=7 W=11,,,,,,Mat=7 W=11
-player_profile_career_breakdown,pass,Mat=7 W=11,,,,,,Mat=7 W=11
-player_profile_recent_form,pass,1/10,15444ed2-30b9-4f4b-bdf6-0989519af7c5,,,,,
+latest_match,pass,latest Winter 2026 match,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,2026-07-11 02:00:00+00:00,Brunswick Cricket Club,lost by 7 wickets,Round 8,
+scorecard_batting_rows,pass,24 latest-match batting rows,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,,,,,
+scorecard_bowling_rows,pass,13 latest-match bowling rows,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,,,,,
+scorecard_fielding_rows,pass,5 latest-match fielding rows,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,,,,,
+ball_by_ball_rows,pass,386 latest-match ball rows,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,,,,,
+siddhanth_latest_bowling_figures,pass,0/27 off 3.0,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,,,,,
+player_season_aggregate,pass,Mat=8 W=11,,,,,,Mat=8 W=11
+season_overview_detailed_stats,pass,Mat=8 W=11,,,,,,Mat=8 W=11
+player_profile_career_breakdown,pass,Mat=8 W=11,,,,,,Mat=8 W=11
+player_profile_recent_form,pass,0/27,7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627,,,,,
 player_profile_competition_grade,pass,performance_breakdown_by_dimension.csv,,,,,,
 player_dna_batting_position,pass,rows=9,,,,,,
 player_dna_bowling_phase,pass,rows=5,,,,,,

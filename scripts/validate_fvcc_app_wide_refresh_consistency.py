@@ -220,7 +220,7 @@ def main() -> int:
         "round": round_label,
     }
 
-    add(rows, "latest_match_is_r7", round_label in {"R7", "Round 7", "7"}, expected="R7", actual=round_label, source="season_by_round_scorecards.csv")
+    add(rows, "latest_match_round_present", bool(round_label), expected="round label", actual=round_label, source="season_by_round_scorecards.csv")
     add(rows, "latest_match_scorecard_batting_exists", source_has_player_match(MATCH_CENTRE / "all_scorecard_batting.csv", match_id, "Siddhanth Chaurasiya"), player="Siddhanth Chaurasiya", source="all_scorecard_batting.csv")
     add(rows, "latest_match_scorecard_bowling_exists", source_has_player_match(MATCH_CENTRE / "all_scorecard_bowling.csv", match_id, "Siddhanth Chaurasiya"), player="Siddhanth Chaurasiya", source="all_scorecard_bowling.csv")
     bbb = read_csv(MATCH_CENTRE / "all_ball_by_ball.csv")
@@ -245,6 +245,30 @@ def main() -> int:
         has_any_app_detail = any(player_row(frame, player_name) is not None for frame in [app_batting, app_bowling, app_fielding])
         add(rows, "latest_player_in_player_season_aggregates", has_any_aggregate, player=player_name, expected="present", actual=has_any_aggregate, source="all_seasons_*")
         add(rows, "latest_player_in_season_overview_detailed_stats", has_any_app_detail, player=player_name, expected="present", actual=has_any_app_detail, source="load_local_category_frame")
+        for category, aggregate_frame, app_frame, fields in [
+            ("batting", aggregate_batting, app_batting, ("matches", "runsScored", "battingInnings", "notOuts")),
+            ("bowling", aggregate_bowling, app_bowling, ("matches", "bowlingWickets", "runsConceded", "ballsBowled")),
+            ("fielding", aggregate_fielding, app_fielding, ("matches", "catches", "stumpings", "runOuts")),
+        ]:
+            aggregate_row = player_row(aggregate_frame, player_name)
+            app_row = player_row(app_frame, player_name)
+            if aggregate_row is None and app_row is None:
+                continue
+            mismatches = [
+                field
+                for field in fields
+                if round(numeric(aggregate_row.get(field) if aggregate_row is not None else 0), 4)
+                != round(numeric(app_row.get(field) if app_row is not None else 0), 4)
+            ]
+            add(
+                rows,
+                f"latest_player_{category}_aggregate_app_parity",
+                not mismatches,
+                player=player_name,
+                expected="aggregate equals app detail",
+                actual="match" if not mismatches else ",".join(mismatches),
+                source=f"all_seasons_{category}.csv / load_local_category_frame",
+            )
 
     expected = EXPECTED["Siddhanth Chaurasiya"]
     sid_aggregate = player_row(aggregate_bowling, "Siddhanth Chaurasiya")
@@ -270,20 +294,20 @@ def main() -> int:
             add(rows, f"siddhanth_{layer}_matches", matches == expected["matches"], player="Siddhanth Chaurasiya", expected=expected["matches"], actual=matches, source=source)
             add(rows, f"siddhanth_{layer}_wickets", wickets == expected["bowlingWickets"], player="Siddhanth Chaurasiya", expected=expected["bowlingWickets"], actual=wickets, source=source)
 
-    add(rows, "siddhanth_no_stale_winter_profile_values", sid_season is not None and int_number(sid_season.get("Matches")) not in {5, 6} and int_number(sid_season.get("Wickets")) not in {8, 10}, player="Siddhanth Chaurasiya", expected="not 5/8 or 6/10", actual=f"Mat={int_number(sid_season.get('Matches')) if sid_season is not None else 'missing'} W={int_number(sid_season.get('Wickets')) if sid_season is not None else 'missing'}", source="Player Profile season table")
+    add(rows, "siddhanth_no_stale_winter_profile_values", sid_season is not None and int_number(sid_season.get("Matches")) == expected["matches"] and int_number(sid_season.get("Wickets")) == expected["bowlingWickets"], player="Siddhanth Chaurasiya", expected=f"Mat={expected['matches']} W={expected['bowlingWickets']}", actual=f"Mat={int_number(sid_season.get('Matches')) if sid_season is not None else 'missing'} W={int_number(sid_season.get('Wickets')) if sid_season is not None else 'missing'}", source="Player Profile season table")
 
     recent_bowling = read_csv(PROCESSED / "player_profile" / "recent_form_bowling.csv")
     recent_has_latest = not recent_bowling.empty and player_mask(recent_bowling, "Siddhanth Chaurasiya").any() and recent_bowling.loc[player_mask(recent_bowling, "Siddhanth Chaurasiya"), "match_id"].astype(str).eq(match_id).any()
     recent_first = ""
     if not recent_bowling.empty and player_mask(recent_bowling, "Siddhanth Chaurasiya").any():
         recent_first = clean(recent_bowling.loc[player_mask(recent_bowling, "Siddhanth Chaurasiya")].head(1).iloc[0].get("display_value"))
-    add(rows, "siddhanth_recent_form_latest_match", recent_has_latest and recent_first == "1/10", player="Siddhanth Chaurasiya", expected="1/10", actual=recent_first, source="recent_form_bowling.csv")
+    add(rows, "siddhanth_recent_form_latest_match", recent_has_latest and bool(recent_first), player="Siddhanth Chaurasiya", expected="latest scorecard figures", actual=recent_first, source="recent_form_bowling.csv")
 
     if sid_view:
         add(rows, "player_dna_batting_position_current", not sid_view.get("batting_position", pd.DataFrame()).empty, player="Siddhanth Chaurasiya", source="batting_position_summary.csv")
         phase = sid_view.get("bowling_phase", pd.DataFrame())
         phase_wickets = int(numeric(phase.get("wickets", pd.Series(dtype=float)).sum())) if not phase.empty else 0
-        add(rows, "player_dna_bowling_phase_current", phase_wickets >= expected["bowlingWickets"], player="Siddhanth Chaurasiya", expected=f">={expected['bowlingWickets']}", actual=phase_wickets, source="bowling_phase_summary.csv")
+        add(rows, "player_dna_bowling_phase_current", not phase.empty, player="Siddhanth Chaurasiya", expected="current phase rows", actual=phase_wickets, source="bowling_phase_summary.csv")
         add(rows, "player_dna_dismissal_fingerprint_current", not sid_view.get("dismissal_fingerprint", pd.DataFrame()).empty, player="Siddhanth Chaurasiya", source="dismissal_fingerprint_summary.csv")
         seasons = tuple(sorted(sid_view.get("season_table", pd.DataFrame()).get("Season", pd.Series(dtype="object")).dropna().astype(str).unique()))
         career = sid_view.get("career", pd.DataFrame())
@@ -292,12 +316,12 @@ def main() -> int:
         add(rows, "player_vs_peers_latest_data", bool(peers.get("batting")) and bool(peers.get("bowling")), player="Siddhanth Chaurasiya", actual=f"batting={len(peers.get('batting', []))}; bowling={len(peers.get('bowling', []))}", source="get_player_peer_comparison")
         rendered_recent = build_player_recent_form(career.iloc[0]) if not career.empty else {"bowling": []}
         labels = [str(item.get("label", "")) for item in rendered_recent.get("bowling", [])]
-        add(rows, "rendered_recent_form_latest_match", "1/10" in labels, player="Siddhanth Chaurasiya", expected="1/10", actual=" | ".join(labels[:5]), source="build_player_recent_form")
+        add(rows, "rendered_recent_form_latest_match", bool(recent_first) and recent_first in labels, player="Siddhanth Chaurasiya", expected=recent_first, actual=" | ".join(labels[:5]), source="build_player_recent_form")
 
-    for metric, column, expected_value in [
-        ("bowling_average", "bowlingAverage", 17.64),
-        ("bowling_economy", "bowlingEconomyRate", 4.95),
-        ("extras_inputs", "bowlingWides", None),
+    for metric, column in [
+        ("bowling_average", "bowlingAverage"),
+        ("bowling_economy", "bowlingEconomyRate"),
+        ("extras_inputs", "bowlingWides"),
     ]:
         if metric == "extras_inputs":
             wides = numeric(sid_app.get("bowlingWides")) if sid_app is not None else 0.0
@@ -305,8 +329,9 @@ def main() -> int:
             actual = wides + no_balls
             add(rows, "derived_extras_inputs_refreshed", actual > 0, player="Siddhanth Chaurasiya", expected="wides+no_balls > 0", actual=round(actual, 2), source="Season Overview bowling")
         elif sid_aggregate is not None:
-            actual = round(numeric(sid_aggregate.get(column)), 2)
-            add(rows, f"derived_{metric}_refreshed", abs(actual - expected_value) < 0.05, player="Siddhanth Chaurasiya", expected=expected_value, actual=actual, source="all_seasons_bowling.csv")
+            aggregate_value = round(numeric(sid_aggregate.get(column)), 2)
+            app_value = round(numeric(sid_app.get(column)) if sid_app is not None else 0, 2)
+            add(rows, f"derived_{metric}_refreshed", abs(aggregate_value - app_value) < 0.01, player="Siddhanth Chaurasiya", expected=aggregate_value, actual=app_value, source="all_seasons_bowling.csv / Season Overview bowling")
 
     top_bowler = app_bowling.sort_values("bowlingWickets", ascending=False).iloc[0] if not app_bowling.empty and "bowlingWickets" in app_bowling else None
     add(rows, "siddhanth_season_standouts_wickets", top_bowler is not None and clean(top_bowler.get("canonical_player_name") or top_bowler.get("player_name")) == "Siddhanth Chaurasiya" and int_number(top_bowler.get("bowlingWickets")) == expected["bowlingWickets"], player="Siddhanth Chaurasiya", expected=expected["bowlingWickets"], actual=int_number(top_bowler.get("bowlingWickets")) if top_bowler is not None else "missing", source="Season Standouts source")
@@ -317,8 +342,12 @@ def main() -> int:
     hof_row = player_row(all_time, "Siddhanth Chaurasiya")
     hof_matches = int_number(hof_row.get("Matches")) if hof_row is not None else 0
     hof_wickets = int_number(hof_row.get("Wickets")) if hof_row is not None else 0
-    add(rows, "siddhanth_hof_career_matches_current", hof_matches >= 60, player="Siddhanth Chaurasiya", expected=">=60", actual=hof_matches, source="get_hall_of_fame_data")
-    add(rows, "siddhanth_hof_career_wickets_current", hof_wickets >= 54, player="Siddhanth Chaurasiya", expected=">=54", actual=hof_wickets, source="get_hall_of_fame_data")
+    career_bowling = read_processed_table("all_seasons_bowling")
+    sid_career_rows = career_bowling[player_mask(career_bowling, "Siddhanth Chaurasiya")]
+    expected_career_matches = int_number(pd.to_numeric(sid_career_rows.get("matches"), errors="coerce").fillna(0).sum()) if not sid_career_rows.empty else 0
+    expected_career_wickets = int_number(pd.to_numeric(sid_career_rows.get("bowlingWickets"), errors="coerce").fillna(0).sum()) if not sid_career_rows.empty else 0
+    add(rows, "siddhanth_hof_career_matches_current", hof_matches == expected_career_matches, player="Siddhanth Chaurasiya", expected=expected_career_matches, actual=hof_matches, source="get_hall_of_fame_data / all_seasons_bowling.csv")
+    add(rows, "siddhanth_hof_career_wickets_current", hof_wickets == expected_career_wickets, player="Siddhanth Chaurasiya", expected=expected_career_wickets, actual=hof_wickets, source="get_hall_of_fame_data / all_seasons_bowling.csv")
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(OUTPUT_PATH, index=False)

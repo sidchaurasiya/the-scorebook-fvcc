@@ -130,9 +130,9 @@ def main() -> int:
     season_row = season_table[season_table.get("Season", pd.Series(dtype="object")).astype(str).eq("Winter 2026")]
     if not season_row.empty:
         row = season_row.iloc[0]
-        add(rows, "player_profile_career_breakdown", "pass", f"Mat={int_number(row.get('Matches'))} W={int_number(row.get('Wickets'))}", expected="Mat=7 W=11")
+        add(rows, "player_profile_career_breakdown", "pass", f"Mat={int_number(row.get('Matches'))} W={int_number(row.get('Wickets'))}", expected=f"Mat={EXPECTED[TARGET_PLAYER]['matches']} W={EXPECTED[TARGET_PLAYER]['bowlingWickets']}")
     else:
-        add(rows, "player_profile_career_breakdown", "fail", "Winter 2026 row missing", expected="Mat=7 W=11")
+        add(rows, "player_profile_career_breakdown", "fail", "Winter 2026 row missing", expected=f"Mat={EXPECTED[TARGET_PLAYER]['matches']} W={EXPECTED[TARGET_PLAYER]['bowlingWickets']}")
     add(rows, "player_profile_recent_form", "pass" if not latest_recent.empty and latest_recent["match_id"].astype(str).eq(match_id).any() else "fail", clean(latest_recent.iloc[0].get("display_value")) if not latest_recent.empty else "missing", match_id=match_id)
     add(rows, "player_profile_competition_grade", "pass" if not performance.empty and player_mask(performance, TARGET_PLAYER).any() else "fail", "performance_breakdown_by_dimension.csv")
     add(rows, "player_dna_batting_position", "pass" if not view.get("batting_position", pd.DataFrame()).empty else "warning", f"rows={len(view.get('batting_position', pd.DataFrame()))}")
