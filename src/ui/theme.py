@@ -185,6 +185,8 @@ def inject_theme() -> None:
             letter-spacing: -0.02em;
         }
 
+        div[data-testid="stTabs"] button,
+        div[data-testid="stTabs"] [data-testid="stTab"],
         div[data-testid="stTabs"] [role="tab"] {
             border-radius: 999px;
             color: #737998;
@@ -194,6 +196,8 @@ def inject_theme() -> None:
             padding: 8px 16px;
         }
 
+        div[data-testid="stTabs"] button[aria-selected="true"],
+        div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"],
         div[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
             background: linear-gradient(135deg, var(--club-primary, var(--pitch)), var(--club-accent, var(--pitch-2)));
             color: #ffffff;
@@ -209,13 +213,16 @@ def inject_theme() -> None:
             gap: 4px;
             margin-bottom: 18px;
             padding: 5px;
+            width: fit-content;
+            max-width: 100%;
         }
 
-        div[data-testid="stTabs"] [data-baseweb="tab-border"] {
+        div[data-testid="stTabs"] [data-baseweb="tab-border"],
+        div[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
             display: none;
         }
 
-        div[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+        div[data-testid="stTabs"] .react-aria-SelectionIndicator {
             display: none;
         }
 
@@ -8089,6 +8096,8 @@ def active_club_theme_css() -> str:
             color: #ffffff !important;
         }}
 
+        div[data-testid="stTabs"] button,
+        div[data-testid="stTabs"] [data-testid="stTab"],
         div[data-testid="stTabs"] [role="tab"] {{
             color: var(--muted) !important;
         }}
@@ -8096,8 +8105,13 @@ def active_club_theme_css() -> str:
         div[data-testid="stTabs"] [role="tablist"] {{
             background: var(--surface-soft) !important;
             border: 1px solid var(--line) !important;
+            display: inline-flex !important;
+            width: fit-content !important;
+            max-width: 100% !important;
         }}
 
+        div[data-testid="stTabs"] button[aria-selected="true"],
+        div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"],
         div[data-testid="stTabs"] [role="tab"][aria-selected="true"],
         .profile-segment.active {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
@@ -8105,9 +8119,15 @@ def active_club_theme_css() -> str:
             box-shadow: 0 10px 24px rgba(var(--club-primary-rgb), 0.22) !important;
         }}
 
+        div[data-testid="stTabs"] button[aria-selected="true"] *,
+        div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"] *,
         div[data-testid="stTabs"] [role="tab"][aria-selected="true"] *,
         .profile-segment.active * {{
             color: #ffffff !important;
+        }}
+
+        div[data-testid="stTabs"] .react-aria-SelectionIndicator {{
+            display: none !important;
         }}
 
         a,
