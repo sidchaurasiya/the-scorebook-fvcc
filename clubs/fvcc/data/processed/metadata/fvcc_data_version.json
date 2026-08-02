@@ -1,13 +1,14 @@
 {
   "club_id": "fvcc",
-  "failed_command": "",
-  "generated_app_facing_data_version": "20260712T114042Z",
-  "latest_match_date": "2026-07-11 02:00:00+00:00",
-  "latest_match_id": "7d4cc2a2-fb5f-4b3b-abdc-b9eebf89e627",
+  "generated_app_facing_data_version": "20260802T103021Z",
+  "latest_match_date": "2026-08-01 02:00:00+00:00",
+  "latest_match_id": "e8cd9e49-70e2-480f-84b1-bbfc86e6297d",
   "latest_match_opponent": "Brunswick Cricket Club",
   "latest_match_result": "lost by 7 wickets",
-  "latest_match_round": "R8",
-  "latest_refresh_timestamp": "2026-07-12T11:40:42.635223+00:00",
-  "validator_output": "clubs/fvcc/data/processed/validation/fvcc_app_wide_refresh_consistency_validation.csv",
+  "latest_match_round": "Semi Finals",
+  "latest_refresh_timestamp": "2026-08-02T10:30:21.435411+00:00",
+  "source_data_mtime": 1785594572.7395265,
+  "validator_checks": 88,
+  "validator_failures": 0,
   "validator_status": "pass"
 }
