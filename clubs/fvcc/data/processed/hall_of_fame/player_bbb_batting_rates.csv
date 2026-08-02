@@ -3,14 +3,14 @@ raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_00000000000
 raw_00000000_0000_0000_0000_000000000003,raw_00000000_0000_0000_0000_000000000003,********,********,15,14,1,1,1,107.14285714285714
 raw_00000000_0000_0000_0000_000000000005,raw_00000000_0000_0000_0000_000000000005,********,********,11,8,0,1,1,137.5
 raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,9,37,3,3,3,24.324324324324323
-raw_c3a31191_6c5e_438e_9288_354845031832,raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,280,767,23,27,26,36.50586701434159
+raw_c3a31191_6c5e_438e_9288_354845031832,raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,332,818,24,28,27,40.58679706601467
 raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,376,877,19,21,20,42.87343215507411
 raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,raw_9070b54a_0677_4338_8bc3_bb7ca2aa65b8,Anurag Joshi,Anurag Joshi,19,70,4,4,4,27.142857142857142
 aravind_boddula,aravind_boddula,Aravind Boddula,Aravind Boddula,9,19,3,3,3,47.36842105263158
-raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,399,247,4,8,8,161.53846153846155
+raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,raw_d1ed36b2_499d_4b65_95a3_6f3f51177415,Armaan Datta,Armaan Datta,407,259,5,9,9,157.14285714285714
 raw_b3b52283_bba3_41bc_8dea_fe249e5487b3,raw_b3b52283_bba3_41bc_8dea_fe249e5487b3,Arun Parvathyraj,Arun Parvathyraj,5,7,1,1,1,71.42857142857143
 raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,raw_fa1b6803_3b25_4211_b5aa_d1ea9168d018,Aryan Datta,Aryan Datta,25,50,3,3,3,50.0
-ashish_sharma,ashish_sharma,Ashish Sharma,Ashish Sharma,142,251,17,17,17,56.57370517928287
+ashish_sharma,ashish_sharma,Ashish Sharma,Ashish Sharma,154,274,19,19,19,56.2043795620438
 balaji_viswanathan,balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,201,237,15,18,17,84.81012658227849
 baurel_d_mello,baurel_d_mello,Baurel D'Mello,Baurel D'Mello,612,697,14,16,15,87.8048780487805
 raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,332,455,15,16,15,72.96703296703296
@@ -26,9 +26,9 @@ feroz_hassan,feroz_hassan,Feroz Hassan,Feroz Hassan,25,96,9,10,10,26.04166666666
 gopi_krishna,gopi_krishna,Gopi Krishna,Gopi Krishna,10,25,1,1,1,40.0
 raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,raw_d36a9234_b2b2_44a0_9fa3_3e1527aa4b1c,Harish Kumar,Harish Kumar,288,617,21,21,20,46.677471636953
 ibad_mohammed,ibad_mohammed,Ibad Mohammed,Ibad Mohammed,275,424,7,9,8,64.85849056603773
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,949,1302,27,34,33,72.88786482334869
-janaka_wijayakoon,janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,94,85,9,9,9,110.58823529411765
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,75,138,9,12,12,54.34782608695652
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,982,1361,29,36,35,72.15282880235121
+janaka_wijayakoon,janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,104,97,11,11,11,107.21649484536083
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,80,154,10,14,14,51.94805194805195
 jimmy_sharma,jimmy_sharma,Jimmy Sharma,Jimmy Sharma,310,469,13,20,20,66.09808102345416
 raw_7b43011a_eb05_448f_93c9_644481721a69,raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,180,277,14,15,14,64.98194945848375
 kalpeshkumar_patel,kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,468,503,18,19,18,93.04174950298211
@@ -37,10 +37,10 @@ raw_68ac86a9_b0a2_4dfe_9c94_f8e2d566269b,raw_68ac86a9_b0a2_4dfe_9c94_f8e2d566269
 kieran_bhan,kieran_bhan,Kieran Bhan,Kieran Bhan,558,921,31,32,30,60.586319218241044
 raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,raw_8cc72ac1_93ab_43ad_a24f_fdcbf14da6a2,Kiran Tomy,Kiran Tomy,64,150,8,9,9,42.666666666666664
 raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,112,156,6,8,8,71.7948717948718
-mayur_mohan,mayur_mohan,Mayur Mohan,Mayur Mohan,53,104,7,12,12,50.96153846153846
+mayur_mohan,mayur_mohan,Mayur Mohan,Mayur Mohan,60,120,9,14,14,50.0
 raw_98be31d5_daf2_437b_8d94_e44170555a40,raw_98be31d5_daf2_437b_8d94_e44170555a40,Mayur Patil,Mayur Patil,17,27,4,5,5,62.96296296296296
 raw_4c9e3082_4034_4e6d_9142_5a76549bd6be,raw_4c9e3082_4034_4e6d_9142_5a76549bd6be,Mohammed Adnanuddin,Mohammed Adnanuddin,1,34,5,5,5,2.9411764705882355
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,339,667,25,27,26,50.82458770614693
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,347,688,27,29,28,50.43604651162791
 raw_71ef9dbf_3692_4288_94d6_3030623bea83,raw_71ef9dbf_3692_4288_94d6_3030623bea83,Muhammad Anas Mukhtar,Muhammad Anas Mukhtar,63,89,5,5,5,70.78651685393258
 raw_5bb5ba70_d7c7_4e21_a6ca_b6e111b4f1e4,raw_5bb5ba70_d7c7_4e21_a6ca_b6e111b4f1e4,Nabin Shrestha,Nabin Shrestha,38,58,1,1,1,65.51724137931035
 nikhil_sawant,nikhil_sawant,Nikhil Sawant,Nikhil Sawant,149,137,6,7,7,108.75912408759125
@@ -48,7 +48,7 @@ raw_661bdd19_e67a_4978_a255_36e16789ab1f,raw_661bdd19_e67a_4978_a255_36e16789ab1
 raw_8a856bda_2a2c_416f_948f_f80829c83646,raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,11,76,5,9,9,14.473684210526315
 raw_17d58ef7_cae1_444e_adba_71c74067872b,raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,100,180,7,8,8,55.55555555555556
 predheesh_valayil_sivanandan,predheesh_valayil_sivanandan,Predheesh Valayil Sivanandan,Predheesh Valayil Sivanandan,127,102,4,6,6,124.50980392156863
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,432,901,28,28,28,47.94672586015538
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,449,920,30,30,30,48.80434782608695
 raw_ad51ee65_d0d9_465d_a097_6d5a9971d4fd,raw_ad51ee65_d0d9_465d_a097_6d5a9971d4fd,Rajan Pusalkar,Rajan Pusalkar,4,6,1,1,1,66.66666666666667
 raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,raw_100b60f9_15ab_4d35_9626_be4212a5d0e2,Rama Suravajjula,Rama Suravajjula,120,196,14,14,13,61.224489795918366
 ravi_chowdary,ravi_chowdary,Ravi Chowdary,Ravi Chowdary,37,74,2,6,6,50.0
@@ -60,7 +60,7 @@ raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa5
 saleem_shafqat,saleem_shafqat,Saleem Shafqat,Saleem Shafqat,41,111,2,2,2,36.93693693693694
 sandeep_gill,sandeep_gill,Sandeep Gill,Sandeep Gill,66,106,6,10,10,62.264150943396224
 raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,62,162,5,13,13,38.27160493827161
-raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,488,698,32,35,33,69.91404011461319
+raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,518,738,34,37,35,70.18970189701896
 raw_d7f93a87_6b05_4830_a524_41457fd00603,raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,43,221,6,14,13,19.457013574660632
 shivnyl_naidu,shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,212,712,13,16,16,29.775280898876403
 shrikant_sharma,shrikant_sharma,Shrikant Sharma,Shrikant Sharma,71,95,8,9,9,74.73684210526316
@@ -72,7 +72,7 @@ srikanth_para,srikanth_para,Srikanth Para,Srikanth Para,32,39,4,4,4,82.051282051
 raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,raw_bacb745b_1109_4ffc_b4ce_f53bf8c269ce,Syed Shabbir,Syed Shabbir,15,26,2,3,3,57.69230769230769
 raw_1876a444_275e_4ae9_92aa_1eebf5760833,raw_1876a444_275e_4ae9_92aa_1eebf5760833,Syedzainulla Abedin,Syedzainulla Abedin,4,2,1,1,1,200.0
 raw_e5bc75aa_b94d_482e_b9f0_df9828edd3ff,raw_e5bc75aa_b94d_482e_b9f0_df9828edd3ff,Ved Patel,Ved Patel,28,110,4,5,5,25.454545454545453
-vinay_sharma,vinay_sharma,Vinay Sharma,Vinay Sharma,291,479,17,22,22,60.75156576200418
+vinay_sharma,vinay_sharma,Vinay Sharma,Vinay Sharma,311,501,18,23,23,62.075848303393215
 raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,24,118,6,7,7,20.338983050847457
 vinit_naidu,vinit_naidu,Vinit Naidu,Vinit Naidu,243,513,18,19,18,47.36842105263158
 vishnu_para,vishnu_para,Vishnu Para,Vishnu Para,159,258,11,11,11,61.627906976744185

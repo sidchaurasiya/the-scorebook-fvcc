@@ -213,8 +213,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-07-12T11:33:21.652760+00:00",
-  "last_successful_refresh_time": "2026-07-12T11:33:21.652760+00:00",
+  "fetch_date_time": "2026-08-01T09:44:39.111212+00:00",
+  "last_successful_refresh_time": "2026-08-01T09:44:39.111212+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
