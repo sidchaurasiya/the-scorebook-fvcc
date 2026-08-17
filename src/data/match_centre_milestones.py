@@ -6,6 +6,8 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.dismissal_status import is_not_out_values
+
 from src.data.match_centre_ownership import add_club_match_ownership, is_selected_club_team_name
 from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 
@@ -429,15 +431,13 @@ def milestone_ball(group: pd.DataFrame, target: int) -> int | None:
 
 
 def is_not_out(row: pd.Series) -> bool:
-    dismissal = as_text(row.get("dismissal_type")).casefold()
-    text = as_text(row.get("dismissal_text")).casefold()
-    return "not out" in dismissal or "not out" in text or dismissal == ""
+    return is_not_out_values(row.get("dismissal_type"), row.get("dismissal_text"))
 
 
 def has_clear_not_out_status(row: pd.Series) -> bool:
-    dismissal = as_text(row.get("dismissal_type")).casefold()
-    text = as_text(row.get("dismissal_text")).casefold()
-    return "not out" in dismissal or "not out" in text
+    dismissal = as_text(row.get("dismissal_type")).strip()
+    text = as_text(row.get("dismissal_text")).strip()
+    return bool(dismissal or text) and is_not_out_values(dismissal, text)
 
 
 def format_final_score(final_runs: int, not_out: bool) -> str:

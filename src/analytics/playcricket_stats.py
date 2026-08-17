@@ -240,9 +240,10 @@ def _recalculate_bowling_stats(row: dict[str, object], group: pd.DataFrame) -> N
         or row.get("runsConceded")
         or row.get("runs_conceded")
     )
-    overs = _number(row.get("overs") or row.get("bowlingOvers") or row.get("oversBowled"))
+    overs_notation = row.get("overs") or row.get("bowlingOvers") or row.get("oversBowled")
+    overs = _decimal_overs(overs_notation)
     balls = _number(row.get("ballsBowled") or row.get("bowlingBalls") or row.get("bowlingBallsBowled"))
-    if overs is None and balls is not None:
+    if balls is not None:
         overs = balls / 6
 
     if wickets and wickets > 0 and runs_conceded is not None:
@@ -268,6 +269,23 @@ def _recalculate_bowling_stats(row: dict[str, object], group: pd.DataFrame) -> N
             "bowlingWickets",
         )
 
+
+def _decimal_overs(value: object) -> float | None:
+    """Convert cricket over notation (for example 3.5) to decimal overs."""
+    if value is None or pd.isna(value):
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        whole_text, _, ball_text = text.partition(".")
+        whole = int(whole_text)
+        balls = int(ball_text or "0")
+    except (TypeError, ValueError):
+        return None
+    if whole < 0 or balls < 0 or balls > 5:
+        return None
+    return (whole * 6 + balls) / 6
 
 def _weighted_average(
     group: pd.DataFrame,

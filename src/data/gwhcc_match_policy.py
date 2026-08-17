@@ -9,6 +9,8 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.dismissal_status import batting_innings_mask, combined_dismissal_text
+
 try:
     import yaml
 except ModuleNotFoundError:  # Streamlit Cloud may boot before optional deps are available.
@@ -130,16 +132,14 @@ def has_status_no_play_text(row: pd.Series) -> bool:
 def batting_activity(frame: pd.DataFrame) -> pd.Series:
     if frame.empty:
         return pd.Series(dtype=bool)
-    dismissal = frame.get("dismissal_type", pd.Series("", index=frame.index)).fillna("").astype(str).str.casefold()
-    text = frame.get("dismissal_text", pd.Series("", index=frame.index)).fillna("").astype(str).str.casefold()
-    passive = dismissal.isin({"did not bat", "absent"}) | text.isin({"did not bat", "absent"})
+    innings = batting_innings_mask(frame)
+    dismissal_text = combined_dismissal_text(frame)
     numeric_cols = ["runs_scored", "balls_faced", "fours_scored", "sixes_scored", "batting_minutes"]
     numeric = pd.Series(False, index=frame.index)
     for column in numeric_cols:
         if column in frame:
             numeric = numeric | pd.to_numeric(frame[column], errors="coerce").fillna(0).gt(0)
-    active_dismissal = ~(dismissal.isin({"", "did not bat", "absent"}) | text.isin({"did not bat", "absent"}))
-    return (~passive) & (numeric | active_dismissal)
+    return innings & (numeric | dismissal_text.ne(""))
 
 
 def build_match_policy_table(frames: dict[str, pd.DataFrame] | None = None) -> pd.DataFrame:

@@ -1,0 +1,33 @@
+{
+  "batting": {
+    "player": "Paul Young",
+    "player_id": "paul_young",
+    "season": "Summer 2022/23",
+    "matches": 13.5,
+    "runs": 1016.0,
+    "innings": 15.0,
+    "average": 84.66666666666667,
+    "strike_rate": null,
+    "hs": "131*",
+    "50s": 8.0,
+    "100s": 3.0,
+    "4s": 107.0,
+    "6s": 58.0,
+    "0s": 1.0
+  },
+  "bowling": {
+    "player": "Luke Galle",
+    "player_id": "raw_5e51cdc2_8d9e_4583_badc_2922f6095d48",
+    "season": "Summer 2017/18",
+    "matches": 14.5,
+    "wickets": 44.0,
+    "overs": "220.5",
+    "maidens": 63.0,
+    "average": 13.772727272727273,
+    "economy": 2.7441509433962263,
+    "strike_rate": 30.113636363636363,
+    "bbi": "7-33",
+    "5wi": 4.0,
+    "10wm": 0.0
+  }
+}

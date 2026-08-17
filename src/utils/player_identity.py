@@ -49,6 +49,30 @@ VALIDATION_COLUMNS = [
     "reviewed_at",
 ]
 
+PRIVATE_PLAYER_MARKERS = {
+    "********",
+    "private player",
+    "anonymous player",
+    "anonymised player",
+    "anonymized player",
+    "name withheld",
+    "withheld",
+}
+PRIVATE_PLAYER_FLAG_COLUMNS = (
+    "is_private",
+    "is_anonymised",
+    "is_anonymized",
+    "privacy_flag",
+    "player_is_private",
+)
+PLAYER_NAME_COLUMNS = (
+    "canonical_player_name",
+    "display_player_name",
+    "raw_player_name",
+    "player_name",
+    "Player",
+)
+
 
 def player_identity_path(filename: str | Path, club_id: str | None = None) -> Path:
     return get_mapping_path(filename, club_id=club_id)
@@ -60,6 +84,52 @@ def clean_player_name(name: object) -> str:
     value = re.sub(r"[^\w\s]", " ", value)
     value = re.sub(r"\s+", " ", value)
     return value.strip()
+
+
+def is_private_or_anonymised_player(
+    value: object = "",
+    *,
+    metadata: dict[str, object] | pd.Series | None = None,
+) -> bool:
+    """Return whether a player identity must be hidden from public UI outputs."""
+    if metadata is not None:
+        for column in PRIVATE_PLAYER_FLAG_COLUMNS:
+            flag = metadata.get(column) if hasattr(metadata, "get") else None
+            if str(flag or "").strip().casefold() in {"true", "1", "yes", "y", "private", "anonymous"}:
+                return True
+        for column in PLAYER_NAME_COLUMNS:
+            candidate = metadata.get(column) if hasattr(metadata, "get") else None
+            if candidate is not None and is_private_or_anonymised_player(candidate):
+                return True
+
+    text = "" if value is None or pd.isna(value) else re.sub(r"\s+", " ", str(value)).strip()
+    if not text:
+        return False
+    lowered = text.casefold()
+    return lowered in PRIVATE_PLAYER_MARKERS or set(text) <= {"*"}
+
+
+def public_player_mask(frame: pd.DataFrame) -> pd.Series:
+    """Build a public-display eligibility mask without mutating backend records."""
+    if frame.empty:
+        return pd.Series(dtype=bool, index=frame.index)
+    private = pd.Series(False, index=frame.index)
+    for column in PRIVATE_PLAYER_FLAG_COLUMNS:
+        if column in frame:
+            private |= frame[column].fillna("").astype(str).str.strip().str.casefold().isin(
+                {"true", "1", "yes", "y", "private", "anonymous"}
+            )
+    for column in PLAYER_NAME_COLUMNS:
+        if column in frame:
+            private |= frame[column].map(is_private_or_anonymised_player)
+    return ~private
+
+
+def filter_public_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
+    """Return customer-safe player rows while retaining all backend source rows."""
+    if frame.empty:
+        return frame.copy()
+    return frame.loc[public_player_mask(frame)].copy()
 
 
 def normalize_player_name_for_strict_merge(name: object) -> str:
@@ -162,7 +232,9 @@ def player_aliases_mtime(path: str | Path | None = None, *, club_id: str | None 
     path = Path(path) if path is not None else player_identity_path(ALIASES_PATH.name, club_id=club_id)
     if not path.exists():
         load_player_aliases(path)
-    return path.stat().st_mtime if path.exists() else 0.0
+    manual_path = path.with_name(MANUAL_MERGES_PATH.name)
+    mtimes = [candidate.stat().st_mtime for candidate in (path, manual_path) if candidate.exists()]
+    return max(mtimes, default=0.0)
 
 
 def load_player_merge_validation(path: str | Path | None = None, *, club_id: str | None = None) -> pd.DataFrame:

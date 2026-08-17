@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
@@ -65,6 +66,7 @@ def display_grade_name(raw: object) -> str:
         return ""
     text = re.sub(r"^\d+\.\s*", "", text)
     text = re.sub(r"^\d+\s*[-–]\s*", "", text)
+    text = re.sub(r"\bCompare & Conect\b", "Compare & Connect", text, flags=re.IGNORECASE)
     text = re.sub(r"\bGlen Waverley Hawks\s*[-–]\s*", "", text, flags=re.IGNORECASE)
     text = re.sub(r"\s*\((?:\d+\s*Overs?|12\s*Players?|11\s*Players?|77/78 to 2000)[^)]*\)", "", text, flags=re.IGNORECASE)
     text = re.sub(r"\bModern Orthodontics\s+", "", text, flags=re.IGNORECASE)
@@ -89,10 +91,11 @@ def grade_mapping_row(raw: object) -> dict[str, object]:
     display = display_grade_name(raw_text)
     lowered = raw_text.casefold()
     display_lower = display.casefold()
-    age_match = re.search(r"\b(?:under\s*)?u?(\d{2})\b", display_lower)
+    age_match = re.search(r"\b(?:under\s*)?u?(\d{2})(?=[a-z]?\b)", display_lower)
     is_t20 = bool(re.search(r"\b(t20|twenty20|20\s*over|20-over)\b", lowered))
     is_fast = "fast" in lowered or "anklbytrs" in lowered or "entry" in lowered
-    is_junior = bool(age_match) or is_fast
+    is_entry_junior = is_fast or "super 7" in lowered or "stage 1" in lowered
+    is_junior = bool(age_match) or is_entry_junior
     is_women_girls = any(token in lowered for token in ["women", "womens", "girls", "female"])
     if is_t20:
         group = "T20"
@@ -101,7 +104,7 @@ def grade_mapping_row(raw: object) -> dict[str, object]:
     elif is_junior:
         age = int(age_match.group(1)) if age_match else 10
         group = "Junior"
-        order = {18: 400, 16: 500, 14: 600, 12: 700}.get(age, 800)
+        order = {18: 400, 16: 500, 14: 600, 13: 650, 12: 700}.get(age, 800)
         fmt = "Junior"
     elif is_women_girls:
         group = "Senior women/girls"
@@ -118,10 +121,9 @@ def grade_mapping_row(raw: object) -> dict[str, object]:
     requires_review = (
         not raw_text
         or "anklbytrs" in lowered
-        or "compare & conect" in lowered
         or fmt == "Unknown"
         or "grade 2nds" in lowered
-        or bool(re.search(r"\b[a-z]{2,}\d+[a-z]*\b", lowered))
+        or (bool(re.search(r"\b[a-z]{2,}\d+[a-z]*\b", lowered)) and not is_junior)
     )
     grade_type = "T20" if is_t20 else "Junior" if is_junior else "Senior/open"
     record_scope = record_scope_for_mapping(group, fmt)
@@ -134,7 +136,7 @@ def grade_mapping_row(raw: object) -> dict[str, object]:
         "grade_group": group,
         "grade_type": grade_type,
         "format": fmt,
-        "age_group": f"U{age_match.group(1)}" if age_match else ("Entry junior" if is_fast else "Open"),
+        "age_group": f"U{age_match.group(1)}" if age_match else ("Entry junior" if is_entry_junior else "Open"),
         "gender_group": "Women/Girls" if is_women_girls else "Open/Mixed",
         "display_order": order,
         "include_in_senior_records": str(group == "Senior/open").lower(),
@@ -173,9 +175,19 @@ def load_grade_mapping() -> pd.DataFrame:
     return frame
 
 
-def mapping_lookup() -> dict[str, dict[str, object]]:
+@lru_cache(maxsize=4)
+def _mapping_lookup_for_version(
+    mapping_path: str,
+    mapping_mtime_ns: int,
+) -> dict[str, dict[str, object]]:
+    _ = (mapping_path, mapping_mtime_ns)
     frame = load_grade_mapping()
     return {clean_text(row["raw_grade_name"]): row.to_dict() for _, row in frame.iterrows()}
+
+
+def mapping_lookup() -> dict[str, dict[str, object]]:
+    mapping_mtime_ns = GRADE_MAPPING_PATH.stat().st_mtime_ns if GRADE_MAPPING_PATH.exists() else -1
+    return _mapping_lookup_for_version(str(GRADE_MAPPING_PATH), mapping_mtime_ns)
 
 
 def annotate_grade_metadata(frame: pd.DataFrame, grade_column: str = "grade_name") -> pd.DataFrame:

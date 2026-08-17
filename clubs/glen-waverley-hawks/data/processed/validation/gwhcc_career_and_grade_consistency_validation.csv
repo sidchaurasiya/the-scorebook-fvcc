@@ -1,0 +1,15 @@
+check_name,validation_status,notes
+prepared_career_ids_unique,pass,rows=1237; duplicate canonical IDs=0.
+paul_young_resolves_once,pass,Paul Young prepared rows=1.
+nathan_bungey_resolves_once,pass,Nathan Bungey prepared rows=1.
+private_players_excluded_from_authoritative_career,pass,Visible private rows=0.
+hof_milestone_totals_match,pass,Compared 16 authoritative player rows.
+milestone_no_duplicate_player_metric,pass,Duplicate canonical player/category rows=0.
+gwhcc_active_window_three_relevant_seasons,pass,"Active seasons=['Summer 2025/26', 'Summer 2024/25', 'Summer 2023/24']."
+compare_connect_canonical_display,pass,Canonical labels=['Compare & Connect Dorothy McIntosh Shield'].
+known_juniors_governed_as_junior,pass,Incorrect known junior mappings=0.
+persisted_governance_matches_expected,pass,Mismatched persisted rows=0.
+summer_2025_26_first_three_team_order,pass,"First three=['Compare & Connect Dorothy McIntosh Shield', 'C Grade', 'D Grade']."
+summer_2025_26_team_ids_preserved,pass,Rows=17; unique team IDs=17.
+prepared_hof_core_current,pass,Prepared rows=1237; authoritative rows=1237.
+prepared_hof_core_version_guard,pass,A mismatched Hall of Fame data version must reject the prepared snapshot.

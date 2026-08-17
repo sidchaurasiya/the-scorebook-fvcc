@@ -4,6 +4,7 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.dismissal_status import batting_innings_mask, dismissed_mask
 from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 from src.data.match_centre_ownership import add_club_match_ownership, ensure_club_ownership_columns, is_selected_club_team_name
 
@@ -13,6 +14,7 @@ def prepare_match_centre_frames(data: dict[str, pd.DataFrame]) -> dict[str, pd.D
     innings = data.get("match_innings", pd.DataFrame()).copy()
     batting = add_match_context(data.get("scorecard_batting", pd.DataFrame()), matches)
     bowling = add_match_context(data.get("scorecard_bowling", pd.DataFrame()), matches)
+    batting = batting[batting_innings_mask(batting)].copy()
     batting = calculate_batting_contribution_percentage(batting, innings)
     bowling = calculate_bowling_wicket_contribution_percentage(bowling, innings)
     return {
@@ -361,10 +363,7 @@ def best_bowling_label(frame: pd.DataFrame) -> str:
 
 
 def dismissal_flags(frame: pd.DataFrame) -> pd.Series:
-    if frame.empty or "dismissal_type" not in frame:
-        return pd.Series([False] * len(frame), index=frame.index)
-    values = frame["dismissal_type"].fillna("").astype(str).str.casefold().str.strip()
-    return (values != "") & ~values.isin({"not out", "retired not out", "retired hurt"})
+    return dismissed_mask(frame)
 
 
 def weighted_contribution(frame: pd.DataFrame, numerator: str, denominator: str) -> float | None:

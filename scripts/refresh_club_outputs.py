@@ -26,6 +26,7 @@ DEPLOY_SAFE_STEPS = [
     ("Player Profile summaries", "build_player_profile_insight_exports.py"),
     ("Hall of Fame detail summaries", "build_hall_of_fame_detail_exports.py"),
     ("Hall of Fame premiership summaries", "build_premiership_hall_of_fame_exports.py"),
+    ("Hall of Fame core aggregates", "build_hall_of_fame_core_exports.py"),
 ]
 
 

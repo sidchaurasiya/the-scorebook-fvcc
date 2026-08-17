@@ -25,6 +25,12 @@ from scripts import build_season_overview_detail_exports as season_exports  # no
 from scripts.club_refresh_utils import add_club_args, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import get_player_profile_dir, get_processed_match_centre_dir, get_raw_match_centre_dir  # noqa: E402
 from src.data.name_normalization import normalize_opponent_club_name, normalize_ground_name as shared_normalize_ground_name  # noqa: E402
+from src.data.dismissal_status import (  # noqa: E402
+    batting_innings_mask,
+    is_batting_innings_values,
+    is_not_out_values,
+    not_out_mask,
+)
 from src.data.scorecard_validation import filter_plausible_bowling_figures  # noqa: E402
 from src.ui import layout  # noqa: E402
 
@@ -231,14 +237,14 @@ def prepare_batting(frames: dict[str, pd.DataFrame], club_id: str | None = None)
     rows = layout.scorecard_dedupe(rows, ["match_id", "innings_id", "participant_id", "bat_instance"])
     rows = add_match_dimensions(rows, frames["matches"], club_id=club_id)
     rows = ensure_display_player_name(rows)
-    rows = rows[rows.apply(is_batting_innings, axis=1)].copy()
+    rows = rows[batting_innings_mask(rows)].copy()
     if rows.empty:
         return rows
     rows["runs_numeric"] = pd.to_numeric(rows.get("runs_scored"), errors="coerce").fillna(0)
     rows["balls_numeric"] = pd.to_numeric(rows.get("balls_faced"), errors="coerce").fillna(0)
     rows["fours_numeric"] = pd.to_numeric(rows.get("fours_scored"), errors="coerce").fillna(0)
     rows["sixes_numeric"] = pd.to_numeric(rows.get("sixes_scored"), errors="coerce").fillna(0)
-    rows["not_out"] = rows.apply(is_not_out, axis=1)
+    rows["not_out"] = not_out_mask(rows)
     rows["out"] = ~rows["not_out"]
     rows["is_30"] = rows["runs_numeric"].between(30, 49, inclusive="both")
     rows["is_50"] = rows["runs_numeric"].between(50, 99, inclusive="both")
@@ -742,13 +748,11 @@ def clean_text(value: object, fallback: str = "") -> str:
 
 
 def is_not_out(row: pd.Series) -> bool:
-    text = f"{row.get('dismissal_type', '')} {row.get('dismissal_text', '')}".strip().casefold()
-    return text in {"", "not out"} or "not out" in text or "retired not out" in text
+    return is_not_out_values(row.get("dismissal_type"), row.get("dismissal_text"))
 
 
 def is_batting_innings(row: pd.Series) -> bool:
-    text = f"{row.get('dismissal_type', '')} {row.get('dismissal_text', '')}".strip().casefold()
-    return not any(term in text for term in ["did not bat", "dnb", "absent"])
+    return is_batting_innings_values(row.get("dismissal_type"), row.get("dismissal_text"))
 
 
 def dismissal_bucket(row: pd.Series) -> str:

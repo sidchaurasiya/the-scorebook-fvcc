@@ -55,6 +55,9 @@ match_count_policy:
   no_play_weight: 0.0
   no_play_detection: activity_based
 
+milestone_policy:
+  active_season_count: 3
+
 data:
   root_dir: clubs/glen-waverley-hawks/data
   source_systems:

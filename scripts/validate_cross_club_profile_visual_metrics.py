@@ -140,10 +140,17 @@ def validate() -> list[dict[str, object]]:
     add("both", "career links new tab", 'target="_blank" rel="noopener noreferrer"' in layout)
     add("fvcc", "runs chart navy", "active_runs_chart_colour" in layout and 'get_active_club_id() == "fvcc"' in layout and "active_link_colour()" in layout)
     add("grdcc", "runs chart unchanged", 'else active_chart_primary_colour()' in layout)
-    add("both", "combined 50s 100s KPI", '"Total 50s/100s"' in layout and "fifties /" in layout)
+    add(
+        "both",
+        "combined 50s 100s KPI",
+        '"Total 50s/100s"' in layout
+        and "plural_word(fifties, 'fifty', 'fifties')" in layout
+        and "plural_word(hundreds, 'hundred', 'hundreds')" in layout
+        and "/<br>" in layout,
+    )
     add("both", "zero milestones hidden", "if fifties or hundreds:" in layout)
     add("both", "leader KPI redesign", "leader-highlight-card" in layout and "leader-highlight-details" in theme)
-    add("both", "leader latest three", "details[:3]" in layout and "leader-highlight-more" in layout)
+    add("both", "leader compact examples", "details[:2]" in layout and "leader-highlight-chip" in layout and "leader-highlight-more" in layout)
     add("both", "club colour tags", ".profile-badge," in theme and "color: var(--club-link) !important" in theme)
     add("both", "club colour recent form", ".recent-form-chip.bat" in theme and ".recent-form-chip.bowl" in theme)
     profile_colour_block = theme[theme.index(".profile-badge {"):theme.index(".profile-badge-gold")]
@@ -151,7 +158,7 @@ def validate() -> list[dict[str, object]]:
     colour_block = f"{profile_colour_block}\n{recent_colour_block}".casefold()
     add("both", "accidental purple removed", all(value not in colour_block for value in ("#5b3df5", "#4b37d8", "#f0edff")))
     add("both", "milestone ratio muted", ".milestone-watch-top span" in theme and "color: var(--club-muted) !important" in theme)
-    add("both", "extras compact", "season-col-extras {{ width: 66px; }}" in layout and "season-col-extras {{ width: 60px; }}" in layout)
+    add("both", "extras compact", "season-col-extras {{ width: 58px; }}" in layout and "season-col-extras {{ width: 54px; }}" in layout)
     exclusive = layout[layout.index("def render_milestone_club(all_time"):layout.index("def highest_reached_threshold")]
     add("both", "exclusive club first five scroll", 'data-visible-rows="5" data-scroll-enabled="true"' in exclusive and "max-height: 259px" in theme)
     add("both", "exclusive club no top 10", "Show top 10" not in exclusive)
@@ -167,7 +174,21 @@ def validate() -> list[dict[str, object]]:
 
     add("both", "raw data unchanged", not changed_paths(["data/raw", "clubs/fvcc/data/raw", "clubs/georges-river-district/data/raw"]))
     add("grdcc", "annual report sources unchanged", not changed_paths(["clubs/georges-river-district/data/annual_report", "clubs/georges-river-district/data/processed/annual_report"]))
-    add("both", "club palettes unchanged", not changed_paths(["clubs/fvcc/club_config.yaml", "clubs/georges-river-district/club_config.yaml"]))
+    fvcc_config = source("clubs/fvcc/club_config.yaml")
+    grdcc_config = source("clubs/georges-river-district/club_config.yaml")
+    palette_values_unchanged = all(
+        value in fvcc_config
+        for value in ('primary_colour: "#A31952"', 'secondary_colour: "#28485F"', 'accent_colour: "#D4A83A"')
+    ) and all(
+        value in grdcc_config
+        for value in (
+            'primary_colour: "#0B3F9F"',
+            'primary_dark_colour: "#082A66"',
+            'secondary_colour: "#79C8EE"',
+            'accent_colour: "#D7193F"',
+        )
+    )
+    add("both", "club palettes unchanged", palette_values_unchanged, "Template config additions are allowed; palette values must stay fixed.")
 
     write_csv(
         ROOT / "clubs/fvcc/data/processed/validation/fvcc_club_name_merge_audit.csv",
