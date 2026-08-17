@@ -8,6 +8,8 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.dismissal_status import dismissed_mask
+
 
 ALL_MATCHES_COLUMNS = [
     "match_id",
@@ -992,14 +994,7 @@ def is_wicket(ball: dict[str, Any]) -> bool:
 
 
 def dismissed_batter_mask(batting: pd.DataFrame) -> pd.Series:
-    if batting.empty:
-        return pd.Series(dtype=bool)
-    dismissal_type = batting["dismissal_type"].fillna("").astype(str).str.casefold()
-    dismissal_text = batting["dismissal_text"].fillna("").astype(str).str.casefold()
-    return ~(
-        dismissal_type.isin(["", "not out", "did not bat"])
-        | dismissal_text.isin(["", "not out", "did not bat"])
-    )
+    return dismissed_mask(batting)
 
 
 def run_out_batter_mask(batting: pd.DataFrame) -> pd.Series:

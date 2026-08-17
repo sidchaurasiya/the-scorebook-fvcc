@@ -23,6 +23,7 @@ from scripts.club_refresh_utils import add_club_args, print_club_header, print_o
 from src.config.club_config import get_processed_match_centre_dir, get_processed_path, get_season_overview_dir  # noqa: E402
 from src.data.match_centre_ownership import ensure_club_ownership_columns  # noqa: E402
 from src.data.scorecard_validation import filter_plausible_bowling_figures  # noqa: E402
+from src.data.dismissal_status import dismissed_mask  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
@@ -289,12 +290,7 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
     batting = layout.scorecard_dedupe(batting, ["match_id", "innings_id", "participant_id", "bat_instance"])
     batting["scorecard_runs"] = pd.to_numeric(batting.get("runs_scored"), errors="coerce")
     batting["scorecard_balls"] = pd.to_numeric(batting.get("balls_faced"), errors="coerce")
-    dismissal = (
-        batting.get("dismissal_type", pd.Series("", index=batting.index)).fillna("").astype(str).str.casefold().str.strip()
-        + " "
-        + batting.get("dismissal_text", pd.Series("", index=batting.index)).fillna("").astype(str).str.casefold().str.strip()
-    ).str.strip()
-    batting["bbb_dismissed"] = (~dismissal.isin({"", "not out", "retired not out", "retired hurt"})).astype(int)
+    batting["bbb_dismissed"] = dismissed_mask(batting).astype(int)
     lookup = batting.drop_duplicates(["match_id", "innings_id", "participant_id"])[
         scope_columns() + ["participant_id", "scorecard_runs", "scorecard_balls", "bbb_dismissed"]
     ].copy()

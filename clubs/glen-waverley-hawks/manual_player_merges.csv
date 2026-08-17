@@ -1,4 +1,8 @@
 canonical_player_name,raw_player_name,raw_player_id,notes
+Nathan Bungey,Nathan Bungey,59057be9-29af-4675-a662-7370e4f9cd44,confirmed continuity merge: exact full name; historical profile ends 2022/23 and successor profile begins 2023/24
+Nathan Bungey,Nathan Bungey,fc4ba90e-5a13-4348-8811-29947e4461fb,confirmed continuity merge: exact full name; historical profile ends 2022/23 and successor profile begins 2023/24
+Paul Young,Paul Young,0ad71a7c-4f8c-4c80-8242-a230e1768f99,safe confirmed merge: exact name; non-overlapping consecutive seasons 2016/17-2022/23
+Paul Young,Paul Young,e209cdbe-8795-47f9-a912-53ce47e86570,safe confirmed merge: exact name; non-overlapping consecutive seasons 2023/24-2025/26
 Aansh Pandya,Aansh Pandya,a5b91711-1708-4d8c-9b2b-15889e584327,safe auto-merge glen-waverley-hawks-safe-0002: exact case-insensitive name match; no season overlap
 Aansh Pandya,Aansh Pandya,eb8a76be-7819-43e8-a4c5-3f02d255c4fd,safe auto-merge glen-waverley-hawks-safe-0002: exact case-insensitive name match; no season overlap
 Ahmed Virk,Ahmed Virk,49941513-16d9-4b58-9514-155493cffa40,safe auto-merge glen-waverley-hawks-safe-0004: exact case-insensitive name match; no season overlap

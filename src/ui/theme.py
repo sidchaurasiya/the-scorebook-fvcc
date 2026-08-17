@@ -197,8 +197,12 @@ def inject_theme() -> None:
         }
 
         div[data-testid="stTabs"] button[aria-selected="true"],
+        div[data-testid="stTabs"] button[data-selected="true"],
+        div[data-testid="stTabs"] button[data-state="active"],
         div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"],
-        div[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+        div[data-testid="stTabs"] [data-testid="stTab"][data-selected="true"],
+        div[data-testid="stTabs"] [role="tab"][aria-selected="true"],
+        div[data-testid="stTabs"] [role="tab"][data-selected="true"] {
             background: linear-gradient(135deg, var(--club-primary, var(--pitch)), var(--club-accent, var(--pitch-2)));
             color: #ffffff;
             border-bottom-color: transparent;
@@ -224,6 +228,58 @@ def inject_theme() -> None:
 
         div[data-testid="stTabs"] .react-aria-SelectionIndicator {
             display: none;
+        }
+
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] {
+            align-items: center;
+            background: var(--club-primary-soft, #F7F8FD) !important;
+            border: 1px solid rgba(var(--club-primary-rgb, 91, 75, 235), 0.18) !important;
+            border-radius: 999px !important;
+            display: inline-flex !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 5px !important;
+            width: fit-content !important;
+        }
+
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button,
+        div[data-testid="stButtonGroup"] button[data-testid^="stBaseButton-segmented_control"] {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 999px !important;
+            box-shadow: none !important;
+            color: var(--club-muted, #737998) !important;
+            flex: 0 0 auto !important;
+            font-size: 0.9rem !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            min-height: 38px !important;
+            padding: 8px 16px !important;
+            white-space: nowrap !important;
+        }
+
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button[aria-checked="true"],
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button[aria-pressed="true"],
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button[aria-selected="true"],
+        div[data-testid="stButtonGroup"] button[data-testid$="segmented_controlActive"] {
+            background: linear-gradient(135deg, var(--club-primary, var(--pitch)), var(--club-secondary, var(--pitch-2))) !important;
+            border-color: transparent !important;
+            box-shadow: 0 10px 24px rgba(var(--club-primary-rgb, 91, 75, 235), 0.20) !important;
+            color: #ffffff !important;
+        }
+
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button[aria-checked="true"] *,
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button[aria-pressed="true"] *,
+        div[data-testid="stButtonGroup"] [data-baseweb="button-group"] > button[aria-selected="true"] *,
+        div[data-testid="stButtonGroup"] button[data-testid$="segmented_controlActive"] * {
+            color: inherit !important;
+        }
+
+        div[data-testid="stButtonGroup"] button:focus-visible {
+            box-shadow: 0 0 0 3px rgba(var(--club-primary-rgb, 91, 75, 235), 0.24) !important;
+            outline: none !important;
         }
 
         div[data-testid="stMetric"] {
@@ -821,8 +877,10 @@ def inject_theme() -> None:
 
         .side-footer-contact a {
             color: rgba(255, 255, 255, 0.84);
+            display: inline-block;
             text-decoration: none;
             word-break: normal;
+            white-space: nowrap;
         }
 
         .side-build-marker {
@@ -4049,6 +4107,13 @@ def inject_theme() -> None:
             margin: 5px 0 8px;
         }
 
+        .profile-intelligence-note {
+            color: #6D728E;
+            font-size: 0.74rem;
+            line-height: 1.4;
+            margin: -2px 0 8px;
+        }
+
         .profile-best-badge {
             background: #f7f1ff;
             border: 1px solid #ded2ff;
@@ -4172,6 +4237,9 @@ def inject_theme() -> None:
         div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"] button,
         div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"] button,
         div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] button,
+        div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"] button,
+        div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"] button,
+        div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] button,
         div.st-key-season_round_grade_folder_tabs button[data-testid^="stBaseButton-segmented_control"],
         div.st-key-milestone_page_view_folder_tabs button[data-testid^="stBaseButton-segmented_control"],
         div.st-key-player_profile_breakdown_folder_tabs button[data-testid^="stBaseButton-segmented_control"] {
@@ -4191,15 +4259,18 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        div.st-key-season_round_grade_folder_tabs [data-testid="stButtonGroup"] button[aria-checked="true"],
+        div.st-key-milestone_page_view_folder_tabs [data-testid="stButtonGroup"] button[aria-checked="true"],
+        div.st-key-player_profile_breakdown_folder_tabs [data-testid="stButtonGroup"] button[aria-checked="true"],
         div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         div.st-key-season_round_grade_folder_tabs div[data-testid="stSegmentedControl"] button[kind="primary"],
         div.st-key-milestone_page_view_folder_tabs div[data-testid="stSegmentedControl"] button[kind="primary"],
         div.st-key-player_profile_breakdown_folder_tabs div[data-testid="stSegmentedControl"] button[kind="primary"],
-        div.st-key-season_round_grade_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"],
-        div.st-key-milestone_page_view_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"],
-        div.st-key-player_profile_breakdown_folder_tabs button[data-testid="stBaseButton-segmented_controlActive"] {
+        div.st-key-season_round_grade_folder_tabs button[data-testid$="segmented_controlActive"],
+        div.st-key-milestone_page_view_folder_tabs button[data-testid$="segmented_controlActive"],
+        div.st-key-player_profile_breakdown_folder_tabs button[data-testid$="segmented_controlActive"] {
             background: #F0EDFF !important;
             border-color: #ded8ff !important;
             border-bottom-color: #ffffff !important;
@@ -4409,6 +4480,7 @@ def inject_theme() -> None:
         }
 
         div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button,
+        div.st-key-season_round_grade_filter_control [data-testid="stButtonGroup"] button,
         div.st-key-season_round_grade_filter_control button[data-testid^="stBaseButton-segmented_control"] {
             background: transparent !important;
             border: 0 !important;
@@ -4423,9 +4495,10 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        div.st-key-season_round_grade_filter_control [data-testid="stButtonGroup"] button[aria-checked="true"],
         div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         div.st-key-season_round_grade_filter_control div[data-testid="stSegmentedControl"] button[kind="primary"],
-        div.st-key-season_round_grade_filter_control button[data-testid="stBaseButton-segmented_controlActive"] {
+        div.st-key-season_round_grade_filter_control button[data-testid$="segmented_controlActive"] {
             background: #F0EDFF !important;
             box-shadow: none !important;
             color: var(--pitch) !important;
@@ -5100,6 +5173,11 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button,
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"] button,
         .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] button,
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid^="stBaseButton-segmented_control"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"],
@@ -5118,6 +5196,11 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] button[aria-checked="true"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
@@ -5128,11 +5211,11 @@ def inject_theme() -> None:
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control div[data-testid="stSegmentedControl"] button[kind="primary"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[kind="primary"],
-        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid="stBaseButton-segmented_controlActive"] {
+        .block-container:has(.player-profile-page) div.st-key-player_profile_breakdown_view_control button[data-testid$="segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid$="segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid$="segmented_controlActive"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_page_view_control button[data-testid$="segmented_controlActive"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid$="segmented_controlActive"] {
             background: #F0EDFF !important;
             box-shadow: none !important;
             color: var(--pitch) !important;
@@ -7857,8 +7940,10 @@ def inject_theme() -> None:
 
             .mobile-page-footer .mobile-footer-contact a {
                 color: #5B3DF5;
+                display: inline-block;
                 text-decoration: none;
-                word-break: break-word;
+                word-break: normal;
+                white-space: nowrap;
             }
 
             div.st-key-mobile_nav_fallback label {
@@ -7979,6 +8064,45 @@ def active_club_theme_css() -> str:
         if active_club_id == "fvcc"
         else ""
     )
+    gwhcc_only_css = (
+        """
+        .block-container:has(.hall-of-fame-page) .performance-value {
+            color: var(--club-value) !important;
+        }
+
+        div.st-key-milestone_page_view_folder_tabs button:is(
+            [aria-checked="true"],
+            [aria-pressed="true"],
+            [kind="primary"],
+            [data-testid$="segmented_controlActive"]
+        ),
+        div.st-key-player_profile_breakdown_folder_tabs button:is(
+            [aria-checked="true"],
+            [aria-pressed="true"],
+            [kind="primary"],
+            [data-testid$="segmented_controlActive"]
+        ) {
+            color: var(--club-value) !important;
+        }
+
+        div.st-key-milestone_page_view_folder_tabs button:is(
+            [aria-checked="true"],
+            [aria-pressed="true"],
+            [kind="primary"],
+            [data-testid$="segmented_controlActive"]
+        ) *,
+        div.st-key-player_profile_breakdown_folder_tabs button:is(
+            [aria-checked="true"],
+            [aria-pressed="true"],
+            [kind="primary"],
+            [data-testid$="segmented_controlActive"]
+        ) * {
+            color: inherit !important;
+        }
+        """
+        if active_club_id == "glen-waverley-hawks"
+        else ""
+    )
     return f"""
         <style>
         :root {{
@@ -8015,6 +8139,7 @@ def active_club_theme_css() -> str:
         }}
 
         {fvcc_only_css}
+        {gwhcc_only_css}
 
         .stApp {{
             background:
@@ -8111,8 +8236,12 @@ def active_club_theme_css() -> str:
         }}
 
         div[data-testid="stTabs"] button[aria-selected="true"],
+        div[data-testid="stTabs"] button[data-selected="true"],
+        div[data-testid="stTabs"] button[data-state="active"],
         div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"],
+        div[data-testid="stTabs"] [data-testid="stTab"][data-selected="true"],
         div[data-testid="stTabs"] [role="tab"][aria-selected="true"],
+        div[data-testid="stTabs"] [role="tab"][data-selected="true"],
         .profile-segment.active {{
             background: linear-gradient(135deg, var(--club-primary), var(--club-secondary)) !important;
             color: #ffffff !important;
@@ -8120,8 +8249,12 @@ def active_club_theme_css() -> str:
         }}
 
         div[data-testid="stTabs"] button[aria-selected="true"] *,
+        div[data-testid="stTabs"] button[data-selected="true"] *,
+        div[data-testid="stTabs"] button[data-state="active"] *,
         div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"] *,
+        div[data-testid="stTabs"] [data-testid="stTab"][data-selected="true"] *,
         div[data-testid="stTabs"] [role="tab"][aria-selected="true"] *,
+        div[data-testid="stTabs"] [role="tab"][data-selected="true"] *,
         .profile-segment.active * {{
             color: #ffffff !important;
         }}
@@ -8403,6 +8536,10 @@ def active_club_theme_css() -> str:
             margin: 14px 0 28px !important;
         }}
 
+        div.st-key-hof_team_group_filter_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] button,
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] button,
         div.st-key-hof_team_group_filter_control button[data-testid^="stBaseButton-segmented_control"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid^="stBaseButton-segmented_control"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid^="stBaseButton-segmented_control"],
@@ -8416,12 +8553,16 @@ def active_club_theme_css() -> str:
             padding: 8px 16px !important;
         }}
 
-        div.st-key-hof_team_group_filter_control button[data-testid="stBaseButton-segmented_controlActive"],
+        div.st-key-hof_team_group_filter_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control [data-testid="stButtonGroup"] button[aria-checked="true"],
+        div.st-key-hof_team_group_filter_control button[data-testid$="segmented_controlActive"],
         div.st-key-hof_team_group_filter_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         div.st-key-hof_team_group_filter_control div[data-testid="stSegmentedControl"] button[kind="primary"],
-        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid="stBaseButton-segmented_controlActive"],
-        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid="stBaseButton-segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control button[data-testid$="segmented_controlActive"],
+        .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control button[data-testid$="segmented_controlActive"],
+        .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control button[data-testid$="segmented_controlActive"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_discipline_view_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.player-profile-page) div.st-key-player_profile_phase_model_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],
         .block-container:has(.near-milestones-page) div.st-key-milestone_club_category_control div[data-testid="stSegmentedControl"] button[aria-pressed="true"],

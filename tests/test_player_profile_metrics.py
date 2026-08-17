@@ -6,6 +6,9 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.analytics.playcricket_stats import _decimal_overs, _recalculate_bowling_stats
+from src.data.dismissal_status import batting_innings_mask, dismissed_mask, not_out_mask
+from src.ui.layout import calculate_bowling_impact_score
 from scripts.build_player_profile_insight_exports import build_dimension_bbb_batting
 from scripts.audit_player_profile_qa import parse_bbi
 
@@ -180,6 +183,47 @@ def test_non_bbb_innings_are_excluded_from_balls_per_dismissal() -> None:
     row = grouped.iloc[0]
     # The third innings is a scorecard-only dismissal. It must not increase BBB dismissals.
     assert float(row["bbb_dismissals"]) == 1
+
+
+def test_shared_dismissal_status_handles_duplicate_not_out_text() -> None:
+    rows = pd.DataFrame(
+        [
+            {"dismissal_type": "Not Out", "dismissal_text": "not out"},
+            {"dismissal_type": "Retired Hurt", "dismissal_text": "retired hurt"},
+            {"dismissal_type": "Retired Not Out", "dismissal_text": "not out"},
+            {"dismissal_type": "Absent", "dismissal_text": "absent"},
+            {"dismissal_type": "Did Not Bat", "dismissal_text": "DNB"},
+            {"dismissal_type": "Caught", "dismissal_text": "c Smith b Jones"},
+        ]
+    )
+
+    assert batting_innings_mask(rows).tolist() == [True, True, True, False, False, True]
+    assert not_out_mask(rows).tolist() == [True, True, True, False, False, False]
+    assert dismissed_mask(rows).tolist() == [False, False, False, False, False, True]
+
+
+def test_cricket_overs_notation_uses_balls_not_decimal_fraction() -> None:
+    assert_close(_decimal_overs("3.5"), 23 / 6, tolerance=0.0001)
+    assert _decimal_overs("3.6") is None
+
+    row = {
+        "bowlingWickets": 1,
+        "bowlingRunsConceded": 23,
+        "overs": "3.5",
+        "ballsBowled": 23,
+    }
+    _recalculate_bowling_stats(row, pd.DataFrame())
+    assert_close(row["bowlingEconomyRate"], 6.0)
+    assert_close(row["bowlingStrikeRate"], 23.0)
+
+
+def test_bowling_impact_uses_cricket_overs_notation() -> None:
+    rows = pd.DataFrame(
+        [{"wickets_taken": 1, "economy": 6.0, "maidens_bowled": 0, "overs_bowled": "3.5"}]
+    )
+    result = calculate_bowling_impact_score(rows).iloc[0]
+    assert_close(result["overs_bowled"], 23 / 6, tolerance=0.0001)
+    assert_close(result["bowling_impact_score"], 25 + (23 / 6) - 12, tolerance=0.0001)
 
 
 def test_no_bbb_coverage_returns_empty_bbb_summary() -> None:

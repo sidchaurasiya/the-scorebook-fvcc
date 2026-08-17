@@ -5,6 +5,7 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.dismissal_status import batting_innings_mask, dismissed_mask
 from src.data.match_centre_ownership import add_club_match_ownership, ensure_club_ownership_columns, is_selected_club_team_name
 from src.data.name_normalization import normalize_ground_name, normalize_opponent_club_name
 from src.data.playcricket_ingestion import read_processed_table
@@ -111,6 +112,7 @@ def prepare_match_centre_frames(frames: dict[str, pd.DataFrame]) -> dict[str, pd
     batting = add_identity_context(batting, identity)
     bowling = add_identity_context(bowling, identity)
     fielding = add_identity_context(fielding, identity)
+    batting = batting[batting_innings_mask(batting)].copy()
     batting = calculate_team_run_contribution(batting, innings)
     bowling = calculate_wicket_share(bowling, innings)
     return {
@@ -912,13 +914,7 @@ def next_highest_score(batting: pd.DataFrame, match_id: Any, innings_id: Any, pa
 
 
 def dismissal_flags(frame: pd.DataFrame) -> pd.Series:
-    if frame.empty:
-        return pd.Series(dtype="bool")
-    text = clean_series(frame.get("dismissal_type", pd.Series("", index=frame.index)))
-    fallback = clean_series(frame.get("dismissal_text", pd.Series("", index=frame.index)))
-    combined = text.where(text != "", fallback).str.casefold()
-    not_out = combined.isin({"", "not out", "retired not out", "retired hurt"})
-    return ~not_out
+    return dismissed_mask(frame)
 
 
 def dismissal_bucket(row: pd.Series) -> str:

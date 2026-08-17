@@ -5,6 +5,7 @@ from typing import Any
 
 import pandas as pd
 
+from src.data.dismissal_status import dismissed_mask
 from src.data import player_dna_analytics as dna
 from src.data.match_centre_ownership import ensure_club_ownership_columns
 
@@ -647,12 +648,7 @@ def next_highest_score(batting: pd.DataFrame, row: pd.Series) -> float:
 
 
 def dismissal_flags(frame: pd.DataFrame) -> pd.Series:
-    if frame.empty:
-        return pd.Series(dtype="bool")
-    text = clean(frame.get("dismissal_type", pd.Series("", index=frame.index)))
-    fallback = clean(frame.get("dismissal_text", pd.Series("", index=frame.index)))
-    combined = text.where(text != "", fallback).str.casefold()
-    return ~combined.isin({"", "not out", "retired not out", "retired hurt"})
+    return dismissed_mask(frame)
 
 
 def dismissal_bucket(row: pd.Series) -> str:

@@ -88,6 +88,12 @@ def clean_grade_name(value: object) -> str:
     label = re.sub(r"^\d+\s*[-–]\s*", "", label).strip()
     label = label.replace("Designated One Day Comp.", "DODC")
     label = canonicalize_grade_label(normalize_spaces(label))
+    if active_club_id() == "georges-river-district" and get_feature_flag(
+        "enable_grade_opponent_normalisation",
+        False,
+        club_id="georges-river-district",
+    ):
+        return canonicalize_grdcc_grade_label(label)
     if active_club_id() == "glen-waverley-hawks" and get_feature_flag(
         "enable_grade_opponent_normalisation",
         False,
@@ -124,13 +130,79 @@ def canonicalize_grade_label(label: str) -> str:
     return grade_aliases.get(normalized, label)
 
 
+def canonicalize_grdcc_grade_label(label: str) -> str:
+    normalized = normalized_name_without_canonical(label)
+    if not normalized:
+        return label
+
+    grade_aliases = {
+        "1st grade": "First Grade The RB Clark Cup",
+        "first grade": "First Grade The RB Clark Cup",
+        "grdcc 1st grade": "First Grade The RB Clark Cup",
+        "first grade the rb clark cup": "First Grade The RB Clark Cup",
+        "2nd grade": "Second Grade The SJ Mayne Trophy",
+        "second grade": "Second Grade The SJ Mayne Trophy",
+        "grdcc 2nd grade": "Second Grade The SJ Mayne Trophy",
+        "second grade the sj mayne trophy": "Second Grade The SJ Mayne Trophy",
+        "3rd grade": "Third Grade The JB Hollander Cup",
+        "third grade": "Third Grade The JB Hollander Cup",
+        "grdcc 3rd grade": "Third Grade The JB Hollander Cup",
+        "third grade the jb hollander cup": "Third Grade The JB Hollander Cup",
+        "4th grade": "Fourth Grade The Harry Culbert Trophy",
+        "fourth grade": "Fourth Grade The Harry Culbert Trophy",
+        "grdcc 4th grade": "Fourth Grade The Harry Culbert Trophy",
+        "fourth grade the harry culbert trophy": "Fourth Grade The Harry Culbert Trophy",
+        "5th grade": "Fifth Grade The Tim Creer Cup",
+        "fifth grade": "Fifth Grade The Tim Creer Cup",
+        "grdcc 5th grade": "Fifth Grade The Tim Creer Cup",
+        "fifth grade the tim creer cup": "Fifth Grade The Tim Creer Cup",
+        "tim creer cup": "Fifth Grade The Tim Creer Cup",
+        "tim creer cup 5th grade": "Fifth Grade The Tim Creer Cup",
+        "tim creer cup a division": "Fifth Grade The Tim Creer Cup",
+        "frank gray shield": "Frank Gray Shield",
+        "grdcc fgs": "Frank Gray Shield",
+        "frank gray shield thunder conference": "Frank Gray Shield",
+        "frank gray shield u 24 s": "Frank Gray Shield",
+        "frank gray shield u24 s": "Frank Gray Shield",
+        "frank gray shield u24s": "Frank Gray Shield",
+        "under 24 s": "Frank Gray Shield",
+        "first grade limited overs": "First Grade Limited Overs",
+        "georges river 1st grade l o": "First Grade Limited Overs",
+        "nsw community cup": "NSW Community Cup",
+        "nsw community cup 2023 24": "NSW Community Cup",
+        "nsw community cup 2024 25": "NSW Community Cup",
+        "masters": "Masters",
+        "grdcc masters": "Masters",
+        "sydney masters over 40 s": "Masters",
+        "sydney masters over 40s": "Masters",
+        "vintage": "Vintage / Over 60s",
+        "grdcc vintage": "Vintage / Over 60s",
+        "gr vintage": "Vintage / Over 60s",
+        "sydney vintage over 60 s competition": "Vintage / Over 60s",
+        "sydney vintage over 60s competition": "Vintage / Over 60s",
+        "o60s regionals": "Vintage / Over 60s",
+        "regional o60s": "Vintage / Over 60s",
+        "regionals mens o60s": "Vintage / Over 60s",
+        "regionals mens o60s thomas latto trophy": "Vintage / Over 60s",
+        "o60s thomas latto trophy": "Vintage / Over 60s",
+        "nsw o60s regional": "Vintage / Over 60s",
+        "classics": "Classics",
+        "grdcc classics": "Classics",
+        "classics owls": "Classics OWLS",
+        "masters owls": "Masters OWLS",
+        "classics foxs": "Classics FOXS",
+    }
+    return grade_aliases.get(normalized, label)
+
+
 def canonicalize_gwhcc_grade_label(label: str) -> str:
     try:
-        from src.data.gwhcc_governance import mapping_lookup
+        from src.data.gwhcc_governance import display_grade_name, mapping_lookup
 
         mapping = mapping_lookup().get(clean_label(label))
         if mapping:
             return str(mapping.get("display_grade_name") or label)
+        return display_grade_name(label) or label
     except Exception:
         pass
     return label
@@ -272,6 +344,33 @@ def apply_team_grade_display_columns(df: pd.DataFrame) -> pd.DataFrame:
         output["team_name"] = ""
     if "grade_name" not in output:
         output["grade_name"] = ""
+
+    if active_club_id() == "glen-waverley-hawks":
+        pair_values: dict[tuple[str, str], tuple[str, str, str, str, str]] = {}
+        row_values = []
+        for team_name, grade_name in zip(output["team_name"], output["grade_name"]):
+            pair_key = (clean_label(team_name), clean_label(grade_name))
+            values = pair_values.get(pair_key)
+            if values is None:
+                clean_team = clean_team_name(team_name)
+                clean_grade = clean_grade_name(grade_name)
+                values = (
+                    clean_team,
+                    clean_grade,
+                    canonical_team_label(clean_team),
+                    canonical_grade_label(clean_team, clean_grade),
+                    build_team_grade_display(team_name, grade_name),
+                )
+                pair_values[pair_key] = values
+            row_values.append(values)
+        (
+            output["clean_team_name"],
+            output["clean_grade_name"],
+            output["canonical_team_label"],
+            output["canonical_grade_label"],
+            output["team_grade_display"],
+        ) = map(list, zip(*row_values))
+        return output
 
     output["clean_team_name"] = output["team_name"].map(clean_team_name)
     output["clean_grade_name"] = output["grade_name"].map(clean_grade_name)

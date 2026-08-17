@@ -1,0 +1,18 @@
+team_id,source_team_name,raw_grade_name,display_grade_name,source_team_sequence,expected_governance_category,persisted_governance_category
+2b4ccf9a-bd2b-419c-a56a-6a6ab2bb0c04,Glen Waverley Hawks - 1st XI,3. Compare & Conect Dorothy McIntosh Shield,Compare & Connect Dorothy McIntosh Shield,1.0,Senior/open,Senior/open
+f31d3fa3-bf9b-4843-8360-bac24733eab8,Glen Waverley Hawks - 2nd XI,"C Grade (70 Overs, 12 Players)",C Grade,2.0,Senior/open,Senior/open
+979d354a-afe5-4f98-bf03-0224bbcf7a14,Glen Waverley Hawks - 3rd XI,"D Grade (64 Overs, 12 Players)",D Grade,3.0,Senior/open,Senior/open
+9f53d49f-c004-49cf-9654-a3fc71c901d7,04. U14B,Modern Orthodontics U14 - B Grade,U14 B Grade,4.0,Junior,Junior
+26ce06c1-bd02-40a1-9b8e-f751a22abcc3,05. U14D,Modern Orthodontics U14 - D Grade,U14 D Grade,5.0,Junior,Junior
+c9ae3899-1cbf-4720-a783-ed01daadb8e1,06. U12A,Modern Orthodontics U12 - A Grade,U12 A Grade,6.0,Junior,Junior
+c6626861-1562-4300-b43d-e07fd5d99728,07. U12C GOLD,Modern Orthodontics U12 - C Grade,U12 C Grade,7.0,Junior,Junior
+75d1d8c9-faba-48af-bb93-69025e7ab4f8,08. U12C BROWN,Modern Orthodontics U12 - C Grade,U12 C Grade,8.0,Junior,Junior
+79b9b1d8-789b-48ae-971d-70054f6cd21d,09. Fast 9's GOLD,Fast 9's - Sunday White,Fast 9's - Sunday White,9.0,Junior,Junior
+164cf5a8-4abd-4ac6-b9f9-22c60a45f59e,10. Fast 9's BROWN,Fast 9's - Sunday White,Fast 9's - Sunday White,10.0,Junior,Junior
+9faf2f3b-965b-4761-809c-add366a377f9,11. Super 7's Saturday,Super 7's - Saturday Gold,Super 7's - Saturday Gold,11.0,Junior,Junior
+7516b94b-cd8f-4ee6-8dca-4d823f3905fc,12. Super 7's Sunday,Super 7's - Sunday Blue,Super 7's - Sunday Blue,12.0,Junior,Junior
+cc30f797-52b5-4072-8a4c-9af819e42940,Glen Waverley Hawks - T20 (1),T20 A - Kookaburra Shield,T20 A,,T20,T20
+979633a0-461c-4544-90e8-888e13a00b69,Glen Waverley Hawks - Under 13's (1),U13B Saturday - Fischer Shield,U13B Saturday - Fischer Shield,,Junior,Junior
+0b4bf9ce-9b73-44c8-9ad9-c5f22f5d0c84,Glen Waverley Hawks - Under 13's (2),U13C Saturday - Halvy Shield,U13C Saturday - Halvy Shield,,Junior,Junior
+066aaa87-b330-4f9d-8c63-03d07ed4d1b3,Glen Waverley Hawks Girls Stage 1 - Spirit,Girls Stage 1 - Spirit (OTLR),Girls Stage 1 - Spirit (OTLR),,Junior,Junior
+fb737693-357c-47f9-ae48-d6a9dc19b2e9,Glen Waverley Hawks T20 2nd XI,T20 E - Field of View Shield,T20 E - Field of View Shield,,T20,T20
