@@ -35,6 +35,14 @@ APPS: tuple[StreamlitApp, ...] = (
         name="FVCC Hall of Fame",
         url="https://the-scorebook-fvcc.streamlit.app/?page=hall-of-fame&source=keep_awake",
     ),
+    StreamlitApp(
+        name="Glen Waverley Hawks Hall of Fame",
+        url="https://the-scorebook-glen-waverley-hawks-cricket-club.streamlit.app/?page=hall-of-fame",
+    ),
+    StreamlitApp(
+        name="GRDCC root",
+        url="https://the-scorebook-grdcc.streamlit.app/",
+    ),
 )
 
 PAGE_LOAD_TIMEOUT_MS = 90_000
