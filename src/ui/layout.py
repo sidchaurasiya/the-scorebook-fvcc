@@ -8984,13 +8984,52 @@ def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str
             "fielding": format_all_time_fielding_table(all_time),
         }
     with st.container(key="full_stats_card"):
+        player_search = st.text_input(
+            "Search player",
+            placeholder="Type a player name",
+            key="hof_detailed_records_player_search",
+        )
+        filtered_tables = filter_detailed_record_tables_by_player(tables, player_search)
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            render_all_time_detail_table(tables["batting"], "hof_batting_detail")
+            render_searched_detail_table(filtered_tables["batting"], "hof_batting_detail", "batting", player_search)
         with bowling_tab:
-            render_all_time_detail_table(tables["bowling"], "hof_bowling_detail")
+            render_searched_detail_table(filtered_tables["bowling"], "hof_bowling_detail", "bowling", player_search)
         with fielding_tab:
-            render_all_time_detail_table(tables["fielding"], "hof_fielding_detail")
+            render_searched_detail_table(filtered_tables["fielding"], "hof_fielding_detail", "fielding", player_search)
+
+
+def filter_detailed_record_tables_by_player(
+    tables: dict[str, pd.DataFrame],
+    search_text: object,
+) -> dict[str, pd.DataFrame]:
+    needle = str(search_text or "").strip()
+    filtered: dict[str, pd.DataFrame] = {}
+    for category, table in tables.items():
+        rows = table.copy()
+        if "Player" not in rows:
+            filtered[category] = rows
+            continue
+        player_labels = rows["Player"].map(link_display_label)
+        rows = rows.loc[~player_labels.map(is_private_or_anonymised_player)].copy()
+        if needle:
+            public_labels = rows["Player"].map(link_display_label)
+            rows = rows.loc[public_labels.str.contains(needle, case=False, regex=False, na=False)].copy()
+        filtered[category] = rows
+    return filtered
+
+
+def render_searched_detail_table(
+    table: pd.DataFrame,
+    key_prefix: str,
+    category: str,
+    search_text: object,
+) -> None:
+    needle = str(search_text or "").strip()
+    if needle and table.empty:
+        st.info(f'No matching players in {category} records for "{needle}".')
+        return
+    render_all_time_detail_table(table, key_prefix)
 
 
 @st.cache_data(show_spinner=False)
