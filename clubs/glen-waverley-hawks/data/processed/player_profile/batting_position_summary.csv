@@ -360,19 +360,15 @@ raw_cb836970_3401_4d90_92cd_b1c0874032fa,Ahad Cheema,Ahad Cheema,No. 8,8,1,11,0,
 raw_cb836970_3401_4d90_92cd_b1c0874032fa,Ahad Cheema,Ahad Cheema,Tail,10,6,16,6,2.6666666666666665
 raw_2655131f_d49f_4cb0_9f1a_eeafd066b27a,Ahilan Kugangsan,Ahilan Kugangsan,No. 9,9,2,6,1,6.0
 raw_2655131f_d49f_4cb0_9f1a_eeafd066b27a,Ahilan Kugangsan,Ahilan Kugangsan,Tail,10,3,16,2,8.0
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,Opener,1,36,1063,34,31.264705882352942
-raw_ab4b3614_a40b_44ed_98d8_603f228e6dba,Ahilan Sivakumaran,Ahilan Sivakumaran,Opener,1,7,61,6,10.166666666666666
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 3,3,10,258,9,28.666666666666668
-raw_ab4b3614_a40b_44ed_98d8_603f228e6dba,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 3,3,1,38,1,38.0
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 4,4,34,963,30,32.1
-raw_ab4b3614_a40b_44ed_98d8_603f228e6dba,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 4,4,3,66,3,22.0
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 5,5,20,560,14,40.0
-raw_ab4b3614_a40b_44ed_98d8_603f228e6dba,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 5,5,3,23,3,7.666666666666667
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 6,6,4,26,3,8.666666666666666
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 7,7,3,73,0,
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 8,8,2,29,2,14.5
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 9,9,2,11,0,
-raw_2e73b740_a0d7_49c3_937c_08acc2378fa7,Ahilan Sivakumaran,Ahilan Sivakumaran,Tail,10,4,6,4,1.5
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,Opener,1,43,1124,40,28.1
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 3,3,11,296,10,29.6
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 4,4,37,1029,33,31.181818181818183
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 5,5,23,583,17,34.294117647058826
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 6,6,4,26,3,8.666666666666666
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 7,7,3,73,0,
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 8,8,2,29,2,14.5
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,No. 9,9,2,11,0,
+ahilan_sivakumaran,Ahilan Sivakumaran,Ahilan Sivakumaran,Tail,10,4,6,4,1.5
 ahmed_virk,Ahmed Virk,Ahmed Virk,Opener,1,1,42,1,42.0
 ahmed_virk,Ahmed Virk,Ahmed Virk,No. 4,4,1,0,1,0.0
 ahmed_virk,Ahmed Virk,Ahmed Virk,No. 5,5,2,54,1,54.0
@@ -1888,14 +1884,14 @@ raw_caddca26_3ca3_4d88_96ba_48a4b1c32b4e,Drew Davidson,Drew Davidson,No. 7,7,4,3
 raw_caddca26_3ca3_4d88_96ba_48a4b1c32b4e,Drew Davidson,Drew Davidson,No. 8,8,6,42,5,8.4
 raw_caddca26_3ca3_4d88_96ba_48a4b1c32b4e,Drew Davidson,Drew Davidson,No. 9,9,1,3,1,3.0
 raw_caddca26_3ca3_4d88_96ba_48a4b1c32b4e,Drew Davidson,Drew Davidson,Tail,10,2,13,0,
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,Opener,1,2,43,2,21.5
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,No. 3,3,4,87,3,29.0
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,No. 4,4,5,34,5,6.8
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,No. 5,5,7,185,7,26.428571428571427
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,No. 6,6,6,110,5,22.0
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,No. 7,7,3,50,2,25.0
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,No. 8,8,2,22,2,11.0
-raw_9ea5de51_11fb_4f07_b7ed_643e5cbd6a84,Dulaj Madushanka,Dulaj Madushanka,Tail,10,1,38,0,
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,Opener,1,5,89,5,17.8
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,No. 3,3,4,87,3,29.0
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,No. 4,4,24,568,23,24.695652173913043
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,No. 5,5,16,373,16,23.3125
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,No. 6,6,16,244,15,16.266666666666666
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,No. 7,7,4,54,3,18.0
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,No. 8,8,2,22,2,11.0
+dulaj_madushanka,Dulaj Madushanka,Dulaj Madushanka,Tail,10,1,38,0,
 raw_6c9fe119_2686_4669_bc58_361986f8cb08,Dulaj Millawabandara,Dulaj Millawabandara,Opener,1,2,21,2,10.5
 raw_6c9fe119_2686_4669_bc58_361986f8cb08,Dulaj Millawabandara,Dulaj Millawabandara,No. 3,3,3,26,2,13.0
 raw_6c9fe119_2686_4669_bc58_361986f8cb08,Dulaj Millawabandara,Dulaj Millawabandara,No. 4,4,6,95,4,23.75
@@ -2167,18 +2163,15 @@ raw_19b5b03e_b4a9_4a7c_9245_e44d17f30fee,Greg Mccallum,Greg Mccallum,No. 4,4,4,1
 raw_19b5b03e_b4a9_4a7c_9245_e44d17f30fee,Greg Mccallum,Greg Mccallum,No. 5,5,3,38,2,19.0
 raw_19b5b03e_b4a9_4a7c_9245_e44d17f30fee,Greg Mccallum,Greg Mccallum,No. 6,6,4,18,4,4.5
 raw_19b5b03e_b4a9_4a7c_9245_e44d17f30fee,Greg Mccallum,Greg Mccallum,No. 9,9,2,8,2,4.0
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,Opener,1,5,32,5,6.4
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 3,3,43,1205,40,30.125
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 4,4,36,901,32,28.15625
-raw_b97f0ec1_63ba_4739_bfef_0601dbe1b60f,Greg Mccormick,Greg Mccormick,No. 4,4,2,36,2,18.0
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 5,5,80,1361,73,18.643835616438356
-raw_b97f0ec1_63ba_4739_bfef_0601dbe1b60f,Greg Mccormick,Greg Mccormick,No. 5,5,3,15,3,5.0
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 6,6,94,1587,78,20.346153846153847
-raw_b97f0ec1_63ba_4739_bfef_0601dbe1b60f,Greg Mccormick,Greg Mccormick,No. 6,6,1,25,1,25.0
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 7,7,45,755,42,17.976190476190474
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 8,8,19,271,14,19.357142857142858
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,No. 9,9,6,77,5,15.4
-raw_3ceac2e4_0768_4b05_98a8_b6496faac675,Greg Mccormick,Greg Mccormick,Tail,10,2,13,1,13.0
+greg_mccormick,Greg Mccormick,Greg Mccormick,Opener,1,5,32,5,6.4
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 3,3,43,1205,40,30.125
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 4,4,38,937,34,27.558823529411764
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 5,5,83,1376,76,18.105263157894736
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 6,6,95,1612,79,20.40506329113924
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 7,7,45,755,42,17.976190476190474
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 8,8,19,271,14,19.357142857142858
+greg_mccormick,Greg Mccormick,Greg Mccormick,No. 9,9,6,77,5,15.4
+greg_mccormick,Greg Mccormick,Greg Mccormick,Tail,10,2,13,1,13.0
 raw_4923ef77_98da_44b7_a666_17c0b52aaf46,Greg Rodda,Greg Rodda,No. 6,6,1,1,1,1.0
 raw_23d2f460_33fd_4bb6_9925_b81410a497ba,Greg Stack,Greg Stack,No. 3,3,3,148,3,49.333333333333336
 raw_23d2f460_33fd_4bb6_9925_b81410a497ba,Greg Stack,Greg Stack,No. 4,4,2,44,2,22.0
@@ -3830,21 +3823,15 @@ raw_f075dba4_30c8_40fb_9345_ad3c7c440731,Nathan A Munasinghe,Nathan A Munasinghe
 raw_f075dba4_30c8_40fb_9345_ad3c7c440731,Nathan A Munasinghe,Nathan A Munasinghe,No. 3,3,2,77,2,38.5
 raw_f075dba4_30c8_40fb_9345_ad3c7c440731,Nathan A Munasinghe,Nathan A Munasinghe,No. 4,4,2,70,2,35.0
 raw_f075dba4_30c8_40fb_9345_ad3c7c440731,Nathan A Munasinghe,Nathan A Munasinghe,No. 6,6,1,0,1,0.0
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,Opener,1,13,241,12,20.083333333333332
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 3,3,9,77,9,8.555555555555555
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 4,4,8,70,8,8.75
-raw_fc4ba90e_5a13_4348_8811_29947e4461fb,Nathan Bungey,Nathan Bungey,No. 4,4,2,35,2,17.5
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 5,5,14,200,14,14.285714285714286
-raw_fc4ba90e_5a13_4348_8811_29947e4461fb,Nathan Bungey,Nathan Bungey,No. 5,5,1,1,1,1.0
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 6,6,23,400,19,21.05263157894737
-raw_fc4ba90e_5a13_4348_8811_29947e4461fb,Nathan Bungey,Nathan Bungey,No. 6,6,1,34,0,
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 7,7,41,539,31,17.387096774193548
-raw_fc4ba90e_5a13_4348_8811_29947e4461fb,Nathan Bungey,Nathan Bungey,No. 7,7,1,17,1,17.0
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 8,8,58,806,39,20.666666666666668
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,No. 9,9,40,364,23,15.826086956521738
-raw_fc4ba90e_5a13_4348_8811_29947e4461fb,Nathan Bungey,Nathan Bungey,No. 9,9,2,7,1,7.0
-raw_59057be9_29af_4675_a662_7370e4f9cd44,Nathan Bungey,Nathan Bungey,Tail,10,31,215,11,19.545454545454547
-raw_fc4ba90e_5a13_4348_8811_29947e4461fb,Nathan Bungey,Nathan Bungey,Tail,10,2,11,0,
+nathan_bungey,Nathan Bungey,Nathan Bungey,Opener,1,13,241,12,20.083333333333332
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 3,3,9,77,9,8.555555555555555
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 4,4,10,105,10,10.5
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 5,5,15,201,15,13.4
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 6,6,24,434,19,22.842105263157894
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 7,7,42,556,32,17.375
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 8,8,58,806,39,20.666666666666668
+nathan_bungey,Nathan Bungey,Nathan Bungey,No. 9,9,42,371,24,15.458333333333334
+nathan_bungey,Nathan Bungey,Nathan Bungey,Tail,10,33,226,11,20.545454545454547
 raw_86ae6562_bd95_49ae_917f_01381a123641,Nathan Eubergang,Nathan Eubergang,No. 3,3,1,50,0,
 raw_86ae6562_bd95_49ae_917f_01381a123641,Nathan Eubergang,Nathan Eubergang,Tail,10,1,0,1,0.0
 raw_58e0c49e_68e1_4be2_8fa3_d0a0501e5642,Nathan Grylls,Nathan Grylls,No. 4,4,1,7,1,7.0
@@ -4149,20 +4136,14 @@ raw_43282b51_f1e7_45f5_b9c4_0e5aa677ef94,Paul Seddon,Paul Seddon,No. 7,7,2,42,2,
 raw_43282b51_f1e7_45f5_b9c4_0e5aa677ef94,Paul Seddon,Paul Seddon,No. 8,8,1,2,1,2.0
 raw_43282b51_f1e7_45f5_b9c4_0e5aa677ef94,Paul Seddon,Paul Seddon,No. 9,9,1,37,1,37.0
 raw_48d0f39b_6e70_421c_8538_3b7a40f05554,Paul Shaw,Paul Shaw,No. 8,8,1,3,1,3.0
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,Opener,1,55,1805,51,35.3921568627451
-raw_e209cdbe_8795_47f9_a912_53ce47e86570,Paul Young,Paul Young,Opener,1,28,864,27,32.0
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,No. 3,3,3,283,2,141.5
-raw_e209cdbe_8795_47f9_a912_53ce47e86570,Paul Young,Paul Young,No. 3,3,6,272,6,45.333333333333336
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,No. 4,4,8,272,8,34.0
-raw_e209cdbe_8795_47f9_a912_53ce47e86570,Paul Young,Paul Young,No. 4,4,2,132,2,66.0
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,No. 5,5,5,159,5,31.8
-raw_e209cdbe_8795_47f9_a912_53ce47e86570,Paul Young,Paul Young,No. 5,5,3,178,3,59.333333333333336
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,No. 6,6,3,80,3,26.666666666666668
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,No. 7,7,1,54,0,
-raw_e209cdbe_8795_47f9_a912_53ce47e86570,Paul Young,Paul Young,No. 7,7,1,47,1,47.0
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,No. 8,8,2,86,2,43.0
-raw_0ad71a7c_4f8c_4c80_8242_a230e1768f99,Paul Young,Paul Young,Tail,10,1,33,0,
-raw_e209cdbe_8795_47f9_a912_53ce47e86570,Paul Young,Paul Young,Tail,10,1,17,1,17.0
+paul_young,Paul Young,Paul Young,Opener,1,83,2669,78,34.217948717948715
+paul_young,Paul Young,Paul Young,No. 3,3,9,555,8,69.375
+paul_young,Paul Young,Paul Young,No. 4,4,10,404,10,40.4
+paul_young,Paul Young,Paul Young,No. 5,5,8,337,8,42.125
+paul_young,Paul Young,Paul Young,No. 6,6,3,80,3,26.666666666666668
+paul_young,Paul Young,Paul Young,No. 7,7,2,101,1,101.0
+paul_young,Paul Young,Paul Young,No. 8,8,2,86,2,43.0
+paul_young,Paul Young,Paul Young,Tail,10,2,50,1,50.0
 raw_e1612848_b49e_4af1_a1bb_de2ac3a148b4,Pavneet Arneja,Pavneet Arneja,No. 6,6,1,37,1,37.0
 raw_e1612848_b49e_4af1_a1bb_de2ac3a148b4,Pavneet Arneja,Pavneet Arneja,No. 7,7,7,91,6,15.166666666666666
 raw_e1612848_b49e_4af1_a1bb_de2ac3a148b4,Pavneet Arneja,Pavneet Arneja,No. 8,8,6,28,6,4.666666666666667
@@ -4487,23 +4468,15 @@ raw_180518c4_ab5d_4fc5_893d_75a9ab85035c,Ravin Mehra,Ravin Mehra,No. 9,9,3,44,1,
 raw_180518c4_ab5d_4fc5_893d_75a9ab85035c,Ravin Mehra,Ravin Mehra,Tail,10,2,33,1,33.0
 raw_dd357667_d2a7_4f78_94a1_e17b9a182481,Ray Camilleri,Ray Camilleri,No. 7,7,1,1,1,1.0
 raw_dd357667_d2a7_4f78_94a1_e17b9a182481,Ray Camilleri,Ray Camilleri,No. 8,8,1,1,1,1.0
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,Opener,1,1,0,0,
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,Opener,1,18,329,13,25.307692307692307
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,No. 3,3,1,8,1,8.0
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 3,3,7,120,6,20.0
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 4,4,6,65,4,16.25
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,No. 5,5,4,27,3,9.0
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 5,5,4,47,4,11.75
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,No. 6,6,5,116,5,23.2
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 6,6,10,116,9,12.88888888888889
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,No. 7,7,8,106,5,21.2
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 7,7,9,61,4,15.25
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,No. 8,8,4,137,1,137.0
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 8,8,5,52,4,13.0
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,No. 9,9,6,29,6,4.833333333333333
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,No. 9,9,4,7,2,3.5
-raw_86ab50f2_878d_49ff_9bf2_308a4588f6ba,Reece Anderson,Reece Anderson,Tail,10,8,20,2,10.0
-raw_c585c145_4b58_43ae_8a92_1d5b71520d94,Reece Anderson,Reece Anderson,Tail,10,24,150,14,10.714285714285714
+reece_anderson,Reece Anderson,Reece Anderson,Opener,1,19,329,13,25.307692307692307
+reece_anderson,Reece Anderson,Reece Anderson,No. 3,3,8,128,7,18.285714285714285
+reece_anderson,Reece Anderson,Reece Anderson,No. 4,4,6,65,4,16.25
+reece_anderson,Reece Anderson,Reece Anderson,No. 5,5,8,74,7,10.571428571428571
+reece_anderson,Reece Anderson,Reece Anderson,No. 6,6,15,232,14,16.571428571428573
+reece_anderson,Reece Anderson,Reece Anderson,No. 7,7,17,167,9,18.555555555555557
+reece_anderson,Reece Anderson,Reece Anderson,No. 8,8,9,189,5,37.8
+reece_anderson,Reece Anderson,Reece Anderson,No. 9,9,10,36,8,4.5
+reece_anderson,Reece Anderson,Reece Anderson,Tail,10,32,170,16,10.625
 raw_3a15fda4_32d3_4d3f_b833_92c3db0e01fc,Revan Patil,Revan Patil,No. 3,3,1,2,1,2.0
 raw_3a15fda4_32d3_4d3f_b833_92c3db0e01fc,Revan Patil,Revan Patil,No. 4,4,1,0,1,0.0
 raw_3a15fda4_32d3_4d3f_b833_92c3db0e01fc,Revan Patil,Revan Patil,Tail,10,1,2,0,
@@ -5954,11 +5927,6 @@ raw_f839d758_6e34_471b_a15c_33842460c4ed,Wayne De Fraga,Wayne De Fraga,No. 7,7,1
 raw_f839d758_6e34_471b_a15c_33842460c4ed,Wayne De Fraga,Wayne De Fraga,No. 8,8,24,466,22,21.181818181818183
 raw_f839d758_6e34_471b_a15c_33842460c4ed,Wayne De Fraga,Wayne De Fraga,No. 9,9,19,213,17,12.529411764705882
 raw_f839d758_6e34_471b_a15c_33842460c4ed,Wayne De Fraga,Wayne De Fraga,Tail,10,3,40,2,20.0
-raw_cc4b36aa_4663_41e6_bf8a_ac6032903439,Wijesinghe Arachchige Dulaj Madushanka,Wijesinghe Arachchige Dulaj Madushanka,Opener,1,3,46,3,15.333333333333334
-raw_cc4b36aa_4663_41e6_bf8a_ac6032903439,Wijesinghe Arachchige Dulaj Madushanka,Wijesinghe Arachchige Dulaj Madushanka,No. 4,4,19,534,18,29.666666666666668
-raw_cc4b36aa_4663_41e6_bf8a_ac6032903439,Wijesinghe Arachchige Dulaj Madushanka,Wijesinghe Arachchige Dulaj Madushanka,No. 5,5,9,188,9,20.88888888888889
-raw_cc4b36aa_4663_41e6_bf8a_ac6032903439,Wijesinghe Arachchige Dulaj Madushanka,Wijesinghe Arachchige Dulaj Madushanka,No. 6,6,10,134,10,13.4
-raw_cc4b36aa_4663_41e6_bf8a_ac6032903439,Wijesinghe Arachchige Dulaj Madushanka,Wijesinghe Arachchige Dulaj Madushanka,No. 7,7,1,4,1,4.0
 raw_48351728_8f3e_452d_ad3a_54dd4310ea41,Will Christophers,Will Christophers,No. 8,8,1,36,1,36.0
 raw_ea217e54_460c_453d_a5f5_eecb837228ed,Will Pearce,Will Pearce,Opener,1,2,16,0,
 raw_ea217e54_460c_453d_a5f5_eecb837228ed,Will Pearce,Will Pearce,No. 4,4,2,22,1,22.0

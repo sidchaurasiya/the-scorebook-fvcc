@@ -514,13 +514,16 @@ def apply_identity_lookup(frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def raw_to_canonical_lookup() -> pd.DataFrame:
+    from src.utils.player_identity import apply_player_identity_mapping
+
     parts = []
     for filename in ["all_seasons_batting.csv", "all_seasons_bowling.csv", "all_seasons_fielding.csv"]:
         frame = read_csv(PROCESSED / filename)
         required = {"raw_player_id", "canonical_player_id", "canonical_player_name"}
         if frame.empty or not required.issubset(frame.columns):
             continue
-        rows = frame[["raw_player_id", "canonical_player_id", "canonical_player_name"]].copy()
+        mapped = apply_player_identity_mapping(frame, club_id=CLUB_ID)
+        rows = mapped[["raw_player_id", "canonical_player_id", "canonical_player_name"]].copy()
         rows["display_player_name"] = rows["canonical_player_name"]
         parts.append(rows)
     if not parts:

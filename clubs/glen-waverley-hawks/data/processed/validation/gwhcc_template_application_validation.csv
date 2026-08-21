@@ -9,10 +9,10 @@ core_match_rows_available,pass,all_seasons_matches.csv rows=3475.
 core_scorecard_rows_available,pass,scorecard batting rows=31430; bowling rows=20615; fielding rows=7308.
 player_season_aggregates_available,pass,Aggregate rows bat=5669; bowl=5669; field=5669.
 career_inputs_available,pass,players rows=1288; seasons=36; grades=120.
-hof_sources_available,pass,HOF win-rate rows=1277; scorecard milestone rows=1198.
+hof_sources_available,pass,HOF win-rate rows=1226; scorecard milestone rows=1192.
 season_overview_sources_available,pass,Season by Round rows=3475; batting scope rows=5603; bowling scope rows=4379.
-player_profile_sources_available,pass,Profile breakdown rows=76982; recent bat=26423; recent bowl=20204.
-bbb_summaries_reported,pass,"BBB summary rows=4661; zero means unavailable, not fabricated."
+player_profile_sources_available,pass,Profile breakdown rows=76612; recent bat=26423; recent bowl=20204.
+bbb_summaries_reported,pass,"BBB summary rows=4633; zero means unavailable, not fabricated."
 sbr_template_classes_available,pass,Shared Season by Round responsive/scroll classes are present.
 kpi_card_template_available,pass,Shared KPI/Career Highlights card classes are present.
 team_grade_leaders_theme_driven,pass,Team/Grade Leaders styles use club CSS variables.

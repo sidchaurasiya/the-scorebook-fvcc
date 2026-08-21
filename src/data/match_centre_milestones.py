@@ -139,6 +139,11 @@ def add_batting_context(batting: pd.DataFrame, matches: pd.DataFrame, innings: p
         "match_date",
         "season",
         "fvcc_team_id",
+        "source_team_ids",
+        "home_team_id",
+        "away_team_id",
+        "home_team_name",
+        "away_team_name",
         "team_name",
         "grade_name",
         "opposition_team",
@@ -153,7 +158,18 @@ def add_batting_context(batting: pd.DataFrame, matches: pd.DataFrame, innings: p
             on="innings_id",
             how="left",
         )
-    output = output[output["team_id"].astype(str) == output["fvcc_team_id"].astype(str)].copy()
+    team_ids = output["team_id"].astype(str)
+    source_team_match = output.apply(
+        lambda row: str(row.get("team_id")) in {
+            part.strip() for part in str(row.get("source_team_ids") or "").split("|") if part.strip()
+        },
+        axis=1,
+    )
+    output = output[source_team_match | team_ids.eq(output["fvcc_team_id"].astype(str))].copy()
+    home_side = output["team_id"].astype(str).eq(output["home_team_id"].astype(str))
+    output["team_name"] = output["home_team_name"].where(home_side, output["away_team_name"])
+    output["opposition_team"] = output["away_team_name"].where(home_side, output["home_team_name"])
+    output["opposition_team"] = output["opposition_team"].map(normalize_opponent_club_name)
     return output
 
 
@@ -183,22 +199,23 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
         balls_source_used, ball_warnings = choose_balls_faced_source(group, scorecard_final_balls)
         group["balls_faced"] = cumulative_balls_faced(group, balls_source_used)
         trusted_final_runs = safe_int(group["batter_runs"].max())
-        if (
+        scorecard_run_mismatch = (
             scorecard_final_runs is not None
             and trusted_final_runs is not None
             and trusted_final_runs != scorecard_final_runs
             and runs_source_used != "source_cumulative_validated"
-        ):
+        )
+        if scorecard_run_mismatch:
             warnings.append(
                 validation_row(
-                    "trusted_runs_mismatch_scorecard_excluded",
-                    "excluded",
+                    "trusted_runs_mismatch_scorecard_partial_milestones",
+                    "warning",
                     match_id,
                     innings_id,
                     participant_id,
                     scorecard_final_runs,
                     trusted_final_runs,
-                    "Fastest milestones were excluded because verified per-delivery batter runs could not be reconciled with the scorecard total.",
+                    "Scorecard and per-delivery final runs differ; only milestone crossings independently supported by both totals were retained.",
                     scorecard_final_balls,
                     safe_int(group["balls_faced"].dropna().iloc[-1]) if group["balls_faced"].notna().any() else None,
                     {},
@@ -206,8 +223,13 @@ def calculate_milestones(batting: pd.DataFrame, balls: pd.DataFrame, identity: d
                     runs_source_used,
                 )
             )
-            continue
         milestones = {f"balls_to_{target}": milestone_ball(group, target) for target in MILESTONES}
+        supported_final_runs = trusted_final_runs
+        if scorecard_final_runs is not None and supported_final_runs is not None:
+            supported_final_runs = min(scorecard_final_runs, supported_final_runs)
+        for target in MILESTONES:
+            if supported_final_runs is None or supported_final_runs < target:
+                milestones[f"balls_to_{target}"] = None
         for target, minimum in MIN_PLAUSIBLE_MILESTONE_BALLS.items():
             milestone_key = f"balls_to_{target}"
             milestone_value = milestones.get(milestone_key)

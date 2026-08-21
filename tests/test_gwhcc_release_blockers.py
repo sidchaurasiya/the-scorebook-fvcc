@@ -5,6 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 from src.data.gwhcc_governance import annotate_grade_metadata, display_grade_name, grade_mapping_row
+from src.data.gwhcc_document_overrides import apply_record_overrides
+from src.data.gwhcc_player_status import governed_player_active
 from src.ui import layout
 from src.utils.player_identity import (
     apply_player_identity_mapping,
@@ -16,6 +18,63 @@ from src.utils.player_identity import (
 ROOT = Path(__file__).resolve().parents[1]
 CLUB_ID = "glen-waverley-hawks"
 PROCESSED = ROOT / "clubs" / CLUB_ID / "data" / "processed"
+
+
+def test_customer_feedback_identity_merges_are_unique_in_profile_index(monkeypatch) -> None:
+    monkeypatch.setenv("CLUB_ID", CLUB_ID)
+    index = layout.load_player_profile_index(
+        CLUB_ID,
+        layout.metadata_mtime(),
+        layout.player_aliases_mtime(),
+    )
+    for name in ["Greg Mccormick", "Ahilan Sivakumaran", "Reece Anderson", "Dulaj Madushanka", "James Anderson"]:
+        assert index["name"].str.casefold().eq(name.casefold()).sum() == 1
+
+
+def test_customer_feedback_historical_centuries_and_debut_are_governed() -> None:
+    all_time = pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv", low_memory=False)
+    authoritative = apply_record_overrides(all_time, write_decisions=False)
+    expected_hundreds = {
+        "Sunny Somaia": 19,
+        "Glen Mahoney": 16,
+        "Stuart Wynd": 15,
+        "Greg Mccormick": 8,
+        "Brett Powell": 6,
+        "Dulaj Madushanka": 3,
+    }
+    for name, expected in expected_hundreds.items():
+        row = authoritative[authoritative["Player"].astype(str).str.casefold().eq(name.casefold())]
+        assert len(row) == 1
+        assert int(row.iloc[0]["100s"]) == expected
+    adrian = authoritative[authoritative["Player"].astype(str).str.casefold().eq("adrian dale")]
+    assert len(adrian) == 1
+    assert adrian.iloc[0]["Debut Season"] == "Summer 1980/81"
+
+
+def test_gwhcc_active_status_uses_governed_current_club_evidence() -> None:
+    assert not governed_player_active(True, "arun_chelvan", "Arun Chelvan")
+    assert not governed_player_active(True, "ahilan_sivakumaran", "Ahilan Sivakumaran")
+    assert governed_player_active(False, "nathan_bungey", "Nathan Bungey")
+
+
+def test_customer_feedback_fastest_innings_are_deployed() -> None:
+    records = pd.read_csv(PROCESSED / "hall_of_fame" / "fastest_batting_milestones.csv", low_memory=False)
+    arun = records[
+        records["match_id"].astype(str).eq("4c2ca82a-a39d-4904-a122-3b532617a86b")
+        & records["participant_id"].astype(str).eq("7ebc3350-3efe-4d6f-88f6-2b3a0a568a8d")
+    ]
+    luke = records[
+        records["match_id"].astype(str).eq("bd66ac0a-98d6-4733-aad4-ef7dfe1e0cea")
+        & records["participant_id"].astype(str).eq("5e51cdc2-8d9e-4583-badc-2922f6095d48")
+    ]
+    assert len(arun) == 1 and int(arun.iloc[0]["balls_to_50"]) == 18
+    assert len(luke) == 1 and int(luke.iloc[0]["balls_to_100"]) == 37
+    assert not bool(luke.iloc[0]["source_ball_by_ball_available"])
+
+
+def test_historical_profile_season_sort_supports_1900s() -> None:
+    assert layout.profile_season_sort_key("Summer 1980/81") < layout.profile_season_sort_key("Summer 1995/96")
+    assert layout.profile_season_sort_key("Summer 1995/96") < layout.profile_season_sort_key("Summer 2000/01")
 
 
 def test_nathan_bungey_resolves_to_one_canonical_identity() -> None:

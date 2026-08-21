@@ -58,6 +58,12 @@ from src.data.gwhcc_document_overrides import (
     merge_premiership_overrides as merge_gwhcc_premiership_overrides,
 )
 from src.data.gwhcc_governance import display_grade_name as gwhcc_display_grade_name
+from src.data.gwhcc_player_status import (
+    governed_active_player_ids as apply_gwhcc_active_player_id_overrides,
+    governed_active_player_names as apply_gwhcc_active_player_name_overrides,
+    governed_player_active as apply_gwhcc_player_active_override,
+    player_status_signature as gwhcc_player_status_signature,
+)
 from src.data.hall_of_fame_prepared import (
     load_prepared_hall_of_fame_core,
     prepared_core_manifest_signature,
@@ -168,7 +174,7 @@ FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
-PLAYER_PROFILE_INDEX_VERSION = "2026-07-identity-v4"
+PLAYER_PROFILE_INDEX_VERSION = "2026-08-gwhcc-feedback-v5"
 PERFORMANCE_CACHE_VERSION = "2026-07-performance-v2"
 HAWKS_MATCH_COUNT_FOOTNOTE = "* Hawks match counts apply club rules: T20 = 0.5 match; no-play games are excluded."
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
@@ -7364,7 +7370,11 @@ def active_hof_players(data: dict[str, object]) -> set[str]:
             continue
         recent = frame[frame["season"].map(safe_season_label).isin(latest)]
         active.update(recent[player_column].map(normalize_featured_player_name).dropna())
-    return {name for name in active if name}
+    active = {name for name in active if name}
+    if get_active_club_id() == "glen-waverley-hawks":
+        governed = apply_gwhcc_active_player_name_overrides(active)
+        return {normalize_featured_player_name(name) for name in governed if name}
+    return active
 
 
 def render_hall_of_fame_leaders(all_time: pd.DataFrame, active_players: set[str] | None = None) -> None:
@@ -7911,11 +7921,11 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
 @st.cache_data(show_spinner=False, persist="disk")
 def load_batting_milestone_records(
     club_id: str,
-    _path: str | None = None,
-    _mtime: float | None = None,
+    path_value: str | None = None,
+    source_mtime: float | None = None,
 ) -> pd.DataFrame:
-    _ = club_id
-    path = batting_milestones_path()
+    _ = (club_id, source_mtime)
+    path = Path(path_value) if path_value else batting_milestones_path()
     if path is None:
         return pd.DataFrame()
     try:
@@ -9736,8 +9746,10 @@ def recent_active_canonical_players(
         canonical_ids = recent_activity["canonical_player_id"].fillna("").astype(str).str.strip()
         canonical_ids = canonical_ids[canonical_ids != ""]
         if not canonical_ids.empty:
-            return set(canonical_ids)
-    return set(recent_activity["canonical_player_name"].dropna().map(make_player_slug).astype(str))
+            active = set(canonical_ids)
+            return apply_gwhcc_active_player_id_overrides(active, activity) if club_id == "glen-waverley-hawks" else active
+    active = set(recent_activity["canonical_player_name"].dropna().map(make_player_slug).astype(str))
+    return apply_gwhcc_active_player_id_overrides(active, activity) if club_id == "glen-waverley-hawks" else active
 
 
 def latest_activity_seasons(activity: pd.DataFrame, season_count: int) -> list[str]:
@@ -11141,7 +11153,11 @@ def player_profile_view_signature() -> tuple[object, ...]:
         get_processed_path("all_seasons_bowling.csv"),
         get_processed_path("all_seasons_fielding.csv"),
     ]
-    base = tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + player_profile_detail_source_signature()
+    base = (("profile_view_version", PLAYER_PROFILE_INDEX_VERSION),) + tuple(
+        (str(path), path.stat().st_mtime) for path in paths if path.exists()
+    ) + player_profile_detail_source_signature()
+    if get_active_club_id() == "glen-waverley-hawks":
+        base = base + (("gwhcc_player_status", repr(gwhcc_player_status_signature())),)
     return base + (("authoritative_career", repr(hall_of_fame_override_signature(get_active_club_id()))),)
 
 
@@ -11733,7 +11749,11 @@ def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame])
     club_legend = matches >= 200 or runs >= 4000 or wickets >= 250
     genuine_all_rounder = runs >= 1000 and wickets >= 100
     all_round_contributor = matches_30 and bat_avg > 12 and runs >= 300 and wickets >= 30
-    recently_active = player_active_in_latest_club_seasons(season_table, season_count=2)
+    recently_active = player_active_in_latest_club_seasons(
+        season_table,
+        canonical_player_id=career.get("canonical_player_id", ""),
+        player_name=career.get("Player", ""),
+    )
     upcoming_star = recently_active and matches_20 and matches < 50 and (
         bat_avg > 20 or (0 < bowl_avg < 20 and wickets >= 15)
     )
@@ -11906,18 +11926,30 @@ def latest_profile_activity_seasons(club_id: str, local_version: float) -> tuple
     return tuple(sorted(seasons, key=profile_season_sort_key, reverse=True))
 
 
-def player_active_in_latest_club_seasons(season_table: pd.DataFrame, season_count: int = 2) -> bool:
+def player_active_in_latest_club_seasons(
+    season_table: pd.DataFrame,
+    season_count: int | None = None,
+    *,
+    canonical_player_id: object = "",
+    player_name: object = "",
+) -> bool:
+    club_id = get_active_club_id()
     if season_table.empty or "Season" not in season_table:
-        return False
-    latest = set(latest_profile_activity_seasons(get_active_club_id(), metadata_mtime())[:season_count])
+        return apply_gwhcc_player_active_override(False, canonical_player_id, player_name) if club_id == "glen-waverley-hawks" else False
+    if season_count is None:
+        policy = load_club_config(club_id).get("milestone_policy", {})
+        configured_count = policy.get("active_season_count") if isinstance(policy, dict) else None
+        season_count = int(configured_count) if configured_count is not None else 2
+    latest = set(latest_profile_activity_seasons(club_id, metadata_mtime())[:season_count])
     if not latest:
-        return False
+        return apply_gwhcc_player_active_override(False, canonical_player_id, player_name) if club_id == "glen-waverley-hawks" else False
     player_seasons = {
         safe_season_label(season)
         for season in season_table["Season"].dropna()
         if safe_season_label(season)
     }
-    return bool(player_seasons & latest)
+    default_active = bool(player_seasons & latest)
+    return apply_gwhcc_player_active_override(default_active, canonical_player_id, player_name) if club_id == "glen-waverley-hawks" else default_active
 
 
 def select_profile_badges(candidates: list[dict[str, object]]) -> list[str]:
@@ -15058,7 +15090,7 @@ def career_span_label(seasons: list[str]) -> str:
 
 def profile_season_sort_key(value: object) -> int:
     label = str(value or "")
-    years = [int(year) for year in pd.Series([label]).str.findall(r"20\d{2}").iloc[0]]
+    years = [int(year) for year in pd.Series([label]).str.findall(r"(?:19|20)\d{2}").iloc[0]]
     if not years:
         return 0
     if "Summer" in label and len(years) >= 2:

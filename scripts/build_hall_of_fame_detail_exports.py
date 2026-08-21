@@ -24,6 +24,7 @@ from scripts import build_player_profile_insight_exports as profile_exports  # n
 from scripts.club_refresh_utils import add_club_args, get_club_team_ids, print_club_header, print_outputs, print_paths, resolve_club_id  # noqa: E402
 from src.config.club_config import get_club_name, get_club_short_name, get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
+from src.data.gwhcc_document_overrides import merge_fastest_innings_supplements  # noqa: E402
 from src.ui import layout  # noqa: E402
 
 
@@ -83,6 +84,10 @@ def main(argv: list[str] | None = None) -> int:
         "scorecard_record_links.csv": build_scorecard_record_links(batting, bowling),
         "fastest_batting_milestones.csv": build_fastest_batting_milestones(club_id=club_id),
     }
+    if club_id == "glen-waverley-hawks":
+        from src.data.gwhcc_match_policy import write_weighted_win_rates
+
+        outputs["player_win_rates.csv"] = write_weighted_win_rates()
     for filename, frame in outputs.items():
         frame.to_csv(output_dir / filename, index=False)
 
@@ -384,6 +389,8 @@ def build_fastest_batting_milestones(club_id: str | None = None) -> pd.DataFrame
         club_team_ids=get_club_team_ids(club_id),
         club_name_token=get_club_name(club_id),
     )
+    if club_id == "glen-waverley-hawks":
+        return merge_fastest_innings_supplements(result.milestones)
     return result.milestones
 
 

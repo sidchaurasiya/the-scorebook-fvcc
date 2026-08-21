@@ -1,5 +1,5 @@
 check_name,validation_status,notes
-prepared_career_ids_unique,pass,rows=1237; duplicate canonical IDs=0.
+prepared_career_ids_unique,pass,rows=1233; duplicate canonical IDs=0.
 paul_young_resolves_once,pass,Paul Young prepared rows=1.
 nathan_bungey_resolves_once,pass,Nathan Bungey prepared rows=1.
 private_players_excluded_from_authoritative_career,pass,Visible private rows=0.
@@ -11,5 +11,5 @@ known_juniors_governed_as_junior,pass,Incorrect known junior mappings=0.
 persisted_governance_matches_expected,pass,Mismatched persisted rows=0.
 summer_2025_26_first_three_team_order,pass,"First three=['Compare & Connect Dorothy McIntosh Shield', 'C Grade', 'D Grade']."
 summer_2025_26_team_ids_preserved,pass,Rows=17; unique team IDs=17.
-prepared_hof_core_current,pass,Prepared rows=1237; authoritative rows=1237.
+prepared_hof_core_current,pass,Prepared rows=1233; authoritative rows=1233.
 prepared_hof_core_version_guard,pass,A mismatched Hall of Fame data version must reject the prepared snapshot.

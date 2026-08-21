@@ -1,0 +1,4 @@
+canonical_player_id,canonical_player_name,status,effective_season,source,confidence,notes
+arun_chelvan,Arun Chelvan,inactive,Summer 2025/26,GWHCC customer feedback FB09,confirmed,Departed GWHCC and now plays for another club; explicit club status overrides recent historical activity.
+ahilan_sivakumaran,Ahilan Sivakumaran,inactive,Summer 2025/26,GWHCC customer feedback FB09,confirmed,Departed GWHCC and now plays elsewhere; explicit club status overrides recent historical activity.
+nathan_bungey,Nathan Bungey,active,Summer 2025/26,PlayCricket GWHCC Summer 2025/26 plus customer feedback FB09,confirmed,Current GWHCC season activity verified under the governed merged identity.
