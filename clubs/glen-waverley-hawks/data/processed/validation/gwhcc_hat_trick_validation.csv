@@ -1,0 +1,19 @@
+check,status,detail
+candidate_audit_complete,PASS,rows=8
+confirmed_events_exported,PASS,public=1 expected=1
+no_duplicate_candidate_events,PASS,rows=8
+no_duplicate_public_events,PASS,rows=1
+no_private_public_players,PASS,masked names excluded
+previous_confirmed_events_retained,PASS,missing=[]
+private_confirmed_events_excluded,PASS,private_confirmed=0
+ambiguous_candidates_visible,PASS,count=1
+new_candidate_events,INFO,count=0 ids=[]
+source_delivery_rows,INFO,241113
+semantic_duplicate_rows_removed,INFO,109
+eligible_bowling_delivery_rows,INFO,120232
+eligible_bowling_innings,INFO,646
+matches_with_ball_by_ball,INFO,636
+candidate_windows,INFO,8
+confirmed,INFO,1
+rejected,INFO,6
+ambiguous,INFO,1
