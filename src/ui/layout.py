@@ -163,6 +163,7 @@ HALL_OF_FAME_PLAYER_WIN_RATES_PATH = get_hall_of_fame_path("player_win_rates.csv
 HALL_OF_FAME_BBB_BATTING_RATES_PATH = get_hall_of_fame_path("player_bbb_batting_rates.csv")
 HALL_OF_FAME_SCORECARD_MILESTONES_PATH = get_hall_of_fame_path("player_scorecard_milestones.csv")
 HALL_OF_FAME_BOWLING_MILESTONES_PATH = get_hall_of_fame_path("player_bowling_milestones.csv")
+HALL_OF_FAME_HAT_TRICKS_PATH = get_hall_of_fame_path("hat_tricks.csv")
 DEBUG_HOF_TIMINGS = os.getenv("FVCC_DEBUG_TIMINGS") == "1"
 SHOW_ROUTING_DEBUG = os.getenv("FVCC_SHOW_ROUTING_DEBUG") == "1"
 PLAYER_PEERS_RELIABLE_SEASON = "Winter 2025"
@@ -4852,6 +4853,10 @@ def render_hall_of_fame_page() -> None:
     render_fastest_batting_milestone_records(team_group_slug)
     log_hof_timing("render fastest innings", section_started_at)
     section_started_at = time.perf_counter()
+    if HALL_OF_FAME_HAT_TRICKS_PATH.exists():
+        render_hat_trick_records(team_group_slug)
+        log_hof_timing("render hat-tricks", section_started_at)
+    section_started_at = time.perf_counter()
     render_record_holders(hall_of_fame_data)
     log_hof_timing("render record holders", section_started_at)
     section_started_at = time.perf_counter()
@@ -7916,6 +7921,77 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
             "balls",
             "No verified 100s from available ball-by-ball data yet.",
         )
+
+
+def render_hat_trick_records(team_group_slug: str | None = None) -> None:
+    render_section_heading("Hat-tricks 🎩")
+    st.caption("Hat-tricks identified from available detailed records.")
+    records = load_hat_trick_records(
+        get_active_club_id(),
+        str(HALL_OF_FAME_HAT_TRICKS_PATH),
+        HALL_OF_FAME_HAT_TRICKS_PATH.stat().st_mtime if HALL_OF_FAME_HAT_TRICKS_PATH.exists() else None,
+    )
+    if team_group_slug in {"men", "women"} and not records.empty:
+        records = filter_hof_team_group_frame(records, team_group_slug)
+    if records.empty:
+        render_empty_milestone_card(
+            "Hat-tricks",
+            "No confirmed hat-tricks in available detailed records.",
+            "Historical coverage is limited to retained source evidence.",
+        )
+        return
+    records = records.sort_values(["match_date", "canonical_player_name"], ascending=[False, True], na_position="last")
+    rows_html = "".join(hat_trick_record_row_html(row) for _, row in records.iterrows())
+    st.markdown(
+        f'<div class="hof-card performance-card"><div class="card-title">Confirmed Hat-tricks</div>{rows_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def load_hat_trick_records(club_id: str, path_value: str, source_mtime: float | None) -> pd.DataFrame:
+    _ = (club_id, source_mtime)
+    path = Path(path_value)
+    if not path.exists():
+        return pd.DataFrame()
+    try:
+        records = pd.read_csv(path)
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
+        return pd.DataFrame()
+    records = filter_public_player_rows(records)
+    if club_id == "glen-waverley-hawks" and "grade_name" in records:
+        records["grade_name"] = records["grade_name"].map(gwhcc_display_grade_name)
+    records["match_date"] = pd.to_datetime(records.get("match_date"), errors="coerce")
+    return records
+
+
+def hat_trick_record_row_html(row: pd.Series) -> str:
+    player = safe_record_text(row.get("canonical_player_name"), "Unknown player")
+    player_id = player_id_from_row(row)
+    opponent = clean_opponent_label(row.get("opponent"), "Unknown opposition")
+    delivery_sequence = safe_record_text(row.get("delivery_sequence"))
+    dismissal_sequence = safe_record_text(row.get("dismissal_sequence"))
+    sequence_text = f"Deliveries {delivery_sequence}" if delivery_sequence else "Three consecutive bowler wickets"
+    if dismissal_sequence:
+        sequence_text += f" · {dismissal_sequence}"
+    scorecard_html = scorecard_link_html(
+        row.get("match_id"),
+        page_slug="hall-of-fame",
+        section_name="hat_tricks",
+    )
+    return (
+        '<div class="performance-row">'
+        '<span class="progress-rank">🎩</span>'
+        '<div class="performance-player">'
+        f'<strong>{player_profile_link_html(player_id, player)}</strong>'
+        f'<span class="fastest-final-score">vs {html.escape(opponent)}</span>'
+        f'{milestone_meta_html(row)}'
+        f'<span>{html.escape(sequence_text)}</span>'
+        f'{f"<span>{scorecard_html}</span>" if scorecard_html else ""}'
+        '</div>'
+        '<div class="performance-value">Hat-trick</div>'
+        '</div>'
+    )
 
 
 @st.cache_data(show_spinner=False, persist="disk")

@@ -28,6 +28,7 @@ def main() -> int:
 
     run_script("build_club_app_facing_scorecards.py", "--club", CLUB_ID)
     run_script("build_match_centre_milestones.py", "--club", CLUB_ID)
+    run_script("build_gwhcc_hat_tricks.py")
 
     policy_result = apply_hawks_match_policy_to_app_data()
     print("Applied Hawks match-count policy")
