@@ -83,3 +83,14 @@ def test_below_threshold_fastest_50_is_excluded() -> None:
     excluded = validation[validation["check_name"] == "balls_to_50_below_plausibility_threshold"]
     assert not excluded.empty
     assert set(excluded["severity"]) == {"excluded"}
+
+
+def test_supported_milestone_is_retained_when_final_delivery_runs_are_incomplete() -> None:
+    runs = [6, 6, 6, 6, 6, 6, 6, 6, 2, 6]
+
+    milestones, validation = calculate_milestones(batting_row(60, balls=10), ball_rows(runs), {})
+
+    assert int(milestones.iloc[0]["balls_to_50"]) == 9
+    warning = validation[validation["check_name"] == "trusted_runs_mismatch_scorecard_partial_milestones"]
+    assert not warning.empty
+    assert set(warning["severity"]) == {"warning"}

@@ -2,7 +2,7 @@ check_name,validation_status,actual,expected,notes
 source_files_or_import_guide_exists,pass,7,raw docs or import guide,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/docs/gwhcc_document_override_import_guide.md
 record_overrides_parseable,pass,29,csv exists,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_record_overrides.csv
 no_lower_document_value_applied,pass,0,0,Documents can only override higher all-time values.
-decision_rows_written,pass,29,decision csv,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_document_override_decisions.csv
+decision_rows_written,pass,32,decision csv,/Users/preetkaur/Documents/Codex/2026-04-24/scorebook-recovery/clubs/glen-waverley-hawks/data/processed/validation/gwhcc_document_override_decisions.csv
 every_override_has_source_confidence,pass,"['player_name', 'metric', 'document_value', 'source_document', 'confidence', 'notes']",source and confidence,Required audit fields.
 premiership_source_files_parseable,pass,True/True,both csvs exist,Document premiership sources are optional but scaffolded.
 combined_premierships_deduplicated,pass,0,0,Combined premiership rows use conservative de-duplication.

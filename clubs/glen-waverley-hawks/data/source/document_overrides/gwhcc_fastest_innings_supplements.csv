@@ -1,0 +1,2 @@
+match_id,participant_id,canonical_player_id,canonical_player_name,balls_to_50,balls_to_100,source_document,confidence,notes
+bd66ac0a-98d6-4733-aad4-ef7dfe1e0cea,5e51cdc2-8d9e-4583-badc-2922f6095d48,raw_5e51cdc2_8d9e_4583_badc_2922f6095d48,Luke Galle,,37,GWHCC customer feedback FB11 corroborated by PlayCricket scorecard,confirmed,Customer confirms Luke reached 100 on ball 37 and retired at that point; official scorecard records 102 from 37 retired not out but the match has no ball-by-ball payload.

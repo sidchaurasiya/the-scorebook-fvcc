@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data.gwhcc_match_policy import PROCESSED, read_csv
+from src.data.gwhcc_match_policy import MATCH_CENTRE, PROCESSED, read_csv
 
 CLUB_ID = "glen-waverley-hawks"
 ROOT = Path(__file__).resolve().parents[2]
@@ -20,9 +20,14 @@ REVIEW_DIR = SOURCE_ROOT / "review"
 VALIDATION_DIR = PROCESSED / "validation"
 
 RECORD_OVERRIDES = SOURCE_ROOT / "gwhcc_record_overrides.csv"
+CUSTOMER_CAREER_OVERRIDES = SOURCE_ROOT / "gwhcc_customer_career_overrides.csv"
 PREMIERSHIPS = SOURCE_ROOT / "gwhcc_premierships.csv"
 PREMIERSHIP_PLAYERS = SOURCE_ROOT / "gwhcc_premiership_players.csv"
 PLAYER_ALIASES = SOURCE_ROOT / "gwhcc_document_player_aliases.csv"
+HISTORICAL_CENTURIES = SOURCE_ROOT / "gwhcc_historical_centuries.csv"
+HISTORICAL_CAREER_METADATA = SOURCE_ROOT / "gwhcc_historical_career_metadata.csv"
+HISTORICAL_PREMIERSHIPS = SOURCE_ROOT / "gwhcc_historical_premiership_events.csv"
+FASTEST_INNINGS_SUPPLEMENTS = SOURCE_ROOT / "gwhcc_fastest_innings_supplements.csv"
 DECISIONS = VALIDATION_DIR / "gwhcc_document_override_decisions.csv"
 VALIDATION = VALIDATION_DIR / "gwhcc_document_override_validation.csv"
 
@@ -68,7 +73,17 @@ def ensure_document_override_dirs() -> None:
 
 
 def document_override_signature() -> tuple[tuple[str, float], ...]:
-    paths = [RECORD_OVERRIDES, PREMIERSHIPS, PREMIERSHIP_PLAYERS, PLAYER_ALIASES]
+    paths = [
+        RECORD_OVERRIDES,
+        CUSTOMER_CAREER_OVERRIDES,
+        PREMIERSHIPS,
+        PREMIERSHIP_PLAYERS,
+        PLAYER_ALIASES,
+        HISTORICAL_CENTURIES,
+        HISTORICAL_CAREER_METADATA,
+        HISTORICAL_PREMIERSHIPS,
+        FASTEST_INNINGS_SUPPLEMENTS,
+    ]
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
 
 
@@ -136,7 +151,8 @@ def write_empty_source_files() -> None:
 
 def load_record_overrides() -> pd.DataFrame:
     write_empty_source_files()
-    frame = read_csv(RECORD_OVERRIDES)
+    frames = [frame for frame in [read_csv(RECORD_OVERRIDES), read_csv(CUSTOMER_CAREER_OVERRIDES)] if not frame.empty]
+    frame = pd.concat(frames, ignore_index=True, sort=False) if frames else pd.DataFrame(columns=RECORD_COLUMNS)
     for column in RECORD_COLUMNS:
         if column not in frame:
             frame[column] = ""
@@ -155,7 +171,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
     if overrides.empty:
         if write_decisions:
             write_decision_rows(decisions)
-        return output
+        return apply_historical_career_supplements(output)
 
     output["_player_key_for_doc_override"] = output["Player"].map(normalize_name)
     alias_lookup = unique_alias_lookup(output["Player"])
@@ -206,7 +222,208 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
     output = output.drop(columns=["_player_key_for_doc_override"], errors="ignore")
     if write_decisions:
         write_decision_rows(decisions)
+    return apply_historical_career_supplements(output)
+
+
+def apply_historical_career_supplements(all_time: pd.DataFrame) -> pd.DataFrame:
+    """Apply additive century counts and documented debut metadata."""
+    if all_time.empty:
+        return all_time
+    output = all_time.copy()
+    centuries = read_csv(HISTORICAL_CENTURIES)
+    if not centuries.empty and "100s" in output and "historical_100s_supplement" not in output:
+        counts = centuries.groupby("canonical_player_id", as_index=False).size().rename(columns={"size": "historical_100s_supplement"})
+        output = merge_supplement_by_identity(output, counts, ["historical_100s_supplement"])
+        output["historical_100s_supplement"] = pd.to_numeric(output.get("historical_100s_supplement"), errors="coerce").fillna(0).astype(int)
+        output["100s"] = pd.to_numeric(output["100s"], errors="coerce").fillna(0) + output["historical_100s_supplement"]
+        output["hundreds_value_source"] = output["historical_100s_supplement"].gt(0).map({True: "playcricket_plus_customer_history", False: "playcricket"})
+
+    metadata = read_csv(HISTORICAL_CAREER_METADATA)
+    if not metadata.empty:
+        columns = ["earliest_documented_season", "source_document", "source_sheet"]
+        available = [column for column in columns if column in metadata]
+        source = metadata[["canonical_player_id", *available]].drop_duplicates("canonical_player_id")
+        source = source.rename(columns={"source_document": "career_start_source_document", "source_sheet": "career_start_source_sheet"})
+        if "earliest_documented_season" not in output:
+            output = merge_supplement_by_identity(output, source, [column for column in source.columns if column != "canonical_player_id"])
+        if "Debut Season" in output:
+            output["Debut Season"] = output.apply(
+                lambda row: earlier_season(row.get("earliest_documented_season"), row.get("Debut Season")),
+                axis=1,
+            )
+        if "Career Span" in output:
+            output["Career Span"] = output.apply(
+                lambda row: career_span_with_documented_start(row.get("Career Span"), row.get("earliest_documented_season")),
+                axis=1,
+            )
     return output
+
+
+def merge_supplement_by_identity(output: pd.DataFrame, supplement: pd.DataFrame, value_columns: list[str]) -> pd.DataFrame:
+    if supplement.empty:
+        return output
+    if "canonical_player_id" in output:
+        return output.merge(supplement[["canonical_player_id", *value_columns]], on="canonical_player_id", how="left")
+    if "Player" not in output:
+        return output
+    source = supplement.copy()
+    if "canonical_player_name" not in source:
+        return output
+    source["_player_key"] = source["canonical_player_name"].map(normalize_name)
+    source = source.drop_duplicates("_player_key")
+    result = output.copy()
+    result["_player_key"] = result["Player"].map(normalize_name)
+    return result.merge(source[["_player_key", *value_columns]], on="_player_key", how="left").drop(columns="_player_key")
+
+
+def season_sort_key(value: object) -> tuple[int, int]:
+    match = re.search(r"(\d{4})/(\d{2})", str(value or ""))
+    return (int(match.group(1)), int(match.group(2))) if match else (0, 0)
+
+
+def earlier_season(documented: object, reconstructed: object) -> str:
+    documented_text = clean_optional_text(documented)
+    reconstructed_text = clean_optional_text(reconstructed)
+    if documented_text and (not reconstructed_text or season_sort_key(documented_text) < season_sort_key(reconstructed_text)):
+        return documented_text
+    return reconstructed_text
+
+
+def career_span_with_documented_start(current: object, documented: object) -> str:
+    current_text = clean_optional_text(current)
+    documented_text = clean_optional_text(documented)
+    if not documented_text:
+        return current_text
+    if not current_text:
+        return documented_text
+    parts = [part.strip() for part in re.split(r"\s+[–—-]\s+", current_text) if part.strip()]
+    latest = parts[-1] if parts else current_text
+    start = earlier_season(documented_text, parts[0] if parts else current_text)
+    return start if season_sort_key(start) == season_sort_key(latest) else f"{start} – {latest}"
+
+
+def clean_optional_text(value: object) -> str:
+    if value is None or pd.isna(value):
+        return ""
+    text = str(value).strip()
+    return "" if text.casefold() in {"", "nan", "none", "nat"} else text
+
+
+def merge_fastest_innings_supplements(milestones: pd.DataFrame) -> pd.DataFrame:
+    """Merge governed scorecard-only milestone evidence without fabricating deliveries."""
+    supplements = read_csv(FASTEST_INNINGS_SUPPLEMENTS)
+    if supplements.empty:
+        return milestones
+    confidence = supplements.get("confidence", pd.Series("", index=supplements.index)).astype(str).str.casefold().str.strip()
+    supplements = supplements[confidence.isin({"confirmed", "approved", "high"})].copy()
+    if supplements.empty:
+        return milestones
+
+    batting = read_csv(MATCH_CENTRE / "all_scorecard_batting.csv")
+    matches = read_csv(MATCH_CENTRE / "all_matches.csv")
+    innings = read_csv(MATCH_CENTRE / "all_match_innings.csv")
+    if batting.empty or matches.empty:
+        return milestones
+    rows = []
+    for supplement in supplements.to_dict("records"):
+        match_id = str(supplement.get("match_id") or "").strip()
+        participant_id = str(supplement.get("participant_id") or "").strip()
+        scorecard = batting[
+            batting["match_id"].astype(str).eq(match_id)
+            & batting["participant_id"].astype(str).eq(participant_id)
+        ]
+        match = matches[matches["match_id"].astype(str).eq(match_id)]
+        if len(scorecard) != 1 or len(match) != 1:
+            continue
+        scorecard_row = scorecard.iloc[0]
+        match_row = match.iloc[0]
+        final_runs = numeric_value(scorecard_row.get("runs_scored"))
+        final_balls = numeric_value(scorecard_row.get("balls_faced"))
+        balls_to_50 = numeric_value(supplement.get("balls_to_50"))
+        balls_to_100 = numeric_value(supplement.get("balls_to_100"))
+        if not valid_governed_milestone(final_runs, final_balls, balls_to_50, 50):
+            balls_to_50 = None
+        if not valid_governed_milestone(final_runs, final_balls, balls_to_100, 100):
+            balls_to_100 = None
+        if balls_to_50 is None and balls_to_100 is None:
+            continue
+        team_id = str(scorecard_row.get("team_id") or "")
+        home_id = str(match_row.get("home_team_id") or "")
+        team_name = match_row.get("home_team_name") if team_id == home_id else match_row.get("away_team_name")
+        opposition = match_row.get("away_team_name") if team_id == home_id else match_row.get("home_team_name")
+        team_runs = pd.NA
+        if not innings.empty:
+            innings_match = innings[
+                innings["match_id"].astype(str).eq(match_id)
+                & innings["innings_id"].astype(str).eq(str(scorecard_row.get("innings_id") or ""))
+            ]
+            if not innings_match.empty:
+                team_runs = pd.to_numeric(innings_match.iloc[0].get("runs_scored"), errors="coerce")
+        not_out = str(scorecard_row.get("dismissal_type") or "").casefold() in {"not out", "retired not out"} or "not out" in str(scorecard_row.get("dismissal_text") or "").casefold()
+        final_runs_int = int(final_runs) if final_runs is not None else 0
+        rows.append(
+            {
+                "player_id": participant_id,
+                "player_name": scorecard_row.get("player_name"),
+                "canonical_player_name": supplement.get("canonical_player_name") or scorecard_row.get("player_name"),
+                "match_id": match_id,
+                "innings_id": scorecard_row.get("innings_id"),
+                "participant_id": participant_id,
+                "match_date": str(match_row.get("first_match_day") or "")[:10],
+                "season": match_row.get("season"),
+                "team_name": team_name,
+                "grade_name": match_row.get("grade_name"),
+                "opposition_team": opposition,
+                "venue_name": match_row.get("venue_name"),
+                "match_type": match_row.get("match_type"),
+                "final_runs": final_runs_int,
+                "final_balls": int(final_balls) if final_balls is not None else pd.NA,
+                "final_score_display": f"{final_runs_int}{'*' if not_out else ''}",
+                "balls_to_25": pd.NA,
+                "balls_to_50": balls_to_50,
+                "balls_to_100": balls_to_100,
+                "balls_to_150": pd.NA,
+                "team_runs": team_runs,
+                "team_run_contribution_pct": (final_runs_int * 100 / float(team_runs)) if pd.notna(team_runs) and float(team_runs) else pd.NA,
+                "result_text": match_row.get("result_text"),
+                "is_not_out": not_out,
+                "runs_source_used": "playcricket_scorecard",
+                "balls_faced_source_used": "governed_customer_milestone",
+                "source_ball_by_ball_available": False,
+                "governed_source_document": supplement.get("source_document"),
+                "governed_source_notes": supplement.get("notes"),
+            }
+        )
+    if not rows:
+        return milestones
+    additions = pd.DataFrame(rows)
+    output = milestones.copy()
+    for row in additions.to_dict("records"):
+        mask = (
+            output.get("match_id", pd.Series("", index=output.index)).astype(str).eq(str(row["match_id"]))
+            & output.get("participant_id", pd.Series("", index=output.index)).astype(str).eq(str(row["participant_id"]))
+        )
+        if mask.any():
+            index = output.index[mask][0]
+            for column in ["balls_to_50", "balls_to_100"]:
+                if pd.isna(output.at[index, column]) and pd.notna(row.get(column)):
+                    output.at[index, column] = row[column]
+            continue
+        for column in row:
+            if column not in output:
+                output[column] = pd.NA
+        output.loc[len(output)] = [row.get(column, pd.NA) for column in output.columns]
+    return output.sort_values(["match_date", "player_name"], ascending=[False, True]).reset_index(drop=True)
+
+
+def valid_governed_milestone(final_runs: float | None, final_balls: float | None, milestone_balls: float | None, target: int) -> bool:
+    return (
+        final_runs is not None
+        and final_balls is not None
+        and milestone_balls is not None
+        and final_runs >= target
+        and 0 < milestone_balls <= final_balls
+    )
 
 
 def decision_row(
@@ -251,7 +468,8 @@ def premiership_key(row: pd.Series) -> str:
 
 def merge_premiership_overrides(wins: pd.DataFrame, players: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     write_empty_source_files()
-    doc_wins = read_csv(PREMIERSHIPS)
+    doc_win_frames = [frame for frame in [read_csv(PREMIERSHIPS), read_csv(HISTORICAL_PREMIERSHIPS)] if not frame.empty]
+    doc_wins = pd.concat(doc_win_frames, ignore_index=True, sort=False) if doc_win_frames else pd.DataFrame()
     doc_players = read_csv(PREMIERSHIP_PLAYERS)
     combined_wins = wins.copy()
     if "source" not in combined_wins:

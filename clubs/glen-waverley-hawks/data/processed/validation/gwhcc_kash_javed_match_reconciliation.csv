@@ -1,0 +1,6 @@
+category,raw_appearances,weighted_matches,adjustment,notes
+played_non_t20,142,142.0,0.0,T20=0.5; no-play=0; other played matches=1.
+played_t20,25,12.5,12.5,T20=0.5; no-play=0; other played matches=1.
+no_play_non_t20,9,0.0,9.0,T20=0.5; no-play=0; other played matches=1.
+no_play_t20,2,0.0,2.0,T20=0.5; no-play=0; other played matches=1.
+total_selected_squad_source,178,154.5,23.5,Authoritative arithmetic from locally retained PlayCricket match and selected-squad records.
