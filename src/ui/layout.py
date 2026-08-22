@@ -4908,6 +4908,7 @@ def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_s
     )
     if club_id == "glen-waverley-hawks":
         all_time = apply_gwhcc_record_overrides(all_time, write_decisions=False)
+        all_time = add_gwhcc_not_outs_for_display(all_time, batting)
     detailed_tables = {
         "batting": format_all_time_batting_table(all_time),
         "bowling": format_all_time_bowling_table(all_time),
@@ -6366,6 +6367,8 @@ def get_hall_of_fame_data(
         override_version,
         club_id=active_club_id,
     )
+    if active_club_id == "glen-waverley-hawks":
+        all_time = add_gwhcc_not_outs_for_display(all_time, historical_data["batting"])
     log_hof_timing("copy all-time summary", started_at)
 
     started_at = time.perf_counter()
@@ -8970,6 +8973,7 @@ def highest_reached_threshold(value: object, thresholds: list[int]) -> int | Non
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed Records 📊")
     render_hawks_match_count_footnote()
+    render_gwhcc_not_outs_coverage_note()
     if isinstance(all_time_or_tables, dict):
         tables = {
             "batting": all_time_or_tables["batting"].copy(),
@@ -9085,6 +9089,7 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
         "Latest Season",
         "Matches",
         "Win %",
+        "Not Outs",
         "Runs",
         "Bat Avg",
         "Bat SR",
@@ -9107,6 +9112,21 @@ def format_all_time_batting_table(all_time: pd.DataFrame) -> pd.DataFrame:
     table = link_season_columns(table)
     table = coerce_display_numbers(table)
     return apply_hof_table_sorting(table, "batting")
+
+
+def add_gwhcc_not_outs_for_display(all_time: pd.DataFrame, batting: pd.DataFrame) -> pd.DataFrame:
+    output = filter_public_player_rows(all_time)
+    required = {"canonical_player_id", "battingNotOuts"}
+    if output.empty or batting.empty or "canonical_player_id" not in output or not required.issubset(batting.columns):
+        return output
+    public_batting = filter_public_player_rows(batting)
+    not_outs = public_batting[["canonical_player_id", "battingNotOuts"]].copy()
+    not_outs["Not Outs"] = pd.to_numeric(not_outs["battingNotOuts"], errors="coerce")
+    not_outs = not_outs.groupby("canonical_player_id", as_index=False, dropna=False)["Not Outs"].sum(min_count=1)
+    output = output.drop(columns=["Not Outs"], errors="ignore").copy()
+    output["_not_out_row_order"] = range(len(output))
+    output = output.merge(not_outs, on="canonical_player_id", how="left", sort=False)
+    return output.sort_values("_not_out_row_order").drop(columns="_not_out_row_order").reset_index(drop=True)
 
 
 @st.cache_data(show_spinner=False)
@@ -9655,7 +9675,7 @@ def hof_detail_display_value(column: str, value: object, row: pd.Series | None =
     if column == "Overs":
         balls = cricket_overs_to_balls(value)
         return "" if balls is None else balls_to_overs_display(balls) or ""
-    if column in {"Seasons", "Seasons Played", "Matches", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "Maidens", "Wickets", "3WI", "5WI", "10WM", "Catches", "Stumpings", "Run Outs", "Dismissals"}:
+    if column in {"Seasons", "Seasons Played", "Matches", "Not Outs", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "Maidens", "Wickets", "3WI", "5WI", "10WM", "Catches", "Stumpings", "Run Outs", "Dismissals"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
@@ -13538,7 +13558,7 @@ def render_profile_breakdown_fallback_table(
         rows = profile_view.get("season_table", pd.DataFrame()).copy()
         if not rows.empty:
             if selected_discipline == "Batting":
-                columns = ["Season", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+                columns = profile_batting_table_columns("Season")
                 render_profile_season_stat_table(rows, columns, ["Innings", "Runs", "30s", "50s", "100s"])
                 return
             if selected_discipline == "Bowling":
@@ -13558,7 +13578,7 @@ def render_profile_breakdown_fallback_table(
         rows = profile_view.get("grade_table", pd.DataFrame()).copy()
         if not rows.empty:
             if selected_discipline == "Batting":
-                columns = ["Grade", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+                columns = profile_batting_table_columns("Grade")
                 render_profile_group_stat_table(rows, columns, ["Innings", "Runs", "30s", "50s", "100s"], "Grade")
                 return
             if selected_discipline == "Bowling":
@@ -13576,6 +13596,13 @@ def render_profile_breakdown_fallback_table(
             render_profile_group_stat_table(rows, columns, ["Catches", "Stumpings", "Run Outs", "Dismissals"], "Grade")
             return
     render_profile_empty_state(*profile_performance_empty_copy(label, selected_discipline))
+
+
+def profile_batting_table_columns(label_column: str) -> list[str]:
+    columns = [label_column, "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+    if get_active_club_id() == "glen-waverley-hawks":
+        columns.insert(2, "NO")
+    return columns
 
 
 def profile_breakdown_options() -> list[tuple[str, str]]:
@@ -13858,6 +13885,7 @@ def render_profile_performance_table(
             columns={
                 "breakdown_label": label_column,
                 "innings": "Inn",
+                "outs": "Outs",
                 "runs": "Runs",
                 "bat_avg": "Avg",
                 "strike_rate": "Strike Rate",
@@ -13871,6 +13899,11 @@ def render_profile_performance_table(
             }
         )
         columns = [label_column, "Inn", "Runs", "Avg", "Strike Rate", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+        if get_active_club_id() == "glen-waverley-hawks" and {"Inn", "Outs"}.issubset(table.columns):
+            table["Not Outs"] = (
+                pd.to_numeric(table["Inn"], errors="coerce") - pd.to_numeric(table["Outs"], errors="coerce")
+            ).clip(lower=0)
+            columns.insert(2, "Not Outs")
         activity_columns = ["Inn", "Runs", "30s", "50s", "100s"]
     elif discipline == "Bowling":
         table = filtered.rename(
@@ -14027,6 +14060,7 @@ def profile_performance_table_html(
       }}
       .profile-performance-table col.profile-col-label {{ width: 184px; }}
       .profile-performance-table col.profile-col-inn,
+      .profile-performance-table col.profile-col-not-outs,
       .profile-performance-table col.profile-col-m,
       .profile-performance-table col.profile-col-w,
       .profile-performance-table col.profile-col-30s,
@@ -14268,7 +14302,7 @@ def profile_performance_display_value(column: str, value: object, label_column: 
     if column in {"Avg", "SR", "Eco"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
-    if column in {"Inn", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "M", "W", "3WI", "5WI", "Catches", "Stumpings", "RO", "Dismissals"}:
+    if column in {"Inn", "Not Outs", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "M", "W", "3WI", "5WI", "Catches", "Stumpings", "RO", "Dismissals"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
@@ -14384,7 +14418,7 @@ def render_player_season_table(season_table: pd.DataFrame) -> None:
     with st.container(key="player_profile_season_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            columns = ["Season", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+            columns = profile_batting_table_columns("Season")
             render_profile_season_stat_table(season_table, columns, ["Innings", "Runs", "30s", "50s", "100s"])
         with bowling_tab:
             table = season_table.copy()
@@ -14407,7 +14441,7 @@ def render_player_grade_table(grade_table: pd.DataFrame) -> None:
     with st.container(key="player_profile_grade_table"):
         batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
         with batting_tab:
-            columns = ["Grade", "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+            columns = profile_batting_table_columns("Grade")
             render_profile_group_stat_table(grade_table, columns, ["Innings", "Runs", "30s", "50s", "100s"], "Grade")
         with bowling_tab:
             table = grade_table.copy()
@@ -14439,6 +14473,8 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
         st.caption("No data available for this view.")
         return
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
+    if get_active_club_id() == "glen-waverley-hawks" and "NO" in table:
+        table = table.rename(columns={"NO": "Not Outs"})
     display = link_season_columns(format_profile_sortable_table(table), ["Season"])
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -14459,6 +14495,7 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
         "Matches",
         "Inn",
         "Innings",
+        "Not Outs",
         "Runs",
         "BF",
         "BBB Runs",
@@ -14539,6 +14576,8 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         table = table.sort_values("_sort_key").drop(columns="_sort_key")
     else:
         table = table.sort_values(label_column)
+    if get_active_club_id() == "glen-waverley-hawks" and "NO" in table:
+        table = table.rename(columns={"NO": "Not Outs"})
     display = format_profile_sortable_table(table)
     table_height = min(390, max(170, 42 * (len(display) + 1)))
     render_filterable_dataframe(
@@ -14629,11 +14668,12 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Overview 🧩")
     render_hawks_match_count_footnote()
+    render_gwhcc_not_outs_coverage_note()
     keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
     matches_text, _, _ = historical_matches_display_text(career)
     batting_matches_value = matches_text or format_int(career.get("Matches"))
     cards = [
-        ("Batting", [("Matches/Innings", f"{batting_matches_value} / {format_int(career.get('Innings'))}"), ("Runs", format_int(career.get("Runs"))), ("Average", format_decimal(career.get("Bat Avg"))), ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))), ("0s", format_int(career.get("0s"))), ("HS", format_high_score_text(career.get("HS")) or "")]),
+        ("Batting", player_profile_batting_career_metrics(career, batting_matches_value)),
         ("Bowling", [("Wickets", format_int(career.get("Wickets"))), ("Overs", safe_record_text(career.get("Overs"), "")), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", safe_record_text(career.get("BBI"), ""))]),
         ("Fielding", [("Catches", format_int(career.get("Catches"))), ("Stumpings", format_int(career.get("Stumpings"))), ("Run Outs", format_int(career.get("Run Outs"))), ("Dismissals", format_int(career.get("Dismissals")))]),
     ]
@@ -14644,6 +14684,28 @@ def render_player_breakdown(career: pd.Series) -> None:
             card_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
             card_classes = f"profile-breakdown-card profile-career-overview-card profile-career-card-{card_slug} {keeper_class}"
             st.markdown(f'<div class="{card_classes}"><h4>{html.escape(title)}</h4>{metric_html}</div>', unsafe_allow_html=True)
+
+
+def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) -> list[tuple[str, str]]:
+    metrics = [
+        ("Matches/Innings", f"{matches_text} / {format_int(career.get('Innings'))}"),
+        ("Runs", format_int(career.get("Runs"))),
+        ("Average", format_decimal(career.get("Bat Avg"))),
+        ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))),
+        ("0s", format_int(career.get("0s"))),
+        ("HS", format_high_score_text(career.get("HS")) or ""),
+    ]
+    if get_active_club_id() == "glen-waverley-hawks":
+        innings = pd.to_numeric(career.get("Innings"), errors="coerce")
+        outs = pd.to_numeric(career.get("Outs"), errors="coerce")
+        not_outs = max(float(innings) - float(outs), 0) if pd.notna(innings) and pd.notna(outs) else None
+        metrics.insert(1, ("Not Outs", format_int(not_outs)))
+    return metrics
+
+
+def render_gwhcc_not_outs_coverage_note() -> None:
+    if get_active_club_id() == "glen-waverley-hawks":
+        st.caption("Not Outs reflect available PlayCricket batting records; historical document-only totals may differ.")
 
 
 def render_player_recent_form(career: pd.Series) -> None:
@@ -15370,7 +15432,7 @@ def historical_matches_numeric_value(row: pd.Series, *, matches_key: str = "Matc
 def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
     decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Strike Rate", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
-    integer_columns = {"M", "Matches", "Inn", "Innings", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "W", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}
+    integer_columns = {"M", "Matches", "Inn", "Innings", "Not Outs", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "W", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}
     for column in output.columns:
         if column in decimal_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "" if pd.isna(value) else f"{float(value):.2f}")
@@ -15389,6 +15451,7 @@ def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
         "Matches",
         "Inn",
         "Innings",
+        "Not Outs",
         "Runs",
         "BF",
         "BBB Runs",
@@ -18246,6 +18309,7 @@ def season_detail_display_value(column: str, value: object, row: pd.Series | Non
         "M",
         "Mat",
         "Inn",
+        "Not Outs",
         "Runs",
         "30s",
         "50s",
@@ -18347,41 +18411,48 @@ def build_full_stats_frame(
 
 
 def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
+    source_columns = [
+        "player_name",
+        "team_name",
+        "matches",
+        "battingInnings",
+        "battingAggregate",
+        "battingAverage",
+        "seasonDetailBatSR",
+        "high_score",
+        "seasonDetail30s",
+        "batting50s",
+        "batting100s",
+        "batting0s",
+        "battingFours",
+        "battingSixes",
+    ]
+    display_columns = [
+        "Player",
+        "Team",
+        "M",
+        "Inn",
+        "Runs",
+        "Bat Avg",
+        "Bat SR",
+        "HS",
+        "30s",
+        "50s",
+        "100s",
+        "0s",
+        "4s",
+        "6s",
+    ]
+    if get_active_club_id() == "glen-waverley-hawks":
+        source_columns.insert(4, "battingNotOuts")
+        display_columns.insert(4, "NO")
     output = prepare_curated_display_frame(
         df,
-        [
-            "player_name",
-            "team_name",
-            "matches",
-            "battingInnings",
-            "battingAggregate",
-            "battingAverage",
-            "seasonDetailBatSR",
-            "high_score",
-            "seasonDetail30s",
-            "batting50s",
-            "batting100s",
-            "batting0s",
-            "battingFours",
-            "battingSixes",
-        ],
-        [
-            "Player",
-            "Team",
-            "M",
-            "Inn",
-            "Runs",
-            "Bat Avg",
-            "Bat SR",
-            "HS",
-            "30s",
-            "50s",
-            "100s",
-            "0s",
-            "4s",
-            "6s",
-        ],
+        source_columns,
+        display_columns,
     )
+    if get_active_club_id() == "glen-waverley-hawks":
+        output = output.rename(columns={"NO": "Not Outs"})
     return apply_batting_detail_fallbacks(output)
 
 
