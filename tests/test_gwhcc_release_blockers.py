@@ -221,7 +221,7 @@ def test_singular_plural_and_exclusive_threshold_order() -> None:
     assert layout.normalize_result_wording("Won by 1 wickets") == "Won by 1 wicket"
     assert layout.normalize_result_wording("won by 1 runs") == "won by 1 run"
     assert layout.grammatical_unit(1, "catches") == "catch"
-    assert sorted(layout.exclusive_club_specs("matches")[0]["thresholds"], reverse=True) == [400, 300, 200, 100]
+    assert sorted(layout.exclusive_club_specs("matches", CLUB_ID)[0]["thresholds"], reverse=True) == [400, 300, 200, 100, 50]
 
 
 def test_customer_footer_hides_build_marker_and_keeps_email_intact(monkeypatch) -> None:

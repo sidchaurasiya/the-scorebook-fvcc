@@ -5595,14 +5595,14 @@ def render_approaching_milestones_page() -> None:
     )
     if selected_view == "achieved":
         season_window = milestone_achievement_season_window(historical_data)
-        achieved = build_achieved_milestones(historical_data, season_window)
+        achieved = build_achieved_milestones(historical_data, season_window, club_id)
         hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
     elif selected_view == "exclusive":
         render_milestone_club(historical_data["all_time"], selected_milestone_club_category())
     else:
         active_players = recent_active_canonical_players(historical_data)
-        watchlist = build_approaching_milestone_watchlist(historical_data["all_time"])
+        watchlist = build_approaching_milestone_watchlist(historical_data["all_time"], club_id)
         if active_players:
             watchlist = watchlist[watchlist["canonical_player_id"].isin(active_players)].copy()
         hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
@@ -5760,9 +5760,19 @@ def ordered_milestone_seasons(season_table: pd.DataFrame) -> list[str]:
     return output["name"].dropna().astype(str).drop_duplicates().tolist()
 
 
-def milestone_achievement_specs() -> list[dict[str, object]]:
+def milestone_match_thresholds(club_id: str | None = None, *, extended: bool = False) -> list[int]:
+    active_club_id = club_id or get_active_club_id()
+    thresholds = [100, 200, 300, 400]
+    if extended:
+        thresholds.extend([500, 600])
+    if active_club_id == "glen-waverley-hawks":
+        thresholds.insert(0, 50)
+    return thresholds
+
+
+def milestone_achievement_specs(club_id: str | None = None) -> list[dict[str, object]]:
     return [
-        {"category": "Matches", "metric": "Matches", "unit": "matches", "thresholds": [100, 200, 300, 400, 500, 600]},
+        {"category": "Matches", "metric": "Matches", "unit": "matches", "thresholds": milestone_match_thresholds(club_id, extended=True)},
         {"category": "Runs", "metric": "Runs", "unit": "runs", "thresholds": [1000, 2000, 3000, 4000, 5000, 6000]},
         {"category": "Wickets", "metric": "Wickets", "unit": "wickets", "thresholds": [100, 200, 300, 400]},
         {"category": "Catches", "metric": "Catches", "unit": "catches", "thresholds": [100, 200]},
@@ -5773,6 +5783,7 @@ def milestone_achievement_specs() -> list[dict[str, object]]:
 def build_achieved_milestones(
     historical_data: dict[str, object],
     season_window: list[str],
+    club_id: str | None = None,
 ) -> pd.DataFrame:
     columns = [
         "Player",
@@ -5787,7 +5798,10 @@ def build_achieved_milestones(
     if not season_window:
         return pd.DataFrame(columns=columns)
 
+    active_club_id = club_id or get_active_club_id()
     all_time = historical_data["all_time"].copy()
+    if active_club_id == "glen-waverley-hawks":
+        all_time = filter_public_player_rows(all_time)
     period_totals = build_milestone_period_totals(historical_data, season_window)
     season_totals = build_milestone_period_totals_by_season(historical_data, season_window)
     if all_time.empty or period_totals.empty:
@@ -5795,7 +5809,7 @@ def build_achieved_milestones(
 
     rows: list[dict[str, object]] = []
     season_label = milestone_season_window_label(season_window)
-    for spec in milestone_achievement_specs():
+    for spec in milestone_achievement_specs(active_club_id):
         metric = str(spec["metric"])
         if metric not in all_time or metric not in period_totals:
             continue
@@ -5819,7 +5833,11 @@ def build_achieved_milestones(
                             "Category": spec["category"],
                             "Milestone": f"{int(threshold_value):,} {spec['unit']} reached",
                             "Threshold": int(threshold_value),
-                            "Current Total": int(round(current_total)),
+                            "Current Total": (
+                                float(current_total)
+                                if active_club_id == "glen-waverley-hawks" and metric == "Matches"
+                                else int(round(current_total))
+                            ),
                             "Season": milestone_reached_season(
                                 season_totals,
                                 str(player["player_key"]),
@@ -5836,7 +5854,7 @@ def build_achieved_milestones(
         return pd.DataFrame(columns=columns)
     output = pd.DataFrame(rows).drop_duplicates(["canonical_player_id", "Category", "Threshold"])
     output["category_order"] = output["Category"].map(
-        {str(spec["category"]): index for index, spec in enumerate(milestone_achievement_specs())}
+        {str(spec["category"]): index for index, spec in enumerate(milestone_achievement_specs(active_club_id))}
     )
     output = output.sort_values(["category_order", "Threshold", "Player"], ascending=[True, False, True])
     return output.drop(columns=["category_order"], errors="ignore")[columns]
@@ -6143,7 +6161,7 @@ def achievement_card_html(row: pd.Series) -> str:
         f'<div class="achievement-player">{player_profile_link_html(player_id_from_row(row), row["Player"])}</div>'
         f'<div class="achievement-value">{html.escape(str(row["Milestone"]))}</div>'
         f'<div class="achievement-meta">{html.escape(str(row["Season"]))} · {html.escape(str(row["Category"]))}</div>'
-        f'<div class="achievement-total">Current total: {int(row["Current Total"]):,} {html.escape(str(row["Unit"]))}</div>'
+        f'<div class="achievement-total">Current total: {format_compact_number(row["Current Total"])} {html.escape(str(row["Unit"]))}</div>'
         "</article>"
     )
 
@@ -8849,10 +8867,10 @@ def record_card_html(card: dict[str, object]) -> str:
     )
 
 
-def exclusive_club_specs(category: str) -> list[dict[str, object]]:
+def exclusive_club_specs(category: str, club_id: str | None = None) -> list[dict[str, object]]:
     specs = {
         "matches": [
-            {"metric": "Matches", "label": "matches", "thresholds": [100, 200, 300, 400]},
+            {"metric": "Matches", "label": "matches", "thresholds": milestone_match_thresholds(club_id)},
         ],
         "runs": [
             {"metric": "Runs", "label": "runs", "thresholds": [1000, 2000, 3000, 4000, 5000, 6000]},
@@ -8869,7 +8887,10 @@ def exclusive_club_specs(category: str) -> list[dict[str, object]]:
 
 def render_milestone_club(all_time: pd.DataFrame, selected_category: str = "matches") -> None:
     club_entries: list[tuple[pd.DataFrame, int, str, str]] = []
-    for spec in exclusive_club_specs(selected_category):
+    club_id = get_active_club_id()
+    if club_id == "glen-waverley-hawks":
+        all_time = filter_public_player_rows(all_time)
+    for spec in exclusive_club_specs(selected_category, club_id):
         metric = str(spec["metric"])
         thresholds = [int(value) for value in spec["thresholds"]]
         if metric not in all_time:
@@ -9829,16 +9850,20 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def build_approaching_milestone_watchlist(all_time: pd.DataFrame) -> pd.DataFrame:
+def build_approaching_milestone_watchlist(all_time: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+    active_club_id = club_id or get_active_club_id()
+    if active_club_id == "glen-waverley-hawks":
+        all_time = filter_public_player_rows(all_time)
+    first_match_threshold = min(milestone_match_thresholds(active_club_id))
     specs = [
-        ("Matches", "Matches", 100, 10, "matches", "Career Milestones"),
-        ("Runs", "Runs", 1000, 100, "runs", "Career Milestones"),
-        ("Wickets", "Wickets", 100, 10, "wickets", "Career Milestones"),
-        ("Catches", "Catches", 100, 10, "catches", "Career Milestones"),
+        ("Matches", "Matches", 100, 10, "matches", "Career Milestones", first_match_threshold),
+        ("Runs", "Runs", 1000, 100, "runs", "Career Milestones", None),
+        ("Wickets", "Wickets", 100, 10, "wickets", "Career Milestones", None),
+        ("Catches", "Catches", 100, 10, "catches", "Career Milestones", None),
     ]
     frames = [
-        build_milestone_watchlist(all_time, value_col, category, step, threshold, unit, group)
-        for category, value_col, step, threshold, unit, group in specs
+        build_milestone_watchlist(all_time, value_col, category, step, threshold, unit, group, first_threshold)
+        for category, value_col, step, threshold, unit, group, first_threshold in specs
         if value_col in all_time
     ]
     frames = [frame for frame in frames if not frame.empty]
@@ -9961,6 +9986,7 @@ def build_milestone_watchlist(
     threshold: int,
     unit: str,
     group: str,
+    first_threshold: int | None = None,
 ) -> pd.DataFrame:
     if df.empty or value_col not in df or "Player" not in df:
         return pd.DataFrame(columns=milestone_watchlist_columns())
@@ -9982,7 +10008,9 @@ def build_milestone_watchlist(
         group_columns.append(id_column)
     grouped = values.groupby(group_columns, as_index=False)[value_col].sum()
     grouped["Current Total"] = grouped[value_col].astype(float)
-    grouped["Target Milestone"] = grouped["Current Total"].map(lambda value: next_milestone_target(value, step))
+    grouped["Target Milestone"] = grouped["Current Total"].map(
+        lambda value: next_milestone_target(value, step, first_threshold)
+    )
     grouped["Remaining"] = grouped["Target Milestone"] - grouped["Current Total"]
     grouped = grouped[(grouped["Remaining"] > 0) & (grouped["Remaining"] <= threshold)]
     if grouped.empty:
@@ -9997,7 +10025,9 @@ def build_milestone_watchlist(
     return grouped[milestone_watchlist_columns()]
 
 
-def next_milestone_target(value: float, step: int) -> int:
+def next_milestone_target(value: float, step: int, first_threshold: int | None = None) -> int:
+    if first_threshold is not None and float(value) < first_threshold:
+        return int(first_threshold)
     current = int(value)
     if current % step == 0:
         return current + step
@@ -10085,7 +10115,11 @@ def milestone_group_rule(category: str) -> str:
 
 def milestone_empty_message(category: str) -> str:
     messages = {
-        "Matches": "No players within 10 matches of the next 100-match milestone.",
+        "Matches": (
+            "No players within 10 matches of the next major match milestone."
+            if get_active_club_id() == "glen-waverley-hawks"
+            else "No players within 10 matches of the next 100-match milestone."
+        ),
         "Runs": "No players within 100 runs of the next 1000-run milestone.",
         "Wickets": "No players within 10 wickets of the next 100-wicket milestone.",
         "Catches": "No players within 10 catches of the next 100-catch milestone.",
