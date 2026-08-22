@@ -1,0 +1,20 @@
+source_classification,season,candidate_rows,confirmed_rows,review_rows,private_rows
+ball_by_ball_calculated,Summer 2016/17,71,0,71,0
+ball_by_ball_calculated,Summer 2017/18,211,113,98,0
+ball_by_ball_calculated,Summer 2018/19,120,97,23,0
+ball_by_ball_calculated,Summer 2019/20,558,378,176,4
+ball_by_ball_calculated,Summer 2020/21,351,335,12,4
+ball_by_ball_calculated,Summer 2021/22,428,373,53,2
+ball_by_ball_calculated,Summer 2022/23,515,434,80,1
+ball_by_ball_calculated,Summer 2023/24,491,309,172,10
+ball_by_ball_calculated,Summer 2024/25,824,552,266,6
+ball_by_ball_calculated,Summer 2025/26,1015,718,263,34
+customer_document,Summer 1986/87,1,0,1,0
+customer_document,Summer 1990/91,1,0,1,0
+customer_document,Summer 1993/94,1,0,1,0
+customer_document,Summer 1995/96,1,0,1,0
+customer_document,Summer 1996/97,1,1,0,0
+customer_document,Summer 2004/05,1,1,0,0
+customer_document,Summer 2007/08,2,2,0,0
+customer_document,Summer 2013/14,1,1,0,0
+customer_document,Summer 2014/15,1,0,1,0

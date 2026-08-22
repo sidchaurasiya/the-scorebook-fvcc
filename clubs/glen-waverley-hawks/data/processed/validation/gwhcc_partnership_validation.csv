@@ -1,0 +1,18 @@
+check,status,detail
+prepared_events_exist,PASS,rows=3314
+record_holders_exist,PASS,rows=10
+no_duplicate_events,PASS,duplicates=0
+one_record_per_wicket,PASS,"wickets=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+no_private_public_events,PASS,private=0
+all_records_from_public_events,PASS,record IDs are event-backed
+review_rows_are_audited,PASS,review=1219
+wicket_1_record_is_maximum,PASS,maximum=294
+wicket_2_record_is_maximum,PASS,maximum=336
+wicket_3_record_is_maximum,PASS,maximum=248
+wicket_4_record_is_maximum,PASS,maximum=215
+wicket_5_record_is_maximum,PASS,maximum=102
+wicket_6_record_is_maximum,PASS,maximum=106
+wicket_7_record_is_maximum,PASS,maximum=94
+wicket_8_record_is_maximum,PASS,maximum=122
+wicket_9_record_is_maximum,PASS,maximum=90
+wicket_10_record_is_maximum,PASS,maximum=204
