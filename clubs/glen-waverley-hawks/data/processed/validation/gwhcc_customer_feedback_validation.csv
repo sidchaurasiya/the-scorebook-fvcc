@@ -2,7 +2,8 @@ check_name,validation_status,actual,expected,notes
 identity_greg_mccormick_single_canonical,PASS,1,1,Governed non-overlapping provider IDs resolve to one canonical identity.
 identity_ahilan_sivakumaran_single_canonical,PASS,1,1,Governed non-overlapping provider IDs resolve to one canonical identity.
 identity_reece_anderson_single_canonical,PASS,1,1,Governed non-overlapping provider IDs resolve to one canonical identity.
-fb04_james_single_scorebook_source,PASS,1,1,No unsupported merge was applied to ambiguous customer workbook rows.
+fb04_james_single_scorebook_source,PASS,scorebook_ids=1; customer_aliases=1,scorebook_ids=1; customer_aliases=1,Customer confirmed both workbook labels refer to the one existing PlayCricket participant; overlapping workbook rows are not summed.
+greg_customer_decision_scorebook_totals,PASS,427.0/8664.0/393.0,427/8664/393,Career Master alternatives remain retained evidence and are not applied.
 historical_century_supplements_exist,PASS,65,65,Governed customer century rows are versioned outside raw PlayCricket data.
 fb05_sunny_somaia_centuries,PASS,19.0,19,Customer score list reconciled against existing scorecard and aggregate century counts.
 fb05_glen_mahoney_centuries,PASS,16.0,16,Customer score list reconciled against existing scorecard and aggregate century counts.
@@ -12,7 +13,7 @@ fb05_brett_powell_centuries,PASS,6.0,6,Customer score list reconciled against ex
 fb05_dulaj_madushanka_centuries,PASS,3.0,3,Customer score list reconciled against existing scorecard and aggregate century counts.
 fb02_ahilan_authoritative_totals,PASS,132.0/3414.0/45.0,132/3414/45,Customer Career Master supplements the confirmed merged identity.
 fb07_adrian_documented_debut,PASS,Summer 1980/81,Summer 1980/81,Detailed reconstructed seasons remain unchanged.
-fb08_kash_weighted_matches,PASS,154.5,154.5,Existing T20/no-play policy retained.
+fb08_kash_weighted_matches,PASS,154.5,154.5,Closed no issue: Scorebook is GWHCC-only; the customer comparison included other clubs. Existing T20/no-play policy retained.
 fb06_combined_premiership_events,PASS,53,53,24 verified PlayCricket events plus 29 non-duplicated governed historical events.
 fb09_arun_inactive,PASS,False,False,Explicit departed-player evidence overrides recency.
 fb09_ahilan_inactive,PASS,False,False,Explicit departed-player evidence overrides recency.

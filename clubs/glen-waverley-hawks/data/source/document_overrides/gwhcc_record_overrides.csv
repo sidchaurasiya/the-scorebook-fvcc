@@ -2,7 +2,7 @@ player_name,metric,document_value,source_document,confidence,notes
 G. Mahoney,runs,11040.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 S. Somaia,runs,9621.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 S. Wynd,runs,9205.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
-G. McCormick,runs,8664.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. McCormick,runs,8664.0,gwhcc_leading_players_source.pdf,confirmed,"Customer decision on 2026-08-23: use Scorebook totals 427 games, 8,664 runs and 393 wickets; Career Master alternatives remain retained evidence and are not applied."
 B. Calder,runs,7636.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 J. Greaves,runs,7098.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 C. Briginshaw,runs,7051.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
@@ -12,7 +12,7 @@ G. Haye,runs,6215.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC
 M. Briginshaw,wickets,533.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 A. Dale,wickets,456.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 N. Bungey,wickets,408.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
-G. McCormick,wickets,393.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. McCormick,wickets,393.0,gwhcc_leading_players_source.pdf,confirmed,"Customer decision on 2026-08-23: use Scorebook totals 427 games, 8,664 runs and 393 wickets; Career Master alternatives remain retained evidence and are not applied."
 C. Perkins,wickets,377.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 L. Galle,wickets,357.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 S. Wynd,wickets,349.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
@@ -20,7 +20,7 @@ A. Chelvan,wickets,339.0,gwhcc_leading_players_source.pdf,review,Extracted from 
 J. Goddard (Justin),wickets,333.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 H. Bristow,wickets,318.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 T. Medina,wickets,300.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
-G. McCormick,games,427.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
+G. McCormick,games,427.0,gwhcc_leading_players_source.pdf,confirmed,"Customer decision on 2026-08-23: use Scorebook totals 427 games, 8,664 runs and 393 wickets; Career Master alternatives remain retained evidence and are not applied."
 C. Briginshaw,games,390.5,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 N. Bungey,games,338.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.
 G. Powell,games,337.0,gwhcc_leading_players_source.pdf,review,Extracted from GWHCC Leading Players 2025-26 source document; requires review before customer use.

@@ -6,7 +6,7 @@ import pandas as pd
 from pandas.testing import assert_frame_equal
 
 from src.data.match_centre_parser import build_ball_partnerships
-from src.data.partnerships import build_partnership_record_holders, prepare_ball_by_ball_partnerships
+from src.data.partnerships import EVENT_COLUMNS, build_partnership_record_holders, combine_partnership_events, prepare_ball_by_ball_partnerships
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,6 +156,17 @@ def test_preparation_and_record_selection_are_reproducible() -> None:
     second = prepare()
     assert_frame_equal(first.events, second.events)
     assert_frame_equal(build_partnership_record_holders(first.events), build_partnership_record_holders(second.events))
+
+
+def test_playcricket_precedes_equivalent_customer_partnership() -> None:
+    playcricket = prepare().events.iloc[[0]].copy()
+    document = playcricket.copy()
+    document["record_id"] = "document-equivalent"
+    document["source_classification"] = "customer_document"
+    document["evidence_quality"] = "club_record_document"
+    combined = combine_partnership_events(document[EVENT_COLUMNS], playcricket[EVENT_COLUMNS])
+    assert len(combined) == 1
+    assert combined.iloc[0]["source_classification"] == "ball_by_ball_calculated"
 
 
 def test_deployed_partnership_outputs_are_public_and_validated() -> None:

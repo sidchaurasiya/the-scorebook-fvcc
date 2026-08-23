@@ -3,7 +3,6 @@ import html
 import math
 import os
 import re
-import subprocess
 import textwrap
 import time
 from urllib.parse import quote, unquote
@@ -91,6 +90,7 @@ from src.config.club_config import (
     get_season_overview_path,
     load_club_config,
 )
+from src.config.app_version import scorebook_build_identifier, scorebook_version_label
 from src.data import player_dna_analytics as player_dna
 from src.data import scorebook_lab_analytics as scorebook_lab
 from src.data import season_story_analytics as season_story
@@ -782,22 +782,13 @@ def add_missing_canonical_player_ids(table: pd.DataFrame, club_id: str | None = 
 
 
 def app_build_commit() -> str:
-    for env_name in ("STREAMLIT_GIT_COMMIT", "COMMIT_SHA", "GIT_COMMIT", "SOURCE_VERSION"):
-        value = str(os.getenv(env_name, "") or "").strip()
-        if value:
-            return value[:7]
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=APP_ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
-            timeout=2,
-        )
-    except Exception:
-        return "unknown"
-    return result.stdout.strip() or "unknown"
+    return scorebook_build_identifier(APP_ROOT)
+
+
+def scorebook_version_footer_html() -> str:
+    if get_active_club_id() != "glen-waverley-hawks":
+        return ""
+    return f'<div class="scorebook-version">{html.escape(scorebook_version_label("GWHCC", APP_ROOT))}</div>'
 
 
 def app_data_version_label() -> str:
@@ -980,6 +971,7 @@ def render_sidebar() -> str:
                 <div>For feedback/enquiries:</div>
                 <a href="mailto:{html.escape(configured_feedback_email())}">{configured_feedback_email_html()}</a>
             </div>
+            {scorebook_version_footer_html()}
             {app_build_marker_html()}
         </div>
         """,
@@ -1000,6 +992,7 @@ def render_mobile_page_footer() -> None:
                 <div>For feedback/enquiries:</div>
                 <a href="mailto:{html.escape(configured_feedback_email())}">{configured_feedback_email_html()}</a>
             </div>
+            {scorebook_version_footer_html()}
         </div>
         """,
         unsafe_allow_html=True,

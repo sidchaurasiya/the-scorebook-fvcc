@@ -2,3 +2,5 @@ document_player_name,playcricket_player_name,scope,confidence,notes
 S. Somaia,Sunny Somaia,all,confirmed,Confirmed by POC review on 2026-07-07.
 J. Goddard (Justin),Justin Goddard,all,confirmed,Confirmed by POC review on 2026-07-07.
 G. Haye,Grant Haye,all,confirmed,Confirmed by POC review on 2026-07-07.
+ANDERSON. J,James Anderson,career,confirmed,Customer confirmed ANDERSON.J and ANDERSON.J.C are the same person on 2026-08-23; overlapping workbook rows must not be added together.
+ANDERSON.J.C,James Anderson,career,confirmed,Customer confirmed ANDERSON.J and ANDERSON.J.C are the same person on 2026-08-23; one existing PlayCricket participant remains authoritative.
