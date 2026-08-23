@@ -14,12 +14,14 @@ if str(ROOT) not in sys.path:
 
 from src.data.gwhcc_document_overrides import (  # noqa: E402
     DECISIONS,
+    HISTORICAL_CAREER_METRIC_DECISIONS,
     PREMIERSHIPS,
     PREMIERSHIP_PLAYERS,
     RAW_DIR,
     RECORD_OVERRIDES,
     VALIDATION,
     apply_record_overrides,
+    load_historical_career_metric_decisions,
     merge_premiership_overrides,
 )
 from src.data.gwhcc_match_policy import PROCESSED, read_csv  # noqa: E402
@@ -76,6 +78,7 @@ def main() -> int:
     all_time = sample_all_time()
     applied = apply_record_overrides(all_time)
     decisions = read_csv(DECISIONS)
+    historical_metrics = load_historical_career_metric_decisions()
     raw_files = [path for path in RAW_DIR.glob("*") if path.is_file() and not path.name.startswith(".")]
     if decisions.empty:
         lower_applied = False
@@ -100,6 +103,10 @@ def main() -> int:
         check("most_premierships_combined_source_available", not combined_players.empty, len(combined_players), "player premiership rows", "Most Premierships can be rebuilt from combined player table."),
         check("hof_player_profile_same_record_override_function", not applied.empty or all_time.empty, len(applied), "applicable all-time rows", "HOF and Player Profile use apply_record_overrides."),
         check("milestones_use_overridden_all_time_when_present", True, "HOF all_time", "milestone source", "Milestone exclusive/watchlist reads HOF all_time in layout."),
+        check("fb17c_metric_decisions_parseable", HISTORICAL_CAREER_METRIC_DECISIONS.exists() and len(historical_metrics) == 101, len(historical_metrics), 101, "FB17C source has 21 runs, wickets and averages plus 17 approved Not Outs."),
+        check("fb17c_metric_decisions_unique", not historical_metrics.duplicated(["canonical_player_id", "metric"]).any(), int(historical_metrics.duplicated(["canonical_player_id", "metric"]).sum()), 0, "One governed value per canonical player and metric."),
+        check("fb17c_excludes_matches_and_fielding", not historical_metrics["metric"].isin({"matches", "catches", "stumpings", "run_outs"}).any(), sorted(historical_metrics["metric"].unique()), "runs/wickets/averages/approved not_outs", "Historical match counting and fielding remain PlayCricket governed."),
+        check("fb17c_provenance_complete", historical_metrics[["source_document", "source_sheet", "source_row", "confidence", "decision_reason"]].astype(str).apply(lambda column: column.str.strip().ne("").all()).all(), "complete" if not historical_metrics.empty else "empty", "complete", "Every FB17C metric remains traceable to the committed audit and Career Master row."),
         check("no_grdcc_fvcc_data_changes", True, "hawks-only module", "no shared data mutation", "Document overrides are gated to GWHCC app paths."),
     ]
     VALIDATION.parent.mkdir(parents=True, exist_ok=True)

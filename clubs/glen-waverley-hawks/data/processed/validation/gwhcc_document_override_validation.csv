@@ -9,4 +9,8 @@ combined_premierships_deduplicated,pass,0,0,Combined premiership rows use conser
 most_premierships_combined_source_available,pass,361,player premiership rows,Most Premierships can be rebuilt from combined player table.
 hof_player_profile_same_record_override_function,pass,1220,applicable all-time rows,HOF and Player Profile use apply_record_overrides.
 milestones_use_overridden_all_time_when_present,pass,HOF all_time,milestone source,Milestone exclusive/watchlist reads HOF all_time in layout.
+fb17c_metric_decisions_parseable,pass,101,101,"FB17C source has 21 runs, wickets and averages plus 17 approved Not Outs."
+fb17c_metric_decisions_unique,pass,0,0,One governed value per canonical player and metric.
+fb17c_excludes_matches_and_fielding,pass,"['batting_average', 'bowling_average', 'not_outs', 'runs', 'wickets']",runs/wickets/averages/approved not_outs,Historical match counting and fielding remain PlayCricket governed.
+fb17c_provenance_complete,pass,complete,complete,Every FB17C metric remains traceable to the committed audit and Career Master row.
 no_grdcc_fvcc_data_changes,pass,hawks-only module,no shared data mutation,Document overrides are gated to GWHCC app paths.

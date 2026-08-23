@@ -26,6 +26,7 @@ PREMIERSHIP_PLAYERS = SOURCE_ROOT / "gwhcc_premiership_players.csv"
 PLAYER_ALIASES = SOURCE_ROOT / "gwhcc_document_player_aliases.csv"
 HISTORICAL_CENTURIES = SOURCE_ROOT / "gwhcc_historical_centuries.csv"
 HISTORICAL_CAREER_METADATA = SOURCE_ROOT / "gwhcc_historical_career_metadata.csv"
+HISTORICAL_CAREER_METRIC_DECISIONS = SOURCE_ROOT / "gwhcc_historical_career_metric_decisions.csv"
 HISTORICAL_SEASONS = SOURCE_ROOT / "gwhcc_historical_seasons.csv"
 HISTORICAL_PREMIERSHIPS = SOURCE_ROOT / "gwhcc_historical_premiership_events.csv"
 FASTEST_INNINGS_SUPPLEMENTS = SOURCE_ROOT / "gwhcc_fastest_innings_supplements.csv"
@@ -67,6 +68,14 @@ METRIC_TO_COLUMN = {
     "catches": "Catches",
 }
 
+HISTORICAL_CAREER_METRIC_TO_COLUMN = {
+    "runs": "Runs",
+    "wickets": "Wickets",
+    "not_outs": "Not Outs",
+    "batting_average": "Bat Avg",
+    "bowling_average": "Bowl Avg",
+}
+
 
 def ensure_document_override_dirs() -> None:
     for path in [RAW_DIR, EXTRACTED_DIR, REVIEW_DIR, VALIDATION_DIR]:
@@ -82,6 +91,7 @@ def document_override_signature() -> tuple[tuple[str, float], ...]:
         PLAYER_ALIASES,
         HISTORICAL_CENTURIES,
         HISTORICAL_CAREER_METADATA,
+        HISTORICAL_CAREER_METRIC_DECISIONS,
         HISTORICAL_SEASONS,
         HISTORICAL_PREMIERSHIPS,
         FASTEST_INNINGS_SUPPLEMENTS,
@@ -232,6 +242,92 @@ def load_record_overrides() -> pd.DataFrame:
     return frame[RECORD_COLUMNS + ["metric_key"]].dropna(subset=["document_value"])
 
 
+def load_historical_career_metric_decisions() -> pd.DataFrame:
+    decisions = read_csv(HISTORICAL_CAREER_METRIC_DECISIONS)
+    required = {
+        "canonical_player_id",
+        "canonical_player_name",
+        "metric",
+        "authoritative_value",
+        "authority_source",
+        "coverage_scope",
+        "source_document",
+        "source_sheet",
+        "source_row",
+        "confidence",
+        "decision_status",
+        "decision_reason",
+    }
+    if decisions.empty or not required.issubset(decisions.columns):
+        return pd.DataFrame(columns=sorted(required))
+    output = decisions.copy()
+    for column in required - {"authoritative_value"}:
+        output[column] = output[column].fillna("").astype(str).str.strip()
+    output["metric"] = output["metric"].str.casefold()
+    output["confidence"] = output["confidence"].str.casefold()
+    output["decision_status"] = output["decision_status"].str.casefold()
+    output["authoritative_value"] = pd.to_numeric(output["authoritative_value"], errors="coerce")
+    output = output[
+        output["metric"].isin(HISTORICAL_CAREER_METRIC_TO_COLUMN)
+        & output["confidence"].isin({"high", "confirmed", "approved"})
+        & output["decision_status"].eq("approved_fb17c")
+    ].dropna(subset=["authoritative_value"])
+    duplicates = output.duplicated(["canonical_player_id", "metric"], keep=False)
+    return output[~duplicates].reset_index(drop=True)
+
+
+def apply_historical_career_metric_decisions(
+    all_time: pd.DataFrame,
+    *,
+    club_id: str = CLUB_ID,
+) -> pd.DataFrame:
+    if str(club_id).strip().casefold() != CLUB_ID or all_time.empty:
+        return all_time
+    decisions = load_historical_career_metric_decisions()
+    if decisions.empty:
+        return all_time
+    output = all_time.copy()
+    if "canonical_player_id" not in output and "Player" not in output:
+        return output
+    if "Not Outs" not in output and {"Innings", "Outs"}.issubset(output.columns):
+        output["Not Outs"] = (
+            pd.to_numeric(output["Innings"], errors="coerce")
+            - pd.to_numeric(output["Outs"], errors="coerce")
+        ).clip(lower=0)
+    if "historical_career_metrics_applied" not in output:
+        output["historical_career_metrics_applied"] = False
+    if "historical_career_metric_names" not in output:
+        output["historical_career_metric_names"] = ""
+    for decision in decisions.to_dict("records"):
+        metric = str(decision["metric"])
+        column = HISTORICAL_CAREER_METRIC_TO_COLUMN[metric]
+        if column not in output:
+            output[column] = pd.NA
+        mask = pd.Series(False, index=output.index)
+        canonical_id = str(decision["canonical_player_id"])
+        if canonical_id and "canonical_player_id" in output:
+            mask = output["canonical_player_id"].fillna("").astype(str).eq(canonical_id)
+        if not mask.any() and "Player" in output:
+            mask = output["Player"].map(normalize_name).eq(normalize_name(decision["canonical_player_name"]))
+        if mask.sum() != 1:
+            continue
+        index = output.index[mask][0]
+        if f"detailed_{metric}_value" not in output:
+            output[f"detailed_{metric}_value"] = pd.NA
+        output.at[index, f"detailed_{metric}_value"] = numeric_value(output.at[index, column])
+        output.at[index, column] = float(decision["authoritative_value"])
+        output.at[index, f"{metric}_authority_source"] = decision["authority_source"]
+        output.at[index, f"{metric}_authority_scope"] = decision["coverage_scope"]
+        output.at[index, f"{metric}_authority_source_row"] = decision["source_row"]
+        output.at[index, "historical_career_metrics_applied"] = True
+        existing = [value for value in str(output.at[index, "historical_career_metric_names"] or "").split(";") if value]
+        output.at[index, "historical_career_metric_names"] = ";".join(dict.fromkeys([*existing, metric]))
+        if metric in {"runs", "wickets"}:
+            output.at[index, f"{metric}_value_source"] = "career_master"
+            output.at[index, f"{metric}_override_applied"] = True
+    return output
+
+
 def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = True) -> pd.DataFrame:
     if all_time.empty or "Player" not in all_time:
         return all_time
@@ -241,7 +337,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
     if overrides.empty:
         if write_decisions:
             write_decision_rows(decisions)
-        return apply_historical_career_supplements(output)
+        return apply_historical_career_metric_decisions(apply_historical_career_supplements(output))
 
     output["_player_key_for_doc_override"] = output["Player"].map(normalize_name)
     alias_lookup = unique_alias_lookup(output["Player"])
@@ -292,7 +388,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
     output = output.drop(columns=["_player_key_for_doc_override"], errors="ignore")
     if write_decisions:
         write_decision_rows(decisions)
-    return apply_historical_career_supplements(output)
+    return apply_historical_career_metric_decisions(apply_historical_career_supplements(output))
 
 
 def apply_historical_career_supplements(all_time: pd.DataFrame) -> pd.DataFrame:
