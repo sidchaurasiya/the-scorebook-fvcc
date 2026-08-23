@@ -1,0 +1,60 @@
+impact_type,metric,player,current_value,proposed_value,current_rank,proposed_rank,current_band,proposed_band,notes
+Player Profile,Not Outs,A Loucas,0.0,12.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Andrew Newman,8.0,22.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Chris Jackson,6.0,21.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,D Brady,0.0,1.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Darren Paulin,0.0,23.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,David Huntington,27.0,36.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Drew Davidson,4.0,7.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Glen Davies,13.0,21.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Greg Huntington,1.0,3.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Greg Mccallum,3.0,9.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,John Bennett,1.0,5.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Mehul Somaia,3.0,28.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Scott Davies,17.0,23.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Scott Perkins,17.0,37.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Seddon Randall,3.0,9.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Stuart Brady,20.0,39.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Not Outs,Tom Waters,0.0,16.0,,,,,Simulation only; current profile not-outs remain unchanged.
+Player Profile,Runs,A Loucas,132.0,1620.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Andrew Newman,1323.0,3920.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Chris Jackson,342.0,1267.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,D Brady,0.0,166.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Darren Paulin,10.0,1281.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,David Huntington,2211.0,3182.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Drew Davidson,362.0,514.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Glen Davies,1144.0,3093.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Greg Huntington,34.0,142.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Greg Mccallum,1020.0,2225.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,John Bennett,310.0,2138.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Matthew Silva,905.0,2567.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Mehul Somaia,406.0,1791.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Richard Emslie,214.0,1749.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Scott Davies,1468.0,2337.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Scott Perkins,2420.0,3494.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Seddon Randall,485.0,1701.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Simon Laughton,436.0,2084.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Stephen Quinn,3533.0,4921.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Stuart Brady,1982.0,4044.0,,,,,Simulation only; no production value changed.
+Player Profile,Runs,Tom Waters,389.0,2180.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,A Loucas,0.0,16.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Andrew Newman,8.0,32.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Chris Jackson,64.0,248.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,D Brady,1.0,11.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Darren Paulin,2.0,209.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,David Huntington,104.0,115.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Drew Davidson,37.0,59.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Glen Davies,99.0,232.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Greg Huntington,0.0,9.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Greg Mccallum,1.0,16.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,John Bennett,1.0,5.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Matthew Silva,82.0,227.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Mehul Somaia,20.0,100.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Richard Emslie,2.0,4.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Scott Davies,29.0,84.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Scott Perkins,118.0,193.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Seddon Randall,4.0,10.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Simon Laughton,72.0,152.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Stephen Quinn,18.0,51.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Stuart Brady,2.0,188.0,,,,,Simulation only; no production value changed.
+Player Profile,Wickets,Tom Waters,13.0,91.0,,,,,Simulation only; no production value changed.
