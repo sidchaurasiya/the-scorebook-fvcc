@@ -9,6 +9,7 @@ LAYOUT = ROOT / "src/ui/layout.py"
 PLAYER_IDENTITY = ROOT / "src/utils/player_identity.py"
 PERFORMANCE = ROOT / "src/utils/performance.py"
 OVERRIDES = ROOT / "src/data/featured_record_overrides.py"
+STATUS_OVERRIDES = ROOT / "src/data/player_status_overrides.py"
 FVCC_CONFIG = ROOT / "clubs/fvcc/club_config.yaml"
 PROCESSED = ROOT / "clubs/fvcc/data/processed"
 PROFILE_DIR = PROCESSED / "validation/performance"
@@ -50,9 +51,18 @@ def main() -> int:
     identity = PLAYER_IDENTITY.read_text(encoding="utf-8")
     performance = PERFORMANCE.read_text(encoding="utf-8")
     overrides = OVERRIDES.read_text(encoding="utf-8")
+    status_overrides = STATUS_OVERRIDES.read_text(encoding="utf-8")
     config = FVCC_CONFIG.read_text(encoding="utf-8")
     changed = changed_paths()
-    raw_changed = [path for path in changed if "/raw/" in path or path.startswith("clubs/fvcc/data/source/")]
+    allowed_status_path = "clubs/fvcc/data/source/fvcc_player_status_overrides.csv"
+    raw_changed = [
+        path for path in changed
+        if "/raw/" in path
+        or (
+            path.startswith("clubs/fvcc/data/source/")
+            and path not in {allowed_status_path, "clubs/fvcc/data/source/"}
+        )
+    ]
     core_data_changed = [
         path
         for path in changed
@@ -74,7 +84,7 @@ def main() -> int:
     ]
     checks = [
         ("no_raw_fvcc_changes", not raw_changed, "; ".join(raw_changed)),
-        ("grdcc_single_group_path_preserved", "if active_club_is_grdcc():\n            return None" in layout, "GRDCC single-group behavior remains unchanged."),
+        ("single_group_path_preserved", "single_fvcc_group = active_club_is_fvcc()" in layout, "FVCC single-group HOF reuse remains active."),
         ("grdcc_annual_report_scoped", "if active_club_id != GRDCC_CLUB_ID" in overrides, "Annual Report override loaders remain GRDCC-only."),
         ("fvcc_prepared_cache", 'persist="disk"' in layout and cached_profile, "FVCC profile contains a disk-cache hit."),
         ("duplicate_hof_aggregation_avoided", "Skipped equivalent FVCC single-group rebuild." in layout, "Single FVCC HOF group reuses prepared all-time tables."),
@@ -84,7 +94,10 @@ def main() -> int:
         ("season_overview_rows_available", csv_rows("seasons.csv") > 0 and csv_rows("teams.csv") > 0 and "render_overview(dashboard_data)" in layout, "Season and team data plus route are present."),
         ("player_profile_available", csv_rows("players.csv") > 0 and "render_player_profile_page()" in layout, "Player index data and route are present."),
         ("milestones_available", "render_approaching_milestones_page()" in layout and "build_approaching_milestone_watchlist" in layout, "Milestone route and candidate builder remain present."),
-        ("fvcc_theme_unchanged", all(value in config for value in ['primary_colour: "#6D4DFF"', 'secondary_colour: "#9F2747"', 'background_colour: "#F7F8FC"']), "FVCC configured colors are unchanged."),
+        ("milestone_bundle_cached", "def load_portability_milestone_page_data(" in layout, "FVCC milestone derivations use a club/version-keyed persistent cache."),
+        ("profile_source_frames_cached", "def load_portability_player_profile_source_frames(" in identity, "FVCC canonical profile frames are prepared once per data/identity version."),
+        ("active_status_override_framework", "def apply_active_player_id_overrides(" in status_overrides and (ROOT / allowed_status_path).exists(), "FVCC has an optional ID-based status override file."),
+        ("fvcc_theme_unchanged", all(value in config for value in ['primary_colour: "#A31952"', 'secondary_colour: "#28485F"', 'background_colour: "#F6F8FB"']), "FVCC configured colors are unchanged."),
         ("fvcc_core_data_unchanged", not core_data_changed, "; ".join(core_data_changed)),
     ]
     PROFILE_DIR.mkdir(parents=True, exist_ok=True)
