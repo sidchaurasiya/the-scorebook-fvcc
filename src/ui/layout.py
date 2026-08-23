@@ -52,6 +52,7 @@ from src.data.featured_record_overrides import (
     normalize_featured_player_name,
 )
 from src.data.gwhcc_document_overrides import (
+    apply_historical_career_metric_decisions as apply_gwhcc_historical_career_metrics,
     apply_record_overrides as apply_gwhcc_record_overrides,
     document_override_signature as gwhcc_document_override_signature,
     historical_season_record as gwhcc_historical_season_record,
@@ -9166,7 +9167,7 @@ def highest_reached_threshold(value: object, thresholds: list[int]) -> int | Non
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed Records 📊")
     render_hawks_match_count_footnote()
-    render_gwhcc_not_outs_coverage_note()
+    render_gwhcc_hof_career_coverage_note()
     if isinstance(all_time_or_tables, dict):
         tables = {
             "batting": all_time_or_tables["batting"].copy(),
@@ -9319,7 +9320,8 @@ def add_gwhcc_not_outs_for_display(all_time: pd.DataFrame, batting: pd.DataFrame
     output = output.drop(columns=["Not Outs"], errors="ignore").copy()
     output["_not_out_row_order"] = range(len(output))
     output = output.merge(not_outs, on="canonical_player_id", how="left", sort=False)
-    return output.sort_values("_not_out_row_order").drop(columns="_not_out_row_order").reset_index(drop=True)
+    output = output.sort_values("_not_out_row_order").drop(columns="_not_out_row_order").reset_index(drop=True)
+    return apply_gwhcc_historical_career_metrics(output)
 
 
 @st.cache_data(show_spinner=False)
@@ -14903,7 +14905,7 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Overview 🧩")
     render_hawks_match_count_footnote()
-    render_gwhcc_not_outs_coverage_note()
+    render_gwhcc_career_coverage_note(career)
     keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
     matches_text, _, _ = historical_matches_display_text(career)
     batting_matches_value = matches_text or format_int(career.get("Matches"))
@@ -14922,8 +14924,9 @@ def render_player_breakdown(career: pd.Series) -> None:
 
 
 def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) -> list[tuple[str, str]]:
+    matches_label = "Matches / detailed innings" if parse_bool(career.get("historical_career_metrics_applied")) else "Matches/Innings"
     metrics = [
-        ("Matches/Innings", f"{matches_text} / {format_int(career.get('Innings'))}"),
+        (matches_label, f"{matches_text} / {format_int(career.get('Innings'))}"),
         ("Runs", format_int(career.get("Runs"))),
         ("Average", format_decimal(career.get("Bat Avg"))),
         ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))),
@@ -14931,11 +14934,36 @@ def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) 
         ("HS", format_high_score_text(career.get("HS")) or ""),
     ]
     if get_active_club_id() == "glen-waverley-hawks":
-        innings = pd.to_numeric(career.get("Innings"), errors="coerce")
-        outs = pd.to_numeric(career.get("Outs"), errors="coerce")
-        not_outs = max(float(innings) - float(outs), 0) if pd.notna(innings) and pd.notna(outs) else None
+        governed_not_outs = pd.to_numeric(career.get("Not Outs"), errors="coerce")
+        if pd.notna(governed_not_outs) and str(career.get("not_outs_authority_source", "")).casefold() == "career_master":
+            not_outs = float(governed_not_outs)
+        else:
+            innings = pd.to_numeric(career.get("Innings"), errors="coerce")
+            outs = pd.to_numeric(career.get("Outs"), errors="coerce")
+            not_outs = max(float(innings) - float(outs), 0) if pd.notna(innings) and pd.notna(outs) else None
         metrics.insert(1, ("Not Outs", format_int(not_outs)))
     return metrics
+
+
+def render_gwhcc_career_coverage_note(career: pd.Series) -> None:
+    if get_active_club_id() != "glen-waverley-hawks":
+        return
+    if parse_bool(career.get("historical_career_metrics_applied")):
+        st.caption(
+            "Runs, wickets and career averages use verified historical club records where digital scorecards are incomplete. "
+            "Matches, innings, overs, rate metrics, fielding and season breakdowns remain PlayCricket-based; "
+            "Not Outs use historical records only when separately approved."
+        )
+    else:
+        st.caption("Not Outs reflect available PlayCricket batting records; historical document-only totals may differ.")
+
+
+def render_gwhcc_hof_career_coverage_note() -> None:
+    if get_active_club_id() == "glen-waverley-hawks":
+        st.caption(
+            "Governed runs, wickets and career averages use verified historical club records; "
+            "matches, innings, overs, rate metrics, fielding and season statistics remain PlayCricket-based."
+        )
 
 
 def render_gwhcc_not_outs_coverage_note() -> None:
