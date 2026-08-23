@@ -4749,6 +4749,51 @@ def inject_theme() -> None:
             padding: 12px 13px;
         }
 
+        .historical-coverage-card {
+            background: #ffffff;
+            border: 1px solid #e4d39b;
+            border-radius: 14px;
+            box-shadow: 0 14px 32px rgba(48, 31, 5, 0.06);
+            margin-top: 8px;
+            padding: 24px;
+        }
+
+        .historical-coverage-kicker {
+            color: #A87500;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .historical-coverage-card h2 {
+            color: var(--ink);
+            font-size: 1.35rem;
+            margin: 6px 0 8px;
+        }
+
+        .historical-coverage-card p,
+        .historical-coverage-card li,
+        .historical-coverage-source {
+            color: #68708a;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .historical-coverage-card ul {
+            margin: 14px 0 0;
+            padding-left: 20px;
+        }
+
+        .historical-coverage-source {
+            border-top: 1px solid #ece7d8;
+            margin-top: 16px;
+            padding-top: 12px;
+        }
+
+        .profile-coverage-meta {
+            color: #7a641f;
+        }
+
         .mobile-label {
             display: none;
         }
