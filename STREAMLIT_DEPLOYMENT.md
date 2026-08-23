@@ -28,6 +28,16 @@ The customer-facing app uses committed processed data and does not need PlayHQ c
 
 ## Post-Deployment QA
 
+### Verify the deployed release
+
+The GWHCC sidebar and mobile footer show a single release identifier in this format:
+
+```text
+Scorebook GWHCC | Release: v1.0.0 | Build: <short commit SHA>
+```
+
+Compare the displayed build with the first seven characters of the GitHub commit deployed from `main`. If they differ, Streamlit is running an older checkout or has not completed its redeploy. Streamlit Cloud may optionally set `SCOREBOOK_BUILD_SHA` to the deployed commit SHA; when no supported environment value or Git metadata is available, the footer shows `Build: unavailable` rather than exposing diagnostics.
+
 - Confirm the header and sidebar identify Glen Waverley Hawks, with no FVCC or GRDCC content.
 - Open Hall of Fame, Season Overview, Milestone, and Player Profile.
 - Confirm Hall of Fame uses the prepared snapshots and loads without a long aggregate rebuild.

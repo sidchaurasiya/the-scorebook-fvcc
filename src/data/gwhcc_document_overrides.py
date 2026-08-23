@@ -772,14 +772,20 @@ def parse_leading_player_records(source_name: str) -> list[dict[str, object]]:
     }
     for metric, metric_rows in values.items():
         for player_name, value in metric_rows:
+            greg_confirmed = player_name == "G. McCormick" and metric in {"runs", "wickets", "games"}
             rows.append(
                 {
                     "player_name": player_name,
                     "metric": metric,
                     "document_value": value,
                     "source_document": source,
-                    "confidence": "review",
-                    "notes": note,
+                    "confidence": "confirmed" if greg_confirmed else "review",
+                    "notes": (
+                        "Customer decision on 2026-08-23: use Scorebook totals 427 games, 8,664 runs and 393 wickets; "
+                        "Career Master alternatives remain retained evidence and are not applied."
+                        if greg_confirmed
+                        else note
+                    ),
                 }
             )
     return rows

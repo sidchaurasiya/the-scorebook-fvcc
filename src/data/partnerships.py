@@ -174,7 +174,7 @@ def build_partnership_record_holders(events: pd.DataFrame) -> pd.DataFrame:
     rows = rows[rows["runs"].notna() & rows["wicket_number"].between(1, 10, inclusive="both")].copy()
     if rows.empty:
         return empty_events()
-    rows["_source_priority"] = rows["source_classification"].map({"customer_document": 0, "ball_by_ball_calculated": 1}).fillna(2)
+    rows["_source_priority"] = rows["source_classification"].map({"ball_by_ball_calculated": 0, "customer_document": 1}).fillna(2)
     rows = rows.sort_values(
         ["wicket_number", "runs", "_source_priority", "season", "record_id"],
         ascending=[True, False, True, False, True],
@@ -186,7 +186,22 @@ def combine_partnership_events(*frames: pd.DataFrame) -> pd.DataFrame:
     available = [frame[EVENT_COLUMNS].copy() for frame in frames if isinstance(frame, pd.DataFrame) and not frame.empty]
     if not available:
         return empty_events()
-    return pd.concat(available, ignore_index=True).drop_duplicates("record_id", keep="first").sort_values("record_id").reset_index(drop=True)
+    rows = pd.concat(available, ignore_index=True).drop_duplicates("record_id", keep="first")
+    pair_ids = rows[["player_1_canonical_id", "player_2_canonical_id"]].fillna("").astype(str)
+    rows["_pair_key"] = pair_ids.apply(lambda row: "|".join(sorted(row.tolist())), axis=1)
+    rows["_equivalent_key"] = (
+        rows["season"].fillna("").astype(str)
+        + "|"
+        + pd.to_numeric(rows["wicket_number"], errors="coerce").fillna(-1).astype(str)
+        + "|"
+        + pd.to_numeric(rows["runs"], errors="coerce").fillna(-1).astype(str)
+        + "|"
+        + rows["_pair_key"]
+    )
+    primary_keys = set(rows.loc[rows["source_classification"].eq("ball_by_ball_calculated"), "_equivalent_key"])
+    duplicate_document = rows["source_classification"].eq("customer_document") & rows["_equivalent_key"].isin(primary_keys)
+    rows = rows.loc[~duplicate_document].copy()
+    return rows.drop(columns=["_pair_key", "_equivalent_key"]).sort_values("record_id").reset_index(drop=True)[EVENT_COLUMNS]
 
 
 def partnership_validation_status(

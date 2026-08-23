@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.build_hall_of_fame_detail_exports import build_fastest_batting_milestones  # noqa: E402
-from src.data.gwhcc_document_overrides import apply_record_overrides, merge_premiership_overrides  # noqa: E402
+from src.data.gwhcc_document_overrides import apply_record_overrides, load_document_player_aliases, merge_premiership_overrides  # noqa: E402
 from src.data.gwhcc_match_policy import build_match_policy_table, selected_player_rows  # noqa: E402
 from src.data.gwhcc_player_status import governed_player_active  # noqa: E402
 from src.utils.player_identity import apply_player_identity_mapping, is_private_or_anonymised_player  # noqa: E402
@@ -129,7 +129,10 @@ def build_kash_reconciliation() -> pd.DataFrame:
             "raw_appearances": int(rows["match_id"].nunique()),
             "weighted_matches": float(pd.to_numeric(rows["match_weight"], errors="coerce").fillna(0).sum()),
             "adjustment": float(rows["match_id"].nunique() - pd.to_numeric(rows["match_weight"], errors="coerce").fillna(0).sum()),
-            "notes": "Authoritative arithmetic from locally retained PlayCricket match and selected-squad records.",
+            "notes": (
+                "Closed no issue on 2026-08-23: authoritative GWHCC-only arithmetic from locally retained PlayCricket records. "
+                "The customer comparison included cricket played for other clubs."
+            ),
         }
     )
     return pd.DataFrame(output)
@@ -249,7 +252,20 @@ def main() -> int:
         rows = mapped[mapped["canonical_player_name"].astype(str).str.casefold().eq(name.casefold())]
         checks.append(check(f"identity_{normalize_name(name).replace(' ', '_')}_single_canonical", rows["canonical_player_id"].nunique() == 1, rows["canonical_player_id"].nunique(), 1, "Governed non-overlapping provider IDs resolve to one canonical identity."))
     james = mapped[mapped["canonical_player_name"].astype(str).str.casefold().eq("james anderson")]
-    checks.append(check("fb04_james_single_scorebook_source", james["raw_player_id"].nunique() == 1, james["raw_player_id"].nunique(), 1, "No unsupported merge was applied to ambiguous customer workbook rows."))
+    james_aliases = load_document_player_aliases("career")
+    james_labels_resolve = all(james_aliases.get(normalize_name(label)) == "james anderson" for label in ["ANDERSON. J", "ANDERSON.J.C"])
+    checks.append(
+        check(
+            "fb04_james_single_scorebook_source",
+            james["raw_player_id"].nunique() == 1 and james_labels_resolve,
+            f"scorebook_ids={james['raw_player_id'].nunique()}; customer_aliases={int(james_labels_resolve)}",
+            "scorebook_ids=1; customer_aliases=1",
+            "Customer confirmed both workbook labels refer to the one existing PlayCricket participant; overlapping workbook rows are not summed.",
+        )
+    )
+    greg = authoritative[authoritative["Player"].astype(str).str.casefold().eq("greg mccormick")]
+    greg_ok = len(greg) == 1 and all(float(greg.iloc[0][metric]) == value for metric, value in {"Matches": 427, "Runs": 8664, "Wickets": 393}.items())
+    checks.append(check("greg_customer_decision_scorebook_totals", greg_ok, "missing" if greg.empty else f"{greg.iloc[0]['Matches']}/{greg.iloc[0]['Runs']}/{greg.iloc[0]['Wickets']}", "427/8664/393", "Career Master alternatives remain retained evidence and are not applied."))
     century_path = CLUB_ROOT / "data/source/document_overrides/gwhcc_historical_centuries.csv"
     century_rows = pd.read_csv(century_path) if century_path.exists() else pd.DataFrame()
     checks.append(check("historical_century_supplements_exist", len(century_rows) == 65, len(century_rows), 65, "Governed customer century rows are versioned outside raw PlayCricket data."))
@@ -269,7 +285,7 @@ def main() -> int:
     checks.append(check("fb02_ahilan_authoritative_totals", ahilan_ok, "missing" if ahilan.empty else f"{ahilan.iloc[0]['Matches']}/{ahilan.iloc[0]['Runs']}/{ahilan.iloc[0]['Wickets']}", "132/3414/45", "Customer Career Master supplements the confirmed merged identity."))
     adrian = authoritative[authoritative["Player"].astype(str).str.casefold().eq("adrian dale")]
     checks.append(check("fb07_adrian_documented_debut", len(adrian) == 1 and str(adrian.iloc[0].get("Debut Season")) == "Summer 1980/81", adrian.iloc[0].get("Debut Season") if len(adrian) else "missing", "Summer 1980/81", "Detailed reconstructed seasons remain unchanged."))
-    checks.append(check("fb08_kash_weighted_matches", abs(float(kash.iloc[-1]["weighted_matches"]) - 154.5) < 1e-9, kash.iloc[-1]["weighted_matches"], 154.5, "Existing T20/no-play policy retained."))
+    checks.append(check("fb08_kash_weighted_matches", abs(float(kash.iloc[-1]["weighted_matches"]) - 154.5) < 1e-9, kash.iloc[-1]["weighted_matches"], 154.5, "Closed no issue: Scorebook is GWHCC-only; the customer comparison included other clubs. Existing T20/no-play policy retained."))
     base_wins = pd.read_csv(PROCESSED / "hall_of_fame" / "premiership_wins.csv")
     base_players = pd.read_csv(PROCESSED / "hall_of_fame" / "player_premierships.csv")
     combined_wins, _ = merge_premiership_overrides(base_wins, base_players)

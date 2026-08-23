@@ -883,6 +883,16 @@ def inject_theme() -> None:
             white-space: nowrap;
         }
 
+        .scorebook-version {
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 0.68rem;
+            font-weight: 600;
+            line-height: 1.35;
+            margin-top: 10px;
+            opacity: 0.78;
+            overflow-wrap: anywhere;
+        }
+
         .side-build-marker {
             color: rgba(255, 255, 255, 0.46);
             font-size: 0.52rem;
@@ -7944,6 +7954,11 @@ def inject_theme() -> None:
                 text-decoration: none;
                 word-break: normal;
                 white-space: nowrap;
+            }
+
+            .mobile-page-footer .scorebook-version {
+                color: #7d839d;
+                margin-top: 7px;
             }
 
             div.st-key-mobile_nav_fallback label {
