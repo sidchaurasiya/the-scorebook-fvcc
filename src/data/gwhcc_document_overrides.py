@@ -26,6 +26,7 @@ PREMIERSHIP_PLAYERS = SOURCE_ROOT / "gwhcc_premiership_players.csv"
 PLAYER_ALIASES = SOURCE_ROOT / "gwhcc_document_player_aliases.csv"
 HISTORICAL_CENTURIES = SOURCE_ROOT / "gwhcc_historical_centuries.csv"
 HISTORICAL_CAREER_METADATA = SOURCE_ROOT / "gwhcc_historical_career_metadata.csv"
+HISTORICAL_SEASONS = SOURCE_ROOT / "gwhcc_historical_seasons.csv"
 HISTORICAL_PREMIERSHIPS = SOURCE_ROOT / "gwhcc_historical_premiership_events.csv"
 FASTEST_INNINGS_SUPPLEMENTS = SOURCE_ROOT / "gwhcc_fastest_innings_supplements.csv"
 DECISIONS = VALIDATION_DIR / "gwhcc_document_override_decisions.csv"
@@ -81,10 +82,79 @@ def document_override_signature() -> tuple[tuple[str, float], ...]:
         PLAYER_ALIASES,
         HISTORICAL_CENTURIES,
         HISTORICAL_CAREER_METADATA,
+        HISTORICAL_SEASONS,
         HISTORICAL_PREMIERSHIPS,
         FASTEST_INNINGS_SUPPLEMENTS,
     ]
     return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
+
+
+def load_historical_seasons() -> pd.DataFrame:
+    seasons = read_csv(HISTORICAL_SEASONS)
+    required = {
+        "season_id",
+        "season",
+        "start_date",
+        "first_xi_participation",
+        "documented_premiership_grades",
+        "source_type",
+        "source_document",
+        "source_sheet",
+        "source_record",
+        "confidence",
+        "evidence_description",
+    }
+    if seasons.empty or not required.issubset(seasons.columns):
+        return pd.DataFrame(columns=sorted(required))
+    seasons = seasons.copy()
+    seasons["season_id"] = seasons["season_id"].fillna("").astype(str).str.strip()
+    seasons["season"] = seasons["season"].fillna("").astype(str).str.strip()
+    seasons["confidence"] = seasons["confidence"].fillna("").astype(str).str.casefold().str.strip()
+    seasons = seasons[
+        seasons["season_id"].ne("")
+        & seasons["season"].ne("")
+        & seasons["confidence"].isin({"high", "confirmed", "approved"})
+    ]
+    return seasons.drop_duplicates("season").sort_values("start_date", ascending=False).reset_index(drop=True)
+
+
+def merge_historical_seasons(seasons: list[dict], club_id: str) -> list[dict]:
+    if str(club_id).strip().casefold() != CLUB_ID:
+        return seasons
+    output = [dict(season) for season in seasons]
+    existing = {str(season.get("name", "")).strip().casefold() for season in output}
+    for row in load_historical_seasons().to_dict("records"):
+        season_name = str(row.get("season", "")).strip()
+        if not season_name or season_name.casefold() in existing:
+            continue
+        output.append(
+            {
+                "id": row.get("season_id"),
+                "name": season_name,
+                "startDate": row.get("start_date"),
+                "isCurrentSeason": False,
+                "historicalMetadataOnly": True,
+                "historicalRecord": row,
+            }
+        )
+        existing.add(season_name.casefold())
+    return output
+
+
+def historical_season_record(season: dict | object, club_id: str) -> dict[str, object] | None:
+    if str(club_id).strip().casefold() != CLUB_ID or not isinstance(season, dict):
+        return None
+    embedded = season.get("historicalRecord")
+    if isinstance(embedded, dict):
+        return embedded
+    season_id = str(season.get("id", "")).strip()
+    season_name = str(season.get("name", "")).strip().casefold()
+    rows = load_historical_seasons()
+    matched = rows[
+        rows["season_id"].astype(str).eq(season_id)
+        | rows["season"].astype(str).str.casefold().eq(season_name)
+    ]
+    return matched.iloc[0].to_dict() if len(matched) == 1 else None
 
 
 def normalize_name(value: object) -> str:

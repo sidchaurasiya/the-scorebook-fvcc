@@ -16,6 +16,7 @@ This manifest describes the files needed by the customer-facing Glen Waverley Ha
 - `clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_premierships.csv`: approved premiership supplements.
 - `clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_premiership_players.csv`: approved player-premiership supplements.
 - `clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_document_player_aliases.csv`: approved document-to-PlayCricket identity aliases.
+- `clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_historical_seasons.csv`: verified pre-PlayCricket season-existence metadata and concise historical facts used by Season Overview.
 - `clubs/glen-waverley-hawks/data/metadata.json`: source refresh metadata used for cache versioning.
 - `clubs/glen-waverley-hawks/data/processed/{all_seasons_batting.csv,all_seasons_bowling.csv,all_seasons_fielding.csv,all_seasons_matches.csv,players.csv,seasons.csv,teams.csv}`: core customer-facing match, player, season, and team data.
 - `clubs/glen-waverley-hawks/data/processed/hall_of_fame/`: Hall of Fame source tables and the six deploy-safe `prepared_*` snapshots. `prepared_core_manifest.json` validates the snapshots against SHA-256 signatures of their authoritative inputs.

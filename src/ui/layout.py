@@ -54,6 +54,8 @@ from src.data.featured_record_overrides import (
 from src.data.gwhcc_document_overrides import (
     apply_record_overrides as apply_gwhcc_record_overrides,
     document_override_signature as gwhcc_document_override_signature,
+    historical_season_record as gwhcc_historical_season_record,
+    merge_historical_seasons as merge_gwhcc_historical_seasons,
     merge_premiership_overrides as merge_gwhcc_premiership_overrides,
 )
 from src.data.gwhcc_governance import display_grade_name as gwhcc_display_grade_name
@@ -1049,6 +1051,7 @@ def render_data_source_panel(
             st.error(str(error))
             seasons = []
 
+    seasons = merge_gwhcc_historical_seasons(seasons, get_active_club_id())
     if not seasons:
         st.warning("No local backup is available yet. Use the sidebar refresh button to create one.")
         return None
@@ -1119,53 +1122,72 @@ def render_data_source_panel(
             selected_token = f"{selected_season.get('id', '')}|{selected_season.get('name', '')}"
             st.session_state["season_overview_requested_token"] = selected_token
 
-        try:
-            if using_local_backup:
-                teams = load_local_playcricket_teams(get_active_club_id(), selected_season["id"], local_version)
-            else:
-                teams = load_public_playcricket_teams(
-                    organisation_id,
-                    selected_season["id"],
-                )
-        except PlayCricketPublicError as error:
-            if local_backup_available():
-                using_local_backup = True
-                local_version = metadata_mtime()
-                teams = load_local_playcricket_teams(get_active_club_id(), selected_season["id"], local_version)
-                st.warning(f"Using local backup from {backup_timestamp_label()}.")
-            else:
-                st.error(str(error))
-                teams = []
-
-        if not teams:
-            st.warning("No teams found for this club and season.")
-            return None
-
         all_teams_option = {
             "id": "__all_teams__",
             "name": "All teams",
             "grade": {"id": "__all_grades__", "name": "Whole club"},
         }
-        teams = filter_empty_grdcc_season_teams(selected_season, teams, local_version)
-        teams = combine_grdcc_duplicate_competition_teams(sort_teams_by_grade_display(teams))
-        team_options = [all_teams_option, *teams]
-        team_option_labels = team_selector_labels(team_options)
+        historical_record = gwhcc_historical_season_record(selected_season, get_active_club_id())
+        if historical_record:
+            teams = []
+            selected_team = {
+                "id": "__historical_records__",
+                "name": "Historical records",
+                "grade": {"id": "__historical_coverage__", "name": "Club activity confirmed"},
+            }
+            with team_col:
+                st.markdown('<div class="simple-filter-label">Historical coverage</div>', unsafe_allow_html=True)
+                st.text_input(
+                    "Historical coverage",
+                    value="Club activity confirmed",
+                    disabled=True,
+                    label_visibility="collapsed",
+                    key="season_overview_historical_coverage",
+                )
+            is_all_teams = True
+        else:
+            try:
+                if using_local_backup:
+                    teams = load_local_playcricket_teams(get_active_club_id(), selected_season["id"], local_version)
+                else:
+                    teams = load_public_playcricket_teams(
+                        organisation_id,
+                        selected_season["id"],
+                    )
+            except PlayCricketPublicError as error:
+                if local_backup_available():
+                    using_local_backup = True
+                    local_version = metadata_mtime()
+                    teams = load_local_playcricket_teams(get_active_club_id(), selected_season["id"], local_version)
+                    st.warning(f"Using local backup from {backup_timestamp_label()}.")
+                else:
+                    st.error(str(error))
+                    teams = []
 
-        with team_col:
-            st.markdown('<div class="simple-filter-label">Select team/grade</div>', unsafe_allow_html=True)
-            selected_team = st.selectbox(
-                "Team",
-                team_options,
-                format_func=lambda option: team_option_labels.get(str(option.get("id", "")), format_team_option(option)),
-                label_visibility="collapsed",
-            )
+            if not teams:
+                st.warning("No teams found for this club and season.")
+                return None
 
-        is_all_teams = selected_team["id"] == "__all_teams__"
+            teams = filter_empty_grdcc_season_teams(selected_season, teams, local_version)
+            teams = combine_grdcc_duplicate_competition_teams(sort_teams_by_grade_display(teams))
+            team_options = [all_teams_option, *teams]
+            team_option_labels = team_selector_labels(team_options)
+
+            with team_col:
+                st.markdown('<div class="simple-filter-label">Select team/grade</div>', unsafe_allow_html=True)
+                selected_team = st.selectbox(
+                    "Team",
+                    team_options,
+                    format_func=lambda option: team_option_labels.get(str(option.get("id", "")), format_team_option(option)),
+                    label_visibility="collapsed",
+                )
+            is_all_teams = selected_team["id"] == "__all_teams__"
+
         grade = selected_team.get("grade", {})
-        context_description = build_context_description(
-            selected_season,
-            selected_team,
-            is_all_teams,
+        context_description = (
+            f"Historical records for {selected_season.get('name', '-')}"
+            if historical_record
+            else build_context_description(selected_season, selected_team, is_all_teams)
         )
         selected_season_name = str(selected_season.get("name", "") or "")
         selected_team_label = format_team_option(selected_team)
@@ -1202,6 +1224,22 @@ def render_data_source_panel(
             """,
             unsafe_allow_html=True,
         )
+
+    if historical_record:
+        return {
+            "request": None,
+            "season": selected_season,
+            "team": selected_team,
+            "teams": [],
+            "is_all_teams": True,
+            "using_local_backup": using_local_backup,
+            "backup_timestamp": backup_timestamp_label() if using_local_backup else None,
+            "context_description": context_description,
+            "context_label": "Verified historical club record",
+            "page_slug": page_slug,
+            "historical_metadata_only": True,
+            "historical_record": historical_record,
+        }
 
     try:
         if is_all_teams:
@@ -1977,11 +2015,59 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
     if not dashboard_data:
         st.info("Load public PlayCricket stats to view the dashboard.")
         return
+    if dashboard_data.get("historical_metadata_only"):
+        render_historical_season_coverage(dashboard_data)
+        return
 
     render_season_by_round(dashboard_data)
     render_overall_section(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
+
+
+def historical_season_facts(record: dict[str, object]) -> list[str]:
+    facts = []
+    if parse_bool(record.get("first_xi_participation")):
+        facts.append("First XI participation confirmed")
+    grade_value = record.get("documented_premiership_grades", "")
+    grade_text = "" if pd.isna(grade_value) else str(grade_value)
+    grades = [
+        normalize_spaces(value)
+        for value in grade_text.split(";")
+        if normalize_spaces(value)
+    ]
+    if grades:
+        label = "Premiership" if len(grades) == 1 else "Premierships"
+        facts.append(f"{label}: {', '.join(grades)}")
+    return facts
+
+
+def render_historical_season_coverage(dashboard_data: dict[str, object]) -> None:
+    season = dashboard_data.get("season", {}) or {}
+    record = dashboard_data.get("historical_record", {}) or {}
+    season_name = str(season.get("name", "Historical season") or "Historical season")
+    facts_html = "".join(f"<li>{html.escape(fact)}</li>" for fact in historical_season_facts(record))
+    source = " · ".join(
+        part
+        for part in [
+            str(record.get("source_document", "") or "").strip(),
+            str(record.get("source_sheet", "") or "").strip(),
+        ]
+        if part
+    )
+    source_html = f'<div class="historical-coverage-source">Source: {html.escape(source)}</div>' if source else ""
+    st.markdown(
+        f"""
+        <section class="historical-coverage-card">
+            <div class="historical-coverage-kicker">Verified club history</div>
+            <h2>{html.escape(season_name)}</h2>
+            <p>Historical club records confirm GWHCC activity in this season. Detailed PlayCricket match and player statistics are not available for this period.</p>
+            {f'<ul>{facts_html}</ul>' if facts_html else ''}
+            {source_html}
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def all_available_match_centre_scope() -> Path:
@@ -11944,6 +12030,7 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
         for badge in badges
     )
     insight = player_profile_insight(career, badges)
+    coverage_html = player_profile_historical_coverage_html(career, profile_view.get("season_table", pd.DataFrame()))
     st.markdown(
         (
             '<div class="player-hero-card">'
@@ -11954,6 +12041,7 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
             f'<div class="profile-insight">{html.escape(insight)}</div>'
             f'<div class="profile-meta">Grades played: {html.escape(str(career.get("Grades Played", "—") or "—"))}</div>'
             f'<div class="profile-meta">Career span: {html.escape(str(career.get("Career Span", "—") or "—"))}</div>'
+            f'{coverage_html}'
             '</div>'
             f'<div class="profile-badges">{badge_html}</div>'
             '</div>'
@@ -11961,6 +12049,33 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
         ),
         unsafe_allow_html=True,
     )
+
+
+def player_profile_historical_coverage(career: pd.Series, season_table: pd.DataFrame) -> tuple[str, str]:
+    if get_active_club_id() != "glen-waverley-hawks":
+        return "", ""
+    documented = str(career.get("earliest_documented_season", "") or "").strip()
+    available = [] if season_table.empty or "Season" not in season_table else season_table["Season"].dropna().astype(str).tolist()
+    detailed = min(available, key=profile_season_sort_key) if available else ""
+    if not documented:
+        return "", ""
+    if detailed and profile_season_sort_key(documented) >= profile_season_sort_key(detailed):
+        detailed = ""
+    return documented, detailed
+
+
+def player_profile_historical_coverage_html(career: pd.Series, season_table: pd.DataFrame) -> str:
+    documented, detailed = player_profile_historical_coverage(career, season_table)
+    if not documented:
+        return ""
+    lines = [
+        f'<div class="profile-meta profile-coverage-meta">Earliest verified GWHCC season: {html.escape(documented)}</div>'
+    ]
+    if detailed:
+        lines.append(
+            f'<div class="profile-meta profile-coverage-meta">Detailed statistics available from: {html.escape(detailed)}</div>'
+        )
+    return "".join(lines)
 
 
 def player_role_badges(career: pd.Series, profile_view: dict[str, pd.DataFrame]) -> list[str]:
