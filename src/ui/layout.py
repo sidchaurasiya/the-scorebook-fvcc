@@ -66,6 +66,11 @@ from src.data.gwhcc_player_status import (
     governed_player_active as apply_gwhcc_player_active_override,
     player_status_signature as gwhcc_player_status_signature,
 )
+from src.data.player_status_overrides import (
+    apply_active_player_id_overrides,
+    apply_active_player_name_overrides,
+    player_status_signature,
+)
 from src.data.hall_of_fame_prepared import (
     load_prepared_hall_of_fame_core,
     prepared_core_manifest_signature,
@@ -5651,25 +5656,40 @@ def render_approaching_milestones_page() -> None:
     club_id = get_active_club_id()
     identity_version = player_aliases_mtime()
     override_version = hall_of_fame_override_signature(club_id)
-    historical_data = load_hall_of_fame_data(
-        metadata_mtime(),
-        identity_version,
-        HALL_OF_FAME_DATA_VERSION,
-        club_id=club_id,
-    )
-    if historical_data is None:
+    selected_view = selected_milestone_page_view()
+    portability_clubs = {"fvcc", "georges-river-district"}
+    milestone_data = None
+    if club_id in portability_clubs:
+        milestone_data = load_portability_milestone_page_data(
+            metadata_mtime(),
+            identity_version,
+            HALL_OF_FAME_DATA_VERSION,
+            override_version,
+            player_status_signature(club_id),
+            club_id,
+            selected_view,
+        )
+        historical_data = None
+    else:
+        historical_data = load_hall_of_fame_data(
+            metadata_mtime(),
+            identity_version,
+            HALL_OF_FAME_DATA_VERSION,
+            club_id=club_id,
+        )
+        if historical_data is not None:
+            historical_data = historical_data.copy()
+            historical_data["all_time"] = get_authoritative_career_totals(
+                metadata_mtime(),
+                identity_version,
+                HALL_OF_FAME_DATA_VERSION,
+                override_version,
+                club_id=club_id,
+            )
+    if milestone_data is None and historical_data is None:
         st.info("Historical data is not available yet. Refresh local backup to build the milestone watchlist.")
         return
-    historical_data = historical_data.copy()
-    historical_data["all_time"] = get_authoritative_career_totals(
-        metadata_mtime(),
-        identity_version,
-        HALL_OF_FAME_DATA_VERSION,
-        override_version,
-        club_id=club_id,
-    )
 
-    selected_view = selected_milestone_page_view()
     st.markdown(
         f"""
         <div class="near-milestones-page"></div>
@@ -5679,19 +5699,82 @@ def render_approaching_milestones_page() -> None:
         unsafe_allow_html=True,
     )
     if selected_view == "achieved":
-        season_window = milestone_achievement_season_window(historical_data)
-        achieved = build_achieved_milestones(historical_data, season_window, club_id)
-        hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
+        if milestone_data is not None:
+            season_window = milestone_data["season_window"]
+            achieved = milestone_data["achieved"]
+            hall_of_fame_movements = milestone_data["hall_of_fame_movements"]
+        else:
+            season_window = milestone_achievement_season_window(historical_data)
+            achieved = build_achieved_milestones(historical_data, season_window, club_id)
+            hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
     elif selected_view == "exclusive":
-        render_milestone_club(historical_data["all_time"], selected_milestone_club_category())
+        all_time = milestone_data["all_time"] if milestone_data is not None else historical_data["all_time"]
+        render_milestone_club(all_time, selected_milestone_club_category())
     else:
+        if milestone_data is not None:
+            watchlist = milestone_data["watchlist"]
+            hall_of_fame_watch = milestone_data["hall_of_fame_watch"]
+        else:
+            active_players = recent_active_canonical_players(historical_data)
+            watchlist = build_approaching_milestone_watchlist(historical_data["all_time"], club_id)
+            if active_players:
+                watchlist = watchlist[watchlist["canonical_player_id"].isin(active_players)].copy()
+            hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
+        render_career_milestone_cards(watchlist, hall_of_fame_watch)
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def load_portability_milestone_page_data(
+    local_version: float,
+    identity_version: float,
+    data_version: str,
+    override_version: tuple[object, ...],
+    status_signature: tuple[object, ...],
+    club_id: str,
+    selected_view: str,
+) -> dict[str, object] | None:
+    del status_signature
+    historical_data = load_hall_of_fame_data(
+        local_version,
+        identity_version,
+        data_version,
+        club_id=club_id,
+    )
+    if historical_data is None:
+        return None
+    historical_data = historical_data.copy()
+    historical_data["all_time"] = get_authoritative_career_totals(
+        local_version,
+        identity_version,
+        data_version,
+        override_version,
+        club_id=club_id,
+    )
+
+    output: dict[str, object] = {"all_time": historical_data["all_time"].copy()}
+    if selected_view == "achieved":
+        season_window = milestone_achievement_season_window(historical_data)
+        output.update(
+            {
+                "season_window": season_window,
+                "achieved": build_achieved_milestones(historical_data, season_window, club_id),
+                "hall_of_fame_movements": build_hall_of_fame_movements(historical_data, season_window),
+            }
+        )
+    elif selected_view == "upcoming":
         active_players = recent_active_canonical_players(historical_data)
         watchlist = build_approaching_milestone_watchlist(historical_data["all_time"], club_id)
         if active_players:
             watchlist = watchlist[watchlist["canonical_player_id"].isin(active_players)].copy()
-        hall_of_fame_watch = build_hall_of_fame_watch(historical_data["all_time"], active_players)
-        render_career_milestone_cards(watchlist, hall_of_fame_watch)
+        output.update(
+            {
+                "watchlist": watchlist,
+                "hall_of_fame_watch": build_hall_of_fame_watch(historical_data["all_time"], active_players),
+                "active_players": active_players,
+            }
+        )
+    return output
 
 
 def milestone_page_view_options() -> list[tuple[str, str]]:
@@ -7485,6 +7568,13 @@ def active_hof_players(data: dict[str, object]) -> set[str]:
     if get_active_club_id() == "glen-waverley-hawks":
         governed = apply_gwhcc_active_player_name_overrides(active)
         return {normalize_featured_player_name(name) for name in governed if name}
+    if get_active_club_id() in {"fvcc", "georges-river-district"}:
+        return apply_active_player_name_overrides(
+            active,
+            frames,
+            club_id=get_active_club_id(),
+            name_normalizer=normalize_featured_player_name,
+        )
     return active
 
 
@@ -10081,7 +10171,11 @@ def recent_active_canonical_players(
         canonical_ids = canonical_ids[canonical_ids != ""]
         if not canonical_ids.empty:
             active = set(canonical_ids)
-            return apply_gwhcc_active_player_id_overrides(active, activity) if club_id == "glen-waverley-hawks" else active
+            if club_id == "glen-waverley-hawks":
+                return apply_gwhcc_active_player_id_overrides(active, activity)
+            if club_id in {"fvcc", "georges-river-district"}:
+                return apply_active_player_id_overrides(active, activity, club_id=club_id)
+            return active
     active = set(recent_activity["canonical_player_name"].dropna().map(make_player_slug).astype(str))
     return apply_gwhcc_active_player_id_overrides(active, activity) if club_id == "glen-waverley-hawks" else active
 

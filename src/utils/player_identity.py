@@ -991,6 +991,25 @@ def rebuild_canonical_processed_tables(
 
 
 @st.cache_data(show_spinner=False, persist="disk")
+def load_portability_player_profile_source_frames(
+    club_id: str,
+    local_version: float,
+    identity_version: float,
+) -> dict[str, pd.DataFrame]:
+    """Prepare canonical FVCC/GRDCC source frames once per governed version."""
+    del local_version, identity_version
+    aliases = load_player_aliases(club_id=club_id)
+    frames = {}
+    for category in ["batting", "bowling", "fielding"]:
+        try:
+            frame = read_processed_table(f"all_seasons_{category}")
+            frames[category] = apply_player_identity_mapping(frame, aliases, club_id=club_id) if not frame.empty else frame
+        except MemoryError:
+            frames[category] = pd.DataFrame()
+    return frames
+
+
+@st.cache_data(show_spinner=False, persist="disk")
 def get_player_profile_data(
     canonical_player_id: str,
     local_version: float | None = None,
@@ -1005,19 +1024,27 @@ def get_player_profile_data(
     """
     local_version = metadata_mtime() if local_version is None else local_version
     identity_version = player_aliases_mtime(club_id=club_id) if identity_version is None else identity_version
-    _ = (local_version, identity_version)
-    aliases = load_player_aliases(club_id=club_id)
-    frames = {}
-    for category in ["batting", "bowling", "fielding"]:
-        try:
-            frame = read_processed_table(f"all_seasons_{category}")
-            frames[category] = apply_player_identity_mapping(frame, aliases, club_id=club_id) if not frame.empty else frame
-        except MemoryError:
-            frames[category] = pd.DataFrame()
+    active_club_id = str(club_id or get_active_club_id()).strip().casefold()
+    if active_club_id in {"fvcc", "georges-river-district"}:
+        prepared_frames = load_portability_player_profile_source_frames(
+            active_club_id,
+            local_version,
+            identity_version,
+        )
+        frames = {category: frame.copy() for category, frame in prepared_frames.items()}
+    else:
+        aliases = load_player_aliases(club_id=club_id)
+        frames = {}
+        for category in ["batting", "bowling", "fielding"]:
+            try:
+                frame = read_processed_table(f"all_seasons_{category}")
+                frames[category] = apply_player_identity_mapping(frame, aliases, club_id=club_id) if not frame.empty else frame
+            except MemoryError:
+                frames[category] = pd.DataFrame()
 
     canonical_player_id = str(canonical_player_id).strip()
     selected_ids = {canonical_player_id}
-    if str(club_id or get_active_club_id()).strip().casefold() == "georges-river-district":
+    if active_club_id == "georges-river-district":
         selected_names: set[str] = set()
         for frame in frames.values():
             if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
