@@ -213,6 +213,12 @@ def test_non_bowler_dismissals_do_not_qualify() -> None:
     assert result.audit.iloc[0]["validation_status"] == "REJECTED"
 
 
+def test_retirement_event_interrupts_bowler_sequence() -> None:
+    result = detection(["Bowled", "Retired Hurt", "LBW"])
+    assert result.events.empty
+    assert result.audit.iloc[0]["validation_status"] == "REJECTED"
+
+
 def test_semantic_duplicate_delivery_is_removed() -> None:
     result = detection(["Bowled", "Caught", "Stumped"], duplicate_first=True)
     assert len(result.events) == 1
@@ -235,8 +241,23 @@ def test_provider_ids_merge_to_same_canonical_bowler() -> None:
 
 def test_private_player_is_excluded_from_public_events() -> None:
     result = detection(["Bowled", "Caught", "LBW"], player_name="********")
-    assert len(result.events) == 1
+    assert result.events.empty
+    assert result.audit.iloc[0]["validation_status"] == "REJECTED"
     assert public_hat_trick_events(result.events).empty
+
+
+def test_unresolved_bowler_identity_is_review_only() -> None:
+    result = detection(
+        ["Bowled", "Caught", "LBW"],
+        identity_lookup={
+            "some-other-player": {
+                "canonical_player_id": "other",
+                "canonical_player_name": "Other Player",
+            }
+        },
+    )
+    assert result.events.empty
+    assert result.audit.iloc[0]["validation_status"] == "AMBIGUOUS / REVIEW"
 
 
 def test_repeated_hat_tricks_by_same_player_remain_separate_events() -> None:

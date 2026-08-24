@@ -8134,7 +8134,10 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
 
 def render_hat_trick_records(team_group_slug: str | None = None) -> None:
     render_section_heading("Hat-tricks 🎩")
-    st.caption("Hat-tricks identified from available detailed records.")
+    if get_active_club_id() == "glen-waverley-hawks":
+        st.caption("Hat-tricks identified from available detailed records.")
+    else:
+        st.caption("Hat-tricks identified from available verified ball-by-ball records.")
     records = load_hat_trick_records(
         get_active_club_id(),
         str(HALL_OF_FAME_HAT_TRICKS_PATH),
@@ -8145,7 +8148,11 @@ def render_hat_trick_records(team_group_slug: str | None = None) -> None:
     if records.empty:
         render_empty_milestone_card(
             "Hat-tricks",
-            "No confirmed hat-tricks in available detailed records.",
+            (
+                "No confirmed hat-tricks in available detailed records."
+                if get_active_club_id() == "glen-waverley-hawks"
+                else "No confirmed hat-tricks identified in available verified ball-by-ball records."
+            ),
             "Historical coverage is limited to retained source evidence.",
         )
         return

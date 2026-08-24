@@ -1,0 +1,23 @@
+check,status,detail
+candidate_counts_reconcile,PASS,rows=0
+confirmed_publication_reconciles,PASS,public=0 confirmed=0
+no_duplicate_candidates,PASS,rows=0
+no_duplicate_public_events,PASS,rows=0
+canonical_public_identities_present,PASS,rows=0
+no_private_public_players,PASS,masked identities excluded
+source_gaps_do_not_affect_confirmed_candidates,PASS,affected=0
+club_id,INFO,fvcc
+source_matches,INFO,961
+club_scorecard_matches,INFO,843
+source_matches_with_ball_by_ball,INFO,101
+matches_with_usable_bowling_evidence,INFO,100
+source_delivery_rows,INFO,50379
+delivery_rows_examined,INFO,24652
+credited_bowler_wickets,INFO,677
+candidate_sequences,INFO,0
+confirmed_candidates,INFO,0
+rejected_candidates,INFO,0
+review_candidates,INFO,0
+semantic_duplicate_rows_removed,INFO,27
+missing_bowler_identity_wickets,INFO,0
+unknown_dismissal_semantics,INFO,0

@@ -1,0 +1,2 @@
+club_id,source_matches,club_scorecard_matches,source_matches_with_ball_by_ball,matches_with_usable_bowling_evidence,source_delivery_rows,delivery_rows_examined,credited_bowler_wickets,candidate_sequences,confirmed_candidates,rejected_candidates,review_candidates,semantic_duplicate_rows_removed,missing_bowler_identity_wickets,unknown_dismissal_semantics
+fvcc,961,843,101,100,50379,24652,677,0,0,0,0,27,0,0
