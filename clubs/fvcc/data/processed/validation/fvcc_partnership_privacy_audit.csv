@@ -1,0 +1,4 @@
+privacy_status,candidate_rows,published_rows,rejected_rows,private_identity_exposed
+PUBLIC_PUBLIC,872,872,0,False
+PUBLIC_PRIVATE,15,15,0,False
+PRIVATE_PRIVATE,0,0,0,False
