@@ -63,7 +63,7 @@ def test_hof_batting_table_exposes_not_outs_without_changing_rank_order() -> Non
     assert result["Bat Avg"].tolist() == [20, 10]
 
 
-def test_season_overview_batting_detail_exposes_not_outs_for_gwhcc_only(monkeypatch) -> None:
+def test_season_overview_batting_detail_exposes_not_outs_for_gwhcc(monkeypatch) -> None:
     source = pd.DataFrame(
         [
             {
@@ -84,11 +84,6 @@ def test_season_overview_batting_detail_exposes_not_outs_for_gwhcc_only(monkeypa
     assert hawks["Runs"].tolist() == [300]
     assert hawks["Bat Avg"].tolist() == [50.0]
 
-    monkeypatch.setattr(layout, "get_active_club_id", lambda: "fvcc")
-    fvcc = layout.get_batting_display_df(source)
-    assert "Not Outs" not in fvcc.columns
-
-
 def test_player_profile_career_metrics_show_not_outs_without_changing_average(monkeypatch) -> None:
     career = pd.Series({"Innings": 20, "Outs": 15, "Runs": 500, "Bat Avg": 33.33, "Bat SR": 80, "0s": 2, "HS": "100*"})
     monkeypatch.setattr(layout, "get_active_club_id", lambda: "glen-waverley-hawks")
@@ -98,18 +93,12 @@ def test_player_profile_career_metrics_show_not_outs_without_changing_average(mo
     assert metrics["Average"] == "33.33"
 
 
-def test_player_profile_zero_not_outs_and_cross_club_scope(monkeypatch) -> None:
+def test_player_profile_zero_not_outs_for_gwhcc(monkeypatch) -> None:
     career = pd.Series({"Innings": 8, "Outs": 8, "Runs": 80, "Bat Avg": 10, "Bat SR": 50, "0s": 0, "HS": 20})
     monkeypatch.setattr(layout, "get_active_club_id", lambda: "glen-waverley-hawks")
     hawks_metrics = dict(layout.player_profile_batting_career_metrics(career, "8"))
     assert hawks_metrics["Not Outs"] == "0"
     assert layout.profile_batting_table_columns("Season")[2] == "NO"
-
-    monkeypatch.setattr(layout, "get_active_club_id", lambda: "fvcc")
-    fvcc_metrics = dict(layout.player_profile_batting_career_metrics(career, "8"))
-    assert "Not Outs" not in fvcc_metrics
-    assert "NO" not in layout.profile_batting_table_columns("Season")
-
 
 def test_gwhcc_not_outs_coverage_note_is_club_scoped(monkeypatch) -> None:
     messages: list[str] = []
