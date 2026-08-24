@@ -98,7 +98,11 @@ from src.config.club_config import (
     get_season_overview_path,
     load_club_config,
 )
-from src.config.app_version import scorebook_build_identifier, scorebook_version_label
+from src.config.app_version import (
+    scorebook_build_identifier,
+    scorebook_release_config,
+    scorebook_version_label,
+)
 from src.data import player_dna_analytics as player_dna
 from src.data import scorebook_lab_analytics as scorebook_lab
 from src.data import season_story_analytics as season_story
@@ -794,9 +798,11 @@ def app_build_commit() -> str:
 
 
 def scorebook_version_footer_html() -> str:
-    if get_active_club_id() != "glen-waverley-hawks":
+    release = scorebook_release_config(get_active_club_id())
+    if release is None:
         return ""
-    return f'<div class="scorebook-version">{html.escape(scorebook_version_label("GWHCC", APP_ROOT))}</div>'
+    label = scorebook_version_label(release.club_label, APP_ROOT, release.release_version)
+    return f'<div class="scorebook-version">{html.escape(label)}</div>'
 
 
 def app_data_version_label() -> str:
