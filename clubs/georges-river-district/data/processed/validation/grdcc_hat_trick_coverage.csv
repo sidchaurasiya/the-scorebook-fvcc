@@ -1,0 +1,2 @@
+club_id,source_matches,club_scorecard_matches,source_matches_with_ball_by_ball,matches_with_usable_bowling_evidence,source_delivery_rows,delivery_rows_examined,credited_bowler_wickets,candidate_sequences,confirmed_candidates,rejected_candidates,review_candidates,semantic_duplicate_rows_removed,missing_bowler_identity_wickets,unknown_dismissal_semantics
+georges-river-district,2604,2167,295,279,155573,74501,2129,4,4,0,0,75,23,0

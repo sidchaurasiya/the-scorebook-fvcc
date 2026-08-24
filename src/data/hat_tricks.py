@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Mapping
 
 import pandas as pd
@@ -38,8 +39,11 @@ AUDIT_COLUMNS = [
     "season",
     "match_id",
     "innings_id",
+    "innings_number",
+    "match_date",
     "opponent",
     "team_name",
+    "grade_name",
     "delivery_1",
     "dismissal_1",
     "dismissed_player_id_1",
@@ -71,6 +75,7 @@ EVENT_COLUMNS = [
     "season",
     "match_id",
     "innings_id",
+    "innings_number",
     "match_date",
     "team_name",
     "opponent",
@@ -94,6 +99,15 @@ class HatTrickDetectionResult:
     coverage: dict[str, object]
 
 
+@dataclass(frozen=True)
+class GovernedHatTrickBuildResult:
+    events: pd.DataFrame
+    audit: pd.DataFrame
+    coverage: pd.DataFrame
+    source_issues: pd.DataFrame
+    validation: pd.DataFrame
+
+
 def detect_hat_tricks(
     ball_by_ball: pd.DataFrame,
     *,
@@ -103,6 +117,7 @@ def detect_hat_tricks(
     selected_team_ids_by_match: Mapping[str, set[str]] | None = None,
     identity_lookup: Mapping[str, Mapping[str, str]] | None = None,
     coverage_note: str = "Hat-tricks identified from available detailed records.",
+    evidence_source: str = "PlayCricket ball-by-ball + bowling and batting scorecards",
 ) -> HatTrickDetectionResult:
     if ball_by_ball.empty:
         return HatTrickDetectionResult(empty_events(), empty_audit(), empty_coverage())
@@ -121,16 +136,26 @@ def detect_hat_tricks(
     bowling_lookup = prepare_bowling_lookup(bowling_scorecard)
     batting_lookup = prepare_batting_lookup(batting_scorecard)
     identity_lookup = identity_lookup or {}
-    rows["_canonical_bowler_id"] = rows["bowler_participant_id"].map(
-        lambda value: clean_text(identity_lookup.get(str(value), {}).get("canonical_player_id")) or str(value)
+    rows["_raw_bowler_id"] = rows["bowler_participant_id"].map(clean_text)
+    rows["_identity_resolved"] = rows["_raw_bowler_id"].map(
+        lambda value: bool(
+            clean_text(identity_lookup.get(value, {}).get("canonical_player_id"))
+            and clean_text(identity_lookup.get(value, {}).get("canonical_player_name"))
+        )
+    )
+    rows["_canonical_bowler_id"] = rows["_raw_bowler_id"].map(
+        lambda value: clean_text(identity_lookup.get(value, {}).get("canonical_player_id")) or value
     )
     rows["_canonical_bowler_name"] = rows.apply(
-        lambda row: clean_text(identity_lookup.get(str(row.get("bowler_participant_id")), {}).get("canonical_player_name"))
+        lambda row: clean_text(identity_lookup.get(clean_text(row.get("bowler_participant_id")), {}).get("canonical_player_name"))
         or clean_text(row.get("bowler_short_name"))
         or "Unknown player",
         axis=1,
     )
     conflict_coordinates = conflicting_delivery_coordinates(rows)
+    missing_bowler_matches = set(
+        rows.loc[rows["_raw_bowler_id"].eq(""), "match_id"].dropna().astype(str)
+    )
 
     audit_rows: list[dict[str, object]] = []
     confirmed_rows: list[dict[str, object]] = []
@@ -148,6 +173,15 @@ def detect_hat_tricks(
             player_name = clean_text(sequence.iloc[0].get("_canonical_bowler_name")) or "Unknown player"
             innings_ids = list(dict.fromkeys(sequence["innings_id"].dropna().astype(str)))
             innings_label = " | ".join(innings_ids)
+            innings_number_values = pd.to_numeric(
+                sequence.get("innings_number", pd.Series(index=sequence.index, dtype=float)),
+                errors="coerce",
+            ).dropna()
+            innings_numbers = [
+                str(int(value)) if float(value).is_integer() else str(value)
+                for value in dict.fromkeys(innings_number_values)
+            ]
+            innings_number_label = " | ".join(innings_numbers)
             match = match_lookup.get(str(match_id), {})
             team_name, opponent = team_and_opponent(sequence.iloc[0], match)
             scorecard_wickets = bowling_wickets_for_candidate(
@@ -168,6 +202,16 @@ def detect_hat_tricks(
                 batting_verified=batting_verified,
                 conflict_coordinates=conflict_coordinates,
             )
+            if str(match_id) in missing_bowler_matches:
+                status = "AMBIGUOUS / REVIEW"
+                reason = "The match contains delivery rows with missing bowler identity that could affect personal-sequence continuity."
+            if not bool(sequence["_identity_resolved"].all()):
+                status = "AMBIGUOUS / REVIEW"
+                reason = "Bowler identity does not resolve to a canonical player ID and public name."
+            private_player = is_private_or_anonymised_player(player_name)
+            if private_player:
+                status = "REJECTED"
+                reason = "Canonical bowler identity is private or masked."
             labels = [delivery_label(row) for _, row in sequence.iterrows()]
             dismissals = [clean_text(value) for value in sequence["dismissal_type"]]
             dismissed_ids = [clean_text(value) for value in sequence["dismissed_participant_id"]]
@@ -176,7 +220,7 @@ def detect_hat_tricks(
             event_id = hat_trick_event_id(str(match_id), innings_ids, sequence)
             source_evidence = (
                 "PlayCricket ball-by-ball"
-                f"; bowling scorecard wickets={format_optional_number(scorecard_wickets)}"
+                f"; scorecard credited wickets={format_optional_number(scorecard_wickets)}"
                 f"; batting dismissals verified={batting_verified}/3"
             )
             audit_row = {
@@ -186,8 +230,11 @@ def detect_hat_tricks(
                 "season": clean_text(match.get("season")),
                 "match_id": str(match_id),
                 "innings_id": innings_label,
+                "innings_number": innings_number_label,
+                "match_date": clean_text(match.get("first_match_day"))[:10],
                 "opponent": opponent,
                 "team_name": team_name,
+                "grade_name": clean_text(match.get("grade_name")),
                 "delivery_1": labels[0],
                 "dismissal_1": dismissals[0],
                 "dismissed_player_id_1": dismissed_ids[0],
@@ -210,7 +257,7 @@ def detect_hat_tricks(
                 "batting_dismissals_verified": batting_verified,
                 "validation_status": status,
                 "exclusion_reason": reason,
-                "is_private_player": is_private_or_anonymised_player(player_name),
+                "is_private_player": private_player,
             }
             audit_rows.append(audit_row)
             if status == "CONFIRMED":
@@ -222,6 +269,7 @@ def detect_hat_tricks(
                         "season": clean_text(match.get("season")),
                         "match_id": str(match_id),
                         "innings_id": innings_label,
+                        "innings_number": innings_number_label,
                         "match_date": clean_text(match.get("first_match_day"))[:10],
                         "team_name": team_name,
                         "opponent": opponent,
@@ -231,7 +279,7 @@ def detect_hat_tricks(
                         "spans_overs": sequence_spans_overs(sequence),
                         "spans_innings": len(innings_ids) > 1,
                         "scorecard_wickets": scorecard_wickets,
-                        "evidence_source": "PlayCricket ball-by-ball + bowling and batting scorecards",
+                        "evidence_source": evidence_source,
                         "confidence": "high",
                         "scoreboard_url": f"https://play.cricket.com.au/match/{match_id}",
                         "source_coverage_note": coverage_note,
@@ -250,6 +298,16 @@ def detect_hat_tricks(
         "eligible_bowling_delivery_rows": int(len(rows)),
         "eligible_bowling_innings": int(rows["innings_id"].nunique()),
         "matches_with_ball_by_ball": int(rows["match_id"].nunique()),
+        "matches_with_usable_bowling_evidence": int(rows.loc[rows["_raw_bowler_id"].ne(""), "match_id"].nunique()),
+        "credited_bowler_wickets": int(rows["bowler_wicket"].sum()),
+        "missing_bowler_identity_wickets": int(
+            (
+                rows["is_wicket_bool"]
+                & rows["dismissal_key"].isin(BOWLER_WICKET_DISMISSALS)
+                & rows["_raw_bowler_id"].eq("")
+            ).sum()
+        ),
+        "unknown_dismissal_semantics": int(unknown_dismissal_mask(rows).sum()),
         "candidate_windows": int(len(audit)),
         "confirmed": int((audit.get("validation_status") == "CONFIRMED").sum()) if not audit.empty else 0,
         "rejected": int((audit.get("validation_status") == "REJECTED").sum()) if not audit.empty else 0,
@@ -267,6 +325,7 @@ def public_hat_trick_events(events: pd.DataFrame) -> pd.DataFrame:
 def prepare_delivery_rows(ball_by_ball: pd.DataFrame) -> tuple[pd.DataFrame, int]:
     rows = ball_by_ball.copy().reset_index(drop=True)
     rows["_source_order"] = range(len(rows))
+    original_rows = len(rows)
     rows = rows.drop_duplicates("ball_event_id", keep="first") if "ball_event_id" in rows else rows.drop_duplicates()
     rows["is_wicket_bool"] = bool_series(rows.get("is_wicket"))
     rows["is_legal_bool"] = bool_series(rows.get("is_legal_delivery"))
@@ -302,7 +361,12 @@ def prepare_delivery_rows(ball_by_ball: pd.DataFrame) -> tuple[pd.DataFrame, int
     semantic_columns = [column for column in semantic_columns if column in rows]
     before = len(rows)
     rows = rows.drop_duplicates(semantic_columns, keep="first").copy()
-    return rows, before - len(rows)
+    return rows, (original_rows - before) + (before - len(rows))
+
+
+def unknown_dismissal_mask(rows: pd.DataFrame) -> pd.Series:
+    known = BOWLER_WICKET_DISMISSALS | NON_BOWLER_DISMISSALS
+    return rows["is_wicket_bool"] & ~rows["dismissal_key"].isin(known)
 
 
 def classify_candidate(
@@ -487,6 +551,298 @@ def numeric_extra(value: object) -> int | float:
     return int(number) if float(number).is_integer() else float(number)
 
 
+def build_governed_club_hat_tricks(
+    *,
+    club_id: str,
+    match_centre_root: Path,
+    club_processed_root: Path,
+    coverage_note: str = "Hat-tricks identified from available verified ball-by-ball records.",
+) -> GovernedHatTrickBuildResult:
+    """Build a club's governed public records from ignored local source files."""
+    matches, balls, batting = load_hat_trick_sources(match_centre_root)
+    selected = {
+        str(row.match_id): parse_source_team_ids(row.source_team_ids)
+        for row in matches.itertuples()
+    }
+    identity_lookup = build_club_identity_lookup(club_processed_root)
+    bowling = derive_bowling_scorecard_from_batting(batting)
+    detected = detect_hat_tricks(
+        balls,
+        matches=matches,
+        bowling_scorecard=bowling,
+        batting_scorecard=batting,
+        selected_team_ids_by_match=selected,
+        identity_lookup=identity_lookup,
+        coverage_note=coverage_note,
+        evidence_source="PlayCricket ball-by-ball + batting scorecard dismissal reconciliation",
+    )
+    events = public_hat_trick_events(detected.events)
+    prepared_rows, _ = prepare_delivery_rows(balls)
+    prepared_rows = prepared_rows[
+        prepared_rows.apply(
+            lambda row: clean_text(row.get("bowling_team_id"))
+            in selected.get(clean_text(row.get("match_id")), set()),
+            axis=1,
+        )
+    ].copy()
+    prepared_rows["_raw_bowler_id"] = prepared_rows["bowler_participant_id"].map(clean_text)
+    issues = build_hat_trick_source_issue_audit(
+        prepared_rows,
+        matches=matches,
+        batting=batting,
+        identity_lookup=identity_lookup,
+        candidate_match_ids=set(detected.audit.get("match_id", pd.Series(dtype=str)).astype(str)),
+    )
+    club_team_ids = set().union(*selected.values()) if selected else set()
+    club_scorecard_matches = int(
+        batting.loc[batting.get("team_id", pd.Series(dtype=str)).astype(str).isin(club_team_ids), "match_id"].nunique()
+    )
+    source_bbb = bool_series(matches.get("is_ball_by_ball", pd.Series(False, index=matches.index)))
+    coverage = pd.DataFrame(
+        [
+            {
+                "club_id": club_id,
+                "source_matches": int(matches["match_id"].nunique()),
+                "club_scorecard_matches": club_scorecard_matches,
+                "source_matches_with_ball_by_ball": int(matches.loc[source_bbb, "match_id"].nunique()),
+                "matches_with_usable_bowling_evidence": detected.coverage["matches_with_usable_bowling_evidence"],
+                "source_delivery_rows": detected.coverage["source_delivery_rows"],
+                "delivery_rows_examined": detected.coverage["eligible_bowling_delivery_rows"],
+                "credited_bowler_wickets": detected.coverage["credited_bowler_wickets"],
+                "candidate_sequences": detected.coverage["candidate_windows"],
+                "confirmed_candidates": detected.coverage["confirmed"],
+                "rejected_candidates": detected.coverage["rejected"],
+                "review_candidates": detected.coverage["ambiguous"],
+                "semantic_duplicate_rows_removed": detected.coverage["semantic_duplicate_rows_removed"],
+                "missing_bowler_identity_wickets": detected.coverage["missing_bowler_identity_wickets"],
+                "unknown_dismissal_semantics": detected.coverage["unknown_dismissal_semantics"],
+            }
+        ]
+    )
+    validation = build_hat_trick_validation(events, detected.audit, coverage, issues)
+    return GovernedHatTrickBuildResult(events, detected.audit, coverage, issues, validation)
+
+
+def load_hat_trick_sources(match_centre_root: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    required = ("all_matches.csv", "all_ball_by_ball.csv", "all_scorecard_batting.csv")
+    scopes = [match_centre_root] if all((match_centre_root / name).exists() for name in required) else []
+    scopes.extend(
+        child
+        for child in sorted(match_centre_root.iterdir() if match_centre_root.exists() else [])
+        if child.is_dir() and all((child / name).exists() for name in required)
+    )
+    if not scopes:
+        raise FileNotFoundError(f"No complete restored match-centre scope found under {match_centre_root}.")
+    matches = pd.concat([pd.read_csv(scope / required[0], low_memory=False) for scope in scopes], ignore_index=True)
+    balls = pd.concat([pd.read_csv(scope / required[1], low_memory=False) for scope in scopes], ignore_index=True)
+    batting = pd.concat([pd.read_csv(scope / required[2], low_memory=False) for scope in scopes], ignore_index=True)
+    matches = matches.drop_duplicates("match_id", keep="last").reset_index(drop=True)
+    if "ball_event_id" in balls:
+        balls = balls.drop_duplicates("ball_event_id", keep="last").reset_index(drop=True)
+    batting_key = [column for column in ["match_id", "innings_id", "participant_id", "bat_instance"] if column in batting]
+    batting = batting.drop_duplicates(batting_key, keep="last").reset_index(drop=True)
+    return matches, balls, batting
+
+
+def parse_source_team_ids(value: object) -> set[str]:
+    text = clean_text(value).replace(";", ",").replace("|", ",")
+    return {token.strip() for token in text.split(",") if token.strip()}
+
+
+def build_club_identity_lookup(club_processed_root: Path) -> dict[str, dict[str, str]]:
+    lookup: dict[str, dict[str, str]] = {}
+    for filename in ["all_seasons_bowling.csv", "all_seasons_batting.csv"]:
+        path = club_processed_root / filename
+        if not path.exists():
+            continue
+        rows = pd.read_csv(path, low_memory=False)
+        required = {"raw_player_id", "canonical_player_id", "canonical_player_name"}
+        if not required.issubset(rows.columns):
+            continue
+        for row in rows[list(required)].drop_duplicates().itertuples(index=False):
+            raw_id = clean_text(getattr(row, "raw_player_id"))
+            canonical_id = clean_text(getattr(row, "canonical_player_id"))
+            canonical_name = clean_text(getattr(row, "canonical_player_name"))
+            if raw_id and canonical_id and canonical_name:
+                lookup.setdefault(
+                    raw_id,
+                    {"canonical_player_id": canonical_id, "canonical_player_name": canonical_name},
+                )
+    return lookup
+
+
+def derive_bowling_scorecard_from_batting(batting: pd.DataFrame) -> pd.DataFrame:
+    """Derive per-innings wicket credit from independent batting scorecard rows."""
+    columns = ["match_id", "innings_id", "participant_id", "wickets_taken"]
+    if batting.empty or "bowler_participant_id" not in batting:
+        return pd.DataFrame(columns=columns)
+    rows = batting.copy()
+    rows["dismissal_key"] = rows.get("dismissal_type", pd.Series("", index=rows.index)).map(normalize_dismissal_type)
+    rows = rows[
+        rows["dismissal_key"].isin(BOWLER_WICKET_DISMISSALS)
+        & rows["bowler_participant_id"].map(clean_text).ne("")
+    ].copy()
+    if rows.empty:
+        return pd.DataFrame(columns=columns)
+    grouped = (
+        rows.groupby(["match_id", "innings_id", "bowler_participant_id"], dropna=False)
+        .size()
+        .rename("wickets_taken")
+        .reset_index()
+        .rename(columns={"bowler_participant_id": "participant_id"})
+    )
+    return grouped[columns]
+
+
+def build_hat_trick_source_issue_audit(
+    rows: pd.DataFrame,
+    *,
+    matches: pd.DataFrame,
+    batting: pd.DataFrame,
+    identity_lookup: Mapping[str, Mapping[str, str]],
+    candidate_match_ids: set[str],
+) -> pd.DataFrame:
+    columns = [
+        "issue_type",
+        "classification",
+        "match_id",
+        "innings_id",
+        "season",
+        "grade_name",
+        "delivery",
+        "dismissal_type",
+        "dismissed_participant_id",
+        "scorecard_bowler_participant_id",
+        "scorecard_bowler_canonical_id",
+        "scorecard_bowler_name",
+        "affects_confirmed_candidate",
+        "detail",
+    ]
+    if rows.empty:
+        return pd.DataFrame(columns=columns)
+    match_lookup = frame_lookup(matches, "match_id")
+    batting_lookup = prepare_batting_lookup(batting)
+    issue_rows: list[dict[str, object]] = []
+    missing_bowler = (
+        rows["_raw_bowler_id"].eq("")
+        & rows["is_wicket_bool"]
+        & rows["dismissal_key"].isin(BOWLER_WICKET_DISMISSALS)
+    )
+    for _, row in rows.loc[missing_bowler].iterrows():
+        match_id = clean_text(row.get("match_id"))
+        innings_id = clean_text(row.get("innings_id"))
+        dismissed_id = clean_text(row.get("dismissed_participant_id"))
+        scorecard = batting_lookup.get((match_id, innings_id, dismissed_id), {})
+        scorecard_bowler = clean_text(scorecard.get("bowler_participant_id"))
+        canonical = identity_lookup.get(scorecard_bowler, {})
+        malformed = not dismissed_id
+        issue_rows.append(
+            {
+                "issue_type": "missing_bowler_identity",
+                "classification": "D" if malformed else "C",
+                "match_id": match_id,
+                "innings_id": innings_id,
+                "season": clean_text(match_lookup.get(match_id, {}).get("season")),
+                "grade_name": clean_text(match_lookup.get(match_id, {}).get("grade_name")),
+                "delivery": delivery_label(row),
+                "dismissal_type": clean_text(row.get("dismissal_type")),
+                "dismissed_participant_id": dismissed_id,
+                "scorecard_bowler_participant_id": scorecard_bowler,
+                "scorecard_bowler_canonical_id": clean_text(canonical.get("canonical_player_id")),
+                "scorecard_bowler_name": clean_text(canonical.get("canonical_player_name")),
+                "affects_confirmed_candidate": match_id in candidate_match_ids,
+                "detail": (
+                    "Malformed wicket row has no dismissed participant, so scorecard attribution is unavailable."
+                    if malformed
+                    else "Batting scorecard may identify the wicket bowler, but missing delivery-level bowler data prevents governed personal-sequence reconstruction."
+                ),
+            }
+        )
+    unknown = unknown_dismissal_mask(rows)
+    for _, row in rows.loc[unknown].iterrows():
+        match_id = clean_text(row.get("match_id"))
+        issue_rows.append(
+            {
+                "issue_type": "unknown_dismissal_semantics",
+                "classification": "C",
+                "match_id": match_id,
+                "innings_id": clean_text(row.get("innings_id")),
+                "season": clean_text(match_lookup.get(match_id, {}).get("season")),
+                "grade_name": clean_text(match_lookup.get(match_id, {}).get("grade_name")),
+                "delivery": delivery_label(row),
+                "dismissal_type": clean_text(row.get("dismissal_type")),
+                "dismissed_participant_id": clean_text(row.get("dismissed_participant_id")),
+                "scorecard_bowler_participant_id": "",
+                "scorecard_bowler_canonical_id": "",
+                "scorecard_bowler_name": "",
+                "affects_confirmed_candidate": match_id in candidate_match_ids,
+                "detail": "Provider dismissal label is not governed as bowler-credit or non-bowler-credit.",
+            }
+        )
+    return pd.DataFrame(issue_rows, columns=columns)
+
+
+def build_hat_trick_validation(
+    events: pd.DataFrame,
+    audit: pd.DataFrame,
+    coverage: pd.DataFrame,
+    source_issues: pd.DataFrame,
+) -> pd.DataFrame:
+    statuses = audit.get("validation_status", pd.Series(dtype=str)).fillna("").astype(str)
+    confirmed_ids = set(audit.loc[statuses.eq("CONFIRMED"), "event_id"].astype(str)) if not audit.empty else set()
+    public_ids = set(events.get("event_id", pd.Series(dtype=str)).dropna().astype(str))
+    affected = source_issues.get("affects_confirmed_candidate", pd.Series(False, index=source_issues.index))
+    affected = affected.astype(str).str.casefold().isin({"true", "1", "yes"})
+    checks = [
+        ("candidate_counts_reconcile", len(audit) == int(coverage.iloc[0]["candidate_sequences"]), f"rows={len(audit)}"),
+        ("confirmed_publication_reconciles", public_ids == confirmed_ids, f"public={len(public_ids)} confirmed={len(confirmed_ids)}"),
+        ("no_duplicate_candidates", not audit.get("event_id", pd.Series(dtype=str)).duplicated().any(), f"rows={len(audit)}"),
+        ("no_duplicate_public_events", not events.get("event_id", pd.Series(dtype=str)).duplicated().any(), f"rows={len(events)}"),
+        (
+            "canonical_public_identities_present",
+            events.get("canonical_player_id", pd.Series(dtype=str)).map(clean_text).ne("").all()
+            and events.get("canonical_player_name", pd.Series(dtype=str)).map(clean_text).ne("").all(),
+            f"rows={len(events)}",
+        ),
+        (
+            "no_private_public_players",
+            not events.get("canonical_player_name", pd.Series(dtype=str)).map(is_private_or_anonymised_player).any(),
+            "masked identities excluded",
+        ),
+        (
+            "source_gaps_do_not_affect_confirmed_candidates",
+            not bool(affected.any()),
+            f"affected={int(affected.sum())}",
+        ),
+    ]
+    return pd.DataFrame(
+        [{"check": name, "status": "PASS" if passed else "FAIL", "detail": detail} for name, passed, detail in checks]
+        + [{"check": key, "status": "INFO", "detail": str(value)} for key, value in coverage.iloc[0].items()]
+    )
+
+
+def write_governed_hat_trick_outputs(
+    result: GovernedHatTrickBuildResult,
+    *,
+    hall_of_fame_output: Path,
+    validation_dir: Path,
+    prefix: str,
+) -> None:
+    hall_of_fame_output.parent.mkdir(parents=True, exist_ok=True)
+    validation_dir.mkdir(parents=True, exist_ok=True)
+    write_csv_atomic(result.events, hall_of_fame_output)
+    write_csv_atomic(result.audit, validation_dir / f"{prefix}_hat_trick_candidate_audit.csv")
+    write_csv_atomic(result.coverage, validation_dir / f"{prefix}_hat_trick_coverage.csv")
+    write_csv_atomic(result.source_issues, validation_dir / f"{prefix}_hat_trick_source_issue_audit.csv")
+    write_csv_atomic(result.validation, validation_dir / f"{prefix}_hat_trick_validation.csv")
+
+
+def write_csv_atomic(frame: pd.DataFrame, path: Path) -> None:
+    temporary = path.with_suffix(f"{path.suffix}.tmp")
+    frame.to_csv(temporary, index=False)
+    temporary.replace(path)
+
+
 def empty_events() -> pd.DataFrame:
     return pd.DataFrame(columns=EVENT_COLUMNS)
 
@@ -502,6 +858,10 @@ def empty_coverage() -> dict[str, object]:
         "eligible_bowling_delivery_rows": 0,
         "eligible_bowling_innings": 0,
         "matches_with_ball_by_ball": 0,
+        "matches_with_usable_bowling_evidence": 0,
+        "credited_bowler_wickets": 0,
+        "missing_bowler_identity_wickets": 0,
+        "unknown_dismissal_semantics": 0,
         "candidate_windows": 0,
         "confirmed": 0,
         "rejected": 0,
