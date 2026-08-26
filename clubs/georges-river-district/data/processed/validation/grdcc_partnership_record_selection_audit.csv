@@ -1,0 +1,11 @@
+wicket_number,candidate_rows,selected_partnership_id,selected_runs,selected_balls,maximum_runs,maximum_run_ties,selection_status,validation_status,tie_break_rule
+1,299,bbb:76971ca8-d71f-4837-ac22-54c67a3ab757:230525e5-2130-4671-8868-096dfe59e271:1,185,212,185,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+2,291,bbb:1da5e521-4f7a-4165-bc97-322e601b1b3a:cfae28cb-7f32-4ec7-b6f3-ed8cbf6c5e2c:2,183,174,183,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+3,280,bbb:71f34844-6b42-458a-ab3e-8dd24a8902be:5118cb04-5489-4e4a-9307-d448bcf8c895:3,154,267,154,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+4,269,bbb:e15a6d92-9f27-41e3-9eae-b180e4d8a388:3e5c3f31-6b64-4963-b6c5-3247c06cc6ab:4,140,126,140,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+5,264,bbb:55ad78e4-fabc-4074-8fa8-d0412012199d:014486a9-dc5f-44f0-a0ac-4d7724bddf90:5,140,121,140,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+6,248,bbb:068e49f0-32cb-47e0-983c-691e52449f7e:27e303b6-72c2-4a24-aea1-3c7725ed425a:6,106,90,106,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+7,232,bbb:b336bb68-601f-4981-b277-f5b95a636b3b:d3a24c54-5daf-4d24-8a86-26307699dd0a:7,96,94,96,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+8,212,bbb:c73e3822-abbe-48fc-99ea-20bf29ed2011:ccf5b273-6183-4f03-ad05-72f270879c12:8,119,166,119,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+9,197,bbb:984fd5bd-07ba-4ff5-b2a9-1e69e1588583:246002cd-2352-4d04-9478-f4f25a5bea9a:9,94,84,94,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
+10,169,bbb:5093f506-96fd-408d-bdf2-9c6f4c7fe050:899c7ad1-bffb-4500-a9c1-fc8c0ffdf56e:10,64,69,64,1,SELECTED,PASS,runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc
