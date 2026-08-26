@@ -53,6 +53,7 @@ PUBLIC_PARTNERSHIP_COLUMNS = [
     "batter_2_public_name",
     "partnership_runs",
     "balls_faced",
+    "wicket_number",
     "match_id",
     "season",
     "grade",
@@ -82,11 +83,13 @@ class PartnershipPreparationResult:
 @dataclass(frozen=True)
 class GovernedClubPartnershipResult:
     events: pd.DataFrame
+    records: pd.DataFrame
     coverage: pd.DataFrame
     privacy_audit: pd.DataFrame
     identity_audit: pd.DataFrame
     reconciliation_audit: pd.DataFrame
     rejected: pd.DataFrame
+    record_selection_audit: pd.DataFrame
 
 
 def prepare_ball_by_ball_partnerships(
@@ -444,6 +447,7 @@ def build_governed_club_partnerships(
                 "batter_2_public_name": public_2[1],
                 "partnership_runs": numeric_number(row.get("runs")),
                 "balls_faced": numeric_number(row.get("balls")),
+                "wicket_number": number,
                 "match_id": match_id,
                 "season": clean_text(match.get("season")),
                 "grade": clean_text(match.get("grade_name")),
@@ -527,6 +531,7 @@ def build_governed_club_partnerships(
         "source_detail",
     ]
     reconciliation = reconciliation.reindex(columns=reconciliation_columns)
+    records, record_selection_audit = build_verified_partnership_record_holders(events)
     privacy_audit = build_partnership_privacy_audit(partnership_rows, events, rejected)
     coverage = pd.DataFrame(
         [
@@ -555,17 +560,145 @@ def build_governed_club_partnerships(
                     rejected.get("privacy_status", pd.Series(dtype=str)).eq("PRIVATE_PRIVATE").sum()
                 ),
                 "incomplete_identity_rows": int(len(identity_audit)),
+                "record_holder_rows": int(len(records)),
             }
         ]
     )
     return GovernedClubPartnershipResult(
         events=events,
+        records=records,
         coverage=coverage,
         privacy_audit=privacy_audit,
         identity_audit=identity_audit,
         reconciliation_audit=reconciliation,
         rejected=rejected,
+        record_selection_audit=record_selection_audit,
     )
+
+
+def build_verified_partnership_record_holders(
+    events: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Select one verified maximum per wicket with stable, documented tie-breaking.
+
+    Ties resolve by more partnership balls, then earlier match date, match ID,
+    innings ID, and partnership ID. Input dataframe ordering is never used.
+    """
+    audit_columns = [
+        "wicket_number",
+        "candidate_rows",
+        "selected_partnership_id",
+        "selected_runs",
+        "selected_balls",
+        "maximum_runs",
+        "maximum_run_ties",
+        "selection_status",
+        "validation_status",
+        "tie_break_rule",
+    ]
+    if events.empty:
+        audit = pd.DataFrame(
+            [
+                {
+                    "wicket_number": wicket,
+                    "candidate_rows": 0,
+                    "selected_partnership_id": "",
+                    "selected_runs": pd.NA,
+                    "selected_balls": pd.NA,
+                    "maximum_runs": pd.NA,
+                    "maximum_run_ties": 0,
+                    "selection_status": "NO_VERIFIED_RECORD",
+                    "validation_status": "PASS",
+                    "tie_break_rule": "runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc",
+                }
+                for wicket in range(1, 11)
+            ],
+            columns=audit_columns,
+        )
+        return pd.DataFrame(columns=PUBLIC_PARTNERSHIP_COLUMNS), audit
+
+    rows = events.copy()
+    rows["wicket_number"] = pd.to_numeric(rows.get("wicket_number"), errors="coerce")
+    rows["partnership_runs"] = pd.to_numeric(rows.get("partnership_runs"), errors="coerce")
+    rows["balls_faced"] = pd.to_numeric(rows.get("balls_faced"), errors="coerce")
+    rows["_match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
+    eligible = rows[
+        rows["wicket_number"].between(1, 10, inclusive="both")
+        & rows["partnership_runs"].notna()
+        & rows["partnership_runs"].ge(0)
+        & rows.get("reconciliation_status", pd.Series("", index=rows.index)).isin(
+            {"MATCHED", "SCORE_DIFFERENCE_ACCEPTED"}
+        )
+        & rows.get("privacy_status", pd.Series("", index=rows.index)).isin(
+            {"PUBLIC_PUBLIC", "PUBLIC_PRIVATE"}
+        )
+    ].copy()
+    eligible = eligible.drop_duplicates("partnership_id", keep="first")
+    selected_rows: list[pd.Series] = []
+    audit_rows: list[dict[str, object]] = []
+    tie_rule = "runs desc; balls desc; match date asc; match ID asc; innings ID asc; partnership ID asc"
+    for wicket in range(1, 11):
+        candidates = eligible[eligible["wicket_number"].eq(wicket)].copy()
+        if candidates.empty:
+            audit_rows.append(
+                {
+                    "wicket_number": wicket,
+                    "candidate_rows": 0,
+                    "selected_partnership_id": "",
+                    "selected_runs": pd.NA,
+                    "selected_balls": pd.NA,
+                    "maximum_runs": pd.NA,
+                    "maximum_run_ties": 0,
+                    "selection_status": "NO_VERIFIED_RECORD",
+                    "validation_status": "PASS",
+                    "tie_break_rule": tie_rule,
+                }
+            )
+            continue
+        maximum_runs = float(candidates["partnership_runs"].max())
+        maximum_ties = int(candidates["partnership_runs"].eq(maximum_runs).sum())
+        candidates = candidates.sort_values(
+            [
+                "partnership_runs",
+                "balls_faced",
+                "_match_date_sort",
+                "match_id",
+                "innings_id",
+                "partnership_id",
+            ],
+            ascending=[False, False, True, True, True, True],
+            kind="mergesort",
+            na_position="last",
+        )
+        selected = candidates.iloc[0]
+        selected_rows.append(selected)
+        valid = (
+            int(selected["wicket_number"]) == wicket
+            and float(selected["partnership_runs"]) == maximum_runs
+            and clean_text(selected.get("match_id")) != ""
+            and clean_text(selected.get("innings_id")) != ""
+        )
+        audit_rows.append(
+            {
+                "wicket_number": wicket,
+                "candidate_rows": len(candidates),
+                "selected_partnership_id": clean_text(selected.get("partnership_id")),
+                "selected_runs": numeric_number(selected.get("partnership_runs")),
+                "selected_balls": numeric_number(selected.get("balls_faced")),
+                "maximum_runs": numeric_number(maximum_runs),
+                "maximum_run_ties": maximum_ties,
+                "selection_status": "SELECTED",
+                "validation_status": "PASS" if valid else "FAIL",
+                "tie_break_rule": tie_rule,
+            }
+        )
+    if selected_rows:
+        records = pd.DataFrame(selected_rows).drop(columns="_match_date_sort", errors="ignore")
+        records = records[PUBLIC_PARTNERSHIP_COLUMNS].sort_values("wicket_number").reset_index(drop=True)
+    else:
+        records = pd.DataFrame(columns=PUBLIC_PARTNERSHIP_COLUMNS)
+    audit = pd.DataFrame(audit_rows, columns=audit_columns)
+    return records, audit
 
 
 def load_partnership_sources(
@@ -786,6 +919,7 @@ def write_governed_club_partnership_outputs(
     output.parent.mkdir(parents=True, exist_ok=True)
     validation_dir.mkdir(parents=True, exist_ok=True)
     write_csv_atomic(result.events, output)
+    write_csv_atomic(result.records, output.with_name("partnership_records.csv"))
     write_csv_atomic(result.coverage, validation_dir / f"{prefix}_partnership_coverage_audit.csv")
     write_csv_atomic(result.privacy_audit, validation_dir / f"{prefix}_partnership_privacy_audit.csv")
     write_csv_atomic(result.identity_audit, validation_dir / f"{prefix}_partnership_identity_audit.csv")
@@ -794,6 +928,10 @@ def write_governed_club_partnership_outputs(
         validation_dir / f"{prefix}_partnership_reconciliation_failures.csv",
     )
     write_csv_atomic(result.rejected, validation_dir / f"{prefix}_partnership_rejected_records.csv")
+    write_csv_atomic(
+        result.record_selection_audit,
+        validation_dir / f"{prefix}_partnership_record_selection_audit.csv",
+    )
 
 
 def write_csv_atomic(frame: pd.DataFrame, path: Path) -> None:

@@ -4958,12 +4958,13 @@ def render_hall_of_fame_page() -> None:
         render_hat_trick_records(team_group_slug)
         log_hof_timing("render hat-tricks", section_started_at)
     section_started_at = time.perf_counter()
-    if HALL_OF_FAME_VERIFIED_PARTNERSHIPS_PATH.exists():
-        render_verified_partnerships(team_group_slug)
-        log_hof_timing("render verified partnerships", section_started_at)
-    elif HALL_OF_FAME_PARTNERSHIP_RECORDS_PATH.exists():
-        render_partnership_records(team_group_slug)
-        log_hof_timing("render partnership records", section_started_at)
+    if HALL_OF_FAME_PARTNERSHIP_RECORDS_PATH.exists():
+        if get_active_club_id() in {"fvcc", "georges-river-district"}:
+            render_verified_partnership_records(team_group_slug)
+            log_hof_timing("render verified partnership records", section_started_at)
+        else:
+            render_partnership_records(team_group_slug)
+            log_hof_timing("render partnership records", section_started_at)
     section_started_at = time.perf_counter()
     render_record_holders(hall_of_fame_data)
     log_hof_timing("render record holders", section_started_at)
@@ -8214,35 +8215,34 @@ def hat_trick_record_row_html(row: pd.Series) -> str:
     )
 
 
-def render_verified_partnerships(team_group_slug: str | None = None) -> None:
-    render_section_heading("Verified Batting Partnerships")
-    st.caption("Partnerships identified from available verified ball-by-ball records. Private player identities are protected.")
-    records = load_verified_partnerships(
+def render_verified_partnership_records(team_group_slug: str | None = None) -> None:
+    render_section_heading("Verified Partnership Records 🤝")
+    st.caption(
+        "Highest partnerships by wicket identified from available verified ball-by-ball records. "
+        "Private player identities are protected."
+    )
+    records = load_verified_partnership_records(
         get_active_club_id(),
-        str(HALL_OF_FAME_VERIFIED_PARTNERSHIPS_PATH),
-        HALL_OF_FAME_VERIFIED_PARTNERSHIPS_PATH.stat().st_mtime
-        if HALL_OF_FAME_VERIFIED_PARTNERSHIPS_PATH.exists()
+        str(HALL_OF_FAME_PARTNERSHIP_RECORDS_PATH),
+        HALL_OF_FAME_PARTNERSHIP_RECORDS_PATH.stat().st_mtime
+        if HALL_OF_FAME_PARTNERSHIP_RECORDS_PATH.exists()
         else None,
     )
     if team_group_slug in {"men", "women"} and not records.empty:
         records = filter_hof_team_group_frame(records, team_group_slug)
-    if records.empty:
-        render_empty_milestone_card(
-            "Verified Batting Partnerships",
-            "No publishable partnerships are available in verified ball-by-ball coverage.",
-            "Incomplete pairs and private-only partnerships are excluded.",
-        )
-        return
-    st.caption("Showing the most recent verified partnerships within available coverage.")
-    recent = records.head(12)
-    columns = st.columns(2)
-    for index, (_, row) in enumerate(recent.iterrows()):
-        with columns[index % 2]:
-            st.markdown(verified_partnership_row_html(row), unsafe_allow_html=True)
+    render_partnership_record_panels(
+        records,
+        empty_title="Verified Partnership Records",
+        empty_message="No verified partnership records are available for this team group.",
+    )
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_verified_partnerships(club_id: str, path_value: str, source_mtime: float | None) -> pd.DataFrame:
+def load_verified_partnership_records(
+    club_id: str,
+    path_value: str,
+    source_mtime: float | None,
+) -> pd.DataFrame:
     _ = (club_id, source_mtime)
     path = Path(path_value)
     if not path.exists():
@@ -8251,75 +8251,31 @@ def load_verified_partnerships(club_id: str, path_value: str, source_mtime: floa
         records = pd.read_csv(path, low_memory=False)
     except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return pd.DataFrame()
-    required = {"batter_1_public_name", "batter_2_public_name", "partnership_runs"}
+    required = {
+        "batter_1_public_name",
+        "batter_2_public_name",
+        "partnership_runs",
+        "wicket_number",
+    }
     if not required.issubset(records.columns):
         return pd.DataFrame()
-    records["partnership_runs"] = pd.to_numeric(records["partnership_runs"], errors="coerce")
-    records["balls_faced"] = pd.to_numeric(records.get("balls_faced"), errors="coerce")
-    records["match_date"] = pd.to_datetime(records.get("match_date"), errors="coerce")
-    records["team_name"] = records.get("batting_team", "")
-    records["display_grade_name"] = records.get("grade", "")
-    private_1 = records["batter_1_public_name"].eq("Private player")
-    private_2 = records["batter_2_public_name"].eq("Private player")
-    records.loc[private_1, "batter_1"] = ""
-    records.loc[private_2, "batter_2"] = ""
-    return records.sort_values(
-        ["match_date", "match_id", "innings", "partnership_id"],
-        ascending=[False, True, True, True],
-        kind="mergesort",
-        na_position="last",
-    ).reset_index(drop=True)
-
-
-def verified_partnership_row_html(row: pd.Series) -> str:
-    player_1 = safe_record_text(row.get("batter_1_public_name"), "Unknown player")
-    player_2 = safe_record_text(row.get("batter_2_public_name"), "Unknown player")
-    player_1_html = (
-        html.escape(player_1)
-        if player_1 == "Private player"
-        else player_profile_link_html(row.get("batter_1"), player_1)
-    )
-    player_2_html = (
-        html.escape(player_2)
-        if player_2 == "Private player"
-        else player_profile_link_html(row.get("batter_2"), player_2)
-    )
-    context = []
-    season = safe_record_text(row.get("season"))
-    if season:
-        context.append(season_overview_link_html(season))
-    grade = governed_record_grade_label(row.get("grade"))
-    if grade:
-        context.append(html.escape(grade))
-    opponent = clean_opponent_label(row.get("opponent"), "")
-    if opponent:
-        context.append(f"vs {html.escape(opponent)}")
-    detail = []
-    balls = safe_record_int(row.get("balls_faced"))
-    if balls is not None:
-        detail.append(f"{balls} balls")
-    innings = safe_record_int(row.get("innings"))
-    if innings is not None:
-        detail.append(f"innings {innings}")
-    scorecard = scorecard_link_html(
-        row.get("match_id"),
-        page_slug="hall-of-fame",
-        section_name="verified_partnerships",
-    )
-    if scorecard:
-        detail.append(scorecard)
-    return (
-        '<div class="hof-card performance-card">'
-        '<div class="performance-row">'
-        '<span class="progress-rank">🤝</span>'
-        '<div class="performance-player">'
-        f'<strong>{player_1_html} &amp; {player_2_html}</strong>'
-        f'<span>{" • ".join(context)}</span>'
-        f'<span>{" • ".join(detail)}</span>'
-        '</div>'
-        f'<div class="performance-value">{format_int(row.get("partnership_runs"))} runs</div>'
-        '</div></div>'
-    )
+    output = records.copy()
+    output["player_1_canonical_id"] = output.get("batter_1", "")
+    output["player_2_canonical_id"] = output.get("batter_2", "")
+    output["player_1_name"] = output["batter_1_public_name"]
+    output["player_2_name"] = output["batter_2_public_name"]
+    output["runs"] = pd.to_numeric(output["partnership_runs"], errors="coerce")
+    output["balls"] = pd.to_numeric(output.get("balls_faced"), errors="coerce")
+    output["wicket_number"] = pd.to_numeric(output["wicket_number"], errors="coerce")
+    output["display_grade_name"] = output.get("grade", "")
+    output["raw_grade_name"] = output.get("grade", "")
+    output["team_name"] = output.get("batting_team", "")
+    output["source_classification"] = "ball_by_ball_calculated"
+    private_1 = output["player_1_name"].eq("Private player")
+    private_2 = output["player_2_name"].eq("Private player")
+    output.loc[private_1, "player_1_canonical_id"] = ""
+    output.loc[private_2, "player_2_canonical_id"] = ""
+    return output.sort_values("wicket_number").reset_index(drop=True)
 
 
 def render_partnership_records(team_group_slug: str | None = None) -> None:
@@ -8332,24 +8288,62 @@ def render_partnership_records(team_group_slug: str | None = None) -> None:
     )
     if team_group_slug in {"men", "women"} and not records.empty:
         records = filter_hof_team_group_frame(records, team_group_slug)
+    render_partnership_record_panels(
+        records,
+        empty_title="Record Partnerships",
+        empty_message="No confirmed partnership records are available.",
+    )
+
+
+def render_partnership_record_panels(
+    records: pd.DataFrame,
+    *,
+    empty_title: str,
+    empty_message: str,
+) -> None:
     if records.empty:
         render_empty_milestone_card(
-            "Record Partnerships",
-            "No confirmed partnership records are available.",
+            empty_title,
+            empty_message,
             "Partnerships appear only when pair identities and source evidence reconcile.",
         )
         return
     columns = st.columns(2)
     for column, start, end in [(columns[0], 1, 5), (columns[1], 6, 10)]:
-        rows = records[pd.to_numeric(records["wicket_number"], errors="coerce").between(start, end, inclusive="both")]
-        if rows.empty:
-            continue
-        row_html = "".join(partnership_record_row_html(row) for _, row in rows.iterrows())
+        rows = records[
+            pd.to_numeric(records["wicket_number"], errors="coerce").between(
+                start, end, inclusive="both"
+            )
+        ]
+        rows_by_wicket = {
+            int(float(row["wicket_number"])): row
+            for _, row in rows.iterrows()
+            if pd.notna(pd.to_numeric(row.get("wicket_number"), errors="coerce"))
+        }
+        row_html = "".join(
+            partnership_record_row_html(rows_by_wicket[wicket])
+            if wicket in rows_by_wicket
+            else partnership_record_empty_row_html(wicket)
+            for wicket in range(start, end + 1)
+        )
         with column:
             st.markdown(
                 f'<div class="hof-card performance-card"><div class="card-title">{start}–{end} Wicket Records</div>{row_html}</div>',
                 unsafe_allow_html=True,
             )
+
+
+def partnership_record_empty_row_html(wicket_number: int) -> str:
+    return (
+        '<div class="performance-row partnership-record-empty">'
+        f'<span class="progress-rank">{wicket_number}</span>'
+        '<div class="performance-player">'
+        '<strong>No verified record available</strong>'
+        '<span>Available ball-by-ball coverage contains no eligible partnership for this wicket.</span>'
+        '</div>'
+        '<div class="performance-value">—</div>'
+        '</div>'
+    )
 
 
 @st.cache_data(show_spinner=False, persist="disk")
@@ -8374,8 +8368,16 @@ def load_partnership_records(club_id: str, path_value: str, source_mtime: float 
 def partnership_record_row_html(row: pd.Series) -> str:
     player_1 = safe_record_text(row.get("player_1_name"), "Unknown player")
     player_2 = safe_record_text(row.get("player_2_name"), "Unknown player")
-    player_1_link = player_profile_link_html(row.get("player_1_canonical_id"), player_1)
-    player_2_link = player_profile_link_html(row.get("player_2_canonical_id"), player_2)
+    player_1_link = (
+        html.escape(player_1)
+        if player_1 == "Private player"
+        else player_profile_link_html(row.get("player_1_canonical_id"), player_1)
+    )
+    player_2_link = (
+        html.escape(player_2)
+        if player_2 == "Private player"
+        else player_profile_link_html(row.get("player_2_canonical_id"), player_2)
+    )
     wicket_number = safe_record_int(row.get("wicket_number")) or 0
     source_label = (
         "Club historical record"
