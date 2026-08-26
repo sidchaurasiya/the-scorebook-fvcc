@@ -2182,6 +2182,20 @@ def inject_theme() -> None:
             padding: 22px 24px 24px;
         }
 
+        div.st-key-hof_detailed_records_controls {
+            margin-bottom: 16px;
+        }
+
+        div.st-key-hof_detailed_records_controls [data-testid="stHorizontalBlock"] {
+            align-items: flex-end;
+        }
+
+        div.st-key-hof_detailed_records_controls div.st-key-hof_detailed_records_category_control,
+        div.st-key-hof_detailed_records_controls div[data-testid="stSelectbox"] {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
         div.st-key-runs_chart_card h4,
         div.st-key-top_scorers_card h4,
         div.st-key-top_wickets_card h4,
@@ -7609,6 +7623,34 @@ def inject_theme() -> None:
             .block-container:has(.seasons-page) div.st-key-full_stats_card {
                 border-radius: 18px;
                 padding: 14px 10px 16px;
+            }
+
+            div.st-key-hof_detailed_records_controls [data-testid="stHorizontalBlock"] {
+                align-items: stretch !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+
+            div.st-key-hof_detailed_records_controls [data-testid="stColumn"] {
+                flex: 1 1 100% !important;
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"],
+            div.st-key-hof_detailed_records_category_control [data-baseweb="button-group"] {
+                display: flex !important;
+                width: 100% !important;
+            }
+
+            div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button,
+            div.st-key-hof_detailed_records_category_control [data-baseweb="button-group"] button,
+            div.st-key-hof_detailed_records_category_control button[data-testid^="stBaseButton-segmented_control"] {
+                flex: 0 0 calc((100% - 8px) / 3) !important;
+                justify-content: center !important;
+                min-width: 0 !important;
+                padding: 8px 6px !important;
+                width: calc((100% - 8px) / 3) !important;
             }
 
             .block-container:has(.seasons-page) div.st-key-full_stats_card div[data-testid="stDataFrame"] {

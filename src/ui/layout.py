@@ -9406,19 +9406,113 @@ def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str
             "fielding": format_all_time_fielding_table(all_time),
         }
     with st.container(key="full_stats_card"):
-        player_search = st.text_input(
-            "Search player",
-            placeholder="Type a player name",
-            key="hof_detailed_records_player_search",
+        with st.container(key="hof_detailed_records_controls"):
+            category_column, search_column = st.columns(
+                [3, 2],
+                gap="large",
+                vertical_alignment="bottom",
+            )
+            with category_column:
+                selected_category = render_folder_tab_widget(
+                    "Detailed record category",
+                    [("batting", "Batting"), ("bowling", "Bowling"), ("fielding", "Fielding")],
+                    key="hof_detailed_records_category",
+                    control_key="hof_detailed_records_category_control",
+                )
+            with search_column:
+                player_search = st.selectbox(
+                    "Search player",
+                    detailed_record_public_player_options(tables),
+                    index=None,
+                    placeholder="Search player",
+                    key="hof_detailed_records_player_search",
+                    label_visibility="collapsed",
+                )
+        filtered_tables = filter_detailed_record_tables_by_selected_player(tables, player_search)
+        render_searched_detail_table(
+            filtered_tables[selected_category],
+            f"hof_{selected_category}_detail",
+            selected_category,
+            player_search,
         )
-        filtered_tables = filter_detailed_record_tables_by_player(tables, player_search)
-        batting_tab, bowling_tab, fielding_tab = st.tabs(["Batting", "Bowling", "Fielding"])
-        with batting_tab:
-            render_searched_detail_table(filtered_tables["batting"], "hof_batting_detail", "batting", player_search)
-        with bowling_tab:
-            render_searched_detail_table(filtered_tables["bowling"], "hof_bowling_detail", "bowling", player_search)
-        with fielding_tab:
-            render_searched_detail_table(filtered_tables["fielding"], "hof_fielding_detail", "fielding", player_search)
+
+
+def detailed_record_public_player_options(
+    tables: dict[str, pd.DataFrame] | None = None,
+) -> list[str]:
+    _ = tables
+    index = load_player_profile_index(
+        get_active_club_id(),
+        metadata_mtime(),
+        player_aliases_mtime(),
+    )
+    return canonical_public_player_names(index)
+
+
+def canonical_player_name_casing_overrides(frame: pd.DataFrame) -> dict[str, str]:
+    if frame.empty or "canonical_player_name" not in frame:
+        return {}
+    raw_column = "player_name" if "player_name" in frame else "raw_player_name"
+    if raw_column not in frame:
+        return {}
+    overrides: dict[str, str] = {}
+    for canonical, raw in zip(frame["canonical_player_name"], frame[raw_column]):
+        canonical_name = str(canonical or "").strip()
+        raw_name = str(raw or "").strip()
+        if (
+            canonical_name
+            and raw_name
+            and canonical_name.casefold() == raw_name.casefold()
+            and not is_private_or_anonymised_player(raw_name)
+        ):
+            overrides.setdefault(canonical_name.casefold(), raw_name)
+    return overrides
+
+
+def canonical_public_player_names(index: pd.DataFrame) -> list[str]:
+    if index.empty or "name" not in index:
+        return []
+    names = index["name"].fillna("").astype(str).str.strip()
+    names = names[
+        names.ne("")
+        & ~names.map(is_private_or_anonymised_player)
+        & ~names.map(is_internal_player_label)
+    ]
+    unique: dict[str, str] = {}
+    for name in names:
+        unique.setdefault(name.casefold(), name)
+    return sorted(unique.values(), key=lambda value: (value.casefold(), value))
+
+
+def filter_detailed_record_player_suggestions(
+    player_names: list[str],
+    search_text: object,
+) -> list[str]:
+    needle = str(search_text or "").strip().casefold()
+    if not needle:
+        return list(player_names)
+    return [name for name in player_names if needle in name.casefold()]
+
+
+def filter_detailed_record_tables_by_selected_player(
+    tables: dict[str, pd.DataFrame],
+    selected_player: object,
+) -> dict[str, pd.DataFrame]:
+    selected = str(selected_player or "").strip().casefold()
+    filtered: dict[str, pd.DataFrame] = {}
+    for category, table in tables.items():
+        rows = table.copy()
+        if "Player" not in rows:
+            filtered[category] = rows
+            continue
+        labels = rows["Player"].map(link_display_label)
+        public = ~labels.map(is_private_or_anonymised_player)
+        rows = rows.loc[public].copy()
+        if selected:
+            public_labels = rows["Player"].map(link_display_label)
+            rows = rows.loc[public_labels.str.casefold().eq(selected)].copy()
+        filtered[category] = rows
+    return filtered
 
 
 def filter_detailed_record_tables_by_player(
@@ -11702,6 +11796,7 @@ def load_player_profile_index(
     combined = pd.concat(frames, ignore_index=True)
     if "canonical_player_id" not in combined or "canonical_player_name" not in combined:
         return pd.DataFrame(columns=["id", "name"])
+    display_casing = canonical_player_name_casing_overrides(combined)
     index = (
         combined[["canonical_player_id", "canonical_player_name"]]
         .dropna()
@@ -11710,6 +11805,9 @@ def load_player_profile_index(
     )
     index["id"] = index["id"].astype(str).str.strip()
     index["name"] = index["name"].astype(str).str.strip()
+    index["name"] = index["name"].map(
+        lambda value: display_casing.get(value.casefold(), value)
+    )
     index = index[
         index["id"].ne("")
         & index["name"].ne("")
