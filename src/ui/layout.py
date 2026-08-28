@@ -8509,6 +8509,11 @@ def load_deploy_scorecard_record_rows() -> dict[str, pd.DataFrame]:
     frame = read_match_centre_csv(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH)
     if frame.empty or "mode" not in frame:
         return {"batting": pd.DataFrame(), "bowling": pd.DataFrame()}
+    # These low-cardinality labels account for most of this wide lookup's
+    # retained memory. Keep high-cardinality IDs, URLs and dates unchanged.
+    for column in ["mode", "canonical_player_id", "canonical_player_name", "season"]:
+        if column in frame:
+            frame[column] = frame[column].astype("category")
     return {
         mode: frame[frame["mode"].astype(str) == mode].drop(columns=["mode"], errors="ignore").copy()
         for mode in ["batting", "bowling"]
@@ -11852,9 +11857,12 @@ def build_player_profile_view(
     batting = add_batting_display_columns(apply_team_grade_display_columns(profile.get("batting", pd.DataFrame())))
     bowling = apply_team_grade_display_columns(profile.get("bowling", pd.DataFrame()))
     fielding = add_display_stat_aliases(apply_team_grade_display_columns(profile.get("fielding", pd.DataFrame())))
+    player_id, player_name_key = player_profile_identity_keys(profile)
     detail_sources = load_player_profile_detail_sources(
         get_active_club_id(),
         player_profile_detail_source_signature(),
+        player_id,
+        player_name_key,
     )
     season_table = build_player_season_table(batting, bowling, fielding)
     season_table = enrich_player_profile_season_table(season_table, profile, detail_sources)
@@ -12127,20 +12135,118 @@ def player_profile_detail_source_signature() -> tuple[tuple[str, float], ...]:
 def load_player_profile_detail_sources(
     club_id: str,
     signature: tuple[tuple[str, float], ...],
+    player_id: str = "",
+    player_name_key: str = "",
 ) -> dict[str, pd.DataFrame]:
-    _ = (club_id, signature)
+    _ = (club_id, signature, player_id, player_name_key)
     return {
-        "career_bbb_batting": read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH),
-        "scope_bbb_batting": read_match_centre_csv(SEASON_OVERVIEW_BBB_BATTING_RATES_PATH),
-        "scorecard_batting": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH),
-        "scorecard_bowling": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH),
-        "performance_breakdown": read_match_centre_csv(PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH),
-        "batting_position": read_match_centre_csv(PLAYER_PROFILE_BATTING_POSITION_PATH),
-        "bowling_phase": read_match_centre_csv(PLAYER_PROFILE_BOWLING_PHASE_PATH),
-        "dismissal_fingerprint": read_match_centre_csv(PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH),
-        "recent_form_batting": read_match_centre_csv(PLAYER_PROFILE_RECENT_FORM_BATTING_PATH),
-        "recent_form_bowling": read_match_centre_csv(PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH),
+        "career_bbb_batting": read_match_centre_csv_for_player(
+            HALL_OF_FAME_BBB_BATTING_RATES_PATH, player_id, player_name_key
+        ),
+        "scope_bbb_batting": read_match_centre_csv_for_player(
+            SEASON_OVERVIEW_BBB_BATTING_RATES_PATH, player_id, player_name_key
+        ),
+        "scorecard_batting": read_match_centre_csv_for_player(
+            SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH, player_id, player_name_key
+        ),
+        "scorecard_bowling": read_match_centre_csv_for_player(
+            SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH, player_id, player_name_key
+        ),
+        "performance_breakdown": read_match_centre_csv_for_player(
+            PLAYER_PROFILE_PERFORMANCE_BREAKDOWN_PATH, player_id, player_name_key
+        ),
+        "batting_position": read_match_centre_csv_for_player(
+            PLAYER_PROFILE_BATTING_POSITION_PATH, player_id, player_name_key
+        ),
+        "bowling_phase": read_match_centre_csv_for_player(
+            PLAYER_PROFILE_BOWLING_PHASE_PATH, player_id, player_name_key
+        ),
+        "dismissal_fingerprint": read_match_centre_csv_for_player(
+            PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH,
+            player_id,
+            player_name_key,
+            include_club_rows=True,
+        ),
+        "recent_form_batting": read_match_centre_csv_for_player(
+            PLAYER_PROFILE_RECENT_FORM_BATTING_PATH, player_id, player_name_key
+        ),
+        "recent_form_bowling": read_match_centre_csv_for_player(
+            PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH, player_id, player_name_key
+        ),
     }
+
+
+PROFILE_SOURCE_CHUNK_SIZE = 10_000
+
+
+def read_match_centre_csv_for_player(
+    path: Path,
+    player_id: str,
+    player_name_key: str,
+    *,
+    include_club_rows: bool = False,
+) -> pd.DataFrame:
+    """Read only one profile's rows from a prepared detail source.
+
+    Profile detail files are immutable, wide tables shared by every player.
+    Chunking keeps the full source frame out of the runtime cache while
+    preserving the existing ID-first, name-fallback selection semantics.
+    """
+    if not path.exists():
+        return pd.DataFrame()
+
+    id_matches: list[pd.DataFrame] = []
+    name_matches: list[pd.DataFrame] = []
+    club_matches: list[pd.DataFrame] = []
+    id_columns: tuple[str, ...] = tuple()
+    name_columns: tuple[str, ...] = tuple()
+    source_columns: list[str] = []
+    try:
+        for chunk in pd.read_csv(path, chunksize=PROFILE_SOURCE_CHUNK_SIZE, low_memory=False):
+            if not source_columns:
+                source_columns = list(chunk.columns)
+            if not id_columns:
+                id_columns = tuple(
+                    column
+                    for column in ["canonical_player_id", "player_key", "player_id"]
+                    if column in chunk
+                )
+                name_columns = tuple(
+                    column
+                    for column in ["canonical_player_name", "display_player_name", "player_name", "raw_player_name"]
+                    if column in chunk
+                )
+
+            id_mask = pd.Series(False, index=chunk.index)
+            if player_id:
+                for column in id_columns:
+                    id_mask = id_mask | chunk[column].astype(str).str.strip().eq(player_id)
+            if id_mask.any():
+                id_matches.append(chunk.loc[id_mask].copy())
+
+            name_mask = pd.Series(False, index=chunk.index)
+            if player_name_key:
+                for column in name_columns:
+                    name_mask = name_mask | chunk[column].map(player_name_match_key).eq(player_name_key)
+            if name_mask.any():
+                name_matches.append(chunk.loc[name_mask].copy())
+
+            if include_club_rows:
+                club_mask = pd.Series(False, index=chunk.index)
+                if "scope" in chunk:
+                    club_mask = chunk["scope"].astype(str).str.casefold().eq("club")
+                elif "canonical_player_id" in chunk:
+                    club_mask = chunk["canonical_player_id"].astype(str).str.strip().eq("__club__")
+                if club_mask.any():
+                    club_matches.append(chunk.loc[club_mask].copy())
+    except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError, ValueError):
+        return pd.DataFrame()
+
+    selected = id_matches if id_matches else name_matches
+    frames = selected + club_matches
+    if not frames:
+        return pd.DataFrame(columns=source_columns)
+    return pd.concat(frames, ignore_index=True)
 
 
 def player_profile_identity_keys(profile: dict[str, object]) -> tuple[str, str]:
@@ -13457,7 +13563,46 @@ def load_player_peer_sources(
             club_id=club_id,
         )
     )
-    return batting, bowling
+    return (
+        compact_player_peer_source(batting, "batting"),
+        compact_player_peer_source(bowling, "bowling"),
+    )
+
+
+def compact_player_peer_source(frame: pd.DataFrame, discipline: str) -> pd.DataFrame:
+    """Keep only columns used by peer filtering and aggregation."""
+    common = [
+        "season",
+        "canonical_player_id",
+        "team_name",
+        "grade_name",
+        "canonical_grade_label",
+        "team_grade_display",
+        "canonical_team_label",
+        "clean_team_name",
+    ]
+    metrics = {
+        "batting": [
+            "battingAggregate",
+            "battingInnings",
+            "battingNotOuts",
+            "battingBallsFaced",
+            "battingFours",
+            "battingSixes",
+            "batting0s",
+        ],
+        "bowling": [
+            "bowlingWickets",
+            "bowlingRuns",
+            "bowlingBalls",
+            "bowlingMaidens",
+            "bowlingWides",
+            "bowlingNoBalls",
+            "bowlingWicketsUnassisted",
+        ],
+    }
+    columns = [column for column in common + metrics.get(discipline, []) if column in frame]
+    return frame.loc[:, columns].copy()
 
 
 @st.cache_data(show_spinner=False)
@@ -15370,6 +15515,8 @@ def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, obje
     sources = load_player_profile_detail_sources(
         get_active_club_id(),
         player_profile_detail_source_signature(),
+        player_id,
+        player_name_key,
     )
     batting = player_recent_form_deploy_rows(sources.get("recent_form_batting", pd.DataFrame()), player_id, player_name_key)
     bowling = player_recent_form_deploy_rows(sources.get("recent_form_bowling", pd.DataFrame()), player_id, player_name_key)
