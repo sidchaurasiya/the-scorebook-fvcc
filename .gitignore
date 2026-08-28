@@ -44,6 +44,7 @@ data/processed/ball_by_ball_sample/
 data/processed/match_centre_sample/
 data/processed/match_centre_pilot/
 data/processed/match_centre_summer_pilot/
+data/processed/validation/memory/
 clubs/*/player_duplicate_audit.csv
 clubs/*/player_identity_summary.csv
 clubs/*/player_mapping_conflicts.csv
