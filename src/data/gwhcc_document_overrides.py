@@ -32,6 +32,7 @@ HISTORICAL_PREMIERSHIPS = SOURCE_ROOT / "gwhcc_historical_premiership_events.csv
 FASTEST_INNINGS_SUPPLEMENTS = SOURCE_ROOT / "gwhcc_fastest_innings_supplements.csv"
 DECISIONS = VALIDATION_DIR / "gwhcc_document_override_decisions.csv"
 VALIDATION = VALIDATION_DIR / "gwhcc_document_override_validation.csv"
+RECORD_OVERRIDE_GOVERNANCE_VERSION = "approved-record-overrides-v1"
 
 RECORD_COLUMNS = ["player_name", "metric", "document_value", "source_document", "confidence", "notes"]
 PREMIERSHIP_COLUMNS = [
@@ -75,6 +76,8 @@ HISTORICAL_CAREER_METRIC_TO_COLUMN = {
     "batting_average": "Bat Avg",
     "bowling_average": "Bowl Avg",
 }
+RECORD_OVERRIDE_APPROVED_CONFIDENCE = frozenset({"confirmed", "approved"})
+CUSTOMER_CAREER_OVERRIDE_APPROVED_CONFIDENCE = frozenset({"high", "confirmed", "approved"})
 
 
 def ensure_document_override_dirs() -> None:
@@ -96,7 +99,9 @@ def document_override_signature() -> tuple[tuple[str, float], ...]:
         HISTORICAL_PREMIERSHIPS,
         FASTEST_INNINGS_SUPPLEMENTS,
     ]
-    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + (
+        ("record_override_governance", RECORD_OVERRIDE_GOVERNANCE_VERSION),
+    )
 
 
 def load_historical_seasons() -> pd.DataFrame:
@@ -231,15 +236,36 @@ def write_empty_source_files() -> None:
 
 def load_record_overrides() -> pd.DataFrame:
     write_empty_source_files()
-    frames = [frame for frame in [read_csv(RECORD_OVERRIDES), read_csv(CUSTOMER_CAREER_OVERRIDES)] if not frame.empty]
+    frames = []
+    for path, source_kind in [
+        (RECORD_OVERRIDES, "record_overrides"),
+        (CUSTOMER_CAREER_OVERRIDES, "customer_career_overrides"),
+    ]:
+        frame = read_csv(path)
+        if frame.empty:
+            continue
+        frame = frame.copy()
+        frame["_override_source"] = source_kind
+        frames.append(frame)
     frame = pd.concat(frames, ignore_index=True, sort=False) if frames else pd.DataFrame(columns=RECORD_COLUMNS)
+    if "_override_source" not in frame:
+        frame["_override_source"] = ""
     for column in RECORD_COLUMNS:
         if column not in frame:
             frame[column] = ""
     frame["metric_key"] = frame["metric"].map(lambda value: normalize_name(value).replace(" ", "_"))
     frame["metric_key"] = frame["metric_key"].replace({"game": "games", "match": "matches"})
     frame["document_value"] = pd.to_numeric(frame["document_value"], errors="coerce")
-    return frame[RECORD_COLUMNS + ["metric_key"]].dropna(subset=["document_value"])
+    return frame[RECORD_COLUMNS + ["metric_key", "_override_source"]].dropna(subset=["document_value"])
+
+
+def is_production_approved_record_override(override: pd.Series) -> bool:
+    """Return whether a governed record source may change customer-facing values."""
+    confidence = str(override.get("confidence", "") or "").strip().casefold()
+    source_kind = str(override.get("_override_source", "record_overrides") or "").strip().casefold()
+    if source_kind == "customer_career_overrides":
+        return confidence in CUSTOMER_CAREER_OVERRIDE_APPROVED_CONFIDENCE
+    return confidence in RECORD_OVERRIDE_APPROVED_CONFIDENCE
 
 
 def load_historical_career_metric_decisions() -> pd.DataFrame:
@@ -366,6 +392,19 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
             continue
         index = output.index[mask][0]
         playcricket_value = numeric_value(output.at[index, column])
+        if not is_production_approved_record_override(override):
+            decisions.append(
+                decision_row(
+                    override,
+                    metric_key,
+                    playcricket_value,
+                    document_value,
+                    playcricket_value,
+                    "review_not_applied",
+                    False,
+                )
+            )
+            continue
         applied = playcricket_value is None or document_value > playcricket_value
         display_value = document_value if applied else playcricket_value
         output.at[index, f"playcricket_{column.lower().replace(' ', '_')}_value"] = playcricket_value
