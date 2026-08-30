@@ -8356,13 +8356,38 @@ def load_partnership_records(club_id: str, path_value: str, source_mtime: float 
         records = pd.read_csv(path, low_memory=False)
     except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return pd.DataFrame()
-    private = records["player_1_name"].map(is_private_or_anonymised_player) | records["player_2_name"].map(is_private_or_anonymised_player)
-    records = records.loc[~private].copy()
+    if club_id == "glen-waverley-hawks":
+        records = protect_gwhcc_partnership_record_privacy(records)
+    else:
+        private = records["player_1_name"].map(is_private_or_anonymised_player) | records["player_2_name"].map(is_private_or_anonymised_player)
+        records = records.loc[~private].copy()
     if club_id == "glen-waverley-hawks" and "display_grade_name" in records:
         records["display_grade_name"] = records["display_grade_name"].map(gwhcc_display_grade_name)
     records["wicket_number"] = pd.to_numeric(records.get("wicket_number"), errors="coerce")
     records["runs"] = pd.to_numeric(records.get("runs"), errors="coerce")
     return records.sort_values("wicket_number").reset_index(drop=True)
+
+
+def protect_gwhcc_partnership_record_privacy(records: pd.DataFrame) -> pd.DataFrame:
+    """Redact one protected partner and reject records with two protected partners."""
+    if records.empty:
+        return records.copy()
+    output = records.copy()
+    player_1_private = output["player_1_name"].map(is_private_or_anonymised_player)
+    player_2_private = output["player_2_name"].map(is_private_or_anonymised_player)
+    if "privacy_status" in output:
+        status = output["privacy_status"].fillna("").astype(str).str.strip().str.upper()
+        output = output.loc[status.isin({"PUBLIC_PUBLIC", "PUBLIC_PRIVATE"})].copy()
+        player_1_private = player_1_private.loc[output.index]
+        player_2_private = player_2_private.loc[output.index]
+    output = output.loc[~(player_1_private & player_2_private)].copy()
+    player_1_private = player_1_private.loc[output.index]
+    player_2_private = player_2_private.loc[output.index]
+    output.loc[player_1_private, "player_1_name"] = "Private player"
+    output.loc[player_2_private, "player_2_name"] = "Private player"
+    output.loc[player_1_private, "player_1_canonical_id"] = ""
+    output.loc[player_2_private, "player_2_canonical_id"] = ""
+    return output
 
 
 def partnership_record_row_html(row: pd.Series) -> str:

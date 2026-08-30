@@ -7,6 +7,7 @@ from pandas.testing import assert_frame_equal
 
 from src.data.match_centre_parser import build_ball_partnerships
 from src.data.partnerships import EVENT_COLUMNS, build_partnership_record_holders, combine_partnership_events, prepare_ball_by_ball_partnerships
+from src.ui import layout
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,6 +100,7 @@ def test_existing_delivery_calculator_builds_partnership_runs_and_pairs() -> Non
 def test_partnership_preparation_reconciles_runs_and_context() -> None:
     result = prepare()
     assert len(result.events) == 2
+    assert result.events["privacy_status"].eq("PUBLIC_PUBLIC").all()
     first = result.events.iloc[0]
     assert first["runs"] == 40
     assert first["balls"] == 50
@@ -122,17 +124,34 @@ def test_missing_identity_is_held_for_review() -> None:
     result = prepare(identity={"player-a": {"canonical_player_id": "a", "canonical_player_name": "A Player"}})
     assert result.events.empty
     assert result.audit["validation_status"].eq("REVIEW").all()
+    assert result.coverage["unresolved_events_excluded"] == 2
 
 
-def test_private_pair_is_excluded() -> None:
+def test_public_private_pair_is_redacted_and_published() -> None:
     identity = {
         "player-a": {"canonical_player_id": "private", "canonical_player_name": "********"},
         "player-b": {"canonical_player_id": "b", "canonical_player_name": "B Player"},
         "player-c": {"canonical_player_id": "c", "canonical_player_name": "C Player"},
     }
     result = prepare(identity=identity)
+    assert len(result.events) == 2
+    assert result.events["privacy_status"].eq("PUBLIC_PRIVATE").all()
+    assert result.events["player_1_name"].eq("Private player").all()
+    assert result.events["player_1_canonical_id"].fillna("").eq("").all()
+    assert result.events["player_2_name"].tolist() == ["B Player", "C Player"]
+    assert result.audit["validation_status"].eq("CONFIRMED").all()
+
+
+def test_private_private_pair_is_excluded() -> None:
+    identity = {
+        "player-a": {"canonical_player_id": "private-a", "canonical_player_name": "********"},
+        "player-b": {"canonical_player_id": "private-b", "canonical_player_name": "********"},
+        "player-c": {"canonical_player_id": "private-c", "canonical_player_name": "********"},
+    }
+    result = prepare(identity=identity)
     assert result.events.empty
     assert result.audit["validation_status"].eq("EXCLUDED_PRIVATE").all()
+    assert result.audit["privacy_status"].eq("PRIVATE_PRIVATE").all()
 
 
 def test_mismatched_innings_total_is_not_published() -> None:
@@ -158,6 +177,120 @@ def test_preparation_and_record_selection_are_reproducible() -> None:
     assert_frame_equal(build_partnership_record_holders(first.events), build_partnership_record_holders(second.events))
 
 
+def partnership_record_event(
+    record_id: str,
+    *,
+    runs: int,
+    privacy_status: str,
+    player_1_name: str = "Public Player",
+    player_2_name: str = "Second Public Player",
+    match_date: str = "2025-01-01",
+) -> dict[str, object]:
+    row = {column: "" for column in EVENT_COLUMNS}
+    row.update(
+        {
+            "record_id": record_id,
+            "player_1_canonical_id": "public-player",
+            "player_1_name": player_1_name,
+            "player_2_canonical_id": "" if player_2_name == "Private player" else "second-public-player",
+            "player_2_name": player_2_name,
+            "runs": runs,
+            "balls": 60,
+            "wicket_number": 1,
+            "season": "Summer 2024/25",
+            "match_id": f"match-{record_id}",
+            "innings_id": f"innings-{record_id}",
+            "match_date": match_date,
+            "source_classification": "ball_by_ball_calculated",
+            "privacy_status": privacy_status,
+        }
+    )
+    return row
+
+
+def test_public_private_can_win_record_selection() -> None:
+    events = pd.DataFrame(
+        [
+            partnership_record_event("public-public", runs=100, privacy_status="PUBLIC_PUBLIC"),
+            partnership_record_event(
+                "public-private",
+                runs=120,
+                privacy_status="PUBLIC_PRIVATE",
+                player_2_name="Private player",
+            ),
+        ]
+    )
+    records = build_partnership_record_holders(events)
+    assert records.iloc[0]["record_id"] == "public-private"
+    assert records.iloc[0]["player_2_name"] == "Private player"
+    assert records.iloc[0]["player_2_canonical_id"] == ""
+
+
+def test_record_tie_remains_deterministic_after_redaction() -> None:
+    events = pd.DataFrame(
+        [
+            partnership_record_event(
+                "later",
+                runs=120,
+                privacy_status="PUBLIC_PRIVATE",
+                player_2_name="Private player",
+                match_date="2025-02-01",
+            ),
+            partnership_record_event(
+                "earlier",
+                runs=120,
+                privacy_status="PUBLIC_PRIVATE",
+                player_2_name="Private player",
+                match_date="2025-01-01",
+            ),
+        ]
+    ).sample(frac=1, random_state=7)
+    records = build_partnership_record_holders(events)
+    assert records.iloc[0]["record_id"] == "earlier"
+
+
+def test_gwhcc_runtime_redaction_prevents_private_link_and_query_exposure() -> None:
+    records = pd.DataFrame(
+        [
+            {
+                "record_id": "public-private",
+                "player_1_canonical_id": "public-id",
+                "player_1_name": "Public Player",
+                "player_2_canonical_id": "private-source-id",
+                "player_2_name": "********",
+                "runs": 120,
+                "wicket_number": 1,
+                "privacy_status": "PUBLIC_PRIVATE",
+                "season": "Summer 2024/25",
+                "match_id": "match-1",
+                "source_classification": "ball_by_ball_calculated",
+            },
+            {
+                "record_id": "private-private",
+                "player_1_canonical_id": "private-1",
+                "player_1_name": "********",
+                "player_2_canonical_id": "private-2",
+                "player_2_name": "********",
+                "runs": 130,
+                "wicket_number": 2,
+                "privacy_status": "PRIVATE_PRIVATE",
+            },
+        ]
+    )
+    protected = layout.protect_gwhcc_partnership_record_privacy(records)
+    assert protected["record_id"].tolist() == ["public-private"]
+    row = protected.iloc[0]
+    assert row["player_2_name"] == "Private player"
+    assert row["player_2_canonical_id"] == ""
+
+    rendered = layout.partnership_record_row_html(row)
+    assert "Public Player" in rendered
+    assert "Private player" in rendered
+    assert "private-source-id" not in rendered
+    assert "player_id=private" not in rendered.casefold()
+    assert "********" not in rendered
+
+
 def test_playcricket_precedes_equivalent_customer_partnership() -> None:
     playcricket = prepare().events.iloc[[0]].copy()
     document = playcricket.copy()
@@ -173,8 +306,22 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     events = pd.read_csv(PROCESSED / "partnerships" / "partnership_events.csv", low_memory=False)
     records = pd.read_csv(PROCESSED / "hall_of_fame" / "partnership_records.csv", low_memory=False)
     validation = pd.read_csv(PROCESSED / "validation" / "gwhcc_partnership_validation.csv")
-    assert len(events) == 3314
+    assert len(events) == 3350
+    assert events["privacy_status"].value_counts().to_dict() == {
+        "PUBLIC_PUBLIC": 3314,
+        "PUBLIC_PRIVATE": 36,
+    }
     assert records["wicket_number"].tolist() == list(range(1, 11))
     assert not events["player_1_name"].astype(str).str.contains(r"\*{2,}", regex=True).any()
     assert not events["player_2_name"].astype(str).str.contains(r"\*{2,}", regex=True).any()
+    private_rows = events[events["privacy_status"].eq("PUBLIC_PRIVATE")]
+    protected_slots = pd.concat(
+        [
+            private_rows.loc[private_rows["player_1_name"].eq("Private player"), "player_1_canonical_id"],
+            private_rows.loc[private_rows["player_2_name"].eq("Private player"), "player_2_canonical_id"],
+        ],
+        ignore_index=True,
+    )
+    assert len(protected_slots) == len(private_rows)
+    assert protected_slots.fillna("").eq("").all()
     assert validation["status"].ne("FAIL").all()
