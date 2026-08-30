@@ -36,6 +36,7 @@ EVENT_COLUMNS = [
     "confidence",
     "scorecard_url",
     "source_detail",
+    "privacy_status",
 ]
 AUDIT_COLUMNS = EVENT_COLUMNS + [
     "validation_status",
@@ -45,6 +46,12 @@ AUDIT_COLUMNS = EVENT_COLUMNS + [
     "innings_runs_difference",
     "is_private_player",
 ]
+UNRESOLVED_PARTNERSHIP_REVIEW_REASONS = frozenset(
+    {
+        "Canonical identity is missing for one or both batters.",
+        "Incomplete or invalid two-batter delivery sequence.",
+    }
+)
 PUBLIC_PARTNERSHIP_COLUMNS = [
     "partnership_id",
     "batter_1",
@@ -137,18 +144,25 @@ def prepare_ball_by_ball_partnerships(
         match_id = clean_text(row.get("match_id"))
         innings_id = clean_text(row.get("innings_id"))
         match = match_lookup.get(match_id, {})
-        player_1 = resolved_player(row.get("batter_1_participant_id"), row.get("batter_1_name"), identity_lookup)
-        player_2 = resolved_player(row.get("batter_2_participant_id"), row.get("batter_2_name"), identity_lookup)
+        player_1 = governed_batter_identity(
+            row.get("batter_1_participant_id"), row.get("batter_1_name"), identity_lookup
+        )
+        player_2 = governed_batter_identity(
+            row.get("batter_2_participant_id"), row.get("batter_2_name"), identity_lookup
+        )
+        privacy_status = governed_partnership_privacy_status(player_1, player_2)
+        public_1 = public_batter_identity(player_1)
+        public_2 = public_batter_identity(player_2)
         raw_grade = clean_text(match.get("grade_name"))
         display_grade = grade_display(raw_grade) if grade_display else raw_grade
         team_name, opponent = team_and_opponent(row, match)
         wicket_number = numeric_int(row.get("partnership_number"))
         event = {
             "record_id": f"bbb:{match_id}:{innings_id}:{wicket_number or 'unknown'}",
-            "player_1_canonical_id": player_1[0],
-            "player_1_name": player_1[1],
-            "player_2_canonical_id": player_2[0],
-            "player_2_name": player_2[1],
+            "player_1_canonical_id": public_1[0],
+            "player_1_name": public_1[1],
+            "player_2_canonical_id": public_2[0],
+            "player_2_name": public_2[1],
             "runs": numeric_number(row.get("runs")),
             "balls": numeric_number(row.get("balls")),
             "wickets_lost": partnership_wickets_lost(row),
@@ -167,9 +181,9 @@ def prepare_ball_by_ball_partnerships(
             "confidence": "high",
             "scorecard_url": f"https://play.cricket.com.au/match/{match_id}" if match_id else "",
             "source_detail": "PlayCricket chronological delivery data; partnership totals reconcile to the innings scorecard.",
+            "privacy_status": privacy_status,
         }
-        private = any(is_private_or_anonymised_player(value) for value in [player_1[1], player_2[1], row.get("batter_1_name"), row.get("batter_2_name")])
-        status, reason = partnership_validation_status(row, player_1, player_2, private)
+        status, reason = partnership_validation_status(row, player_1, player_2, privacy_status)
         audit_row = {
             **event,
             "validation_status": status,
@@ -177,7 +191,7 @@ def prepare_ball_by_ball_partnerships(
             "innings_partnership_runs": numeric_number(row.get("innings_partnership_runs")),
             "innings_scorecard_runs": numeric_number(row.get("innings_scorecard_runs")),
             "innings_runs_difference": numeric_number(row.get("innings_runs_difference")),
-            "is_private_player": private,
+            "is_private_player": privacy_status != "PUBLIC_PUBLIC",
         }
         audit_rows.append(audit_row)
         if status == "CONFIRMED":
@@ -199,6 +213,14 @@ def prepare_ball_by_ball_partnerships(
         "confirmed_events": int(statuses.eq("CONFIRMED").sum()),
         "review_events": int(statuses.eq("REVIEW").sum()),
         "private_events_excluded": int(statuses.eq("EXCLUDED_PRIVATE").sum()),
+        "public_public_events": int(events.get("privacy_status", pd.Series(dtype=str)).eq("PUBLIC_PUBLIC").sum()),
+        "public_private_events": int(events.get("privacy_status", pd.Series(dtype=str)).eq("PUBLIC_PRIVATE").sum()),
+        "private_private_events_excluded": int(
+            audit.get("privacy_status", pd.Series(dtype=str)).eq("PRIVATE_PRIVATE").sum()
+        ),
+        "unresolved_events_excluded": int(
+            unresolved_partnership_review_mask(audit.get("review_reason", pd.Series(dtype=str))).sum()
+        ),
         "matches": int(rows["match_id"].nunique()) if not rows.empty else 0,
         "innings": int(rows["innings_id"].nunique()) if not rows.empty else 0,
     }
@@ -212,6 +234,8 @@ def build_partnership_record_holders(events: pd.DataFrame) -> pd.DataFrame:
     rows["runs"] = pd.to_numeric(rows["runs"], errors="coerce")
     rows["wicket_number"] = pd.to_numeric(rows["wicket_number"], errors="coerce")
     rows = rows[rows["runs"].notna() & rows["wicket_number"].between(1, 10, inclusive="both")].copy()
+    if "privacy_status" in rows:
+        rows = rows[rows["privacy_status"].isin({"PUBLIC_PUBLIC", "PUBLIC_PRIVATE"})].copy()
     if rows.empty:
         return empty_events()
     rows["_source_priority"] = rows["source_classification"].map({"ball_by_ball_calculated": 0, "customer_document": 1}).fillna(2)
@@ -246,17 +270,22 @@ def combine_partnership_events(*frames: pd.DataFrame) -> pd.DataFrame:
 
 def partnership_validation_status(
     row: pd.Series,
-    player_1: tuple[str, str],
-    player_2: tuple[str, str],
-    private: bool,
+    player_1: Mapping[str, object],
+    player_2: Mapping[str, object],
+    privacy_status: str,
 ) -> tuple[str, str]:
-    if private:
-        return "EXCLUDED_PRIVATE", "One or both batters are private or masked."
     if bool(row.get("_duplicate_key")):
         return "REVIEW", "Duplicate match/innings/partnership key."
-    if not all([player_1[0], player_1[1], player_2[0], player_2[1]]):
+    raw_ids = [clean_text(player_1.get("raw_id")), clean_text(player_2.get("raw_id"))]
+    if not all(raw_ids) or raw_ids[0] == raw_ids[1]:
+        return "REVIEW", "Incomplete or invalid two-batter delivery sequence."
+    if privacy_status == "PRIVATE_PRIVATE":
+        return "EXCLUDED_PRIVATE", "Both batters are private or masked."
+    public_players = [player for player in [player_1, player_2] if not bool(player.get("private"))]
+    if any(not bool(player.get("resolved")) for player in public_players):
         return "REVIEW", "Canonical identity is missing for one or both batters."
-    if player_1[0] == player_2[0]:
+    canonical_ids = [clean_text(player_1.get("canonical_id")), clean_text(player_2.get("canonical_id"))]
+    if all(canonical_ids) and canonical_ids[0] == canonical_ids[1]:
         return "REVIEW", "Both source participants resolve to the same canonical player."
     runs = pd.to_numeric(row.get("runs"), errors="coerce")
     if pd.isna(runs) or float(runs) < 0:
@@ -264,7 +293,13 @@ def partnership_validation_status(
     difference = pd.to_numeric(row.get("innings_runs_difference"), errors="coerce")
     if pd.isna(difference) or abs(float(difference)) > 1e-9:
         return "REVIEW", "Partnership rows do not reconcile to the innings scorecard total."
+    if privacy_status == "PUBLIC_PRIVATE":
+        return "CONFIRMED", "Public batter identity and redacted private partner reconcile to the innings scorecard total."
     return "CONFIRMED", "Canonical batter pair and delivery-derived runs reconcile to the innings scorecard total."
+
+
+def unresolved_partnership_review_mask(values: pd.Series) -> pd.Series:
+    return values.fillna("").astype(str).str.strip().isin(UNRESOLVED_PARTNERSHIP_REVIEW_REASONS)
 
 
 def resolved_player(

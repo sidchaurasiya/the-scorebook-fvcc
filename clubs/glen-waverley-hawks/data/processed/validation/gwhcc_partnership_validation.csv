@@ -1,11 +1,13 @@
 check,status,detail
-prepared_events_exist,PASS,rows=3314
+prepared_events_exist,PASS,rows=3350
 record_holders_exist,PASS,rows=10
 no_duplicate_events,PASS,duplicates=0
 one_record_per_wicket,PASS,"wickets=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-no_private_public_events,PASS,private=0
+no_private_name_exposure,PASS,unsafe_private=0
+public_private_uses_exact_protected_label,PASS,public_private=36
+protected_partner_has_no_public_id,PASS,protected_ids=0
 all_records_from_public_events,PASS,record IDs are event-backed
-review_rows_are_audited,PASS,review=1219
+review_rows_are_audited,PASS,review=1239
 wicket_1_record_is_maximum,PASS,maximum=294
 wicket_2_record_is_maximum,PASS,maximum=336
 wicket_3_record_is_maximum,PASS,maximum=248

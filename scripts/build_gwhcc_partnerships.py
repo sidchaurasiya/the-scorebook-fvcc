@@ -21,6 +21,7 @@ from src.data.partnerships import (  # noqa: E402
     combine_partnership_events,
     partnership_type_label,
     prepare_ball_by_ball_partnerships,
+    unresolved_partnership_review_mask,
 )
 from src.utils.player_identity import apply_player_identity_mapping, is_private_or_anonymised_player  # noqa: E402
 
@@ -90,17 +91,25 @@ def historical_partnership_rows(matches: pd.DataFrame) -> tuple[pd.DataFrame, pd
         review_required = str(row.get("review_required", "")).casefold() in {"true", "1", "yes"}
         player_1_name = str(row.get("player_1_name", "")).strip()
         player_2_name = str(row.get("player_2_name", "")).strip()
-        private = is_private_or_anonymised_player(player_1_name) or is_private_or_anonymised_player(player_2_name)
+        player_1_private = is_private_or_anonymised_player(player_1_name)
+        player_2_private = is_private_or_anonymised_player(player_2_name)
+        privacy_status = (
+            "PRIVATE_PRIVATE"
+            if player_1_private and player_2_private
+            else "PUBLIC_PRIVATE"
+            if player_1_private or player_2_private
+            else "PUBLIC_PUBLIC"
+        )
         wicket_number = int(float(row["wicket_number"]))
         both_not_out = str(row.get("player_1_score", "")).endswith("*") and str(row.get("player_2_score", "")).endswith("*")
         team_name, opponent = historical_team_and_opponent(match)
         grade = str(row.get("grade_name", "")).strip()
         event = {
             "record_id": row["record_id"],
-            "player_1_canonical_id": row.get("player_1_canonical_id", ""),
-            "player_1_name": player_1_name,
-            "player_2_canonical_id": row.get("player_2_canonical_id", ""),
-            "player_2_name": player_2_name,
+            "player_1_canonical_id": "" if player_1_private else row.get("player_1_canonical_id", ""),
+            "player_1_name": "Private player" if player_1_private else player_1_name,
+            "player_2_canonical_id": "" if player_2_private else row.get("player_2_canonical_id", ""),
+            "player_2_name": "Private player" if player_2_private else player_2_name,
             "runs": int(float(row["runs"])),
             "balls": None,
             "wickets_lost": 0 if both_not_out else 1,
@@ -119,13 +128,21 @@ def historical_partnership_rows(matches: pd.DataFrame) -> tuple[pd.DataFrame, pd
             "confidence": row.get("confidence", ""),
             "scorecard_url": f"https://play.cricket.com.au/match/{match_id}" if match_id else "",
             "source_detail": f"{row['source_document']} / {row['source_sheet']} row {row['source_row']}: {row['notes']}",
+            "privacy_status": privacy_status,
         }
-        missing_identity = not all(
-            str(event[column]).strip()
-            for column in ["player_1_canonical_id", "player_1_name", "player_2_canonical_id", "player_2_name"]
+        public_slots = [
+            (event["player_1_canonical_id"], event["player_1_name"]),
+            (event["player_2_canonical_id"], event["player_2_name"]),
+        ]
+        missing_identity = any(
+            not str(player_id).strip() or not str(player_name).strip()
+            for (player_id, player_name), is_private in zip(
+                public_slots, [player_1_private, player_2_private]
+            )
+            if not is_private
         )
-        if private:
-            status, reason = "EXCLUDED_PRIVATE", "One or both document players are private or masked."
+        if privacy_status == "PRIVATE_PRIVATE":
+            status, reason = "EXCLUDED_PRIVATE", "Both document players are private or masked."
         elif review_required or missing_identity:
             status, reason = "REVIEW", row.get("notes", "Historical identity requires review.")
         else:
@@ -139,7 +156,7 @@ def historical_partnership_rows(matches: pd.DataFrame) -> tuple[pd.DataFrame, pd
                 "innings_partnership_runs": None,
                 "innings_scorecard_runs": None,
                 "innings_runs_difference": None,
-                "is_private_player": private,
+                "is_private_player": privacy_status != "PUBLIC_PUBLIC",
             }
         )
     return pd.DataFrame(event_rows, columns=EVENT_COLUMNS), pd.DataFrame(audit_rows, columns=AUDIT_COLUMNS)
@@ -158,7 +175,7 @@ def historical_team_and_opponent(match: dict[str, object]) -> tuple[str, str]:
 
 def coverage_rows(audit: pd.DataFrame) -> pd.DataFrame:
     if audit.empty:
-        return pd.DataFrame(columns=["source_classification", "season", "candidate_rows", "confirmed_rows", "review_rows", "private_rows"])
+        return pd.DataFrame(columns=["source_classification", "season", "candidate_rows", "confirmed_rows", "review_rows", "private_rows", "public_public_rows", "public_private_rows", "private_private_rows", "unresolved_rows"])
     rows = audit.copy()
     return (
         rows.groupby(["source_classification", "season"], dropna=False)
@@ -167,6 +184,10 @@ def coverage_rows(audit: pd.DataFrame) -> pd.DataFrame:
             confirmed_rows=("validation_status", lambda values: int(pd.Series(values).isin({"CONFIRMED", "DOCUMENT_CONFIRMED"}).sum())),
             review_rows=("validation_status", lambda values: int(pd.Series(values).eq("REVIEW").sum())),
             private_rows=("validation_status", lambda values: int(pd.Series(values).eq("EXCLUDED_PRIVATE").sum())),
+            public_public_rows=("privacy_status", lambda values: int(pd.Series(values).eq("PUBLIC_PUBLIC").sum())),
+            public_private_rows=("privacy_status", lambda values: int(pd.Series(values).eq("PUBLIC_PRIVATE").sum())),
+            private_private_rows=("privacy_status", lambda values: int(pd.Series(values).eq("PRIVATE_PRIVATE").sum())),
+            unresolved_rows=("review_reason", lambda values: int(unresolved_partnership_review_mask(pd.Series(values)).sum())),
         )
         .reset_index()
         .sort_values(["source_classification", "season"])
@@ -174,13 +195,28 @@ def coverage_rows(audit: pd.DataFrame) -> pd.DataFrame:
 
 
 def validation_rows(events: pd.DataFrame, records: pd.DataFrame, audit: pd.DataFrame) -> pd.DataFrame:
-    private = events["player_1_name"].map(is_private_or_anonymised_player) | events["player_2_name"].map(is_private_or_anonymised_player)
+    player_1_protected = events["player_1_name"].eq("Private player")
+    player_2_protected = events["player_2_name"].eq("Private player")
+    unsafe_private = (
+        events["player_1_name"].map(is_private_or_anonymised_player) & ~player_1_protected
+    ) | (
+        events["player_2_name"].map(is_private_or_anonymised_player) & ~player_2_protected
+    )
+    protected_ids = (
+        player_1_protected & events["player_1_canonical_id"].fillna("").astype(str).str.strip().ne("")
+    ) | (
+        player_2_protected & events["player_2_canonical_id"].fillna("").astype(str).str.strip().ne("")
+    )
+    public_private = events.get("privacy_status", pd.Series("", index=events.index)).eq("PUBLIC_PRIVATE")
+    protected_count = player_1_protected.astype(int) + player_2_protected.astype(int)
     checks = [
         ("prepared_events_exist", not events.empty, f"rows={len(events)}"),
         ("record_holders_exist", not records.empty, f"rows={len(records)}"),
         ("no_duplicate_events", not events["record_id"].duplicated().any(), f"duplicates={int(events['record_id'].duplicated().sum())}"),
         ("one_record_per_wicket", not records["wicket_number"].duplicated().any(), f"wickets={records['wicket_number'].tolist()}"),
-        ("no_private_public_events", not private.any(), f"private={int(private.sum())}"),
+        ("no_private_name_exposure", not unsafe_private.any(), f"unsafe_private={int(unsafe_private.sum())}"),
+        ("public_private_uses_exact_protected_label", protected_count.loc[public_private].eq(1).all(), f"public_private={int(public_private.sum())}"),
+        ("protected_partner_has_no_public_id", not protected_ids.any(), f"protected_ids={int(protected_ids.sum())}"),
         ("all_records_from_public_events", set(records["record_id"]).issubset(set(events["record_id"])), "record IDs are event-backed"),
         ("review_rows_are_audited", int(audit["validation_status"].eq("REVIEW").sum()) > 0, f"review={int(audit['validation_status'].eq('REVIEW').sum())}"),
     ]
