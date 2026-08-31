@@ -72,6 +72,7 @@ from src.data.player_status_overrides import (
     player_status_signature,
 )
 from src.data.hall_of_fame_prepared import (
+    FVCC_HOF_PUBLIC_FILTER_VERSION,
     load_prepared_hall_of_fame_core,
     prepared_core_manifest_signature,
 )
@@ -6417,10 +6418,9 @@ def load_hall_of_fame_data(
     batting_raw = apply_team_grade_display_columns(batting_raw)
     bowling_raw = apply_team_grade_display_columns(bowling_raw)
     fielding_raw = apply_team_grade_display_columns(fielding_raw)
-    if active_club_id == "glen-waverley-hawks":
-        batting_raw = filter_public_player_rows(batting_raw)
-        bowling_raw = filter_public_player_rows(bowling_raw)
-        fielding_raw = filter_public_player_rows(fielding_raw)
+    batting_raw = filter_public_hall_of_fame_rows(batting_raw, active_club_id)
+    bowling_raw = filter_public_hall_of_fame_rows(bowling_raw, active_club_id)
+    fielding_raw = filter_public_hall_of_fame_rows(fielding_raw, active_club_id)
     if allow_legacy_fallback() and runtime_identity_maintenance_enabled():
         export_team_grade_display_audit(
             [batting_raw, bowling_raw, fielding_raw],
@@ -6480,15 +6480,10 @@ def load_hall_of_fame_data(
         all_time = build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding)
         log_hof_timing("build all-time player summary", started_at)
     else:
-        batting = prepared_core["batting"]
-        bowling = prepared_core["bowling"]
-        fielding = prepared_core["fielding"]
-        all_time = prepared_core["all_time"]
-        if active_club_id == "glen-waverley-hawks":
-            batting = filter_public_player_rows(batting)
-            bowling = filter_public_player_rows(bowling)
-            fielding = filter_public_player_rows(fielding)
-            all_time = filter_public_player_rows(all_time)
+        batting = filter_public_hall_of_fame_rows(prepared_core["batting"], active_club_id)
+        bowling = filter_public_hall_of_fame_rows(prepared_core["bowling"], active_club_id)
+        fielding = filter_public_hall_of_fame_rows(prepared_core["fielding"], active_club_id)
+        all_time = filter_public_hall_of_fame_rows(prepared_core["all_time"], active_club_id)
 
     prepared = {
         "batting_raw": add_batting_display_columns(batting_raw),
@@ -6531,13 +6526,15 @@ def get_authoritative_career_totals(
     all_time = apply_featured_record_overrides(historical_data["all_time"].copy(), club_id=active_club_id)
     if active_club_id == "glen-waverley-hawks":
         all_time = apply_gwhcc_record_overrides(all_time, write_decisions=False)
-    return all_time
+    return filter_public_hall_of_fame_rows(all_time, active_club_id)
 
 
 def hall_of_fame_override_signature(club_id: str | None = None) -> tuple[object, ...]:
     active_club_id = club_id or get_active_club_id()
     signature: list[object] = [("featured", featured_record_overrides_mtime())]
     signature.append(("prepared_core", prepared_core_manifest_signature(active_club_id)))
+    if active_club_id == "fvcc":
+        signature.append(("public_filter", FVCC_HOF_PUBLIC_FILTER_VERSION))
     if active_club_id == "glen-waverley-hawks":
         signature.extend(gwhcc_document_override_signature())
     return tuple(signature)
@@ -6631,6 +6628,13 @@ def normalise_player_names(df: pd.DataFrame) -> pd.DataFrame:
     output = df.copy()
     output["player_name"] = output["player_name"].map(display_player_name)
     return output
+
+
+def filter_public_hall_of_fame_rows(frame: pd.DataFrame, club_id: str) -> pd.DataFrame:
+    """Apply established public-player governance at the HOF data boundary."""
+    if club_id not in {"fvcc", "glen-waverley-hawks"}:
+        return frame.copy()
+    return filter_public_player_rows(frame)
 
 
 def identity_export_frame(df: pd.DataFrame, source: str) -> pd.DataFrame:
@@ -11826,6 +11830,8 @@ def load_player_profile_index(
     combined = pd.concat(frames, ignore_index=True)
     if "canonical_player_id" not in combined or "canonical_player_name" not in combined:
         return pd.DataFrame(columns=["id", "name"])
+    if club_id in {"fvcc", "glen-waverley-hawks"}:
+        combined = filter_public_player_rows(combined)
     display_casing = canonical_player_name_casing_overrides(combined)
     index = (
         combined[["canonical_player_id", "canonical_player_name"]]
