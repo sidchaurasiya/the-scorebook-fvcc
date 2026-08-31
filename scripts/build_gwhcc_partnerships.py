@@ -114,6 +114,11 @@ def historical_partnership_rows(matches: pd.DataFrame) -> tuple[pd.DataFrame, pd
             "balls": None,
             "wickets_lost": 0 if both_not_out else 1,
             "wicket_number": wicket_number,
+            "source_partnership_number": wicket_number,
+            "wickets_fallen_at_start": wicket_number - 1,
+            "wickets_fallen_at_end": wicket_number - 1 if both_not_out else wicket_number,
+            "wicket_ordinal_status": "CONFIRMED",
+            "wicket_ordinal_reason": "Explicit governed historical wicket ordinal.",
             "partnership_type": partnership_type_label(wicket_number),
             "season": row["season"],
             "match_id": match_id,
@@ -175,7 +180,7 @@ def historical_team_and_opponent(match: dict[str, object]) -> tuple[str, str]:
 
 def coverage_rows(audit: pd.DataFrame) -> pd.DataFrame:
     if audit.empty:
-        return pd.DataFrame(columns=["source_classification", "season", "candidate_rows", "confirmed_rows", "review_rows", "private_rows", "public_public_rows", "public_private_rows", "private_private_rows", "unresolved_rows"])
+        return pd.DataFrame(columns=["source_classification", "season", "candidate_rows", "confirmed_rows", "review_rows", "private_rows", "public_public_rows", "public_private_rows", "private_private_rows", "unresolved_rows", "wicket_ordinal_confirmed_rows", "wicket_ordinal_review_rows"])
     rows = audit.copy()
     return (
         rows.groupby(["source_classification", "season"], dropna=False)
@@ -188,6 +193,8 @@ def coverage_rows(audit: pd.DataFrame) -> pd.DataFrame:
             public_private_rows=("privacy_status", lambda values: int(pd.Series(values).eq("PUBLIC_PRIVATE").sum())),
             private_private_rows=("privacy_status", lambda values: int(pd.Series(values).eq("PRIVATE_PRIVATE").sum())),
             unresolved_rows=("review_reason", lambda values: int(unresolved_partnership_review_mask(pd.Series(values)).sum())),
+            wicket_ordinal_confirmed_rows=("wicket_ordinal_status", lambda values: int(pd.Series(values).eq("CONFIRMED").sum())),
+            wicket_ordinal_review_rows=("wicket_ordinal_status", lambda values: int(pd.Series(values).eq("REVIEW").sum())),
         )
         .reset_index()
         .sort_values(["source_classification", "season"])
@@ -209,6 +216,7 @@ def validation_rows(events: pd.DataFrame, records: pd.DataFrame, audit: pd.DataF
     )
     public_private = events.get("privacy_status", pd.Series("", index=events.index)).eq("PUBLIC_PRIVATE")
     protected_count = player_1_protected.astype(int) + player_2_protected.astype(int)
+    ordinal_confirmed = events.get("wicket_ordinal_status", pd.Series("", index=events.index)).eq("CONFIRMED")
     checks = [
         ("prepared_events_exist", not events.empty, f"rows={len(events)}"),
         ("record_holders_exist", not records.empty, f"rows={len(records)}"),
@@ -217,6 +225,8 @@ def validation_rows(events: pd.DataFrame, records: pd.DataFrame, audit: pd.DataF
         ("no_private_name_exposure", not unsafe_private.any(), f"unsafe_private={int(unsafe_private.sum())}"),
         ("public_private_uses_exact_protected_label", protected_count.loc[public_private].eq(1).all(), f"public_private={int(public_private.sum())}"),
         ("protected_partner_has_no_public_id", not protected_ids.any(), f"protected_ids={int(protected_ids.sum())}"),
+        ("record_holders_have_confirmed_wicket_ordinals", records.get("wicket_ordinal_status", pd.Series("", index=records.index)).eq("CONFIRMED").all(), f"unconfirmed_records={int((~records.get('wicket_ordinal_status', pd.Series('', index=records.index)).eq('CONFIRMED')).sum())}"),
+        ("wicket_ordinal_review_rows_are_audited", int((~ordinal_confirmed).sum()) > 0, f"review={int((~ordinal_confirmed).sum())}"),
         ("all_records_from_public_events", set(records["record_id"]).issubset(set(events["record_id"])), "record IDs are event-backed"),
         ("review_rows_are_audited", int(audit["validation_status"].eq("REVIEW").sum()) > 0, f"review={int(audit['validation_status'].eq('REVIEW').sum())}"),
     ]

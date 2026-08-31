@@ -6,7 +6,13 @@ import pandas as pd
 from pandas.testing import assert_frame_equal
 
 from src.data.match_centre_parser import build_ball_partnerships
-from src.data.partnerships import EVENT_COLUMNS, build_partnership_record_holders, combine_partnership_events, prepare_ball_by_ball_partnerships
+from src.data.partnerships import (
+    EVENT_COLUMNS,
+    build_partnership_record_holders,
+    combine_partnership_events,
+    conventional_partnership_ordinal,
+    prepare_ball_by_ball_partnerships,
+)
 from src.ui import layout
 
 
@@ -29,6 +35,8 @@ def source_context(runs: tuple[int, int] = (40, 60), pair_ids: tuple[str, str] =
                 "runs": runs[0],
                 "balls": 50,
                 "source": "ball_by_ball",
+                "start_score": "0-0",
+                "end_score": f"1-{runs[0]}",
                 "wicket_ending_participant_id": pair_ids[1],
                 "dismissal_type": "Caught",
             },
@@ -44,6 +52,8 @@ def source_context(runs: tuple[int, int] = (40, 60), pair_ids: tuple[str, str] =
                 "runs": runs[1],
                 "balls": 70,
                 "source": "ball_by_ball",
+                "start_score": f"1-{runs[0]}",
+                "end_score": f"1-{sum(runs)}",
                 "wicket_ending_participant_id": "",
                 "dismissal_type": "",
             },
@@ -63,7 +73,9 @@ def source_context(runs: tuple[int, int] = (40, 60), pair_ids: tuple[str, str] =
             }
         ]
     )
-    innings = pd.DataFrame([{"match_id": "match-1", "innings_id": "innings-1", "runs_scored": sum(runs)}])
+    innings = pd.DataFrame(
+        [{"match_id": "match-1", "innings_id": "innings-1", "runs_scored": sum(runs), "wickets_fallen": 1}]
+    )
     identity = {
         "player-a": {"canonical_player_id": "a_player", "canonical_player_name": "A Player"},
         "player-b": {"canonical_player_id": "b_player", "canonical_player_name": "B Player"},
@@ -106,6 +118,9 @@ def test_partnership_preparation_reconciles_runs_and_context() -> None:
     assert first["balls"] == 50
     assert first["opponent"] == "Opposition Cricket Club"
     assert first["evidence_quality"] == "innings_total_reconciled"
+    assert result.events["wicket_number"].tolist() == [1, 2]
+    assert result.events["source_partnership_number"].tolist() == [1, 2]
+    assert result.events["wicket_ordinal_status"].eq("CONFIRMED").all()
 
 
 def test_duplicate_canonical_identity_is_held_for_review() -> None:
@@ -177,6 +192,55 @@ def test_preparation_and_record_selection_are_reproducible() -> None:
     assert_frame_equal(build_partnership_record_holders(first.events), build_partnership_record_holders(second.events))
 
 
+def test_conventional_wicket_ordinal_uses_wickets_fallen_not_raw_segment_counter() -> None:
+    row = pd.Series(
+        {
+            "partnership_number": 8,
+            "start_score": "6-85",
+            "end_score": "7-207",
+            "innings_scorecard_wickets": 10,
+            "wicket_ending_participant_id": "dismissed-player",
+        }
+    )
+    assert conventional_partnership_ordinal(row) == (
+        7,
+        6,
+        7,
+        "CONFIRMED",
+        "Conventional ordinal derived from source wickets fallen.",
+    )
+
+
+def test_duplicate_or_non_counting_wicket_event_is_review_only() -> None:
+    row = pd.Series(
+        {
+            "partnership_number": 6,
+            "start_score": "5-84",
+            "end_score": "5-84",
+            "innings_scorecard_wickets": 10,
+            "wicket_ending_participant_id": "duplicate-dismissal",
+        }
+    )
+    assert conventional_partnership_ordinal(row)[0] is None
+    assert conventional_partnership_ordinal(row)[3] == "REVIEW"
+
+
+def test_synthetic_innings_maps_opening_through_tenth_wicket() -> None:
+    ordinals = []
+    for wickets_fallen in range(10):
+        row = pd.Series(
+            {
+                "partnership_number": wickets_fallen + 1,
+                "start_score": f"{wickets_fallen}-{wickets_fallen * 10}",
+                "end_score": f"{wickets_fallen + 1}-{wickets_fallen * 10 + 10}",
+                "innings_scorecard_wickets": 10,
+                "wicket_ending_participant_id": f"dismissed-{wickets_fallen}",
+            }
+        )
+        ordinals.append(conventional_partnership_ordinal(row)[0])
+    assert ordinals == list(range(1, 11))
+
+
 def partnership_record_event(
     record_id: str,
     *,
@@ -203,6 +267,7 @@ def partnership_record_event(
             "match_date": match_date,
             "source_classification": "ball_by_ball_calculated",
             "privacy_status": privacy_status,
+            "wicket_ordinal_status": "CONFIRMED",
         }
     )
     return row
@@ -224,6 +289,20 @@ def test_public_private_can_win_record_selection() -> None:
     assert records.iloc[0]["record_id"] == "public-private"
     assert records.iloc[0]["player_2_name"] == "Private player"
     assert records.iloc[0]["player_2_canonical_id"] == ""
+
+
+def test_unverified_ordinal_cannot_win_a_public_record() -> None:
+    events = pd.DataFrame(
+        [
+            partnership_record_event("verified", runs=100, privacy_status="PUBLIC_PUBLIC"),
+            {
+                **partnership_record_event("review", runs=150, privacy_status="PUBLIC_PUBLIC"),
+                "wicket_ordinal_status": "REVIEW",
+            },
+        ]
+    )
+    records = build_partnership_record_holders(events)
+    assert records.iloc[0]["record_id"] == "verified"
 
 
 def test_record_tie_remains_deterministic_after_redaction() -> None:
@@ -324,4 +403,15 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     )
     assert len(protected_slots) == len(private_rows)
     assert protected_slots.fillna("").eq("").all()
+    assert events["wicket_ordinal_status"].value_counts().to_dict() == {
+        "CONFIRMED": 3019,
+        "REVIEW": 331,
+    }
+    assert records["wicket_ordinal_status"].eq("CONFIRMED").all()
+    assert records.loc[records["wicket_number"].eq(7), ["player_1_name", "player_2_name", "runs"]].values.tolist() == [
+        ["Ahilan Sivakumaran", "Karanvir Singh", 122]
+    ]
+    assert records.loc[records["wicket_number"].eq(8), ["player_1_name", "player_2_name", "runs"]].values.tolist() == [
+        ["Arun Chelvan", "Anil Mirchandani", 84]
+    ]
     assert validation["status"].ne("FAIL").all()
