@@ -22,6 +22,11 @@ EVENT_COLUMNS = [
     "balls",
     "wickets_lost",
     "wicket_number",
+    "source_partnership_number",
+    "wickets_fallen_at_start",
+    "wickets_fallen_at_end",
+    "wicket_ordinal_status",
+    "wicket_ordinal_reason",
     "partnership_type",
     "season",
     "match_id",
@@ -128,12 +133,16 @@ def prepare_ball_by_ball_partnerships(
     key_columns = ["match_id", "innings_id", "partnership_number"]
     rows["_duplicate_key"] = rows.duplicated(key_columns, keep=False)
 
-    innings_runs = innings[["match_id", "innings_id", "runs_scored"]].drop_duplicates(["match_id", "innings_id"]).copy()
+    innings_runs = innings[["match_id", "innings_id", "runs_scored", "wickets_fallen"]].drop_duplicates(
+        ["match_id", "innings_id"]
+    ).copy()
     innings_runs["runs_scored"] = pd.to_numeric(innings_runs["runs_scored"], errors="coerce")
+    innings_runs["wickets_fallen"] = pd.to_numeric(innings_runs["wickets_fallen"], errors="coerce")
     totals = rows.groupby(["match_id", "innings_id"], as_index=False)["runs"].sum(min_count=1)
     totals = totals.rename(columns={"runs": "innings_partnership_runs"})
     totals = totals.merge(innings_runs, on=["match_id", "innings_id"], how="left")
     totals = totals.rename(columns={"runs_scored": "innings_scorecard_runs"})
+    totals = totals.rename(columns={"wickets_fallen": "innings_scorecard_wickets"})
     totals["innings_runs_difference"] = totals["innings_partnership_runs"] - totals["innings_scorecard_runs"]
     rows = rows.merge(totals, on=["match_id", "innings_id"], how="left")
 
@@ -156,9 +165,16 @@ def prepare_ball_by_ball_partnerships(
         raw_grade = clean_text(match.get("grade_name"))
         display_grade = grade_display(raw_grade) if grade_display else raw_grade
         team_name, opponent = team_and_opponent(row, match)
-        wicket_number = numeric_int(row.get("partnership_number"))
+        source_partnership_number = numeric_int(row.get("partnership_number"))
+        (
+            wicket_number,
+            wickets_fallen_at_start,
+            wickets_fallen_at_end,
+            wicket_ordinal_status,
+            wicket_ordinal_reason,
+        ) = conventional_partnership_ordinal(row)
         event = {
-            "record_id": f"bbb:{match_id}:{innings_id}:{wicket_number or 'unknown'}",
+            "record_id": f"bbb:{match_id}:{innings_id}:{source_partnership_number or 'unknown'}",
             "player_1_canonical_id": public_1[0],
             "player_1_name": public_1[1],
             "player_2_canonical_id": public_2[0],
@@ -167,6 +183,11 @@ def prepare_ball_by_ball_partnerships(
             "balls": numeric_number(row.get("balls")),
             "wickets_lost": partnership_wickets_lost(row),
             "wicket_number": wicket_number,
+            "source_partnership_number": source_partnership_number,
+            "wickets_fallen_at_start": wickets_fallen_at_start,
+            "wickets_fallen_at_end": wickets_fallen_at_end,
+            "wicket_ordinal_status": wicket_ordinal_status,
+            "wicket_ordinal_reason": wicket_ordinal_reason,
             "partnership_type": partnership_type_label(wicket_number),
             "season": clean_text(match.get("season")),
             "match_id": match_id,
@@ -221,6 +242,12 @@ def prepare_ball_by_ball_partnerships(
         "unresolved_events_excluded": int(
             unresolved_partnership_review_mask(audit.get("review_reason", pd.Series(dtype=str))).sum()
         ),
+        "wicket_ordinal_confirmed_events": int(
+            audit.get("wicket_ordinal_status", pd.Series(dtype=str)).eq("CONFIRMED").sum()
+        ),
+        "wicket_ordinal_review_events": int(
+            audit.get("wicket_ordinal_status", pd.Series(dtype=str)).eq("REVIEW").sum()
+        ),
         "matches": int(rows["match_id"].nunique()) if not rows.empty else 0,
         "innings": int(rows["innings_id"].nunique()) if not rows.empty else 0,
     }
@@ -234,6 +261,8 @@ def build_partnership_record_holders(events: pd.DataFrame) -> pd.DataFrame:
     rows["runs"] = pd.to_numeric(rows["runs"], errors="coerce")
     rows["wicket_number"] = pd.to_numeric(rows["wicket_number"], errors="coerce")
     rows = rows[rows["runs"].notna() & rows["wicket_number"].between(1, 10, inclusive="both")].copy()
+    if "wicket_ordinal_status" in rows:
+        rows = rows[rows["wicket_ordinal_status"].eq("CONFIRMED")].copy()
     if "privacy_status" in rows:
         rows = rows[rows["privacy_status"].isin({"PUBLIC_PUBLIC", "PUBLIC_PRIVATE"})].copy()
     if rows.empty:
@@ -296,6 +325,34 @@ def partnership_validation_status(
     if privacy_status == "PUBLIC_PRIVATE":
         return "CONFIRMED", "Public batter identity and redacted private partner reconcile to the innings scorecard total."
     return "CONFIRMED", "Canonical batter pair and delivery-derived runs reconcile to the innings scorecard total."
+
+
+def conventional_partnership_ordinal(
+    row: pd.Series,
+) -> tuple[int | None, int | None, int | None, str, str]:
+    """Derive a public wicket ordinal only from a coherent source score progression."""
+    start = score_wickets(row.get("start_score"))
+    end = score_wickets(row.get("end_score"))
+    innings_wickets = numeric_int(row.get("innings_scorecard_wickets"))
+    ends_with_wicket = bool(clean_text(row.get("wicket_ending_participant_id")))
+
+    if start is None or end is None:
+        return None, start, end, "REVIEW", "Source score progression is incomplete."
+    if start < 0 or start > 9 or end < start or end > start + 1:
+        return None, start, end, "REVIEW", "Source score progression is not a valid wicket sequence."
+    if innings_wickets is None or end > innings_wickets:
+        return None, start, end, "REVIEW", "Source wicket progression exceeds the scorecard innings total."
+    if ends_with_wicket and end != start + 1:
+        return None, start, end, "REVIEW", "Wicket event does not advance the source wicket count."
+    if not ends_with_wicket and end != start:
+        return None, start, end, "REVIEW", "Source wicket count changes without an ending wicket event."
+    return start + 1, start, end, "CONFIRMED", "Conventional ordinal derived from source wickets fallen."
+
+
+def score_wickets(value: object) -> int | None:
+    text = clean_text(value)
+    first, separator, _rest = text.partition("-")
+    return numeric_int(first) if separator else None
 
 
 def unresolved_partnership_review_mask(values: pd.Series) -> pd.Series:
