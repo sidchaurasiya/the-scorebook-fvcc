@@ -17,6 +17,7 @@ from src.config.club_config import (
 
 MANIFEST_FILENAME = "prepared_core_manifest.json"
 GREATEST_SEASONS_FILENAME = "prepared_greatest_seasons.json"
+FVCC_HOF_PUBLIC_FILTER_VERSION = "fvcc-hof-public-filter-v1"
 FRAME_FILENAMES = {
     "batting": "prepared_career_batting.csv",
     "bowling": "prepared_career_bowling.csv",
@@ -79,6 +80,10 @@ def prepared_core_manifest_signature(club_id: str) -> tuple[object, ...]:
     return (str(path), stat.st_size, stat.st_mtime_ns)
 
 
+def prepared_core_public_filter_version(club_id: str) -> str:
+    return FVCC_HOF_PUBLIC_FILTER_VERSION if club_id == "fvcc" else ""
+
+
 def load_prepared_hall_of_fame_core(club_id: str, data_version: str) -> dict[str, object] | None:
     output_dir = get_hall_of_fame_dir(club_id=club_id)
     manifest_path = output_dir / MANIFEST_FILENAME
@@ -89,6 +94,9 @@ def load_prepared_hall_of_fame_core(club_id: str, data_version: str) -> dict[str
     except (OSError, json.JSONDecodeError):
         return None
     if manifest.get("club_id") != club_id or manifest.get("data_version") != data_version:
+        return None
+    expected_public_filter_version = prepared_core_public_filter_version(club_id)
+    if expected_public_filter_version and manifest.get("public_filter_version") != expected_public_filter_version:
         return None
     if manifest.get("source_signature") != prepared_core_source_signature(club_id):
         return None
@@ -145,16 +153,17 @@ def write_prepared_hall_of_fame_core(
     written.append(greatest_path)
 
     manifest_path = target / MANIFEST_FILENAME
+    manifest = {
+        "club_id": club_id,
+        "data_version": data_version,
+        "source_signature": prepared_core_source_signature(club_id),
+        "row_counts": row_counts,
+    }
+    public_filter_version = prepared_core_public_filter_version(club_id)
+    if public_filter_version:
+        manifest["public_filter_version"] = public_filter_version
     manifest_path.write_text(
-        json.dumps(
-            {
-                "club_id": club_id,
-                "data_version": data_version,
-                "source_signature": prepared_core_source_signature(club_id),
-                "row_counts": row_counts,
-            },
-            indent=2,
-        )
+        json.dumps(manifest, indent=2)
         + "\n",
         encoding="utf-8",
     )
