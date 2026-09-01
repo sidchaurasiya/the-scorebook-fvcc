@@ -132,7 +132,7 @@ def test_other_clubs_are_not_modified() -> None:
     assert apply_historical_career_metric_decisions(sample, club_id="georges-river-district").equals(sample)
 
 
-def test_prepared_hof_rows_and_top_ten_membership_are_unchanged() -> None:
+def test_governed_replacements_recompute_hof_top_ten_without_double_counting() -> None:
     audit = pd.read_csv(VALIDATION / "gwhcc_career_total_reconciliation_audit.csv").fillna("")
     candidates = audit[audit["recommended_authority"].eq("CAREER_MASTER_REPLACEMENT")]
     after = authoritative_frame()
@@ -142,7 +142,59 @@ def test_prepared_hof_rows_and_top_ten_membership_are_unchanged() -> None:
         before.loc[mask, "Runs"] = float(row.scorebook_runs)
         before.loc[mask, "Wickets"] = float(row.scorebook_wickets)
     assert len(after) == len(before) == 1233
-    for metric in ["Matches", "Runs", "Wickets", "Catches"]:
-        before_top = before.sort_values([metric, "Player"], ascending=[False, True]).head(10)["canonical_player_id"].tolist()
-        after_top = after.sort_values([metric, "Player"], ascending=[False, True]).head(10)["canonical_player_id"].tolist()
-        assert before_top == after_top
+
+    def ranked(frame: pd.DataFrame, metric: str) -> pd.DataFrame:
+        return frame.sort_values([metric, "Player"], ascending=[False, True]).reset_index(drop=True)
+
+    def rank_for(frame: pd.DataFrame, metric: str, player_id: str) -> int:
+        ranking = ranked(frame, metric)
+        return int(ranking.index[ranking["canonical_player_id"].astype(str).eq(player_id)][0]) + 1
+
+    decisions = load_historical_career_metric_decisions()
+    stephen_id = "raw_2ecad9ed_3966_4cba_85f3_644b5191db5c"
+    chris_id = "raw_b42006f6_92c7_4345_ae8b_c7b7080cac2c"
+    stephen = after[after["canonical_player_id"].astype(str).eq(stephen_id)].iloc[0]
+    chris = after[after["canonical_player_id"].astype(str).eq(chris_id)].iloc[0]
+    stephen_audit = candidates[candidates["canonical_player_id"].eq(stephen_id)].iloc[0]
+    chris_audit = candidates[candidates["canonical_player_id"].eq(chris_id)].iloc[0]
+    stephen_decision = decisions[(decisions["canonical_player_id"].eq(stephen_id)) & decisions["metric"].eq("runs")].iloc[0]
+    chris_decision = decisions[(decisions["canonical_player_id"].eq(chris_id)) & decisions["metric"].eq("wickets")].iloc[0]
+
+    assert float(stephen["Runs"]) == float(stephen_decision["authoritative_value"]) == 4921.0
+    assert float(stephen["Runs"]) != float(stephen_audit["scorebook_runs"]) + float(stephen_decision["authoritative_value"])
+    assert float(chris["Wickets"]) == float(chris_decision["authoritative_value"]) == 248.0
+    assert float(chris["Wickets"]) != float(chris_audit["scorebook_wickets"]) + float(chris_decision["authoritative_value"])
+
+    assert rank_for(before, "Runs", stephen_id) == 16
+    assert rank_for(after, "Runs", stephen_id) == 10
+    assert rank_for(before, "Wickets", chris_id) == 57
+    assert rank_for(after, "Wickets", chris_id) == 10
+    assert rank_for(after, "Runs", "paul_young") == 11
+    assert rank_for(after, "Wickets", "raw_e8f5b374_e618_4735_9419_cc4e8c4511e8") == 11
+
+    assert ranked(after, "Runs").head(10)["Player"].tolist() == [
+        "Greg Mccormick",
+        "Glen Mahoney",
+        "Sunny Somaia",
+        "Stuart Wynd",
+        "Apurwa Sarve",
+        "Chris Briginshaw",
+        "Brooke Calder",
+        "Grant Haye",
+        "Jarrod Greaves",
+        "Stephen Quinn",
+    ]
+    assert ranked(after, "Wickets").head(10)["Player"].tolist() == [
+        "Matthew Briginshaw",
+        "Greg Mccormick",
+        "Nathan Bungey",
+        "Luke Galle",
+        "Arun Chelvan",
+        "Stuart Wynd",
+        "Chris Perkins",
+        "Patrick Eldridge",
+        "Shane Vanin",
+        "Chris Jackson",
+    ]
+    assert float(after.loc[after["Player"].eq("Glen Mahoney"), "Runs"].iloc[0]) == 7734.0
+    assert after["canonical_player_id"].nunique() == before["canonical_player_id"].nunique()
