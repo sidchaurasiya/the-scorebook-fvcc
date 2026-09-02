@@ -1,0 +1,82 @@
+{
+  "club_id": "georges-river-district",
+  "data_version": "hof-historical-match-proxy-v6",
+  "source_signature": [
+    {
+      "path": "clubs/georges-river-district/club_config.yaml",
+      "size": 2316,
+      "sha256": "6a54ce3e1b3fbcd331f04c82c0ca65407dd6ae4dc242762343b4fddb365feda2"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/all_seasons_batting.csv",
+      "size": 3712481,
+      "sha256": "08b060b4d7a828fbad83286c571e0f12ee60dbd88d44ec6412ccfc7bba45b0ba"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/all_seasons_bowling.csv",
+      "size": 3657105,
+      "sha256": "9c54b5345ab4b233642af516f7acc71f19f8851436437abd0b446cb9d04a197e"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/all_seasons_fielding.csv",
+      "size": 3471982,
+      "sha256": "e4b0fc6003447f344834adaf543090208be2a48eff4cfb32d59ab3090d90214e"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_bbb_batting_rates.csv",
+      "size": 43829,
+      "sha256": "e8323bec666e1c8a01986246f13893505766b7a7a29a738c9eabcb878792dd42"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_bowling_milestones.csv",
+      "size": 102409,
+      "sha256": "d1d537373e433b67383227507ec91dbb08cdebafb3b765b2891c73096f17ff39"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_scorecard_milestones.csv",
+      "size": 124138,
+      "sha256": "d2a151e54ebeb7726c55e0802113783c20f9da6c0b6e7b9bbbbb7ab4ef741684"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_win_rates.csv",
+      "size": 214059,
+      "sha256": "3911acb1fc1d791093b33d3c0e6b3518064a06e9121fa6ab8dc9e301514a9cea"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/players.csv",
+      "size": 224013,
+      "sha256": "ea8a5e7f6fde79f445ed326c60aaadcd4d5faae162b2a4da84e51b9eff21c378"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/seasons.csv",
+      "size": 9775,
+      "sha256": "01a4c888fdf1b10f44055d8337f4dbadc4ab9c0f947134b7ea777ba2015a7044"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv",
+      "size": 1816433,
+      "sha256": "c71e089567dab5d1a1c527a5588747e77bf47ec0614526295f433451d15491bc"
+    },
+    {
+      "path": "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_bowling.csv",
+      "size": 126739,
+      "sha256": "25e47baf738d54a0ff070b492727317aaaa645cd4f93faa93c1e23eb82cbcd14"
+    },
+    {
+      "path": "clubs/georges-river-district/manual_player_merges.csv",
+      "size": 19586,
+      "sha256": "4d82df14065e2e99c00e3ae3221d80e17aa0535af9a77b3528470f447b097a0b"
+    },
+    {
+      "path": "clubs/georges-river-district/player_aliases.csv",
+      "size": 112,
+      "sha256": "3fff712c2cedba0134c6ba327d3fd2b6c808136995626cf641d68e957ea00a94"
+    }
+  ],
+  "row_counts": {
+    "batting": 2041,
+    "bowling": 1720,
+    "fielding": 1566,
+    "all_time": 2063
+  }
+}

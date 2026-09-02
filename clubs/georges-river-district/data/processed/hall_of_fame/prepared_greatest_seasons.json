@@ -1,0 +1,33 @@
+{
+  "batting": {
+    "player": "Wade Butler",
+    "player_id": "raw_8b7e20e0_0c9d_41a6_b26e_9b089d11096a",
+    "season": "Summer 2017/18",
+    "matches": 32.0,
+    "runs": 1004.0,
+    "innings": 31.0,
+    "average": 37.18518518518518,
+    "strike_rate": null,
+    "hs": "99",
+    "50s": 9.0,
+    "100s": 0.0,
+    "4s": 100.0,
+    "6s": 36.0,
+    "0s": 6.0
+  },
+  "bowling": {
+    "player": "F Griggs",
+    "player_id": "grdcc_excel_exact_f_griggs",
+    "season": "Summer 1932/33",
+    "matches": 0.0,
+    "wickets": 83.0,
+    "overs": "269.2",
+    "maidens": 66.0,
+    "average": 9.795180722891565,
+    "economy": 3.0185643564356437,
+    "strike_rate": 19.46987951807229,
+    "bbi": "\u2014",
+    "5wi": 0.0,
+    "10wm": 0.0
+  }
+}
