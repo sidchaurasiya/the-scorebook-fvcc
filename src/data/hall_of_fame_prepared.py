@@ -47,6 +47,14 @@ def prepared_core_source_paths(club_id: str) -> list[Path]:
     mapping_path = get_mapping_path("player_aliases.csv", club_id=club_id)
     paths.extend([mapping_path, mapping_path.with_name("manual_player_merges.csv")])
     paths.append(REPO_ROOT / "clubs" / club_id / "club_config.yaml")
+    if club_id == "georges-river-district":
+        paths.extend(
+            get_processed_path("supplemental", filename, club_id=club_id)
+            for filename in (
+                "excel_all_seasons_batting.csv",
+                "excel_all_seasons_bowling.csv",
+            )
+        )
     if club_id == "glen-waverley-hawks":
         paths.append(
             REPO_ROOT
