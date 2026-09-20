@@ -311,6 +311,27 @@ def _assign_override_value(output: pd.DataFrame, index: object, column: str, val
     output.loc[index, column] = coerced
 
 
+def _strongest_high_score(values: pd.Series) -> object:
+    """Keep the not-out flag attached to the highest evidenced score."""
+    candidates = []
+    for value in values:
+        match = re.fullmatch(r"\s*(\d+)(?:\.0+)?(\*)?\s*", str(value))
+        if match:
+            candidates.append((int(match.group(1)), bool(match.group(2))))
+    if not candidates:
+        return pd.NA
+    runs, not_out = max(candidates)
+    return f"{runs}{'*' if not_out else ''}"
+
+
+def _preserve_merged_high_score(output: pd.DataFrame, index: object, rows: pd.DataFrame) -> None:
+    if "HS" in rows:
+        value = _strongest_high_score(rows["HS"])
+        if pd.notna(value):
+            output["HS"] = output["HS"].astype(object)
+            output.loc[index, "HS"] = value
+
+
 def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     output = all_time.copy()
     if output.empty or "Player" not in output.columns:
@@ -334,7 +355,6 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
             "Wickets": _supplement_value(supplement, "displayed_career_wickets"),
             "Matches": _supplement_value(supplement, "excel_matches"),
             "Innings": _supplement_value(supplement, "excel_innings"),
-            "HS": _supplement_value(supplement, "excel_hs"),
             "Bat Avg": _supplement_value(supplement, "excel_batting_average"),
             "50s": _supplement_value(supplement, "excel_50s"),
             "100s": _supplement_value(supplement, "excel_100s"),
@@ -351,6 +371,12 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
             if value is None or column not in output.columns:
                 continue
             _assign_override_value(output, index, column, value)
+        if "HS" in output:
+            # A historical supplement must not lower a governed career record.
+            hs = _strongest_high_score(pd.Series([output.loc[index, "HS"], supplement.get("excel_hs")]))
+            if pd.notna(hs):
+                output["HS"] = output["HS"].astype(object)
+                output.loc[index, "HS"] = hs
         if "Overs" in output.columns and numeric_updates.get("Balls Bowled") is not None:
             _assign_override_value(output, index, "Overs", _balls_to_overs_display(numeric_updates["Balls Bowled"]))
         if str(supplement.get("override_metric", "")).strip() == "career_wickets" and str(supplement.get("override_applies", "")).strip().casefold() == "yes":
@@ -473,6 +499,7 @@ def apply_featured_record_overrides(
         matching_rows = output.loc[matches].copy()
         metric_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
         featured_index = metric_values.idxmax()
+        _preserve_merged_high_score(output, featured_index, matching_rows)
         duplicate_indices = matching_rows.index.difference([featured_index])
         if len(duplicate_indices):
             output = output.drop(index=duplicate_indices)
@@ -510,6 +537,7 @@ def apply_featured_record_overrides(
             matching_rows = output.loc[matches].copy()
             current_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
             featured_index = current_values.idxmax()
+            _preserve_merged_high_score(output, featured_index, matching_rows)
             duplicate_indices = matching_rows.index.difference([featured_index])
             if len(duplicate_indices):
                 output = output.drop(index=duplicate_indices)
