@@ -332,6 +332,27 @@ def _preserve_merged_high_score(output: pd.DataFrame, index: object, rows: pd.Da
             output.loc[index, "HS"] = value
 
 
+def _extend_career_span(output: pd.DataFrame, index: object, seasons: list[str]) -> None:
+    existing = []
+    for column in ("Seasons", "Debut Season", "Latest Season"):
+        if column in output:
+            existing.extend(_season_list(output.loc[index, column]))
+    supplied = [part for value in seasons for part in _season_list(value)]
+    known = sorted({s for s in existing + supplied if _season_sort_key(s) != 999999}, key=_season_sort_key)
+    if not known:
+        return
+    for column, value in (("Debut Season", known[0]), ("Latest Season", known[-1]),
+                          ("Career Span", _career_span_from_seasons(', '.join(known)))):
+        if column in output:
+            _assign_override_value(output, index, column, value)
+    if "Seasons" in output:
+        _assign_override_value(output, index, "Seasons", ', '.join(known))
+    for column in ("Seasons Played", "Seasons Count"):
+        if column in output:
+            current = pd.to_numeric(output.loc[index, column], errors='coerce')
+            _assign_override_value(output, index, column, max(len(known), current if pd.notna(current) else 0))
+
+
 def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
     output = all_time.copy()
     if output.empty or "Player" not in output.columns:
@@ -362,8 +383,6 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
             "Bowl Avg": _supplement_value(supplement, "excel_bowling_average"),
             "Bowl SR": _supplement_value(supplement, "excel_bowling_strike_rate"),
             "Balls Bowled": _supplement_value(supplement, "excel_balls"),
-            "Seasons Played": _supplement_value(supplement, "excel_seasons_count"),
-            "Seasons Count": _supplement_value(supplement, "excel_seasons_count"),
         }
         if numeric_updates.get("Innings") is not None and "Innings" not in output.columns:
             output["Innings"] = pd.NA
@@ -398,15 +417,7 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
 
         seasons_text = _first_non_empty(pd.Series([supplement.get("excel_seasons", "")]))
         seasons = sorted(_season_list(seasons_text), key=_season_sort_key)
-        if seasons_text and "Seasons" in output.columns:
-            _assign_override_value(output, index, "Seasons", seasons_text)
-        if seasons:
-            if "Debut Season" in output.columns:
-                _assign_override_value(output, index, "Debut Season", seasons[0])
-            if "Latest Season" in output.columns:
-                _assign_override_value(output, index, "Latest Season", seasons[-1])
-            if "Career Span" in output.columns:
-                _assign_override_value(output, index, "Career Span", _career_span_from_seasons(seasons_text))
+        _extend_career_span(output, index, seasons)
         if "Featured Record Source" in output.columns:
             _assign_override_value(output, index, "Featured Record Source", "GRDCC 2024/25 Annual Report")
         preferred_name = str(supplement.get("player_name", "") or "").strip()
@@ -500,6 +511,7 @@ def apply_featured_record_overrides(
         metric_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
         featured_index = metric_values.idxmax()
         _preserve_merged_high_score(output, featured_index, matching_rows)
+        _extend_career_span(output, featured_index, [str(v) for c in ("Debut Season", "Latest Season", "Seasons") if c in matching_rows for v in matching_rows[c].dropna()])
         duplicate_indices = matching_rows.index.difference([featured_index])
         if len(duplicate_indices):
             output = output.drop(index=duplicate_indices)
@@ -538,6 +550,7 @@ def apply_featured_record_overrides(
             current_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
             featured_index = current_values.idxmax()
             _preserve_merged_high_score(output, featured_index, matching_rows)
+            _extend_career_span(output, featured_index, [str(v) for c in ("Debut Season", "Latest Season", "Seasons") if c in matching_rows for v in matching_rows[c].dropna()])
             duplicate_indices = matching_rows.index.difference([featured_index])
             if len(duplicate_indices):
                 output = output.drop(index=duplicate_indices)
