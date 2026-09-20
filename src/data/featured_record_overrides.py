@@ -555,7 +555,8 @@ def apply_featured_record_overrides(
             if len(duplicate_indices):
                 output = output.drop(index=duplicate_indices)
         elif add_missing_players:
-            featured_index = len(output)
+            # Alias collapse leaves gaps; len(output) may still be an occupied label.
+            featured_index = max(output.index, default=-1) + 1
             _assign_override_value(output, featured_index, "Player", str(leader.get("player_name", "")).strip())
         else:
             continue
