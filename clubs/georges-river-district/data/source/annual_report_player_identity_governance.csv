@@ -1,0 +1,8 @@
+report_name,status,canonical_player_id,evidence,public_treatment
+Warwick Geitz,LEGITIMATE_REPORT_ONLY_PLAYER,,2024/25 Annual Report p98 Shields 5119 runs; no canonical digital candidate,unlinked
+Eric Reid,MATCHED_EXISTING_CANONICAL_PLAYER,grdcc_excel_exact_e_reid,Approved report reconciliation records Historical Excel 3985 matching E Reid 1929/30-1940/41; unique compatible name and total,canonical
+R. Davey,NEEDS_CLUB_CONFIRMATION,,2024/25 Annual Report p98 2875 runs; identity relative to B Davey and Barry Davey unresolved,withhold
+Gordon Parsons,MATCHED_EXISTING_CANONICAL_PLAYER,grdcc_excel_exact_g_parsons,Approved report reconciliation records Historical Excel 2850 matching G Parsons 1930/31-1940/41; unique compatible name and total,canonical
+Ben Worger,LEGITIMATE_REPORT_ONLY_PLAYER,,2024/25 Annual Report p98 2312 runs; approved supplement names Benjamin Worger; no canonical digital candidate,unlinked
+Matthew Grealy,NEEDS_CLUB_CONFIRMATION,,Report p99 Frank Gray 165 runs; Matt Grealy 1058 and Matthew J Grealy 753 lack approved cross-name identity mapping,withhold
+Frank Griggs,MATCHED_EXISTING_CANONICAL_PLAYER,grdcc_excel_exact_f_griggs,Approved report reconciliation Historical Excel 333 wickets equals F Griggs; existing Greatest Seasons explicitly expands F Griggs to Frank Griggs,canonical
