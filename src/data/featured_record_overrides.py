@@ -64,6 +64,17 @@ def featured_record_override_path(club_id: str | None = None) -> Path:
     return REPO_ROOT / "clubs" / active_club_id / "data" / "source" / "annual_report_featured_record_overrides.csv"
 
 
+def report_identity_governance_path() -> Path:
+    return REPO_ROOT / 'clubs' / GRDCC_CLUB_ID / 'data/source/annual_report_player_identity_governance.csv'
+
+
+def load_report_identity_governance(club_id: str | None = None) -> pd.DataFrame:
+    if normalize_club_id(club_id or get_active_club_id()) != GRDCC_CLUB_ID:
+        return pd.DataFrame()
+    path = report_identity_governance_path()
+    return _load_override_csv(path) if path.exists() else pd.DataFrame()
+
+
 def annual_report_all_time_leaders_path() -> Path:
     return (
         REPO_ROOT
@@ -119,6 +130,7 @@ def featured_record_overrides_mtime(club_id: str | None = None) -> float:
         annual_report_all_time_leaders_path(),
         annual_report_override_decisions_path(),
         override_player_supplements_path(),
+        report_identity_governance_path(),
     ]
     return max((path.stat().st_mtime for path in paths if path.exists()), default=0.0)
 
@@ -486,6 +498,18 @@ def apply_featured_record_overrides(
     if output.empty or "Player" not in output.columns:
         return output
 
+    identity_decisions = load_report_identity_governance(club_id)
+    held_names = set()
+    for _, identity in identity_decisions.iterrows():
+        report_name = str(identity.get('report_name', '')).strip()
+        status = identity.get('status', '')
+        if status in {'NEEDS_CLUB_CONFIRMATION', 'DUPLICATE_REPORT_RECORD'}:
+            held_names.add(normalize_featured_player_name(report_name))
+        elif status == 'MATCHED_EXISTING_CANONICAL_PLAYER' and 'canonical_player_id' in output:
+            matched = output['canonical_player_id'].astype(str).eq(identity.get('canonical_player_id', ''))
+            if matched.sum() == 1:
+                output.loc[matched, 'Player'] = report_name
+
     normalized_players = output["Player"].map(normalize_featured_player_name)
     supplements = load_override_player_supplements(club_id)
     supplement_alias_map = (
@@ -533,6 +557,8 @@ def apply_featured_record_overrides(
             columns={"section": "legacy_section"}
         )
     for _, leader in decisions.iterrows():
+        if normalize_featured_player_name(leader.get('player_name', '')) in held_names:
+            continue
         metric = str(leader.get("metric", "")).strip()
         target_column = METRIC_COLUMNS.get(metric)
         if target_column is None:
