@@ -1354,6 +1354,21 @@ def load_public_playcricket_teams(
 
 
 @st.cache_data(show_spinner=False, persist="disk")
+def grdcc_historical_navigation_rows(club_id: str, local_version: float) -> pd.DataFrame:
+    """Use governed historical rows for navigation without inventing digital teams."""
+    if club_id != "georges-river-district":
+        return pd.DataFrame()
+    frames = []
+    for category in ("batting", "bowling"):
+        frame = read_processed_table(f"all_seasons_{category}")
+        if "source_system" in frame:
+            frame = frame[frame["source_system"].eq("excel")]
+            if not frame.empty:
+                frames.append(frame[["season_id", "season", "team_id", "team_name", "grade_id", "grade_name"]])
+    return pd.concat(frames, ignore_index=True).drop_duplicates() if frames else pd.DataFrame()
+
+
+@st.cache_data(show_spinner=False, persist="disk")
 def load_local_playcricket_seasons(club_id: str, local_version: float) -> list[dict]:
     _ = (club_id, local_version)
     seasons_df = read_processed_table("seasons")
@@ -1370,12 +1385,31 @@ def load_local_playcricket_seasons(club_id: str, local_version: float) -> list[d
                 "isCurrentSeason": parse_bool(row.get("isCurrentSeason")),
             }
         )
+    historical = grdcc_historical_navigation_rows(club_id, local_version)
+    if not historical.empty:
+        names = set(historical["season"])
+        seasons = [season for season in seasons if season["name"] not in names]
+        seasons.extend(
+            {"id": row["season_id"], "name": row["season"], "startDate": "", "isCurrentSeason": False}
+            for row in historical[["season_id", "season"]].drop_duplicates().to_dict("records")
+        )
+        seasons.sort(key=lambda season: profile_season_sort_key(season["name"]), reverse=True)
     return seasons
 
 
 @st.cache_data(show_spinner=False, persist="disk")
 def load_local_playcricket_teams(club_id: str, season_id: str, local_version: float) -> list[dict]:
     _ = (club_id, local_version)
+    historical = grdcc_historical_navigation_rows(club_id, local_version)
+    if not historical.empty:
+        scoped = historical[historical["season_id"].astype(str).eq(str(season_id))]
+        if not scoped.empty:
+            return [
+                {"id": row["team_id"], "name": row["team_name"],
+                 "grade": {"id": row["grade_id"], "name": row["grade_name"],
+                           "owningOrganisation": {"id": "historical_excel", "name": "Historical Excel"}}}
+                for row in scoped[["team_id", "team_name", "grade_id", "grade_name"]].drop_duplicates().to_dict("records")
+            ]
     teams_df = read_processed_table("teams")
     if teams_df.empty:
         return []
