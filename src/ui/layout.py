@@ -731,10 +731,17 @@ def link_player_column(table: pd.DataFrame, id_column: str = "canonical_player_i
     if table.empty or "Player" not in table or id_column not in table:
         return table
     output = table.copy()
-    output["Player"] = [
-        player_profile_url(player_id, player)
-        for player_id, player in zip(output[id_column], output["Player"])
-    ]
+    player_labels = []
+    for player_id, player in zip(output[id_column], output["Player"]):
+        player_id_text = "" if pd.isna(player_id) else str(player_id).strip()
+        if player_id_text.casefold() in {"nan", "none", "null", "<na>", "nat"}:
+            player_id_text = ""
+        # Report-only records have no profile target; the table renderer escapes their names.
+        if player_id_text and not is_private_or_anonymised_player(player):
+            player_labels.append(player_profile_url(player_id_text, player))
+        else:
+            player_labels.append(player)
+    output["Player"] = player_labels
     return output.drop(columns=[id_column], errors="ignore")
 
 
