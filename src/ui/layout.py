@@ -7446,7 +7446,9 @@ def parse_batting_score(score: object, dismissal_type: object = None) -> tuple[i
     match = re.search(r"(\d+)", text)
     if not match:
         return None, False
-    return int(match.group(1)), "*" in text or is_not_out_values(dismissal_type)
+    # A bare HS value has no innings dismissal evidence; do not treat it as a blank scorecard dismissal.
+    has_dismissal_status = dismissal_type is not None and not pd.isna(dismissal_type)
+    return int(match.group(1)), "*" in text or (has_dismissal_status and is_not_out_values(dismissal_type))
 
 
 def build_ball_by_ball_batting_strike_rates() -> pd.DataFrame:
