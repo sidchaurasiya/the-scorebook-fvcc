@@ -20,11 +20,11 @@ def test_hs_display_does_not_invent_a_not_out(value, expected):
 
 
 @pytest.mark.parametrize("dismissal,expected", [
-    (None, False), (pd.NA, False), (float("nan"), False),
+    (None, True), (pd.NA, True), (float("nan"), True),
     ("bowled", False), ("caught", False), ("not out", True),
     ("retired hurt", True),
 ])
-def test_hs_not_out_requires_explicit_score_or_status(dismissal, expected):
+def test_supplied_scorecard_status_retains_provider_semantics(dismissal, expected):
     assert layout.parse_batting_score("130", dismissal) == (130, expected)
 
 
@@ -32,6 +32,13 @@ def test_blank_scorecard_provider_semantics_are_not_changed():
     assert is_not_out_values("") is True
     assert layout.parse_batting_score("130", "") == (130, True)
     assert layout.parse_batting_score("130") == (130, False)
+
+
+@pytest.mark.parametrize("missing", [None, pd.NA, float("nan"), ""])
+def test_nullable_scorecard_status_is_distinct_from_omitted_hs_metadata(missing):
+    assert layout.parse_batting_score("130", missing) == (130, is_not_out_values(missing))
+    assert layout.parse_batting_score("130") == (130, False)
+    assert layout.format_high_score_text("130") == "130"
 
 
 def test_unrelated_career_not_outs_do_not_mark_highest_score():

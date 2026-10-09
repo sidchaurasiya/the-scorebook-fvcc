@@ -7439,15 +7439,18 @@ def scorecard_dedupe(rows: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
     return rows.drop_duplicates(dedupe_columns) if dedupe_columns else rows.drop_duplicates()
 
 
-def parse_batting_score(score: object, dismissal_type: object = None) -> tuple[int | None, bool]:
+_MISSING_DISMISSAL_STATUS = object()
+
+
+def parse_batting_score(score: object, dismissal_type: object = _MISSING_DISMISSAL_STATUS) -> tuple[int | None, bool]:
     if pd.isna(score):
         return None, False
     text = str(score).strip()
     match = re.search(r"(\d+)", text)
     if not match:
         return None, False
-    # A bare HS value has no innings dismissal evidence; do not treat it as a blank scorecard dismissal.
-    has_dismissal_status = dismissal_type is not None and not pd.isna(dismissal_type)
+    # Omitted HS metadata is unknown; supplied nullable status retains the scorecard provider contract.
+    has_dismissal_status = dismissal_type is not _MISSING_DISMISSAL_STATUS
     return int(match.group(1)), "*" in text or (has_dismissal_status and is_not_out_values(dismissal_type))
 
 
