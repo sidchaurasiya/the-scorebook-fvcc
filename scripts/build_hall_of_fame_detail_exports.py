@@ -76,6 +76,14 @@ def main(argv: list[str] | None = None) -> int:
     fielding = profile_exports.prepare_fielding(frames, club_id=club_id)
     balls = profile_exports.prepare_ball_rows(frames, club_id=club_id)
 
+    if club_id == 'georges-river-district':
+        from src.utils.player_identity import filter_public_player_rows
+
+        # Masked historical appearances must not multiply a later public identity.
+        batting = filter_public_player_rows(batting)
+        bowling = filter_public_player_rows(bowling)
+        fielding = filter_public_player_rows(fielding)
+
     outputs = {
         "player_win_rates.csv": build_player_win_rates(frames["matches"], batting, bowling, fielding, club_id=club_id),
         "player_bbb_batting_rates.csv": build_player_bbb_batting_rates(batting, balls),

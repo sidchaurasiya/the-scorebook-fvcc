@@ -1,0 +1,12 @@
+legacy_summary_id,canonical_player_id,canonical_player_name,verification_rule,source_reference,source_match_count
+greg_richards,grdcc_excel_exact_greg_richards,Greg Richards,Existing confirmed manual source-ID merge; retired slug namespace,f319846; exact-source continuity audit,16
+raw_a7c47043_9c8a_493b_b1c4_b3bfba926364,grdcc_excel_exact_riley_orr,Riley Orr,Exact native source ID retained in governed full profile,f319846; exact-source continuity audit,150
+raw_ab5dfa34_5aca_49a2_82bd_6c7450aa6fb5,grdcc_excel_exact_riley_orr,Riley Orr,Exact native source ID retained in governed full profile,f319846; exact-source continuity audit,52
+raw_6b83af56_b41c_487f_aacb_6ff963682aab,grdcc_excel_exact_shane_pargeter,Shane Pargeter,Exact native source ID retained in governed full profile,f319846; exact-source continuity audit,101
+raw_b9eba4be_d449_4fa9_95bb_d851e4ded7ba,grdcc_excel_exact_shane_pargeter,Shane Pargeter,Exact native source ID retained in governed full profile,f319846; exact-source continuity audit,10
+lachlan_cheney,grdcc_excel_exact_lachlan_cheney,Lachlan Cheney,Existing confirmed manual source-ID merge; retired slug namespace,f319846; exact-source continuity audit,27
+daniel_milliken,grdcc_excel_exact_daniel_milliken,Daniel Milliken,Existing confirmed manual source-ID merge; retired slug namespace,f319846; exact-source continuity audit,88
+joel_murphy,grdcc_excel_exact_joel_murphy,Joel Murphy,Existing confirmed manual source-ID merge; retired slug namespace,f319846; exact-source continuity audit,49
+raw_1548ffef_fccb_4b7b_8955_adf2c7dc1d9e,grdcc_excel_exact_ali_ali,Ali Ali,Exact native source ID retained in governed full profile,f319846; exact-source continuity audit,48
+raw_7b7af497_6bbc_41d7_83a5_301de3fb3f95,grdcc_excel_exact_ali_ali,Ali Ali,Exact native source ID retained in governed full profile,f319846; exact-source continuity audit,201
+nicholas_stevens,grdcc_excel_exact_nicholas_stevens,Nicholas Stevens,Existing confirmed manual source-ID merge; retired slug namespace,f319846; exact-source continuity audit,47
