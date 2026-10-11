@@ -183,7 +183,7 @@ def test_premiership_display_uses_ending_year_without_changing_navigation(monkey
 
 
 def test_latest_default_season_has_activity() -> None:
-    assert layout.latest_season_with_activity(CLUB_ID, layout.metadata_mtime()) == "Summer 2025/26"
+    assert layout.latest_season_with_activity(CLUB_ID, layout.metadata_mtime()) == "Summer 2026/27"
 
 
 def test_fastest_innings_grade_uses_governed_label() -> None:
