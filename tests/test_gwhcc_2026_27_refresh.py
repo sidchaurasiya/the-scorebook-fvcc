@@ -85,3 +85,22 @@ def test_new_partnerships_keep_evidence_and_privacy_gates():
     assert records.wicket_ordinal_status.eq('CONFIRMED').all()
     assert records.wicket_number.tolist() == list(range(1,11))
     assert not records.season.eq(SEASON).any()
+
+
+def test_hawks_hs_labels_require_affirmative_not_out_evidence(monkeypatch):
+    monkeypatch.setenv('CLUB_ID',CLUB)
+    assert layout.format_high_score_text('0') == '0'
+    assert layout.format_high_score_text('38') == '38'
+    assert layout.format_high_score_text('54*') == '54*'
+    for missing in [None,float('nan'),pd.NA,'']:
+        assert layout.parse_batting_score('38',missing) == (38,False)
+    assert layout.parse_batting_score('38','Bowled') == (38,False)
+    assert layout.parse_batting_score('38','Not Out') == (38,True)
+    assert layout.parse_batting_score('0','Did Not Bat') == (0,False)
+
+
+def test_hawks_hs_guard_does_not_change_other_clubs(monkeypatch):
+    for club in ['fvcc','georges-river-district']:
+        monkeypatch.setenv('CLUB_ID',club)
+        assert layout.parse_batting_score('38') == (38,True)
+        assert layout.parse_batting_score('38','Bowled') == (38,False)

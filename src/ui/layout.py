@@ -7446,6 +7446,9 @@ def parse_batting_score(score: object, dismissal_type: object = None) -> tuple[i
     match = re.search(r"(\d+)", text)
     if not match:
         return None, False
+    if get_active_club_id() == "glen-waverley-hawks":
+        has_dismissal = pd.notna(dismissal_type) and str(dismissal_type).strip() != ""
+        return int(match.group(1)), "*" in text or (has_dismissal and is_not_out_values(dismissal_type))
     return int(match.group(1)), "*" in text or is_not_out_values(dismissal_type)
 
 
@@ -12582,7 +12585,8 @@ def render_player_header_card(profile_view: dict[str, pd.DataFrame]) -> None:
 def player_profile_historical_coverage(career: pd.Series, season_table: pd.DataFrame) -> tuple[str, str]:
     if get_active_club_id() != "glen-waverley-hawks":
         return "", ""
-    documented = str(career.get("earliest_documented_season", "") or "").strip()
+    source_season = career.get("earliest_documented_season", "")
+    documented = "" if pd.isna(source_season) else str(source_season).strip()
     available = [] if season_table.empty or "Season" not in season_table else season_table["Season"].dropna().astype(str).tolist()
     detailed = min(available, key=profile_season_sort_key) if available else ""
     if not documented:
