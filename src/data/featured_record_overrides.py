@@ -8,6 +8,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.data.grdcc_career_refresh import apply_later_season_totals, refresh_baseline_paths
+
 from src.config.club_config import REPO_ROOT, get_active_club_id, get_feature_flag, normalize_club_id
 
 
@@ -131,6 +133,7 @@ def featured_record_overrides_mtime(club_id: str | None = None) -> float:
         annual_report_override_decisions_path(),
         override_player_supplements_path(),
         report_identity_governance_path(),
+        *refresh_baseline_paths(),
     ]
     return max((path.stat().st_mtime for path in paths if path.exists()), default=0.0)
 
@@ -595,4 +598,7 @@ def apply_featured_record_overrides(
         _assign_override_value(output, featured_index, "Featured Record Metric", metric)
         _assign_override_value(output, featured_index, "Featured Record Source", "GRDCC 2024/25 Annual Report")
         normalized_players = output["Player"].map(normalize_featured_player_name)
-    return apply_override_player_supplements(output, club_id)
+    return apply_later_season_totals(
+        apply_override_player_supplements(output, club_id),
+        club_id or get_active_club_id(), source_frame=all_time,
+    )

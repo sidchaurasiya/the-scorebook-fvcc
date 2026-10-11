@@ -128,6 +128,7 @@ from src.utils.player_identity import (
     ensure_identity_exports,
     ensure_player_alias_mappings,
     filter_public_player_rows,
+    public_player_mask,
     get_player_profile_data,
     player_identity_path,
     load_player_aliases,
@@ -136,6 +137,9 @@ from src.utils.player_identity import (
     player_aliases_mtime,
     is_private_or_anonymised_player,
     rebuild_canonical_processed_tables,
+)
+from src.data.grdcc_summary_identity import (
+    alias_summary_ids, coalesce_summary_namespaces, namespace_signature, read_normalized_summary,
 )
 from src.utils.team_grade import (
     apply_team_grade_display_columns,
@@ -6462,6 +6466,15 @@ def load_hall_of_fame_data(
     batting_raw = filter_public_hall_of_fame_rows(batting_raw, active_club_id)
     bowling_raw = filter_public_hall_of_fame_rows(bowling_raw, active_club_id)
     fielding_raw = filter_public_hall_of_fame_rows(fielding_raw, active_club_id)
+    if active_club_id == "georges-river-district":
+        public_ids = set()
+        for source in (batting_raw, bowling_raw, fielding_raw):
+            if "canonical_player_id" in source:
+                public_ids.update(source.loc[public_player_mask(source), "canonical_player_id"].dropna())
+        # A later public appearance does not unmask or inherit earlier protected stats.
+        batting_raw = exclude_protected_identity_history(batting_raw, public_ids)
+        bowling_raw = exclude_protected_identity_history(bowling_raw, public_ids)
+        fielding_raw = exclude_protected_identity_history(fielding_raw, public_ids)
     if allow_legacy_fallback() and runtime_identity_maintenance_enabled():
         export_team_grade_display_audit(
             [batting_raw, bowling_raw, fielding_raw],
@@ -6676,6 +6689,13 @@ def filter_public_hall_of_fame_rows(frame: pd.DataFrame, club_id: str) -> pd.Dat
     if club_id not in {"fvcc", "glen-waverley-hawks"}:
         return frame.copy()
     return filter_public_player_rows(frame)
+
+
+def exclude_protected_identity_history(frame: pd.DataFrame, public_ids: set) -> pd.DataFrame:
+    if frame.empty or "canonical_player_id" not in frame:
+        return frame.copy()
+    protected_collision = ~public_player_mask(frame) & frame.canonical_player_id.isin(public_ids)
+    return frame.loc[~protected_collision].copy()
 
 
 def identity_export_frame(df: pd.DataFrame, source: str) -> pd.DataFrame:
@@ -7066,13 +7086,14 @@ def build_match_centre_win_rates() -> pd.DataFrame:
 
 def player_win_rates_signature() -> tuple[tuple[str, float], ...]:
     if HALL_OF_FAME_PLAYER_WIN_RATES_PATH.exists():
-        return ((str(HALL_OF_FAME_PLAYER_WIN_RATES_PATH), HALL_OF_FAME_PLAYER_WIN_RATES_PATH.stat().st_mtime),)
+        return ((str(HALL_OF_FAME_PLAYER_WIN_RATES_PATH), HALL_OF_FAME_PLAYER_WIN_RATES_PATH.stat().st_mtime),) + namespace_signature()
     return tuple()
 
 
 @st.cache_data(show_spinner=False)
 def load_deploy_safe_win_rates(_signature: tuple[tuple[str, float], ...]) -> pd.DataFrame:
     frame = read_match_centre_csv(HALL_OF_FAME_PLAYER_WIN_RATES_PATH)
+    frame = read_normalized_summary(frame, HALL_OF_FAME_PLAYER_WIN_RATES_PATH.name)
     if frame.empty:
         return pd.DataFrame(columns=["player_key", "player_name_key", "Win Matches", "Win Count", "win_pct"])
     output = frame.copy()
@@ -7095,12 +7116,13 @@ def hall_of_fame_detail_source_signature() -> tuple[tuple[str, float], ...]:
         HALL_OF_FAME_SCORECARD_MILESTONES_PATH,
         HALL_OF_FAME_BOWLING_MILESTONES_PATH,
     ]
-    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + namespace_signature()
 
 
 @st.cache_data(show_spinner=False)
 def load_deploy_safe_bbb_batting_rates(_signature: tuple[tuple[str, float], ...]) -> pd.DataFrame:
     frame = read_match_centre_csv(HALL_OF_FAME_BBB_BATTING_RATES_PATH)
+    frame = read_normalized_summary(frame, HALL_OF_FAME_BBB_BATTING_RATES_PATH.name)
     if frame.empty:
         return pd.DataFrame(columns=["player_key", "ballByBallBatSR", "ballByBallBatRuns", "ballByBallBatBalls"])
     output = frame.copy()
@@ -7124,6 +7146,8 @@ def load_deploy_safe_bbb_batting_rates(_signature: tuple[tuple[str, float], ...]
 def load_deploy_safe_scorecard_detail_milestones(_signature: tuple[tuple[str, float], ...]) -> pd.DataFrame:
     batting = read_match_centre_csv(HALL_OF_FAME_SCORECARD_MILESTONES_PATH)
     bowling = read_match_centre_csv(HALL_OF_FAME_BOWLING_MILESTONES_PATH)
+    batting = read_normalized_summary(batting, HALL_OF_FAME_SCORECARD_MILESTONES_PATH.name)
+    bowling = read_normalized_summary(bowling, HALL_OF_FAME_BOWLING_MILESTONES_PATH.name)
     frames = []
     if not batting.empty:
         bat_output = batting.copy()
@@ -12205,7 +12229,7 @@ def player_profile_detail_source_signature() -> tuple[tuple[str, float], ...]:
         PLAYER_PROFILE_RECENT_FORM_BATTING_PATH,
         PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH,
     ]
-    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists())
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + namespace_signature()
 
 
 @st.cache_data(show_spinner=False, persist="disk")
@@ -12280,6 +12304,9 @@ def read_match_centre_csv_for_player(
     source_columns: list[str] = []
     try:
         for chunk in pd.read_csv(path, chunksize=PROFILE_SOURCE_CHUNK_SIZE, low_memory=False):
+            if get_active_club_id() == "georges-river-district":
+                chunk = filter_public_player_rows(chunk)
+                chunk = alias_summary_ids(chunk)
             if not source_columns:
                 source_columns = list(chunk.columns)
             if not id_columns:
@@ -12323,7 +12350,7 @@ def read_match_centre_csv_for_player(
     frames = selected + club_matches
     if not frames:
         return pd.DataFrame(columns=source_columns)
-    return pd.concat(frames, ignore_index=True)
+    return coalesce_summary_namespaces(pd.concat(frames, ignore_index=True), path.name)
 
 
 def player_profile_identity_keys(profile: dict[str, object]) -> tuple[str, str]:

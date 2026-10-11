@@ -316,7 +316,21 @@ def apply_player_identity_mapping(
     resolved = output.apply(resolve, axis=1, result_type="expand")
     output["canonical_player_id"] = resolved[0]
     output["canonical_player_name"] = resolved[1]
-    return apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+    output = apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+    if str(club_id or get_active_club_id()).strip().casefold() == 'georges-river-district':
+        sources = aliases_df.get('merge_source', pd.Series('', index=aliases_df.index))
+        continuity = aliases_df.loc[sources.eq('verified_2026_27_source_id_continuity')]
+        for alias in continuity.itertuples():
+            matched = output.raw_player_id.eq(alias.raw_player_id)
+            if not matched.any():
+                continue
+            names = output.loc[matched, 'canonical_player_name'].map(normalize_player_name_for_strict_merge)
+            expected = normalize_player_name_for_strict_merge(alias.canonical_player_name)
+            if not names.eq(expected).all():
+                raise ValueError('Verified source-ID continuity conflicts with canonical name evidence')
+            output.loc[matched, 'canonical_player_id'] = alias.canonical_player_id
+            output.loc[matched, 'canonical_player_name'] = alias.canonical_player_name
+    return output
 
 
 def apply_grdcc_historical_exact_name_mapping(
@@ -395,7 +409,7 @@ def apply_grdcc_historical_exact_name_mapping(
             continue
         display_names = name_source.loc[group.index].map(display_player_name)
         display_name = display_names.mode().iloc[0] if not display_names.mode().empty else display_names.iloc[0]
-        canonical_id = f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
+        canonical_id = grdcc_exact_canonical_id(normalized_name)
         merge_mask = merge_candidates & output["_strict_historical_name"].eq(normalized_name)
         output.loc[merge_mask, "canonical_player_id"] = canonical_id
         output.loc[merge_mask, "canonical_player_name"] = display_name
@@ -492,10 +506,25 @@ def grdcc_exact_name_nonoverlap_canonical_map(
             continue
         display_names = name_source.loc[group.index].map(display_player_name)
         display_name = display_names.mode().iloc[0] if not display_names.mode().empty else display_names.iloc[0]
-        canonical_id = f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
+        canonical_id = grdcc_exact_canonical_id(normalized_name)
         for raw_id in group["raw_player_id"].fillna("").astype(str).str.strip().unique().tolist():
             canonical_map[raw_id] = (canonical_id, display_name)
     return canonical_map
+
+
+def grdcc_exact_canonical_id(normalized_name: str) -> str:
+    path = get_processed_path('', club_id='georges-river-district').parent / 'source/canonical_player_continuity.csv'
+    if path.exists():
+        records = _read_canonical_continuity(str(path), path.stat().st_mtime_ns)
+        if normalized_name in records:
+            return records[normalized_name]
+    return f"grdcc_excel_exact_{make_player_slug(normalized_name)}"
+
+
+@st.cache_data(show_spinner=False)
+def _read_canonical_continuity(path: str, version: int) -> dict[str, str]:
+    frame = pd.read_csv(path)
+    return frame.set_index('normalized_player_name').canonical_player_id.to_dict()
 
 
 def default_canonical_id(row: pd.Series) -> str:
@@ -1045,6 +1074,7 @@ def get_player_profile_data(
     canonical_player_id = str(canonical_player_id).strip()
     selected_ids = {canonical_player_id}
     if active_club_id == "georges-river-district":
+        frames = {category: filter_public_player_rows(frame) for category, frame in frames.items()}
         selected_names: set[str] = set()
         for frame in frames.values():
             if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
