@@ -61,7 +61,7 @@ def test_governed_report_only_records_in_actual_table(governed, formatter):
     before = governed.copy(deep=True)
     markup, cells = render(governed, formatter)
     by_name = {cell["text"]: cell for cell in cells}
-    assert len(cells) == 2035
+    assert len(cells) == 2090
     for name in ["Warwick Geitz", "Ben Worger"]:
         assert governed.loc[governed.Player.eq(name), "canonical_player_id"].isna().all()
         assert by_name[name]["hrefs"] == []
