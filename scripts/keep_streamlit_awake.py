@@ -1,148 +1,107 @@
-"""Visit Streamlit apps with a real browser session so they stay warm."""
-
+"""Wake and verify public Scorebook apps using real browser sessions."""
 from __future__ import annotations
 
-import sys
-from dataclasses import dataclass
+import argparse
+import json
+import os
+from pathlib import Path
+import re
+import time
+from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
-from playwright.sync_api import Error as PlaywrightError
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
-from playwright.sync_api import Page
-from playwright.sync_api import sync_playwright
-
-
-@dataclass(frozen=True)
-class StreamlitApp:
-    name: str
-    url: str
-
-
-# Add FVCC, GRDCC, Southside, and other Streamlit apps here as needed.
-APPS: tuple[StreamlitApp, ...] = (
-    StreamlitApp(
-        name="Le Page Park root",
-        url="https://the-scorebook-le-page-park-demo.streamlit.app/?source=keep_awake",
-    ),
-    StreamlitApp(
-        name="Le Page Park Hall of Fame",
-        url="https://the-scorebook-le-page-park-demo.streamlit.app/?page=hall-of-fame&source=keep_awake",
-    ),
-    StreamlitApp(
-        name="FVCC root",
-        url="https://the-scorebook-fvcc.streamlit.app/?source=keep_awake",
-    ),
-    StreamlitApp(
-        name="FVCC Hall of Fame",
-        url="https://the-scorebook-fvcc.streamlit.app/?page=hall-of-fame&source=keep_awake",
-    ),
-    StreamlitApp(
-        name="Glen Waverley Hawks Hall of Fame",
-        url="https://the-scorebook-glen-waverley-hawks-cricket-club.streamlit.app/?page=hall-of-fame",
-    ),
-    StreamlitApp(
-        name="GRDCC root",
-        url="https://the-scorebook-grdcc.streamlit.app/",
-    ),
-)
-
-PAGE_LOAD_TIMEOUT_MS = 90_000
-BUTTON_CLICK_TIMEOUT_MS = 5_000
-SESSION_WARMUP_MS = 25_000
+APPS = {
+    "FVCC": "https://the-scorebook-fvcc.streamlit.app/?page=hall-of-fame",
+    "GRDCC": "https://the-scorebook-grdcc.streamlit.app/",
+    "GWHCC": "https://the-scorebook-glen-waverley-hawks-cricket-club.streamlit.app/",
+}
+WAKE_BUTTON = re.compile(r"^Yes, get this app back up!$", re.I)
+READY_TIMEOUT = 240
+ARTIFACTS = Path("keep-awake-results")
 
 
-def maybe_click_wake_button(page: Page) -> bool:
-    """Click a visible Streamlit wake button when the app is asleep."""
-    button_texts = ("wake", "up", "run", "running", "app", "yes")
+def wait_for_app(page, messages, minimum_messages=0):
+    """Inspect the shell AND app iframe; a 200 response alone is not success."""
+    deadline = time.monotonic() + READY_TIMEOUT
+    wake_clicked = False
+    while time.monotonic() < deadline:
+        for frame in page.frames:
+            try:
+                wake = frame.get_by_role("button", name=WAKE_BUTTON)
+                if not wake_clicked and wake.is_visible():
+                    wake.click(timeout=5000)
+                    wake_clicked = True
+                    print("Clicked Streamlit wake button", flush=True)
+                app = frame.locator('[data-testid="stAppViewContainer"]')
+                title = frame.locator("h1").filter(has_text="Hall of Fame")
+                if app.is_visible() and title.first.is_visible():
+                    error = frame.locator('[data-testid="stException"]')
+                    if error.count():
+                        raise RuntimeError(error.first.inner_text())
+                    if len(messages) > minimum_messages:
+                        return frame
+            except PlaywrightError:
+                # Frames can be replaced while a sleeping app starts up.
+                continue
+        page.wait_for_timeout(1000)
+    raise RuntimeError("App did not render Hall of Fame with live Streamlit WebSocket traffic within 240 seconds")
 
-    for button in page.locator("button").all():
+
+def visit(browser, name, url, attempt):
+    with browser.new_context(viewport={"width": 1440, "height": 1000}, locale="en-AU") as context:
+        page = context.new_page()
+        messages = []
+
+        def watch_socket(socket):
+            if "/_stcore/stream" in socket.url:
+                socket.on("framereceived", lambda _: messages.append(time.monotonic()))
+
+        page.on("websocket", watch_socket)
         try:
-            if not button.is_visible(timeout=1_000):
-                continue
-
-            label = " ".join(button.inner_text(timeout=1_000).lower().split())
-            if not label:
-                continue
-
-            if any(token in label for token in button_texts):
-                print(f"Wake button detected: {label!r}", flush=True)
-                button.click(timeout=BUTTON_CLICK_TIMEOUT_MS)
-                return True
-        except (PlaywrightError, PlaywrightTimeoutError):
-            continue
-
-    print("Wake button detected: no", flush=True)
-    return False
-
-
-def visit_app(page: Page, app: StreamlitApp) -> bool:
-    print(f"--- Visiting {app.name} ---", flush=True)
-    print(f"URL: {app.url}", flush=True)
-
-    response = page.goto(
-        app.url,
-        wait_until="domcontentloaded",
-        timeout=PAGE_LOAD_TIMEOUT_MS,
-    )
-
-    if response is None:
-        raise RuntimeError(f"{app.name} did not return an initial page response")
-
-    status = response.status
-    print(f"Initial HTTP status: {status}", flush=True)
-
-    wake_button_clicked = maybe_click_wake_button(page)
-    if wake_button_clicked:
-        page.wait_for_load_state("domcontentloaded", timeout=PAGE_LOAD_TIMEOUT_MS)
-
-    page.wait_for_timeout(SESSION_WARMUP_MS)
-
-    try:
-        title = page.title()
-        print(f"Page title read: yes ({title!r})", flush=True)
-    except (PlaywrightError, PlaywrightTimeoutError) as exc:
-        print(f"Page title read: no ({exc})", flush=True)
-
-    if status >= 400:
-        raise RuntimeError(f"{app.name} returned HTTP {status}")
-
-    print(f"Result: success for {app.name}", flush=True)
-    return True
+            response = page.goto(url, wait_until="domcontentloaded", timeout=90000)
+            if response is None or response.status >= 400:
+                raise RuntimeError(f"Initial HTTP status: {response.status if response else 'no response'}")
+            frame = wait_for_app(page, messages)
+            # Explicit, harmless in-app navigation generates a real browser click.
+            link = frame.locator('a.side-nav-item').filter(has_text="Hall of Fame").first
+            baseline = len(messages)
+            link.click(timeout=15000)
+            print(f"{name}: clicked Hall of Fame navigation", flush=True)
+            frame = wait_for_app(page, messages, baseline)
+            page.wait_for_timeout(10000)
+            frame = wait_for_app(page, messages, baseline)
+            print(f"{name}: app rendered; received {len(messages)} Streamlit WebSocket messages", flush=True)
+        finally:
+            page.screenshot(path=str(ARTIFACTS / f"{name}-{attempt}.png"), full_page=True)
 
 
-def main() -> int:
-    failures: list[str] = []
-    successes = 0
-
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--app", choices=APPS)
+    args = parser.parse_args()
+    ARTIFACTS.mkdir(exist_ok=True)
+    results = {}
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         try:
-            context = browser.new_context(
-                viewport={"width": 1440, "height": 1000},
-                locale="en-AU",
-            )
-            page = context.new_page()
-
-            for app in APPS:
-                try:
-                    if visit_app(page, app):
-                        successes += 1
-                except (PlaywrightError, PlaywrightTimeoutError, RuntimeError) as exc:
-                    message = f"{app.name}: {exc}"
-                    failures.append(message)
-                    print(f"Result: failure for {app.name}: {exc}", file=sys.stderr, flush=True)
+            for name in ([args.app] if args.app else APPS):
+                for attempt in (1, 2):
+                    print(f"Visiting {name}: {APPS[name]} (attempt {attempt})", flush=True)
+                    try:
+                        visit(browser, name, APPS[name], attempt)
+                        results[name] = {"success": True, "attempt": attempt}
+                        break
+                    except (PlaywrightError, RuntimeError) as exc:
+                        results[name] = {"success": False, "attempt": attempt, "error": str(exc)}
+                        print(f"{name}: FAILED: {exc}", flush=True)
         finally:
             browser.close()
-
-    if failures:
-        print("One or more Streamlit keep-awake visits failed:", file=sys.stderr)
-        for failure in failures:
-            print(f"- {failure}", file=sys.stderr)
-
-    if successes == 0:
-        print("WARNING: all Streamlit keep-awake visits failed.", file=sys.stderr)
-
-    print(f"Completed {len(APPS)} visit attempt(s): {successes} succeeded, {len(failures)} failed.", flush=True)
-    return 0
+    (ARTIFACTS / "results.json").write_text(json.dumps(results, indent=2) + "\n")
+    if summary := os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(summary, "a") as output:
+            for name, result in results.items():
+                status = "PASS - app loaded and clicked" if result["success"] else "FAIL - see logs and screenshots"
+                output.write(f"- {name}: {status}\n")
+    return 0 if all(result["success"] for result in results.values()) else 1
 
 
 if __name__ == "__main__":
