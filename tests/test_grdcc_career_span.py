@@ -16,9 +16,9 @@ def test_nick_span_survives_supplements():
     core=pd.read_csv('clubs/georges-river-district/data/processed/hall_of_fame/prepared_career_all_time.csv')
     nick=core[core.Player.eq('Nick Condylios')]
     output=mod.apply_featured_record_overrides(nick,'georges-river-district',add_missing_players=False)
-    assert output['Latest Season'].iloc[0]=='Summer 2025/26'
+    assert output['Latest Season'].iloc[0]=='Summer 2026/27'
     assert output['Debut Season'].iloc[0]=='Summer 2015/16'
-    assert output['Seasons Played'].iloc[0]==11
+    assert output['Seasons Played'].iloc[0]==12
     assert output.HS.iloc[0]=='130*'
 
 

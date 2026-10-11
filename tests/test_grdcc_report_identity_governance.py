@@ -9,7 +9,7 @@ def output():
 
 def test_seven_report_identity_decisions_account_for_new_baseline():
     shown=output()
-    assert len(shown)==2035
+    assert len(shown)==2090  # 2,035 governed baseline + 55 verified current identities.
     assert not shown.canonical_player_id.dropna().duplicated().any()
     assert set(shown[shown.canonical_player_id.isna()].Player)=={'Warwick Geitz','Ben Worger'}
     assert not shown.Player.isin(['R. Davey','Matthew Grealy']).any()
