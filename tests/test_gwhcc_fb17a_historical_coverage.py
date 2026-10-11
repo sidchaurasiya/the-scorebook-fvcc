@@ -90,6 +90,13 @@ def test_adrian_dale_profile_distinguishes_verified_start_from_detail(monkeypatc
     assert "Detailed statistics available from: Summer 1995/96" in rendered
 
 
+def test_missing_historical_metadata_never_renders_nan(monkeypatch) -> None:
+    monkeypatch.setattr(layout, "get_active_club_id", lambda: "glen-waverley-hawks")
+    seasons = pd.DataFrame({"Season": ["Summer 2026/27"]})
+    for missing in [float("nan"), pd.NA, None, ""]:
+        career = pd.Series({"earliest_documented_season": missing})
+        assert layout.player_profile_historical_coverage(career, seasons) == ("", "")
+        assert layout.player_profile_historical_coverage_html(career, seasons) == ""
 
 
 def test_all_34_governed_career_starts_remain_available() -> None:
