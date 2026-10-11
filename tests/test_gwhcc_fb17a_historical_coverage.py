@@ -90,6 +90,8 @@ def test_adrian_dale_profile_distinguishes_verified_start_from_detail(monkeypatc
     assert "Detailed statistics available from: Summer 1995/96" in rendered
 
 
+
+
 def test_all_34_governed_career_starts_remain_available() -> None:
     metadata = pd.read_csv(SOURCE / "gwhcc_historical_career_metadata.csv")
     assert len(metadata) == 34
@@ -119,14 +121,18 @@ def test_greg_approved_totals_and_non_additive_governance_remain_fixed() -> None
     assert not {"matches", "runs", "wickets", "catches"}.intersection(historical_seasons.columns)
 
 
-def test_existing_historical_and_bbb_outputs_are_unchanged() -> None:
+def test_historical_and_verified_refresh_outputs_are_preserved() -> None:
     assert len(pd.read_csv(SOURCE / "gwhcc_historical_centuries.csv")) == 65
     assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "premiership_wins.csv")) == 24
     assert len(pd.read_csv(SOURCE / "gwhcc_historical_premiership_events.csv")) == 29
     assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "partnership_records.csv")) == 10
     assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "hat_tricks.csv")) == 1
-    assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "fastest_batting_milestones.csv")) == 780
-    assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv")) == 1233
+    fastest = pd.read_csv(PROCESSED / "hall_of_fame" / "fastest_batting_milestones.csv")
+    career = pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv")
+    assert len(fastest) == 788
+    assert fastest["season"].ne("Summer 2026/27").sum() == 780
+    assert len(career) == 1289
+    assert career["Debut Season"].ne("Summer 2026/27").sum() == 1233
 
 
 def test_private_player_filtering_outputs_remain_public() -> None:

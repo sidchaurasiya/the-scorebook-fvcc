@@ -1,0 +1,756 @@
+{
+  "cutoff": "2026-10-11",
+  "timezone": "Australia/Melbourne",
+  "base_sha": "ccf82a2667d16af287a7fcef97bcbf769be21940",
+  "teams": 19,
+  "grades": 16,
+  "fixtures": 218,
+  "included_matches": 17,
+  "abandoned_no_play_excluded": 3,
+  "upcoming_excluded": 187,
+  "pending_undated_excluded": 11,
+  "scorecards_cached": 20,
+  "bbb_matches": 16,
+  "source_metric_checks": 2160,
+  "source_metric_differences": 0,
+  "own_innings_reconciled": 17,
+  "opposition_source_conflicts": [
+    {
+      "match_id": "10fd584a-0766-48a7-b0ff-3a8d1acb371b",
+      "innings_id": "628d449b-d42d-434c-a97c-944462024467",
+      "scorecard_total": 102,
+      "batting_plus_extras": 96,
+      "residual": 6,
+      "scope": "opposition batting; source values retained without correction",
+      "cause": "Upstream inconsistency; no documented adjustment or parser omission established."
+    },
+    {
+      "match_id": "d7fabe29-02a1-4b7e-b1bb-6f9e88e66d35",
+      "innings_id": "2450fccb-5557-4ac4-b3d3-b44f68542271",
+      "scorecard_total": 61,
+      "batting_plus_extras": 62,
+      "residual": -1,
+      "scope": "opposition batting; source values retained without correction",
+      "cause": "Upstream inconsistency; no documented adjustment or parser omission established."
+    }
+  ],
+  "historical_preservation_checks": 65,
+  "profile_increment_checks": 26,
+  "prepared_checks": 8,
+  "bbb_innings_reconciled": 26,
+  "bbb_innings_mismatch_excluded_from_bowling_insights": 6,
+  "innings_without_bbb": 2,
+  "highest_score_governance": "Hawks score labels require explicit asterisk or affirmative dismissal evidence; missing dismissal does not imply not out. Current compact exports preserve explicit DNB types; historical source rows unchanged.",
+  "canonical_players_before": 1233,
+  "canonical_players_after": 1289,
+  "active_public_before": 258,
+  "active_public_after": 294,
+  "existing_current_participants": 94,
+  "new_source_backed_public_profiles": 56,
+  "customer_confirmed_identity_continuities": 3,
+  "historical_captain_keys_retained": true,
+  "premiership_files_byte_identical": true,
+  "governed_career_replacements_unchanged": 21,
+  "partnership_events_before": 3350,
+  "partnership_events_after": 3442,
+  "partnership_records": 10,
+  "partnership_records_unchanged": true,
+  "partnership_records_sha256": "ec77cb4df61741387634b668cd952d826ca9131932d445fea0d2f264012f10ad",
+  "hat_tricks": 1,
+  "fastest_rows_before": 780,
+  "fastest_rows_after": 788,
+  "new_verified_fifties_or_hundreds": 0,
+  "tests": {
+    "passed": 165,
+    "failed": 0,
+    "skipped": 0,
+    "blocked": 1,
+    "blocked_check": "Other-club full raw partnership rebuild requires absent ignored FVCC/GRDCC source scopes; synthetic cross-club and memory guards passed."
+  },
+  "source_receipts": [
+    {
+      "file": "fixtures_02324805-b9a8-4684-a387-5bf23203825f.json",
+      "sha256": "f5f965b81e86124f7a3a1d4958d816c32de8b6ba7a866b773ea267b75a9b3ac4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/02324805-b9a8-4684-a387-5bf23203825f/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:11.150793+00:00"
+    },
+    {
+      "file": "fixtures_06cb233b-8199-46c2-8e41-84e83972f0f4.json",
+      "sha256": "dc95d4c9382461678beea9fc8694605d8c36d81fbd4ac49ad90cb4ef32b1b47b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/06cb233b-8199-46c2-8e41-84e83972f0f4/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:14.286302+00:00"
+    },
+    {
+      "file": "fixtures_0b55cb87-0588-425a-92e8-7d5470a72daf.json",
+      "sha256": "b49055873a9d7c0b9f04b1e78c69465156230c90543909d885823364b5b60fd9",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/0b55cb87-0588-425a-92e8-7d5470a72daf/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:12.688613+00:00"
+    },
+    {
+      "file": "fixtures_0d73de4c-bfaa-443f-94ea-59a0bea1110e.json",
+      "sha256": "9ed2a0a4bbd558e1fefbe3a1c75fd1e7eb43b05ef38ca03232229f8c4b69720b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/0d73de4c-bfaa-443f-94ea-59a0bea1110e/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:17.735990+00:00"
+    },
+    {
+      "file": "fixtures_0f06fdb3-041c-4052-8bd7-a17cc2efceb9.json",
+      "sha256": "8d581ccf43de1a03c82eaf07c7736ea95f3af93bc2d34fddf7285c64480cd556",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/0f06fdb3-041c-4052-8bd7-a17cc2efceb9/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:02.632885+00:00"
+    },
+    {
+      "file": "fixtures_1476907a-6f4f-4e08-a654-e51f083d2196.json",
+      "sha256": "68275c78a50151f51d18fa27b71e802f7eca8ca63aa77f3ab600e01360a5e5e6",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/1476907a-6f4f-4e08-a654-e51f083d2196/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:07.871494+00:00"
+    },
+    {
+      "file": "fixtures_1d5580e7-9e43-447e-b217-fd1b7b957911.json",
+      "sha256": "835361f4624e4f6d38aec914c27ee794d587cb50e0b44fec185cced90a5ecee7",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/1d5580e7-9e43-447e-b217-fd1b7b957911/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:06.781274+00:00"
+    },
+    {
+      "file": "fixtures_25af2e23-f5c3-446f-ab8d-921e7049411a.json",
+      "sha256": "5bd6967dab91fccbf3f9a91e4893460224b2887775a0ced2c58e58e8384a28cd",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/25af2e23-f5c3-446f-ab8d-921e7049411a/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:04.245507+00:00"
+    },
+    {
+      "file": "fixtures_29251b9a-459d-4d41-a6dd-3f9015fc61e9.json",
+      "sha256": "95020889f073e48f897d59068dc45a78fd21d2953f6a95d1e4c6a837ea088ff7",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/29251b9a-459d-4d41-a6dd-3f9015fc61e9/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:08.716020+00:00"
+    },
+    {
+      "file": "fixtures_361936bc-7377-4bf2-ab1e-e72c4f957eda.json",
+      "sha256": "284573bb1c0158241858f5777fa18d2e06c696a50bf4543e1eb790311db70167",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/361936bc-7377-4bf2-ab1e-e72c4f957eda/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:09.524538+00:00"
+    },
+    {
+      "file": "fixtures_383187e8-ab2a-4baf-bdce-8e97933aaa91.json",
+      "sha256": "a85315c7177dbc26c7366f432a82df970c2123304614b183710baffbfeb4ba7d",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/383187e8-ab2a-4baf-bdce-8e97933aaa91/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:03.462139+00:00"
+    },
+    {
+      "file": "fixtures_3dcf263e-7028-4f37-9df8-0c508ae2af9f.json",
+      "sha256": "06e6297263fa018b6c3b6416b2b93b319e3dce092ccb4c5fec5eb57873c4b40e",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/3dcf263e-7028-4f37-9df8-0c508ae2af9f/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:13.536236+00:00"
+    },
+    {
+      "file": "fixtures_4c451b1b-5a94-412e-ba2a-9c98ae1d04ef.json",
+      "sha256": "8f041c734c22afd60fe868c64e4c875d38774b79be757553a07348b492a15cac",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/4c451b1b-5a94-412e-ba2a-9c98ae1d04ef/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:05.905253+00:00"
+    },
+    {
+      "file": "fixtures_4f0a500f-61fc-4482-90df-bf00c67151b1.json",
+      "sha256": "77a31a7a5198f4911935a9b49a87a5b4d8f976f12e7023c70aad4c28045a1c0b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/4f0a500f-61fc-4482-90df-bf00c67151b1/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:15.821456+00:00"
+    },
+    {
+      "file": "fixtures_5d2d88b2-5524-466f-9713-4c7f84a13d40.json",
+      "sha256": "db58e5e4b06034fce767837421eb5fbe428e8c802d2a579f3898f97fd383529a",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/5d2d88b2-5524-466f-9713-4c7f84a13d40/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:05.160416+00:00"
+    },
+    {
+      "file": "fixtures_b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f.json",
+      "sha256": "9141e7f75fae20704189dbb1778702e663aba31610177dbd1c5131952b3f2e82",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:16.710372+00:00"
+    },
+    {
+      "file": "fixtures_b9cabe98-e559-42bc-9d69-3ee454d46603.json",
+      "sha256": "fa63951c33b16b973c00593707281256209dc81a100d4cc76561409f1bd9413d",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/b9cabe98-e559-42bc-9d69-3ee454d46603/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:10.388624+00:00"
+    },
+    {
+      "file": "fixtures_d5c9f549-9890-4c32-91f1-128113dc8f70.json",
+      "sha256": "ad6d8f136f5d2d04d1b5af2c7143356adc7e85cc62ce30a1a5adad0764bcb7fc",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/d5c9f549-9890-4c32-91f1-128113dc8f70/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:11.963130+00:00"
+    },
+    {
+      "file": "fixtures_ee3a8191-9d63-4abe-a6bf-afec6e71be35.json",
+      "sha256": "e44fce123d541d48aef0e0862583314497079cefbfdf9b0cc7e1a197504d5b4b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/teams/ee3a8191-9d63-4abe-a6bf-afec6e71be35/matches?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:15.106453+00:00"
+    },
+    {
+      "file": "match=08af51ad-f608-4361-bea5-5e41eff219a4__balls.json",
+      "sha256": "3f534a3b3126dbc9c5b23a40a32d313561040902f5d5beb57a9cb3ea76f69ad7",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/08af51ad-f608-4361-bea5-5e41eff219a4/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:25.732619+00:00"
+    },
+    {
+      "file": "match=08af51ad-f608-4361-bea5-5e41eff219a4__scorecard.json",
+      "sha256": "bd8818c09ffa1cc1971f8a4bb5eaa5026c30a1a6dfc4eb175f9855391fc151c4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/08af51ad-f608-4361-bea5-5e41eff219a4?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:24.841463+00:00"
+    },
+    {
+      "file": "match=0dd48723-e961-42ef-b867-d042b2797661__balls.json",
+      "sha256": "af1220b17131e97a6bd3734a73cf6e85a3db2dbf9298049d909daceb9935cbe2",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/0dd48723-e961-42ef-b867-d042b2797661/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:27.521574+00:00"
+    },
+    {
+      "file": "match=0dd48723-e961-42ef-b867-d042b2797661__scorecard.json",
+      "sha256": "d607edc67b527a514a0644fc28d931ba51ff41bb3d54ed51fd9112ca83c770c5",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/0dd48723-e961-42ef-b867-d042b2797661?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:26.511357+00:00"
+    },
+    {
+      "file": "match=10fd584a-0766-48a7-b0ff-3a8d1acb371b__balls.json",
+      "sha256": "41734662dd59d2bd74e408f9ecc54d8b41fff260d059ab3cf3a3185ee4f27501",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/10fd584a-0766-48a7-b0ff-3a8d1acb371b/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:29.327445+00:00"
+    },
+    {
+      "file": "match=10fd584a-0766-48a7-b0ff-3a8d1acb371b__scorecard.json",
+      "sha256": "fe353e38e97a118d6f7ecb2e1ff31808fec6f321b1e081d4e6a66f1286598232",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/10fd584a-0766-48a7-b0ff-3a8d1acb371b?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:28.394116+00:00"
+    },
+    {
+      "file": "match=1ba4e3e2-be2e-4143-9b4c-e9db8e742be7__balls.json",
+      "sha256": "13fbc6a62fba331882de4d35dceebe971cf54e909005e185482f1120bd6d1538",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/1ba4e3e2-be2e-4143-9b4c-e9db8e742be7/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:43.916914+00:00"
+    },
+    {
+      "file": "match=1ba4e3e2-be2e-4143-9b4c-e9db8e742be7__scorecard.json",
+      "sha256": "8e149e1b670883fb548cdc79d4047e09f41e25cb2d62944d9d30f734b122ff7c",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/1ba4e3e2-be2e-4143-9b4c-e9db8e742be7?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:42.865484+00:00"
+    },
+    {
+      "file": "match=1d15a913-93ea-4421-b597-0bb5750b65e7__balls.json",
+      "sha256": "43360418cd6289d129cc7374459ee85bf5ca0fdcdab85b28745c0a2e7d1a2925",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/1d15a913-93ea-4421-b597-0bb5750b65e7/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:32.797858+00:00"
+    },
+    {
+      "file": "match=1d15a913-93ea-4421-b597-0bb5750b65e7__scorecard.json",
+      "sha256": "95ecc3aa2a576c6493bdbfa8e134236c2cbd809b7ff9082eee07e326ba60cfa5",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/1d15a913-93ea-4421-b597-0bb5750b65e7?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:31.765802+00:00"
+    },
+    {
+      "file": "match=20afb783-29d2-4de2-ae35-ccb1408235e6__scorecard.json",
+      "sha256": "4e41fda3d73e7cdc7c8e8b49f53855f0d952154c33bbe4efff9b871f37dc2285",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/20afb783-29d2-4de2-ae35-ccb1408235e6?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:18.196911+00:00"
+    },
+    {
+      "file": "match=21e140ab-5109-4dfb-bef7-355988a8791a__balls.json",
+      "sha256": "e8edb7500cd7b51a7c77529dbe6b9091534e3c83b2e92070a8495f117b2b4c98",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/21e140ab-5109-4dfb-bef7-355988a8791a/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:48.169170+00:00"
+    },
+    {
+      "file": "match=21e140ab-5109-4dfb-bef7-355988a8791a__scorecard.json",
+      "sha256": "a5c6e19c8cf96a1383848d7a8845663d489e2cd404d71b5e0ba8a390dd55f2e0",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/21e140ab-5109-4dfb-bef7-355988a8791a?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:47.270355+00:00"
+    },
+    {
+      "file": "match=4a42ade5-c8df-4149-98c4-c30d13771481__scorecard.json",
+      "sha256": "ddfe5b51565e5047ff5ac2221078ead4949747319bf68056bd94a8122292824f",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/4a42ade5-c8df-4149-98c4-c30d13771481?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:16.680919+00:00"
+    },
+    {
+      "file": "match=4d4fc6a4-cf13-4f79-afb7-18c516f746c6__balls.json",
+      "sha256": "c05b949c94ed449d456e013850a2cf62f1816d913d62b2a5b55f9930551615dd",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/4d4fc6a4-cf13-4f79-afb7-18c516f746c6/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:19.810028+00:00"
+    },
+    {
+      "file": "match=4d4fc6a4-cf13-4f79-afb7-18c516f746c6__scorecard.json",
+      "sha256": "8c558392d435a417195a00e25ad9a2a66f07b9948b15972b77d6348b46a3b2c0",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/4d4fc6a4-cf13-4f79-afb7-18c516f746c6?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:18.922764+00:00"
+    },
+    {
+      "file": "match=5cf78f8c-c7d7-4aa2-a2b4-34762ddf50ae__balls.json",
+      "sha256": "fc3ea85748f8febad751f1c40b6e7bbab22d1a89d3d407f071c920d9980b896d",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/5cf78f8c-c7d7-4aa2-a2b4-34762ddf50ae/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:30.998347+00:00"
+    },
+    {
+      "file": "match=5cf78f8c-c7d7-4aa2-a2b4-34762ddf50ae__scorecard.json",
+      "sha256": "81ca6b83c5a24486da6c2a5ee96936f2ab0e2e56089e9e88d89fca4937efb447",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/5cf78f8c-c7d7-4aa2-a2b4-34762ddf50ae?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:30.092093+00:00"
+    },
+    {
+      "file": "match=5e517919-580a-45cf-81c2-341e97a7f304__balls.json",
+      "sha256": "dcd4613f374179ab5b9179e3c853c23e29cc4f03cc2206ddd8c0f93d6501782d",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/5e517919-580a-45cf-81c2-341e97a7f304/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:15.822914+00:00"
+    },
+    {
+      "file": "match=5e517919-580a-45cf-81c2-341e97a7f304__scorecard.json",
+      "sha256": "a4cc53687ce58fdc668948cea4fc9bcb05612121edb5915201ea66a13988f8fb",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/5e517919-580a-45cf-81c2-341e97a7f304?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:14.877579+00:00"
+    },
+    {
+      "file": "match=75c15b5e-5677-4838-81ba-3837124bfabd__scorecard.json",
+      "sha256": "43a730b1c3d61173439dd962f55a4f2c30dbe11ff986251f390dea0c2d20d05e",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/75c15b5e-5677-4838-81ba-3837124bfabd?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:17.393329+00:00"
+    },
+    {
+      "file": "match=79e28d15-b925-4537-a880-cc828c31f801__balls.json",
+      "sha256": "c793e46051056280708df476e88413d65bda77dfd84012df3760fc6d773ed030",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/79e28d15-b925-4537-a880-cc828c31f801/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:21.786245+00:00"
+    },
+    {
+      "file": "match=79e28d15-b925-4537-a880-cc828c31f801__scorecard.json",
+      "sha256": "49e42b706f2daa94a3105c6944646bc3f208f9cde1e9acf8f2c4140dae69d744",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/79e28d15-b925-4537-a880-cc828c31f801?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:20.649112+00:00"
+    },
+    {
+      "file": "match=856dbd14-d85b-45af-b0d9-2e7cbc095022__balls.json",
+      "sha256": "3a48d852a81562c5a83e70f298cf6f23f67b24e54253949880d865eaf2ae7f1e",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/856dbd14-d85b-45af-b0d9-2e7cbc095022/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:46.365497+00:00"
+    },
+    {
+      "file": "match=856dbd14-d85b-45af-b0d9-2e7cbc095022__scorecard.json",
+      "sha256": "4919157ff23fdbfadc48489af87efa6b83eb0bde7c21a66d397e2331345b83ea",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/856dbd14-d85b-45af-b0d9-2e7cbc095022?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:45.115085+00:00"
+    },
+    {
+      "file": "match=93955dcb-0b3c-4e00-a902-5225be190bef__balls.json",
+      "sha256": "6c4cc623d38595f611dfb0add0037a186faee593c20d6a730aba60210f8defaf",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/93955dcb-0b3c-4e00-a902-5225be190bef/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:35.144411+00:00"
+    },
+    {
+      "file": "match=93955dcb-0b3c-4e00-a902-5225be190bef__scorecard.json",
+      "sha256": "4efc13f44309f11973ace5de3225ea995c4ef18fd5b4743ccebe1844c91bfa45",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/93955dcb-0b3c-4e00-a902-5225be190bef?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:34.116761+00:00"
+    },
+    {
+      "file": "match=ab1a53b9-8b51-42c1-a736-0acd2c2693c0__scorecard.json",
+      "sha256": "6bda16f36ee3f94d7a5a72495e34b7e3c643dfa72bfd27fc91a0b65082661dc2",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/ab1a53b9-8b51-42c1-a736-0acd2c2693c0?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:13.953669+00:00"
+    },
+    {
+      "file": "match=b44ef5d4-bc28-40d3-9a55-b68ed5352835__balls.json",
+      "sha256": "7780aa59e020dbdb75c5b969fbdac00645075a0b1fa134385a01cd07e5671404",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/b44ef5d4-bc28-40d3-9a55-b68ed5352835/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:41.976127+00:00"
+    },
+    {
+      "file": "match=b44ef5d4-bc28-40d3-9a55-b68ed5352835__scorecard.json",
+      "sha256": "4303ac46a5dcd746aae4017b54ae32224bcfde158108b6c38973cf861340b8bf",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/b44ef5d4-bc28-40d3-9a55-b68ed5352835?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:40.932563+00:00"
+    },
+    {
+      "file": "match=ca0c9ea2-a1f3-4d5d-9a7a-456d6867b5b2__balls.json",
+      "sha256": "0ace42d266aa4a834c76892a5029f191936e79714eb121bc851e79a584b913ed",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/ca0c9ea2-a1f3-4d5d-9a7a-456d6867b5b2/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:40.047885+00:00"
+    },
+    {
+      "file": "match=ca0c9ea2-a1f3-4d5d-9a7a-456d6867b5b2__scorecard.json",
+      "sha256": "48ec4a0fdad96684bbc0e7ceb6acc3ca1a5f039154128e2c09486b0de9691480",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/ca0c9ea2-a1f3-4d5d-9a7a-456d6867b5b2?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:38.999737+00:00"
+    },
+    {
+      "file": "match=d7fabe29-02a1-4b7e-b1bb-6f9e88e66d35__balls.json",
+      "sha256": "6339664c9716da004606d699486904b0761c014e298bc83c9bb45b244f546678",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/d7fabe29-02a1-4b7e-b1bb-6f9e88e66d35/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:38.204978+00:00"
+    },
+    {
+      "file": "match=d7fabe29-02a1-4b7e-b1bb-6f9e88e66d35__scorecard.json",
+      "sha256": "b2f3a642f0c12825acd839b0e2647dd625f8d5baf00aa47ea5987641ad2fddd2",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/d7fabe29-02a1-4b7e-b1bb-6f9e88e66d35?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:37.138599+00:00"
+    },
+    {
+      "file": "match=fc2fcd50-d994-4f34-b3f9-7d4ca30786ea__balls.json",
+      "sha256": "cfe2882aa0fe1754faceefa927ecfdcec1ab2a2e0da217fecada00a30ae3213a",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/fc2fcd50-d994-4f34-b3f9-7d4ca30786ea/balls?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:23.794572+00:00"
+    },
+    {
+      "file": "match=fc2fcd50-d994-4f34-b3f9-7d4ca30786ea__scorecard.json",
+      "sha256": "8025c699d4b2b2bda11a485cdaf21a24f21934229c47d07b8020d7703f77fce3",
+      "url": "https://grassrootsapiproxy.cricket.com.au/scores/matches/fc2fcd50-d994-4f34-b3f9-7d4ca30786ea?responseModifier=includeScorecard&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:40:22.744725+00:00"
+    },
+    {
+      "file": "seasons.json",
+      "sha256": "163cf1777b52f67c221636854c6d55629b1809e93e11bf793ac09cedc7354dde",
+      "url": "https://grassrootsapiproxy.cricket.com.au/fixturesladders/organisations/50f7f1e3-86d8-eb11-a7ad-2818780da0cc/seasons?jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:39:00.959421+00:00"
+    },
+    {
+      "file": "stats_02324805-b9a8-4684-a387-5bf23203825f_batting.json",
+      "sha256": "94f720ac0c298fc60b85b6012d7f04a8617c23beae8ef098ac0b8882f6fb4d24",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/3680036d-af8f-4517-9686-8de5389eaa25/batting-statistics?teamId=02324805-b9a8-4684-a387-5bf23203825f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:09.372347+00:00"
+    },
+    {
+      "file": "stats_02324805-b9a8-4684-a387-5bf23203825f_bowling.json",
+      "sha256": "1bb9ad5cce0c638a74eff39d14f3c8046a863062bf916b774b12974d029ad33c",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/3680036d-af8f-4517-9686-8de5389eaa25/bowling-statistics?teamId=02324805-b9a8-4684-a387-5bf23203825f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:10.108021+00:00"
+    },
+    {
+      "file": "stats_02324805-b9a8-4684-a387-5bf23203825f_fielding.json",
+      "sha256": "d5001ec625dc0700c291d538d270d4230df6c5978595f5b131f32afabaf6a6d1",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/3680036d-af8f-4517-9686-8de5389eaa25/fielding-statistics?teamId=02324805-b9a8-4684-a387-5bf23203825f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:10.946702+00:00"
+    },
+    {
+      "file": "stats_06cb233b-8199-46c2-8e41-84e83972f0f4_batting.json",
+      "sha256": "c14f74a099ecf75ef19c86a0966e49ab95f9e31a44aa426bb8e3c54c8bd01ca7",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/923ce08b-79d2-411f-8260-71b15fd15093/batting-statistics?teamId=06cb233b-8199-46c2-8e41-84e83972f0f4&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:19.046095+00:00"
+    },
+    {
+      "file": "stats_06cb233b-8199-46c2-8e41-84e83972f0f4_bowling.json",
+      "sha256": "57a5d53ded10f1eeaf120a7f6d88d3e95e6058226e930da85e7e3650ad77b5af",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/923ce08b-79d2-411f-8260-71b15fd15093/bowling-statistics?teamId=06cb233b-8199-46c2-8e41-84e83972f0f4&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:20.575220+00:00"
+    },
+    {
+      "file": "stats_06cb233b-8199-46c2-8e41-84e83972f0f4_fielding.json",
+      "sha256": "b019525f31f4a4228d0f4b1eb5cf145b3f27f87a2915ce78c1eb0a29d93db5e4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/923ce08b-79d2-411f-8260-71b15fd15093/fielding-statistics?teamId=06cb233b-8199-46c2-8e41-84e83972f0f4&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:21.328430+00:00"
+    },
+    {
+      "file": "stats_0b55cb87-0588-425a-92e8-7d5470a72daf_batting.json",
+      "sha256": "ee155e5a128268082b3da111bc7bab16313b6d72111b66cf4e3811fc83a4f4c4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/e545c4af-3173-4c7a-b88b-62a010d451c6/batting-statistics?teamId=0b55cb87-0588-425a-92e8-7d5470a72daf&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:14.107851+00:00"
+    },
+    {
+      "file": "stats_0b55cb87-0588-425a-92e8-7d5470a72daf_bowling.json",
+      "sha256": "6bc497d4cbe3a23a9056af6d14db14a464eb49e6601d401157bbcca55f64794e",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/e545c4af-3173-4c7a-b88b-62a010d451c6/bowling-statistics?teamId=0b55cb87-0588-425a-92e8-7d5470a72daf&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:14.941454+00:00"
+    },
+    {
+      "file": "stats_0b55cb87-0588-425a-92e8-7d5470a72daf_fielding.json",
+      "sha256": "c7c850a8d3f463e3d0d3796309ac97c04b8307458365ead411e99de36a026ea4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/e545c4af-3173-4c7a-b88b-62a010d451c6/fielding-statistics?teamId=0b55cb87-0588-425a-92e8-7d5470a72daf&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:15.662155+00:00"
+    },
+    {
+      "file": "stats_0d73de4c-bfaa-443f-94ea-59a0bea1110e_batting.json",
+      "sha256": "deb78e40c2462f5eb9ab3434f006a28c91034842587c5caf634d16a325321c03",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/370bb111-23ac-4dda-be0d-edeefa06580e/batting-statistics?teamId=0d73de4c-bfaa-443f-94ea-59a0bea1110e&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:30.537128+00:00"
+    },
+    {
+      "file": "stats_0d73de4c-bfaa-443f-94ea-59a0bea1110e_bowling.json",
+      "sha256": "2660648b21815f7dd7461b6b52a261ffffd300a69c839f9bc153d0e03bed8e1f",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/370bb111-23ac-4dda-be0d-edeefa06580e/bowling-statistics?teamId=0d73de4c-bfaa-443f-94ea-59a0bea1110e&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:31.334801+00:00"
+    },
+    {
+      "file": "stats_0d73de4c-bfaa-443f-94ea-59a0bea1110e_fielding.json",
+      "sha256": "2b84d395de10e571537888c9c7dd8efb18d17f02ea508b59f90fa3d285c29d7f",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/370bb111-23ac-4dda-be0d-edeefa06580e/fielding-statistics?teamId=0d73de4c-bfaa-443f-94ea-59a0bea1110e&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:32.312126+00:00"
+    },
+    {
+      "file": "stats_0f06fdb3-041c-4052-8bd7-a17cc2efceb9_batting.json",
+      "sha256": "491899255ba8e2443352471f815798923c5e4d93ebda1e33b014abd0542dda71",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/75c51ded-beba-4c33-b94c-ce5ba8ee9ad2/batting-statistics?teamId=0f06fdb3-041c-4052-8bd7-a17cc2efceb9&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:42.959389+00:00"
+    },
+    {
+      "file": "stats_0f06fdb3-041c-4052-8bd7-a17cc2efceb9_bowling.json",
+      "sha256": "0f4978ef4dd2541c506598f877186f0e3bcaefb831804659fe3a1682863c0b40",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/75c51ded-beba-4c33-b94c-ce5ba8ee9ad2/bowling-statistics?teamId=0f06fdb3-041c-4052-8bd7-a17cc2efceb9&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:43.737010+00:00"
+    },
+    {
+      "file": "stats_0f06fdb3-041c-4052-8bd7-a17cc2efceb9_fielding.json",
+      "sha256": "41c0d7af3c0f6f4ff948eee266bf3217288ec876137e0b1eeb17be2394b78112",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/75c51ded-beba-4c33-b94c-ce5ba8ee9ad2/fielding-statistics?teamId=0f06fdb3-041c-4052-8bd7-a17cc2efceb9&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:44.532324+00:00"
+    },
+    {
+      "file": "stats_1476907a-6f4f-4e08-a654-e51f083d2196_batting.json",
+      "sha256": "be0e38dffaff8318c6170ef8491f4488359b209f4ba1372c4aebbefa0ea690f1",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/afcbf178-6425-4fd2-ac1f-a0bde956dfec/batting-statistics?teamId=1476907a-6f4f-4e08-a654-e51f083d2196&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:59.739729+00:00"
+    },
+    {
+      "file": "stats_1476907a-6f4f-4e08-a654-e51f083d2196_bowling.json",
+      "sha256": "f9569b89baa5dd30dad97474a9d1403ceebd31c439d955869026c15031f93b46",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/afcbf178-6425-4fd2-ac1f-a0bde956dfec/bowling-statistics?teamId=1476907a-6f4f-4e08-a654-e51f083d2196&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:00.460032+00:00"
+    },
+    {
+      "file": "stats_1476907a-6f4f-4e08-a654-e51f083d2196_fielding.json",
+      "sha256": "583ce8cfe7af36ce28b0312f92dedc4269cd630da280e807ea0222bd34f18cf4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/afcbf178-6425-4fd2-ac1f-a0bde956dfec/fielding-statistics?teamId=1476907a-6f4f-4e08-a654-e51f083d2196&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:01.198850+00:00"
+    },
+    {
+      "file": "stats_1d5580e7-9e43-447e-b217-fd1b7b957911_batting.json",
+      "sha256": "e331d73835a4480280d15b26eb6eeb269a986efffc1d49dc3576671d292506fb",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/47921c0f-9463-4b2a-b514-64463829a334/batting-statistics?teamId=1d5580e7-9e43-447e-b217-fd1b7b957911&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:56.968646+00:00"
+    },
+    {
+      "file": "stats_1d5580e7-9e43-447e-b217-fd1b7b957911_bowling.json",
+      "sha256": "6cc3ec3b06e4cfe6ed11459ad5597146e2accbdbb0b74b378107ed2d31d4ed79",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/47921c0f-9463-4b2a-b514-64463829a334/bowling-statistics?teamId=1d5580e7-9e43-447e-b217-fd1b7b957911&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:57.838636+00:00"
+    },
+    {
+      "file": "stats_1d5580e7-9e43-447e-b217-fd1b7b957911_fielding.json",
+      "sha256": "aae362b441c24881182144893f11e15d93a5b200be273e48cb111d23faa778c1",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/47921c0f-9463-4b2a-b514-64463829a334/fielding-statistics?teamId=1d5580e7-9e43-447e-b217-fd1b7b957911&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:58.693313+00:00"
+    },
+    {
+      "file": "stats_25af2e23-f5c3-446f-ab8d-921e7049411a_batting.json",
+      "sha256": "4a0a8fdd8bd21b358e09a8f96132e01267c3fd534156e7fb6b93bf17c008f176",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/acfc82ad-2f62-469a-a667-83c6815ddb43/batting-statistics?teamId=25af2e23-f5c3-446f-ab8d-921e7049411a&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:47.944686+00:00"
+    },
+    {
+      "file": "stats_25af2e23-f5c3-446f-ab8d-921e7049411a_bowling.json",
+      "sha256": "c18f86255c8fec2eb5be83757efe9eac6a5989a5fbabedaac7e132c103454314",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/acfc82ad-2f62-469a-a667-83c6815ddb43/bowling-statistics?teamId=25af2e23-f5c3-446f-ab8d-921e7049411a&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:48.810344+00:00"
+    },
+    {
+      "file": "stats_25af2e23-f5c3-446f-ab8d-921e7049411a_fielding.json",
+      "sha256": "4f26d54184f2e6cec8839953e44d47b5b65438f010cf2ea2ec826c5ad77ebbdf",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/acfc82ad-2f62-469a-a667-83c6815ddb43/fielding-statistics?teamId=25af2e23-f5c3-446f-ab8d-921e7049411a&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:49.813330+00:00"
+    },
+    {
+      "file": "stats_29251b9a-459d-4d41-a6dd-3f9015fc61e9_batting.json",
+      "sha256": "ffefbd985f995e5819ef33beb0af1ec1cdbb493a3ae52dd551001c72f4d8f747",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/8a079873-2e2b-4c02-a038-5233ae316aac/batting-statistics?teamId=29251b9a-459d-4d41-a6dd-3f9015fc61e9&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:02.031486+00:00"
+    },
+    {
+      "file": "stats_29251b9a-459d-4d41-a6dd-3f9015fc61e9_bowling.json",
+      "sha256": "d25878a383229d1385c4806d5cd0ea062e06c6d13887345429934593b3f5a3e5",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/8a079873-2e2b-4c02-a038-5233ae316aac/bowling-statistics?teamId=29251b9a-459d-4d41-a6dd-3f9015fc61e9&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:02.883808+00:00"
+    },
+    {
+      "file": "stats_29251b9a-459d-4d41-a6dd-3f9015fc61e9_fielding.json",
+      "sha256": "72d823e01b4e3516c9b8c3044c1b7b4c32cc212371e28a505af6925aaf57da85",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/8a079873-2e2b-4c02-a038-5233ae316aac/fielding-statistics?teamId=29251b9a-459d-4d41-a6dd-3f9015fc61e9&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:03.605151+00:00"
+    },
+    {
+      "file": "stats_361936bc-7377-4bf2-ab1e-e72c4f957eda_batting.json",
+      "sha256": "f405e3bcc937014cff32e364bea721d36f8827198cbb4a1229e43bf4c8be420c",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/8a079873-2e2b-4c02-a038-5233ae316aac/batting-statistics?teamId=361936bc-7377-4bf2-ab1e-e72c4f957eda&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:04.455802+00:00"
+    },
+    {
+      "file": "stats_361936bc-7377-4bf2-ab1e-e72c4f957eda_bowling.json",
+      "sha256": "4799867c718a49145fb6e15ba5337401696618aef9917f1968d1fbdda3504330",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/8a079873-2e2b-4c02-a038-5233ae316aac/bowling-statistics?teamId=361936bc-7377-4bf2-ab1e-e72c4f957eda&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:05.194688+00:00"
+    },
+    {
+      "file": "stats_361936bc-7377-4bf2-ab1e-e72c4f957eda_fielding.json",
+      "sha256": "0f8311883213cb8c3a39381108db025c4b07fa4af42bb455b21f6d2bc318dcc0",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/8a079873-2e2b-4c02-a038-5233ae316aac/fielding-statistics?teamId=361936bc-7377-4bf2-ab1e-e72c4f957eda&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:06.029475+00:00"
+    },
+    {
+      "file": "stats_383187e8-ab2a-4baf-bdce-8e97933aaa91_batting.json",
+      "sha256": "31f833c65e99d341cbc9af26f13aba5955a1721073440d03afb1bb82cf5f851b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/39b835fd-8685-4adc-b9f0-7dcd1808f1b3/batting-statistics?teamId=383187e8-ab2a-4baf-bdce-8e97933aaa91&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:45.343657+00:00"
+    },
+    {
+      "file": "stats_383187e8-ab2a-4baf-bdce-8e97933aaa91_bowling.json",
+      "sha256": "1d1385d859cc85d76be6636338c6815910c86b701e61a4e5c1e6d322e80ab43d",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/39b835fd-8685-4adc-b9f0-7dcd1808f1b3/bowling-statistics?teamId=383187e8-ab2a-4baf-bdce-8e97933aaa91&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:46.209762+00:00"
+    },
+    {
+      "file": "stats_383187e8-ab2a-4baf-bdce-8e97933aaa91_fielding.json",
+      "sha256": "35338f9e88a808712f7750b9eee5ac432d3beb17fb7a9687d71fd3dba934e7c4",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/39b835fd-8685-4adc-b9f0-7dcd1808f1b3/fielding-statistics?teamId=383187e8-ab2a-4baf-bdce-8e97933aaa91&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:47.154425+00:00"
+    },
+    {
+      "file": "stats_3dcf263e-7028-4f37-9df8-0c508ae2af9f_batting.json",
+      "sha256": "84f16b25ad15ed3bd3114cdd729329ab4b4f64fec424a0757517548fb0e4e5b9",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/ec70f45f-7655-42ed-a333-57e1189464ea/batting-statistics?teamId=3dcf263e-7028-4f37-9df8-0c508ae2af9f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:16.409101+00:00"
+    },
+    {
+      "file": "stats_3dcf263e-7028-4f37-9df8-0c508ae2af9f_bowling.json",
+      "sha256": "dcbad67d8d8936090d70c2becbcd054f2c30eca394a7055c0565dc3ff3b80ccf",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/ec70f45f-7655-42ed-a333-57e1189464ea/bowling-statistics?teamId=3dcf263e-7028-4f37-9df8-0c508ae2af9f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:17.237903+00:00"
+    },
+    {
+      "file": "stats_3dcf263e-7028-4f37-9df8-0c508ae2af9f_fielding.json",
+      "sha256": "1799e4422853b370cc8320c87f124743e2318da46919d2ead76c677b35bc16f1",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/ec70f45f-7655-42ed-a333-57e1189464ea/fielding-statistics?teamId=3dcf263e-7028-4f37-9df8-0c508ae2af9f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:18.086503+00:00"
+    },
+    {
+      "file": "stats_4c451b1b-5a94-412e-ba2a-9c98ae1d04ef_batting.json",
+      "sha256": "c57bd63e61d724db429bb32ba5936b0c1503fa8036bed70fcb9a9b5fae8985cf",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/c932e893-58c8-4c35-9b42-730056fbba02/batting-statistics?teamId=4c451b1b-5a94-412e-ba2a-9c98ae1d04ef&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:54.208929+00:00"
+    },
+    {
+      "file": "stats_4c451b1b-5a94-412e-ba2a-9c98ae1d04ef_bowling.json",
+      "sha256": "a936d0e682ac89dc9c70268b10f8682afe75ac2d127789dd765d45fd575b6169",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/c932e893-58c8-4c35-9b42-730056fbba02/bowling-statistics?teamId=4c451b1b-5a94-412e-ba2a-9c98ae1d04ef&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:55.268027+00:00"
+    },
+    {
+      "file": "stats_4c451b1b-5a94-412e-ba2a-9c98ae1d04ef_fielding.json",
+      "sha256": "c2a75bd8b1ac604617e60ec2ac18e5e0c6285be3379ba47ef2e746c6cc43bf5f",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/c932e893-58c8-4c35-9b42-730056fbba02/fielding-statistics?teamId=4c451b1b-5a94-412e-ba2a-9c98ae1d04ef&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:56.165557+00:00"
+    },
+    {
+      "file": "stats_4f0a500f-61fc-4482-90df-bf00c67151b1_batting.json",
+      "sha256": "2c232bb1e9416023cd86eb19a2b1b4e460beffc7e320cc986761d93098fd7011",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/70f22112-1320-4c91-9546-2532c870fd76/batting-statistics?teamId=4f0a500f-61fc-4482-90df-bf00c67151b1&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:25.295834+00:00"
+    },
+    {
+      "file": "stats_4f0a500f-61fc-4482-90df-bf00c67151b1_bowling.json",
+      "sha256": "9bee17223862bca327424e4ee9d3b1a84d8cbc99f57d9e467069938446df2ea2",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/70f22112-1320-4c91-9546-2532c870fd76/bowling-statistics?teamId=4f0a500f-61fc-4482-90df-bf00c67151b1&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:26.042849+00:00"
+    },
+    {
+      "file": "stats_4f0a500f-61fc-4482-90df-bf00c67151b1_fielding.json",
+      "sha256": "ab61e3dce93a2b96fa46c844e3d31d49f9616270e8d9e9be0d2c596914024dd6",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/70f22112-1320-4c91-9546-2532c870fd76/fielding-statistics?teamId=4f0a500f-61fc-4482-90df-bf00c67151b1&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:26.890578+00:00"
+    },
+    {
+      "file": "stats_5d2d88b2-5524-466f-9713-4c7f84a13d40_batting.json",
+      "sha256": "6e8af6841aa95ec4e31bf0a1fcec173eaccdc779452557ddd5b5060e066bd006",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/36184e13-9e9a-4b96-94a2-8d1e71d82e35/batting-statistics?teamId=5d2d88b2-5524-466f-9713-4c7f84a13d40&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:51.066186+00:00"
+    },
+    {
+      "file": "stats_5d2d88b2-5524-466f-9713-4c7f84a13d40_bowling.json",
+      "sha256": "1e0405b2e47d20552f3a3dcd4486cabdd8fd062d5a458eb86d00f94d563ca93b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/36184e13-9e9a-4b96-94a2-8d1e71d82e35/bowling-statistics?teamId=5d2d88b2-5524-466f-9713-4c7f84a13d40&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:52.613280+00:00"
+    },
+    {
+      "file": "stats_5d2d88b2-5524-466f-9713-4c7f84a13d40_fielding.json",
+      "sha256": "145b9b41a7186a8888e92d9eee51b9de3f6ac3f0b91dd8d744843ca281fcec63",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/36184e13-9e9a-4b96-94a2-8d1e71d82e35/fielding-statistics?teamId=5d2d88b2-5524-466f-9713-4c7f84a13d40&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:41:53.448501+00:00"
+    },
+    {
+      "file": "stats_b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f_batting.json",
+      "sha256": "116b13b20edfde126f91c140bd989756d94ca13ab7a88ff5ced468efdac1da07",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/370bb111-23ac-4dda-be0d-edeefa06580e/batting-statistics?teamId=b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:27.811521+00:00"
+    },
+    {
+      "file": "stats_b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f_bowling.json",
+      "sha256": "6b470d1759c22a554c695f39351683a718f7d558011e24bd4f3afbe76113bf41",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/370bb111-23ac-4dda-be0d-edeefa06580e/bowling-statistics?teamId=b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:28.652215+00:00"
+    },
+    {
+      "file": "stats_b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f_fielding.json",
+      "sha256": "ed0a55c908763579487fdf79d9d50b7225b91c5d6fe68b299234ebc072c81b9c",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/370bb111-23ac-4dda-be0d-edeefa06580e/fielding-statistics?teamId=b6b10d77-3c30-4dd2-83b5-7ffef10fbb7f&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:29.715855+00:00"
+    },
+    {
+      "file": "stats_b9cabe98-e559-42bc-9d69-3ee454d46603_batting.json",
+      "sha256": "d0b2e14b2a0210a946862ce8fdba7789c840dff9dc4ed2c56e130f60ba245c2b",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/ce095a68-63ba-4454-a854-29e802e88304/batting-statistics?teamId=b9cabe98-e559-42bc-9d69-3ee454d46603&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:06.936790+00:00"
+    },
+    {
+      "file": "stats_b9cabe98-e559-42bc-9d69-3ee454d46603_bowling.json",
+      "sha256": "a9ba2d676a999baf481007c81105acfe6c9af685786c1f90f590bc4cfc363315",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/ce095a68-63ba-4454-a854-29e802e88304/bowling-statistics?teamId=b9cabe98-e559-42bc-9d69-3ee454d46603&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:07.797905+00:00"
+    },
+    {
+      "file": "stats_b9cabe98-e559-42bc-9d69-3ee454d46603_fielding.json",
+      "sha256": "a37f4d90e4dd5941df09015c5f167800ad6174c2b7df25ed5f9835eeb07444d3",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/ce095a68-63ba-4454-a854-29e802e88304/fielding-statistics?teamId=b9cabe98-e559-42bc-9d69-3ee454d46603&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:08.651079+00:00"
+    },
+    {
+      "file": "stats_d5c9f549-9890-4c32-91f1-128113dc8f70_batting.json",
+      "sha256": "787a9a8d1ae21f54990f9c7ddda6adb63af51278c1d0c64b001a62a095683f94",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/e545c4af-3173-4c7a-b88b-62a010d451c6/batting-statistics?teamId=d5c9f549-9890-4c32-91f1-128113dc8f70&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:11.797796+00:00"
+    },
+    {
+      "file": "stats_d5c9f549-9890-4c32-91f1-128113dc8f70_bowling.json",
+      "sha256": "65a195b1ace7f2416965a396c6fc0657175692f02388198c7964f9398351a7dc",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/e545c4af-3173-4c7a-b88b-62a010d451c6/bowling-statistics?teamId=d5c9f549-9890-4c32-91f1-128113dc8f70&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:12.538603+00:00"
+    },
+    {
+      "file": "stats_d5c9f549-9890-4c32-91f1-128113dc8f70_fielding.json",
+      "sha256": "186750a73c373c1ac1271bfbb3a502cdc871a885e571e9db341ad998be4ca846",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/e545c4af-3173-4c7a-b88b-62a010d451c6/fielding-statistics?teamId=d5c9f549-9890-4c32-91f1-128113dc8f70&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:13.367831+00:00"
+    },
+    {
+      "file": "stats_ee3a8191-9d63-4abe-a6bf-afec6e71be35_batting.json",
+      "sha256": "06f3b3ba279d5c6d8ffb4063b49db1218c701d22f7a1e5eda7b8364134638bff",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/7c070020-d0c2-4050-b27e-439746e2fa35/batting-statistics?teamId=ee3a8191-9d63-4abe-a6bf-afec6e71be35&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:22.373731+00:00"
+    },
+    {
+      "file": "stats_ee3a8191-9d63-4abe-a6bf-afec6e71be35_bowling.json",
+      "sha256": "b1e66d05cef0c5c14d810763b01dcee6fbe629aa0441a490bb8422c85280a320",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/7c070020-d0c2-4050-b27e-439746e2fa35/bowling-statistics?teamId=ee3a8191-9d63-4abe-a6bf-afec6e71be35&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:23.268065+00:00"
+    },
+    {
+      "file": "stats_ee3a8191-9d63-4abe-a6bf-afec6e71be35_fielding.json",
+      "sha256": "3ff227a336ffcd04dbd2706c3e52b6f1fe563e131642d26c636759c4409a0f0f",
+      "url": "https://grassrootsapiproxy.cricket.com.au/participants/grades/7c070020-d0c2-4050-b27e-439746e2fa35/fielding-statistics?teamId=ee3a8191-9d63-4abe-a6bf-afec6e71be35&jsconfig=eccn%3Atrue",
+      "fetched_at": "2026-10-11T15:42:24.244663+00:00"
+    },
+    {
+      "file": "teams_2026_27.json",
+      "sha256": "1de905197e22e6a5eaab82153c32bcf9339f7a8702d17f42d0e61a639a4f35cd",
+      "url": "https://grassrootsapiproxy.cricket.com.au/fixturesladders/organisations/50f7f1e3-86d8-eb11-a7ad-2818780da0cc/teams?jsconfig=eccn%3Atrue&seasonId=69609582-ba37-4440-9d1e-a38fa912f6d3",
+      "fetched_at": "2026-10-11T15:39:01.779460+00:00"
+    }
+  ]
+}

@@ -385,11 +385,14 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     events = pd.read_csv(PROCESSED / "partnerships" / "partnership_events.csv", low_memory=False)
     records = pd.read_csv(PROCESSED / "hall_of_fame" / "partnership_records.csv", low_memory=False)
     validation = pd.read_csv(PROCESSED / "validation" / "gwhcc_partnership_validation.csv")
-    assert len(events) == 3350
+    assert len(events) == 3442
     assert events["privacy_status"].value_counts().to_dict() == {
-        "PUBLIC_PUBLIC": 3314,
-        "PUBLIC_PRIVATE": 36,
+        "PUBLIC_PUBLIC": 3404,
+        "PUBLIC_PRIVATE": 38,
     }
+    historical = events[events["season"].ne("Summer 2026/27")]
+    assert len(historical) == 3350
+    assert historical["privacy_status"].value_counts().to_dict() == {"PUBLIC_PUBLIC": 3314, "PUBLIC_PRIVATE": 36}
     assert records["wicket_number"].tolist() == list(range(1, 11))
     assert not events["player_1_name"].astype(str).str.contains(r"\*{2,}", regex=True).any()
     assert not events["player_2_name"].astype(str).str.contains(r"\*{2,}", regex=True).any()
@@ -404,8 +407,8 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     assert len(protected_slots) == len(private_rows)
     assert protected_slots.fillna("").eq("").all()
     assert events["wicket_ordinal_status"].value_counts().to_dict() == {
-        "CONFIRMED": 3019,
-        "REVIEW": 331,
+        "CONFIRMED": 3092,
+        "REVIEW": 350,
     }
     assert records["wicket_ordinal_status"].eq("CONFIRMED").all()
     assert records.loc[records["wicket_number"].eq(7), ["player_1_name", "player_2_name", "runs"]].values.tolist() == [
