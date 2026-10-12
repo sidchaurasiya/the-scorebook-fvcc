@@ -1,14 +1,27 @@
 {
   "club_id": "fvcc",
-  "generated_app_facing_data_version": "20260802T103021Z",
-  "latest_match_date": "2026-08-01 02:00:00+00:00",
-  "latest_match_id": "e8cd9e49-70e2-480f-84b1-bbfc86e6297d",
-  "latest_match_opponent": "Brunswick Cricket Club",
-  "latest_match_result": "lost by 7 wickets",
-  "latest_match_round": "Semi Finals",
-  "latest_refresh_timestamp": "2026-08-02T10:30:21.435411+00:00",
+  "generated_app_facing_data_version": "2026-10-12T13:55:33.814657+00:00",
+  "latest_match_date": "2026-10-10T12:30:00.0000000+11:00",
+  "latest_match_id": "fa973310-7871-447f-a4ac-8f6aa4dbfc2a",
+  "latest_match_opponent": "Reservoir Cobras 3rds XI",
+  "latest_match_result": "Reservoir Cobras 3rds XI won by 8 wickets",
+  "latest_match_round": "Round 2",
+  "latest_refresh_timestamp": "2026-10-12T13:55:33.814657+00:00",
   "source_data_mtime": 1785594572.7395265,
-  "validator_checks": 88,
+  "validator_checks": 168,
   "validator_failures": 0,
-  "validator_status": "pass"
+  "validator_status": "pass",
+  "cutoff_utc": "2026-10-12T13:53:25.225892+00:00",
+  "cutoff_melbourne": "2026-10-13T00:53:25.225892+11:00",
+  "new_match_ids": [
+    "b51f12f3-3c4a-4f15-8735-928f005fb2d2",
+    "cdf93da6-f0d4-405b-b1f3-d30744e4774e",
+    "f3e9f065-f39c-4be8-acb2-37b6512d8cae",
+    "fa973310-7871-447f-a4ac-8f6aa4dbfc2a"
+  ],
+  "latest_statistical_season": "Summer 2026/27",
+  "source_limitations": [
+    "2nd XI scorecard team total 125 differs from listed batting 110 plus extras 9; no invented allocation.",
+    "1st XI batting innings delivery total 153 differs from scorecard 152; full-innings bowling coverage gate excludes inconsistent innings."
+  ]
 }
