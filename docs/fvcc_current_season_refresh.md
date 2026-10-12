@@ -43,6 +43,15 @@ inputs; its manifest includes the FVCC public-filter token and source fingerprin
 
 Source limitations are retained explicitly:
 
+**SOURCE EXCEPTION ACCEPTED BY CUSTOMER** on 12 October 2026:
+FVCC 2nd XI vs Strathewen Cougars. The six-run discrepancy below is an accepted
+provider limitation and is no longer a release blocker. Preserve the official
+innings total of 125, the published individual batting scores, and the official
+result (FVCC won by six wickets). Do not invent the six runs, allocate them to
+extras, modify career totals, or derive unsupported innings metrics. Source
+provenance and discrepancy evidence remain retained. Acceptance is not a
+provider correction or proof of innings reconciliation.
+
 - Match `cdf93da6-f0d4-405b-b1f3-d30744e4774e`: the provider reports an innings
   total of 125, but listed batter runs 110 plus extras nine total 119. Both
   scorecard and official player aggregate report the same player contributions;
@@ -64,3 +73,31 @@ Kalpeshkumar Patel 86*, and all 1,957 batting aggregate rows have known Not Outs
 Raw receipts, checkpoints, candidate/quarantine outputs, validation scratch data,
 browser screenshots, and local caches are excluded from Git. Release/push and
 production verification require a separate task.
+
+## Final release gate
+
+Remote main remains `34a805133fd2819bc8fa47b7762a39f5113a3ff0`, the original
+refresh base; no integration is required. The refresh commit `34dae8b` is
+preserved, with a documentation/test-only follow-up. No data or shared application
+logic changed during this gate, so the 168 reconciliation checks, raw/prepared
+equivalence, deterministic generation, fallback, privacy/link safeguards and
+local browser UAT are carried forward without rebuilding or repeating them.
+
+The obsolete Not Outs test now requires exactly 1,957 populated FVCC rows.
+A frozen normalized SHA-256 from base `34a8051` guards all 1,912 historical
+batting keys and values. New-contribution checks require exactly 45 unique
+canonical player-team contributions per discipline and identical contribution
+sets. The same cross-club test also contained a pre-existing stale GRDCC row
+count; it now requires the 7,933 rows already present in approved main and its
+metadata. GRDCC data, historical missing-value expectations and average checks
+are unchanged.
+
+Final focused tests: 33 FVCC/cross-club Not Outs and incremental-refresh tests,
+eight clean-process GWHCC Not Outs tests, and 26 clean-process GRDCC/shared HS
+tests pass (67 total). Six unavailable historical reconstruction integrations
+remain BLOCKED, not PASS. The accepted six-run source exception is not a release
+blocker; the separate one-run BBB discrepancy remains excluded from affected
+whole-innings bowling analytics. The original statistical anchors are unchanged.
+
+This candidate is ready for controlled Git release review, not yet released.
+No push, deployment, Streamlit reboot or cache clearing is authorized here.
