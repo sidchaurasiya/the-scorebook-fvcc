@@ -120,6 +120,6 @@ def test_prepared_gwhcc_averages_still_reconcile_with_not_outs() -> None:
     average = pd.to_numeric(batting["battingAverage"], errors="coerce")
     calculated = runs / (innings - not_outs).clip(lower=0).replace(0, pd.NA)
     comparable = average.notna() & calculated.notna()
-    assert int(comparable.sum()) == 1100
+    assert int(comparable.sum()) == 1128
     assert (average[comparable] - calculated[comparable]).abs().max() < 1e-9
-    assert int(not_outs.fillna(0).eq(0).sum()) == 304
+    assert int(not_outs.fillna(0).eq(0).sum()) == 325
