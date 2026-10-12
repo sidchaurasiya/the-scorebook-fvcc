@@ -255,22 +255,25 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-05-26T03:53:12.642411+00:00",
-  "last_successful_refresh_time": "2026-05-26T03:53:12.642411+00:00",
+  "fetch_date_time": "2026-10-11T15:42:32.312126+00:00",
+  "last_successful_refresh_time": "2026-10-11T15:42:32.312126+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
     "/participants/grades/{grade_id}/batting-statistics",
     "/participants/grades/{grade_id}/bowling-statistics",
-    "/participants/grades/{grade_id}/fielding-statistics"
+    "/participants/grades/{grade_id}/fielding-statistics",
+    "/scores/teams/{team_id}/matches",
+    "/scores/matches/{match_id}?responseModifier=includeScorecard",
+    "/scores/matches/{match_id}/balls"
   ],
-  "matches_fetched": 0,
-  "players_fetched": 1288,
-  "teams_fetched": 330,
+  "matches_fetched": 3492,
+  "players_fetched": 1347,
+  "teams_fetched": 346,
   "stat_rows": {
-    "batting": 5669,
-    "bowling": 5669,
-    "fielding": 5669
+    "batting": 5849,
+    "bowling": 5849,
+    "fielding": 5849
   },
   "live_requests": 11,
   "cache_hits": 1016,
@@ -278,6 +281,15 @@
   "notes": [
     "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",
     "Refresh should be used sparingly; normal dashboard usage reads the active club processed data first.",
-    "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population."
-  ]
+    "Current-season source-backed incremental refresh; historical match, Captain, premiership and governed career evidence retained.",
+    "Request counters describe the prior full backup; the incremental build reads cached current-season source receipts."
+  ],
+  "incremental_refresh": {
+    "season": "Summer 2026/27",
+    "cutoff": "2026-10-11",
+    "timezone": "Australia/Melbourne",
+    "source": "PlayCricket public scorecards and team statistics",
+    "cached_source_payload_count": 114,
+    "historical_source_rows_preserved": true
+  }
 }
