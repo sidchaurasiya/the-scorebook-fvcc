@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+
 import pandas as pd
 
 from src.data.not_outs import (
@@ -209,8 +211,8 @@ def test_gwhcc_existing_helper_behaviour_is_unchanged() -> None:
 
 def test_current_fvcc_and_grdcc_sources_reconcile_without_average_changes() -> None:
     sources = [
-        ("clubs/fvcc/data/processed/all_seasons_batting.csv", 1912, 1912, 0, 0),
-        ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 7789, 7789, 0, 0),
+        ("clubs/fvcc/data/processed/all_seasons_batting.csv", 1957, 1957, 0, 0),
+        ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 7933, 7933, 0, 0),
         (
             "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv",
             4980,
@@ -233,3 +235,49 @@ def test_current_fvcc_and_grdcc_sources_reconcile_without_average_changes() -> N
         assert int(not_outs.isna().sum()) == expected_missing
         assert int((not_outs > innings).fillna(False).sum()) == 0
         assert int(((calculated - average).abs().gt(0.05) & comparable).sum()) == expected_mismatches
+
+
+def test_fvcc_refresh_preserves_all_historical_batting_keys_and_values() -> None:
+    frame = pd.read_csv("clubs/fvcc/data/processed/all_seasons_batting.csv", low_memory=False)
+    history = frame.loc[frame["season"].ne("Summer 2026/27")].drop(
+        columns=["provider_appearance_count"]
+    )
+    assert len(history) == 1912
+    assert not history.duplicated(["season_id", "team_id", "player_id"]).any()
+    history = history.sort_values(["season_id", "team_id", "player_id"]).reset_index(drop=True)
+    for column in history.select_dtypes(include="number"):
+        history[column] = history[column].astype(float)
+    normalized = history.to_csv(
+        index=False, float_format="%.17g", na_rep="<missing>", lineterminator="\n"
+    )
+    # Frozen from all original columns at production base 34a8051; numeric
+    # serialization normalizes harmless integer/float CSV representation changes.
+    assert hashlib.sha256(normalized.encode()).hexdigest() == (
+        "365eb0c2505a533a812e25487581cdcf67d94ae1794200999c1b06aa100cd941"
+    )
+
+
+def test_fvcc_refresh_has_exact_verified_new_contributions() -> None:
+    contributions = []
+    for kind, metric, total in [
+        ("batting", "battingAggregate", 486),
+        ("bowling", "bowlingWickets", 20),
+        ("fielding", "fieldingTotalCatches", 8),
+    ]:
+        frame = pd.read_csv(f"clubs/fvcc/data/processed/all_seasons_{kind}.csv", low_memory=False)
+        current = frame.loc[frame["season"].eq("Summer 2026/27")]
+        assert len(frame) == 1957
+        assert len(current) == 45
+        assert current["matches"].eq(1).all()
+        assert current[metric].sum() == total
+        assert current["canonical_player_id"].notna().all()
+        assert not current.duplicated(["season_id", "team_id", "player_id"]).any()
+        assert not current.duplicated(["season_id", "team_id", "canonical_player_id"]).any()
+        contributions.append(
+            set(
+                current[["season_id", "team_id", "canonical_player_id"]].itertuples(
+                    index=False, name=None
+                )
+            )
+        )
+    assert contributions[0] == contributions[1] == contributions[2]
