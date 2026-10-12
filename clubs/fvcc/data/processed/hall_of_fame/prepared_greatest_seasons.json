@@ -1,0 +1,33 @@
+{
+  "batting": {
+    "player": "Sanjay Ct",
+    "player_id": "sanjay_ct",
+    "season": "Summer 2008/09",
+    "matches": 15.0,
+    "runs": 720.0,
+    "innings": 15.0,
+    "average": 51.42857142857143,
+    "strike_rate": null,
+    "hs": "117",
+    "50s": 4.0,
+    "100s": 3.0,
+    "4s": 91.0,
+    "6s": 0.0,
+    "0s": 1.0
+  },
+  "bowling": {
+    "player": "Clint Fernandes",
+    "player_id": "clint_fernandes",
+    "season": "Summer 2003/04",
+    "matches": 13.0,
+    "wickets": 65.0,
+    "overs": "244.4",
+    "maidens": 87.0,
+    "average": 8.184615384615384,
+    "economy": 2.1743869209809263,
+    "strike_rate": 22.584615384615386,
+    "bbi": "6-11",
+    "5wi": 5.0,
+    "10wm": 1.0
+  }
+}

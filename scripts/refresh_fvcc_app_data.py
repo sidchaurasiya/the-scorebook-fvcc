@@ -18,6 +18,9 @@ VALIDATION_PATH = ROOT / "clubs" / "fvcc" / "data" / "processed" / "validation" 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Refresh FVCC aggregate, match-centre, deploy-safe, and validation outputs.")
     parser.add_argument("--dry-run", action="store_true", help="Print the command sequence without running it.")
+    parser.add_argument("--source-bundle", type=Path, help="Use a frozen, reconciled disjoint-season bundle without rebuilding historical match-centre data.")
+    parser.add_argument("--candidate-root", type=Path, help="New outside-repository output directory for the guarded incremental candidate.")
+    parser.add_argument("--baseline-root", type=Path, default=ROOT, help="Verified committed FVCC baseline for an incremental candidate.")
     parser.add_argument(
         "--skip-live-refresh",
         action="store_true",
@@ -29,6 +32,15 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     python = sys.executable
+    if args.source_bundle:
+        if args.candidate_root is None:
+            raise SystemExit("--source-bundle requires --candidate-root")
+        command = [python, "scripts/build_fvcc_incremental_refresh.py", "--source-bundle", str(args.source_bundle),
+                   "--candidate-root", str(args.candidate_root), "--baseline-root", str(args.baseline_root)]
+        print("FVCC guarded incremental candidate: " + " ".join(command))
+        if not args.dry_run:
+            subprocess.run(command, cwd=ROOT, check=True)
+        return 0
     commands: list[list[str]] = []
     if not args.skip_live_refresh:
         commands.append([python, "scripts/refresh_data.py", "--club", "fvcc", "--with-current-match-centre"])
