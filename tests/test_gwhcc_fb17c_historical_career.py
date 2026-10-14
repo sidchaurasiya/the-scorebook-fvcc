@@ -141,8 +141,8 @@ def test_governed_replacements_recompute_hof_top_ten_without_double_counting() -
         mask = before["canonical_player_id"].astype(str).eq(row.canonical_player_id)
         before.loc[mask, "Runs"] = float(row.scorebook_runs)
         before.loc[mask, "Wickets"] = float(row.scorebook_wickets)
-    assert len(after) == len(before) == 1289
-    assert after["Debut Season"].ne("Summer 2026/27").sum() == 1233
+    assert len(after) == len(before) == 1285
+    assert after["Debut Season"].ne("Summer 2026/27").sum() == 1229
 
     def ranked(frame: pd.DataFrame, metric: str) -> pd.DataFrame:
         return frame.sort_values([metric, "Player"], ascending=[False, True]).reset_index(drop=True)

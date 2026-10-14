@@ -138,8 +138,8 @@ def test_historical_and_verified_refresh_outputs_are_preserved() -> None:
     career = pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv")
     assert len(fastest) == 788
     assert fastest["season"].ne("Summer 2026/27").sum() == 780
-    assert len(career) == 1289
-    assert career["Debut Season"].ne("Summer 2026/27").sum() == 1233
+    assert len(career) == 1285
+    assert career["Debut Season"].ne("Summer 2026/27").sum() == 1229
 
 
 def test_private_player_filtering_outputs_remain_public() -> None:
