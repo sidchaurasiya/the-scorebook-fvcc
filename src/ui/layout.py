@@ -671,6 +671,12 @@ def resolve_player_query_to_id(player_names_by_id: dict[str, str]) -> str:
     if query_player_id in player_names_by_id:
         return query_player_id
 
+    from src.utils.player_identity import resolve_approved_disjoint_player_id
+
+    redirected = resolve_approved_disjoint_player_id(query_player_id)
+    if redirected in player_names_by_id:
+        return redirected
+
     query_player = unquote(query_param_value("player"))
     if query_player in player_names_by_id:
         return query_player
