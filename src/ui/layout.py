@@ -7909,10 +7909,11 @@ def render_premiership_records(team_group_slug: str | None = None) -> None:
 
 def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     club_short_name = html.escape(get_club_short_name())
+    heading_name = "GWHCC" if get_active_club_id() == "glen-waverley-hawks" else club_short_name
     if wins.empty:
         return (
             '<div class="hof-card premiership-wall-card premiership-empty">'
-            f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
+            f'<div class="premiership-card-title">{heading_name} Premiership Wins</div>'
             f"<p>No verified {club_short_name} premiership wins available yet.</p>"
             "</div>"
         )
@@ -7924,7 +7925,7 @@ def premiership_wins_card_html(wins: pd.DataFrame) -> str:
     rows_html = "".join(premiership_win_row_html(row) for _, row in rows.iterrows())
     return (
         '<div class="hof-card premiership-wall-card premiership-wins-card">'
-        f'<div class="premiership-card-title">{club_short_name} Premiership Wins</div>'
+        f'<div class="premiership-card-title">{heading_name} Premiership Wins</div>'
         '<div class="premiership-card-scroll premiership-wins-scroll" '
         'data-desktop-visible-rows="6" data-mobile-visible-rows="5" data-scroll-enabled="true">'
         f'{rows_html}</div>'
@@ -8187,7 +8188,8 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
         key="fastest-milestones-view",
     )
     render_section_heading("Fastest Innings ⚡")
-    st.caption("Based on matches with verified ball-by-ball data.")
+    if get_active_club_id() != "glen-waverley-hawks":
+        st.caption("Based on matches with verified ball-by-ball data.")
     milestone_path = batting_milestones_path()
     milestones = load_batting_milestone_records(
         get_active_club_id(),
@@ -8225,9 +8227,7 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
 
 def render_hat_trick_records(team_group_slug: str | None = None) -> None:
     render_section_heading("Hat-tricks 🎩")
-    if get_active_club_id() == "glen-waverley-hawks":
-        st.caption("Hat-tricks identified from available detailed records.")
-    else:
+    if get_active_club_id() != "glen-waverley-hawks":
         st.caption("Hat-tricks identified from available verified ball-by-ball records.")
     records = load_hat_trick_records(
         get_active_club_id(),
@@ -8366,7 +8366,8 @@ def load_verified_partnership_records(
 
 def render_partnership_records(team_group_slug: str | None = None) -> None:
     render_section_heading("Record Partnerships 🤝")
-    st.caption("Wicket records combine club-supplied historical records with innings-reconciled ball-by-ball data.")
+    if get_active_club_id() != "glen-waverley-hawks":
+        st.caption("Wicket records combine club-supplied historical records with innings-reconciled ball-by-ball data.")
     records = load_partnership_records(
         get_active_club_id(),
         str(HALL_OF_FAME_PARTNERSHIP_RECORDS_PATH),
@@ -9507,7 +9508,6 @@ def highest_reached_threshold(value: object, thresholds: list[int]) -> int | Non
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed Records 📊")
     render_hawks_match_count_footnote()
-    render_gwhcc_hof_career_coverage_note()
     if isinstance(all_time_or_tables, dict):
         tables = {
             "batting": all_time_or_tables["batting"].copy(),
