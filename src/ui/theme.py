@@ -8168,6 +8168,95 @@ def active_club_theme_css() -> str:
     )
     gwhcc_only_css = (
         """
+        section[data-testid="stSidebar"] .side-brand {
+            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+        }
+
+        section[data-testid="stSidebar"] .side-shield-logo {
+            background: transparent;
+            border: 0;
+            border-radius: 8px;
+            box-shadow: none;
+            flex: 0 0 64px;
+            height: 64px;
+            overflow: visible;
+            padding: 0;
+            width: 64px;
+        }
+
+        section[data-testid="stSidebar"] .side-shield-logo img {
+            border-radius: 8px;
+            object-fit: contain;
+            transform: none;
+        }
+
+        .hof-card.premiership-wins-card .premiership-season,
+        .hof-card.premiership-wins-card .premiership-season a.season-overview-link,
+        .hof-card.premiership-wins-card .premiership-season a.season-overview-link:visited {
+            color: var(--club-value) !important;
+        }
+
+        div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] [role="radiogroup"] {
+            background: #ffffff !important;
+            border: 1px solid #E5E3F7 !important;
+            border-radius: 999px !important;
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 4px !important;
+            max-width: 100%;
+            overflow: visible;
+            padding: 6px !important;
+            width: min(100%, 370px) !important;
+        }
+
+        div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 999px !important;
+            box-shadow: none !important;
+            color: #646C91 !important;
+            font-size: 1rem !important;
+            font-weight: 800 !important;
+            justify-content: center !important;
+            line-height: 1.25 !important;
+            min-height: 44px !important;
+            min-width: 0 !important;
+            padding: 10px 22px !important;
+            width: 100% !important;
+        }
+
+        div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button * {
+            color: inherit !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            white-space: nowrap;
+        }
+
+        div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:is(
+            [kind="segmented_controlActive"], [aria-checked="true"], [aria-pressed="true"], [aria-selected="true"]
+        ) {
+            background: #F1ECFF !important;
+            color: #4B37D8 !important;
+        }
+
+        div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:focus-visible {
+            outline: 2px solid #4B37D8 !important;
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 640px) {
+            div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] [role="radiogroup"] {
+                width: 100% !important;
+            }
+
+            div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button {
+                padding: 10px 6px !important;
+            }
+        }
+
         .block-container:has(.hall-of-fame-page) .performance-value {
             color: var(--club-value) !important;
         }
