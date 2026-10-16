@@ -8200,8 +8200,8 @@ def active_club_theme_css() -> str:
         }
 
         div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] [role="radiogroup"] {
-            background: #ffffff !important;
-            border: 1px solid #E5E3F7 !important;
+            background: var(--club-surface) !important;
+            border: 1px solid var(--club-border) !important;
             border-radius: 999px !important;
             display: grid !important;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -8217,7 +8217,7 @@ def active_club_theme_css() -> str:
             border: 0 !important;
             border-radius: 999px !important;
             box-shadow: none !important;
-            color: #646C91 !important;
+            color: var(--club-muted) !important;
             font-size: 1rem !important;
             font-weight: 800 !important;
             justify-content: center !important;
@@ -8238,12 +8238,12 @@ def active_club_theme_css() -> str:
         div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:is(
             [kind="segmented_controlActive"], [aria-checked="true"], [aria-pressed="true"], [aria-selected="true"]
         ) {
-            background: #F1ECFF !important;
-            color: #4B37D8 !important;
+            background: var(--club-primary) !important;
+            color: var(--club-text) !important;
         }
 
         div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:focus-visible {
-            outline: 2px solid #4B37D8 !important;
+            outline: 2px solid var(--club-text) !important;
             outline-offset: 2px;
         }
 

@@ -79,6 +79,18 @@ def test_visual_overrides_are_hawks_scoped(monkeypatch, club):
         'section[data-testid="stSidebar"] .side-brand {',
         '.hof-card.premiership-wins-card .premiership-season a.season-overview-link',
         'div.st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:focus-visible',
-        'background: #F1ECFF !important;',
     ]:
         assert (rule in css) == (club == "glen-waverley-hawks")
+
+
+def test_hawks_category_palette_uses_club_tokens_without_purple(monkeypatch):
+    monkeypatch.setattr(theme, "get_active_club_id", lambda: "glen-waverley-hawks")
+    css = theme.active_club_theme_css()
+    selector_css = css.split('div.st-key-hof_detailed_records_category_control', 1)[1].split(
+        '.block-container:has(.hall-of-fame-page)', 1
+    )[0]
+    for token in ["surface", "border", "muted", "primary", "text"]:
+        assert f"var(--club-{token})" in selector_css
+    assert "outline: 2px solid var(--club-text)" in selector_css
+    for old_colour in ["#F1ECFF", "#4B37D8", "#646C91", "#E5E3F7"]:
+        assert old_colour not in selector_css
