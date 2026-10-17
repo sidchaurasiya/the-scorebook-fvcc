@@ -63,7 +63,12 @@ def eligible_match_ids(matches: pd.DataFrame, innings: pd.DataFrame, cutoff: str
     if matches['match_id'].duplicated().any():
         raise ValueError('Duplicate match IDs')
     dates = pd.to_datetime(matches['first_match_day'], utc=True, errors='coerce').dt.tz_convert('Australia/Melbourne')
-    through_cutoff = dates.dt.date.le(pd.Timestamp(cutoff).date())
+    boundary = pd.Timestamp(cutoff)
+    if "T" in cutoff or " " in cutoff:
+        boundary = boundary.tz_localize("Australia/Melbourne") if boundary.tzinfo is None else boundary.tz_convert("Australia/Melbourne")
+        through_cutoff = dates.le(boundary)
+    else:
+        through_cutoff = dates.dt.date.le(boundary.date())
     activity = innings.groupby('match_id')[['runs_scored', 'wickets_fallen', 'overs_bowled']].sum().gt(0).any(axis=1)
     statuses = matches['status'].isin(['COMPLETED', 'ABANDONED'])
     return set(matches.loc[through_cutoff & statuses & matches['match_id'].map(activity).fillna(False), 'match_id'])
@@ -88,4 +93,19 @@ def preserve_compact_dismissal_type(batting: pd.DataFrame) -> pd.DataFrame:
     result = batting.copy()
     text = result['dismissal_text'].fillna('').astype(str)
     result['dismissal_text'] = text.where(text.str.strip().ne(''), result['dismissal_type'].fillna(''))
+    return result
+
+
+def profile_fielding_input(fielding: pd.DataFrame) -> pd.DataFrame:
+    """Adapt PlayCricket totals to the profile export's unassisted-plus-assisted contract.
+
+    Keep retained source rows intact. The provider's runOuts already includes
+    assistedRunOuts, so adding both directly would duplicate the assisted credits.
+    """
+    result = fielding.copy()
+    total = pd.to_numeric(result["run_outs"], errors="coerce")
+    assisted = pd.to_numeric(result["assisted_run_outs"], errors="coerce")
+    if (total.isna() | assisted.isna() | assisted.lt(0) | total.lt(assisted)).any():
+        raise ValueError("Incomplete or inconsistent GWHCC run-out source totals")
+    result["run_outs"] = total - assisted
     return result

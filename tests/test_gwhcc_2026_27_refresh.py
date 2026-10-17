@@ -12,12 +12,12 @@ DATA = Path(__file__).resolve().parents[1] / 'clubs' / CLUB / 'data/processed'
 SEASON = 'Summer 2026/27'
 
 
-def test_current_season_is_official_and_has_seventeen_unique_played_matches():
+def test_current_season_is_official_and_has_twenty_unique_played_matches():
     seasons = pd.read_csv(DATA / 'seasons.csv')
     assert seasons.loc[seasons.name.eq(SEASON), 'id'].tolist() == ['69609582-ba37-4440-9d1e-a38fa912f6d3']
     matches = pd.read_csv(DATA / 'all_seasons_matches.csv')
     assert not matches.match_id.duplicated().any()
-    assert len(matches[matches.season.eq(SEASON)]) == 17
+    assert len(matches[matches.season.eq(SEASON)]) == 20
     assert len(matches[~matches.season.eq(SEASON)]) == 3475
 
 
@@ -25,9 +25,9 @@ def test_current_aggregates_use_only_verified_selected_appearances():
     for category in ['batting', 'bowling', 'fielding']:
         frame = pd.read_csv(DATA / f'all_seasons_{category}.csv')
         new = frame[frame.season.eq(SEASON)]
-        assert len(new) == 180
-        assert new.matches.eq(1).all()
-        assert new.matches.sum() == 180
+        assert len(new) == 184
+        assert new.matches.isin([1, 2]).all()
+        assert new.matches.sum() == 207
         assert not new.duplicated(['season_id', 'team_id', 'player_id']).any()
         assert new.matches.le(new.raw_playhq_matches).all()
 
@@ -77,8 +77,8 @@ def test_historical_captain_premiership_and_delivery_records_survive():
 def test_new_partnerships_keep_evidence_and_privacy_gates():
     events = pd.read_csv(DATA / 'partnerships/partnership_events.csv')
     new = events[events.season.eq(SEASON)]
-    assert len(new) == 92
-    assert new.privacy_status.value_counts().to_dict() == {'PUBLIC_PUBLIC':90,'PUBLIC_PRIVATE':2}
+    assert len(new) == 111
+    assert new.privacy_status.value_counts().to_dict() == {'PUBLIC_PUBLIC':109,'PUBLIC_PRIVATE':2}
     for position in [1,2]:
         protected = new[f'player_{position}_name'].eq('Private player')
         assert new.loc[protected,f'player_{position}_canonical_id'].fillna('').eq('').all()

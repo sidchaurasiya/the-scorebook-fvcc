@@ -59,7 +59,7 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     if candidate == ROOT or ROOT in candidate.parents or candidate.exists():
         raise ValueError('Candidate must be a new outside-repository directory')
     os.environ['CLUB_ID'] = CLUB
-    from src.data.gwhcc_incremental import append_disjoint, eligible_match_ids, merge_summary, reconciled_delivery_innings, preserve_compact_dismissal_type
+    from src.data.gwhcc_incremental import append_disjoint, eligible_match_ids, merge_summary, reconciled_delivery_innings, preserve_compact_dismissal_type, profile_fielding_input
     from src.config import club_config as config
     from src.data.playcricket_ingestion import normalize_teams, normalize_players
     from src.utils.player_identity import apply_player_identity_mapping, filter_public_player_rows
@@ -182,7 +182,8 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     from src.ui import layout
     batting = profile.prepare_batting(frames, club_id=CLUB)
     bowling = profile.prepare_bowling(frames, club_id=CLUB)
-    fielding = profile.prepare_fielding(frames, club_id=CLUB)
+    profile_fielding_frames = {**frames, 'fielding': profile_fielding_input(frames['fielding'])}
+    fielding = profile.prepare_fielding(profile_fielding_frames, club_id=CLUB)
     balls = profile.prepare_ball_rows(frames, club_id=CLUB)
     bowling_frames = frames.copy()
     bowling_frames['balls'], bowling_evidence = reconciled_delivery_innings(frames['innings'], frames['balls'])

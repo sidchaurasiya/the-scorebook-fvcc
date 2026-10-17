@@ -1,0 +1,144 @@
+{
+  "pass": true,
+  "source_cutoff_utc": "2026-10-17T11:41:42+00:00",
+  "source_cutoff_melbourne": "2026-10-17T22:41:42+11:00",
+  "baseline": {
+    "represented_seasons": 47,
+    "historical_matches": 3475,
+    "current_season_matches": 17,
+    "total_match_ids": 3492,
+    "public_hof_players": 1285,
+    "current_season_public_players": 150,
+    "weighted_career_appearances": 29116.0,
+    "career_runs": 395330.0,
+    "career_wickets": 19638.0,
+    "career_catches": 7769.0,
+    "career_fifties": 1331.0,
+    "career_hundreds": 292.0,
+    "fastest_innings_rows": 788,
+    "fastest_fifties": 197,
+    "fastest_hundreds": 32,
+    "hat_tricks": 1,
+    "premiership_events": 53,
+    "partnership_events": 3442,
+    "selected_partnership_records": 10,
+    "captain_summary_rows": 10200,
+    "captain_batting_runs": 295192.0,
+    "active_players": 294
+  },
+  "refreshed": {
+    "represented_seasons": 47,
+    "historical_matches": 3475,
+    "current_season_matches": 20,
+    "total_match_ids": 3495,
+    "public_hof_players": 1285,
+    "current_season_public_players": 150,
+    "weighted_career_appearances": 29143.0,
+    "career_runs": 395619.0,
+    "career_wickets": 19652.0,
+    "career_catches": 7771.0,
+    "career_fifties": 1331.0,
+    "career_hundreds": 292.0,
+    "fastest_innings_rows": 793,
+    "fastest_fifties": 197,
+    "fastest_hundreds": 32,
+    "hat_tricks": 1,
+    "premiership_events": 53,
+    "partnership_events": 3461,
+    "selected_partnership_records": 10,
+    "captain_summary_rows": 10200,
+    "captain_batting_runs": 295192.0,
+    "active_players": 294
+  },
+  "new_canonical_identities": [],
+  "source_metric_checks": 2970,
+  "run_out_source_checks": 594,
+  "profile_checks": [
+    {
+      "discipline": "Batting",
+      "metric": "battingAggregate",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Batting",
+      "metric": "battingInnings",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Batting",
+      "metric": "batting50s",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Batting",
+      "metric": "batting100s",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Bowling",
+      "metric": "bowlingWickets",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Fielding",
+      "metric": "fieldingTotalCatches",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Fielding",
+      "metric": "fieldingStumpings",
+      "canonical_player_checks": 150,
+      "pass": true
+    },
+    {
+      "discipline": "Fielding",
+      "metric": "fieldingRunOuts",
+      "canonical_player_checks": 150,
+      "pass": true
+    }
+  ],
+  "historical_preserved": true,
+  "canonical_merges_created": 0,
+  "new_completed_match_ids": [
+    "c7712667-22a0-47e1-959f-5183b4666e1b",
+    "c477068b-c612-4018-a2b5-f11091cdb3fe",
+    "f7bad6a0-c1c8-4c24-a993-92462c4e69d0"
+  ],
+  "corrected_match_ids": [
+    "10fd584a-0766-48a7-b0ff-3a8d1acb371b",
+    "75c15b5e-5677-4838-81ba-3837124bfabd"
+  ],
+  "partnership_records_sha256": "ec77cb4df61741387634b668cd952d826ca9131932d445fea0d2f264012f10ad",
+  "pending_matches": 11,
+  "no_play_abandoned_matches": 3,
+  "private_output_exposure": 0,
+  "pending_match_ids": [
+    "8ea4ade9-ca29-47ae-9908-ca81776eca47",
+    "be085026-67f3-4b1b-a368-810a74900af5",
+    "66beb26c-0144-4b70-bf85-71a5c1f3b899",
+    "4c03a077-e7d5-405c-a828-6f05f63cb093",
+    "adbae06b-ee20-4f8e-b73c-261693bb20c1",
+    "34aaa6f4-9c7e-4d49-9e70-96f14dd74198",
+    "01ffbdfa-0d18-4689-b9c6-d0c6f7fcf540",
+    "1f90aaf8-d3d6-4f99-b19e-f8b94d91bb69",
+    "c28ad15b-9c10-4fcd-be6a-3bd489384c60",
+    "e7faba41-d913-4139-aab7-4cad73035e8f",
+    "8d904e89-7d3f-42f6-a97b-85bcada7f95f"
+  ],
+  "source_coverage": {
+    "teams": 21,
+    "grades": 18,
+    "unique_fixtures": 218,
+    "live_stumps_bad_light_excluded": 11,
+    "no_play_abandoned_excluded": 3,
+    "upcoming": 173,
+    "undated_pending": 11
+  },
+  "current_season_fielding_source_semantics": "Provider total run-outs already includes assists; profile adapter prevents duplication"
+}
