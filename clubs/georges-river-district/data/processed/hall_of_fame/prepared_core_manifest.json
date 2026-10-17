@@ -9,43 +9,43 @@
     },
     {
       "path": "clubs/georges-river-district/data/processed/all_seasons_batting.csv",
-      "size": 3783116,
-      "sha256": "300519243f845516105ab38e3775ac16abdd0970180830d38a161e64ca6cb78d"
+      "size": 3791155,
+      "sha256": "0965956590a2fed02f93811abbfc83cdff4068117827eff3019e32a7999058b8"
     },
     {
       "path": "clubs/georges-river-district/data/processed/all_seasons_bowling.csv",
-      "size": 3725723,
-      "sha256": "356cb02ad96f66484538446f7a6130266381cb405acef421905800d8f535eee7"
+      "size": 3733618,
+      "sha256": "cfa39e818d03fc3430136de5aa7e890f924915f036aaa9f4096ff2aa618dd654"
     },
     {
       "path": "clubs/georges-river-district/data/processed/all_seasons_fielding.csv",
-      "size": 3538206,
-      "sha256": "1fe8c384c75eea4547d29558039b43326ccdd02a762001ca1ebc3b4ec96e540e"
+      "size": 3545730,
+      "sha256": "868722b69ec76f6a33db938dc738d61412b8ea38eb21cbce073384f4b397a00e"
     },
     {
       "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_bbb_batting_rates.csv",
-      "size": 52149,
-      "sha256": "89b584836940a0f2944819c127163166b61df0d897b2b3351739c67eee03f251"
+      "size": 52319,
+      "sha256": "2d61bf2966c9e469c4663675fc34abdb64e3b6d7169bcacef03f348950f17b80"
     },
     {
       "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_bowling_milestones.csv",
-      "size": 110745,
-      "sha256": "153a6113c4edf7b8a532613f86f058715b097b9c8a1bf201051279a51eebf5a3"
+      "size": 111379,
+      "sha256": "667f2f5c7e557340a34f89d13286d5c2f9645785ad612653d70120b0d34c6782"
     },
     {
       "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_scorecard_milestones.csv",
-      "size": 138355,
-      "sha256": "788ac864d03d14998eba5d6730a0a85e59d4a056623a23762fdbef8247f25cbb"
+      "size": 138952,
+      "sha256": "0c753f30d070efff120651d13f38964dc62a0d169f884f5239f338f5423fa2a5"
     },
     {
       "path": "clubs/georges-river-district/data/processed/hall_of_fame/player_win_rates.csv",
-      "size": 230459,
-      "sha256": "e7c8c723aaa599c69c559fd81977266043514c5a785b51ebec16d4f37005b6e0"
+      "size": 231679,
+      "sha256": "214dccc858ac59ee1b34ecb6c0dfccf29a33c3a4513d1bdeb045a50b733db3b8"
     },
     {
       "path": "clubs/georges-river-district/data/processed/players.csv",
-      "size": 230362,
-      "sha256": "92f21a4e77ceb20058f2e0171490fa70ec546cf64052c43ba8f2067157a97a7b"
+      "size": 230687,
+      "sha256": "7b4b62aa60de747ff86a84be9ebaae8c489df45845388b6dbdd1b39c25120481"
     },
     {
       "path": "clubs/georges-river-district/data/processed/seasons.csv",

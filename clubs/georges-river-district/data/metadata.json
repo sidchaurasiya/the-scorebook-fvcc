@@ -525,9 +525,9 @@
   "players_fetched": 1706,
   "teams_fetched": 445,
   "stat_rows": {
-    "batting": 7933,
-    "bowling": 7933,
-    "fielding": 7933
+    "batting": 7950,
+    "bowling": 7950,
+    "fielding": 7950
   },
   "live_requests": 44,
   "cache_hits": 1324,
@@ -537,19 +537,23 @@
     "Refresh should be used sparingly; normal dashboard usage reads the active club processed data first.",
     "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population.",
     "Summer2026/27 incremental snapshot checked2026-10-11 04:00 Australia/Melbourne; prior full-refresh timestamps and request counters retained as historical provenance.",
-    "End-of-day11October delta: two finalized matches added after the preserved04:00snapshot; only two affected-team aggregates fetched."
+    "End-of-day11October delta: two finalized matches added after the preserved04:00snapshot; only two affected-team aggregates fetched.",
+    "Weekly17October refresh: only finalized current-season scorecards and reconciled aggregates replace prior current contributions; historical sufficient statistics retained."
   ],
-  "last_refreshed_at": "2026-10-10T16:26:30.157310+00:00",
+  "last_refreshed_at": "2026-10-17T13:06:16.661090+00:00",
   "incremental_refresh": {
     "season": "Summer 2026/27",
-    "cutoff": "2026-10-11",
-    "timezone": "Australia/Melbourne",
+    "cutoff": "2026-10-17",
+    "timezone": "Australia/Sydney",
     "teams": 13,
     "finalized_match_ids": [
       "0f0bcc20-1904-4ead-be97-b876792b55c2",
       "2185f944-428d-4ca0-9dad-451de9281cd7",
+      "312736b4-3607-4bc8-86c5-25c30b652ca9",
       "341adaa3-df9e-4c23-8b2b-1ffb2e22ef71",
       "3467679e-4fb9-4bca-a042-4887eae93748",
+      "3f887215-ffd6-481f-89da-ed4b6a2f9dd6",
+      "55d3f1c8-da78-4889-b940-e96bd6188455",
       "5cb36bc6-cda7-46db-9767-3c027575df46",
       "61eac62d-2725-405e-8200-afa13d0ebbfd",
       "678da287-ecff-4325-91e1-a926e5128d56",
@@ -563,17 +567,19 @@
       "9f638d82-f963-4eec-be14-a1a952342446",
       "a666f403-4220-4d3a-b901-f98c56fc3409",
       "b0868e4e-5bae-4582-9ac7-01cba8cb58ba",
+      "c1166912-1497-4fb6-a704-0d5e4360cce6",
       "c2d1c29d-0374-4fbf-922f-8394c7b71c09",
       "c35d1927-65ae-4229-b6df-8ca0e738f2ef",
       "d6a310db-eb24-4e9a-b9df-7c99ed822edd",
       "dc81a446-d4a1-4f64-8d62-55c1faf69491",
       "ebd65094-52a8-4c4a-898b-a242b86fed7d"
     ],
-    "source_snapshot_checked_at": "2026-10-11T15:42:20.539663+00:00",
+    "source_snapshot_checked_at": "2026-10-17T13:06:16.661090+00:00",
     "historical_match_ids_retained": 2604,
-    "unique_match_centre_ids": 2626,
-    "statistics_bearing_matches": 16,
-    "cutoff_coverage": "through end of11October2026 Melbourne; known fixtures checked12October02:42"
+    "unique_match_centre_ids": 2630,
+    "statistics_bearing_matches": 20,
+    "cutoff_coverage": "official finalized matches scheduled through17October2026; observation timestamp separately recorded",
+    "discovery_cutoff_sydney": "2026-10-18T00:06:16.661090+11:00"
   },
   "previous_full_refresh_counts": {
     "players": 1650,
@@ -584,5 +590,5 @@
       "fielding": 7789
     }
   },
-  "last_successful_incremental_refresh_time": "2026-10-11T15:42:20.539663+00:00"
+  "last_successful_incremental_refresh_time": "2026-10-17T13:06:16.661090+00:00"
 }
