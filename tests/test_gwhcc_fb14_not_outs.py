@@ -121,6 +121,6 @@ def test_prepared_gwhcc_averages_still_reconcile_with_not_outs() -> None:
     calculated = runs / (innings - not_outs).clip(lower=0).replace(0, pd.NA)
     comparable = average.notna() & calculated.notna()
     # Four disjoint profiles consolidated; rate arithmetic still reconciles.
-    assert int(comparable.sum()) == 1124
+    assert int(comparable.sum()) == 1127
     assert (average[comparable] - calculated[comparable]).abs().max() < 1e-9
     assert int(not_outs.fillna(0).eq(0).sum()) == 324

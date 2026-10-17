@@ -255,8 +255,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-10-11T15:42:32.312126+00:00",
-  "last_successful_refresh_time": "2026-10-11T15:42:32.312126+00:00",
+  "fetch_date_time": "2026-10-17T11:51:07.238859+00:00",
+  "last_successful_refresh_time": "2026-10-17T11:51:07.238859+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -267,13 +267,13 @@
     "/scores/matches/{match_id}?responseModifier=includeScorecard",
     "/scores/matches/{match_id}/balls"
   ],
-  "matches_fetched": 3492,
+  "matches_fetched": 3495,
   "players_fetched": 1347,
-  "teams_fetched": 346,
+  "teams_fetched": 348,
   "stat_rows": {
-    "batting": 5849,
-    "bowling": 5849,
-    "fielding": 5849
+    "batting": 5853,
+    "bowling": 5853,
+    "fielding": 5853
   },
   "live_requests": 11,
   "cache_hits": 1016,
@@ -286,10 +286,10 @@
   ],
   "incremental_refresh": {
     "season": "Summer 2026/27",
-    "cutoff": "2026-10-11",
+    "cutoff": "2026-10-17T22:41:42+11:00",
     "timezone": "Australia/Melbourne",
     "source": "PlayCricket public scorecards and team statistics",
-    "cached_source_payload_count": 114,
+    "cached_source_payload_count": 127,
     "historical_source_rows_preserved": true
   }
 }

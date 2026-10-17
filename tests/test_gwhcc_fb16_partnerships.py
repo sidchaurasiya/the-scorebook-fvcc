@@ -385,9 +385,9 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     events = pd.read_csv(PROCESSED / "partnerships" / "partnership_events.csv", low_memory=False)
     records = pd.read_csv(PROCESSED / "hall_of_fame" / "partnership_records.csv", low_memory=False)
     validation = pd.read_csv(PROCESSED / "validation" / "gwhcc_partnership_validation.csv")
-    assert len(events) == 3442
+    assert len(events) == 3461
     assert events["privacy_status"].value_counts().to_dict() == {
-        "PUBLIC_PUBLIC": 3404,
+        "PUBLIC_PUBLIC": 3423,
         "PUBLIC_PRIVATE": 38,
     }
     historical = events[events["season"].ne("Summer 2026/27")]
@@ -407,8 +407,8 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     assert len(protected_slots) == len(private_rows)
     assert protected_slots.fillna("").eq("").all()
     assert events["wicket_ordinal_status"].value_counts().to_dict() == {
-        "CONFIRMED": 3092,
-        "REVIEW": 350,
+        "CONFIRMED": 3108,
+        "REVIEW": 353,
     }
     assert records["wicket_ordinal_status"].eq("CONFIRMED").all()
     assert records.loc[records["wicket_number"].eq(7), ["player_1_name", "player_2_name", "runs"]].values.tolist() == [

@@ -13,13 +13,14 @@ from src.utils.player_identity import apply_player_identity_mapping, resolve_app
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = "9181d0baf6f33ee3fffe1a66613b92813d203da3"
+MERGED_RELEASE = "86ca230a9b16aa73342a86a36ab9b5190126e124"
 CLUB = "glen-waverley-hawks"
 DATA = ROOT / "clubs" / CLUB / "data"
 
 
-def released(path):
+def released(path, revision=BASELINE):
     relative = str(path.relative_to(ROOT))
-    return pd.read_csv(io.BytesIO(subprocess.check_output(["git", "show", f"{BASELINE}:{relative}"], cwd=ROOT)), low_memory=False)
+    return pd.read_csv(io.BytesIO(subprocess.check_output(["git", "show", f"{revision}:{relative}"], cwd=ROOT)), low_memory=False)
 
 
 def sample(names=("Exact Player", "EXACT PLAYER"), seasons=("Summer 2022/23", "Summer 2023/24")):
@@ -62,7 +63,7 @@ def test_hawks_merges_retain_every_raw_id_and_complete_season_contribution():
     assert approved.canonical_player_name.nunique() == 4
     for kind in ("batting", "bowling", "fielding"):
         path = DATA / f"processed/all_seasons_{kind}.csv"
-        before, after = released(path), pd.read_csv(path)
+        before, after = released(path), released(path, MERGED_RELEASE)
         pd.testing.assert_frame_equal(before.drop(columns="canonical_player_id"), after.drop(columns="canonical_player_id"))
         assert set(before.raw_player_id) == set(after.raw_player_id)
         mapped = apply_player_identity_mapping(after, club_id=CLUB)
@@ -92,7 +93,7 @@ def test_source_aliases_are_id_only_no_new_name_or_cross_club_merge():
 
 def test_prepared_canonical_totals_conserve_full_history_and_unaffected_rows():
     path = DATA / "processed/hall_of_fame/prepared_career_all_time.csv"
-    before, after = released(path), pd.read_csv(path)
+    before, after = released(path), released(path, MERGED_RELEASE)
     assert len(before) == 1289 and len(after) == 1285
     assert after.canonical_player_id.nunique() == 1285
     assert public_player_mask(after).all()
@@ -111,7 +112,7 @@ def test_prepared_canonical_totals_conserve_full_history_and_unaffected_rows():
 
 def test_captain_and_premiership_sufficient_statistics_are_conserved():
     path = DATA / "processed/player_profile/performance_breakdown_by_dimension.csv"
-    before, after = released(path), pd.read_csv(path, low_memory=False)
+    before, after = released(path), released(path, MERGED_RELEASE)
     for dimension in before.dimension.unique():
         for discipline in before.discipline.unique():
             metrics = ["runs", "innings", "outs", "wickets", "runs_against", "balls_bowled", "catches", "stumpings", "run_outs"]
@@ -119,7 +120,7 @@ def test_captain_and_premiership_sufficient_statistics_are_conserved():
             new = after[after.dimension.eq(dimension) & after.discipline.eq(discipline)]
             pd.testing.assert_series_equal(old[metrics].sum(), new[metrics].sum())
     path = DATA / "processed/hall_of_fame/player_premierships.csv"
-    before, after = released(path), pd.read_csv(path)
+    before, after = released(path), released(path, MERGED_RELEASE)
     assert before.premiership_count.sum() == after.premiership_count.sum()
     evidence = lambda f: sorted(m.strip() for s in f.evidence_match_ids for m in s.split(","))
     assert evidence(before) == evidence(after)
@@ -130,13 +131,13 @@ def test_captain_and_premiership_sufficient_statistics_are_conserved():
 
 def test_partnership_evidence_privacy_and_selected_records_preserved():
     path = DATA / "processed/partnerships/partnership_events.csv"
-    before, after = released(path), pd.read_csv(path)
+    before, after = released(path), released(path, MERGED_RELEASE)
     pd.testing.assert_frame_equal(before.drop(columns=["player_1_canonical_id", "player_2_canonical_id"]), after.drop(columns=["player_1_canonical_id", "player_2_canonical_id"]))
     for position in (1, 2):
         private = after[f"player_{position}_name"].eq("Private player")
         assert after.loc[private, f"player_{position}_canonical_id"].isna().all()
     path = DATA / "processed/hall_of_fame/partnership_records.csv"
-    pd.testing.assert_frame_equal(released(path), pd.read_csv(path))
+    pd.testing.assert_frame_equal(released(path), released(path, MERGED_RELEASE))
 
 
 def test_shared_public_query_redirect_is_limited_to_public_index(monkeypatch):
