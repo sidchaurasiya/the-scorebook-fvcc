@@ -8107,6 +8107,76 @@ def inject_theme() -> None:
     st.markdown(active_club_theme_css(), unsafe_allow_html=True)
 
 
+def grdcc_hof_refinements_css() -> str:
+    """Approved pill pattern, limited to GRDCC's existing HOF control container."""
+    return """
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [role="radiogroup"] {
+            background: var(--club-bg) !important;
+            border: 1px solid var(--club-border) !important;
+            border-radius: 999px !important;
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 4px !important;
+            max-width: 100%;
+            padding: 6px !important;
+            width: min(100%, 370px) !important;
+        }
+
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 999px !important;
+            box-shadow: none !important;
+            color: var(--club-muted) !important;
+            font-size: 1rem !important;
+            font-weight: 800 !important;
+            justify-content: center !important;
+            line-height: 1.25 !important;
+            flex: none !important;
+            max-width: none !important;
+            min-height: 44px !important;
+            min-width: 0 !important;
+            padding: 10px 14px !important;
+            width: 100% !important;
+        }
+
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button * {
+            color: inherit !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            white-space: nowrap;
+        }
+
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:is(
+            [kind="segmented_controlActive"], [aria-checked="true"], [aria-pressed="true"], [aria-selected="true"]
+        ) {
+            background: var(--club-primary) !important;
+            color: var(--club-surface) !important;
+        }
+
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button:focus-visible {
+            outline: 2px solid var(--club-primary) !important;
+            outline-offset: 2px;
+        }
+
+        .premiership-wins-card .premiership-season,
+        .premiership-wins-card .premiership-season > a.season-overview-link,
+        .premiership-wins-card .premiership-season > a.season-overview-link:visited {
+            color: var(--club-primary) !important;
+        }
+
+        @media (max-width: 640px) {
+            .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [role="radiogroup"] {
+                width: 100% !important;
+            }
+
+            .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] button {
+                padding: 10px 6px !important;
+            }
+        }
+    """
+
+
 def active_club_theme_css() -> str:
     active_club_id = get_active_club_id()
     branding = FVCC_PRODUCTION_BRANDING if active_club_id == "fvcc" else {}
@@ -8294,6 +8364,7 @@ def active_club_theme_css() -> str:
         if active_club_id == "glen-waverley-hawks"
         else ""
     )
+    grdcc_only_css = grdcc_hof_refinements_css() if active_club_id == "georges-river-district" else ""
     return f"""
         <style>
         :root {{
@@ -8330,7 +8401,7 @@ def active_club_theme_css() -> str:
         }}
 
         {fvcc_only_css}
-        {gwhcc_only_css}
+        {gwhcc_only_css}{grdcc_only_css}
 
         .stApp {{
             background:
