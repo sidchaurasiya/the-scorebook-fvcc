@@ -1,5 +1,5 @@
 canonical_player_id,canonical_player_name,display_player_name,dismissal_bucket,count,scope,total_dismissals,pct,dismissal_order
-__club__,Club average,Club average,Stumped,146.0,club,7211.0,2.02468450977673,5
+__club__,Club average,Club average,Stumped,146.0,club,7212.0,2.024403771491958,5
 raw_00000000_0000_0000_0000_000000000001,********,********,Caught,7.0,player,10.0,70.0,1
 raw_00000000_0000_0000_0000_000000000002,********,********,Caught,4.0,player,7.0,57.142857142857146,1
 raw_00000000_0000_0000_0000_000000000003,********,********,Caught,1.0,player,3.0,33.333333333333336,1
@@ -39,10 +39,10 @@ raw_d5ceddf6_d1d9_48d3_b66b_96e178e727d9,Ajay Rangarajan,Ajay Rangarajan,Bowled,
 raw_d5ceddf6_d1d9_48d3_b66b_96e178e727d9,Ajay Rangarajan,Ajay Rangarajan,LBW,1.0,player,7.0,14.285714285714286,3
 raw_ac94098c_ddf6_45b6_aec2_27c97ec99aed,Ajith Kumar Vaddevolu,Ajith Kumar Vaddevolu,LBW,1.0,player,1.0,100.0,3
 raw_79c93515_52d5_443a_9fa4_fdc4adc2ae10,Akheel Mohammed,Akheel Mohammed,Run out,1.0,player,1.0,100.0,4
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Bowled,21.0,player,93.0,22.580645161290324,2
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,LBW,16.0,player,93.0,17.204301075268816,3
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Run out,6.0,player,93.0,6.451612903225806,4
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Stumped,1.0,player,93.0,1.075268817204301,5
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Bowled,21.0,player,94.0,22.340425531914892,2
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,LBW,16.0,player,94.0,17.02127659574468,3
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Run out,6.0,player,94.0,6.382978723404255,4
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Stumped,1.0,player,94.0,1.0638297872340425,5
 raw_330fb143_de1b_40ec_b0c8_4615b5885b68,Akshay Jindal,Akshay Jindal,Run out,1.0,player,1.0,100.0,4
 raw_fabe3087_4118_4ebf_ae00_523358904311,Alex Moderana,Alex Moderana,Caught,38.0,player,66.0,57.57575757575758,1
 raw_fabe3087_4118_4ebf_ae00_523358904311,Alex Moderana,Alex Moderana,Bowled,21.0,player,66.0,31.818181818181817,2
@@ -809,12 +809,12 @@ raw_fa0146e4_9bd0_4bb3_8c59_7ceca020a7a5,Yashwanth Burugu,Yashwanth Burugu,Caugh
 raw_fa0146e4_9bd0_4bb3_8c59_7ceca020a7a5,Yashwanth Burugu,Yashwanth Burugu,LBW,1.0,player,3.0,33.333333333333336,3
 raw_fa0146e4_9bd0_4bb3_8c59_7ceca020a7a5,Yashwanth Burugu,Yashwanth Burugu,Run out,1.0,player,3.0,33.333333333333336,4
 raw_36bd035f_14ab_4cff_9bbb_45289a642206,Yuvraj Maharaj,Yuvraj Maharaj,Bowled,2.0,player,2.0,100.0,2
-__club__,Club average,Club average,Caught,4373.0,club,7211.0,60.643461378449594,1
-__club__,Club average,Club average,Bowled,1587.0,club,7211.0,22.00804326723062,2
-__club__,Club average,Club average,LBW,709.0,club,7211.0,9.832200804326723,3
-__club__,Club average,Club average,Run out,386.0,club,7211.0,5.352933018998752,4
-__club__,Club average,Club average,Other,10.0,club,7211.0,0.13867702121758424,6
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Caught,49.0,player,93.0,52.68817204301075,1
+__club__,Club average,Club average,Caught,4374.0,club,7212.0,60.64891846921797,1
+__club__,Club average,Club average,Bowled,1587.0,club,7212.0,22.004991680532445,2
+__club__,Club average,Club average,LBW,709.0,club,7212.0,9.83083749306711,3
+__club__,Club average,Club average,Run out,386.0,club,7212.0,5.352190793122573,4
+__club__,Club average,Club average,Other,10.0,club,7212.0,0.1386577925679423,6
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,Caught,50.0,player,94.0,53.191489361702125,1
 balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,Bowled,14.0,player,40.0,35.0,2
 baurel_d_mello,Baurel D'Mello,Baurel D'Mello,Caught,79.0,player,111.0,71.17117117117117,1
 raw_05220db1_794d_452c_b921_2eb60d032d21,Chinni Raja Ammela,Chinni Raja Ammela,Caught,3.0,player,4.0,75.0,1
