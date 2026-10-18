@@ -8110,6 +8110,15 @@ def inject_theme() -> None:
 def grdcc_hof_refinements_css() -> str:
     """Approved pill pattern, limited to GRDCC's existing HOF control container."""
     return """
+        /* Streamlit can give the widget element an intrinsic content width. */
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control .st-key-hof_detailed_records_category,
+        .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] {
+            box-sizing: border-box !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
         .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [role="radiogroup"] {
             background: var(--club-bg) !important;
             border: 1px solid var(--club-border) !important;
