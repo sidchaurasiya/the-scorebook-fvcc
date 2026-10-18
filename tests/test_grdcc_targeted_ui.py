@@ -46,3 +46,27 @@ def test_grdcc_refinement_does_not_hide_source_qualifications_or_change_logo():
     assert 'caption' not in rules
     assert 'side-shield' not in rules
     assert 'img' not in rules
+
+
+@pytest.mark.parametrize('wrapper', [
+    '.st-key-hof_detailed_records_category',
+    '[data-testid="stButtonGroup"]',
+])
+def test_grdcc_category_widget_does_not_shrink_grid_to_intrinsic_width(wrapper):
+    rules = theme.grdcc_hof_refinements_css()
+    scope = '.st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control'
+    wrapper_rule = rules.split(f'{scope} {wrapper}', 1)[1].split('}', 1)[0]
+    assert 'width: 100% !important' in wrapper_rule
+    assert 'max-width: 100% !important' in wrapper_rule
+    assert 'min-width: 0 !important' in wrapper_rule
+    assert 'box-sizing: border-box !important' in wrapper_rule
+
+
+def test_grdcc_width_fix_preserves_label_size_and_focus_clearance():
+    rules = theme.grdcc_hof_refinements_css()
+    assert 'font-size: 1rem !important' in rules
+    assert 'padding: 6px !important' in rules
+    assert 'outline-offset: 2px' in rules
+    assert 'width: min(100%, 370px)' in rules
+    assert 'overflow: hidden' not in rules
+    assert 'text-overflow: clip' not in rules
