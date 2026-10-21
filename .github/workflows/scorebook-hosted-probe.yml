@@ -1,0 +1,59 @@
+name: Scorebook read-only hosted feasibility
+
+on:
+  push:
+    branches: ['automation/scorebook-hosted-probe-2026-10-21']
+    paths:
+      - '.github/workflows/scorebook-hosted-probe.yml'
+      - 'scripts/probe_weekend_hosted.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scorebook-hosted-probe
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SCOREBOOK_RUNTIME_IDENTITY_MAINTENANCE: '0'
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing requirements and probe test tooling
+        run: python -m pip install -r requirements.txt pytest==8.4.2
+      - name: Verify Python builder entry points without generating data
+        run: |
+          python scripts/build_fvcc_incremental_refresh.py --help
+          python scripts/build_gwhcc_weekly_candidate.py --help
+          python scripts/build_gwhcc_incremental_candidate.py --help
+          python scripts/refresh_club_outputs.py --club georges-river-district --dry-run
+      - name: Run existing finalized-source and preservation tests
+        run: >-
+          python -m pytest -q
+          tests/test_grdcc_weekly_refresh.py
+          tests/test_grdcc_incremental_summaries.py
+          tests/test_gwhcc_incremental.py
+          tests/test_gwhcc_weekly_refresh.py
+          tests/test_fvcc_incremental_refresh.py
+          tests/test_fvcc_weekly_refresh.py
+      - name: Sequential bounded official source probe
+        if: ${{ !cancelled() }}
+        run: python scripts/probe_weekend_hosted.py
+      - name: Verify tracked data was unchanged
+        if: ${{ always() }}
+        run: git diff --exit-code -- clubs data src requirements.txt app.py app_grdcc.py app_gwhcc.py
+
+# No schedule, production write token, release command, reboot command, or raw
+# source artifact upload. The branch is for diagnostic execution only.
