@@ -164,6 +164,36 @@ class ControlTests(unittest.TestCase):
             saturday = local.date() - timedelta(days=(local.weekday() - 5) % 7)
             self.assertEqual(str(saturday), '2026-10-24')
 
+    def test_real_non_fast_forward_push_is_rejected_without_retry(self):
+        def git(path, *args, check=True):
+            return subprocess.run(['git', *args], cwd=path, check=check, capture_output=True, text=True)
+        remote = self.root / 'conflict.git'
+        git(self.root, 'init', '--bare', str(remote))
+        writer = self.root / 'first-writer'
+        git(self.root, 'clone', str(remote), str(writer))
+        git(writer, 'config', 'user.name', 'Simulation')
+        git(writer, 'config', 'user.email', 'simulation@example.invalid')
+        git(writer, 'checkout', '-b', 'main')
+        (writer / 'synthetic.txt').write_text('base\n')
+        git(writer, 'add', 'synthetic.txt')
+        git(writer, 'commit', '-m', 'base')
+        git(writer, 'push', 'origin', 'main')
+        stale = self.root / 'stale-writer'
+        git(self.root, 'clone', '--branch', 'main', str(remote), str(stale))
+        git(stale, 'config', 'user.name', 'Simulation')
+        git(stale, 'config', 'user.email', 'simulation@example.invalid')
+        (writer / 'synthetic.txt').write_text('concurrent release\n')
+        git(writer, 'add', 'synthetic.txt')
+        git(writer, 'commit', '-m', 'concurrent advance')
+        git(writer, 'push', 'origin', 'main')
+        expected = git(writer, 'rev-parse', 'HEAD').stdout.strip()
+        (stale / 'synthetic.txt').write_text('obsolete candidate\n')
+        git(stale, 'add', 'synthetic.txt')
+        git(stale, 'commit', '-m', 'obsolete candidate')
+        rejected = git(stale, 'push', 'origin', 'HEAD:main', check=False)
+        self.assertNotEqual(rejected.returncode, 0)
+        self.assertEqual(git(stale, 'ls-remote', 'origin', 'refs/heads/main').stdout.split()[0], expected)
+
     def test_real_git_revert_preserves_other_clubs_and_quarantines(self):
         def git(path, *args, check=True):
             return subprocess.run(['git', *args], cwd=path, check=check, capture_output=True, text=True)
