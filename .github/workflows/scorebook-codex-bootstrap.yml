@@ -1,0 +1,56 @@
+name: Scorebook official Codex action bootstrap
+
+on:
+  push:
+    branches: ['automation/scorebook-hosted-probe-2026-10-21']
+    paths: ['.github/workflows/scorebook-codex-bootstrap.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scorebook-codex-bootstrap
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  credentials:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Report credential presence only
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SCOREBOOK_APP_PRIVATE_KEY: ${{ secrets.SCOREBOOK_APP_PRIVATE_KEY }}
+          SCOREBOOK_APP_ID: ${{ vars.SCOREBOOK_APP_ID }}
+          SCOREBOOK_CONTROLLER_REPOSITORY: ${{ vars.SCOREBOOK_CONTROLLER_REPOSITORY }}
+        shell: python
+        run: |
+          import json, os
+          keys = ['OPENAI_API_KEY', 'SCOREBOOK_APP_PRIVATE_KEY',
+                  'SCOREBOOK_APP_ID', 'SCOREBOOK_CONTROLLER_REPOSITORY']
+          flags = {name: bool(os.environ.get(name, '').strip()) for name in keys}
+          print(json.dumps(flags, sort_keys=True))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+              output.write('Credential presence only; values are never logged.\n\n')
+              for name, configured in flags.items():
+                  output.write(f'- {name}: {"configured" if configured else "missing"}\n')
+              output.write('\nNo API request, source refresh, Git release or reboot is performed.\n')
+
+  install-official-action:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Official action setup mode: with no prompt and no API-key input, its
+      # documented composite steps install the CLI/proxy and skip codex exec.
+      # No secret is passed to this job. API authentication remains untested.
+      - name: Install official Codex action without an API call
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675 # verified v1
+        with:
+          codex-version: '0.163.0'
+          safety-strategy: drop-sudo
+
+# Diagnostic only. No schedule, application checkout, Codex prompt, model API
+# request, write token, private source bundle, publication, rollback or reboot.
