@@ -533,7 +533,9 @@ def resolve_public_profile_target(player_id: object, player_name: object) -> str
     player_id_text = str(player_id or "").strip()
     if player_id_text in valid_ids:
         return player_id_text
-    return name_lookup.get(name.casefold(), "")
+    from src.data.gwhcc_identity import canonical_query_name
+
+    return name_lookup.get(canonical_query_name(name).casefold(), "")
 
 
 @st.cache_data(show_spinner=False, persist="disk")
@@ -11967,6 +11969,9 @@ def player_profile_view_signature() -> tuple[object, ...]:
     ) + player_profile_detail_source_signature()
     if get_active_club_id() == "glen-waverley-hawks":
         base = base + (("gwhcc_player_status", repr(gwhcc_player_status_signature())),)
+        from src.data.gwhcc_identity import PROFILE_DISPLAY_NAMES
+
+        base = base + (("gwhcc_profile_display_names", tuple(sorted(PROFILE_DISPLAY_NAMES.items()))),)
     return base + (("authoritative_career", repr(hall_of_fame_override_signature(get_active_club_id()))),)
 
 
@@ -12003,6 +12008,10 @@ def build_player_profile_view(
     bowling_phase = player_profile_source_rows(detail_sources.get("bowling_phase", pd.DataFrame()), profile)
     dismissal_fingerprint = player_profile_source_rows(detail_sources.get("dismissal_fingerprint", pd.DataFrame()), profile)
     club_dismissal_fingerprint = player_profile_club_rows(detail_sources.get("dismissal_fingerprint", pd.DataFrame()))
+    if active_club_id == "glen-waverley-hawks":
+        from src.data.gwhcc_identity import apply_profile_display_names
+
+        career = apply_profile_display_names(career, active_club_id)
     return {
         "batting": batting,
         "bowling": bowling,
@@ -12836,7 +12845,9 @@ def player_unique_standout_season_count(details: dict[str, list[str]]) -> int:
 
 def player_premiership_profile_badges(career: pd.Series) -> list[str]:
     player_name = str(career.get("Player", "") or "").strip()
-    name_key = player_name_match_key(player_name)
+    from src.data.gwhcc_identity import canonical_query_name
+
+    name_key = player_name_match_key(canonical_query_name(player_name))
     if not name_key:
         return []
     wins, players = load_premiership_records(get_active_club_id(), premiership_records_signature())

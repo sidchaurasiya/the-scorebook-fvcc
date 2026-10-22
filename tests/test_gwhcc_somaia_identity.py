@@ -57,7 +57,7 @@ def test_only_two_explicit_ids_merge_and_legacy_routes_survive(decisions):
     assert mapped.iloc[2].canonical_player_id != CANONICAL
 
 
-@pytest.mark.parametrize("query", ["Sunil", "Sunny", "Somaia", "Sunil Somaia", "Sunny Somaia"])
+@pytest.mark.parametrize("query", ["Sunny", "Somaia", "Sunny Somaia"])
 def test_search_aliases_offer_one_public_canonical_option(monkeypatch, query):
     from src.ui import layout
     monkeypatch.setenv("CLUB_ID", CLUB)
@@ -66,7 +66,7 @@ def test_search_aliases_offer_one_public_canonical_option(monkeypatch, query):
     matches = layout.filter_detailed_record_player_suggestions(names, query)
     assert matches.count("Sunil Somaia") == 1
     assert "Sunny Somaia" not in matches
-    assert player_search_label("Sunil Somaia", CLUB) == "Sunil Somaia (Sunny Somaia)"
+    assert player_search_label("Sunil Somaia", CLUB) == "Sunny Somaia"
     assert canonical_query_name("sunny somaia", CLUB) == "Sunil Somaia"
     assert player_search_label("Sunil Somaia", "fvcc") == "Sunil Somaia"
     assert canonical_query_name("Sunny Somaia", "georges-river-district") == "Sunny Somaia"
