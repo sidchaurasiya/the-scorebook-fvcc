@@ -11,6 +11,8 @@ from src.config.club_config import get_active_club_id, get_mapping_path
 CLUB = "glen-waverley-hawks"
 NAME_VARIANT_APPROVAL = "customer_confirmed_name_variant_disjoint_seasons"
 EXACT_APPROVAL = "customer_approved_exact_disjoint_seasons"
+# Customer's final public name; identity/source evidence keeps its released names.
+PROFILE_DISPLAY_NAMES = {"raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97": "Sunny Somaia"}
 
 
 @lru_cache(maxsize=8)
@@ -43,13 +45,28 @@ def approved_search_variants(club_id: str | None = None) -> tuple[tuple[str, str
 
 
 def player_search_label(name: object, club_id: str | None = None) -> str:
-    """Keep one canonical option, with documented nicknames available to search."""
+    """Keep one canonical option and honour the approved public display name."""
     text = str(name)
+    for player_id, canonical, _ in approved_search_variants(club_id):
+        if canonical.casefold() == text.casefold() and player_id in PROFILE_DISPLAY_NAMES:
+            return PROFILE_DISPLAY_NAMES[player_id]
     variants = sorted({
         alias for _, canonical, alias in approved_search_variants(club_id)
         if canonical.casefold() == text.casefold() and alias.casefold() != text.casefold()
     })
     return f"{text} ({', '.join(variants)})" if variants else text
+
+
+def apply_profile_display_names(career: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
+    """Change presentation only, after all identity/statistical work has finished."""
+    if (club_id or get_active_club_id()) != CLUB or not {"canonical_player_id", "Player"}.issubset(career):
+        return career
+    affected = career.canonical_player_id.isin(PROFILE_DISPLAY_NAMES)
+    if not affected.any():
+        return career
+    output = career.copy()
+    output.loc[affected, "Player"] = output.loc[affected, "canonical_player_id"].map(PROFILE_DISPLAY_NAMES)
+    return output
 
 
 def canonical_query_name(name: str, club_id: str | None = None) -> str:
