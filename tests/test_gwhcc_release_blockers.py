@@ -35,7 +35,7 @@ def test_customer_feedback_historical_centuries_and_debut_are_governed() -> None
     all_time = pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv", low_memory=False)
     authoritative = apply_record_overrides(all_time, write_decisions=False)
     expected_hundreds = {
-        "Sunny Somaia": 19,
+        "Sunil Somaia": 21,
         "Glen Mahoney": 16,
         "Stuart Wynd": 15,
         "Greg Mccormick": 8,

@@ -46,8 +46,8 @@ def test_prepared_snapshot_is_valid_public_and_contains_historical_population():
     prepared = load_prepared_hall_of_fame_core(CLUB, layout.HALL_OF_FAME_DATA_VERSION)
     assert prepared is not None
     career = prepared['all_time']
-    # Four approved disjoint-season consolidations retain all contributions.
-    assert len(career) == career.canonical_player_id.nunique() == 1285
+    # Four exact-name merges plus Cam's approved Sunil/Sunny consolidation.
+    assert len(career) == career.canonical_player_id.nunique() == 1284
     assert career['Debut Season'].eq(SEASON).sum() == 56
     assert public_player_mask(career).all()
 
@@ -65,9 +65,10 @@ def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables()
 
 def test_historical_captain_premiership_and_delivery_records_survive():
     breakdown = pd.read_csv(DATA / 'player_profile/performance_breakdown_by_dimension.csv',low_memory=False)
-    assert breakdown.dimension.eq('Captain').sum() == 10200
+    # Same contributions, four duplicate identity/dimension groups consolidated.
+    assert breakdown.dimension.eq('Captain').sum() == 10196
     assert len(pd.read_csv(DATA / 'hall_of_fame/premiership_wins.csv')) == 24
-    assert len(pd.read_csv(DATA / 'hall_of_fame/player_premierships.csv')) == 171
+    assert len(pd.read_csv(DATA / 'hall_of_fame/player_premierships.csv')) == 170
     hats = pd.read_csv(DATA / 'hall_of_fame/hat_tricks.csv')
     assert hats.canonical_player_name.tolist() == ['Jai Westbury']
     fastest = pd.read_csv(DATA / 'hall_of_fame/fastest_batting_milestones.csv')
