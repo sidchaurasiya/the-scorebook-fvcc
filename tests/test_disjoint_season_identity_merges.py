@@ -55,7 +55,9 @@ def test_private_and_initial_only_profiles_fail_closed():
 
 
 def decisions():
-    return pd.read_csv(DATA / "source/disjoint_season_identity_decisions.csv")
+    frame = pd.read_csv(DATA / "source/disjoint_season_identity_decisions.csv")
+    # These assertions audit the original four exact-name merges at 86ca230.
+    return frame[frame.decision.eq("customer_approved_exact_disjoint_seasons")]
 
 
 def test_hawks_merges_retain_every_raw_id_and_complete_season_contribution():

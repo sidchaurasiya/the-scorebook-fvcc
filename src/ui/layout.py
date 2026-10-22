@@ -683,7 +683,9 @@ def resolve_player_query_to_id(player_names_by_id: dict[str, str]) -> str:
     if not query_player:
         return ""
 
-    target_name = query_player.strip().casefold()
+    from src.data.gwhcc_identity import canonical_query_name
+
+    target_name = canonical_query_name(query_player.strip()).casefold()
     matches = [
         player_id
         for player_id, player_name in player_names_by_id.items()
@@ -9539,6 +9541,7 @@ def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str
                 player_search = st.selectbox(
                     "Search player",
                     detailed_record_public_player_options(tables),
+                    format_func=gwhcc_player_search_label,
                     index=None,
                     placeholder="Search player",
                     key="hof_detailed_records_player_search",
@@ -9563,6 +9566,12 @@ def detailed_record_public_player_options(
         player_aliases_mtime(),
     )
     return canonical_public_player_names(index)
+
+
+def gwhcc_player_search_label(name: object) -> str:
+    from src.data.gwhcc_identity import player_search_label
+
+    return player_search_label(name, get_active_club_id())
 
 
 def canonical_player_name_casing_overrides(frame: pd.DataFrame) -> dict[str, str]:
@@ -9607,7 +9616,7 @@ def filter_detailed_record_player_suggestions(
     needle = str(search_text or "").strip().casefold()
     if not needle:
         return list(player_names)
-    return [name for name in player_names if needle in name.casefold()]
+    return [name for name in player_names if needle in gwhcc_player_search_label(name).casefold()]
 
 
 def filter_detailed_record_tables_by_selected_player(
@@ -10977,7 +10986,7 @@ def render_player_profile_page() -> None:
             "Search player",
             option_ids,
             index=option_ids.index(selected_player_id) if selected_player_id in option_ids else None,
-            format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
+            format_func=lambda player_id: gwhcc_player_search_label(player_names_by_id.get(str(player_id), str(player_id))),
             placeholder="Select a player...",
             key="player_profile_selector_id",
         )

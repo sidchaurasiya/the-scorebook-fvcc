@@ -2851,18 +2851,8 @@ raw_c58a5bdb_af3f_4c4c_b76f_9f14420f1f49,Sunil Annamneedi,Sunil Annamneedi,Caugh
 raw_c58a5bdb_af3f_4c4c_b76f_9f14420f1f49,Sunil Annamneedi,Sunil Annamneedi,Bowled,2,player,10,20.0,2
 raw_c58a5bdb_af3f_4c4c_b76f_9f14420f1f49,Sunil Annamneedi,Sunil Annamneedi,LBW,1,player,10,10.0,3
 raw_c58a5bdb_af3f_4c4c_b76f_9f14420f1f49,Sunil Annamneedi,Sunil Annamneedi,Other,1,player,10,10.0,6
-raw_87dcf20b_a607_4346_a352_899db515d5fb,Sunil Somaia,Sunil Somaia,Caught,14,player,25,56.0,1
-raw_87dcf20b_a607_4346_a352_899db515d5fb,Sunil Somaia,Sunil Somaia,Bowled,3,player,25,12.0,2
-raw_87dcf20b_a607_4346_a352_899db515d5fb,Sunil Somaia,Sunil Somaia,LBW,6,player,25,24.0,3
-raw_87dcf20b_a607_4346_a352_899db515d5fb,Sunil Somaia,Sunil Somaia,Stumped,2,player,25,8.0,5
 raw_30c56b1a_6f17_44fe_a85e_0c40f331bd17,Sunny Krishna,Sunny Krishna,Caught,3,player,5,60.0,1
 raw_30c56b1a_6f17_44fe_a85e_0c40f331bd17,Sunny Krishna,Sunny Krishna,LBW,2,player,5,40.0,3
-raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunny Somaia,Sunny Somaia,Caught,164,player,224,73.21428571428571,1
-raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunny Somaia,Sunny Somaia,Bowled,32,player,224,14.285714285714286,2
-raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunny Somaia,Sunny Somaia,LBW,13,player,224,5.803571428571429,3
-raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunny Somaia,Sunny Somaia,Run out,8,player,224,3.5714285714285716,4
-raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunny Somaia,Sunny Somaia,Stumped,6,player,224,2.6785714285714284,5
-raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunny Somaia,Sunny Somaia,Other,1,player,224,0.44642857142857145,6
 raw_f96d3381_cc54_4ddf_ae98_305468bf442e,Suppun Wathukarage,Suppun Wathukarage,Caught,1,player,2,50.0,1
 raw_f96d3381_cc54_4ddf_ae98_305468bf442e,Suppun Wathukarage,Suppun Wathukarage,Bowled,1,player,2,50.0,2
 raw_e701bf5c_122c_4a76_9616_9246a7c3d014,Syon Neel,Syon Neel,Caught,1,player,8,12.5,1
@@ -3256,3 +3246,9 @@ raw_7f04b5ce_8a32_449f_bff9_07b645163710,Vihaan Patel,Vihaan Patel,Run out,1,pla
 raw_581abbf3_d832_4ded_8ebd_48efdcba373e,Vishruth Mantrala,Vishruth Mantrala,Bowled,1,player,1,100.0,2
 raw_ae9c0aee_2339_4af0_ac66_dcb9a0bd9b65,Vivaan Das,Vivaan Das,Bowled,1,player,1,100.0,2
 raw_9a14524a_f7d8_42c2_885d_397cb19e7efb,Yuvan Mantrala,Yuvan Mantrala,Caught,1,player,1,100.0,1
+raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Caught,178,player,249,71.4859437751004,1
+raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Bowled,35,player,249,14.056224899598394,2
+raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,LBW,19,player,249,7.630522088353414,3
+raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Stumped,8,player,249,3.2128514056224895,5
+raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Run out,8,player,249,3.2128514056224895,4
+raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Other,1,player,249,0.4016064257028112,6

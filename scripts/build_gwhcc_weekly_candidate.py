@@ -42,7 +42,9 @@ def summary_specs():
 
 
 def approved_redirects(decisions: pd.DataFrame) -> dict[str, str]:
-    if not decisions["decision"].eq("customer_approved_exact_disjoint_seasons").all():
+    from src.data.gwhcc_identity import EXACT_APPROVAL, NAME_VARIANT_APPROVAL
+
+    if not decisions["decision"].isin({EXACT_APPROVAL, NAME_VARIANT_APPROVAL}).all():
         raise ValueError("Identity continuity must already be explicitly approved")
     if not decisions["club"].eq(CLUB).all():
         raise ValueError("Cross-club identity decision")
@@ -63,6 +65,10 @@ def canonicalise_summary(frame: pd.DataFrame, decisions: pd.DataFrame, spec, fil
     for column in ["canonical_player_id", "player_key"]:
         if column in frame:
             frame[column] = frame[column].replace(redirects)
+    names = decisions.drop_duplicates("canonical_player_id").set_index("canonical_player_id")["canonical_player_name"]
+    for column in ["canonical_player_name", "display_player_name"]:
+        if column in frame:
+            frame.loc[affected, column] = frame.loc[affected, "canonical_player_id"].map(names)
     reduced = consolidate(frame.loc[affected], *spec)
     if filename == "dismissal_fingerprint_summary.csv":
         counts = pd.to_numeric(reduced["count"], errors="raise")

@@ -262,7 +262,10 @@ def active_aliases(aliases_df: pd.DataFrame) -> pd.DataFrame:
 def resolve_approved_disjoint_player_id(value: str, *, club_id: str | None = None) -> str:
     """Redirect retired public/source IDs using explicit club-scoped decisions only."""
     aliases = active_aliases(load_player_aliases(club_id=club_id))
-    approved = aliases[aliases["merge_source"].eq("customer_approved_exact_disjoint_seasons")]
+    approved_sources = {"customer_approved_exact_disjoint_seasons"}
+    if (club_id or get_active_club_id()) == "glen-waverley-hawks":
+        approved_sources.add("customer_confirmed_name_variant_disjoint_seasons")
+    approved = aliases[aliases["merge_source"].isin(approved_sources)]
     for row in approved.to_dict("records"):
         raw_id = row["raw_player_id"]
         previous_id = default_canonical_id(pd.Series({"raw_player_id": raw_id}))
