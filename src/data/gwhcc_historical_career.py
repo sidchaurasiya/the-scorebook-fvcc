@@ -186,5 +186,5 @@ def apply_dated_career_anchors(frame: pd.DataFrame, *, club_id: str = CLUB_ID) -
         for metric in selected | ({"batting_average"} if "batting" in scopes else set()) | ({"bowling_average"} if "bowling" in scopes else set()):
             output.at[index, f"{metric}_authority_source"] = "dated_career_master"
             output.at[index, f"{metric}_authority_scope"] = "full_career_anchor_plus_strictly_later_seasons"
-            output.at[index, f"{metric}_authority_source_row"] = anchor["source_row"]
+            output.at[index, f"{metric}_authority_source_row"] = str(anchor["source_row"])
     return output
