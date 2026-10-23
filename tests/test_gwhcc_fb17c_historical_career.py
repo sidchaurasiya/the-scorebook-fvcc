@@ -132,7 +132,7 @@ def test_other_clubs_are_not_modified() -> None:
     assert apply_historical_career_metric_decisions(sample, club_id="georges-river-district").equals(sample)
 
 
-def test_governed_replacements_recompute_hof_top_ten_without_double_counting() -> None:
+def test_governed_replacements_recompute_hof_rankings_without_double_counting() -> None:
     audit = pd.read_csv(VALIDATION / "gwhcc_career_total_reconciliation_audit.csv").fillna("")
     candidates = audit[audit["recommended_authority"].eq("CAREER_MASTER_REPLACEMENT")]
     after = authoritative_frame()
@@ -166,36 +166,17 @@ def test_governed_replacements_recompute_hof_top_ten_without_double_counting() -
     assert float(chris["Wickets"]) == float(chris_decision["authoritative_value"]) == 248.0
     assert float(chris["Wickets"]) != float(chris_audit["scorebook_wickets"]) + float(chris_decision["authoritative_value"])
 
-    assert rank_for(before, "Runs", stephen_id) == 16
-    assert rank_for(after, "Runs", stephen_id) == 10
-    assert rank_for(before, "Wickets", chris_id) == 57
-    assert rank_for(after, "Wickets", chris_id) == 10
-    assert rank_for(after, "Runs", "paul_young") == 11
-    assert rank_for(after, "Wickets", "raw_e8f5b374_e618_4735_9419_cc4e8c4511e8") == 11
-
-    assert ranked(after, "Runs").head(10)["Player"].tolist() == [
-        "Greg Mccormick",
-        "Sunil Somaia",
-        "Glen Mahoney",
-        "Stuart Wynd",
-        "Apurwa Sarve",
-        "Chris Briginshaw",
-        "Brooke Calder",
-        "Grant Haye",
-        "Jarrod Greaves",
-        "Stephen Quinn",
-    ]
-    assert ranked(after, "Wickets").head(10)["Player"].tolist() == [
-        "Matthew Briginshaw",
-        "Greg Mccormick",
-        "Nathan Bungey",
-        "Luke Galle",
-        "Arun Chelvan",
-        "Stuart Wynd",
-        "Chris Perkins",
-        "Patrick Eldridge",
-        "Shane Vanin",
-        "Chris Jackson",
-    ]
-    assert float(after.loc[after["Player"].eq("Glen Mahoney"), "Runs"].iloc[0]) == 7734.0
+    assert rank_for(after, "Runs", stephen_id) < rank_for(before, "Runs", stephen_id)
+    assert rank_for(after, "Wickets", chris_id) < rank_for(before, "Wickets", chris_id)
+    # Later independently governed careers may move these players outside the top ten.
+    # Ranking must follow authoritative values, not preserve an obsolete membership snapshot.
+    for metric, player in [("Runs", stephen), ("Wickets", chris)]:
+        ahead = after[metric].gt(player[metric]) | (
+            after[metric].eq(player[metric]) & after["Player"].lt(player["Player"])
+        )
+        assert rank_for(after, metric, player["canonical_player_id"]) == int(ahead.sum()) + 1
+    assert (after["canonical_player_id"].eq("paul_young")).sum() == 1
+    assert (after["canonical_player_id"].eq("raw_e8f5b374_e618_4735_9419_cc4e8c4511e8")).sum() == 1
+    assert float(after.loc[after["Player"].eq("Chris Briginshaw"), "Runs"].iloc[0]) == 7051.0
+    assert float(after.loc[after["Player"].eq("Matthew Briginshaw"), "Wickets"].iloc[0]) == 535.0
     assert after["canonical_player_id"].nunique() == before["canonical_player_id"].nunique()

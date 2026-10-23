@@ -10,6 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.data.gwhcc_match_policy import MATCH_CENTRE, PROCESSED, read_csv
+from src.data.gwhcc_historical_career import apply_dated_career_anchors, dated_career_signature
 
 CLUB_ID = "glen-waverley-hawks"
 ROOT = Path(__file__).resolve().parents[2]
@@ -85,7 +86,7 @@ def ensure_document_override_dirs() -> None:
         path.mkdir(parents=True, exist_ok=True)
 
 
-def document_override_signature() -> tuple[tuple[str, float], ...]:
+def document_override_signature() -> tuple[tuple[object, ...], ...]:
     paths = [
         RECORD_OVERRIDES,
         CUSTOMER_CAREER_OVERRIDES,
@@ -99,7 +100,7 @@ def document_override_signature() -> tuple[tuple[str, float], ...]:
         HISTORICAL_PREMIERSHIPS,
         FASTEST_INNINGS_SUPPLEMENTS,
     ]
-    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + (
+    return tuple((str(path), path.stat().st_mtime) for path in paths if path.exists()) + dated_career_signature() + (
         ("record_override_governance", RECORD_OVERRIDE_GOVERNANCE_VERSION),
     )
 
@@ -363,7 +364,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
     if overrides.empty:
         if write_decisions:
             write_decision_rows(decisions)
-        return apply_historical_career_metric_decisions(apply_historical_career_supplements(output))
+        return apply_dated_career_anchors(apply_historical_career_metric_decisions(apply_historical_career_supplements(output)))
 
     output["_player_key_for_doc_override"] = output["Player"].map(normalize_name)
     alias_lookup = unique_alias_lookup(output["Player"])
@@ -427,7 +428,7 @@ def apply_record_overrides(all_time: pd.DataFrame, *, write_decisions: bool = Tr
     output = output.drop(columns=["_player_key_for_doc_override"], errors="ignore")
     if write_decisions:
         write_decision_rows(decisions)
-    return apply_historical_career_metric_decisions(apply_historical_career_supplements(output))
+    return apply_dated_career_anchors(apply_historical_career_metric_decisions(apply_historical_career_supplements(output)))
 
 
 def apply_historical_career_supplements(all_time: pd.DataFrame) -> pd.DataFrame:

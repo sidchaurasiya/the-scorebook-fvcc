@@ -9766,7 +9766,9 @@ def add_gwhcc_not_outs_for_display(all_time: pd.DataFrame, batting: pd.DataFrame
     output["_not_out_row_order"] = range(len(output))
     output = output.merge(not_outs, on="canonical_player_id", how="left", sort=False)
     output = output.sort_values("_not_out_row_order").drop(columns="_not_out_row_order").reset_index(drop=True)
-    return apply_gwhcc_historical_career_metrics(output)
+    from src.data.gwhcc_historical_career import apply_dated_career_anchors
+
+    return apply_dated_career_anchors(apply_gwhcc_historical_career_metrics(output))
 
 
 def add_club_not_outs_for_display(
@@ -12657,15 +12659,17 @@ def player_profile_historical_coverage(career: pd.Series, season_table: pd.DataF
 
 def player_profile_historical_coverage_html(career: pd.Series, season_table: pd.DataFrame) -> str:
     documented, detailed = player_profile_historical_coverage(career, season_table)
-    if not documented:
-        return ""
     lines = [
         f'<div class="profile-meta profile-coverage-meta">Earliest verified GWHCC season: {html.escape(documented)}</div>'
-    ]
+    ] if documented else []
     if detailed:
         lines.append(
             f'<div class="profile-meta profile-coverage-meta">Detailed statistics available from: {html.escape(detailed)}</div>'
         )
+    if get_active_club_id() == "glen-waverley-hawks" and parse_bool(career.get("historical_career_anchor_applied")):
+        from src.data.gwhcc_historical_career import career_anchor_coverage_note
+
+        lines.append(f'<div class="profile-meta profile-coverage-meta">{html.escape(career_anchor_coverage_note(career))}</div>')
     return "".join(lines)
 
 
@@ -15558,6 +15562,11 @@ def render_player_breakdown(career: pd.Series) -> None:
 
 def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) -> list[tuple[str, str]]:
     matches_label = "Matches / detailed innings" if parse_bool(career.get("historical_career_metrics_applied")) else "Matches/Innings"
+    if get_active_club_id() == "glen-waverley-hawks":
+        from src.data.gwhcc_historical_career import has_dated_career_scope
+
+        if has_dated_career_scope(career, "batting"):
+            matches_label = "Matches / career innings"
     metrics = [
         (matches_label, f"{matches_text} / {format_int(career.get('Innings'))}"),
         ("Runs", format_int(career.get("Runs"))),
@@ -15591,6 +15600,8 @@ def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) 
 def render_gwhcc_career_coverage_note(career: pd.Series) -> None:
     if get_active_club_id() != "glen-waverley-hawks":
         return
+    if parse_bool(career.get("historical_career_anchor_applied")):
+        return  # The canonical profile header already explains this source scope.
     if parse_bool(career.get("historical_career_metrics_applied")):
         st.caption(
             "Runs, wickets and career averages use verified historical club records where digital scorecards are incomplete. "

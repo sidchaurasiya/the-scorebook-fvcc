@@ -99,12 +99,14 @@ def test_missing_historical_metadata_never_renders_nan(monkeypatch) -> None:
         assert layout.player_profile_historical_coverage_html(career, seasons) == ""
 
 
-def test_all_34_governed_career_starts_remain_available() -> None:
+def test_existing_governed_career_starts_and_verified_junior_participation_remain_available() -> None:
     metadata = pd.read_csv(SOURCE / "gwhcc_historical_career_metadata.csv")
-    assert len(metadata) == 34
+    assert len(metadata) == 35
     by_name = metadata.set_index("canonical_player_name")["earliest_documented_season"].to_dict()
     assert by_name["Adrian Dale"] == "Summer 1980/81"
     assert by_name["Greg Mccormick"] == "Summer 1985/86"
+    assert by_name["Chris Briginshaw"] == "Summer 1989/90"
+    assert by_name["Matthew Briginshaw"] == "Summer 1990/91"
 
 
 def test_profile_coverage_language_does_not_leak_to_other_clubs(monkeypatch) -> None:
