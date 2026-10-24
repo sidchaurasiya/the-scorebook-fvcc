@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -28,6 +29,12 @@ def append_disjoint(old, new, keys):
     if not old[keys].merge(new[keys], on=keys, how='inner').empty:
         raise ValueError(f'Overlapping contribution keys: {keys}')
     return pd.concat([old, new], ignore_index=True, sort=False)
+
+
+def validate_same_season_match_partitions(new_match_ids, excluded_match_ids):
+    overlap = set(map(str, new_match_ids)) & set(map(str, excluded_match_ids))
+    if overlap:
+        raise ValueError(f"Selected and excluded match IDs overlap: {sorted(overlap)}")
 
 
 CURRENT_SEASON_EXCLUDED_METRICS = {
@@ -263,6 +270,30 @@ def scored_participation(payloads, team_ids, cutoff):
     return pd.DataFrame(rows).drop_duplicates(['match_id','team_id','player_id'])
 
 
+def add_first_innings_result_context(matches: pd.DataFrame, payloads: list[dict]) -> pd.DataFrame:
+    """Retain the official first-innings decision context in customer-facing results."""
+    output = matches.copy()
+    if output.empty or not {'match_id', 'result_text'}.issubset(output.columns):
+        return output
+    for payload in payloads:
+        summary = payload.get('matchSummary') or {}
+        teams = summary.get('teams') or []
+        winners = [team for team in teams if str(team.get('resultType', '')).upper() == 'WON_ON_FIRST_INNINGS']
+        losers = [team for team in teams if str(team.get('resultType', '')).upper() == 'LOST_ON_FIRST_INNINGS']
+        if not winners and not losers:
+            continue
+        if len(winners) != 1 or len(losers) != 1:
+            raise ValueError(f"Ambiguous official first-innings result for match {payload.get('id', '')}")
+        match_id = str(payload.get('id', ''))
+        rows = output['match_id'].astype(str).eq(match_id)
+        if int(rows.sum()) != 1:
+            raise ValueError(f"Expected one match row for first-innings result {match_id}")
+        source_text = str(summary.get('resultText') or output.loc[rows, 'result_text'].iloc[0] or '').strip()
+        if 'first innings' not in source_text.casefold() and not re.search(r'\bwon\s+by\b', source_text, flags=re.IGNORECASE):
+            output.loc[rows, 'result_text'] = f'{source_text} on first innings'.strip()
+    return output
+
+
 def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     if candidate.exists() or candidate == ROOT or ROOT in candidate.parents:
         raise ValueError('Candidate must be a new outside-repository directory')
@@ -279,8 +310,7 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     same_season = state.get('mode') == 'same_season_incremental'
     if same_season:
         excluded_ids=set(map(str,state.get('excluded_match_ids',[])))
-        if not excluded_ids or excluded_ids & set(map(str,state.get('new_match_ids',[]))):
-            raise ValueError('Same-season candidate needs disjoint selected and excluded match IDs')
+        validate_same_season_match_partitions(state.get('new_match_ids',[]),excluded_ids)
         reconciliation=json.loads((bundle/'source_aggregate_reconciliation.json').read_text())
         failed={kind:values.get('mismatch_count') for kind,values in reconciliation.get('categories',{}).items() if values.get('mismatch_count')!=0}
         if failed:
@@ -299,6 +329,7 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
               for key,filename in {'matches':'all_matches', 'innings':'all_match_innings', 'batting':'all_scorecard_batting',
                                    'bowling':'all_scorecard_bowling', 'fielding':'all_scorecard_fielding',
                                    'balls':'all_ball_by_ball', 'partnerships':'all_partnerships', 'overs':'all_overs'}.items()}
+    frames['matches'] = add_first_innings_result_context(frames['matches'], payloads)
     history_ids = set(pd.read_csv(baseline_root/'clubs/fvcc/data/processed/season_overview/season_by_round_scorecards.csv')['match_id'])
     increment_ids = set(frames['matches']['match_id'])
     if history_ids & increment_ids or len(increment_ids) != len(frames['matches']):
@@ -353,7 +384,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
         current['team_id']=current['team_id'].astype(str)
         current['player_id']=current['player_id'].astype(str)
         if same_season:
-            excluded=pd.read_csv(bundle/f'excluded_match_deltas_{kind}.csv')
+            excluded=(pd.read_csv(bundle/f'excluded_match_deltas_{kind}.csv')
+                      if state.get('excluded_match_ids') else pd.DataFrame())
             old_aggregate=pd.read_csv(processed/f'all_seasons_{kind}.csv',low_memory=False)
             aggregates[kind]=merge_same_season_aggregate(
                 old_aggregate,current,excluded,season_id=str(season['id']),participation=participation,

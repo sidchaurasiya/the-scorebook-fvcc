@@ -49,9 +49,31 @@ def test_round_cards_match_declared_finalized_partition(scope):
     assert set(scope['new_match_ids']) == {
         '22342e82-4bc8-4dfa-ba67-5d9cb831247d',
         'd454dfb9-b61d-4382-b6d2-f75594461198',
+        '6175cdef-3b87-4450-a00d-2b381f4324f7',
         '3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6',
     }
-    assert scope.get('excluded_match_ids') == ['6175cdef-3b87-4450-a00d-2b381f4324f7']
+    assert scope.get('excluded_match_ids') == []
+
+
+def test_third_xi_first_innings_result_is_retained_without_placeholder_stats():
+    match_id = '6175cdef-3b87-4450-a00d-2b381f4324f7'
+    empty_innings_id = '9e282cec-6409-4b96-ba45-362cb2bce458'
+    match = pd.read_csv(DATA / 'all_seasons_matches.csv', low_memory=False)
+    match = match[match.match_id.astype(str).eq(match_id)]
+    assert len(match) == 1
+    assert match.iloc[0].result == 'Ivanhoe Mavericks 1st XI won on first innings'
+    assert match.iloc[0].runs_for == 135
+    assert match.iloc[0].runs_against == 104
+
+    round_row = pd.read_csv(DATA / 'season_overview/season_by_round_scorecards.csv', low_memory=False)
+    round_row = round_row[round_row.match_id.astype(str).eq(match_id)]
+    assert len(round_row) == 1
+    assert round_row.iloc[0].result_class == 'loss'
+    assert round_row.iloc[0].result_text == 'lost on first innings'
+
+    for filename in ['all_seasons_scorecard_batting.csv', 'all_seasons_scorecard_bowling.csv', 'all_seasons_scorecard_fielding.csv']:
+        rows = pd.read_csv(DATA / filename, low_memory=False)
+        assert not rows.get('innings_id', pd.Series(dtype=str)).astype(str).eq(empty_innings_id).any()
 
 
 def test_appearances_follow_public_finalized_scorecards_not_provider_counts(scope):
