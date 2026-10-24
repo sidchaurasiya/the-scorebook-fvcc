@@ -24,11 +24,11 @@ def load_core() -> dict[str, object]:
 def test_valid_manifest_loads_all_grdcc_frames() -> None:
     core = load_core()
 
-    # Verified end-of-day11October partition adds 55 canonical IDs; none disappear.
-    assert len(core["batting"]) == 2096
-    assert len(core["bowling"]) == 1775
-    assert len(core["fielding"]) == 1621
-    assert len(core["all_time"]) == 2118
+    # Verified 24 October partition adds four canonical identities; none disappear.
+    assert len(core["batting"]) == 2100
+    assert len(core["bowling"]) == 1779
+    assert len(core["fielding"]) == 1625
+    assert len(core["all_time"]) == 2122
 
 
 def test_missing_prepared_output_falls_back(tmp_path, monkeypatch) -> None:
