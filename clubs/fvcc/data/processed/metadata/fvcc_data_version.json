@@ -1,36 +1,44 @@
 {
   "club_id": "fvcc",
-  "generated_app_facing_data_version": "2026-10-17T19:40:42.500961+00:00",
-  "latest_match_date": "2026-10-17T12:30:00.0000000+11:00",
-  "latest_match_id": "80a88932-8bd2-43c5-9f49-3db456a60ffd",
-  "latest_match_opponent": "Camrea Stingrays 3rd XI",
-  "latest_match_result": "Fiji Victorian 4th XI won by 9 wickets",
-  "latest_match_round": "Round 3",
-  "latest_refresh_timestamp": "2026-10-17T19:40:42.500961+00:00",
+  "generated_app_facing_data_version": "2026-10-24T10:24:29.819962+00:00",
+  "latest_match_date": "2026-10-24T12:30:00.0000000+11:00",
+  "latest_match_id": "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
+  "latest_match_opponent": "Lalor Warriors 3rd XI",
+  "latest_match_result": "Lalor Warriors 3rd XI won by 200 runs",
+  "latest_match_round": "Round 4",
+  "latest_refresh_timestamp": "2026-10-24T10:24:29.819962+00:00",
   "source_data_mtime": 1785594572.7395265,
-  "validator_checks": 52,
+  "validator_checks": 16,
   "validator_failures": 0,
   "validator_status": "pass",
-  "cutoff_utc": "2026-10-17T19:39:14.188451+00:00",
-  "cutoff_melbourne": "2026-10-18T06:39:14.188451+11:00",
+  "cutoff_utc": "2026-10-24T10:24:29.819962+00:00",
+  "cutoff_melbourne": "2026-10-24T21:24:29.819962+11:00",
   "new_match_ids": [
-    "80a88932-8bd2-43c5-9f49-3db456a60ffd"
+    "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
+    "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
+    "d454dfb9-b61d-4382-b6d2-f75594461198"
   ],
   "latest_statistical_season": "Summer 2026/27",
   "current_finalized_match_ids": [
+    "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
+    "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
     "80a88932-8bd2-43c5-9f49-3db456a60ffd",
     "b51f12f3-3c4a-4f15-8735-928f005fb2d2",
     "cdf93da6-f0d4-405b-b1f3-d30744e4774e",
+    "d454dfb9-b61d-4382-b6d2-f75594461198",
     "f3e9f065-f39c-4be8-acb2-37b6512d8cae",
     "fa973310-7871-447f-a4ac-8f6aa4dbfc2a"
   ],
-  "excluded_incomplete_match_ids": [
-    "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
-    "d454dfb9-b61d-4382-b6d2-f75594461198",
-    "6175cdef-3b87-4450-a00d-2b381f4324f7"
-  ],
+  "excluded_incomplete_match_ids": [],
   "source_limitations": [
     "Accepted 10 October Second XI source discrepancy: official team 125, batter 110, extras 9, unexplained 6; no allocation invented.",
-    "10 October First XI FVCC batting BBB sum 153 vs scorecard 152; affected whole-innings coverage excluded."
+    "10 October First XI FVCC batting BBB sum 153 vs scorecard 152; affected whole-innings coverage excluded.",
+    "First XI R3 scorecard bowling figures reconcile, but per-dismissal bowler participant links are absent and BBB is unavailable; use scorecard-only figures for FVCC, no delivery-derived metrics."
+  ],
+  "excluded_match_ids": [
+    "6175cdef-3b87-4450-a00d-2b381f4324f7"
+  ],
+  "source_issue_match_ids": [
+    "6175cdef-3b87-4450-a00d-2b381f4324f7"
   ]
 }

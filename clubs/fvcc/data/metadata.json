@@ -25,358 +25,10 @@
         }
       ],
       "isCurrentSeason": false
-    },
-    {
-      "id": "a826b403-b813-4318-9805-5bbe4cf7f238",
-      "name": "Summer 2025/26",
-      "startDate": "2025-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "6169f605-4b96-4f21-87c5-0862f914624f",
-      "name": "Winter 2025",
-      "startDate": "2025-01-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "fc1465b6-3c80-4b82-9759-680a784168c2",
-      "name": "Summer 2024/25",
-      "startDate": "2024-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "f8ebef3a-ba2d-48c4-95f8-0b13d067e817",
-      "name": "Summer 2023/24",
-      "startDate": "2023-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "3e3a72f9-34fa-49f5-a42e-35d86629a3af",
-      "name": "Summer 2022/23",
-      "startDate": "2022-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "b1454afb-68a7-46c3-b05c-4b3fe68077cb",
-      "name": "Winter 2022",
-      "startDate": "2022-01-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "aad2a6fe-7bbd-4680-a386-01319b828522",
-      "name": "Summer 2021/22",
-      "startDate": "2021-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "3750296e-c0ac-4f67-ada4-9a47266c1f8a",
-      "name": "Winter 2021",
-      "startDate": "2021-01-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "a387270b-f2fd-4e48-9334-b7f9b59589a5",
-      "name": "Summer 2020/21",
-      "startDate": "2020-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "95aa262f-30aa-4e11-8296-3a374a9fa3aa",
-      "name": "Summer 2019/20",
-      "startDate": "2019-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "d5fcf197-b63b-4b8c-92a6-6925538ba1ac",
-      "name": "Winter 2019",
-      "startDate": "2019-01-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "fec2e604-1806-4e0f-861e-b7ee37643f96",
-      "name": "Summer 2018/19",
-      "startDate": "2018-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "a9c25381-9a31-4bde-b3ff-4074ebed8044",
-      "name": "Summer 2017/18",
-      "startDate": "2017-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "7ec61036-ef0f-434b-9cfb-d287d9f6ec26",
-      "name": "Summer 2016/17",
-      "startDate": "2016-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "c097ba1c-ea65-4a1e-8945-ffe9f22c576a",
-      "name": "Summer 2015/16",
-      "startDate": "2015-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "f7567eab-6090-4cf2-b14f-2874ae98667f",
-      "name": "Summer 2014/15",
-      "startDate": "2014-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "a07158e7-b32f-4511-9f9b-5f75c5f7d6ae",
-      "name": "Summer 2013/14",
-      "startDate": "2013-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "aaf17d1d-d108-45ab-9c9f-7dcbe99d33f1",
-      "name": "Summer 2012/13",
-      "startDate": "2012-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "eec02606-f589-43b3-9d5a-40c3db29b323",
-      "name": "Summer 2011/12",
-      "startDate": "2011-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "b41aad11-0719-4499-ae34-fa95731e582b",
-      "name": "Summer 2010/11",
-      "startDate": "2010-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "d1b386aa-ac78-4fb4-a434-94b03b69808a",
-      "name": "Summer 2009/10",
-      "startDate": "2009-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "2bea42bd-9a74-48c1-9950-f7c3a3906c31",
-      "name": "Summer 2008/09",
-      "startDate": "2008-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "3a5d3c8d-38f5-4c33-b1eb-01aeced3cfd3",
-      "name": "Summer 2007/08",
-      "startDate": "2007-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "e9b37153-9187-4dad-b04d-cf5fa01ccb8e",
-      "name": "Summer 2006/07",
-      "startDate": "2006-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "54f45899-c1b5-4d0a-ae20-dc26e463e143",
-      "name": "Summer 2005/06",
-      "startDate": "2005-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "94913459-339b-4070-9581-c6c1dfad328b",
-      "name": "Summer 2004/05",
-      "startDate": "2004-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "4e850a88-1187-4f43-a5d9-7e988a6e218f",
-      "name": "Summer 2003/04",
-      "startDate": "2003-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "3bf412ae-5efe-4a2b-9d0f-7174ce7d0a71",
-      "name": "Summer 2002/03",
-      "startDate": "2002-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
-    },
-    {
-      "id": "5347386c-ad71-47fe-bd25-a914b2ddf946",
-      "name": "Summer 2001/02",
-      "startDate": "2001-07-01T00:00:00.0000000+00:00",
-      "classification": [
-        {
-          "id": 1,
-          "name": "Participating"
-        }
-      ],
-      "isCurrentSeason": false
     }
   ],
-  "fetch_date_time": "2026-10-17T19:40:42.500961+00:00",
-  "last_successful_refresh_time": "2026-10-17T19:40:42.500961+00:00",
+  "fetch_date_time": "2026-10-24T10:24:29.819962+00:00",
+  "last_successful_refresh_time": "2026-10-24T10:24:29.819962+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -384,13 +36,13 @@
     "/participants/grades/{grade_id}/bowling-statistics",
     "/participants/grades/{grade_id}/fielding-statistics"
   ],
-  "matches_fetched": 966,
-  "players_fetched": 335,
+  "matches_fetched": 969,
+  "players_fetched": 336,
   "teams_fetched": 78,
   "stat_rows": {
-    "batting": 1961,
-    "bowling": 1961,
-    "fielding": 1961
+    "batting": 1968,
+    "bowling": 1968,
+    "fielding": 1968
   },
   "live_requests": 5,
   "cache_hits": 248,
@@ -401,81 +53,81 @@
     "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population."
   ],
   "incremental_refresh": {
-    "cutoff_utc": "2026-10-17T19:39:14.188451+00:00",
-    "cutoff_melbourne": "2026-10-18T06:39:14.188451+11:00",
+    "cutoff_utc": "2026-10-24T10:24:29.819962+00:00",
+    "cutoff_melbourne": "2026-10-24T21:24:29.819962+11:00",
     "new_match_ids": [
-      "80a88932-8bd2-43c5-9f49-3db456a60ffd"
+      "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
+      "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
+      "d454dfb9-b61d-4382-b6d2-f75594461198"
     ],
+    "historical_rows_preserved": true,
+    "provider_cancelled_appearances_excluded": true,
     "current_finalized_match_ids": [
+      "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
+      "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
       "80a88932-8bd2-43c5-9f49-3db456a60ffd",
       "b51f12f3-3c4a-4f15-8735-928f005fb2d2",
       "cdf93da6-f0d4-405b-b1f3-d30744e4774e",
+      "d454dfb9-b61d-4382-b6d2-f75594461198",
       "f3e9f065-f39c-4be8-acb2-37b6512d8cae",
       "fa973310-7871-447f-a4ac-8f6aa4dbfc2a"
     ],
-    "excluded_incomplete_match_ids": [
-      "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
-      "d454dfb9-b61d-4382-b6d2-f75594461198",
-      "6175cdef-3b87-4450-a00d-2b381f4324f7"
-    ],
-    "historical_rows_preserved": true,
-    "publication_policy": "finalized_scorecard_verified_only",
-    "incomplete_team_provider_statistical_changes": 0,
-    "provider_cancelled_appearances_excluded": true,
-    "known_source_exceptions": [
-      "Accepted 10 October Second XI source discrepancy: official team 125, batter 110, extras 9, unexplained 6; no allocation invented.",
-      "10 October First XI FVCC batting BBB sum 153 vs scorecard 152; affected whole-innings coverage excluded."
-    ],
     "verified_public_appearance_counts": {
       "ashish_sharma": 1,
-      "balaji_viswanathan": 1,
-      "baurel_d_mello": 1,
+      "balaji_viswanathan": 2,
+      "baurel_d_mello": 2,
       "damien_vikash": 1,
-      "danny_singh": 1,
+      "danny_singh": 2,
       "faraz_khan": 1,
-      "feroz_hassan": 2,
+      "feroz_hassan": 3,
       "janaka_wijayakoon": 1,
-      "kalpeshkumar_patel": 1,
-      "kieran_bhan": 1,
+      "kalpeshkumar_patel": 2,
+      "kieran_bhan": 2,
       "mayur_mohan": 1,
+      "nikhil_sawant": 1,
       "raw_05220db1_794d_452c_b921_2eb60d032d21": 1,
       "raw_0ceda279_1aad_42cd_a342_75c5faf3ad14": 1,
-      "raw_17d58ef7_cae1_444e_adba_71c74067872b": 1,
-      "raw_1876a444_275e_4ae9_92aa_1eebf5760833": 2,
-      "raw_232cc042_1e4c_423a_9190_e3432698c99d": 1,
+      "raw_162cce2f_a5bb_451f_ab68_d7a037f018ee": 1,
+      "raw_17d58ef7_cae1_444e_adba_71c74067872b": 2,
+      "raw_1876a444_275e_4ae9_92aa_1eebf5760833": 3,
+      "raw_232cc042_1e4c_423a_9190_e3432698c99d": 2,
+      "raw_233ce417_fb9f_4e1e_a318_95e28e0e9d5a": 1,
       "raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26": 1,
-      "raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59": 1,
-      "raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85": 1,
+      "raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59": 2,
+      "raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85": 2,
       "raw_548ed130_0c8c_49a5_939a_1edb2247cbd4": 1,
-      "raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72": 1,
+      "raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72": 2,
       "raw_661bdd19_e67a_4978_a255_36e16789ab1f": 1,
-      "raw_6b74d336_b105_407c_b4ef_f68e2fba7862": 1,
-      "raw_7512873c_b6b6_49fe_80ff_3733b5abd044": 1,
-      "raw_7b43011a_eb05_448f_93c9_644481721a69": 1,
-      "raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b": 1,
-      "raw_8a856bda_2a2c_416f_948f_f80829c83646": 2,
+      "raw_6b74d336_b105_407c_b4ef_f68e2fba7862": 2,
+      "raw_7512873c_b6b6_49fe_80ff_3733b5abd044": 2,
+      "raw_7b43011a_eb05_448f_93c9_644481721a69": 2,
+      "raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b": 2,
+      "raw_8a856bda_2a2c_416f_948f_f80829c83646": 3,
       "raw_8d406a25_db4b_4b64_b592_84d73e3ad834": 1,
-      "raw_a0711994_f960_4c71_bea5_c9dd9f3edd83": 1,
-      "raw_a4fd7cdc_34bb_4350_b595_edca28c4e127": 1,
-      "raw_ab033f7b_82e2_4044_b0cb_9024cf56db51": 1,
-      "raw_ae261d51_9af8_4123_b965_4adda74aafc6": 2,
+      "raw_a0711994_f960_4c71_bea5_c9dd9f3edd83": 2,
+      "raw_a4fd7cdc_34bb_4350_b595_edca28c4e127": 2,
+      "raw_ab033f7b_82e2_4044_b0cb_9024cf56db51": 2,
+      "raw_ae261d51_9af8_4123_b965_4adda74aafc6": 3,
       "raw_b8280555_96bf_427b_b15e_ecaf70081627": 1,
-      "raw_c3a31191_6c5e_438e_9288_354845031832": 1,
-      "raw_cc39f432_071b_4940_b2d8_1a8218d46cc3": 1,
-      "raw_cde56a07_7d3e_47b6_9586_f49472e1ee4b": 2,
+      "raw_c3a31191_6c5e_438e_9288_354845031832": 2,
+      "raw_cc39f432_071b_4940_b2d8_1a8218d46cc3": 2,
+      "raw_cde56a07_7d3e_47b6_9586_f49472e1ee4b": 3,
       "raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8": 1,
-      "raw_d7f93a87_6b05_4830_a524_41457fd00603": 1,
-      "raw_e76d9035_6b7f_48f7_8b69_e8b983e82080": 1,
+      "raw_d7f93a87_6b05_4830_a524_41457fd00603": 2,
+      "raw_e76d9035_6b7f_48f7_8b69_e8b983e82080": 2,
       "raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc": 2,
       "raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186": 2,
-      "raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5": 1,
-      "sandeep_gill": 1,
+      "raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5": 2,
+      "sandeep_gill": 2,
       "shrikant_sharma": 1,
-      "vinay_sharma": 1,
-      "vinit_naidu": 1,
+      "vinay_sharma": 2,
+      "vinit_naidu": 2,
       "vishnu_para": 1,
       "wajhi_syed": 1
     },
-    "appearance_evidence": "Selected public players on finalized scored team rosters; includes supported Did Not Bat participation."
+    "excluded_incomplete_match_ids": [],
+    "excluded_match_ids": [
+      "6175cdef-3b87-4450-a00d-2b381f4324f7"
+    ]
   }
 }
