@@ -7,9 +7,9 @@ max_value_decision_rule,pass,decisions=166
 harry_milburn,pass,displayed=10788
 gordon_leslie,pass,displayed=707
 current_higher_case,pass,count=71
-hof_all_time_prepared_before_tables,pass,shared HOF preparation
+hof_all_time_prepared_before_tables,pass,shared HOF preparation applies the active club scope
 hof_stats_table_uses_prepared_all_time,pass,detailed tables built from prepared all_time
-player_profile_career_override,pass,career row only
+player_profile_career_override,pass,career row only; active club scope is explicit
 career_only_metric_map,pass,no season metric mapping
 no_noisy_source_text,pass,UI template clean
 runtime_grdcc_values,pass,helper applies approved values
@@ -18,4 +18,4 @@ candidate_schema,pass,rows=455
 highest_score_candidates,pass,count=421
 bbi_candidates,pass,count=34
 candidate_only,pass,no app injection
-raw_sources_unchanged,pass,none
+raw_and_historical_sources_unchanged,pass,none

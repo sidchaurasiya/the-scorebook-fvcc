@@ -2,14 +2,14 @@ metric,value
 final_source_rule,Excel through Summer 1971/72; PlayCricket from Summer 1972/73
 excel_batting_rows_kept,1586
 excel_bowling_rows_kept,344
-playcricket_batting_rows_kept,7735
-playcricket_bowling_rows_kept,7681
-playcricket_fielding_rows_kept,7746
+playcricket_batting_rows_kept,7921
+playcricket_bowling_rows_kept,7867
+playcricket_fielding_rows_kept,7932
 excel_seasons,39
-playcricket_seasons,53
-total_app_facing_batting_seasons,92
-total_app_facing_bowling_seasons,77
-total_app_facing_fielding_seasons,57
+playcricket_seasons,54
+total_app_facing_batting_seasons,93
+total_app_facing_bowling_seasons,78
+total_app_facing_fielding_seasons,58
 summer_1971_72_batting_rows,40
 summer_1971_72_batting_source,excel
 summer_1971_72_bowling_rows,0

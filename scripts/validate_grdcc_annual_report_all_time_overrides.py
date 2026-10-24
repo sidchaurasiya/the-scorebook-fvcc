@@ -67,9 +67,18 @@ def main() -> None:
 
     layout = (ROOT / "src/ui/layout.py").read_text(encoding="utf-8")
     helper = (ROOT / "src/data/featured_record_overrides.py").read_text(encoding="utf-8")
-    check("hof_all_time_prepared_before_tables", 'all_time = apply_featured_record_overrides(historical_data["all_time"].copy())' in layout, "shared HOF preparation")
+    check(
+        "hof_all_time_prepared_before_tables",
+        "all_time = apply_featured_record_overrides(\n        build_all_time_player_table(" in layout
+        and "club_id=club_id," in layout,
+        "shared HOF preparation applies the active club scope",
+    )
     check("hof_stats_table_uses_prepared_all_time", '"batting": format_all_time_batting_table(all_time)' in layout and '"bowling": format_all_time_bowling_table(all_time)' in layout, "detailed tables built from prepared all_time")
-    check("player_profile_career_override", "career = apply_featured_record_overrides(career, add_missing_players=False)" in layout, "career row only")
+    check(
+        "player_profile_career_override",
+        "career = apply_featured_record_overrides(career, club_id=active_club_id, add_missing_players=False)" in layout,
+        "career row only; active club scope is explicit",
+    )
     check("career_only_metric_map", '"career_runs": "Runs"' in helper and '"career_wickets": "Wickets"' in helper, "no season metric mapping")
     check("no_noisy_source_text", "Official Annual Report total" not in layout, "UI template clean")
 
@@ -94,14 +103,13 @@ print(json.dumps({'grdcc':out[['Player','Runs','Wickets']].to_dict('records'),'f
     check("bbi_candidates", any(row["record_category"] == "bbi" for row in candidates), f"count={sum(row['record_category'] == 'bbi' for row in candidates)}")
     check("candidate_only", all(row["candidate_for_iconic_performances"] == "yes" and "not injected" in row["notes"] for row in candidates), "no app injection")
 
-    raw_paths = [
-        "clubs/georges-river-district/data/processed/all_seasons_batting.csv",
-        "clubs/georges-river-district/data/processed/all_seasons_bowling.csv",
+    source_paths = [
+        "clubs/georges-river-district/data/source",
         "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv",
         "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_bowling.csv",
     ]
-    changed = subprocess.run(["git", "diff", "--name-only", "--", *raw_paths], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
-    check("raw_sources_unchanged", not changed, changed or "none")
+    changed = subprocess.run(["git", "diff", "--name-only", "--", *source_paths], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+    check("raw_and_historical_sources_unchanged", not changed, changed or "none")
 
     write(VALIDATION, checks, ["check", "status", "detail"])
     overrides = sum(row["override_applies"] == "yes" for row in decisions)

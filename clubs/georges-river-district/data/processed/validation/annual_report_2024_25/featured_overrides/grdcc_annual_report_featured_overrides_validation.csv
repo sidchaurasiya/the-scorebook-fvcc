@@ -1,5 +1,5 @@
 check,status,details
-override_file_loads,pass,/Users/preetkaur/Documents/Codex/2026-04-24/you-are-an-expert-full-stack/clubs/georges-river-district/data/source/annual_report_featured_record_overrides.csv
+override_file_loads,pass,/Users/preetkaur/CodexLocal/worktrees/grdcc-weekly-refresh-2026-10-24/clubs/georges-river-district/data/source/annual_report_featured_record_overrides.csv
 required_fields_present,pass,"annual_report_source, applies_to_app_sections, authoritative_value, metric, override_reason, record_category, report_year"
 required_values_populated,pass,rows with missing required values: 0
 harry_milburn_career_runs_exists,pass,matching rows: 1
