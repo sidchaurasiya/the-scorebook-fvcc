@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 from pathlib import Path
 
-from scripts.build_fvcc_incremental_refresh import append_disjoint, merge_same_season_aggregate, scored_participation
+from scripts.build_fvcc_incremental_refresh import add_first_innings_result_context, append_disjoint, merge_same_season_aggregate, scored_participation, validate_same_season_match_partitions
 from scripts.grdcc_incremental_summaries import merge_summary
 
 
@@ -89,12 +89,12 @@ def test_captain_historical_keys_survive_new_evidence():
 
 def test_verified_current_fvcc_contributions_and_excluded_cancelled_counts():
     root=Path(__file__).resolve().parents[1]/'clubs/fvcc/data/processed'
-    cases=[('batting','battingAggregate',885),('bowling','bowlingWickets',58),('fielding','fieldingTotalCatches',22)]
+    cases=[('batting','battingAggregate',1007),('bowling','bowlingWickets',67),('fielding','fieldingTotalCatches',29)]
     for kind,metric,expected in cases:
         frame=pd.read_csv(root/f'all_seasons_{kind}.csv')
         current=frame[frame.season.eq('Summer 2026/27')]
-        assert len(current)==56
-        assert current.matches.sum()==88
+        assert len(current)==60
+        assert current.matches.sum()==98
         assert current.matches.isin([1,2,3]).all()
         assert current[metric].sum()==expected
         assert not current.duplicated(['season_id','team_id','player_id']).any()
@@ -192,3 +192,49 @@ def test_same_season_fielding_keeps_keeper_and_runout_splits(monkeypatch):
     assert player.fieldingCatchesWK==1
     assert player.fieldingStumpings==0
     assert player.fieldingRunOuts==2
+
+
+def test_same_season_partition_allows_no_excluded_matches():
+    assert validate_same_season_match_partitions(
+        ['verified-match-1', 'verified-match-2'],
+        [],
+    ) is None
+
+
+def test_same_season_partition_rejects_a_match_selected_and_excluded():
+    with pytest.raises(ValueError, match='Selected and excluded match IDs overlap'):
+        validate_same_season_match_partitions(
+            ['same-match'],
+            ['same-match'],
+        )
+
+
+def test_official_first_innings_result_context_is_rendered_without_a_margin():
+    matches=pd.DataFrame([{'match_id':'official-match','result_text':'Ivanhoe Mavericks 1st XI won'}])
+    payload={'id':'official-match','matchSummary':{'resultText':'Ivanhoe Mavericks 1st XI won','teams':[
+        {'id':'club','resultType':'LOST_ON_FIRST_INNINGS'},
+        {'id':'opponent','resultType':'WON_ON_FIRST_INNINGS'},
+    ]}}
+    result=add_first_innings_result_context(matches,[payload])
+    assert result.loc[0,'result_text']=='Ivanhoe Mavericks 1st XI won on first innings'
+    assert matches.loc[0,'result_text']=='Ivanhoe Mavericks 1st XI won'
+
+
+def test_non_first_innings_result_text_is_unchanged():
+    matches=pd.DataFrame([{'match_id':'ordinary-match','result_text':'Other XI won by 5 runs'}])
+    payload={'id':'ordinary-match','matchSummary':{'resultText':'Other XI won by 5 runs','teams':[
+        {'id':'club','resultType':'LOST'},
+        {'id':'opponent','resultType':'WON'},
+    ]}}
+    result=add_first_innings_result_context(matches,[payload])
+    assert result.loc[0,'result_text']=='Other XI won by 5 runs'
+
+
+def test_first_innings_result_with_official_margin_is_preserved_verbatim():
+    matches=pd.DataFrame([{'match_id':'margin-match','result_text':'Other XI won by 2 wickets'}])
+    payload={'id':'margin-match','matchSummary':{'resultText':'Other XI won by 2 wickets','teams':[
+        {'id':'club','resultType':'LOST_ON_FIRST_INNINGS'},
+        {'id':'opponent','resultType':'WON_ON_FIRST_INNINGS'},
+    ]}}
+    result=add_first_innings_result_context(matches,[payload])
+    assert result.loc[0,'result_text']=='Other XI won by 2 wickets'
