@@ -211,7 +211,7 @@ def test_gwhcc_existing_helper_behaviour_is_unchanged() -> None:
 
 def test_current_fvcc_and_grdcc_sources_reconcile_without_average_changes() -> None:
     sources = [
-        ("clubs/fvcc/data/processed/all_seasons_batting.csv", 1961, 1961, 0, 0),
+        ("clubs/fvcc/data/processed/all_seasons_batting.csv", 1968, 1968, 0, 0),
         ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 7933, 7933, 0, 0),
         (
             "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv",
@@ -260,16 +260,16 @@ def test_fvcc_refresh_preserves_all_historical_batting_keys_and_values() -> None
 def test_fvcc_refresh_has_exact_verified_new_contributions() -> None:
     contributions = []
     for kind, metric, total in [
-        ("batting", "battingAggregate", 539),
-        ("bowling", "bowlingWickets", 30),
-        ("fielding", "fieldingTotalCatches", 12),
+        ("batting", "battingAggregate", 885),
+        ("bowling", "bowlingWickets", 58),
+        ("fielding", "fieldingTotalCatches", 22),
     ]:
         frame = pd.read_csv(f"clubs/fvcc/data/processed/all_seasons_{kind}.csv", low_memory=False)
         current = frame.loc[frame["season"].eq("Summer 2026/27")]
-        assert len(frame) == 1961
-        assert len(current) == 49
-        assert current["matches"].sum() == 55
-        assert current["matches"].isin([1, 2]).all()
+        assert len(frame) == 1968
+        assert len(current) == 56
+        assert current["matches"].sum() == 88
+        assert current["matches"].isin([1, 2, 3]).all()
         assert current[metric].sum() == total
         assert current["canonical_player_id"].notna().all()
         assert not current.duplicated(["season_id", "team_id", "player_id"]).any()

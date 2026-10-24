@@ -9,43 +9,43 @@
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_batting.csv",
-      "size": 995358,
-      "sha256": "15e1bdd4f45bef31871777b73536ea3c4a02546b6183b7c938ec5391fe6a5fae"
+      "size": 999526,
+      "sha256": "4bfae02b8a9f775984e30ac292b162b278693554eac42cc2e386dafe708b1267"
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_bowling.csv",
-      "size": 983059,
-      "sha256": "915e01cbc459e916ccc7f39f5bffeaa193349b944be91d772b9018b6e7f6171a"
+      "size": 987085,
+      "sha256": "4ca47b2fa442a26bace620db8019287402e30f16e3d1c72fa366cd3ca39166a2"
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_fielding.csv",
-      "size": 936292,
-      "sha256": "2735b4a5cc6f31e1ff823357ea54838c2929b88018e2d1176ac7b80d65ab58e2"
+      "size": 940138,
+      "sha256": "b03765e05de90684d903b469b679c1fd5d6182a703d9440cc55aec5f29db896a"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_bbb_batting_rates.csv",
-      "size": 11575,
-      "sha256": "ace1c665cf848c983d88c22184362211c0e5436bb2f923e0a52b0ac40979fe1d"
+      "size": 11904,
+      "sha256": "ac08cf11badc6e456ffe89210b390398a3236690e69b42465d04a90dc58edf78"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_bowling_milestones.csv",
-      "size": 32030,
-      "sha256": "8e9ffec657930d62e4f0bf38feab164b0cce06007ed75068c5e9b205e33a5694"
+      "size": 32162,
+      "sha256": "9e8303ddcb9b0a283b9cb55798a1d8b03aa8c7ce34f208861b33a9ef9d2a90c8"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_scorecard_milestones.csv",
-      "size": 37681,
-      "sha256": "ef5e02fe5b0ffa98b049e35de4c4fd6cf0d3bbb5a2a368efdcc9fd6fa04b0cfd"
+      "size": 37813,
+      "sha256": "a36f591ce08ae96a2880ff2e01762a35b3b61163eefba628be9be61bd0246d71"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_win_rates.csv",
-      "size": 62770,
-      "sha256": "1c7787501721cf07cd2c3fbd850fa20c3b39a17051cedb79d5ea63df626ca745"
+      "size": 62975,
+      "sha256": "896585b007629b097556fa42220da7b941b4845d2bb1c72c4fcb7b5088d1837f"
     },
     {
       "path": "clubs/fvcc/data/processed/players.csv",
-      "size": 76196,
-      "sha256": "9d40d3f2d53998093e19764ce9da1fbdad7cfcdf938071c3a1be8b9eba03c6ed"
+      "size": 76402,
+      "sha256": "73e97ae5311a7dd13fd22a09943e919a473ab9637a6269bb024ff06c5ab86d04"
     },
     {
       "path": "clubs/fvcc/data/processed/seasons.csv",
@@ -64,10 +64,10 @@
     }
   ],
   "row_counts": {
-    "batting": 296,
-    "bowling": 296,
-    "fielding": 296,
-    "all_time": 296
+    "batting": 297,
+    "bowling": 297,
+    "fielding": 297,
+    "all_time": 297
   },
   "public_filter_version": "fvcc-hof-public-filter-v1"
 }
