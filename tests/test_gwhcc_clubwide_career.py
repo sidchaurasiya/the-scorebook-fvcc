@@ -25,7 +25,7 @@ def test_every_verified_decision_has_one_public_identity_and_auditable_source(mo
     source = history.load_dated_career_anchors()
     assert len(source) == len(EXPECTED) == 63
     assert source.canonical_player_id.is_unique
-    index = layout.load_player_profile_index(history.CLUB_ID, layout.metadata_mtime(), layout.player_aliases_mtime())
+    index = layout.load_player_profile_index.__wrapped__(history.CLUB_ID, layout.metadata_mtime(), layout.player_aliases_mtime())
     for row in source.to_dict("records"):
         assert int(index.id.eq(row["canonical_player_id"]).sum()) == 1
         assert row["source_row"]
@@ -88,8 +88,8 @@ def test_only_approved_metric_bundles_change_and_all_other_players_are_preserved
     pd.testing.assert_frame_equal(before.loc[other].reset_index(drop=True), after.loc[other, before.columns].reset_index(drop=True), check_dtype=False)
     for metric in ["Matches", "Catches", "Stumpings", "Run Outs", "HS", "50s", "100s", "BBI"]:
         pd.testing.assert_series_equal(before[metric], after[metric], check_dtype=False)
-    assert int(other.sum()) == 1223
-    assert len(after) == 1284 and after.canonical_player_id.is_unique
+    assert int(other.sum()) == len(after) - additional.canonical_player_id.nunique()
+    assert len(after) == 1291 and after.canonical_player_id.is_unique
 
 
 def test_review_rows_remain_suppressed_even_when_an_independent_anchor_has_the_same_value(monkeypatch):
@@ -129,7 +129,7 @@ def test_individual_cutoffs_and_current_season_contributions_survive():
     assert source.loc["Brett Powell", "batting_anchor_through_season"] == "Summer 2020/21"
     assert source.loc["Brett Powell", "bowling_anchor_through_season"] == "Summer 2025/26"
     actual = docs.apply_record_overrides(core_frame(), write_decisions=False).set_index("Player")
-    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 52
+    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 64
     assert actual.loc["Nathan Bungey", "Runs"] == 3330 + 50
     assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 2
 

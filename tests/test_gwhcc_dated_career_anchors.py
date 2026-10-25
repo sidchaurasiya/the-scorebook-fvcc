@@ -145,7 +145,7 @@ def test_real_authoritative_frame_changes_only_explicit_source_identities():
     after = history.apply_dated_career_anchors(before)
     mask = ~before.canonical_player_id.isin(set(history.load_dated_career_anchors().canonical_player_id))
     pd.testing.assert_frame_equal(before.loc[mask].reset_index(drop=True), after.loc[mask, before.columns].reset_index(drop=True), check_dtype=False)
-    assert len(after) == len(base) == 1284
+    assert len(after) == len(base) == 1291
     assert after.canonical_player_id.is_unique
     assert docs.load_historical_career_metric_decisions().canonical_player_id.nunique() == 21
 
@@ -157,7 +157,7 @@ def test_real_authoritative_frame_changes_only_explicit_source_identities():
 def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, monkeypatch):
     from src.ui import layout
     monkeypatch.setenv("CLUB_ID", history.CLUB_ID)
-    index = layout.load_player_profile_index(history.CLUB_ID, layout.metadata_mtime(), layout.player_aliases_mtime())
+    index = layout.load_player_profile_index.__wrapped__(history.CLUB_ID, layout.metadata_mtime(), layout.player_aliases_mtime())
     assert index[index.id.eq(pid)].name.tolist() == [name]
     profile = layout.get_player_profile_data(pid, layout.metadata_mtime(), layout.player_aliases_mtime(), club_id=history.CLUB_ID)
     view = layout.build_player_profile_view.__wrapped__(profile, layout.player_profile_view_signature())
@@ -190,7 +190,10 @@ def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, mo
 
 def test_no_source_season_snapshot_or_other_club_files_changed():
     changed = subprocess.check_output(["git", "diff", "--name-only"], cwd=ROOT, text=True).splitlines()
-    assert not any("/data/processed/" in p or "source/excel" in p for p in changed)
+    allowed = ("clubs/glen-waverley-hawks/data/", "tests/")
+    allowed_exact = {"scripts/build_gwhcc_incremental_candidate.py", "src/ui/layout.py"}
+    assert all(p.startswith(allowed) or p in allowed_exact for p in changed)
+    assert not any("/data/source/" in p or "source/excel" in p for p in changed)
     assert not any(p.startswith(("clubs/fvcc/", "clubs/georges-river-district/")) for p in changed)
 
 

@@ -8004,6 +8004,63 @@ def inject_theme() -> None:
                 color: #5B3DF5 !important;
             }
 
+            div.st-key-gwhcc_mobile_nav_buttons {
+                display: grid;
+                gap: 8px;
+                margin-top: 14px;
+            }
+
+            div.st-key-gwhcc_mobile_nav_buttons div[data-testid="stButton"] {
+                margin: 0;
+                width: 100%;
+            }
+
+            div.st-key-gwhcc_mobile_nav_buttons div[data-testid="stButton"] button,
+            section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button {
+                border-radius: 14px !important;
+                font-size: 0.88rem !important;
+                font-weight: 850 !important;
+                justify-content: flex-start !important;
+                min-height: 44px;
+                padding: 11px 13px !important;
+                text-align: left !important;
+                width: 100%;
+            }
+
+            div.st-key-gwhcc_mobile_nav_buttons div[data-testid="stButton"] button[kind="secondary"] {
+                background: #ffffff !important;
+                border: 1px solid #E6E9F5 !important;
+                box-shadow: none !important;
+                color: var(--ink) !important;
+            }
+
+            div.st-key-gwhcc_mobile_nav_buttons div[data-testid="stButton"] button[kind="primary"],
+            section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="primary"] {
+                background: linear-gradient(135deg, var(--club-sidebar-active), var(--club-sidebar-bg)) !important;
+                border: 1px solid rgba(var(--club-primary-rgb), 0.58) !important;
+                box-shadow: 0 12px 26px rgba(var(--club-primary-rgb), 0.24) !important;
+                color: #ffffff !important;
+            }
+
+            section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="secondary"] {
+                background: transparent !important;
+                border: 1px solid transparent !important;
+                box-shadow: none !important;
+                color: rgba(255, 255, 255, 0.76) !important;
+            }
+
+            section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="secondary"]:hover,
+            section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="secondary"]:focus-visible {
+                background: rgba(255, 255, 255, 0.12) !important;
+                color: #ffffff !important;
+            }
+
+            div.st-key-gwhcc_mobile_nav_buttons div[data-testid="stButton"] button:focus-visible,
+            section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button:focus-visible {
+                outline: 3px solid var(--club-primary) !important;
+                outline-offset: 2px;
+            }
+
             .mobile-page-footer {
                 border-top: 1px solid #ECEEFA;
                 color: #7d839d;
@@ -8469,6 +8526,44 @@ def active_club_theme_css() -> str:
                 0 16px 34px {active_shadow},
                 0 0 0 1px rgba(255,255,255,0.10),
                 inset 0 1px 0 rgba(255,255,255,0.26) !important;
+        }}
+
+        section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button {{
+            align-items: center !important;
+            border-radius: 14px !important;
+            display: flex !important;
+            font-size: 0.98rem !important;
+            font-weight: 750 !important;
+            justify-content: flex-start !important;
+            min-height: 46px;
+            padding: 13px 15px !important;
+            text-align: left !important;
+            width: 100%;
+        }}
+
+        section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="secondary"] {{
+            background: transparent !important;
+            border: 1px solid transparent !important;
+            box-shadow: none !important;
+            color: rgba(255, 255, 255, 0.76) !important;
+        }}
+
+        section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="primary"] {{
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.04)),
+                linear-gradient(135deg, var(--club-sidebar-active), var(--club-sidebar-bg)) !important;
+            border: 1px solid rgba(var(--club-primary-rgb), 0.58) !important;
+            box-shadow:
+                0 16px 34px {active_shadow},
+                0 0 0 1px rgba(255,255,255,0.10),
+                inset 0 1px 0 rgba(255,255,255,0.26) !important;
+            color: #ffffff !important;
+        }}
+
+        section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="secondary"]:hover,
+        section[data-testid="stSidebar"] div.st-key-gwhcc_sidebar_nav div[data-testid="stButton"] button[kind="secondary"]:focus-visible {{
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #ffffff !important;
         }}
 
         section[data-testid="stSidebar"] .side-nav-item:not(.active):hover,

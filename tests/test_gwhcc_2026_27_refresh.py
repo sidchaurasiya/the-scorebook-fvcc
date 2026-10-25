@@ -4,7 +4,7 @@ import pandas as pd
 
 from src.data.hall_of_fame_prepared import load_prepared_hall_of_fame_core
 from src.ui import layout
-from src.utils.player_identity import apply_player_identity_mapping, public_player_mask
+from src.utils.player_identity import apply_player_identity_mapping, filter_public_player_rows, public_player_mask
 
 
 CLUB = 'glen-waverley-hawks'
@@ -12,12 +12,12 @@ DATA = Path(__file__).resolve().parents[1] / 'clubs' / CLUB / 'data/processed'
 SEASON = 'Summer 2026/27'
 
 
-def test_current_season_is_official_and_has_twenty_unique_played_matches():
+def test_current_season_is_official_and_has_thirty_seven_unique_played_matches():
     seasons = pd.read_csv(DATA / 'seasons.csv')
     assert seasons.loc[seasons.name.eq(SEASON), 'id'].tolist() == ['69609582-ba37-4440-9d1e-a38fa912f6d3']
     matches = pd.read_csv(DATA / 'all_seasons_matches.csv')
     assert not matches.match_id.duplicated().any()
-    assert len(matches[matches.season.eq(SEASON)]) == 20
+    assert len(matches[matches.season.eq(SEASON)]) == 37
     assert len(matches[~matches.season.eq(SEASON)]) == 3475
 
 
@@ -25,9 +25,10 @@ def test_current_aggregates_use_only_verified_selected_appearances():
     for category in ['batting', 'bowling', 'fielding']:
         frame = pd.read_csv(DATA / f'all_seasons_{category}.csv')
         new = frame[frame.season.eq(SEASON)]
-        assert len(new) == 184
-        assert new.matches.isin([1, 2]).all()
-        assert new.matches.sum() == 207
+        assert len(new) == 213
+        assert new.matches.ge(1).all() and new.matches.le(3).all()
+        assert new.matches.sum() == 390
+        assert new.raw_playhq_matches.sum() == 400
         assert not new.duplicated(['season_id', 'team_id', 'player_id']).any()
         assert new.matches.le(new.raw_playhq_matches).all()
 
@@ -47,9 +48,32 @@ def test_prepared_snapshot_is_valid_public_and_contains_historical_population():
     assert prepared is not None
     career = prepared['all_time']
     # Four exact-name merges plus Cam's approved Sunil/Sunny consolidation.
-    assert len(career) == career.canonical_player_id.nunique() == 1284
-    assert career['Debut Season'].eq(SEASON).sum() == 56
+    assert len(career) == career.canonical_player_id.nunique() == 1291
+    assert career['Debut Season'].eq(SEASON).sum() == 63
     assert public_player_mask(career).all()
+
+
+def test_current_profile_index_uses_one_existing_canonical_label(monkeypatch):
+    from src.data import playcricket_ingestion
+    monkeypatch.setenv('CLUB_ID', CLUB)
+    # The candidate is refreshed in place; discard only the local test-process cache.
+    playcricket_ingestion._read_processed_table_cached.clear()
+    index = layout.load_player_profile_index.__wrapped__(CLUB, layout.metadata_mtime(), layout.player_aliases_mtime())
+    assert index.id.is_unique
+    assert len(index) == 1291
+    for name, canonical_id in [
+        ('Chris Briginshaw', 'raw_f62c84ce_8d81_4700_bd22_ee8494bab921'),
+        ('Matthew Briginshaw', 'raw_289b8e53_aa95_4072_8288_588447304bcd'),
+    ]:
+        assert index.loc[index.id.eq(canonical_id), 'name'].tolist() == [name]
+    batting = pd.read_csv(DATA / 'all_seasons_batting.csv')
+    for canonical_id, raw_name, canonical_name in [
+        ('raw_f62c84ce_8d81_4700_bd22_ee8494bab921', 'Briginshaw, Chris', 'Chris Briginshaw'),
+        ('raw_289b8e53_aa95_4072_8288_588447304bcd', 'Briginshaw, Matthew', 'Matthew Briginshaw'),
+    ]:
+        row = batting[batting.canonical_player_id.eq(canonical_id) & batting.season.eq(SEASON)].iloc[0]
+        assert row.raw_player_name == raw_name
+        assert row.canonical_player_name == canonical_name
 
 
 def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables():
@@ -60,13 +84,15 @@ def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables()
     ]:
         source = pd.read_csv(DATA / f'all_seasons_{aggregate}.csv')
         detail = pd.read_csv(DATA / f'all_seasons_scorecard_{scorecards}.csv')
+        source = filter_public_player_rows(source)
+        detail = filter_public_player_rows(detail)
         assert source.loc[source.season.eq(SEASON),aggregate_metric].sum() == detail.loc[detail.season.eq(SEASON),detail_metric].sum()
 
 
 def test_historical_captain_premiership_and_delivery_records_survive():
     breakdown = pd.read_csv(DATA / 'player_profile/performance_breakdown_by_dimension.csv',low_memory=False)
     # Same contributions, four duplicate identity/dimension groups consolidated.
-    assert breakdown.dimension.eq('Captain').sum() == 10196
+    assert breakdown.dimension.eq('Captain').sum() == 10226
     assert len(pd.read_csv(DATA / 'hall_of_fame/premiership_wins.csv')) == 24
     assert len(pd.read_csv(DATA / 'hall_of_fame/player_premierships.csv')) == 170
     hats = pd.read_csv(DATA / 'hall_of_fame/hat_tricks.csv')
@@ -78,8 +104,8 @@ def test_historical_captain_premiership_and_delivery_records_survive():
 def test_new_partnerships_keep_evidence_and_privacy_gates():
     events = pd.read_csv(DATA / 'partnerships/partnership_events.csv')
     new = events[events.season.eq(SEASON)]
-    assert len(new) == 111
-    assert new.privacy_status.value_counts().to_dict() == {'PUBLIC_PUBLIC':109,'PUBLIC_PRIVATE':2}
+    assert len(new) == 215
+    assert new.privacy_status.value_counts().to_dict() == {'PUBLIC_PUBLIC':211,'PUBLIC_PRIVATE':4}
     for position in [1,2]:
         protected = new[f'player_{position}_name'].eq('Private player')
         assert new.loc[protected,f'player_{position}_canonical_id'].fillna('').eq('').all()

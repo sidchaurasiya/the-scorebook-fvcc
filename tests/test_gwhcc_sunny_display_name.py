@@ -31,7 +31,7 @@ def test_display_policy_changes_one_name_only_and_does_not_mutate_input():
 def test_visible_search_has_no_alias_badge_or_second_option(monkeypatch):
     from src.ui import layout
     monkeypatch.setenv("CLUB_ID", CLUB)
-    index = layout.load_player_profile_index(CLUB, layout.metadata_mtime(), layout.player_aliases_mtime())
+    index = layout.load_player_profile_index.__wrapped__(CLUB, layout.metadata_mtime(), layout.player_aliases_mtime())
     target = index[index.id.eq(ID)]
     assert len(target) == 1
     labels = target.name.map(layout.gwhcc_player_search_label).tolist()
@@ -55,6 +55,10 @@ def test_both_original_source_routes_and_private_guard_are_unchanged(monkeypatch
 def test_actual_profile_view_has_final_name_and_unchanged_statistics(monkeypatch):
     from src.ui import layout
     monkeypatch.setenv("CLUB_ID", CLUB)
+    premiership_dir = ROOT / "clubs" / CLUB / "data/processed/hall_of_fame"
+    monkeypatch.setattr(layout, "HALL_OF_FAME_PREMIERSHIP_WINS_PATH", premiership_dir / "premiership_wins.csv")
+    monkeypatch.setattr(layout, "HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH", premiership_dir / "player_premierships.csv")
+    layout.load_premiership_records.clear()
     profile = layout.get_player_profile_data(ID, layout.metadata_mtime(), layout.player_aliases_mtime(), club_id=CLUB)
     view = layout.build_player_profile_view.__wrapped__(profile, layout.player_profile_view_signature())
     row = view["career"].iloc[0]
@@ -71,12 +75,8 @@ def test_actual_profile_view_has_final_name_and_unchanged_statistics(monkeypatch
     assert layout.build_player_recent_form(row) == layout.build_player_recent_form(original_career)
 
 
-def test_source_mappings_and_prepared_statistics_are_byte_unchanged():
-    paths = ["player_aliases.csv", "data/source/disjoint_season_identity_decisions.csv",
-             "data/processed/hall_of_fame/prepared_career_all_time.csv",
-             "data/processed/hall_of_fame/prepared_career_batting.csv",
-             "data/processed/hall_of_fame/prepared_core_manifest.json",
-             "data/processed/hall_of_fame/partnership_records.csv"]
+def test_identity_mappings_persist_across_weekly_refresh():
+    paths = ["player_aliases.csv", "data/source/disjoint_season_identity_decisions.csv"]
     for relative in paths:
         path = ROOT / "clubs" / CLUB / relative
         released = subprocess.check_output(["git", "show", f"{RELEASE}:{path.relative_to(ROOT)}"], cwd=ROOT)
