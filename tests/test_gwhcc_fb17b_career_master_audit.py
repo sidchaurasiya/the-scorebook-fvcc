@@ -80,12 +80,12 @@ def test_historical_only_rows_are_not_created_as_production_identities() -> None
 
 def test_simulation_preserves_historical_baseline_after_verified_refresh() -> None:
     career = pd.read_csv(HOF / "prepared_career_all_time.csv", low_memory=False)
-    assert len(career) == 1284
+    assert len(career) == 1291
     assert career["Debut Season"].ne("Summer 2026/27").sum() == 1228
     assert len(pd.read_csv(SOURCE / "gwhcc_historical_centuries.csv")) == 65
     assert len(pd.read_csv(HOF / "premiership_wins.csv")) + len(pd.read_csv(SOURCE / "gwhcc_historical_premiership_events.csv")) == 53
     assert len(pd.read_csv(HOF / "partnership_records.csv")) == 10
     assert len(pd.read_csv(HOF / "hat_tricks.csv")) == 1
     fastest = pd.read_csv(HOF / "fastest_batting_milestones.csv")
-    assert len(fastest) == 788
+    assert len(fastest) == 810
     assert fastest["season"].ne("Summer 2026/27").sum() == 780

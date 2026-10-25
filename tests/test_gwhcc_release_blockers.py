@@ -22,7 +22,7 @@ PROCESSED = ROOT / "clubs" / CLUB_ID / "data" / "processed"
 
 def test_customer_feedback_identity_merges_are_unique_in_profile_index(monkeypatch) -> None:
     monkeypatch.setenv("CLUB_ID", CLUB_ID)
-    index = layout.load_player_profile_index(
+    index = layout.load_player_profile_index.__wrapped__(
         CLUB_ID,
         layout.metadata_mtime(),
         layout.player_aliases_mtime(),
@@ -88,8 +88,11 @@ def test_nathan_bungey_resolves_to_one_canonical_identity() -> None:
     assert mapped.iloc[0]["canonical_player_id"] == "nathan_bungey"
 
 
-def test_public_profile_index_has_one_nathan_and_no_private_players() -> None:
-    index = layout.load_player_profile_index(
+def test_public_profile_index_has_one_nathan_and_no_private_players(monkeypatch) -> None:
+    from src.data import playcricket_ingestion
+    monkeypatch.setenv("CLUB_ID", CLUB_ID)
+    playcricket_ingestion._read_processed_table_cached.clear()
+    index = layout.load_player_profile_index.__wrapped__(
         CLUB_ID,
         layout.metadata_mtime(),
         layout.player_aliases_mtime(),

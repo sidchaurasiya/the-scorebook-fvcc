@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from scripts.build_gwhcc_weekly_candidate import approved_redirects, canonicalise_summary, summary_specs
+from scripts.build_gwhcc_incremental_candidate import preserve_existing_profile_names
 from src.data.gwhcc_incremental import eligible_match_ids, profile_fielding_input
 
 
@@ -11,7 +12,8 @@ def decisions():
     return pd.DataFrame({"club": ["glen-waverley-hawks"] * 2,
                          "decision": ["customer_approved_exact_disjoint_seasons"] * 2,
                          "previous_canonical_id": ["retired", "survivor"],
-                         "canonical_player_id": ["survivor", "survivor"]})
+                         "canonical_player_id": ["survivor", "survivor"],
+                         "canonical_player_name": ["Survivor", "Survivor"]})
 
 
 def test_weekly_seed_reuses_only_existing_approved_redirects():
@@ -32,6 +34,20 @@ def test_weekly_seed_rejects_conflicting_redirects():
     frame.loc[1, "canonical_player_id"] = "someone_else"
     with pytest.raises(ValueError, match="Conflicting"):
         approved_redirects(frame)
+
+
+def test_existing_profile_label_wins_without_changing_source_identity_or_name():
+    frame = pd.DataFrame({
+        "canonical_player_id": ["known", "new"],
+        "canonical_player_name": ["Briginshaw, Chris", "New, Player"],
+        "raw_player_id": ["source-known", "source-new"],
+        "raw_player_name": ["Briginshaw, Chris", "New, Player"],
+    })
+    output = preserve_existing_profile_names(frame, {"known": "Chris Briginshaw"})
+    assert output.canonical_player_id.tolist() == ["known", "new"]
+    assert output.canonical_player_name.tolist() == ["Chris Briginshaw", "New, Player"]
+    assert output.raw_player_name.tolist() == frame.raw_player_name.tolist()
+    assert frame.canonical_player_name.tolist() == ["Briginshaw, Chris", "New, Player"]
 
 
 def test_historical_sufficient_statistics_conserve_approved_identity_contributions():
@@ -76,7 +92,7 @@ DATA = Path(__file__).resolve().parents[1] / "clubs/glen-waverley-hawks/data/pro
 def test_weekly_snapshot_is_disjoint_preserves_history_and_excludes_pending_results():
     validation = json.loads((DATA / "validation/gwhcc_weekly_refresh_validation.json").read_text())
     matches = pd.read_csv(DATA / "all_seasons_matches.csv")
-    assert len(matches) == matches.match_id.nunique() == 3495
+    assert len(matches) == matches.match_id.nunique() == 3512
     assert matches.season.ne("Summer 2026/27").sum() == 3475
     assert set(validation["new_completed_match_ids"]) <= set(matches.match_id)
     assert not set(validation["pending_match_ids"]) & set(matches.match_id)
@@ -106,11 +122,16 @@ def test_weekly_headlines_preserve_four_merged_profiles_and_source_approved_hist
 def test_weekly_prepared_counts_and_governed_validation_have_no_failures():
     validation = json.loads((DATA / "validation/gwhcc_weekly_refresh_validation.json").read_text())
     assert validation["pass"] and validation["historical_preserved"]
-    assert validation["source_metric_checks"] == 2970
-    assert validation["run_out_source_checks"] == 594
+    assert validation["source_metric_checks"] == 4686
+    assert validation["run_out_source_checks"] == 639
     assert all(check["pass"] for check in validation["profile_checks"])
-    assert validation["refreshed"]["current_season_matches"] == 20
-    assert validation["refreshed"]["public_hof_players"] == 1285
+    assert validation["refreshed"]["current_season_matches"] == 37
+    assert validation["refreshed"]["public_hof_players"] == 1291
+    assert validation["refreshed"]["weighted_career_appearances"] == 29326
+    assert validation["refreshed"]["career_runs"] == 433142
+    assert validation["refreshed"]["career_wickets"] == 21105
+    assert validation["refreshed"]["career_catches"] == 7807
+    assert len(validation["new_completed_match_ids"]) == 17
 
 
 def test_weekly_seed_rejects_relative_paths_inside_repository(monkeypatch):

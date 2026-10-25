@@ -9,43 +9,43 @@
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/all_seasons_batting.csv",
-      "size": 4234440,
-      "sha256": "58fde172087e73a6bab9b5d1f2aee1edd440f2a7f8ac96c8dafd809018030598"
+      "size": 4255947,
+      "sha256": "c44434bc5167524f257b15ae90469c9123a59633d0ee00da391d98bf5b80b098"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/all_seasons_bowling.csv",
-      "size": 4201360,
-      "sha256": "f9c23b9409bed4fcea2c8a705ec6ccf0cd77d51e2aca769e76c4cbe982ad1fb1"
+      "size": 4222602,
+      "sha256": "f61694068427b0a936b33656197c0ae1796566a60812043f8fc5bc33ed615f29"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/all_seasons_fielding.csv",
-      "size": 4054390,
-      "sha256": "2201057c0108dc945a06ae08b5e9e6357e6aaabd1dba86e6a0ebb52538e37881"
+      "size": 4074586,
+      "sha256": "3311f7bec32c2c810eba32e4269c82cd6e28dbda4732151765f2afa086566047"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_bbb_batting_rates.csv",
-      "size": 63430,
-      "sha256": "9dbbeb08e7a4798411416592316b43f9eb31dd4107ac59f44ac74445e713405d"
+      "size": 64650,
+      "sha256": "3bd2dd0a9e5dabe4d8796dc23496f99661abd6af31dea1a351473752e91ed50b"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_bowling_milestones.csv",
-      "size": 143372,
-      "sha256": "40701b0ce0328eeb02a1aac8259e77ef24b5723e5c3cfd5dbc8da335e8f3f6cb"
+      "size": 144272,
+      "sha256": "a9d40c5ff80eebcae64b898a6caadef9148fc8b55a49d3b5c12ff504b3e910f5"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_scorecard_milestones.csv",
-      "size": 151750,
-      "sha256": "426b9367a0fba3d625948362b0a3004ad26fc40b71e140941c96c4d5217d56ef"
+      "size": 153154,
+      "sha256": "d848921e5184fb4d678943614f18f666875e1ce530d77ad81fe63a37a108f934"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/hall_of_fame/player_win_rates.csv",
-      "size": 287214,
-      "sha256": "1a338acb18f077a381840898971307efbcccac121dff20f604e593655e862f38"
+      "size": 288673,
+      "sha256": "db83bc113126ae2f1341243dab0780bb9a57d1ab91658843e89272b05d4e4ed6"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/players.csv",
-      "size": 241406,
-      "sha256": "6efb769b0037ee110bc1d7aa267c7f97650419765323875a1fa784974eb0f248"
+      "size": 243366,
+      "sha256": "5e2ef1bb3108f377a3612249b50c2b618e1ab101615d4e5e2bb9a03d5605abba"
     },
     {
       "path": "clubs/glen-waverley-hawks/data/processed/seasons.csv",
@@ -69,9 +69,9 @@
     }
   ],
   "row_counts": {
-    "batting": 1284,
-    "bowling": 1284,
-    "fielding": 1284,
-    "all_time": 1284
+    "batting": 1291,
+    "bowling": 1291,
+    "fielding": 1291,
+    "all_time": 1291
   }
 }

@@ -138,9 +138,9 @@ def test_historical_and_verified_refresh_outputs_are_preserved() -> None:
     assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "hat_tricks.csv")) == 1
     fastest = pd.read_csv(PROCESSED / "hall_of_fame" / "fastest_batting_milestones.csv")
     career = pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv")
-    assert len(fastest) == 793
+    assert len(fastest) == 810
     assert fastest["season"].ne("Summer 2026/27").sum() == 780
-    assert len(career) == 1284
+    assert len(career) == 1291
     assert career["Debut Season"].ne("Summer 2026/27").sum() == 1228
 
 

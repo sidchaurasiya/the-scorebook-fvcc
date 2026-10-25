@@ -21,6 +21,17 @@ sys.path.insert(0, str(ROOT))
 CLUB = 'glen-waverley-hawks'
 
 
+def preserve_existing_profile_names(frame: pd.DataFrame, canonical_names: dict[str, str]) -> pd.DataFrame:
+    """Keep raw source names while retaining the published label for known IDs."""
+    if frame.empty or 'canonical_player_id' not in frame or 'canonical_player_name' not in frame:
+        return frame.copy()
+    output = frame.copy()
+    existing_names = output['canonical_player_id'].astype(str).map(canonical_names)
+    mask = existing_names.notna() & existing_names.astype(str).str.strip().ne('')
+    output.loc[mask, 'canonical_player_name'] = existing_names.loc[mask]
+    return output
+
+
 def update_metadata(bundle: Path, candidate: Path, cutoff: str) -> None:
     data = candidate / 'clubs' / CLUB / 'data'
     path = data / 'metadata.json'
@@ -95,7 +106,15 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     approvals = pd.read_csv(bundle / 'approved_identity_mappings.csv', dtype=str).fillna('')
     if not approvals['decision_status'].eq('customer_confirmed').all():
         raise ValueError('Unapproved identity mapping')
-    baseline_ids = set(pd.read_csv(processed / 'hall_of_fame/prepared_career_all_time.csv')['canonical_player_id'])
+    baseline_profiles = pd.read_csv(
+        processed / 'hall_of_fame/prepared_career_all_time.csv',
+        usecols=['canonical_player_id', 'Player'],
+        dtype=str,
+    ).fillna('')
+    if baseline_profiles['canonical_player_id'].duplicated().any():
+        raise ValueError('Existing canonical HOF profiles must have unique IDs')
+    baseline_profile_names = dict(zip(baseline_profiles['canonical_player_id'], baseline_profiles['Player']))
+    baseline_ids = set(baseline_profile_names)
     if not set(approvals['canonical_player_id']) <= baseline_ids:
         raise ValueError('Identity continuity approval targets a nonexistent historical public profile')
     aliases_path = output_club / 'player_aliases.csv'
@@ -146,7 +165,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         new = new[new['matches'].gt(0)].copy()
         new['season_start_date'] = season['startDate']
         new['competition_name'] = new['grade_name']
-        new = annotate_grade_metadata(apply_player_identity_mapping(new, club_id=CLUB), 'grade_name')
+        new = apply_player_identity_mapping(new, club_id=CLUB)
+        new = preserve_existing_profile_names(new, baseline_profile_names)
+        new = annotate_grade_metadata(new, 'grade_name')
         new['record_scope'] = 'Whole club'
         new['match_count_policy_note'] = 'T20=0.5; played non-T20=1; no-play=0'
         old = pd.read_csv(processed / f'all_seasons_{kind}.csv', low_memory=False)

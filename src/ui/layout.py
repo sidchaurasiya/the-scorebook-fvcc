@@ -5,6 +5,7 @@ import os
 import re
 import textwrap
 import time
+from collections.abc import MutableMapping
 from urllib.parse import quote, unquote
 from pathlib import Path
 
@@ -410,8 +411,40 @@ def configured_feedback_email_html() -> str:
     return html.escape(configured_feedback_email())
 
 
+def reset_hawks_profile_selector_on_route_exit(
+    session_state: MutableMapping[str, object],
+    previous_page: str,
+    current_page: str,
+    club_id: str,
+) -> None:
+    if (
+        club_id == "glen-waverley-hawks"
+        and previous_page == PLAYER_PROFILE_QUERY_PAGE
+        and current_page != PLAYER_PROFILE_QUERY_PAGE
+    ):
+        for key in (
+            "player_profile_selector_id",
+            "selected_player_id",
+            "selected_player_profile_id",
+            "player_profile_valid_ids",
+            "player_profile_name_to_id",
+            "last_player_profile_query_param",
+            "manual_player_profile_selection",
+            "player_profile_selector_label",
+            "pending_player_profile_id",
+        ):
+            session_state.pop(key, None)
+
+
 def resolve_current_page_from_query() -> str:
     current_page = page_slug_from_query()
+    previous_page = str(st.session_state.get("current_page", "") or "")
+    reset_hawks_profile_selector_on_route_exit(
+        st.session_state,
+        previous_page,
+        current_page,
+        get_active_club_id(),
+    )
     st.session_state["current_page"] = current_page
     if query_param_value("page") != current_page:
         # Root URL without page param must initialize to hall-of-fame and sync query params.
@@ -451,6 +484,12 @@ def render_mobile_nav_link(label: str, slug: str, current_page: str) -> str:
         f'<a class="mobile-nav-link{active_class}" href="{html.escape(nav_href(slug), quote=True)}" target="_self">'
         f"{html.escape(label)}</a>"
     )
+
+
+def navigate_to_page_in_session(page_slug: str) -> None:
+    """Navigate without closing the current Streamlit browser session."""
+    st.query_params.clear()
+    st.query_params["page"] = page_slug
 
 
 def player_profile_url(player_id: object, player_name: object | None = None) -> str:
@@ -933,6 +972,7 @@ def render_page() -> None:
 def render_sidebar() -> str:
     page_definitions = get_page_definitions()
     current_page = resolve_current_page_from_query()
+    gwhcc_navigation = get_active_club_id() == "glen-waverley-hawks"
     mobile_links = "".join(
         render_mobile_nav_link(label, slug, current_page)
         for slug, label, _ in page_definitions
@@ -984,11 +1024,22 @@ def render_sidebar() -> str:
                 </div>
             </details>
             <div class="mobile-nav-links">
-                {mobile_links}
+                {'' if gwhcc_navigation else mobile_links}
             </div>
             """,
             unsafe_allow_html=True,
         )
+        if gwhcc_navigation:
+            with st.container(key="gwhcc_mobile_nav_buttons"):
+                for slug, label, _ in page_definitions:
+                    st.button(
+                        label,
+                        key=f"gwhcc_mobile_nav_{slug}",
+                        type="primary" if slug == current_page else "secondary",
+                        use_container_width=True,
+                        on_click=navigate_to_page_in_session,
+                        args=(slug,),
+                    )
 
     st.sidebar.markdown(
         f"""
@@ -1002,11 +1053,23 @@ def render_sidebar() -> str:
         """,
         unsafe_allow_html=True,
     )
-    nav_links = "".join(
-        render_sidebar_nav_link(label, slug, current_page)
-        for slug, label, _ in page_definitions
-    )
-    st.sidebar.markdown(f'<nav class="side-nav">{nav_links}</nav>', unsafe_allow_html=True)
+    if gwhcc_navigation:
+        with st.sidebar.container(key="gwhcc_sidebar_nav"):
+            for slug, label, _ in page_definitions:
+                st.button(
+                    label,
+                    key=f"gwhcc_sidebar_nav_{slug}",
+                    type="primary" if slug == current_page else "secondary",
+                    use_container_width=True,
+                    on_click=navigate_to_page_in_session,
+                    args=(slug,),
+                )
+    else:
+        nav_links = "".join(
+            render_sidebar_nav_link(label, slug, current_page)
+            for slug, label, _ in page_definitions
+        )
+        st.sidebar.markdown(f'<nav class="side-nav">{nav_links}</nav>', unsafe_allow_html=True)
     st.sidebar.markdown(
         f"""
         <div class="side-footer">
@@ -11918,7 +11981,19 @@ def load_player_profile_index(
     for category in ["batting", "bowling", "fielding"]:
         frame = read_processed_table(f"all_seasons_{category}")
         if not frame.empty:
-            frames.append(apply_player_identity_mapping(frame, aliases, club_id=club_id))
+            mapped = apply_player_identity_mapping(frame, aliases, club_id=club_id)
+            if (
+                club_id == "glen-waverley-hawks"
+                and {"canonical_player_id", "canonical_player_name"}.issubset(frame.columns)
+            ):
+                # Processed Hawks rows already carry the approved public label; a second ID-map pass
+                # must not reintroduce scorecard name-order variants for that same canonical ID.
+                original_ids = frame["canonical_player_id"].fillna("").astype(str).str.strip()
+                original_names = frame["canonical_player_name"].fillna("").astype(str).str.strip()
+                unchanged_id = mapped["canonical_player_id"].fillna("").astype(str).str.strip().eq(original_ids)
+                preserve = unchanged_id & original_ids.ne("") & original_names.ne("")
+                mapped.loc[preserve, "canonical_player_name"] = original_names.loc[preserve]
+            frames.append(mapped)
     if not frames:
         return pd.DataFrame(columns=["id", "name"])
 

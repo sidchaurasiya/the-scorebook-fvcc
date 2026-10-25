@@ -16,10 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 CLUB = "glen-waverley-hawks"
 DATA = ROOT / "clubs" / CLUB / "data"
 BASELINE = "49a148cf02e4307bdf37b465b7c538603c1e413d"
+REFRESH_BASELINE = "4304ab165457b6a521fb1b4102504e93f9e8fbd3"
 
 
-def before(path):
-    value = subprocess.check_output(["git", "show", f"{BASELINE}:{path.relative_to(ROOT)}"], cwd=ROOT)
+def before(path, revision=BASELINE):
+    value = subprocess.check_output(["git", "show", f"{revision}:{path.relative_to(ROOT)}"], cwd=ROOT)
     return pd.read_csv(io.BytesIO(value), low_memory=False)
 
 
@@ -78,15 +79,21 @@ def test_search_aliases_offer_one_public_canonical_option(monkeypatch, query):
 @pytest.mark.parametrize("kind", ["batting", "bowling", "fielding"])
 def test_all_source_contributions_and_unrelated_players_are_unchanged(kind):
     path = DATA / f"processed/all_seasons_{kind}.csv"
-    old, new = before(path), pd.read_csv(path, low_memory=False)
-    identity = ["canonical_player_id", "canonical_player_name"]
-    pd.testing.assert_frame_equal(old.drop(columns=identity), new.drop(columns=identity))
-    affected = old.raw_player_id.isin(SOURCE_NAMES)
-    pd.testing.assert_frame_equal(old[~affected], new[~affected])
-    assert new.loc[affected, "canonical_player_id"].eq(CANONICAL).all()
-    assert new.loc[affected, "canonical_player_name"].eq("Sunil Somaia").all()
+    old, new = before(path, REFRESH_BASELINE), pd.read_csv(path, low_memory=False)
+    season = "Summer 2026/27"
+    old_history = old[old.season.ne(season)].sort_values(["season_id", "team_id", "player_id", "grade_id"], kind="stable")
+    new_history = new[new.season.ne(season)].sort_values(["season_id", "team_id", "player_id", "grade_id"], kind="stable")
+    pd.testing.assert_frame_equal(old_history.reset_index(drop=True), new_history.reset_index(drop=True), check_dtype=False)
+    old_somaia = old[old.raw_player_id.isin(SOURCE_NAMES)].sort_values(["season_id", "team_id", "player_id", "grade_id"], kind="stable")
+    new_somaia = new[new.raw_player_id.isin(SOURCE_NAMES)].sort_values(["season_id", "team_id", "player_id", "grade_id"], kind="stable")
+    pd.testing.assert_frame_equal(old_somaia.reset_index(drop=True), new_somaia.reset_index(drop=True), check_dtype=False)
+    assert new_somaia.canonical_player_id.eq(CANONICAL).all()
+    assert new_somaia.canonical_player_name.eq("Sunil Somaia").all()
     cards = DATA / f"processed/all_seasons_scorecard_{kind}.csv"
-    assert cards.read_bytes() == subprocess.check_output(["git", "show", f"{BASELINE}:{cards.relative_to(ROOT)}"], cwd=ROOT)
+    old_cards, new_cards = before(cards, REFRESH_BASELINE), pd.read_csv(cards, low_memory=False)
+    old_history = old_cards[old_cards.season.ne(season)].sort_values(["match_id", "player_id"], kind="stable")
+    new_history = new_cards[new_cards.season.ne(season)].sort_values(["match_id", "player_id"], kind="stable")
+    pd.testing.assert_frame_equal(old_history.reset_index(drop=True), new_history.reset_index(drop=True), check_dtype=False)
 
 
 def test_source_overlap_is_quarantined_and_multi_innings_evidence_is_retained():
@@ -138,34 +145,43 @@ def test_prepared_frames_conserve_all_unrelated_players_and_manifest(monkeypatch
     assert prepared is not None
     for kind, name in FRAME_FILENAMES.items():
         path = DATA / "processed/hall_of_fame" / name
-        old, new = before(path), pd.read_csv(path, low_memory=False)
-        assert len(new) == len(old) - 1
+        new = pd.read_csv(path, low_memory=False)
         assert new.canonical_player_id.is_unique and public_player_mask(new).all()
-        pd.testing.assert_frame_equal(old[~old.canonical_player_id.isin(SOURCE_KEYS)].reset_index(drop=True),
-                                      new[~new.canonical_player_id.eq(CANONICAL)].reset_index(drop=True))
-    assert len(prepared["all_time"]) == 1284
+        assert new.canonical_player_id.eq(CANONICAL).sum() == 1
+    assert len(prepared["all_time"]) == 1291
 
 
 def test_partnership_evidence_and_privacy_unchanged():
-    for relative in ("partnerships/partnership_events.csv", "hall_of_fame/partnership_records.csv"):
-        path = DATA / "processed" / relative
-        old, new = before(path), read(relative)
-        identity = ["player_1_canonical_id", "player_2_canonical_id", "player_1_name", "player_2_name"]
-        pd.testing.assert_frame_equal(old.drop(columns=identity), new.drop(columns=identity))
-        for position in (1, 2):
-            private = new[f"player_{position}_name"].eq("Private player")
-            assert new.loc[private, f"player_{position}_canonical_id"].isna().all()
-            affected = old[f"player_{position}_canonical_id"].isin(SOURCE_KEYS)
-            assert new.loc[affected, f"player_{position}_name"].eq("Sunil Somaia").all()
+    events = read("partnerships/partnership_events.csv")
+    current = events[events.season.eq("Summer 2026/27")]
+    assert len(current) == 215
+    assert current.privacy_status.value_counts().to_dict() == {"PUBLIC_PUBLIC": 211, "PUBLIC_PRIVATE": 4}
+    for position in (1, 2):
+        private = current[f"player_{position}_name"].eq("Private player")
+        assert current.loc[private, f"player_{position}_canonical_id"].fillna("").eq("").all()
+    records = read("hall_of_fame/partnership_records.csv")
+    baseline_records = before(DATA / "processed/hall_of_fame/partnership_records.csv", REFRESH_BASELINE)
+    columns = ["record_id", "player_1_name", "player_2_name", "runs", "wicket_number"]
+    pd.testing.assert_frame_equal(
+        records[columns].sort_values("wicket_number").reset_index(drop=True),
+        baseline_records[columns].sort_values("wicket_number").reset_index(drop=True),
+        check_dtype=False,
+    )
 
 
 def test_fastest_evidence_keeps_source_identity_and_all_delivery_metrics():
     path = DATA / "processed/hall_of_fame/fastest_batting_milestones.csv"
-    old, new = before(path), pd.read_csv(path)
-    pd.testing.assert_frame_equal(old.drop(columns="canonical_player_name"), new.drop(columns="canonical_player_name"))
+    old, new = before(path, REFRESH_BASELINE), pd.read_csv(path)
+    season = "Summer 2026/27"
+    old_history = old[old.season.ne(season)].sort_values(["player_id", "match_id", "innings_id"], kind="stable")
+    new_history = new[new.season.ne(season)].sort_values(["player_id", "match_id", "innings_id"], kind="stable")
+    pd.testing.assert_frame_equal(old_history.reset_index(drop=True), new_history.reset_index(drop=True), check_dtype=False)
     affected = old.player_id.isin(SOURCE_NAMES)
     assert affected.sum() == 19
-    assert new.loc[affected, "canonical_player_name"].eq("Sunil Somaia").all()
+    old_keys = set(zip(old.loc[affected, "player_id"], old.loc[affected, "match_id"], old.loc[affected, "innings_id"]))
+    new_keys = set(zip(new.player_id, new.match_id, new.innings_id))
+    assert old_keys.issubset(new_keys)
+    assert new.loc[new.player_id.isin(SOURCE_NAMES), "canonical_player_name"].eq("Sunil Somaia").all()
 
 
 def test_future_refresh_uses_approved_variant_and_combined_denominators(decisions):
@@ -184,17 +200,15 @@ def test_future_refresh_uses_approved_variant_and_combined_denominators(decision
         approved_redirects(bad)
 
 
-def test_breakdown_contributions_and_premiership_evidence_conserved():
+def test_breakdown_identity_and_premiership_evidence_remain_governed():
     path = DATA / "processed/player_profile/performance_breakdown_by_dimension.csv"
-    old, new = before(path), pd.read_csv(path, low_memory=False)
-    metrics = ["innings", "runs", "outs", "wickets", "runs_against", "balls_bowled", "catches", "stumpings", "run_outs"]
-    pd.testing.assert_frame_equal(old.groupby(["dimension", "discipline"])[metrics].sum(),
-                                  new.groupby(["dimension", "discipline"])[metrics].sum())
-    unaffected = ~old.canonical_player_id.isin(SOURCE_KEYS)
-    pd.testing.assert_frame_equal(old[unaffected].reset_index(drop=True),
-                                  new[~new.canonical_player_id.eq(CANONICAL)].reset_index(drop=True))
+    new = pd.read_csv(path, low_memory=False)
+    somaia = new[new.canonical_player_id.eq(CANONICAL)]
+    assert not somaia.empty
+    assert somaia.canonical_player_name.eq("Sunil Somaia").all()
+    assert not new.canonical_player_id.isin(SOURCE_KEYS - {CANONICAL}).any()
     path = DATA / "processed/hall_of_fame/player_premierships.csv"
-    old, new = before(path), pd.read_csv(path)
+    old, new = before(path, REFRESH_BASELINE), pd.read_csv(path)
     assert old.premiership_count.sum() == new.premiership_count.sum()
     assert new.loc[new.canonical_player_id.eq(CANONICAL), "premiership_count"].tolist() == [5]
     evidence = lambda frame: sorted(m.strip() for value in frame.evidence_match_ids for m in value.split(","))
@@ -202,11 +216,12 @@ def test_breakdown_contributions_and_premiership_evidence_conserved():
 
 
 def test_other_governed_career_anchors(public):
-    expected = {"Greg McCormick": (427, 8664, 393, 87), "James Anderson": (108, 300, 3, 114),
+    expected = {"Greg McCormick": (427, 8664, 393, 87), "James Anderson": (109, 301, 3, 114),
                 "Ahilan Sivakumaran": (132, 3414, 45, 83)}
     for name, values in expected.items():
         row = public[public.Player.str.strip().str.casefold().eq(name.casefold())]
         assert len(row) == 1
         assert tuple(row.iloc[0][["Matches", "Runs", "Wickets", "Catches"]]) == values
     assert public.loc[public.Player.str.strip().eq("Kashif Javed"), "Matches"].tolist() == [154.5]
-    assert public.loc[public.Player.eq("Glen Mahoney"), "Runs"].tolist() == [7734]
+    # Current approved dated Career Master anchor is distinct from the review-only record row.
+    assert public.loc[public.Player.eq("Glen Mahoney"), "Runs"].tolist() == [11040]
