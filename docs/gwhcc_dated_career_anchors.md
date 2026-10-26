@@ -56,7 +56,11 @@ profile note explains the distinction; no shared club styling changes.
 
 Matches, catches, highest scores, fifties/hundreds, balls, overs and other
 rate/fielding/detail fields keep their existing evidence. Historical match
-counts 390.5/296 remain quarantined. No annual rows, scorecards, partnerships,
+counts 390.5/296 remained quarantined in the 23 October implementation. The
+targeted 26 October local match-count candidate now has separate canonical-ID
+decisions documented in `gwhcc_historical_match_counts.md`; it does not alter
+the original five-metric rows or approve other review games overrides.
+No annual rows, scorecards, partnerships,
 hat-tricks, fastest innings or inferred innings/dismissals are created.
 
 Original Premiership lists.pdf pages 2 and 1 and the supplied 2026 premiership

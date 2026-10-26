@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import html
+
 from pathlib import Path
 
 import pandas as pd
@@ -74,7 +76,7 @@ def test_each_real_profile_preserves_seasons_and_uses_governed_summary(pid, monk
         if float(career[metric]) > 0:
             assert milestone["current"] == int(career[metric])
     note = history.career_anchor_coverage_note(career)
-    assert note and note in layout.player_profile_historical_coverage_html(career, view["season_table"])
+    assert note and html.escape(note) in layout.player_profile_historical_coverage_html(career, view["season_table"])
 
 
 def test_only_approved_metric_bundles_change_and_all_other_players_are_preserved(monkeypatch):

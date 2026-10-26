@@ -13,6 +13,7 @@ CLUB_ID = "glen-waverley-hawks"
 DATA = Path(__file__).resolve().parents[2] / "clubs" / CLUB_ID / "data"
 ANCHORS = DATA / "source/document_overrides/gwhcc_dated_career_anchors.csv"
 VERIFIED_ANCHORS = DATA / "source/document_overrides/gwhcc_verified_career_anchors.csv"
+MATCH_ANCHORS = DATA / "source/document_overrides/gwhcc_dated_match_anchors.csv"
 BATTING = DATA / "processed/all_seasons_batting.csv"
 BOWLING = DATA / "processed/all_seasons_bowling.csv"
 COUNT_COLUMNS = {
@@ -38,7 +39,7 @@ def season_start(value: object) -> int:
 
 
 def dated_career_signature() -> tuple:
-    return tuple((str(p), p.stat().st_mtime_ns, p.stat().st_size) for p in [ANCHORS, VERIFIED_ANCHORS, BATTING, BOWLING] if p.exists())
+    return tuple((str(p), p.stat().st_mtime_ns, p.stat().st_size) for p in [ANCHORS, VERIFIED_ANCHORS, MATCH_ANCHORS, BATTING, BOWLING] if p.exists())
 
 
 def anchor_scopes(row: dict) -> tuple[str, ...]:
@@ -62,15 +63,100 @@ def has_dated_career_scope(career: pd.Series, scope: str) -> bool:
 def career_anchor_coverage_note(career: pd.Series) -> str:
     batting = has_dated_career_scope(career, "batting")
     bowling = has_dated_career_scope(career, "bowling")
+    matches = str(career.get("historical_match_anchor_applied", "")).casefold() == "true"
+    match_note = (
+        f"Career matches use the club's verified total through {career.get('historical_match_anchor_through_season', '')} "
+        "plus only later eligible weighted appearances. Historical season/grade match detail is incomplete. "
+    ) if matches else ""
     if batting and bowling:
-        return COVERAGE_NOTE
+        return match_note + (COVERAGE_NOTE.replace("Matches, fielding", "Fielding") if matches else COVERAGE_NOTE)
     if batting:
-        return ("Career batting totals and average include historical club records without season-by-season detail. "
-                "Bowling, matches, fielding and detailed rate, season and grade statistics reflect available digital records.")
+        return match_note + ("Career batting totals and average include historical club records without season-by-season detail. "
+                f"Bowling, {'fielding' if matches else 'matches, fielding'} and detailed rate, season and grade statistics reflect available digital records.")
     if bowling:
-        return ("Career wickets and bowling average include historical club records without season-by-season detail. "
-                "Batting, matches, fielding and detailed rate, season and grade statistics reflect available digital records.")
-    return ""
+        return match_note + ("Career wickets and bowling average include historical club records without season-by-season detail. "
+                f"Batting, {'fielding' if matches else 'matches, fielding'} and detailed rate, season and grade statistics reflect available digital records.")
+    return match_note.strip()
+
+
+def load_dated_match_anchors() -> pd.DataFrame:
+    if not MATCH_ANCHORS.exists():
+        return pd.DataFrame()
+    rows = pd.read_csv(MATCH_ANCHORS, keep_default_na=False)
+    rows = rows[rows["decision_status"].eq("approved_dated_career")
+                & rows["confidence"].isin({"high", "confirmed", "approved"})].copy()
+    if rows.empty:
+        return rows
+    if rows["canonical_player_id"].eq("").any() or rows["canonical_player_id"].duplicated().any():
+        raise ValueError("Approved Hawks match anchors require unique canonical identities")
+    for row in rows.to_dict("records"):
+        season_start(row["anchor_through_season"])
+        value = pd.to_numeric(row["matches"], errors="coerce")
+        if pd.isna(value) or not math.isfinite(value) or value < 0 or value * 2 != int(value * 2):
+            raise ValueError("Invalid historical weighted match count")
+        if not re.fullmatch(r"[a-f0-9]{64}", str(row["source_sha256"])):
+            raise ValueError("Historical match source fingerprint is missing")
+    return rows
+
+
+@lru_cache(maxsize=4)
+def later_match_counts(signature: tuple, cutoffs: tuple) -> dict[str, float]:
+    """Use the finalized annual appearance counts, never innings or raw provider counters."""
+    _ = signature
+    years = dict(cutoffs)
+    grain = ["canonical_player_id", "season_id", "team_id", "grade_id"]
+    rows = pd.read_csv(BATTING, usecols=[*grain, "season", "matches"])
+    rows = rows[rows["canonical_player_id"].isin(years)].copy()
+    if set(years) - set(rows["canonical_player_id"]):
+        raise ValueError("Historical match anchor has no retained source identity")
+    rows["_year"] = rows["season"].map(season_start)
+    rows = rows[rows["_year"].gt(rows["canonical_player_id"].map(years))]
+    if rows[grain].isna().any().any() or rows[grain].astype(str).eq("").any().any() or rows.duplicated(grain).any():
+        raise ValueError("Overlapping or incomplete post-anchor match keys")
+    values = pd.to_numeric(rows["matches"], errors="coerce")
+    if values.isna().any() or not values.map(math.isfinite).all() or values.lt(0).any() or values.mul(2).mod(1).ne(0).any():
+        raise ValueError("Unknown or invalid post-anchor weighted matches; do not infer zero")
+    totals = dict.fromkeys(years, 0.0)
+    totals.update({pid: float(value) for pid, value in values.groupby(rows["canonical_player_id"]).sum().items()})
+    return totals
+
+
+def apply_dated_match_anchors(frame: pd.DataFrame, *, club_id: str = CLUB_ID) -> pd.DataFrame:
+    if club_id != CLUB_ID or frame.empty or "canonical_player_id" not in frame:
+        return frame
+    from src.utils.player_identity import is_private_or_anonymised_player
+
+    anchors = load_dated_match_anchors()
+    if anchors.empty:
+        return frame
+    anchors = anchors[anchors["canonical_player_id"].isin(frame["canonical_player_id"])]
+    if anchors.empty:
+        return frame
+    cutoffs = tuple(sorted((r["canonical_player_id"], season_start(r["anchor_through_season"])) for r in anchors.to_dict("records")))
+    later = later_match_counts(dated_career_signature(), cutoffs)
+    output = frame.copy()
+    for anchor in anchors.to_dict("records"):
+        matched = output[output["canonical_player_id"].eq(anchor["canonical_player_id"])]
+        if len(matched) != 1:
+            raise ValueError("Historical match anchor requires one public canonical career row")
+        if is_private_or_anonymised_player(matched.iloc[0].get("Player"), metadata=matched.iloc[0]):
+            continue
+        index = matched.index[0]
+        if "Matches" in output and pd.api.types.is_integer_dtype(output["Matches"]):
+            output["Matches"] = output["Matches"].astype(float)
+        if "detailed_matches_value" not in output or pd.isna(output.at[index, "detailed_matches_value"]):
+            output.at[index, "detailed_matches_value"] = output.at[index, "Matches"] if "Matches" in output else pd.NA
+        output.at[index, "Matches"] = float(anchor["matches"]) + later[anchor["canonical_player_id"]]
+        output.at[index, "historical_match_anchor_applied"] = True
+        output.at[index, "historical_match_anchor_through_season"] = anchor["anchor_through_season"]
+        output.at[index, "historical_match_anchor_value"] = float(anchor["matches"])
+        output.at[index, "historical_match_anchor_source"] = f"{anchor['source_document']} / {anchor['source_sheet']} row {anchor['source_row']}"
+        output.at[index, "matches_value_source"] = "dated_club_match_anchor"
+        output.at[index, "matches_override_applied"] = True
+        output.at[index, "matches_authority_source"] = "dated_club_match_anchor"
+        output.at[index, "matches_authority_scope"] = "full_career_anchor_plus_strictly_later_seasons"
+        output.at[index, "matches_authority_source_row"] = str(anchor["source_row"])
+    return output
 
 
 def load_dated_career_anchors() -> pd.DataFrame:
@@ -138,10 +224,10 @@ def apply_dated_career_anchors(frame: pd.DataFrame, *, club_id: str = CLUB_ID) -
 
     anchors = load_dated_career_anchors()
     if anchors.empty:
-        return frame
+        return apply_dated_match_anchors(frame, club_id=club_id)
     anchors = anchors[anchors["canonical_player_id"].isin(frame["canonical_player_id"])]
     if anchors.empty:
-        return frame
+        return apply_dated_match_anchors(frame, club_id=club_id)
     cutoffs = tuple(sorted((r["canonical_player_id"], scope, season_start(anchor_cutoff(r, scope)))
                            for r in anchors.to_dict("records") for scope in anchor_scopes(r)))
     later = later_career_counts(dated_career_signature(), cutoffs)
@@ -187,4 +273,4 @@ def apply_dated_career_anchors(frame: pd.DataFrame, *, club_id: str = CLUB_ID) -
             output.at[index, f"{metric}_authority_source"] = "dated_career_master"
             output.at[index, f"{metric}_authority_scope"] = "full_career_anchor_plus_strictly_later_seasons"
             output.at[index, f"{metric}_authority_source_row"] = str(anchor["source_row"])
-    return output
+    return apply_dated_match_anchors(output, club_id=club_id)

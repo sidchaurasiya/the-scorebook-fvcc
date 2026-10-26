@@ -12741,7 +12741,10 @@ def player_profile_historical_coverage_html(career: pd.Series, season_table: pd.
         lines.append(
             f'<div class="profile-meta profile-coverage-meta">Detailed statistics available from: {html.escape(detailed)}</div>'
         )
-    if get_active_club_id() == "glen-waverley-hawks" and parse_bool(career.get("historical_career_anchor_applied")):
+    if get_active_club_id() == "glen-waverley-hawks" and (
+        parse_bool(career.get("historical_career_anchor_applied"))
+        or parse_bool(career.get("historical_match_anchor_applied"))
+    ):
         from src.data.gwhcc_historical_career import career_anchor_coverage_note
 
         lines.append(f'<div class="profile-meta profile-coverage-meta">{html.escape(career_anchor_coverage_note(career))}</div>')
@@ -15978,7 +15981,11 @@ def player_milestone_rows(career: pd.Series) -> list[dict[str, object]]:
     ]
     rows = []
     for category, column, step, unit in specs:
-        current = int(numeric_value(career, column))
+        value = numeric_value(career, column)
+        current = value if (
+            category == "Matches" and get_active_club_id() == "glen-waverley-hawks"
+            and not float(value).is_integer()
+        ) else int(value)
         if current <= 0:
             continue
         target = next_milestone_target(current, step)
