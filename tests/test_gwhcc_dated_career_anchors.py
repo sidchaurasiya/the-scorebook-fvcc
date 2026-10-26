@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import subprocess
 from pathlib import Path
 
@@ -17,6 +18,7 @@ MATTHEW = "raw_289b8e53_aa95_4072_8288_588447304bcd"
 
 @pytest.fixture
 def later_sources(tmp_path, monkeypatch):
+    monkeypatch.setattr(history, "MATCH_ANCHORS", tmp_path / "no_match_decisions.csv")
     for discipline, columns in history.SOURCE_COLUMNS.items():
         rows = []
         for pid in [CHRIS, MATTHEW]:
@@ -88,6 +90,7 @@ def test_application_is_idempotent_and_keeps_original_detailed_values(later_sour
 
 @pytest.mark.parametrize("status", ["review", "rejected", "pending", ""])
 def test_unapproved_sources_remain_audit_only(status, tmp_path, monkeypatch, source_frame):
+    monkeypatch.setattr(history, "MATCH_ANCHORS", tmp_path / "no_match_decisions.csv")
     source = pd.read_csv(history.ANCHORS)
     source["decision_status"] = status
     path = tmp_path / "anchors.csv"
@@ -151,8 +154,8 @@ def test_real_authoritative_frame_changes_only_explicit_source_identities():
 
 
 @pytest.mark.parametrize("pid,name,expected", [
-    (CHRIS, "Chris Briginshaw", (334.5, 7051, 407, 37, 35, 95, 6, "Summer 1989/90")),
-    (MATTHEW, "Matthew Briginshaw", (226, 2417, 238, 44, 535, 49, 1, "Summer 1990/91")),
+    (CHRIS, "Chris Briginshaw", (391.5, 7051, 407, 37, 35, 95, 6, "Summer 1989/90")),
+    (MATTHEW, "Matthew Briginshaw", (297, 2417, 238, 44, 535, 49, 1, "Summer 1990/91")),
 ])
 def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, monkeypatch):
     from src.ui import layout
@@ -171,7 +174,8 @@ def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, mo
     assert view["season_table"].Innings.sum() == (345 if pid == CHRIS else 186)
     assert view["grade_table"].Runs.sum() == (5995 if pid == CHRIS else 1880)
     assert view["grade_table"].Wickets.sum() == (28 if pid == CHRIS else 416)
-    assert history.COVERAGE_NOTE in layout.player_profile_historical_coverage_html(row, view["season_table"])
+    assert html.escape(history.career_anchor_coverage_note(row)) in layout.player_profile_historical_coverage_html(row, view["season_table"])
+    assert "Career matches use the club" in history.career_anchor_coverage_note(row)
     assert dict(layout.player_profile_batting_career_metrics(row, str(expected[0])))["Not Outs"] == str(expected[3])
     all_time = pd.read_csv(DATA / "processed/hall_of_fame/prepared_career_all_time.csv")
     governed = apply_record_overrides(all_time, write_decisions=False)
@@ -191,9 +195,10 @@ def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, mo
 def test_no_source_season_snapshot_or_other_club_files_changed():
     changed = subprocess.check_output(["git", "diff", "--name-only"], cwd=ROOT, text=True).splitlines()
     allowed = ("clubs/glen-waverley-hawks/data/", "tests/")
-    allowed_exact = {"scripts/build_gwhcc_incremental_candidate.py", "src/ui/layout.py"}
+    allowed_exact = {"src/data/gwhcc_historical_career.py", "src/ui/layout.py", "docs/gwhcc_dated_career_anchors.md", "docs/gwhcc_historical_match_counts.md"}
     assert all(p.startswith(allowed) or p in allowed_exact for p in changed)
-    assert not any("/data/source/" in p or "source/excel" in p for p in changed)
+    assert not any(("/data/source/" in p or "source/excel" in p)
+                   and p != "clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv" for p in changed)
     assert not any(p.startswith(("clubs/fvcc/", "clubs/georges-river-district/")) for p in changed)
 
 
