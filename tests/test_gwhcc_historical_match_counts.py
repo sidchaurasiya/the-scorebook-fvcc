@@ -143,10 +143,11 @@ def test_public_identity_boundary_and_other_clubs_are_preserved(match_sources, c
         history.apply_dated_match_anchors(pd.concat([career, career], ignore_index=True))
 
 
-def test_actual_two_match_decisions_do_not_enable_the_old_review_overrides():
+def test_explicit_match_decisions_do_not_enable_old_review_overrides():
     anchors = history.load_dated_match_anchors().set_index('canonical_player_id')
-    assert anchors.index.is_unique and set(anchors.index) == {CHRIS, MATTHEW}
-    assert anchors.anchor_through_season.eq('Summer 2025/26').all()
+    expected = pd.read_csv(ROOT / 'tests/fixtures/gwhcc_clubwide_match_expected.csv')
+    assert anchors.index.is_unique and set(anchors.index) == set(expected.canonical_player_id)
+    assert anchors.loc[[CHRIS, MATTHEW], 'anchor_through_season'].eq('Summer 2025/26').all()
     assert anchors.loc[CHRIS, 'matches'] == 390.5
     assert anchors.loc[MATTHEW, 'matches'] == 296
     reviews = pd.read_csv(docs.RECORD_OVERRIDES)
@@ -171,7 +172,7 @@ def test_actual_later_season_is_one_eligible_appearance_each_not_two_wickets():
         assert set(selected.match_id) <= ids
 
 
-def test_full_authoritative_frame_changes_only_the_two_match_counts(monkeypatch, tmp_path):
+def test_full_authoritative_frame_changes_only_explicit_match_counts(monkeypatch, tmp_path):
     base = pd.read_csv(DATA / 'processed/hall_of_fame/prepared_career_all_time.csv')
     with monkeypatch.context() as old:
         old.setattr(history, 'MATCH_ANCHORS', tmp_path / 'absent.csv')
@@ -181,10 +182,12 @@ def test_full_authoritative_frame_changes_only_the_two_match_counts(monkeypatch,
     unchanged = before.columns.drop(['Matches', 'matches_override_applied', 'matches_value_source'], errors='ignore')
     pd.testing.assert_frame_equal(before[unchanged], after[unchanged], check_dtype=False)
     changed = before.Matches.ne(after.Matches)
-    assert set(after.loc[changed, 'canonical_player_id']) == {CHRIS, MATTHEW}
+    expected = pd.read_csv(ROOT / 'tests/fixtures/gwhcc_clubwide_match_expected.csv')
+    assert set(after.loc[changed, 'canonical_player_id']) == set(expected.canonical_player_id)
     assert after.loc[after.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [391.5]
     assert after.loc[after.canonical_player_id.eq(MATTHEW), 'Matches'].tolist() == [297]
-    assert (after.loc[changed, 'Matches'] - before.loc[changed, 'Matches']).sum() == 128
+    assert (after.loc[changed, 'Matches'] - before.loc[changed, 'Matches']).sum() == pytest.approx(
+        (expected.candidate_matches - expected.before_match_anchors).sum())
 
 
 def test_digital_prepared_core_stays_valid_and_display_uses_the_same_authority(monkeypatch):

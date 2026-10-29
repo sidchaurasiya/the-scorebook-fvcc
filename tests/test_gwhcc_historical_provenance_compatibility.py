@@ -67,7 +67,8 @@ def test_all_63_anchors_accept_string_provenance_without_changing_statistics(car
     assert_all_approved_anchors(actual)
     pd.testing.assert_frame_equal(actual[NUMERIC], expected[NUMERIC], check_dtype=False)
     pd.testing.assert_frame_equal(frame, before)
-    untouched = ~frame.canonical_player_id.isin(history.load_dated_career_anchors().canonical_player_id)
+    governed_ids = set(history.load_dated_career_anchors().canonical_player_id) | set(history.load_dated_match_anchors().canonical_player_id)
+    untouched = ~frame.canonical_player_id.isin(governed_ids)
     pd.testing.assert_frame_equal(frame.loc[untouched], actual.loc[untouched, frame.columns], check_dtype=False)
     for column in frame.columns:
         if column.endswith("_authority_source_row"):
