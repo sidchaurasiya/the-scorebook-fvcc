@@ -146,7 +146,8 @@ def test_real_authoritative_frame_changes_only_explicit_source_identities():
     base = base.merge(batting[["canonical_player_id", "battingNotOuts"]].rename(columns={"battingNotOuts": "Not Outs"}), on="canonical_player_id", validate="one_to_one")
     before = docs.apply_historical_career_metric_decisions(docs.apply_historical_career_supplements(base))
     after = history.apply_dated_career_anchors(before)
-    mask = ~before.canonical_player_id.isin(set(history.load_dated_career_anchors().canonical_player_id))
+    governed_ids = set(history.load_dated_career_anchors().canonical_player_id) | set(history.load_dated_match_anchors().canonical_player_id)
+    mask = ~before.canonical_player_id.isin(governed_ids)
     pd.testing.assert_frame_equal(before.loc[mask].reset_index(drop=True), after.loc[mask, before.columns].reset_index(drop=True), check_dtype=False)
     assert len(after) == len(base) == 1291
     assert after.canonical_player_id.is_unique
@@ -195,10 +196,11 @@ def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, mo
 def test_no_source_season_snapshot_or_other_club_files_changed():
     changed = subprocess.check_output(["git", "diff", "--name-only"], cwd=ROOT, text=True).splitlines()
     allowed = ("clubs/glen-waverley-hawks/data/", "tests/")
-    allowed_exact = {"src/data/gwhcc_historical_career.py", "src/ui/layout.py", "docs/gwhcc_dated_career_anchors.md", "docs/gwhcc_historical_match_counts.md"}
+    allowed_exact = {"src/data/gwhcc_historical_career.py", "src/data/gwhcc_match_achievements.py", "src/ui/layout.py", "docs/gwhcc_dated_career_anchors.md", "docs/gwhcc_historical_match_counts.md", "docs/gwhcc_clubwide_match_reconciliation.md", "docs/gwhcc_verified_match_replacement.md"}
     assert all(p.startswith(allowed) or p in allowed_exact for p in changed)
     assert not any(("/data/source/" in p or "source/excel" in p)
-                   and p != "clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv" for p in changed)
+                   and p not in {"clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv",
+                                 "clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_match_milestone_seasons.csv"} for p in changed)
     assert not any(p.startswith(("clubs/fvcc/", "clubs/georges-river-district/")) for p in changed)
 
 

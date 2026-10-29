@@ -14,6 +14,7 @@ DATA = Path(__file__).resolve().parents[2] / "clubs" / CLUB_ID / "data"
 ANCHORS = DATA / "source/document_overrides/gwhcc_dated_career_anchors.csv"
 VERIFIED_ANCHORS = DATA / "source/document_overrides/gwhcc_verified_career_anchors.csv"
 MATCH_ANCHORS = DATA / "source/document_overrides/gwhcc_dated_match_anchors.csv"
+MATCH_MILESTONES = DATA / "source/document_overrides/gwhcc_match_milestone_seasons.csv"
 BATTING = DATA / "processed/all_seasons_batting.csv"
 BOWLING = DATA / "processed/all_seasons_bowling.csv"
 COUNT_COLUMNS = {
@@ -39,7 +40,7 @@ def season_start(value: object) -> int:
 
 
 def dated_career_signature() -> tuple:
-    return tuple((str(p), p.stat().st_mtime_ns, p.stat().st_size) for p in [ANCHORS, VERIFIED_ANCHORS, MATCH_ANCHORS, BATTING, BOWLING] if p.exists())
+    return tuple((str(p), p.stat().st_mtime_ns, p.stat().st_size) for p in [ANCHORS, VERIFIED_ANCHORS, MATCH_ANCHORS, MATCH_MILESTONES, BATTING, BOWLING] if p.exists())
 
 
 def anchor_scopes(row: dict) -> tuple[str, ...]:

@@ -5843,7 +5843,10 @@ def render_approaching_milestones_page() -> None:
             hall_of_fame_movements = milestone_data["hall_of_fame_movements"]
         else:
             season_window = milestone_achievement_season_window(historical_data)
-            achieved = build_achieved_milestones(historical_data, season_window, club_id)
+            achieved = build_achieved_milestones(
+                historical_data, season_window, club_id,
+                match_evidence_version=override_version if club_id == "glen-waverley-hawks" else None,
+            )
             hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
     elif selected_view == "exclusive":
@@ -6090,7 +6093,9 @@ def build_achieved_milestones(
     historical_data: dict[str, object],
     season_window: list[str],
     club_id: str | None = None,
+    match_evidence_version: object | None = None,
 ) -> pd.DataFrame:
+    _ = match_evidence_version
     columns = [
         "Player",
         "canonical_player_id",
@@ -6120,6 +6125,12 @@ def build_achieved_milestones(
         if metric not in all_time or metric not in period_totals:
             continue
         source = all_time[["player_key", "canonical_player_id", "Player", metric]].copy()
+        if active_club_id == "glen-waverley-hawks" and metric == "Matches":
+            from src.data.gwhcc_match_achievements import qualified_match_achievement_rows
+
+            qualified, controlled_ids = qualified_match_achievement_rows(historical_data, all_time, season_window, spec["thresholds"])
+            rows.extend(qualified)
+            source = source.loc[~source.canonical_player_id.isin(controlled_ids)].copy()
         source[metric] = pd.to_numeric(source[metric], errors="coerce").fillna(0)
         window_values = period_totals[["player_key", metric]].copy()
         window_values[metric] = pd.to_numeric(window_values[metric], errors="coerce").fillna(0)
