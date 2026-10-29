@@ -16,8 +16,15 @@ def load_match_milestone_seasons() -> pd.DataFrame:
         return pd.DataFrame()
     rows = pd.read_csv(MATCH_MILESTONES, keep_default_na=False)
     controlled_ids = set(rows.canonical_player_id.astype(str)) - {""}
+    controlled_years = {}
+    for pid, group in rows.groupby("canonical_player_id"):
+        try:
+            controlled_years[pid] = max(group.season.map(season_start))
+        except ValueError:
+            controlled_years[pid] = None
     rows = rows[rows.decision_status.eq("approved_source_season") & rows.confidence.eq("high")].copy()
     rows.attrs["controlled_ids"] = controlled_ids
+    rows.attrs["controlled_through_year"] = controlled_years
     if rows.empty:
         return rows
     if rows.canonical_player_id.eq("").any() or rows.duplicated(["canonical_player_id", "threshold"]).any():
@@ -64,23 +71,32 @@ def qualified_match_achievement_rows(
             for row in evidence[evidence.canonical_player_id.eq(pid)].to_dict("records"):
                 emit(player, int(row["threshold"]), row["season"])
         has_anchor = str(player.get("historical_match_anchor_applied", "")).casefold() in {"true", "1"}
-        if not has_anchor or not isinstance(batting, pd.DataFrame) or batting.empty:
+        if not isinstance(batting, pd.DataFrame) or batting.empty:
             continue
         grain = ["canonical_player_id", "season_id", "team_id", "grade_id"]
         if not {*grain, "season", "matches"}.issubset(batting):
             continue
         source = batting[batting.canonical_player_id.eq(pid)].copy()
         source["_year"] = source.season.map(season_start)
-        source = source[source._year.gt(season_start(player["historical_match_anchor_through_season"]))]
+        cutoff = (season_start(player["historical_match_anchor_through_season"]) if has_anchor
+                  else evidence.attrs.get("controlled_through_year", {}).get(pid))
+        if cutoff is None:
+            continue
+        if has_anchor:
+            source = source[source._year.gt(cutoff)]
         values = pd.to_numeric(source.matches, errors="coerce")
         if source[grain].isna().any().any() or source[grain].astype(str).eq("").any().any() or source.duplicated(grain).any() or values.isna().any():
             continue
         if not values.map(math.isfinite).all() or values.lt(0).any() or values.mul(2).mod(1).ne(0).any():
             continue
-        running = float(player["historical_match_anchor_value"])
+        running = float(player["historical_match_anchor_value"]) if has_anchor else 0.0
         if not math.isclose(running + float(values.sum()), float(player["Matches"]), abs_tol=1e-8):
             continue
         source["_weight"] = values
+        if not has_anchor:
+            # Evidence-only identities retain digital career authority, not a new career anchor.
+            running = float(source.loc[source._year.le(cutoff), "_weight"].sum())
+            source = source[source._year.gt(cutoff)]
         for (_, season), weight in source.groupby(["_year", "season"])._weight.sum().sort_index().items():
             after = running + float(weight)
             for threshold in thresholds:

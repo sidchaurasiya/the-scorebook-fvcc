@@ -123,3 +123,18 @@ def test_evidence_only_change_invalidates_achieved_cache_without_clearing_it(mon
     changed = layout.build_achieved_milestones(data, ["Summer 2026/27"], history.CLUB_ID, match_evidence_version=(str(tmp_path), 2))
     assert first.Threshold.tolist() == cached.Threshold.tolist() == [50]
     assert changed.Threshold.tolist() == [100]
+
+
+@pytest.mark.parametrize("complete", [True, False])
+def test_evidence_only_player_can_date_a_future_verified_crossing_without_career_anchor(complete):
+    career, data = fixture(anchor=0, current=201,
+                           periods=(("Summer 2025/26",199.5),("Summer 2026/27",.5),("Summer 2027/28",1)))
+    career.loc[0,"canonical_player_id"]="noel_blacker"
+    career.loc[0,"Player"]="Noel Blacker"
+    career.loc[0,"historical_match_anchor_applied"]=False
+    data["batting_raw"].loc[:,"canonical_player_id"]="noel_blacker"
+    if not complete:
+        data["batting_raw"]=data["batting_raw"].iloc[1:]
+    rows, _ = achievements.qualified_match_achievement_rows(data,career,["Summer 2026/27","Summer 2027/28"],[100,200])
+    assert [(r["Threshold"],r["Season"]) for r in rows] == ([(200,"Summer 2026/27")] if complete else [])
+    assert career.Matches.iloc[0]==201
