@@ -15,7 +15,7 @@
   "cutoff_utc": "2026-10-24T14:28:39.413681+00:00",
   "excluded_incomplete_match_ids": [],
   "excluded_match_ids": [],
-  "generated_app_facing_data_version": "2026-10-24T14:28:39.413681+00:00",
+  "generated_app_facing_data_version": "fvcc-fielding-correction-f1c049ffc3234e512f9379687385472d1e27fa4a6b4fef7c1a5a6ac843b29894",
   "latest_match_date": "2026-10-24T12:30:00.0000000+11:00",
   "latest_match_id": "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
   "latest_match_opponent": "Lalor Warriors 3rd XI",
@@ -41,5 +41,10 @@
   ],
   "validator_checks": 19,
   "validator_failures": 0,
-  "validator_status": "pass"
+  "validator_status": "pass",
+  "last_source_correction": {
+    "match_id": "d454dfb9-b61d-4382-b6d2-f75594461198",
+    "source_sha256": "f1c049ffc3234e512f9379687385472d1e27fa4a6b4fef7c1a5a6ac843b29894",
+    "policy": "existing-match-catches-v1"
+  }
 }

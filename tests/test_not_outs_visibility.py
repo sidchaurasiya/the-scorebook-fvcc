@@ -262,7 +262,7 @@ def test_fvcc_refresh_has_exact_verified_new_contributions() -> None:
     for kind, metric, total in [
         ("batting", "battingAggregate", 1007),
         ("bowling", "bowlingWickets", 67),
-        ("fielding", "fieldingTotalCatches", 29),
+        ("fielding", "fieldingTotalCatches", 34),
     ]:
         frame = pd.read_csv(f"clubs/fvcc/data/processed/all_seasons_{kind}.csv", low_memory=False)
         current = frame.loc[frame["season"].eq("Summer 2026/27")]
