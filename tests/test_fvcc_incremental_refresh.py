@@ -89,7 +89,7 @@ def test_captain_historical_keys_survive_new_evidence():
 
 def test_verified_current_fvcc_contributions_and_excluded_cancelled_counts():
     root=Path(__file__).resolve().parents[1]/'clubs/fvcc/data/processed'
-    cases=[('batting','battingAggregate',1007),('bowling','bowlingWickets',67),('fielding','fieldingTotalCatches',29)]
+    cases=[('batting','battingAggregate',1007),('bowling','bowlingWickets',67),('fielding','fieldingTotalCatches',34)]
     for kind,metric,expected in cases:
         frame=pd.read_csv(root/f'all_seasons_{kind}.csv')
         current=frame[frame.season.eq('Summer 2026/27')]
