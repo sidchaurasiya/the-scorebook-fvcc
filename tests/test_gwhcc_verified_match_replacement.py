@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 import pandas as pd
 import pytest
@@ -9,6 +10,7 @@ from src.data import gwhcc_match_policy as policy
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = pd.read_csv(ROOT / "tests/fixtures/gwhcc_clubwide_match_expected.csv")
+CURRENT = json.loads((ROOT/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
 HELD = {"noel_blacker": 106, "raw_561b5dda_3abc_467a_b91f_147590e6ed10": 25.5}
 
 
@@ -32,7 +34,7 @@ def test_each_approved_value_reaches_one_public_profile(decision, monkeypatch):
     assert index.id.eq(pid).sum() == 1
     profile = layout.get_player_profile_data(pid, layout.metadata_mtime(), layout.player_aliases_mtime(), club_id=history.CLUB_ID)
     career = layout.build_player_profile_view.__wrapped__(profile, layout.player_profile_view_signature())["career"].iloc[0]
-    assert career.Matches == decision["candidate_matches"]
+    assert career.Matches == CURRENT['profiles'][pid]['Matches']
     assert career.Player == decision["player_name"]
     assert decision["cutoff"] in history.career_anchor_coverage_note(career)
     watch = next(r for r in layout.player_milestone_rows(career) if r["category"] == "Matches")
@@ -45,7 +47,9 @@ def test_held_values_have_no_direct_or_indirect_match_anchor_effect():
     actual = documents.apply_record_overrides(prepared, write_decisions=False)
     for pid, value in HELD.items():
         row = actual[actual.canonical_player_id.eq(pid)]
-        assert len(row) == 1 and row.Matches.iloc[0] == value
+        # A held historical value is not a freeze against verified later play.
+        digital = prepared.loc[prepared.canonical_player_id.eq(pid),'Matches'].iloc[0]
+        assert len(row) == 1 and row.Matches.iloc[0] == digital == CURRENT['profiles'][pid]['Matches']
         assert str(row.iloc[0].get("historical_match_anchor_applied", "")).casefold() not in {"true", "1"}
         assert "Career matches use the club's verified total" not in history.career_anchor_coverage_note(row.iloc[0])
     again = documents.apply_record_overrides(actual, write_decisions=False)

@@ -92,7 +92,7 @@ DATA = Path(__file__).resolve().parents[1] / "clubs/glen-waverley-hawks/data/pro
 def test_weekly_snapshot_is_disjoint_preserves_history_and_excludes_pending_results():
     validation = json.loads((DATA / "validation/gwhcc_weekly_refresh_validation.json").read_text())
     matches = pd.read_csv(DATA / "all_seasons_matches.csv")
-    assert len(matches) == matches.match_id.nunique() == 3512
+    assert len(matches) == matches.match_id.nunique() == 3517
     assert matches.season.ne("Summer 2026/27").sum() == 3475
     assert set(validation["new_completed_match_ids"]) <= set(matches.match_id)
     assert not set(validation["pending_match_ids"]) & set(matches.match_id)

@@ -8,6 +8,7 @@ occurs here. Acceptance requires a separate source/preservation validation.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -156,10 +157,45 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     old_teams = pd.read_csv(processed / 'teams.csv')
     pd.concat([old_teams[~old_teams['season_id'].eq(season['id'])], teams], ignore_index=True).to_csv(processed / 'teams.csv', index=False)
     aggregate_parts = {}
+    from scripts import build_player_profile_insight_exports as profile
+    from src.data.gwhcc_finalised_aggregates import finalised_aggregate, missing_provider_rows
+
+    excluded = {}
+    excluded_dir = bundle / 'parsed_excluded'
+    for key in ['matches', 'batting', 'bowling', 'fielding']:
+        path = excluded_dir / f'{key}.csv'
+        excluded[key] = pd.read_csv(path, low_memory=False) if path.exists() else frames[key].iloc[:0].copy()
+    if set(excluded['matches']['match_id']) & included:
+        raise ValueError('Excluded source partition overlaps eligible matches')
+    if not excluded['matches'].empty:
+        excluded_innings = pd.read_csv(excluded_dir / 'innings.csv', low_memory=False)
+        if eligible_match_ids(excluded['matches'], excluded_innings, cutoff):
+            raise ValueError('Excluded source partition contains eligible played matches')
+    prepared = {'batting': profile.prepare_batting(frames,club_id=CLUB),
+                'bowling': profile.prepare_bowling(frames,club_id=CLUB), 'fielding':frames['fielding']}
+    omitted = {'batting': profile.prepare_batting(excluded,club_id=CLUB),
+               'bowling': profile.prepare_bowling(excluded,club_id=CLUB), 'fielding':excluded['fielding']}
+    correction_path = bundle / 'verified_scorecard_corrections.csv'
+    corrections = pd.read_csv(correction_path) if correction_path.exists() else pd.DataFrame()
+    for correction in corrections.to_dict('records'):
+        mid = correction['evidence_match_id']
+        if mid not in included:
+            raise ValueError('Correction certificate references a non-eligible match')
+        for suffix, field in [('scorecard','scorecard_payload_sha256'),('balls','balls_payload_sha256')]:
+            payload = json.loads((cache / f'match={mid}__{suffix}.json').read_text())['payload']
+            digest = hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+            if digest != correction[field]:
+                raise ValueError('Correction source payload changed since independent verification')
+    canonical_appearances = apply_player_identity_mapping(appearances,club_id=CLUB)
     for kind in ['batting','bowling','fielding']:
         new = pd.read_csv(bundle / f'current_aggregate_{kind}.csv')
         if not new['team_id'].isin(team_ids).all() or not new['season_id'].eq(season['id']).all():
             raise ValueError('Aggregate rows fall outside the discovered current GWHCC scope')
+        new, partition_changes = finalised_aggregate(new, prepared[kind], omitted[kind], kind, corrections)
+        partition_changes.to_csv(bundle / f'finalised_{kind}_aggregate_changes.csv',index=False)
+        new, participation_rows = missing_provider_rows(new, canonical_appearances, frames, baseline_ids, kind, corrections)
+        participation_rows.to_csv(bundle / f'participation_only_{kind}_rows.csv',index=False)
+        new, _ = finalised_aggregate(new, prepared[kind], omitted[kind], kind, corrections)
         new['raw_playhq_matches'] = new['matches']
         new['matches'] = [weights.get((row.team_id, row.player_id), 0) for row in new.itertuples()]
         new = new[new['matches'].gt(0)].copy()

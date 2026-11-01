@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / 'clubs/glen-waverley-hawks/data'
 CHRIS = 'raw_f62c84ce_8d81_4700_bd22_ee8494bab921'
 MATTHEW = 'raw_289b8e53_aa95_4072_8288_588447304bcd'
+CURRENT = json.loads((ROOT/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
 
 
 @pytest.fixture
@@ -157,18 +158,22 @@ def test_explicit_match_decisions_do_not_enable_old_review_overrides():
     assert docs.load_historical_career_metric_decisions().canonical_player_id.nunique() == 21
 
 
-def test_actual_later_season_is_one_eligible_appearance_each_not_two_wickets():
+def test_actual_later_season_uses_source_verified_appearances_not_wicket_counts():
     annual = pd.read_csv(history.BATTING)
     current = annual[annual.season.eq('Summer 2026/27') & annual.canonical_player_id.isin([CHRIS, MATTHEW])]
-    assert current.groupby('canonical_player_id').matches.sum().to_dict() == {CHRIS: 1, MATTHEW: 1}
+    assert current.groupby('canonical_player_id').matches.sum().to_dict() == {CHRIS: 1, MATTHEW: 3}
     batting = pd.read_csv(DATA / 'processed/all_seasons_scorecard_batting.csv')
     matches = pd.read_csv(DATA / 'processed/all_seasons_matches.csv')
     ids = set(matches.loc[matches.season.eq('Summer 2026/27'), 'match_id'])
-    assert len(ids) == 37
+    assert ids == set(CURRENT['eligible_match_ids'])
     for pid in [CHRIS, MATTHEW]:
         raw_id = pid.removeprefix('raw_').replace('_', '-')
         selected = batting[batting.season.eq('Summer 2026/27') & batting.player_id.eq(raw_id)]
-        assert set(selected.match_id) == {'75c15b5e-5677-4838-81ba-3837124bfabd'}
+        expected_cards = {'75c15b5e-5677-4838-81ba-3837124bfabd'}
+        if pid == MATTHEW:
+            expected_cards.add('be085026-67f3-4b1b-a368-810a74900af5')
+        assert set(selected.match_id) == expected_cards
+        assert set(selected.match_id) <= set(CURRENT['appearance_match_ids'][pid])
         assert set(selected.match_id) <= ids
 
 
@@ -178,14 +183,14 @@ def test_full_authoritative_frame_changes_only_explicit_match_counts(monkeypatch
         old.setattr(history, 'MATCH_ANCHORS', tmp_path / 'absent.csv')
         before = docs.apply_record_overrides(base, write_decisions=False)
     after = docs.apply_record_overrides(base, write_decisions=False)
-    assert len(after) == 1291 and after.canonical_player_id.is_unique
+    assert len(after) == len(base) and after.canonical_player_id.is_unique
     unchanged = before.columns.drop(['Matches', 'matches_override_applied', 'matches_value_source'], errors='ignore')
     pd.testing.assert_frame_equal(before[unchanged], after[unchanged], check_dtype=False)
     changed = before.Matches.ne(after.Matches)
     expected = pd.read_csv(ROOT / 'tests/fixtures/gwhcc_clubwide_match_expected.csv')
     assert set(after.loc[changed, 'canonical_player_id']) == set(expected.canonical_player_id)
     assert after.loc[after.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [391.5]
-    assert after.loc[after.canonical_player_id.eq(MATTHEW), 'Matches'].tolist() == [297]
+    assert after.loc[after.canonical_player_id.eq(MATTHEW), 'Matches'].tolist() == [CURRENT['profiles'][MATTHEW]['Matches']]
     assert (after.loc[changed, 'Matches'] - before.loc[changed, 'Matches']).sum() == pytest.approx(
         (expected.candidate_matches - expected.before_match_anchors).sum())
 
@@ -201,7 +206,7 @@ def test_digital_prepared_core_stays_valid_and_display_uses_the_same_authority(m
     assert raw.loc[raw.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [334.5]
     governed = docs.apply_record_overrides(raw, write_decisions=False)
     displayed = layout.add_gwhcc_not_outs_for_display(governed, core['batting'])
-    for pid, expected, target, missing in [(CHRIS, 391.5, 400, 8.5), (MATTHEW, 297, 300, 3)]:
+    for pid, expected, target, missing in [(CHRIS, 391.5, 400, 8.5), (MATTHEW, 299, 300, 1)]:
         row = displayed[displayed.canonical_player_id.eq(pid)].iloc[0]
         assert row.Matches == expected
         milestone = {r['category']: r for r in layout.player_milestone_rows(row)}['Matches']

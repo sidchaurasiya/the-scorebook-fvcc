@@ -149,14 +149,15 @@ def test_real_authoritative_frame_changes_only_explicit_source_identities():
     governed_ids = set(history.load_dated_career_anchors().canonical_player_id) | set(history.load_dated_match_anchors().canonical_player_id)
     mask = ~before.canonical_player_id.isin(governed_ids)
     pd.testing.assert_frame_equal(before.loc[mask].reset_index(drop=True), after.loc[mask, before.columns].reset_index(drop=True), check_dtype=False)
-    assert len(after) == len(base) == 1291
+    assert len(after) == len(base)
+    assert set(after.canonical_player_id) == set(base.canonical_player_id)
     assert after.canonical_player_id.is_unique
     assert docs.load_historical_career_metric_decisions().canonical_player_id.nunique() == 21
 
 
 @pytest.mark.parametrize("pid,name,expected", [
     (CHRIS, "Chris Briginshaw", (391.5, 7051, 407, 37, 35, 95, 6, "Summer 1989/90")),
-    (MATTHEW, "Matthew Briginshaw", (297, 2417, 238, 44, 535, 49, 1, "Summer 1990/91")),
+    (MATTHEW, "Matthew Briginshaw", (299, 2430, 239, 45, 536, 49, 1, "Summer 1990/91")),
 ])
 def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, monkeypatch):
     from src.ui import layout
@@ -170,11 +171,11 @@ def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, mo
     assert tuple(row[c] for c in columns) == expected
     assert row.Player == name
     assert min(view["season_table"].Season, key=history.season_start) == "Summer 1995/96"
-    assert view["season_table"].Runs.sum() == (5995 if pid == CHRIS else 1880)
-    assert view["season_table"].Wickets.sum() == (28 if pid == CHRIS else 416)
-    assert view["season_table"].Innings.sum() == (345 if pid == CHRIS else 186)
-    assert view["grade_table"].Runs.sum() == (5995 if pid == CHRIS else 1880)
-    assert view["grade_table"].Wickets.sum() == (28 if pid == CHRIS else 416)
+    assert view["season_table"].Runs.sum() == (5995 if pid == CHRIS else 1893)
+    assert view["season_table"].Wickets.sum() == (28 if pid == CHRIS else 417)
+    assert view["season_table"].Innings.sum() == (345 if pid == CHRIS else 187)
+    assert view["grade_table"].Runs.sum() == (5995 if pid == CHRIS else 1893)
+    assert view["grade_table"].Wickets.sum() == (28 if pid == CHRIS else 417)
     assert html.escape(history.career_anchor_coverage_note(row)) in layout.player_profile_historical_coverage_html(row, view["season_table"])
     assert "Career matches use the club" in history.career_anchor_coverage_note(row)
     assert dict(layout.player_profile_batting_career_metrics(row, str(expected[0])))["Not Outs"] == str(expected[3])
@@ -197,6 +198,8 @@ def test_no_source_season_snapshot_or_other_club_files_changed():
     changed = subprocess.check_output(["git", "diff", "--name-only"], cwd=ROOT, text=True).splitlines()
     allowed = ("clubs/glen-waverley-hawks/data/", "tests/")
     allowed_exact = {"src/data/gwhcc_historical_career.py", "src/data/gwhcc_match_achievements.py", "src/ui/layout.py", "docs/gwhcc_dated_career_anchors.md", "docs/gwhcc_historical_match_counts.md", "docs/gwhcc_clubwide_match_reconciliation.md", "docs/gwhcc_verified_match_replacement.md"}
+    allowed_exact |= {'src/data/gwhcc_finalised_aggregates.py','scripts/build_gwhcc_incremental_candidate.py',
+                      'scripts/build_gwhcc_weekly_candidate.py','docs/gwhcc_refresh_2026_10_31.md'}
     assert all(p.startswith(allowed) or p in allowed_exact for p in changed)
     assert not any(("/data/source/" in p or "source/excel" in p)
                    and p not in {"clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv",
