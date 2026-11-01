@@ -91,7 +91,8 @@ def test_only_approved_metric_bundles_change_and_all_other_players_are_preserved
     for metric in ["Matches", "Catches", "Stumpings", "Run Outs", "HS", "50s", "100s", "BBI"]:
         pd.testing.assert_series_equal(before[metric], after[metric], check_dtype=False)
     assert int(other.sum()) == len(after) - additional.canonical_player_id.nunique()
-    assert len(after) == 1291 and after.canonical_player_id.is_unique
+    assert len(after) == len(base) and after.canonical_player_id.is_unique
+    assert set(after.canonical_player_id) == set(base.canonical_player_id)
 
 
 def test_review_rows_remain_suppressed_even_when_an_independent_anchor_has_the_same_value(monkeypatch):
@@ -131,9 +132,9 @@ def test_individual_cutoffs_and_current_season_contributions_survive():
     assert source.loc["Brett Powell", "batting_anchor_through_season"] == "Summer 2020/21"
     assert source.loc["Brett Powell", "bowling_anchor_through_season"] == "Summer 2025/26"
     actual = docs.apply_record_overrides(core_frame(), write_decisions=False).set_index("Player")
-    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 64
+    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 66
     assert actual.loc["Nathan Bungey", "Runs"] == 3330 + 50
-    assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 2
+    assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 3
 
 
 def test_partial_bundle_notes_do_not_claim_unsupported_history():

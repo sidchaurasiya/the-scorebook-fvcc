@@ -52,7 +52,7 @@ def test_both_original_source_routes_and_private_guard_are_unchanged(monkeypatch
     assert layout.resolve_public_profile_target("", "Private player") == ""
 
 
-def test_actual_profile_view_has_final_name_and_unchanged_statistics(monkeypatch):
+def test_actual_profile_view_has_final_name_and_source_backed_refreshed_statistics(monkeypatch):
     from src.ui import layout
     monkeypatch.setenv("CLUB_ID", CLUB)
     premiership_dir = ROOT / "clubs" / CLUB / "data/processed/hall_of_fame"
@@ -63,10 +63,10 @@ def test_actual_profile_view_has_final_name_and_unchanged_statistics(monkeypatch
     view = layout.build_player_profile_view.__wrapped__(profile, layout.player_profile_view_signature())
     row = view["career"].iloc[0]
     assert row.Player == "Sunny Somaia"
-    for metric, expected in {"Matches": 274, "Runs": 8391, "Wickets": 26, "Innings": 280, "Not Outs": 31, "100s": 21}.items():
+    for metric, expected in {"Matches": 276, "Runs": 8495, "Wickets": 26, "Innings": 282, "Not Outs": 31, "100s": 21}.items():
         assert row[metric] == expected
-    assert view["season_table"].Runs.sum() == 8391
-    assert view["season_table"].Innings.sum() == 280
+    assert view["season_table"].Runs.sum() == 8495
+    assert view["season_table"].Innings.sum() == 282
     assert all(card["player"] != "Sunil Somaia" for card in layout.player_highlight_cards(view))
     original_career = row.copy()
     original_career["Player"] = "Sunil Somaia"

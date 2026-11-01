@@ -151,8 +151,12 @@ def main():
     bundle.mkdir()
     for directory in ["source_payloads", "parsed_current"]:
         (bundle / directory).symlink_to((args.source_bundle / directory).resolve(), target_is_directory=True)
+    if (args.source_bundle / 'parsed_excluded').exists():
+        (bundle / 'parsed_excluded').symlink_to((args.source_bundle / 'parsed_excluded').resolve(), target_is_directory=True)
     for filename in ["task_state.json", "current_aggregate_batting.csv", "current_aggregate_bowling.csv", "current_aggregate_fielding.csv"]:
         shutil.copy2(args.source_bundle / filename, bundle / filename)
+    if (args.source_bundle / 'verified_scorecard_corrections.csv').exists():
+        shutil.copy2(args.source_bundle / 'verified_scorecard_corrections.csv', bundle / 'verified_scorecard_corrections.csv')
     # All currently approved aliases are already in the seed; this task grants no new merges.
     pd.DataFrame(columns=["canonical_player_id", "decision_status"]).to_csv(bundle / "approved_identity_mappings.csv", index=False)
     subprocess.run([sys.executable, str(ROOT / "scripts/build_gwhcc_incremental_candidate.py"),

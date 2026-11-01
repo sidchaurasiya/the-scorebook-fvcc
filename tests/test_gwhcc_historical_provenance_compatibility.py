@@ -37,12 +37,12 @@ def typed_provenance(frame, dtype):
     return result
 
 
-def assert_all_approved_anchors(result):
+def assert_all_approved_anchors(result, expected_ids):
     actual = result.set_index("canonical_player_id")
     anchors = history.load_dated_career_anchors()
     assert len(anchors) == 63
     assert set(anchors.metric_scope.dropna()) >= {"batting", "bowling", "batting;bowling"}
-    assert result.canonical_player_id.is_unique and len(result) == 1291
+    assert result.canonical_player_id.is_unique and set(result.canonical_player_id) == expected_ids
     assert set(anchors.canonical_player_id).issubset(set(result.canonical_player_id))
     for anchor in anchors.to_dict("records"):
         player = actual.loc[anchor["canonical_player_id"]]
@@ -64,7 +64,7 @@ def test_all_63_anchors_accept_string_provenance_without_changing_statistics(car
     before = frame.copy(deep=True)
     expected = history.apply_dated_career_anchors(prepared)
     actual = history.apply_dated_career_anchors(frame)
-    assert_all_approved_anchors(actual)
+    assert_all_approved_anchors(actual, set(frame.canonical_player_id))
     pd.testing.assert_frame_equal(actual[NUMERIC], expected[NUMERIC], check_dtype=False)
     pd.testing.assert_frame_equal(frame, before)
     governed_ids = set(history.load_dated_career_anchors().canonical_player_id) | set(history.load_dated_match_anchors().canonical_player_id)
@@ -90,7 +90,7 @@ def test_complete_hof_authoritative_path_preserves_all_governed_values(career_fr
     context = pd.option_context("future.infer_string", True) if dtype == "inferred_arrow" else nullcontext()
     with context:
         actual = layout.get_authoritative_career_totals.__wrapped__(0, club_id=history.CLUB_ID)
-        assert_all_approved_anchors(actual)
+        assert_all_approved_anchors(actual, set(frame.canonical_player_id))
     expected = documents.apply_record_overrides(career_frame, write_decisions=False)
     pd.testing.assert_frame_equal(actual[NUMERIC], expected[NUMERIC], check_dtype=False, check_column_type=False)
     for name, runs, wickets in [("Anthony Medina", 1575, 62), ("Shivo Arivalakan", 44, 17)]:

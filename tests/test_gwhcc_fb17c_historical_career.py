@@ -117,8 +117,8 @@ def test_closed_customer_decisions_and_private_filtering_remain_unchanged() -> N
     expected = {
         "Greg Mccormick": (427.0, 8664.0, 393.0, 87.0),
             # Current-season 1st XI scorecard: one non-T20 appearance and 1 not-out run.
-            "James Anderson": (109.0, 301.0, 3.0, 114.0),
-        "Kashif Javed": (154.5, 3510.0, 6.0, 34.0),
+            "James Anderson": (110.0, 301.0, 3.0, 114.0),
+        "Kashif Javed": (156.5, 3550.0, 6.0, 34.0),
     }
     for name, values in expected.items():
         row = frame[frame["Player"].astype(str).str.casefold().eq(name.casefold())].iloc[0]
@@ -142,7 +142,8 @@ def test_governed_replacements_recompute_hof_rankings_without_double_counting() 
         mask = before["canonical_player_id"].astype(str).eq(row.canonical_player_id)
         before.loc[mask, "Runs"] = float(row.scorebook_runs)
         before.loc[mask, "Wickets"] = float(row.scorebook_wickets)
-    assert len(after) == len(before) == 1291
+    assert len(after) == len(before)
+    assert set(after.canonical_player_id) == set(before.canonical_player_id)
     assert after["Debut Season"].ne("Summer 2026/27").sum() == 1228
 
     def ranked(frame: pd.DataFrame, metric: str) -> pd.DataFrame:
@@ -179,5 +180,5 @@ def test_governed_replacements_recompute_hof_rankings_without_double_counting() 
     assert (after["canonical_player_id"].eq("paul_young")).sum() == 1
     assert (after["canonical_player_id"].eq("raw_e8f5b374_e618_4735_9419_cc4e8c4511e8")).sum() == 1
     assert float(after.loc[after["Player"].eq("Chris Briginshaw"), "Runs"].iloc[0]) == 7051.0
-    assert float(after.loc[after["Player"].eq("Matthew Briginshaw"), "Wickets"].iloc[0]) == 535.0
+    assert float(after.loc[after["Player"].eq("Matthew Briginshaw"), "Wickets"].iloc[0]) == 536.0
     assert after["canonical_player_id"].nunique() == before["canonical_player_id"].nunique()

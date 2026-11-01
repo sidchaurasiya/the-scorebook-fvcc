@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 import pandas as pd
 
@@ -10,14 +11,15 @@ from src.utils.player_identity import apply_player_identity_mapping, filter_publ
 CLUB = 'glen-waverley-hawks'
 DATA = Path(__file__).resolve().parents[1] / 'clubs' / CLUB / 'data/processed'
 SEASON = 'Summer 2026/27'
+SNAPSHOT=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
 
 
-def test_current_season_is_official_and_has_thirty_seven_unique_played_matches():
+def test_current_season_has_the_exact_source_verified_played_match_inventory():
     seasons = pd.read_csv(DATA / 'seasons.csv')
     assert seasons.loc[seasons.name.eq(SEASON), 'id'].tolist() == ['69609582-ba37-4440-9d1e-a38fa912f6d3']
     matches = pd.read_csv(DATA / 'all_seasons_matches.csv')
     assert not matches.match_id.duplicated().any()
-    assert len(matches[matches.season.eq(SEASON)]) == 37
+    assert set(matches.loc[matches.season.eq(SEASON),'match_id']) == set(SNAPSHOT['eligible_match_ids'])
     assert len(matches[~matches.season.eq(SEASON)]) == 3475
 
 
@@ -25,12 +27,23 @@ def test_current_aggregates_use_only_verified_selected_appearances():
     for category in ['batting', 'bowling', 'fielding']:
         frame = pd.read_csv(DATA / f'all_seasons_{category}.csv')
         new = frame[frame.season.eq(SEASON)]
-        assert len(new) == 213
-        assert new.matches.ge(1).all() and new.matches.le(3).all()
-        assert new.matches.sum() == 390
-        assert new.raw_playhq_matches.sum() == 400
+        expected=SNAPSHOT['current_aggregates'][category]
+        assert len(new) == expected['rows']
+        assert new.matches.ge(1).all() and new.matches.le(expected['maximum_matches']).all()
+        assert new.matches.sum() == expected['weighted_matches']
+        assert new.raw_playhq_matches.sum() == expected['known_provider_matches']
+        assert new.raw_playhq_matches.isna().sum() == expected['missing_provider_counts']
         assert not new.duplicated(['season_id', 'team_id', 'player_id']).any()
-        assert new.matches.le(new.raw_playhq_matches).all()
+        known=new.raw_playhq_matches.notna()
+        # Official team-sheet credits can exceed the provider's lagging aggregate.
+        lagging = new[known & new.matches.gt(new.raw_playhq_matches)]
+        assert set(lagging.player_id) == {
+            'c29fd8b6-4284-4799-a52d-73d58004cf16',
+            '577c54ec-5298-41c7-bd0a-b56d36240a6d',
+        }
+        assert lagging.matches.eq(2).all()
+        assert lagging.raw_playhq_matches.eq(1).all()
+        assert new.loc[~known,'source_coverage_note'].str.contains('verified',case=False).all()
 
 
 def test_customer_confirmed_new_ids_resolve_to_existing_canonical_identities():
@@ -48,8 +61,8 @@ def test_prepared_snapshot_is_valid_public_and_contains_historical_population():
     assert prepared is not None
     career = prepared['all_time']
     # Four exact-name merges plus Cam's approved Sunil/Sunny consolidation.
-    assert len(career) == career.canonical_player_id.nunique() == 1291
-    assert career['Debut Season'].eq(SEASON).sum() == 63
+    assert len(career) == career.canonical_player_id.nunique() == SNAPSHOT['population']
+    assert career['Debut Season'].eq(SEASON).sum() == SNAPSHOT['current_debuts']
     assert public_player_mask(career).all()
 
 
@@ -60,7 +73,7 @@ def test_current_profile_index_uses_one_existing_canonical_label(monkeypatch):
     playcricket_ingestion._read_processed_table_cached.clear()
     index = layout.load_player_profile_index.__wrapped__(CLUB, layout.metadata_mtime(), layout.player_aliases_mtime())
     assert index.id.is_unique
-    assert len(index) == 1291
+    assert len(index) == SNAPSHOT['population']
     for name, canonical_id in [
         ('Chris Briginshaw', 'raw_f62c84ce_8d81_4700_bd22_ee8494bab921'),
         ('Matthew Briginshaw', 'raw_289b8e53_aa95_4072_8288_588447304bcd'),
@@ -92,7 +105,7 @@ def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables()
 def test_historical_captain_premiership_and_delivery_records_survive():
     breakdown = pd.read_csv(DATA / 'player_profile/performance_breakdown_by_dimension.csv',low_memory=False)
     # Same contributions, four duplicate identity/dimension groups consolidated.
-    assert breakdown.dimension.eq('Captain').sum() == 10226
+    assert breakdown.dimension.eq('Captain').sum() == SNAPSHOT['captain_rows']
     assert len(pd.read_csv(DATA / 'hall_of_fame/premiership_wins.csv')) == 24
     assert len(pd.read_csv(DATA / 'hall_of_fame/player_premierships.csv')) == 170
     hats = pd.read_csv(DATA / 'hall_of_fame/hat_tricks.csv')
@@ -104,8 +117,8 @@ def test_historical_captain_premiership_and_delivery_records_survive():
 def test_new_partnerships_keep_evidence_and_privacy_gates():
     events = pd.read_csv(DATA / 'partnerships/partnership_events.csv')
     new = events[events.season.eq(SEASON)]
-    assert len(new) == 215
-    assert new.privacy_status.value_counts().to_dict() == {'PUBLIC_PUBLIC':211,'PUBLIC_PRIVATE':4}
+    assert len(new) == SNAPSHOT['partnership_events']
+    assert new.privacy_status.value_counts().to_dict() == SNAPSHOT['partnership_privacy_counts']
     for position in [1,2]:
         protected = new[f'player_{position}_name'].eq('Private player')
         assert new.loc[protected,f'player_{position}_canonical_id'].fillna('').eq('').all()
