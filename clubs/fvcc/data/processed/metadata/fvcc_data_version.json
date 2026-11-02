@@ -3,31 +3,33 @@
   "current_finalized_match_ids": [
     "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
     "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
+    "4318991d-6757-42d7-b8b9-c94314a2849c",
+    "46aac372-eba8-407d-b9e2-b69640f36aef",
     "6175cdef-3b87-4450-a00d-2b381f4324f7",
     "80a88932-8bd2-43c5-9f49-3db456a60ffd",
     "b51f12f3-3c4a-4f15-8735-928f005fb2d2",
     "cdf93da6-f0d4-405b-b1f3-d30744e4774e",
     "d454dfb9-b61d-4382-b6d2-f75594461198",
+    "e3690747-8946-449e-afdb-cbc27e8ae537",
     "f3e9f065-f39c-4be8-acb2-37b6512d8cae",
     "fa973310-7871-447f-a4ac-8f6aa4dbfc2a"
   ],
-  "cutoff_melbourne": "2026-10-25T01:28:39.413681+11:00",
-  "cutoff_utc": "2026-10-24T14:28:39.413681+00:00",
+  "cutoff_melbourne": "2026-10-31T23:59:59+11:00",
+  "cutoff_utc": "2026-10-31T12:59:59+00:00",
   "excluded_incomplete_match_ids": [],
   "excluded_match_ids": [],
-  "generated_app_facing_data_version": "fvcc-fielding-correction-f1c049ffc3234e512f9379687385472d1e27fa4a6b4fef7c1a5a6ac843b29894",
-  "latest_match_date": "2026-10-24T12:30:00.0000000+11:00",
-  "latest_match_id": "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
-  "latest_match_opponent": "Lalor Warriors 3rd XI",
-  "latest_match_result": "Lalor Warriors 3rd XI won by 200 runs",
+  "generated_app_facing_data_version": "2026-10-31T22:31:18.523734+00:00",
+  "latest_match_date": "2026-10-31T12:30:00.0000000+11:00",
+  "latest_match_id": "e3690747-8946-449e-afdb-cbc27e8ae537",
+  "latest_match_opponent": "Northern Socials 1st XI",
+  "latest_match_result": "Northern Socials 1st XI won by 9 wickets",
   "latest_match_round": "Round 4",
-  "latest_refresh_timestamp": "2026-10-24T14:28:39.413681+00:00",
+  "latest_refresh_timestamp": "2026-10-31T22:31:18.523734+00:00",
   "latest_statistical_season": "Summer 2026/27",
   "new_match_ids": [
-    "22342e82-4bc8-4dfa-ba67-5d9cb831247d",
-    "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
-    "6175cdef-3b87-4450-a00d-2b381f4324f7",
-    "d454dfb9-b61d-4382-b6d2-f75594461198"
+    "4318991d-6757-42d7-b8b9-c94314a2849c",
+    "46aac372-eba8-407d-b9e2-b69640f36aef",
+    "e3690747-8946-449e-afdb-cbc27e8ae537"
   ],
   "source_data_mtime": 1785594572.7395265,
   "source_issue_match_ids": [],
@@ -37,14 +39,20 @@
     "First XI R3 scorecard bowling figures are complete, but per-dismissal bowler participant links are absent and BBB is unavailable; include scorecard figures only and do not infer delivery-derived metrics.",
     "Third XI R3 official source reports a first-innings result: Ivanhoe's 104 all out exceeds FVCC's first innings 85 all out; FVCC's 50/3 is a played second innings and does not change the first-innings decision.",
     "Third XI R3 innings 4 is a 0-over 0/0 placeholder with no batting, bowling, fielding or ball-by-ball rows; it is treated as unstarted, not as a scored innings.",
-    "Third XI R3 lacks BBB for FVCC innings 1 and has incomplete batter-dismissal-to-bowler participant links in innings 1 and the opposition innings; preserve per-player scorecard bowling figures but do not infer missing attribution."
+    "Third XI R3 lacks BBB for FVCC innings 1 and has incomplete batter-dismissal-to-bowler participant links in innings 1 and the opposition innings; preserve per-player scorecard bowling figures but do not infer missing attribution.",
+    "First XI R3 refreshed opponent scorecard attribution only; eight batting descriptions replaced, numerical statistics unchanged. Existing approved BBB exclusions retained.",
+    "Owner approved official scorecard SSOT for Fourth XI R4: 205 team runs, 23 affected batter runs, Danny 62 balls. Contradictory delivery innings quarantined from all delivery consumers; no balancing adjustment. Match-date cutoff, not an invented historical finalisation timestamp."
   ],
-  "validator_checks": 19,
+  "validator_checks": 6034,
   "validator_failures": 0,
   "validator_status": "pass",
   "last_source_correction": {
     "match_id": "d454dfb9-b61d-4382-b6d2-f75594461198",
     "source_sha256": "f1c049ffc3234e512f9379687385472d1e27fa4a6b4fef7c1a5a6ac843b29894",
     "policy": "existing-match-catches-v1"
-  }
+  },
+  "validation_scope": "FVCC 31 October 2026 scorecard-authority candidate",
+  "quarantined_delivery_innings_ids": [
+    "68920345-6cdd-4a16-9a20-1eb13967481d"
+  ]
 }
