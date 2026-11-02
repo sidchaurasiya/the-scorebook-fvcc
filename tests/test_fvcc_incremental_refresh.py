@@ -89,13 +89,13 @@ def test_captain_historical_keys_survive_new_evidence():
 
 def test_verified_current_fvcc_contributions_and_excluded_cancelled_counts():
     root=Path(__file__).resolve().parents[1]/'clubs/fvcc/data/processed'
-    cases=[('batting','battingAggregate',1007),('bowling','bowlingWickets',67),('fielding','fieldingTotalCatches',34)]
+    cases=[('batting','battingAggregate',1459),('bowling','bowlingWickets',85),('fielding','fieldingTotalCatches',42)]
     for kind,metric,expected in cases:
         frame=pd.read_csv(root/f'all_seasons_{kind}.csv')
         current=frame[frame.season.eq('Summer 2026/27')]
-        assert len(current)==60
-        assert current.matches.sum()==98
-        assert current.matches.isin([1,2,3]).all()
+        assert len(current)==70
+        assert current.matches.sum()==132
+        assert current.matches.isin([1,2,3,4]).all()
         assert current[metric].sum()==expected
         assert not current.duplicated(['season_id','team_id','player_id']).any()
 
@@ -116,9 +116,9 @@ def test_current_fvcc_new_player_and_hs_governance():
     from src.ui import layout
     core=load_prepared_hall_of_fame_core('fvcc',layout.HALL_OF_FAME_DATA_VERSION)
     career=core['all_time'].set_index('Player')
-    assert career.loc['Paul Silva','Runs']==73
-    assert career.loc['Paul Silva','Wickets']==3
-    assert career.loc['Paul Silva','Matches']==2
+    assert career.loc['Paul Silva','Runs']==122
+    assert career.loc['Paul Silva','Wickets']==4
+    assert career.loc['Paul Silva','Matches']==3
     assert career.loc['Danny Singh','HS']=='144'
     assert career.loc['Kalpeshkumar Patel','HS']=='86*'
 

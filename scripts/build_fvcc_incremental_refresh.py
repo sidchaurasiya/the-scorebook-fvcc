@@ -37,6 +37,39 @@ def validate_same_season_match_partitions(new_match_ids, excluded_match_ids):
         raise ValueError(f"Selected and excluded match IDs overlap: {sorted(overlap)}")
 
 
+def validate_delivery_quarantine(frames, excluded_innings_ids):
+    """Reject derived input that reintroduces an explicitly quarantined innings."""
+    excluded = set(map(str, excluded_innings_ids))
+    for name in ['balls', 'overs', 'partnerships']:
+        frame = frames[name]
+        if excluded and not frame.empty and 'innings_id' not in frame:
+            raise ValueError(f'Cannot verify delivery quarantine for {name}')
+        if 'innings_id' in frame and frame['innings_id'].astype(str).isin(excluded).any():
+            raise ValueError(f'Quarantined delivery innings remains in {name}')
+
+
+def merge_batting_dot_coverage(result, history, increment, keys):
+    """FVCC season exports contain dot counters absent from the generic merger."""
+    result = result.copy()
+    previous = history.set_index(keys)
+    fresh = increment.set_index(keys)
+    for index, row in result.iterrows():
+        key = tuple(row[k] for k in keys)
+        if key not in fresh.index:
+            continue
+        for column in ['bbb_dot_balls', 'bbb_dot_ball_balls_faced']:
+            if column not in fresh or column not in result:
+                continue
+            a = previous.loc[key, column] if key in previous.index else pd.NA
+            b = fresh.loc[key, column]
+            if pd.notna(b):
+                result.loc[index, column] = (float(a) if pd.notna(a) else 0.0) + float(b)
+        if 'batting_dot_ball_pct' in result:
+            denominator = result.loc[index, 'bbb_dot_ball_balls_faced']
+            result.loc[index, 'batting_dot_ball_pct'] = result.loc[index, 'bbb_dot_balls'] * 100 / denominator if pd.notna(denominator) and denominator > 0 else pd.NA
+    return result
+
+
 CURRENT_SEASON_EXCLUDED_METRICS = {
     'batting': ['battingInnings','battingAggregate','battingNotOuts','battingBallsFaced','batting50s','batting100s','batting0s','battingFours','battingSixes','battingMinutes'],
     'bowling': ['bowlingBalls','bowlingMaidens','bowlingRuns','bowlingWickets','bowling5WIs','bowling10WMs','bowlingWides','bowlingNoBalls'],
@@ -329,6 +362,7 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
               for key,filename in {'matches':'all_matches', 'innings':'all_match_innings', 'batting':'all_scorecard_batting',
                                    'bowling':'all_scorecard_bowling', 'fielding':'all_scorecard_fielding',
                                    'balls':'all_ball_by_ball', 'partnerships':'all_partnerships', 'overs':'all_overs'}.items()}
+    validate_delivery_quarantine(frames, state.get('quarantined_delivery_innings_ids', []))
     frames['matches'] = add_first_innings_result_context(frames['matches'], payloads)
     history_ids = set(pd.read_csv(baseline_root/'clubs/fvcc/data/processed/season_overview/season_by_round_scorecards.csv')['match_id'])
     increment_ids = set(frames['matches']['match_id'])
@@ -499,6 +533,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
             if not set(keys).issubset(old.columns) or not set(keys).issubset(current.columns):
                 raise ValueError(f'Cannot merge same-season output {filename}; expected stable summary keys missing')
             result=merge_summary(old,current,keys,history_ids,increment_ids)
+            if filename == 'bbb_batting_rates_by_scope.csv':
+                result = merge_batting_dot_coverage(result, old, current, keys)
             if 'latest_match_date' in result and 'latest_match_date' in current:
                 latest_map=latest_date_by_key(old,current,keys)
                 result['latest_match_date']=[latest_map.get(tuple(row[k] for k in keys),row.get('latest_match_date')) for _,row in result.iterrows()]
