@@ -1053,12 +1053,28 @@ def load_portability_player_profile_source_frames(
     return frames
 
 
-@st.cache_data(show_spinner=False, persist="disk")
 def get_player_profile_data(
     canonical_player_id: str,
     local_version: float | None = None,
     identity_version: float | None = None,
     club_id: str | None = None,
+) -> dict[str, pd.DataFrame | dict[str, str]]:
+    """Resolve the privacy-ledger signature before consulting the profile cache."""
+    from src.data.grdcc_legacy_composites import legacy_ledger_signature
+    active_club_id = str(club_id or get_active_club_id()).strip().casefold()
+    return _get_player_profile_data_cached(
+        canonical_player_id, local_version, identity_version, club_id,
+        legacy_ledger_signature(active_club_id),
+    )
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def _get_player_profile_data_cached(
+    canonical_player_id: str,
+    local_version: float | None,
+    identity_version: float | None,
+    club_id: str | None,
+    legacy_signature: tuple[str, str],
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
 
@@ -1066,6 +1082,7 @@ def get_player_profile_data(
     rows, and team/grade breakdown for one canonical player. The caller can use
     these raw totals to recalculate profile metrics without averaging averages.
     """
+    _ = legacy_signature
     local_version = metadata_mtime() if local_version is None else local_version
     identity_version = player_aliases_mtime(club_id=club_id) if identity_version is None else identity_version
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
@@ -1090,6 +1107,22 @@ def get_player_profile_data(
     selected_ids = {canonical_player_id}
     if active_club_id == "georges-river-district":
         frames = {category: filter_public_player_rows(frame) for category, frame in frames.items()}
+        import json
+        from src.config.club_config import get_hall_of_fame_dir
+        from src.data.grdcc_legacy_composites import approved_component_id_map
+        ledger_path = get_hall_of_fame_dir(club_id=active_club_id) / "legacy_display_composites.json"
+        group_map = {}
+        if ledger_path.exists():
+            identity_rows = [frame[["canonical_player_id", "canonical_player_name"]].rename(columns={"canonical_player_name": "Player"}).drop_duplicates()
+                             for frame in frames.values() if {"canonical_player_id", "canonical_player_name"}.issubset(frame.columns)]
+            if identity_rows:
+                group_map = approved_component_id_map(pd.concat(identity_rows, ignore_index=True).drop_duplicates(),
+                                                      json.loads(ledger_path.read_text()), club_id=active_club_id)
+        target_id = group_map.get(canonical_player_id, canonical_player_id)
+        members = {source for source, target in group_map.items() if target == target_id}
+        if members:
+            canonical_player_id = target_id
+            selected_ids = members
         selected_names: set[str] = set()
         for frame in frames.values():
             if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
@@ -1102,12 +1135,17 @@ def get_player_profile_data(
                 .loc[lambda series: series.ne("")]
                 .tolist()
             )
-        if selected_names:
+        if selected_names and not members:
+            same_name_ids: set[str] = set()
             for frame in frames.values():
                 if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
                     continue
                 same_name = frame["canonical_player_name"].map(normalize_player_name_for_strict_merge).isin(selected_names)
-                selected_ids.update(frame.loc[same_name, "canonical_player_id"].fillna("").astype(str).str.strip().tolist())
+                same_name_ids.update(frame.loc[same_name, "canonical_player_id"].fillna("").astype(str).str.strip().tolist())
+            same_name_ids.discard("")
+            from src.data.grdcc_legacy_composites import legacy_group_requires_separate_profiles
+            if not legacy_group_requires_separate_profiles(same_name_ids, club_id=active_club_id):
+                selected_ids.update(same_name_ids)
         selected_ids.discard("")
 
     scoped = {}

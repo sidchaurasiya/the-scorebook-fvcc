@@ -1,5 +1,5 @@
 player_id,player_name,seasons_played,teams_played_for
-3b4c82fd-7f94-4bd3-9d17-56e06516207d,NOOKARAJESH VARMA SANGADI,Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River Sharks
+3b4c82fd-7f94-4bd3-9d17-56e06516207d,NOOKARAJESH VARMA SANGADI,Summer 2024/25 | Summer 2025/26,GRDCC | Georges River Sharks
 a7c2695a-438f-4077-a772-52e038624dd0,Balamurali Balagurusamy,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks
 b36316aa-c951-4c74-ba60-0e9e518cfa6d,Vinoth Kumar,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | GRDCC 4th Grade | Georges River DCC | Georges River Sharks
 06c9ee56-62f1-4e14-a46e-455d4b9cd038,Manikandan Kamalakaran,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks | Georges River Stingrays
@@ -8,7 +8,7 @@ b36316aa-c951-4c74-ba60-0e9e518cfa6d,Vinoth Kumar,Summer 2023/24 | Summer 2024/2
 5bb45db2-46e1-4ad9-9870-ad33f0bc6d1a,Mohammed Ismail,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | GRDCC 3rd Grade | GRDCC 4th Grade | Georges River DCC | Georges River Sharks | Georges River Stingrays
 656c26e5-aaf4-4639-86b7-86bf539775ec,Venkateswara Reddy Avula,Summer 2025/26,Georges River Sharks
 67373f16-4af1-4dc9-bc20-1d00ccd91c51,Manoj Kumar,Summer 2023/24 | Summer 2025/26,GRDCC | Georges River DCC | Georges River Sharks
-78f7dbdc-8da8-4f0e-a3ed-1ef419f43a12,Sunilkumar Arumugam,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC | Georges River DCC | Georges River Sharks
+78f7dbdc-8da8-4f0e-a3ed-1ef419f43a12,Sunilkumar Arumugam,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks | Georges River Stingrays
 cd6abaee-9331-4ce3-b970-3e1512d8c5b8,Krishnasamy Kasthuri,Summer 2024/25 | Summer 2025/26,GRDCC | Georges River DCC | Georges River Sharks | Georges River Stingrays
 56f6b525-a92b-4173-a1c5-ab1357922f6f,Chandru Mohan,Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks
 6f4dd50c-b0fb-44e3-8210-8d76baab5165,Seetharaman Arumugam,Summer 2025/26 | Summer 2026/27,Georges River Sharks
@@ -39,7 +39,7 @@ bc7584c0-5485-484c-b5b6-cebf311c3404,Steve Lucas,Summer 2022/23 | Summer 2023/24
 b89f82b1-39bb-4fd5-8186-fa3d53da8413,Laurie Turner,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GR Vintage | GRDCC Classics | GRDCC Vintage
 8c5771f4-95e0-4ba2-9cf3-656d88c3b614,Keerin O'Keeffe,Summer 2025/26,GR Vintage | GRDCC Vintage
 ad375ccf-bf59-4e28-9af9-778758291357,David Massey,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GR Vintage | GRDCC Vintage | T/ L
-0ee3d6bc-4351-459a-a67e-ce70f8edae5c,Edward Gray,Summer 2024/25 | Summer 2025/26,GR Vintage | GRDCC Vintage
+0ee3d6bc-4351-459a-a67e-ce70f8edae5c,Edward Gray,Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GR Vintage | GRDCC Vintage
 4e22700d-f2c4-4183-b5ed-a3dc450c1bbb,Peter THOMAS,Summer 2025/26,GR Vintage
 ee97de76-0728-40db-857d-d297d5e72efe,george hodgson,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GR Vintage | GRDCC Vintage | T/ L
 87cd773e-e1e2-4346-93b9-cf7a00631009,Steven HARTAS,Summer 2021/22 | Summer 2024/25 | Summer 2025/26,GR Vintage | GRDCC Vintage | NSW O60s Regional | Sydney Vintage (Over 60's) Competition
@@ -94,7 +94,7 @@ b393020b-fce9-4f44-9707-4adcecaf8285,Dave Jiffkins,Summer 2022/23 | Summer 2023/
 7391bf6d-a73c-4d74-a922-f02693f3c501,Gavin Scott,Summer 1996/97 | Summer 1997/98 | Summer 1999/00 | Summer 2000/01 | Summer 2001/02 | Summer 2002/03 | Summer 2003/04 | Summer 2004/05 | Summer 2005/06 | Summer 2007/08 | Summer 2008/09 | Summer 2009/10 | Summer 2010/11 | Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,1st Grade | 2nd Grade | First Grade | Frank Gray Shield | GRDCC 1st Grade | GRDCC 2nd Grade | GRDCC 3rd Grade | GRDCC Masters | Second Grade | Sportswave T20 Cup | Third Grade
 3748f9bc-c663-48e3-aef8-f041b189e983,John Adamson,Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC Classics | GRDCC Vintage | NSW O60s Regional | Sydney Classics Over 50s | Sydney Vintage (Over 60's) Competition
 e5da5ce8-bfcc-45db-9f44-6faf07672372,Kevin Croom,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC Vintage
-817eae3d-ca00-4649-9cc0-35a1756b8ef9,Martin Cole,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC Classics | GRDCC Prime | GRDCC Vintage | T/ L
+817eae3d-ca00-4649-9cc0-35a1756b8ef9,Martin Cole,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC Classics | GRDCC Prime | GRDCC Vintage | T/ L
 ce919b14-adec-40b2-9735-9d0580d623a8,Peter Lanham,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC Vintage
 119115cb-ab94-4b5a-b10f-f1420f85f4f6,Adam Scott,Summer 2024/25 | Summer 2025/26,GRDCC Classics | GRDCC Vintage
 52f76c12-6a65-411f-ac7d-2fdaa0fc3806,Jack Blades,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,Frank Gray Shield | GRDCC 2nd Grade | GRDCC 3rd Grade | GRDCC 4th Grade
@@ -197,7 +197,7 @@ df2bdfac-2b7e-47bc-88ce-7d55f4943244,Jim Arsovski,Summer 2022/23 | Summer 2023/2
 18ea57c7-df15-488d-a02d-909101f5c7b8,Craig Butler,Summer 2024/25,GRDCC Classics
 58a0c057-72e3-42ee-b71d-89e8f0462035,Chris Morris,Summer 2022/23 | Summer 2024/25,GRDCC Classics | GRDCC Masters
 3fae3901-77c2-4765-a645-bcdd4d4178bf,Gregory Thomas,Summer 2023/24 | Summer 2024/25 | Summer 2026/27,GRDCC Classics | GRDCC Vintage
-6513b681-a053-4c3b-bd71-112d79be507e,Anthony Murphy,Summer 2023/24 | Summer 2024/25,GRDCC Classics
+6513b681-a053-4c3b-bd71-112d79be507e,Anthony Murphy,Summer 2023/24 | Summer 2024/25 | Summer 2026/27,GRDCC Classics | GRDCC Vintage
 a9e4967f-8e70-4c87-9343-8bf9b5ecd203,Thomas Reaney,Summer 2024/25,GRDCC Classics
 896dbddd-4489-4baf-92ee-f7f8f08ee5f9,Craig Matthews,Summer 2022/23 | Summer 2024/25,GRDCC Prime | GRDCC Vintage
 32b4fdc3-e0d2-478b-af69-bdae4e06fabc,John Mesar,Summer 2022/23 | Summer 2023/24 | Summer 2024/25,GRDCC Vintage | T/ L
@@ -1653,47 +1653,50 @@ c36c1b71-540d-428b-9124-f888507acc90,K Buckland,Summer 1972/73,Second Grade
 c3ee3b0b-af93-41a9-af98-e38b2729ffcc,Ayaan Randhawa,Summer 2026/27,Georges River DCC
 e209e291-04e6-48ce-98c9-5b8e6695fa67,Arjun Upadhyay,Summer 2026/27,Georges River DCC
 9e66809f-81ac-41f1-8c8e-7aaa3447c9c2,RYAN Johnson,Summer 2026/27,Georges River DCC
+c6c82a82-ffd8-4a56-9804-82babe04c25b,Amith Kumar Arangi,Summer 2026/27,Georges River DCC | Georges River Stingrays
+bad2f03e-1e6e-41ed-ba88-02f2fa0f90d4,Sri Radha Sai Daivik Botta,Summer 2026/27,Georges River DCC
 ed382533-940e-425c-b83b-c730c3829510,Ankur Gain,Summer 2026/27,Georges River DCC
 f5166908-2947-4b00-a402-28cd4d1f8882,Vijay Veerapaneni,Summer 2026/27,Georges River DCC
-bad2f03e-1e6e-41ed-ba88-02f2fa0f90d4,Sri Radha Sai Daivik Botta,Summer 2026/27,Georges River DCC
+b0381e09-6215-4bb7-bf3e-8ade1c6f8f95,Adhrit Prasaanth,Summer 2026/27,Georges River DCC
+8048f95c-6bd6-4395-8dba-64d5d8a0b46e,Denith Abeyrathna,Summer 2026/27,Georges River DCC
 d4d1c57c-4288-44d4-98cf-df78db440194,Hemansh Vihaan Peripi,Summer 2026/27,Georges River DCC
 2928bee7-c051-4f19-aed6-415a1a6aa9b4,Anirudh Iyer,Summer 2026/27,Georges River DCC
 150b637b-2410-4fda-abd6-d47b0f2a4b08,Virat Janyavula,Summer 2026/27,Georges River DCC
 601e971f-7f11-4f01-89c2-842dd7ac8dad,Vihaan Yalamanchili,Summer 2026/27,Georges River DCC
-8048f95c-6bd6-4395-8dba-64d5d8a0b46e,Denith Abeyrathna,Summer 2026/27,Georges River DCC
 3a01c3d4-fc64-4f93-ac2e-a5bb0b3cd3a9,Tarun Kesavraj,Summer 2026/27,Georges River DCC
 e69beaf1-11a3-4f1a-b6c0-521fd01191e7,Sohaan Pudi,Summer 2026/27,Georges River DCC
 0890d2ad-684d-4e1d-ac46-c3d71bbbb892,Eeshanth Nare,Summer 2026/27,Georges River DCC
-b0381e09-6215-4bb7-bf3e-8ade1c6f8f95,Adhrit Prasaanth,Summer 2026/27,Georges River DCC
 c6590c4d-a210-490b-93b8-18e19db63f11,Kesavraj Lokababu,Summer 2026/27,Georges River DCC
+d8da52a3-5073-4e74-bba7-36957049bf70,Smayan Raju,Summer 2026/27,Georges River DCC
 e2b43990-576d-4865-a6d6-320b6a4a86ba,Shaun Stanley,Summer 2026/27,Georges River DCC
 ab22047f-1577-414e-9101-3212f55d0098,Hasan Hoque,Summer 2026/27,Georges River Sharks
+360038b5-8be3-4d7a-9f2e-78953ca51a79,Vijaya Thorati,Summer 2026/27,Georges River Stingrays
 24b1e2ff-8873-4eae-9302-c434d3b6f4c1,Raj Kalapala,Summer 2026/27,Georges River Stingrays
+1c500950-2673-4f98-a353-1fc02751099d,Ashwini Sikerwar,Summer 2026/27,Georges River Stingrays
 9166ecfb-d69d-482b-9fd8-18e62922d875,Deepak Hosad,Summer 2026/27,Georges River Stingrays
 09c0342a-cb49-49de-94f8-2d5d69a9b3a8,Sree Talluru,Summer 2026/27,Georges River Stingrays
-360038b5-8be3-4d7a-9f2e-78953ca51a79,Vijaya Thorati,Summer 2026/27,Georges River Stingrays
-1c500950-2673-4f98-a353-1fc02751099d,Ashwini Sikerwar,Summer 2026/27,Georges River Stingrays
+06a3b662-7033-4004-a75b-a06652e08550,Vishvajeet Singh Chauhan,Summer 2026/27,Georges River Stingrays
 529424d4-987e-4da7-af87-8cdfb58f4480,Sai Ganta,Summer 2026/27,Georges River Stingrays
 938e294f-92c9-4925-bc4a-0e6ec386b2b1,Aarnav Oza,Summer 2026/27,Georges River Stingrays
 57479078-c39b-45c5-af4a-f95c6fbfb2cd,Sridhar Ghanta,Summer 2026/27,Georges River Stingrays
 95f5090a-3c8b-4465-aa87-dc630d3b8293,Kranthi Nekkalapu,Summer 2026/27,Georges River Stingrays
 f3aa2618-e939-441d-b457-639aa7c3b403,Malay Dave,Summer 2026/27,Georges River Stingrays
-c6c82a82-ffd8-4a56-9804-82babe04c25b,Amith Kumar Arangi,Summer 2026/27,Georges River Stingrays
-06a3b662-7033-4004-a75b-a06652e08550,Vishvajeet Singh Chauhan,Summer 2026/27,Georges River Stingrays
 5d403d48-bd8e-4aa6-9090-313ccbdec980,Anthony Aldous,Summer 2026/27,GRDCC 5th Grade | Georges River Stingrays
-2c476df8-9d92-4cfe-ab27-b1167cd0d8d9,Mark Wall,Summer 2026/27,GRDCC Classics
+2c476df8-9d92-4cfe-ab27-b1167cd0d8d9,Mark Wall,Summer 2026/27,GRDCC Classics | GRDCC Masters
 06c129e8-345f-406f-af3c-e43ee690f7f4,Imlak Zaman,Summer 2026/27,GRDCC Masters
+a094fef2-7f28-424c-9288-e024a384d63d,Jatin Waichal,Summer 2026/27,GRDCC Masters
 87598672-79ae-4476-ab0e-fc2dfb7d69cd,Adam Davison,Summer 2026/27,GRDCC Masters
 f17c793b-ad7a-479c-af2e-8da128240758,Jag Biradar,Summer 2026/27,GRDCC Masters
-06e3de3c-3366-4b31-a5fa-024193ca7a24,Matthew Bean,Summer 2026/27,Frank Gray Shield | GRDCC 2nd Grade
+6aa5afb0-b154-493e-aa5c-ef21273201af,Damon Firmager,Summer 2026/27,GRDCC Masters
 3e6e54b7-cd95-4e77-bc20-3733149d9fc1,William Robertson,Summer 2026/27,Frank Gray Shield | GRDCC 2nd Grade
+48ab2b6a-92ef-4cd9-9215-d8dd5a9fc96a,Shabeg Goraya,Summer 2026/27,Frank Gray Shield | GRDCC 3rd Grade | GRDCC 4th Grade
+06e3de3c-3366-4b31-a5fa-024193ca7a24,Matthew Bean,Summer 2026/27,Frank Gray Shield | GRDCC 2nd Grade
 35076702-d20f-41f4-9860-8ecb792aa431,Aiden Briscoe,Summer 2026/27,Frank Gray Shield | GRDCC 1st Grade
-73052320-5940-4e38-9647-dfc56f5e9f81,Nicholas Mamo,Summer 2026/27,GRDCC 2nd Grade | GRDCC 3rd Grade
-48ab2b6a-92ef-4cd9-9215-d8dd5a9fc96a,Shabeg Goraya,Summer 2026/27,GRDCC 3rd Grade | GRDCC 4th Grade
-8adc59f4-e936-45a8-b629-b312f1c6a055,Edward Holt,Summer 2026/27,GRDCC 3rd Grade
+73052320-5940-4e38-9647-dfc56f5e9f81,Nicholas Mamo,Summer 2026/27,Frank Gray Shield | GRDCC 2nd Grade | GRDCC 3rd Grade
+8d699c3f-9480-4db8-84c7-16d802552b8d,hafez malas,Summer 2026/27,Frank Gray Shield | GRDCC 3rd Grade | GRDCC 4th Grade
+8adc59f4-e936-45a8-b629-b312f1c6a055,Edward Holt,Summer 2026/27,Frank Gray Shield | GRDCC 3rd Grade
 e680d008-b008-4584-b590-a07632f75163,Arshveer Girn,Summer 2026/27,GRDCC 3rd Grade
 1a0622f6-82dc-4ad1-a6c9-dd331e0f7fe5,Basit Aziz,Summer 2026/27,GRDCC 3rd Grade | GRDCC 4th Grade
-8d699c3f-9480-4db8-84c7-16d802552b8d,hafez malas,Summer 2026/27,GRDCC 3rd Grade | GRDCC 4th Grade
 15309dd8-e1eb-4b43-b6cb-658781fa13c2,Sarosh Hossain,Summer 2026/27,GRDCC 4th Grade
 1042fb8a-bae1-486f-bbcb-b0ac7da68885,Samuel Knight,Summer 2026/27,GRDCC 4th Grade
 498566c6-0a0d-4658-9690-8a15fd7a662a,Fraser Lamont,Summer 2026/27,GRDCC 4th Grade | GRDCC 5th Grade

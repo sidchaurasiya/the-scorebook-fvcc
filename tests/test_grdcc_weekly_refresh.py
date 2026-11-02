@@ -51,7 +51,7 @@ def test_returning_players_follow_existing_primary_career_governance():
         pd.read_csv(DATA / 'hall_of_fame/prepared_career_all_time.csv'),
         club_id='georges-river-district',
     )
-    for name, matches in [('Gavin Scott', 322), ('Peter Remfrey', 391), ('Kevin Croom', 442)]:
+    for name, matches in [('Gavin Scott', 322), ('Peter Remfrey', 392), ('Kevin Croom', 443)]:
         row = career.loc[career.Player.eq(name)]
         assert len(row) == 1
         assert row.Matches.iloc[0] == matches

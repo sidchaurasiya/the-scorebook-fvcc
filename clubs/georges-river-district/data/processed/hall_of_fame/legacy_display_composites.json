@@ -1,0 +1,54 @@
+{
+  "records": [
+    {
+      "classification": "APPROVED_EXACT_NAME_NONOVERLAP",
+      "component_id_sha256": [
+        "5456dbb6407574f46c06d8bd21dc74e849593918f65a1c81c06ae2fb3abb02b6",
+        "6f73fc929b0084ed0075d104bf903de33f6ed626fd5d70203daeae4c3d7dfbe2",
+        "8ac0599379685cf8983ce14137eb26b65224930de7fa9f632725b1ad6b169bef"
+      ],
+      "frozen_values": {
+        "0s": "0.0",
+        "100s": "0.0",
+        "10WM": "0.0",
+        "30s": "0",
+        "3WI": "0",
+        "4s": "5.0",
+        "50s": "0.0",
+        "5WI": "0.0",
+        "6s": "0.0",
+        "BBI": "2-13",
+        "Balls Bowled": "12.0",
+        "Bat Avg": "7.75",
+        "Bat SR": "",
+        "Bowl Avg": "",
+        "Bowl SR": "6.0",
+        "Catches": "0.0",
+        "Debut Season": "Summer 1976/77",
+        "Dismissals": "0.0",
+        "Econ": "",
+        "HS": "26*",
+        "Innings": "24.0",
+        "Latest Season": "Summer 2025/26",
+        "Maidens": "0.0",
+        "Matches": "20.0",
+        "Run Outs": "0.0",
+        "Runs": "186.0",
+        "Seasons Played": "10",
+        "Stumpings": "0.0",
+        "Wickets": "2.0",
+        "Win %": "77.77777777777777",
+        "Win Count": "14.0",
+        "Win Matches": "19.0",
+        "ballByBallBatBalls": "",
+        "ballByBallBatRuns": "",
+        "ballByBallBatSR": ""
+      },
+      "identity_rule": "Exact case-insensitive name and pairwise non-overlapping recorded seasons; owner approved",
+      "legacy_id_sha256": "e6a851479e40a1fe19b037c6e6c3c64ae9eb249a4ea44c801d519c924203b146"
+    }
+  ],
+  "schema_version": 1,
+  "source_baseline_commit": "e74ab8868565d9d9c38d9750d419c6b42825face",
+  "source_baseline_sha256": "26d75d2e1d372ff6e8897b0d63377bf6affc8c2c4c451efc0b8451d2f0ac29b1"
+}

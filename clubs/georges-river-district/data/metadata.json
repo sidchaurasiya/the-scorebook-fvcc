@@ -522,12 +522,12 @@
     "/participants/grades/{grade_id}/fielding-statistics"
   ],
   "matches_fetched": 0,
-  "players_fetched": 1710,
+  "players_fetched": 1713,
   "teams_fetched": 445,
   "stat_rows": {
-    "batting": 7975,
-    "bowling": 7975,
-    "fielding": 7975
+    "batting": 7991,
+    "bowling": 7991,
+    "fielding": 7991
   },
   "live_requests": 44,
   "cache_hits": 1324,
@@ -544,11 +544,12 @@
   "last_refreshed_at": "2026-10-17T13:06:16.661090+00:00",
   "incremental_refresh": {
     "season": "Summer 2026/27",
-    "cutoff": "2026-10-24",
+    "cutoff": "2026-10-31",
     "timezone": "Australia/Sydney",
     "teams": 13,
     "finalized_match_ids": [
       "0f0bcc20-1904-4ead-be97-b876792b55c2",
+      "1957f23a-6239-49b4-a6f9-fb85c0f66b57",
       "2185f944-428d-4ca0-9dad-451de9281cd7",
       "2449f477-0847-4f82-8b45-b93c1fe192b3",
       "27418800-8ec6-4cd2-9119-ca4134bf0980",
@@ -566,6 +567,8 @@
       "678da287-ecff-4325-91e1-a926e5128d56",
       "696805e2-54ed-4865-b98d-81a5bf8103d3",
       "6b5a6222-355b-48e1-aeae-174d800920e4",
+      "6c4c42c4-b522-4e4d-9a72-675ce0754ba3",
+      "6e5c94a0-4646-41af-bed0-e179dcfa9bff",
       "842a865f-54a8-4369-9d60-f531087376c2",
       "8d743e57-6081-43b1-97ac-3766b4cca7f8",
       "8ff6a140-b3f2-4e10-a7be-990d1fac6294",
@@ -578,16 +581,19 @@
       "c1166912-1497-4fb6-a704-0d5e4360cce6",
       "c2d1c29d-0374-4fbf-922f-8394c7b71c09",
       "c35d1927-65ae-4229-b6df-8ca0e738f2ef",
+      "c78672a0-3f9f-4a04-ab1f-ea873824e1e4",
       "d6a310db-eb24-4e9a-b9df-7c99ed822edd",
       "dc81a446-d4a1-4f64-8d62-55c1faf69491",
-      "ebd65094-52a8-4c4a-898b-a242b86fed7d"
+      "ebd65094-52a8-4c4a-898b-a242b86fed7d",
+      "f7b7c018-5460-45b1-952b-4ef5496107c4"
     ],
-    "source_snapshot_checked_at": "2026-10-24T14:48:50.084321+00:00",
+    "source_snapshot_checked_at": "2026-11-01T05:31:52.135557+00:00",
     "historical_match_ids_retained": 2604,
-    "unique_match_centre_ids": 2637,
-    "statistics_bearing_matches": 20,
-    "cutoff_coverage": "Official finalized fixtures scheduled through 24 October 2026; source and aggregate retrieval timestamps are recorded in the external checkpoint. Two newly observed innings arithmetic discrepancies remain quarantined for release review.",
-    "discovery_cutoff_sydney": "2026-10-25T01:48:50.084321+11:00"
+    "unique_match_centre_ids": 2642,
+    "statistics_bearing_matches": 31,
+    "cutoff_coverage": "Official finalized fixtures scheduled through 31 October 2026; source and aggregate retrieval timestamps are recorded in the external checkpoint. Previously approved, bounded opponent-scorecard exceptions remain documented.",
+    "discovery_cutoff_sydney": "2026-11-01T16:31:52.135557+11:00",
+    "public_privacy_policy": "Approved public historical profiles retained; masked performances excluded"
   },
   "previous_full_refresh_counts": {
     "players": 1650,
@@ -598,5 +604,5 @@
       "fielding": 7789
     }
   },
-  "last_successful_incremental_refresh_time": "2026-10-24T14:48:50.084321+00:00"
+  "last_successful_incremental_refresh_time": "2026-11-01T05:31:52.135557+00:00"
 }
