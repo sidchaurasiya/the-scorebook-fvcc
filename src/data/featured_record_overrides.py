@@ -61,6 +61,22 @@ def normalize_featured_player_name(value: object) -> str:
     return FEATURED_NAME_ALIASES.get(normalized, normalized)
 
 
+def _has_ambiguous_grdcc_identities(rows: pd.DataFrame, club_id: str | None, approved_aliases: str = '') -> bool:
+    """Never collapse same-name people without a single verified canonical ID."""
+    if normalize_club_id(club_id or get_active_club_id()) != GRDCC_CLUB_ID or len(rows) <= 1:
+        return False
+    if 'canonical_player_id' not in rows:
+        # Legacy report supplements may explicitly identify different spellings
+        # of an otherwise unkeyed historical record; identical names are never
+        # enough to collapse separate records.
+        names = rows['Player'].map(normalize_featured_player_name)
+        if approved_aliases.strip() and names.nunique() == len(rows):
+            return False
+        return True
+    ids = rows['canonical_player_id'].fillna('').astype(str).str.strip()
+    return ids.eq('').any() or ids.nunique() != 1
+
+
 def featured_record_override_path(club_id: str | None = None) -> Path:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
     return REPO_ROOT / "clubs" / active_club_id / "data" / "source" / "annual_report_featured_record_overrides.csv"
@@ -503,12 +519,14 @@ def apply_featured_record_overrides(
 
     identity_decisions = load_report_identity_governance(club_id)
     held_names = set()
+    approved_targets: dict[str, set[str]] = {}
     for _, identity in identity_decisions.iterrows():
         report_name = str(identity.get('report_name', '')).strip()
         status = identity.get('status', '')
         if status in {'NEEDS_CLUB_CONFIRMATION', 'DUPLICATE_REPORT_RECORD'}:
             held_names.add(normalize_featured_player_name(report_name))
         elif status == 'MATCHED_EXISTING_CANONICAL_PLAYER' and 'canonical_player_id' in output:
+            approved_targets.setdefault(normalize_featured_player_name(report_name), set()).add(str(identity.get('canonical_player_id', '')).strip())
             matched = output['canonical_player_id'].astype(str).eq(identity.get('canonical_player_id', ''))
             if matched.sum() == 1:
                 output.loc[matched, 'Player'] = report_name
@@ -535,6 +553,13 @@ def apply_featured_record_overrides(
         if not matches.any():
             continue
         matching_rows = output.loc[matches].copy()
+        if _has_ambiguous_grdcc_identities(matching_rows, club_id, str(supplement_alias_map.get(normalized_name, ''))):
+            ids = approved_targets.get(normalize_featured_player_name(override.get('player_name', normalized_name)), set()) - {''}
+            if len(ids) != 1 or 'canonical_player_id' not in matching_rows:
+                continue
+            matching_rows = matching_rows.loc[matching_rows.canonical_player_id.astype(str).isin(ids)]
+            if len(matching_rows) != 1:
+                continue
         metric_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
         featured_index = metric_values.idxmax()
         _preserve_merged_high_score(output, featured_index, matching_rows)
@@ -576,6 +601,13 @@ def apply_featured_record_overrides(
         matches = _match_player_variants(normalized_players, variants)
         if matches.any():
             matching_rows = output.loc[matches].copy()
+            if _has_ambiguous_grdcc_identities(matching_rows, club_id, str(supplement_alias_map.get(normalized_name, ''))):
+                ids = approved_targets.get(normalize_featured_player_name(leader.get('player_name', normalized_name)), set()) - {''}
+                if len(ids) != 1 or 'canonical_player_id' not in matching_rows:
+                    continue
+                matching_rows = matching_rows.loc[matching_rows.canonical_player_id.astype(str).isin(ids)]
+                if len(matching_rows) != 1:
+                    continue
             current_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
             featured_index = current_values.idxmax()
             _preserve_merged_high_score(output, featured_index, matching_rows)

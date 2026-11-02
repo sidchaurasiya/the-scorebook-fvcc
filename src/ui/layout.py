@@ -203,7 +203,7 @@ FASTEST_MILESTONE_RECORD_LIMIT = 10
 PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
-PLAYER_PROFILE_INDEX_VERSION = "2026-08-gwhcc-feedback-v5"
+PLAYER_PROFILE_INDEX_VERSION = "2026-11-grdcc-approved-group-v1"
 PERFORMANCE_CACHE_VERSION = "2026-07-performance-v2"
 HAWKS_MATCH_COUNT_FOOTNOTE = "* Hawks match counts apply club rules: T20 = 0.5 match; no-play games are excluded."
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
@@ -540,12 +540,20 @@ def season_overview_url(season: object) -> str:
     return app_relative_url({"page": SEASON_OVERVIEW_QUERY_PAGE, "season": season_text}, season_text)
 
 
-@st.cache_data(show_spinner=False, persist="disk")
 def public_player_profile_lookup(
     club_id: str,
     local_version: float,
     identity_version: float,
 ) -> tuple[frozenset[str], dict[str, str]]:
+    from src.data.grdcc_legacy_composites import legacy_ledger_signature
+    return _public_player_profile_lookup_cached(club_id, local_version, identity_version, legacy_ledger_signature(club_id))
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def _public_player_profile_lookup_cached(
+    club_id: str, local_version: float, identity_version: float, governance_signature: tuple[str, str]
+) -> tuple[frozenset[str], dict[str, str]]:
+    _ = governance_signature
     index = load_player_profile_index(club_id, local_version, identity_version)
     if index.empty:
         return frozenset(), {}
@@ -572,6 +580,10 @@ def resolve_public_profile_target(player_id: object, player_name: object) -> str
     player_id_text = str(player_id or "").strip()
     if player_id_text in valid_ids:
         return player_id_text
+    from src.data.grdcc_legacy_composites import redirect_approved_component_id
+    redirected = redirect_approved_component_id(player_id_text, valid_ids, club_id=get_active_club_id())
+    if redirected:
+        return redirected
     from src.data.gwhcc_identity import canonical_query_name
 
     return name_lookup.get(canonical_query_name(name).casefold(), "")
@@ -707,10 +719,39 @@ def resolve_player_profile_selector_value(value: object) -> str:
     return str(name_to_id.get(text, "") or "").strip()
 
 
+def player_profile_selector_labels(player_names_by_id: dict[str, str], club_id: str) -> dict[str, str]:
+    """Disambiguate same-name GRDCC profiles without displaying source IDs."""
+    if club_id != "georges-river-district":
+        return dict(player_names_by_id)
+    groups: dict[str, list[str]] = {}
+    for player_id, name in player_names_by_id.items():
+        groups.setdefault(name.strip().casefold(), []).append(player_id)
+    result = {}
+    for ids in groups.values():
+        ordered = sorted(ids)
+        for index, player_id in enumerate(ordered, 1):
+            name = player_names_by_id[player_id]
+            result[player_id] = f"{name} (record {index})" if len(ordered) > 1 else name
+    return result
+
+
+def player_profile_selector_lookup(player_names_by_id: dict[str, str], labels: dict[str, str]) -> dict[str, str]:
+    candidates: dict[str, set[str]] = {}
+    for player_id, name in player_names_by_id.items():
+        for value in (name, labels[player_id]):
+            candidates.setdefault(value, set()).add(player_id)
+    return {name: next(iter(ids)) for name, ids in candidates.items() if len(ids) == 1}
+
+
 def resolve_player_query_to_id(player_names_by_id: dict[str, str]) -> str:
     query_player_id = unquote(query_param_value("player_id"))
     if query_player_id in player_names_by_id:
         return query_player_id
+
+    from src.data.grdcc_legacy_composites import redirect_approved_component_id
+    grouped = redirect_approved_component_id(query_player_id, player_names_by_id, club_id=get_active_club_id())
+    if grouped:
+        return grouped
 
     from src.utils.player_identity import resolve_approved_disjoint_player_id
 
@@ -5131,7 +5172,7 @@ def filter_hall_of_fame_data_by_team_group(data: dict[str, object], team_group_s
     bowling = combine_player_rows(bowling_raw, "bowling")
     fielding = add_display_stat_aliases(combine_player_rows(add_display_stat_aliases(fielding_raw), "fielding"))
     all_time = apply_featured_record_overrides(
-        build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding),
+        build_all_time_player_table(batting_raw, bowling_raw, fielding_raw, batting, bowling, fielding, full_identity_scope=False),
         club_id=club_id,
     )
     if club_id == "glen-waverley-hawks":
@@ -6511,13 +6552,15 @@ def render_identity_info_note() -> None:
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_hall_of_fame_data(
+def _load_hall_of_fame_data_cached(
     local_version: float,
     identity_version: float | None = None,
     data_version: str = HALL_OF_FAME_DATA_VERSION,
     club_id: str | None = None,
+    serving_signature: object | None = None,
 ) -> dict[str, object] | None:
     active_club_id = club_id or get_active_club_id()
+    _ = serving_signature
     _ = (local_version, identity_version, data_version)
     started_at = time.perf_counter()
     batting_raw = read_processed_table("all_seasons_batting")
@@ -6643,6 +6686,18 @@ def load_hall_of_fame_data(
     return prepared
 
 
+def load_hall_of_fame_data(local_version: float, identity_version: float | None = None,
+                          data_version: str = HALL_OF_FAME_DATA_VERSION,
+                          club_id: str | None = None) -> dict[str, object] | None:
+    active_club = club_id or get_active_club_id()
+    from src.data.grdcc_legacy_composites import legacy_ledger_signature
+    signature = (prepared_core_manifest_signature(active_club), legacy_ledger_signature(active_club))
+    return _load_hall_of_fame_data_cached(local_version, identity_version, data_version, club_id, signature)
+
+
+load_hall_of_fame_data.__wrapped__ = _load_hall_of_fame_data_cached.__wrapped__
+
+
 @st.cache_data(show_spinner=False, persist="disk")
 def get_authoritative_career_totals(
     local_version: float,
@@ -6671,6 +6726,9 @@ def hall_of_fame_override_signature(club_id: str | None = None) -> tuple[object,
     active_club_id = club_id or get_active_club_id()
     signature: list[object] = [("featured", featured_record_overrides_mtime())]
     signature.append(("prepared_core", prepared_core_manifest_signature(active_club_id)))
+    if active_club_id == "georges-river-district":
+        from src.data.grdcc_legacy_composites import legacy_ledger_signature
+        signature.append(("approved_group_serving_v2", legacy_ledger_signature(active_club_id)))
     if active_club_id == "fvcc":
         signature.append(("public_filter", FVCC_HOF_PUBLIC_FILTER_VERSION))
     if active_club_id == "glen-waverley-hawks":
@@ -6823,6 +6881,7 @@ def build_all_time_player_table(
     batting: pd.DataFrame,
     bowling: pd.DataFrame,
     fielding: pd.DataFrame,
+    full_identity_scope: bool = True,
 ) -> pd.DataFrame:
     base = build_player_identity_frame([batting_raw, bowling_raw, fielding_raw])
     for frame, columns in [
@@ -6957,7 +7016,83 @@ def build_all_time_player_table(
             "dismissals_display": "Dismissals",
         }
     )
+    all_time = coalesce_grdcc_approved_nonoverlap_group(
+        all_time, [batting_raw, bowling_raw, fielding_raw], full_identity_scope=full_identity_scope
+    )
     return coalesce_grdcc_exact_name_nonoverlap_all_time(all_time)
+
+
+def coalesce_grdcc_approved_nonoverlap_group(
+    all_time: pd.DataFrame, season_frames: list[pd.DataFrame], *, full_identity_scope: bool = True
+) -> pd.DataFrame:
+    """Apply exact approved membership before general same-name coalescing."""
+    if all_time.empty or get_active_club_id() != "georges-river-district":
+        return all_time
+    import json
+    from src.config.club_config import get_hall_of_fame_dir
+    from src.data.grdcc_legacy_composites import approved_component_id_map, approved_nonoverlap_group
+
+    path = get_hall_of_fame_dir(club_id="georges-river-district") / "legacy_display_composites.json"
+    if not path.exists():
+        return all_time
+    ledger = json.loads(path.read_text())
+    plans = approved_nonoverlap_group(all_time, season_frames, ledger, club_id="georges-river-district", allow_partial=not full_identity_scope)
+    if not full_identity_scope and not plans:
+        mapping = approved_component_id_map(all_time, ledger, club_id="georges-river-district")
+        for target in sorted(set(mapping.values())):
+            ids = tuple(sorted(source for source, canonical in mapping.items() if canonical == target))
+            plans.append({"canonical_player_id": target, "component_ids": ids,
+                          "label": sorted(all_time.loc[all_time.canonical_player_id.isin(ids), "Player"].astype(str), key=lambda x: (x.casefold(), x))[0]})
+    output = all_time.copy()
+    for plan in plans:
+        component = output.loc[output.canonical_player_id.isin(plan["component_ids"])].sort_values("canonical_player_id")
+        if len(component) != len(plan["component_ids"]):
+            raise ValueError("Approved player component changed during aggregation")
+        merged = aggregate_grdcc_exact_name_component(component) if len(component) > 1 else component.iloc[0].copy()
+        if len(component) == 1:
+            merged["canonical_player_id"] = plan["canonical_player_id"]
+            merged["player_key"] = plan["canonical_player_id"]
+        merged["Player"] = plan["label"]
+        if merged["canonical_player_id"] != plan["canonical_player_id"]:
+            raise ValueError("Approved player canonical identifier changed")
+        seasons = set()
+        for frame in season_frames:
+            if {"canonical_player_id", "season"}.issubset(frame.columns):
+                seasons.update(frame.loc[frame.canonical_player_id.isin(plan["component_ids"]), "season"].dropna().astype(str))
+        if seasons:
+            merged["Seasons Played"] = len(seasons)
+        def complete_total(frame: pd.DataFrame, column: str):
+            if not {"canonical_player_id", column}.issubset(frame.columns):
+                return None
+            values = pd.to_numeric(frame.loc[frame.canonical_player_id.isin(plan["component_ids"]), column], errors="coerce")
+            return float(values.sum()) if len(values) and values.notna().all() else None
+
+        batting_source = season_frames[0]
+        bowling_source = season_frames[1] if len(season_frames) > 1 else pd.DataFrame()
+        runs = complete_total(batting_source, "battingAggregate")
+        innings = complete_total(batting_source, "battingInnings")
+        not_outs = complete_total(batting_source, "battingNotOuts")
+        faced = complete_total(batting_source, "battingBallsFaced")
+        if {"canonical_player_id", "battingAggregate", "battingBallsFaced"}.issubset(batting_source.columns):
+            eligible = batting_source.loc[batting_source.canonical_player_id.isin(plan["component_ids"])]
+            # Historical zero delivery counters do not establish coverage when runs exist.
+            missing_deliveries = pd.to_numeric(eligible.battingAggregate, errors="coerce").gt(0) & pd.to_numeric(eligible.battingBallsFaced, errors="coerce").fillna(0).le(0)
+            if missing_deliveries.any():
+                faced = None
+        conceded = complete_total(bowling_source, "bowlingRuns")
+        wickets = complete_total(bowling_source, "bowlingWickets")
+        delivered = complete_total(bowling_source, "bowlingBalls")
+        for column, numerator, denominator, scale in (
+            ("Bat Avg", runs, innings - not_outs if innings is not None and not_outs is not None else None, 1),
+            ("Bat SR", runs, faced, 100),
+            ("Bowl Avg", conceded, wickets, 1),
+            ("Econ", conceded, delivered, 6),
+            ("Bowl SR", delivered, wickets, 1),
+        ):
+            if column in merged:
+                merged[column] = numerator * scale / denominator if numerator is not None and denominator is not None and denominator > 0 else float("nan")
+        output = pd.concat([output.loc[~output.canonical_player_id.isin(plan["component_ids"])], pd.DataFrame([merged])], ignore_index=True)
+    return output
 
 
 def coalesce_grdcc_exact_name_nonoverlap_all_time(all_time: pd.DataFrame) -> pd.DataFrame:
@@ -6989,8 +7124,12 @@ def coalesce_grdcc_exact_name_nonoverlap_all_time(all_time: pd.DataFrame) -> pd.
                 component_seasons.append(set(seasons))
         for component in components:
             subset = group.loc[component]
-            if len(subset) == 1:
-                rows.append(subset.iloc[0])
+            # Modern source IDs are not evidence of identity merely because a
+            # masked season made two same-name careers appear disjoint.
+            ids = subset.get("canonical_player_id", pd.Series("", index=subset.index)).fillna("").astype(str)
+            has_modern_source_id = ids.str.startswith("raw_") & ~ids.str.startswith("raw_excel_")
+            if len(subset) == 1 or has_modern_source_id.any():
+                rows.extend(row for _, row in subset.iterrows())
             else:
                 rows.append(aggregate_grdcc_exact_name_component(subset))
     if not rows:
@@ -11001,12 +11140,13 @@ def render_player_profile_page() -> None:
 
     player_names_by_id = dict(zip(index["id"].astype(str), index["name"].astype(str)))
     option_ids = list(player_names_by_id.keys())
+    selector_labels = player_profile_selector_labels(player_names_by_id, get_active_club_id())
     st.session_state["player_profile_valid_ids"] = option_ids
-    st.session_state["player_profile_name_to_id"] = {
-        player_name: player_id
-        for player_id, player_name in player_names_by_id.items()
-        if player_id
-    }
+    st.session_state["player_profile_name_to_id"] = (
+        player_profile_selector_lookup(player_names_by_id, selector_labels)
+        if get_active_club_id() == "georges-river-district"
+        else {name: player_id for player_id, name in player_names_by_id.items() if player_id}
+    )
 
     def set_selected_player_id(player_id: object, *, manual: bool = False) -> str:
         player_id_text = str(player_id or "").strip()
@@ -11064,7 +11204,7 @@ def render_player_profile_page() -> None:
             "Search player",
             option_ids,
             index=option_ids.index(selected_player_id) if selected_player_id in option_ids else None,
-            format_func=lambda player_id: gwhcc_player_search_label(player_names_by_id.get(str(player_id), str(player_id))),
+            format_func=lambda player_id: gwhcc_player_search_label(selector_labels.get(str(player_id), str(player_id))),
             placeholder="Select a player...",
             key="player_profile_selector_id",
         )
@@ -11173,12 +11313,13 @@ def render_player_profile_v2_page() -> None:
 
     player_names_by_id = dict(zip(index["id"].astype(str), index["name"].astype(str)))
     option_ids = list(player_names_by_id.keys())
+    selector_labels = player_profile_selector_labels(player_names_by_id, get_active_club_id())
     st.session_state["player_profile_valid_ids"] = option_ids
-    st.session_state["player_profile_name_to_id"] = {
-        player_name: player_id
-        for player_id, player_name in player_names_by_id.items()
-        if player_id
-    }
+    st.session_state["player_profile_name_to_id"] = (
+        player_profile_selector_lookup(player_names_by_id, selector_labels)
+        if get_active_club_id() == "georges-river-district"
+        else {name: player_id for player_id, name in player_names_by_id.items() if player_id}
+    )
     query_player_id = resolve_player_query_to_id(player_names_by_id)
     default_player_id = query_player_id or default_player_profile_v2_id(player_names_by_id)
     with st.container(key="player_v2_selector_card"):
@@ -11186,7 +11327,7 @@ def render_player_profile_v2_page() -> None:
             "Search player",
             option_ids,
             index=option_ids.index(default_player_id) if default_player_id in option_ids else 0,
-            format_func=lambda player_id: player_names_by_id.get(str(player_id), str(player_id)),
+            format_func=lambda player_id: selector_labels.get(str(player_id), str(player_id)),
             placeholder="Select a player...",
             key="player_profile_v2_selector_id",
         )
@@ -11980,7 +12121,7 @@ def player_v2_percent(value: object) -> str:
 
 
 @st.cache_data(show_spinner=False, persist="disk")
-def load_player_profile_index(
+def _load_player_profile_index_cached(
     club_id: str,
     local_version: float,
     identity_version: float,
@@ -12011,8 +12152,17 @@ def load_player_profile_index(
     combined = pd.concat(frames, ignore_index=True)
     if "canonical_player_id" not in combined or "canonical_player_name" not in combined:
         return pd.DataFrame(columns=["id", "name"])
-    if club_id in {"fvcc", "glen-waverley-hawks"}:
+    if club_id in {"fvcc", "glen-waverley-hawks", "georges-river-district"}:
         combined = filter_public_player_rows(combined)
+    if club_id == "georges-river-district":
+        import json
+        from src.config.club_config import get_hall_of_fame_dir
+        from src.data.grdcc_legacy_composites import approved_component_id_map
+        path = get_hall_of_fame_dir(club_id=club_id) / "legacy_display_composites.json"
+        if path.exists():
+            identities = combined[["canonical_player_id", "canonical_player_name"]].drop_duplicates().rename(columns={"canonical_player_name": "Player"})
+            mapping = approved_component_id_map(identities, json.loads(path.read_text()), club_id=club_id)
+            combined["canonical_player_id"] = combined["canonical_player_id"].replace(mapping)
     display_casing = canonical_player_name_casing_overrides(combined)
     index = (
         combined[["canonical_player_id", "canonical_player_name"]]
@@ -12040,10 +12190,20 @@ def load_player_profile_index(
         index["profile_source_priority"] = index["id"].astype(str).str.startswith("grdcc_excel_exact_").map({True: 0, False: 1})
         index = (
             index.sort_values(["name_sort", "profile_source_priority", "id"])
-            .drop_duplicates("name_sort", keep="first")
+            .drop_duplicates("id", keep="first")
             .drop(columns=["profile_source_priority"])
         )
     return index.sort_values("name_sort")[["id", "name"]].reset_index(drop=True)
+
+
+def load_player_profile_index(club_id: str, local_version: float, identity_version: float,
+                              cache_version: str = PLAYER_PROFILE_INDEX_VERSION) -> pd.DataFrame:
+    from src.data.grdcc_legacy_composites import legacy_ledger_signature
+    signature = legacy_ledger_signature(club_id)
+    return _load_player_profile_index_cached(club_id, local_version, identity_version, f"{cache_version}:{signature!r}")
+
+
+load_player_profile_index.__wrapped__ = _load_player_profile_index_cached.__wrapped__
 
 
 def player_profile_view_signature() -> tuple[object, ...]:
@@ -12055,6 +12215,9 @@ def player_profile_view_signature() -> tuple[object, ...]:
     base = (("profile_view_version", PLAYER_PROFILE_INDEX_VERSION),) + tuple(
         (str(path), path.stat().st_mtime) for path in paths if path.exists()
     ) + player_profile_detail_source_signature()
+    if get_active_club_id() == "georges-river-district":
+        from src.data.grdcc_legacy_composites import legacy_ledger_signature
+        base = base + (("grdcc_legacy_ledger", legacy_ledger_signature("georges-river-district")),)
     if get_active_club_id() == "glen-waverley-hawks":
         base = base + (("gwhcc_player_status", repr(gwhcc_player_status_signature())),)
         from src.data.gwhcc_identity import PROFILE_DISPLAY_NAMES
@@ -12086,7 +12249,11 @@ def build_player_profile_view(
     career = build_player_career_totals(season_table, batting, bowling, fielding, profile)
     career = enrich_player_profile_career(career, profile, detail_sources)
     active_club_id = get_active_club_id()
-    career = apply_featured_record_overrides(career, club_id=active_club_id, add_missing_players=False)
+    if active_club_id == "georges-river-district":
+        # Global governance resolves same-name ambiguity before profile selection.
+        career = apply_authoritative_profile_career_totals(career, profile, active_club_id)
+    else:
+        career = apply_featured_record_overrides(career, club_id=active_club_id, add_missing_players=False)
     if active_club_id == "glen-waverley-hawks":
         career = apply_gwhcc_record_overrides(career, write_decisions=False)
         career = apply_authoritative_profile_career_totals(career, profile, active_club_id)
@@ -12141,6 +12308,16 @@ def apply_authoritative_profile_career_totals(
         return career
     output = career.copy()
     row = match.iloc[0]
+    if club_id == "georges-river-district":
+        metrics = ["Matches", "Runs", "Wickets", "Catches", "Innings", "Not Outs", "HS", "BBI",
+                   "Bat Avg", "Bat SR", "Bowl Avg", "Bowl SR", "Econ", "30s", "50s", "100s",
+                   "0s", "4s", "6s", "Maidens", "3WI", "5WI", "10WM", "Stumpings", "Run Outs",
+                   "Dismissals", "Balls Bowled", "Matches Source", "Matches Proxy"]
+        for metric in metrics:
+            if metric in row:
+                # Unknown governed values must not revive a locally reconstructed rate.
+                output[metric] = row.get(metric)
+        return output
     for metric in ["Matches", "Runs", "Wickets", "Catches"]:
         if metric in row and pd.notna(row.get(metric)):
             if metric in output:
@@ -15304,6 +15481,8 @@ def profile_player_id_for_name(player_name: object) -> str:
     if index.empty:
         return ""
     matched = index[index["name"].map(player_name_match_key) == name_key]
+    if get_active_club_id() == "georges-river-district" and matched["id"].nunique() != 1:
+        return ""
     return str(matched.iloc[0]["id"]).strip() if not matched.empty else ""
 
 

@@ -212,7 +212,7 @@ def test_gwhcc_existing_helper_behaviour_is_unchanged() -> None:
 def test_current_fvcc_and_grdcc_sources_reconcile_without_average_changes() -> None:
     sources = [
         ("clubs/fvcc/data/processed/all_seasons_batting.csv", 1982, 1982, 0, 0),
-        ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 7975, 7975, 0, 0),
+        ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 7991, 7991, 0, 0),
         (
             "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv",
             4980,

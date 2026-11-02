@@ -24,11 +24,13 @@ def load_core() -> dict[str, object]:
 def test_valid_manifest_loads_all_grdcc_frames() -> None:
     core = load_core()
 
-    # Verified 24 October partition adds four canonical identities; none disappear.
-    assert len(core["batting"]) == 2100
-    assert len(core["bowling"]) == 1779
-    assert len(core["fielding"]) == 1625
-    assert len(core["all_time"]) == 2122
+    # Current public partition retains separate source identities; the frozen
+    # legacy composite is an unranked display record, not a person row.
+    assert len(core["batting"]) == 2103
+    assert len(core["bowling"]) == 1781
+    assert len(core["fielding"]) == 1628
+    # Baseline IDs survive; the approved three-source group is one profile.
+    assert len(core["all_time"]) == 2125
 
 
 def test_missing_prepared_output_falls_back(tmp_path, monkeypatch) -> None:

@@ -49,6 +49,7 @@ def prepared_core_source_paths(club_id: str) -> list[Path]:
     paths.extend([mapping_path, mapping_path.with_name("manual_player_merges.csv")])
     paths.append(REPO_ROOT / "clubs" / club_id / "club_config.yaml")
     if club_id == "georges-river-district":
+        paths.append(hall_of_fame_dir / "legacy_display_composites.json")
         paths.append(REPO_ROOT / 'clubs' / club_id / 'data/source/canonical_player_continuity.csv')
         paths.append(REPO_ROOT / 'clubs' / club_id / 'data/source/summary_identity_namespace_aliases.csv')
         paths.extend(
