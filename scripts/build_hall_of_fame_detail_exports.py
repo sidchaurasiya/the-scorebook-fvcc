@@ -278,12 +278,22 @@ def clean_text(value: object) -> str:
     return "" if text.casefold() in {"", "nan", "none", "nat"} else text
 
 
-def build_player_bbb_batting_rates(batting: pd.DataFrame, balls: pd.DataFrame) -> pd.DataFrame:
+def build_player_bbb_batting_rates(
+    batting: pd.DataFrame,
+    balls: pd.DataFrame,
+    *,
+    include_source_as_recorded: bool = False,
+) -> pd.DataFrame:
     if batting.empty or balls.empty:
         return pd.DataFrame()
     rows = batting.copy()
     rows["career_scope"] = "career"
-    grouped = profile_exports.build_dimension_bbb_batting(rows, balls, "career_scope")
+    grouped = profile_exports.build_dimension_bbb_batting(
+        rows,
+        balls,
+        "career_scope",
+        include_source_as_recorded=include_source_as_recorded,
+    )
     if grouped.empty:
         return pd.DataFrame()
     grouped = grouped.rename(columns={"canonical_player_id": "player_key"})

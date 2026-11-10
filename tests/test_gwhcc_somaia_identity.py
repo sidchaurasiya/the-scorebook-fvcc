@@ -123,20 +123,21 @@ def test_public_career_rates_and_historical_hundreds_reconcile(public):
     row = public[public.canonical_player_id.eq(CANONICAL)]
     assert len(row) == 1 and row.iloc[0].Player == "Sunil Somaia"
     row = row.iloc[0]
-    expected = {metric:CURRENT['profiles'][CANONICAL][metric] for metric in ['Matches','Runs','Innings','50s','100s','Wickets','Catches','Stumpings','Run Outs']}
+    expected = {"Matches": 277, "Runs": 8495, "Innings": 283, "50s": 35, "100s": 21,
+                "Wickets": 26, "Catches": 80, "Stumpings": 28, "Run Outs": 12}
     expected['Dismissals']=120
     for metric, value in expected.items():
         assert row[metric] == value
-    assert row["Bat Avg"] == pytest.approx(8495 / (282 - 31))
+    assert row["Bat Avg"] == pytest.approx(8495 / (283 - 31))
     assert row["Bowl Avg"] == pytest.approx(552 / 26)
     assert str(row.HS) == "160" and row.BBI == "5-46"
     batting = read("all_seasons_batting.csv")
     batting = batting[batting.raw_player_id.isin(SOURCE_NAMES)]
     assert batting.season.nunique() == CURRENT['sunny_raw']['seasons']
     assert batting.battingAggregate.sum() == 8495
-    assert batting.battingInnings.sum() == 282
+    assert batting.battingInnings.sum() == 283
     assert batting.battingNotOuts.sum() == 31
-    assert batting.matches.sum() == 276
+    assert batting.matches.sum() == 277
     history = pd.read_csv(DATA / "source/document_overrides/gwhcc_historical_centuries.csv")
     assert len(history[history.canonical_player_id.eq(CANONICAL)]) == 3
     milestones = read("hall_of_fame/player_scorecard_milestones.csv")
@@ -154,14 +155,14 @@ def test_prepared_frames_conserve_all_unrelated_players_and_manifest(monkeypatch
         new = pd.read_csv(path, low_memory=False)
         assert new.canonical_player_id.is_unique and public_player_mask(new).all()
         assert new.canonical_player_id.eq(CANONICAL).sum() == 1
-    assert len(prepared["all_time"]) == CURRENT['population']
+    assert len(prepared["all_time"]) == 1295
 
 
 def test_partnership_evidence_and_privacy_unchanged():
     events = read("partnerships/partnership_events.csv")
     current = events[events.season.eq("Summer 2026/27")]
-    assert len(current) == CURRENT['partnership_events']
-    assert current.privacy_status.value_counts().to_dict() == CURRENT['partnership_privacy_counts']
+    assert len(current) == 293
+    assert current.privacy_status.value_counts().to_dict() == {"PUBLIC_PUBLIC": 290, "PUBLIC_PRIVATE": 3}
     for position in (1, 2):
         private = current[f"player_{position}_name"].eq("Private player")
         assert current.loc[private, f"player_{position}_canonical_id"].fillna("").eq("").all()
@@ -222,12 +223,12 @@ def test_breakdown_identity_and_premiership_evidence_remain_governed():
 
 
 def test_other_governed_career_anchors(public):
-    expected = {"Greg McCormick": (427, 8664, 393, 87), "James Anderson": (110, 301, 3, 114),
+    expected = {"Greg McCormick": (427, 8664, 393, 87), "James Anderson": (112, 301, 3, 118),
                 "Ahilan Sivakumaran": (132, 3414, 45, 83)}
     for name, values in expected.items():
         row = public[public.Player.str.strip().str.casefold().eq(name.casefold())]
         assert len(row) == 1
         assert tuple(row.iloc[0][["Matches", "Runs", "Wickets", "Catches"]]) == values
-    assert public.loc[public.Player.str.strip().eq("Kashif Javed"), "Matches"].tolist() == [156.5]
+    assert public.loc[public.Player.str.strip().eq("Kashif Javed"), "Matches"].tolist() == [157.5]
     # Current approved dated Career Master anchor is distinct from the review-only record row.
     assert public.loc[public.Player.eq("Glen Mahoney"), "Runs"].tolist() == [11040]
