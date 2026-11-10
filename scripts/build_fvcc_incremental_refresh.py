@@ -632,8 +632,8 @@ def write_prepared_fvcc_core(candidate: Path, processed: Path) -> None:
     from src.data.playcricket_ingestion import metadata_mtime
     from src.utils.player_identity import player_aliases_mtime
     from src.ui import layout
-    layout.load_hall_of_fame_data.clear()
-    prepared=layout.load_hall_of_fame_data(
+    # Read the candidate directly without clearing the shared serving cache.
+    prepared=layout.load_hall_of_fame_data.__wrapped__(
         metadata_mtime(),player_aliases_mtime(club_id=CLUB),layout.HALL_OF_FAME_DATA_VERSION,club_id=CLUB)
     if prepared is None:
         raise RuntimeError('Unable to build candidate prepared HOF from candidate aggregates')
