@@ -47,9 +47,10 @@ def test_round_cards_match_declared_finalized_partition(scope):
     assert set(current.match_id) == set(scope['current_finalized_match_ids'])
     assert set(scope['new_match_ids']) <= set(current.match_id)
     assert set(scope['new_match_ids']) == {
-        '46aac372-eba8-407d-b9e2-b69640f36aef',
-        'e3690747-8946-449e-afdb-cbc27e8ae537',
-        '4318991d-6757-42d7-b8b9-c94314a2849c',
+        '5d2b32ff-c7c3-4900-81c9-548b1d918ffa',
+        '7e3dd365-03c0-4ac7-a601-fc0088327426',
+        'e734e2b8-d92b-4760-b9e8-489984e47547',
+        'f31cfd8e-4345-4a2a-84e0-5aabf75bafb5',
     }
     assert scope.get('excluded_match_ids') == []
 

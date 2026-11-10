@@ -5,31 +5,36 @@
     "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6",
     "4318991d-6757-42d7-b8b9-c94314a2849c",
     "46aac372-eba8-407d-b9e2-b69640f36aef",
+    "5d2b32ff-c7c3-4900-81c9-548b1d918ffa",
     "6175cdef-3b87-4450-a00d-2b381f4324f7",
+    "7e3dd365-03c0-4ac7-a601-fc0088327426",
     "80a88932-8bd2-43c5-9f49-3db456a60ffd",
     "b51f12f3-3c4a-4f15-8735-928f005fb2d2",
     "cdf93da6-f0d4-405b-b1f3-d30744e4774e",
     "d454dfb9-b61d-4382-b6d2-f75594461198",
     "e3690747-8946-449e-afdb-cbc27e8ae537",
+    "e734e2b8-d92b-4760-b9e8-489984e47547",
+    "f31cfd8e-4345-4a2a-84e0-5aabf75bafb5",
     "f3e9f065-f39c-4be8-acb2-37b6512d8cae",
     "fa973310-7871-447f-a4ac-8f6aa4dbfc2a"
   ],
-  "cutoff_melbourne": "2026-10-31T23:59:59+11:00",
-  "cutoff_utc": "2026-10-31T12:59:59+00:00",
+  "cutoff_melbourne": "2026-11-10T15:08:57.189855+11:00",
+  "cutoff_utc": "2026-11-10T04:08:57.189855+00:00",
   "excluded_incomplete_match_ids": [],
   "excluded_match_ids": [],
-  "generated_app_facing_data_version": "2026-10-31T22:31:18.523734+00:00",
-  "latest_match_date": "2026-10-31T12:30:00.0000000+11:00",
-  "latest_match_id": "e3690747-8946-449e-afdb-cbc27e8ae537",
-  "latest_match_opponent": "Northern Socials 1st XI",
-  "latest_match_result": "Northern Socials 1st XI won by 9 wickets",
-  "latest_match_round": "Round 4",
-  "latest_refresh_timestamp": "2026-10-31T22:31:18.523734+00:00",
+  "generated_app_facing_data_version": "2026-11-10T04:09:30.965515+00:00",
+  "latest_match_date": "2026-11-07T12:30:00.0000000+11:00",
+  "latest_match_id": "f31cfd8e-4345-4a2a-84e0-5aabf75bafb5",
+  "latest_match_opponent": "Cameron 1st XI",
+  "latest_match_result": "Cameron 1st XI won by 7 runs",
+  "latest_match_round": "Round 5",
+  "latest_refresh_timestamp": "2026-11-10T04:09:30.965515+00:00",
   "latest_statistical_season": "Summer 2026/27",
   "new_match_ids": [
-    "4318991d-6757-42d7-b8b9-c94314a2849c",
-    "46aac372-eba8-407d-b9e2-b69640f36aef",
-    "e3690747-8946-449e-afdb-cbc27e8ae537"
+    "5d2b32ff-c7c3-4900-81c9-548b1d918ffa",
+    "7e3dd365-03c0-4ac7-a601-fc0088327426",
+    "e734e2b8-d92b-4760-b9e8-489984e47547",
+    "f31cfd8e-4345-4a2a-84e0-5aabf75bafb5"
   ],
   "source_data_mtime": 1785594572.7395265,
   "source_issue_match_ids": [],
@@ -41,9 +46,11 @@
     "Third XI R3 innings 4 is a 0-over 0/0 placeholder with no batting, bowling, fielding or ball-by-ball rows; it is treated as unstarted, not as a scored innings.",
     "Third XI R3 lacks BBB for FVCC innings 1 and has incomplete batter-dismissal-to-bowler participant links in innings 1 and the opposition innings; preserve per-player scorecard bowling figures but do not infer missing attribution.",
     "First XI R3 refreshed opponent scorecard attribution only; eight batting descriptions replaced, numerical statistics unchanged. Existing approved BBB exclusions retained.",
-    "Owner approved official scorecard SSOT for Fourth XI R4: 205 team runs, 23 affected batter runs, Danny 62 balls. Contradictory delivery innings quarantined from all delivery consumers; no balancing adjustment. Match-date cutoff, not an invented historical finalisation timestamp."
+    "Owner approved official scorecard SSOT for Fourth XI R4: 205 team runs, 23 affected batter runs, Danny 62 balls. Contradictory delivery innings quarantined from all delivery consumers; no balancing adjustment. Match-date cutoff, not an invented historical finalisation timestamp.",
+    "Source snapshot verifies completion at retrieval; historical exact finalisation timestamps not exposed.",
+    "Three new innings with conflicting delivery totals excluded from delivery-derived outputs under scorecard authority; official scorecard counters preserved. Retained caught descriptions and masks unchanged."
   ],
-  "validator_checks": 6034,
+  "validator_checks": 4768,
   "validator_failures": 0,
   "validator_status": "pass",
   "last_source_correction": {
@@ -51,8 +58,11 @@
     "source_sha256": "f1c049ffc3234e512f9379687385472d1e27fa4a6b4fef7c1a5a6ac843b29894",
     "policy": "existing-match-catches-v1"
   },
-  "validation_scope": "FVCC 31 October 2026 scorecard-authority candidate",
+  "validation_scope": "FVCC post-rollback November 2026: reconciled public career deltas",
   "quarantined_delivery_innings_ids": [
-    "68920345-6cdd-4a16-9a20-1eb13967481d"
+    "68920345-6cdd-4a16-9a20-1eb13967481d",
+    "73c01bbf-2e62-4bd3-86e2-1b966aa608dd",
+    "a0220f78-0e64-4a75-8bca-a8913e7641e0",
+    "b9b17601-35dc-4c84-95a3-6de4e1a57493"
   ]
 }

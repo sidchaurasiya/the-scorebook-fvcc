@@ -89,13 +89,13 @@ def test_captain_historical_keys_survive_new_evidence():
 
 def test_verified_current_fvcc_contributions_and_excluded_cancelled_counts():
     root=Path(__file__).resolve().parents[1]/'clubs/fvcc/data/processed'
-    cases=[('batting','battingAggregate',1459),('bowling','bowlingWickets',85),('fielding','fieldingTotalCatches',42)]
+    cases=[('batting','battingAggregate',1839),('bowling','bowlingWickets',106),('fielding','fieldingTotalCatches',50)]
     for kind,metric,expected in cases:
         frame=pd.read_csv(root/f'all_seasons_{kind}.csv')
         current=frame[frame.season.eq('Summer 2026/27')]
-        assert len(current)==70
-        assert current.matches.sum()==132
-        assert current.matches.isin([1,2,3,4]).all()
+        assert len(current)==77
+        assert current.matches.sum()==171
+        assert current.matches.isin([1,2,3,4,5]).all()
         assert current[metric].sum()==expected
         assert not current.duplicated(['season_id','team_id','player_id']).any()
 
@@ -106,8 +106,8 @@ def test_current_fvcc_prepared_snapshot_matches_public_player_population():
     from src.utils.player_identity import filter_public_player_rows
     core=load_prepared_hall_of_fame_core('fvcc',layout.HALL_OF_FAME_DATA_VERSION)
     assert core is not None
-    assert len(core['all_time'])==297
-    assert len(filter_public_player_rows(core['all_time']))==297
+    assert len(core['all_time'])==298
+    assert len(filter_public_player_rows(core['all_time']))==298
     assert not core['all_time'].canonical_player_id.duplicated().any()
 
 
@@ -116,9 +116,11 @@ def test_current_fvcc_new_player_and_hs_governance():
     from src.ui import layout
     core=load_prepared_hall_of_fame_core('fvcc',layout.HALL_OF_FAME_DATA_VERSION)
     career=core['all_time'].set_index('Player')
-    assert career.loc['Paul Silva','Runs']==122
-    assert career.loc['Paul Silva','Wickets']==4
-    assert career.loc['Paul Silva','Matches']==3
+    assert career.loc['Paul Silva','Runs']==132
+    assert career.loc['Paul Silva','Wickets']==5
+    assert career.loc['Paul Silva','Matches']==4
+    assert career.loc['Arun Sevugan','Runs']==1
+    assert career.loc['Arun Sevugan','Matches']==1
     assert career.loc['Danny Singh','HS']=='144'
     assert career.loc['Kalpeshkumar Patel','HS']=='86*'
 
