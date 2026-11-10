@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 from pathlib import Path
 
-from scripts.build_fvcc_incremental_refresh import add_first_innings_result_context, append_disjoint, merge_same_season_aggregate, scored_participation, validate_same_season_match_partitions
+from scripts.build_fvcc_incremental_refresh import add_first_innings_result_context, append_disjoint, merge_same_season_aggregate, scored_participation, stable_candidate_rows, validate_same_season_match_partitions
 from scripts.grdcc_incremental_summaries import merge_summary
 
 
@@ -13,6 +13,31 @@ def payload(status='COMPLETED', scored=True):
             'innings':[{'batting':[{'runsScored':10}]}] if scored else [],
             'teams':[{'id':'fvcc-team','players':[{'participantId':'known-id','name':'Public Player'}]},
                      {'id':'opponent','players':[{'participantId':'other-id','name':'Opponent'}]}]}
+
+
+def test_fvcc_prepared_candidate_row_order_is_deterministic():
+    left = pd.DataFrame({'canonical_player_id':['b','a'], 'Runs':[2,1], 'Player':['B','A']})
+    right = left.iloc[::-1].reset_index(drop=True)
+    history = pd.DataFrame({'canonical_player_id':['b','a']})
+    pd.testing.assert_frame_equal(stable_candidate_rows(left,history), stable_candidate_rows(right,history))
+
+
+def test_prepared_candidate_order_uses_all_serving_dimensions_and_values():
+    a=pd.DataFrame([{'canonical_player_id':'z','season_id':'s','team_id':'t','Runs':2},{'canonical_player_id':'a','season_id':'s','team_id':'t','Runs':1}])
+    b=a.iloc[::-1].reset_index(drop=True)
+    history=pd.DataFrame({'canonical_player_id':['z','a']})
+    left=stable_candidate_rows(a,history);right=stable_candidate_rows(b,history)
+    pd.testing.assert_frame_equal(left,right)
+    assert left.canonical_player_id.tolist()==['z','a']
+
+
+def test_new_prepared_player_rows_append_in_stable_identifier_order():
+    history=pd.DataFrame({'canonical_player_id':['existing']})
+    a=pd.DataFrame({'canonical_player_id':['new-z','existing','new-a'],'Runs':[3,1,2]})
+    b=a.iloc[::-1].reset_index(drop=True)
+    expected=stable_candidate_rows(a,history)
+    pd.testing.assert_frame_equal(expected,stable_candidate_rows(b,history))
+    assert expected.canonical_player_id.tolist()==['existing','new-a','new-z']
 
 
 @pytest.mark.parametrize('status',['UPCOMING','LIVE','STUMPS','CANCELLED','BYE'])

@@ -48,6 +48,14 @@ def validate_delivery_quarantine(frames, excluded_innings_ids):
             raise ValueError(f'Quarantined delivery innings remains in {name}')
 
 
+def accepted_delivery_rows(balls, quarantined_innings_ids):
+    """Keep source-authentic BBB; only explicitly invalidated innings are removed."""
+    excluded = set(map(str, quarantined_innings_ids))
+    if not excluded:
+        return balls.copy()
+    return balls.loc[~balls['innings_id'].astype(str).isin(excluded)].copy()
+
+
 def merge_batting_dot_coverage(result, history, increment, keys):
     """FVCC season exports contain dot counters absent from the generic merger."""
     result = result.copy()
@@ -470,9 +478,7 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     bowling = filter_public_player_rows(profile.prepare_bowling(frames, club_id=CLUB))
     fielding = filter_public_player_rows(profile.prepare_fielding(frames, club_id=CLUB))
     balls = profile.prepare_ball_rows(frames, club_id=CLUB)
-    totals = frames['balls'].groupby('innings_id')['total_runs'].sum(min_count=1)
-    reconciled = frames['innings']['innings_id'][frames['innings']['runs_scored'].eq(frames['innings']['innings_id'].map(totals))]
-    phase_frames = dict(frames, balls=frames['balls'][frames['balls']['innings_id'].isin(reconciled)].copy())
+    phase_frames = dict(frames, balls=accepted_delivery_rows(frames['balls'], state.get('quarantined_delivery_innings_ids', [])))
     phase_balls = profile.prepare_ball_rows(phase_frames, club_id=CLUB)
     paths = []
     def summary(relative,current,keys):
@@ -601,7 +607,9 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                                          'current_finalized_match_ids':current_finalized_ids,
                                          'verified_public_appearance_counts':verified_appearance_counts,
                                          'excluded_incomplete_match_ids':remaining_incomplete,
-                                         'excluded_match_ids':sorted(state.get('excluded_match_ids',[]))})
+                                         'excluded_match_ids':sorted(state.get('excluded_match_ids',[])),
+                                         'owner_accepted_delivery_discrepancies':state.get('owner_accepted_delivery_discrepancies',[]),
+                                         'quarantined_delivery_innings_ids':sorted(map(str,state.get('quarantined_delivery_innings_ids',[])))})
     receipt = max(json.loads(p.read_text())['request']['fetched_at'] for p in (bundle/'source_payloads').glob('*.json'))
     metadata['fetch_date_time'] = metadata['last_successful_refresh_time'] = receipt
     metadata_path.write_text(json.dumps(metadata,indent=2)+'\n')
@@ -614,6 +622,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                    cutoff_utc=state['cutoff_utc'],cutoff_melbourne=state['cutoff_melbourne'],new_match_ids=sorted(increment_ids),
                    excluded_match_ids=sorted(state.get('excluded_match_ids',[])),
                    excluded_incomplete_match_ids=remaining_incomplete,
+                   quarantined_delivery_innings_ids=sorted(map(str,state.get('quarantined_delivery_innings_ids',[]))),
+                   owner_accepted_delivery_discrepancies=state.get('owner_accepted_delivery_discrepancies',[]),
                    current_finalized_match_ids=current_finalized,
                    source_issue_match_ids=sorted(set(map(str,version.get('source_issue_match_ids',[])))|set(map(str,state.get('excluded_match_ids',[])))),
                    source_limitations=source_limitations,
@@ -644,6 +654,38 @@ def write_prepared_fvcc_core(candidate: Path, processed: Path) -> None:
         output_dir=processed/'hall_of_fame')
     if not written:
         raise RuntimeError('Candidate prepared HOF writer produced no files')
+    # Pandas groupby hash ordering can vary across offline build processes.
+    # Stabilize only FVCC candidate snapshots, not shared runtime behavior.
+    for path in written:
+        if path.suffix != '.csv':
+            continue
+        frame = pd.read_csv(path, low_memory=False)
+        previous = pd.read_csv(path, low_memory=False)
+        frame = stable_candidate_rows(frame, previous=previous)
+        frame.to_csv(path, index=False)
+
+
+def stable_candidate_rows(frame: pd.DataFrame, previous: pd.DataFrame | None = None) -> pd.DataFrame:
+    if frame.empty:
+        return frame.copy()
+    identity = next((c for c in ['canonical_player_id', 'player_key', 'player_id'] if c in frame), None)
+    if identity is not None and previous is not None and identity in previous:
+        historic = previous[identity].astype(str).tolist()
+        if len(historic) != len(set(historic)):
+            raise ValueError(f'Cannot stabilize prepared row order: duplicated historical {identity}')
+        order = {key: index for index, key in enumerate(historic)}
+        identifiers = frame[identity].astype(str)
+        row_key = frame.astype('string').fillna('').agg('\x1f'.join, axis=1)
+        output = frame.assign(
+            _historic_order=identifiers.map(order).fillna(len(order)),
+            _new_identity=identifiers.where(~identifiers.isin(order), ''),
+            _row_key=row_key,
+        )
+        return output.sort_values(['_historic_order', '_new_identity', '_row_key'], kind='stable').drop(
+            columns=['_historic_order', '_new_identity', '_row_key']
+        ).reset_index(drop=True)
+    sort_key = frame.astype('string').fillna('').agg('\x1f'.join, axis=1)
+    return frame.assign(_candidate_order=sort_key).sort_values('_candidate_order', kind='stable').drop(columns='_candidate_order').reset_index(drop=True)
 
 
 if __name__ == '__main__':
