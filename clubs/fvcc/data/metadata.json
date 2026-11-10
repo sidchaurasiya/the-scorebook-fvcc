@@ -487,6 +487,51 @@
       "wajhi_syed": 4
     },
     "excluded_incomplete_match_ids": [],
-    "excluded_match_ids": []
+    "excluded_match_ids": [],
+    "owner_accepted_delivery_discrepancies": [
+      {
+        "match_id": "7e3dd365-03c0-4ac7-a601-fc0088327426",
+        "innings_id": "a0220f78-0e64-4a75-8bca-a8913e7641e0",
+        "scorecard_runs": 115,
+        "bbb_runs": 113,
+        "delta": -2,
+        "delivery_rows": 225,
+        "unique_delivery_ids": 225,
+        "accepted_policy": "owner_approved_source_as_recorded",
+        "scorecard_controls_scorecard_statistics": true,
+        "bbb_retained_for_delivery_statistics": true,
+        "delivery_excluded": false,
+        "source_receipt_sha256": "d5c3157dfca8ee694ab3bc57076dd364c1d661aa93d192efd552849d82ec9d3a"
+      },
+      {
+        "match_id": "e734e2b8-d92b-4760-b9e8-489984e47547",
+        "innings_id": "b9b17601-35dc-4c84-95a3-6de4e1a57493",
+        "scorecard_runs": 146,
+        "bbb_runs": 145,
+        "delta": -1,
+        "delivery_rows": 230,
+        "unique_delivery_ids": 230,
+        "accepted_policy": "owner_approved_source_as_recorded",
+        "scorecard_controls_scorecard_statistics": true,
+        "bbb_retained_for_delivery_statistics": true,
+        "delivery_excluded": false,
+        "source_receipt_sha256": "4e534ffb51874dcd88726571ca5c8de90668157aea660caf1345a280da8d612d"
+      },
+      {
+        "match_id": "e734e2b8-d92b-4760-b9e8-489984e47547",
+        "innings_id": "73c01bbf-2e62-4bd3-86e2-1b966aa608dd",
+        "scorecard_runs": 148,
+        "bbb_runs": 149,
+        "delta": 1,
+        "delivery_rows": 214,
+        "unique_delivery_ids": 214,
+        "accepted_policy": "owner_approved_source_as_recorded",
+        "scorecard_controls_scorecard_statistics": true,
+        "bbb_retained_for_delivery_statistics": true,
+        "delivery_excluded": false,
+        "source_receipt_sha256": "4e534ffb51874dcd88726571ca5c8de90668157aea660caf1345a280da8d612d"
+      }
+    ],
+    "quarantined_delivery_innings_ids": []
   }
 }

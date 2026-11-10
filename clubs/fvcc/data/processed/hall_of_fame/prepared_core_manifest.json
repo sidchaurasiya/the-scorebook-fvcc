@@ -14,8 +14,8 @@
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_bowling.csv",
-      "size": 997197,
-      "sha256": "e62d164720192ef31713d13830d3e7d44e26230745cc02cde61a099050cb8a1c"
+      "size": 997199,
+      "sha256": "b1308cea779be297aab0d5791a7eafd5145d3980bf52145114404feae73f8603"
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_fielding.csv",
@@ -24,8 +24,8 @@
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_bbb_batting_rates.csv",
-      "size": 11902,
-      "sha256": "d129318c023aa69ab97ebad45d4d8e949f6fe1ceb6139c01d06bad68df724d8e"
+      "size": 11898,
+      "sha256": "c409dbf443c482a1d3931646578a2e9c5ca40e32fbb8959f70571edd77d95429"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_bowling_milestones.csv",
