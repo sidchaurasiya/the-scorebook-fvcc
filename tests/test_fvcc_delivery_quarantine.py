@@ -40,8 +40,20 @@ def test_scorecard_values_are_not_replaced_by_delivery_reconstruction():
 
 def test_accepted_partnership_history_and_other_new_events_remain():
     rows = pd.read_csv(DATA / 'hall_of_fame/partnerships.csv')
-    assert len(rows) == 963
+    assert len(rows) == 982
     assert len(rows[rows.match_id.isin(['46aac372-eba8-407d-b9e2-b69640f36aef', 'e3690747-8946-449e-afdb-cbc27e8ae537'])]) == 20
+
+
+def test_november_delivery_conflicts_do_not_enter_public_records():
+    # Exact innings IDs from the independently reconciled scorecards.
+    excluded = {
+        'a0220f78-0e64-4a75-8bca-a8913e7641e0',
+        'b9b17601-35dc-4c84-95a3-6de4e1a57493',
+        '73c01bbf-2e62-4bd3-86e2-1b966aa608dd',
+    }
+    for name in ['partnerships.csv', 'fastest_batting_milestones.csv', 'hat_tricks.csv']:
+        rows = pd.read_csv(DATA / 'hall_of_fame' / name)
+        assert not set(rows.get('innings_id', [])) & excluded
 
 
 def test_season_batting_dot_coverage_adds_counts_and_recomputes_percentage():
