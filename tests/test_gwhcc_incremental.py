@@ -74,18 +74,63 @@ def test_cutoff_finality_activity_and_timezone():
     assert eligible_match_ids(matches, innings, '2026-10-11') == {'played'}
 
 
-def test_partial_delivery_ledgers_do_not_supply_whole_innings_bowling_insights():
-    innings = pd.DataFrame({'match_id':['m','m'],'innings_id':['complete','partial'],'runs_scored':[10,20]})
-    balls = pd.DataFrame({'match_id':['m','m'],'innings_id':['complete','partial'],'total_runs':[10,5]})
+def test_complete_delivery_feed_is_kept_when_scorecard_runs_differ():
+    innings = pd.DataFrame({
+        'match_id': ['m', 'm', 'm'],
+        'innings_id': ['complete', 'source_diff', 'partial'],
+        'runs_scored': [10, 20, 30],
+        'overs_bowled': ['1.0', '1.0', '1.0'],
+    })
+    balls = pd.DataFrame([
+        {'match_id': 'm', 'innings_id': innings_id, 'ball_event_id': f'{innings_id}-{i}',
+         'total_runs': value, 'is_legal_delivery': True}
+        for innings_id, values in [('complete', [1, 2, 0, 0, 3, 4]),
+                                   ('source_diff', [1, 2, 3, 4, 2, 3]),
+                                   ('partial', [5, 5, 5, 5])]
+        for i, value in enumerate(values)
+    ])
     valid, audit = reconciled_delivery_innings(innings,balls)
-    assert valid.innings_id.tolist() == ['complete']
-    assert audit.reconciled.tolist() == [True,False]
-    pd.testing.assert_frame_equal(balls.iloc[:1],valid)
+    assert set(valid.innings_id) == {'complete', 'source_diff'}
+    assert audit.reconciled.tolist() == [True, False, False]
+    assert audit.accepted_for_bowling_insights.tolist() == [True, True, False]
+    assert audit.coverage_status.tolist() == [
+        'SOURCE_AS_RECORDED_TOTALS_MATCH',
+        'SOURCE_AS_RECORDED_TOTALS_DIFFER',
+        'DELIVERY_COVERAGE_SHORT_OF_SCORECARD_OVERS',
+    ]
+    assert valid.loc[valid.innings_id.eq('source_diff'), 'total_runs'].sum() == 15
+
+
+def test_duplicate_or_missing_delivery_records_are_not_accepted():
+    innings = pd.DataFrame({
+        'match_id': ['m', 'm'],
+        'innings_id': ['missing_runs', 'duplicate_id'],
+        'runs_scored': [10, 10],
+        'overs_bowled': ['1.0', '1.0'],
+    })
+    balls = pd.DataFrame([
+        {'match_id': 'm', 'innings_id': innings_id, 'ball_event_id': f'{innings_id}-{i}',
+         'total_runs': None if innings_id == 'missing_runs' and i == 2 else 1,
+         'is_legal_delivery': True}
+        for innings_id in ['missing_runs', 'duplicate_id']
+        for i in range(6)
+    ])
+    balls.loc[(balls.innings_id.eq('duplicate_id')) & (balls.ball_event_id.eq('duplicate_id-5')), 'ball_event_id'] = 'duplicate_id-4'
+    valid, audit = reconciled_delivery_innings(innings, balls)
+    assert valid.empty
+    assert not audit.accepted_for_bowling_insights.any()
+    assert audit.coverage_status.tolist() == ['DELIVERY_RUNS_MISSING', 'DUPLICATE_EVENT_ID']
 
 
 def test_missing_delivery_runs_and_unavailable_bbb_remain_unsupported():
-    innings = pd.DataFrame({'match_id':['m','m'],'innings_id':['missing','unavailable'],'runs_scored':[10,0]})
-    balls = pd.DataFrame({'match_id':['m','m'],'innings_id':['missing','missing'],'total_runs':[10,None]})
+    innings = pd.DataFrame({
+        'match_id':['m','m'], 'innings_id':['missing','unavailable'],
+        'runs_scored':[10,0], 'overs_bowled':['1.0','0.0'],
+    })
+    balls = pd.DataFrame({
+        'match_id':['m','m'], 'innings_id':['missing','missing'],
+        'ball_event_id':['one','two'], 'total_runs':[10,None], 'is_legal_delivery':[True,True],
+    })
     valid, audit = reconciled_delivery_innings(innings,balls)
     assert valid.empty
     assert not audit.reconciled.any()
