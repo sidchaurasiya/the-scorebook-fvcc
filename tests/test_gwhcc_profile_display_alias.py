@@ -117,9 +117,9 @@ def test_gwhcc_ball_by_ball_strike_rate_is_numeric_not_a_percentage(monkeypatch)
     assert peer_metric_note("Strike Rate (ball-by-ball)") == "Verified ball-by-ball only"
 
 
-def test_non_hawks_strike_rate_formatting_is_unchanged(monkeypatch):
+def test_non_hawks_strike_rate_formatting_uses_runs_per_100_balls(monkeypatch):
     monkeypatch.setattr(layout, "get_active_club_id", lambda: "fvcc")
 
-    assert format_bat_sr_display(68.94) == "68.9%"
-    assert hof_detail_display_value("Bat SR", 68.94) == "68.9%"
-    assert format_peer_metric_value(93.24, "percent") == "93.2%"
+    assert format_bat_sr_display(68.94) == "68.9"
+    assert hof_detail_display_value("Bat SR", 68.94) == "68.9"
+    assert format_peer_metric_value(93.24, "rate") == "93.2"
