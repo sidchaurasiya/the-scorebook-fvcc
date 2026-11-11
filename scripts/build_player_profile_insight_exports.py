@@ -380,6 +380,8 @@ def build_performance_breakdown(
     bowling: pd.DataFrame,
     fielding: pd.DataFrame,
     balls: pd.DataFrame,
+    *,
+    include_source_as_recorded: bool = False,
 ) -> pd.DataFrame:
     frames: list[pd.DataFrame] = []
     for dimension, column in [
@@ -390,14 +392,24 @@ def build_performance_breakdown(
         ("H/A", "home_away_label"),
         ("Captain", "captain_label"),
     ]:
-        frames.append(build_batting_breakdown(batting, balls, dimension, column))
+        frames.append(build_batting_breakdown(
+            batting, balls, dimension, column,
+            include_source_as_recorded=include_source_as_recorded,
+        ))
         frames.append(build_bowling_breakdown(bowling, dimension, column))
         frames.append(build_fielding_breakdown(fielding, dimension, column))
     frames = [frame for frame in frames if not frame.empty]
     return pd.concat(frames, ignore_index=True, sort=False) if frames else pd.DataFrame()
 
 
-def build_batting_breakdown(batting: pd.DataFrame, balls: pd.DataFrame, dimension: str, column: str) -> pd.DataFrame:
+def build_batting_breakdown(
+    batting: pd.DataFrame,
+    balls: pd.DataFrame,
+    dimension: str,
+    column: str,
+    *,
+    include_source_as_recorded: bool = False,
+) -> pd.DataFrame:
     if batting.empty or column not in batting:
         return pd.DataFrame()
     rows = batting[batting[column].astype(str).str.strip() != ""].copy()
@@ -418,15 +430,44 @@ def build_batting_breakdown(batting: pd.DataFrame, balls: pd.DataFrame, dimensio
         sixes=("sixes_numeric", "sum"),
     )
     grouped["bat_avg"] = grouped.apply(lambda row: divide_or_none(row["runs"], row["outs"]), axis=1)
-    bbb = build_dimension_bbb_batting(rows, balls, column)
+    bbb = build_dimension_bbb_batting(
+        rows, balls, column,
+        include_source_as_recorded=include_source_as_recorded,
+    )
     grouped = grouped.merge(bbb, on=player_dimension_columns(column), how="left")
     grouped["strike_rate"] = grouped.apply(lambda row: divide_or_none(row.get("bbb_runs", 0) * 100, row.get("bbb_balls_faced", 0)), axis=1)
     return common_dimension_output(grouped, dimension, column, "Batting")
 
 
-def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, column: str) -> pd.DataFrame:
+def build_dimension_bbb_batting(
+    batting: pd.DataFrame,
+    balls: pd.DataFrame,
+    column: str,
+    *,
+    include_source_as_recorded: bool = False,
+) -> pd.DataFrame:
     if batting.empty or balls.empty:
         return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_batting_innings", "bbb_matches"])
+    if include_source_as_recorded:
+        from src.data.gwhcc_incremental import source_as_recorded_bbb_innings
+
+        source_innings = source_as_recorded_bbb_innings(
+            batting,
+            balls,
+            player_dimension_columns(column),
+            runs_column="runs_numeric",
+            balls_column="balls_numeric",
+            dismissed_column="out",
+        )
+        if source_innings.empty:
+            return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_batting_innings", "bbb_matches"])
+        return source_innings.groupby(player_dimension_columns(column), dropna=False, as_index=False).agg(
+            bbb_runs=("bbb_runs", "sum"),
+            bbb_balls_faced=("bbb_balls_faced", "sum"),
+            bbb_dismissals=("bbb_dismissals", "sum"),
+            bbb_batting_innings=("bbb_batting_innings", "sum"),
+            bbb_matches=("bbb_matches", "sum"),
+        )
     keys = batting[
         player_dimension_columns(column)
         + ["match_id", "innings_id", "participant_id", "runs_numeric", "balls_numeric", "out"]
@@ -471,10 +512,14 @@ def build_dimension_bbb_batting(batting: pd.DataFrame, balls: pd.DataFrame, colu
         & innings["bbb_runs"].eq(innings["scorecard_runs"])
         & innings["bbb_balls_faced"].eq(innings["scorecard_balls"])
     )
-    innings = innings[
-        innings["bbb_balls_faced"].gt(0)
-        & ((has_ball_audit & ball_audit_matches) | (~has_ball_audit & scorecard_audit_matches))
-    ].copy()
+    source_as_recorded_matches = has_ball_audit & ball_audit_matches
+    if include_source_as_recorded:
+        accepted = innings["bbb_balls_faced"].gt(0) & (source_as_recorded_matches | scorecard_audit_matches)
+    else:
+        accepted = innings["bbb_balls_faced"].gt(0) & (
+            source_as_recorded_matches | (~has_ball_audit & scorecard_audit_matches)
+        )
+    innings = innings[accepted].copy()
     if innings.empty:
         return pd.DataFrame(columns=player_dimension_columns(column) + ["bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_batting_innings", "bbb_matches"])
     return innings.groupby(player_dimension_columns(column), dropna=False, as_index=False).agg(

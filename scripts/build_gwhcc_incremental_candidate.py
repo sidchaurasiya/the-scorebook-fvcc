@@ -264,7 +264,10 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         result.to_csv(path, index=False)
         merged_paths.append(relative)
         return result
-    new_perf = profile.build_performance_breakdown(batting,bowling,fielding,balls)
+    new_perf = profile.build_performance_breakdown(
+        batting, bowling, fielding, balls,
+        include_source_as_recorded=True,
+    )
     perf = summary('player_profile/performance_breakdown_by_dimension.csv', new_perf,
                    ['canonical_player_id','dimension','discipline','breakdown_label'], sums, rates,
                    {'high_score':profile.best_high_score_from_labels,'bbi':profile.best_bbi_from_labels})
@@ -306,7 +309,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     season_outputs = {
         'scorecard_batting_milestones_by_scope.csv': seasons.build_scorecard_batting(frames, club_id=CLUB),
         'scorecard_bowling_milestones_by_scope.csv': seasons.build_scorecard_bowling(frames, club_id=CLUB),
-        'bbb_batting_rates_by_scope.csv': seasons.build_bbb_batting(frames, club_id=CLUB),
+        'bbb_batting_rates_by_scope.csv': seasons.build_bbb_batting(
+            frames, club_id=CLUB, include_source_as_recorded=True
+        ),
         'bbb_bowling_dot_rates_by_scope.csv': seasons.build_bbb_bowling(bowling_frames, club_id=CLUB),
         'season_by_round_scorecards.csv': seasons.build_season_by_round(frames, club_id=CLUB),
     }
@@ -316,7 +321,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         if old['season'].eq(season['name']).any():
             raise ValueError('Detailed season overlap')
         pd.concat([old,filter_public_player_rows(new)],ignore_index=True,sort=False).to_csv(path,index=False)
-    summary('hall_of_fame/player_bbb_batting_rates.csv', hof.build_player_bbb_batting_rates(batting, balls),
+    summary('hall_of_fame/player_bbb_batting_rates.csv', hof.build_player_bbb_batting_rates(
+                batting, balls, include_source_as_recorded=True
+            ),
             ['canonical_player_id'], ['bbb_runs','bbb_balls_faced','bbb_dismissals','bbb_batting_innings','bbb_matches'],
             {'bat_sr':('bbb_runs','bbb_balls_faced',100)})
     milestones = summary('hall_of_fame/player_scorecard_milestones.csv', hof.build_player_scorecard_milestones(batting),

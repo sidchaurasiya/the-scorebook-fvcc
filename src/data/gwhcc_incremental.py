@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 import pandas as pd
 
 
@@ -75,17 +77,191 @@ def eligible_match_ids(matches: pd.DataFrame, innings: pd.DataFrame, cutoff: str
 
 
 def reconciled_delivery_innings(innings: pd.DataFrame, balls: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Gate new whole-innings bowling insights without rejecting valid batting milestones."""
+    """Keep complete source event ledgers even when scorecard totals differ.
+
+    Arithmetic differences are recorded, not used as a proxy for delivery
+    completeness. Bowling insights still require a sufficiently complete,
+    uniquely identified event sequence.
+    """
     source = balls.copy()
+    if 'ball_event_id' not in source:
+        source['ball_event_id'] = pd.NA
     source['_runs'] = pd.to_numeric(source['total_runs'], errors='coerce')
+    source['_legal'] = source.get('is_legal_delivery', pd.Series(index=source.index, dtype='object')).map(_source_bool)
     totals = source.groupby(['match_id', 'innings_id'], as_index=False).agg(
         delivery_runs=('_runs', lambda values: values.sum(min_count=1)),
         missing_runs=('_runs', lambda values: int(values.isna().sum())),
+        event_count=('_runs', 'size'),
+        legal_balls=('_legal', lambda values: int(values.fillna(False).sum())),
+        missing_legal_flags=('_legal', lambda values: int(values.isna().sum())),
+        missing_event_ids=('ball_event_id', lambda values: int(values.isna().sum())),
+        duplicate_event_ids=('ball_event_id', lambda values: int(values.duplicated().sum())),
     )
-    audit = innings[['match_id', 'innings_id', 'runs_scored']].merge(totals, on=['match_id', 'innings_id'], how='left')
-    audit['reconciled'] = audit['delivery_runs'].notna() & audit['missing_runs'].eq(0) & audit['runs_scored'].eq(audit['delivery_runs'])
-    ids = set(audit.loc[audit['reconciled'], 'innings_id'])
-    return balls[balls['innings_id'].isin(ids)].copy(), audit
+    audit = innings[['match_id', 'innings_id', 'runs_scored', 'overs_bowled']].merge(
+        totals, on=['match_id', 'innings_id'], how='left'
+    )
+    for column in ['event_count', 'legal_balls', 'missing_runs', 'missing_legal_flags', 'missing_event_ids', 'duplicate_event_ids']:
+        audit[column] = pd.to_numeric(audit[column], errors='coerce').fillna(0).astype(int)
+    audit['expected_legal_balls'] = audit['overs_bowled'].map(overs_to_legal_balls)
+    scorecard_runs = pd.to_numeric(audit['runs_scored'], errors='coerce')
+    delivery_runs = pd.to_numeric(audit['delivery_runs'], errors='coerce')
+    audit['run_difference_delivery_minus_scorecard'] = delivery_runs - scorecard_runs
+    audit['reconciled'] = (
+        delivery_runs.notna()
+        & scorecard_runs.notna()
+        & audit['missing_runs'].eq(0)
+        & delivery_runs.eq(scorecard_runs)
+    )
+    audit['coverage_complete'] = (
+        audit['event_count'].gt(0)
+        & audit['expected_legal_balls'].notna()
+        & audit['event_count'].ge(audit['expected_legal_balls'].fillna(float('inf')))
+        & audit['missing_runs'].eq(0)
+        & audit['missing_legal_flags'].eq(0)
+        & audit['missing_event_ids'].eq(0)
+        & audit['duplicate_event_ids'].eq(0)
+    )
+    audit['accepted_for_bowling_insights'] = audit['coverage_complete']
+    audit['coverage_status'] = audit.apply(delivery_coverage_status, axis=1)
+    accepted = audit.loc[audit['accepted_for_bowling_insights'], ['match_id', 'innings_id']]
+    included = balls.merge(accepted.drop_duplicates(), on=['match_id', 'innings_id'], how='inner')
+    return included, audit
+
+
+def _source_bool(value: object) -> object:
+    if pd.isna(value):
+        return pd.NA
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().casefold() in {'true', '1', 'yes'}
+
+
+def overs_to_legal_balls(value: object) -> int | None:
+    if value is None or pd.isna(value):
+        return None
+    text = str(value).strip()
+    match = re.fullmatch(r'(\d+)(?:\.([0-5]))?', text)
+    if not match:
+        return None
+    overs = int(match.group(1))
+    balls = int(match.group(2) or 0)
+    return overs * 6 + balls
+
+
+def delivery_coverage_status(row: pd.Series) -> str:
+    if row['event_count'] == 0:
+        return 'NO_DELIVERY_EVENTS'
+    if pd.isna(row['expected_legal_balls']):
+        return 'SCORECARD_OVERS_UNAVAILABLE'
+    if row['missing_event_ids']:
+        return 'EVENT_ID_MISSING'
+    if row['duplicate_event_ids']:
+        return 'DUPLICATE_EVENT_ID'
+    if row['missing_runs']:
+        return 'DELIVERY_RUNS_MISSING'
+    if row['missing_legal_flags']:
+        return 'LEGAL_DELIVERY_FLAG_MISSING'
+    if row['event_count'] < row['expected_legal_balls']:
+        return 'DELIVERY_COVERAGE_SHORT_OF_SCORECARD_OVERS'
+    return 'SOURCE_AS_RECORDED_TOTALS_MATCH' if row['reconciled'] else 'SOURCE_AS_RECORDED_TOTALS_DIFFER'
+
+
+def source_as_recorded_bbb_innings(
+    batting: pd.DataFrame,
+    balls: pd.DataFrame,
+    dimension_columns: list[str],
+    *,
+    runs_column: str,
+    balls_column: str,
+    dismissed_column: str,
+) -> pd.DataFrame:
+    """Derive GWHCC ball metrics from unique event rows without scorecard equality gating."""
+    output_columns = list(dict.fromkeys([
+        *dimension_columns, "display_player_name", "match_id", "innings_id",
+        "bbb_runs", "bbb_balls_faced", "bbb_dismissals", "bbb_dot_balls",
+        "bbb_dot_ball_balls_faced", "bbb_batting_innings", "bbb_matches",
+        "delivery_event_count", "scorecard_runs", "scorecard_balls",
+        "source_cumulative_runs", "source_cumulative_balls", "latest_match_date",
+        "delivery_coverage_status",
+    ]))
+    if batting.empty or balls.empty:
+        return pd.DataFrame(columns=output_columns)
+
+    cards = batting.copy()
+    if "display_player_name" not in cards:
+        fallback_name = cards.get("canonical_player_name", cards.get("player_name", pd.Series(index=cards.index, dtype="object")))
+        cards["display_player_name"] = fallback_name
+    dimensions = list(dict.fromkeys(
+        [column for column in dimension_columns if column in cards] + ["display_player_name"]
+    ))
+    card_keys = list(dict.fromkeys([*dimensions, "match_id", "innings_id", "participant_id"]))
+    cards["_scorecard_runs"] = pd.to_numeric(cards[runs_column], errors="coerce")
+    cards["_scorecard_balls"] = pd.to_numeric(cards[balls_column], errors="coerce")
+    cards["_dismissed"] = pd.to_numeric(cards[dismissed_column], errors="coerce").fillna(0)
+    cards["_latest_match_date"] = cards.get("first_match_day", pd.Series(index=cards.index, dtype="object"))
+    cards = cards.groupby(card_keys, dropna=False, as_index=False).agg(
+        scorecard_runs=("_scorecard_runs", "sum"),
+        scorecard_balls=("_scorecard_balls", "sum"),
+        bbb_dismissals=("_dismissed", "max"),
+        latest_match_date=("_latest_match_date", "max"),
+    )
+
+    source = balls.copy()
+    if "ball_event_id" not in source:
+        source["ball_event_id"] = pd.NA
+    source["_runs"] = pd.to_numeric(source["runs_bat"], errors="coerce")
+    source["_wides"] = pd.to_numeric(source["wides"], errors="coerce")
+    source["_ball_faced"] = source["_wides"].eq(0).astype(int)
+    source["_dot_ball"] = source["_ball_faced"].eq(1) & source["_runs"].eq(0)
+    order = [column for column in ["innings_order", "over_number", "ball_number", "ball_event_id"] if column in source]
+    if order:
+        source = source.sort_values(order, kind="stable")
+
+    def last_non_null(values: pd.Series):
+        values = values.dropna()
+        return values.iloc[-1] if not values.empty else pd.NA
+
+    events = source.groupby(
+        ["match_id", "innings_id", "striker_participant_id"], dropna=False, as_index=False
+    ).agg(
+        bbb_runs=("_runs", lambda values: values.sum(min_count=1)),
+        bbb_balls_faced=("_ball_faced", "sum"),
+        bbb_dot_balls=("_dot_ball", "sum"),
+        delivery_event_count=("_runs", "size"),
+        missing_runs=("_runs", lambda values: int(values.isna().sum())),
+        missing_wides=("_wides", lambda values: int(values.isna().sum())),
+        missing_event_ids=("ball_event_id", lambda values: int(values.isna().sum())),
+        duplicate_event_ids=("ball_event_id", lambda values: int(values.duplicated().sum())),
+        source_cumulative_runs=("striker_runs_scored", last_non_null),
+        source_cumulative_balls=("striker_balls_faced", last_non_null),
+    ).rename(columns={"striker_participant_id": "participant_id"})
+    result = cards.merge(events, on=["match_id", "innings_id", "participant_id"], how="left")
+    for column in ["delivery_event_count", "missing_runs", "missing_wides", "missing_event_ids", "duplicate_event_ids"]:
+        result[column] = pd.to_numeric(result[column], errors="coerce").fillna(0).astype(int)
+    result["scorecard_balls"] = pd.to_numeric(result["scorecard_balls"], errors="coerce")
+    result["delivery_coverage_status"] = "SOURCE_EVENT_ROWS_COMPLETE"
+    result.loc[result["delivery_event_count"].eq(0), "delivery_coverage_status"] = "NO_DELIVERY_EVENTS"
+    result.loc[result["delivery_event_count"].lt(result["scorecard_balls"].fillna(float("inf"))), "delivery_coverage_status"] = "PLAYER_EVENT_SEQUENCE_SHORT_OF_SCORECARD_BALLS"
+    result.loc[result["missing_runs"].gt(0) | result["missing_wides"].gt(0), "delivery_coverage_status"] = "DELIVERY_RUN_OR_WIDE_VALUE_MISSING"
+    result.loc[result["missing_event_ids"].gt(0), "delivery_coverage_status"] = "EVENT_ID_MISSING"
+    result.loc[result["duplicate_event_ids"].gt(0), "delivery_coverage_status"] = "DUPLICATE_EVENT_ID"
+    valid = (
+        result["delivery_event_count"].gt(0)
+        & result["delivery_event_count"].ge(result["scorecard_balls"].fillna(float("inf")))
+        & result["missing_runs"].eq(0)
+        & result["missing_wides"].eq(0)
+        & result["missing_event_ids"].eq(0)
+        & result["duplicate_event_ids"].eq(0)
+        & pd.to_numeric(result["bbb_runs"], errors="coerce").notna()
+        & pd.to_numeric(result["bbb_balls_faced"], errors="coerce").gt(0)
+    )
+    result = result.loc[valid].copy()
+    if result.empty:
+        return pd.DataFrame(columns=output_columns)
+    result["bbb_dot_ball_balls_faced"] = result["bbb_balls_faced"]
+    result["bbb_batting_innings"] = 1
+    result["bbb_matches"] = 1
+    return result[output_columns]
 
 
 def preserve_compact_dismissal_type(batting: pd.DataFrame) -> pd.DataFrame:

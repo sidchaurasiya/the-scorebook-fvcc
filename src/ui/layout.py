@@ -214,6 +214,11 @@ PREMIERSHIP_PLAYER_DEFAULT_LIMIT = 6
 PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
 PLAYER_PROFILE_INDEX_VERSION = "2026-11-grdcc-approved-group-v1"
+GWHCC_PROFILE_DISPLAY_NAME_SOURCE = "verified_source_id_display_name"
+GWHCC_BBB_RATE_NOTE = (
+    "Hawks batting strike rates labeled ball-by-ball use verified delivery events only; "
+    "they can differ from scorecard-derived runs and balls."
+)
 PERFORMANCE_CACHE_VERSION = "2026-07-performance-v2"
 HAWKS_MATCH_COUNT_FOOTNOTE = "* Hawks match counts apply club rules: T20 = 0.5 match; no-play games are excluded."
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
@@ -9975,6 +9980,7 @@ def highest_reached_threshold(value: object, thresholds: list[int]) -> int | Non
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed Records 📊")
     render_hawks_match_count_footnote()
+    render_gwhcc_bbb_rate_note()
     if isinstance(all_time_or_tables, dict):
         tables = {
             "batting": all_time_or_tables["batting"].copy(),
@@ -10570,7 +10576,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     columns = [column for column in table.columns if column not in metadata_columns]
     header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
         f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
-        f'<span>{html.escape(str(column))}<span class="sort-indicator"></span></span></th>'
+        f'<span>{html.escape(hof_detail_header_label(column))}<span class="sort-indicator"></span></span></th>'
         for index, column in enumerate(columns)
     )
     rows = []
@@ -10817,6 +10823,12 @@ def hof_detail_column_class(column: object) -> str:
     return f"hof-col-{text or 'column'}"
 
 
+def hof_detail_header_label(column: object) -> str:
+    if get_active_club_id() == "glen-waverley-hawks" and str(column) == "Bat SR":
+        return "Bat SR (ball-by-ball)"
+    return str(column)
+
+
 def hof_detail_default_sort_dir(column: object) -> str:
     return "asc" if str(column) in {"Player", "Debut Season", "Latest Season"} else "desc"
 
@@ -10833,9 +10845,15 @@ def hof_detail_display_value(column: str, value: object, row: pd.Series | None =
         return matches_text
     if column == "HS":
         return format_high_score_text(value)
-    if column == "Win %" or column == "Bat SR":
+    if column == "Win %":
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
+    if column == "Bat SR":
+        numeric = pd.to_numeric(value, errors="coerce")
+        if pd.isna(numeric):
+            return ""
+        formatted = f"{float(numeric):.1f}"
+        return formatted if get_active_club_id() == "glen-waverley-hawks" else f"{formatted}%"
     if column in {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "Econ"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
@@ -10965,7 +10983,11 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
         "Dismissals",
     }
     decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Econ", "Bowl SR", "Win %"}
-    percent_columns = {"Bat SR", "Win %"}
+    percent_columns = {"Win %"}
+    if get_active_club_id() != "glen-waverley-hawks":
+        percent_columns.add("Bat SR")
+    else:
+        decimal_columns.add("Bat SR")
     width_overrides = {
         "Seasons": 78,
         "Seasons Played": 95,
@@ -12525,6 +12547,32 @@ def player_v2_percent(value: object) -> str:
     return "—" if pd.isna(number) else f"{float(number):.1f}%"
 
 
+def apply_gwhcc_profile_display_name_overrides(index: pd.DataFrame, aliases: pd.DataFrame) -> pd.DataFrame:
+    if index.empty or aliases.empty or not {"id", "name"}.issubset(index.columns):
+        return index.copy()
+    required = {"canonical_player_id", "canonical_player_name", "merge_source", "is_active"}
+    if not required.issubset(aliases.columns):
+        return index.copy()
+    active = aliases["is_active"].astype(str).str.strip().str.casefold().isin({"true", "1", "yes", "y"})
+    approved = aliases.loc[
+        active & aliases["merge_source"].astype(str).eq(GWHCC_PROFILE_DISPLAY_NAME_SOURCE),
+        ["canonical_player_id", "canonical_player_name"],
+    ].copy()
+    if approved.empty:
+        return index.copy()
+    approved["canonical_player_id"] = approved["canonical_player_id"].astype(str).str.strip()
+    approved["canonical_player_name"] = approved["canonical_player_name"].astype(str).str.strip()
+    conflicts = approved.groupby("canonical_player_id")["canonical_player_name"].nunique()
+    if conflicts.gt(1).any():
+        raise ValueError("Conflicting GWHCC exact-ID profile display-name decisions")
+    display_names = approved.drop_duplicates("canonical_player_id").set_index("canonical_player_id")["canonical_player_name"]
+    output = index.copy()
+    output["id"] = output["id"].astype(str).str.strip()
+    replacement = output["id"].map(display_names)
+    output.loc[replacement.notna(), "name"] = replacement.loc[replacement.notna()]
+    return output
+
+
 @st.cache_data(show_spinner=False, persist="disk")
 def _load_player_profile_index_cached(
     club_id: str,
@@ -12587,12 +12635,11 @@ def _load_player_profile_index_cached(
         & ~index["id"].astype(str).str.fullmatch(r"raw_0+(?:_0+)*", na=False)
     ].copy()
     if club_id == "glen-waverley-hawks":
+        index = apply_gwhcc_profile_display_name_overrides(index, aliases)
         index = filter_public_player_rows(
             index.rename(columns={"name": "canonical_player_name"}), club_id=club_id
-        ).rename(
-            columns={"canonical_player_name": "name"}
-        )
-    if cache_version != "synthetic-test":
+        ).rename(columns={"canonical_player_name": "name"})
+    if club_id == "georges-river-district" and cache_version != "synthetic-test":
         index = pd.concat([index, report_profile_index(club_id)], ignore_index=True)
     index["name_sort"] = index["name"].astype(str).str.casefold()
     if str(club_id).strip().casefold() == "georges-river-district":
@@ -14481,12 +14528,18 @@ def get_player_peer_comparison(
         "maiden_pct": divide_or_none(sum_numeric(bowling_rows, "maidens") * 100, sum_numeric(bowling_rows, "overs")),
         "extras_pct": divide_or_none(sum_numeric(bowling_rows, "extras") * 100, sum_numeric(bowling_rows, "balls")),
     }
+    strike_rate_label = (
+        "Strike Rate (ball-by-ball)"
+        if get_active_club_id() == "glen-waverley-hawks"
+        else "Strike Rate"
+    )
+    strike_rate_format = "rate" if get_active_club_id() == "glen-waverley-hawks" else "percent"
     batting_metrics = build_peer_metric_rows(
         batting_rows,
         player_id,
         [
             ("Batting Avg", "bat_avg", False, "decimal"),
-            ("Strike Rate", "bat_sr", False, "percent"),
+            (strike_rate_label, "bat_sr", False, strike_rate_format),
             ("Balls per Dismissal", "balls_per_dismissal", False, "decimal"),
             ("Boundary Rate", "boundary_rate", False, "decimal"),
             ("Duck %", "duck_pct", True, "percent"),
@@ -14830,6 +14883,8 @@ def format_peer_metric_value(value: object, value_format: str) -> str:
     numeric = float(value)
     if value_format == "percent":
         return f"{numeric:.1f}%"
+    if value_format == "rate":
+        return f"{numeric:.1f}"
     if value_format == "number":
         return f"{int(round(numeric)):,}"
     return f"{numeric:.2f}"
@@ -14847,6 +14902,7 @@ def peer_status_class(status: object) -> str:
 def peer_metric_note(label: object) -> str:
     notes = {
         "Strike Rate": "Verified ball-by-ball only",
+        "Strike Rate (ball-by-ball)": "Verified ball-by-ball only",
         "Balls per Dismissal": "Verified BBB balls and BBB dismissals only",
         "Boundary Rate": "4s + 6s per innings",
         "Duck %": "% of dismissals that were ducks",
@@ -15173,7 +15229,8 @@ def render_profile_breakdown_fallback_table(
 
 
 def profile_batting_table_columns(label_column: str) -> list[str]:
-    columns = [label_column, "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+    bat_sr_label = "Bat SR (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Bat SR"
+    columns = [label_column, "Innings", "Runs", "Bat Avg", bat_sr_label, "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
     if get_active_club_id() == "glen-waverley-hawks":
         columns.insert(2, "NO")
     elif get_active_club_id() in {"fvcc", "georges-river-district"}:
@@ -15457,6 +15514,7 @@ def render_profile_performance_table(
         render_profile_empty_state(*profile_performance_empty_copy(label_column, discipline))
         return
     if discipline == "Batting":
+        strike_rate_label = "Strike Rate (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Strike Rate"
         table = filtered.rename(
             columns={
                 "breakdown_label": label_column,
@@ -15464,7 +15522,7 @@ def render_profile_performance_table(
                 "outs": "Outs",
                 "runs": "Runs",
                 "bat_avg": "Avg",
-                "strike_rate": "Strike Rate",
+                "strike_rate": strike_rate_label,
                 "high_score": "HS",
                 "thirties": "30s",
                 "fifties": "50s",
@@ -15474,7 +15532,7 @@ def render_profile_performance_table(
                 "sixes": "6s",
             }
         )
-        columns = [label_column, "Inn", "Runs", "Avg", "Strike Rate", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+        columns = [label_column, "Inn", "Runs", "Avg", strike_rate_label, "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
         if get_active_club_id() in {"fvcc", "glen-waverley-hawks"} and {"Inn", "Outs"}.issubset(table.columns):
             table["Not Outs"] = (
                 pd.to_numeric(table["Inn"], errors="coerce") - pd.to_numeric(table["Outs"], errors="coerce")
@@ -16097,8 +16155,12 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
         "Run Outs",
         "Dismissals",
     }
-    percent_columns = {"Bat SR", "Strike Rate", "Extras %"}
+    percent_columns = {"Extras %"}
     decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "SR", "Econ", "Eco"}
+    if get_active_club_id() == "glen-waverley-hawks":
+        decimal_columns.update({"Bat SR (ball-by-ball)", "Strike Rate (ball-by-ball)"})
+    else:
+        percent_columns.update({"Bat SR", "Bat SR (ball-by-ball)", "Strike Rate", "Strike Rate (ball-by-ball)"})
     for column in columns:
         if column == pinned_column:
             if column == "Season":
@@ -16202,10 +16264,11 @@ def build_profile_total_row(source_rows: pd.DataFrame, columns: list[str], label
 
     if "Bat Avg" in columns:
         row["Bat Avg"] = divide_or_none(runs, outs)
-    if "Bat SR" in columns:
+    bat_sr_column = "Bat SR (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Bat SR"
+    if bat_sr_column in columns:
         sr_runs = sum_numeric_series(source_rows["BBB Runs"]) if "BBB Runs" in source_rows else 0
         sr_balls = sum_numeric_series(source_rows["BBB Balls"]) if "BBB Balls" in source_rows else 0
-        row["Bat SR"] = divide_or_none(sr_runs * 100, sr_balls)
+        row[bat_sr_column] = divide_or_none(sr_runs * 100, sr_balls)
     if "HS" in columns and "HS" in source_rows:
         row["HS"] = best_high_score_from_display_values(source_rows["HS"])
     if "Overs" in columns:
@@ -16244,28 +16307,36 @@ def best_bbi_from_display_values(values: pd.Series) -> str:
 
 
 def render_player_breakdown(career: pd.Series) -> None:
+    active_club_id = get_active_club_id()
+    grdcc_scoped_historical = active_club_id == "georges-river-district" and is_scoped_historical(career)
     render_section_heading("Career Overview 🧩")
     render_hawks_match_count_footnote()
     render_gwhcc_career_coverage_note(career)
+    render_gwhcc_bbb_rate_note()
     render_grdcc_not_outs_career_note(career)
     keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
     matches_text, _, _ = historical_matches_display_text(career)
     batting_matches_value = matches_text or format_int(career.get("Matches"))
+    wickets_label = (
+        "Recorded wickets"
+        if grdcc_scoped_historical and career.get(RECORD_KIND) == "primary_historical"
+        else "Wickets"
+    )
     cards = [
         ("Batting", player_profile_batting_career_metrics(career, batting_matches_value)),
-        ("Bowling", [("Recorded wickets" if career.get(RECORD_KIND) == 'primary_historical' else "Wickets", format_int(career.get("Wickets"))), ("Overs", safe_record_text(career.get("Overs"), "")), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", safe_record_text(career.get("BBI"), ""))]),
+        ("Bowling", [(wickets_label, format_int(career.get("Wickets"))), ("Overs", safe_record_text(career.get("Overs"), "")), ("Average", format_decimal(career.get("Bowl Avg"))), ("Strike Rate", format_decimal(career.get("Bowl SR"))), ("Economy", format_decimal(career.get("Econ"))), ("BBI", safe_record_text(career.get("BBI"), ""))]),
         ("Fielding", [("Catches", format_int(career.get("Catches"))), ("Stumpings", format_int(career.get("Stumpings"))), ("Run Outs", format_int(career.get("Run Outs"))), ("Dismissals", format_int(career.get("Dismissals")))]),
     ]
     columns = st.columns(3)
     for column, (title, metrics) in zip(columns, cards):
         with column:
-            if is_scoped_historical(career):
-                metrics = [(label, value or '—') for label, value in metrics]
-            metric_html = "".join(f'<div><span>{html.escape(label)}</span><strong>{html.escape(value)}</strong></div>' for label, value in metrics)
+            if grdcc_scoped_historical:
+                metrics = [(label, value or "—") for label, value in metrics]
+            metric_html = "".join(f"<div><span>{html.escape(label)}</span><strong>{html.escape(value)}</strong></div>" for label, value in metrics)
             card_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
             card_classes = f"profile-breakdown-card profile-career-overview-card profile-career-card-{card_slug} {keeper_class}"
-            st.markdown(f'<div class="{card_classes}"><h4>{html.escape(title)}</h4>{metric_html}</div>', unsafe_allow_html=True)
-
+            markup = f"<div class={chr(34)}{html.escape(card_classes)}{chr(34)}><h4>{html.escape(title)}</h4>{metric_html}</div>"
+            st.markdown(markup, unsafe_allow_html=True)
 
 def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) -> list[tuple[str, str]]:
     matches_label = "Matches / detailed innings" if parse_bool(career.get("historical_career_metrics_applied")) else "Matches/Innings"
@@ -16274,11 +16345,12 @@ def player_profile_batting_career_metrics(career: pd.Series, matches_text: str) 
 
         if has_dated_career_scope(career, "batting"):
             matches_label = "Matches / career innings"
+    strike_rate_label = "Strike Rate (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Strike Rate"
     metrics = [
         (matches_label, f"{matches_text} / {format_int(career.get('Innings'))}"),
         ("Runs", format_int(career.get("Runs"))),
         ("Average", format_decimal(career.get("Bat Avg"))),
-        ("Strike Rate", format_bat_sr_display(career.get("Bat SR"))),
+        (strike_rate_label, format_bat_sr_display(career.get("Bat SR"))),
         ("0s", format_int(career.get("0s"))),
         ("HS", format_high_score_text(career.get("HS")) or ""),
     ]
@@ -16317,6 +16389,11 @@ def render_gwhcc_career_coverage_note(career: pd.Series) -> None:
         )
     else:
         st.caption("Not Outs reflect available PlayCricket batting records; historical document-only totals may differ.")
+
+
+def render_gwhcc_bbb_rate_note() -> None:
+    if get_active_club_id() == "glen-waverley-hawks":
+        st.caption(GWHCC_BBB_RATE_NOTE)
 
 
 def render_gwhcc_hof_career_coverage_note() -> None:
@@ -16533,7 +16610,10 @@ def player_profile_is_keeper(career: pd.Series) -> bool:
 
 def format_bat_sr_display(value: object) -> str:
     number = pd.to_numeric(value, errors="coerce")
-    return "" if pd.isna(number) else f"{float(number):.1f}%"
+    if pd.isna(number):
+        return ""
+    formatted = f"{float(number):.1f}"
+    return formatted if get_active_club_id() == "glen-waverley-hawks" else f"{formatted}%"
 
 
 def render_player_milestones(career: pd.Series) -> None:
@@ -17073,7 +17153,7 @@ def historical_matches_numeric_value(row: pd.Series, *, matches_key: str = "Matc
 
 def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
-    decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Strike Rate", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
+    decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Bat SR (ball-by-ball)", "Strike Rate", "Strike Rate (ball-by-ball)", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
     integer_columns = {"M", "Matches", "Inn", "Innings", "Not Outs", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "W", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}
     for column in output.columns:
         if column in decimal_columns:
@@ -17087,7 +17167,7 @@ def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
 
 def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
     output = table.copy()
-    decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Strike Rate", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
+    decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Bat SR (ball-by-ball)", "Strike Rate", "Strike Rate (ball-by-ball)", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
     integer_columns = {
         "M",
         "Matches",
@@ -18884,6 +18964,7 @@ def render_leader_cards(dashboard_data: dict[str, object]) -> None:
     bowling_df = dashboard_data["bowling"]
     fielding_df = dashboard_data["fielding"]
     show_team = bool(dashboard_data.get("is_all_teams"))
+    batting_sr_label = "SR (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "SR"
 
     bat_col, bowl_col, field_col = st.columns(3)
     with bat_col:
@@ -18897,7 +18978,7 @@ def render_leader_cards(dashboard_data: dict[str, object]) -> None:
                     "matches": "M",
                     "battingAggregate": "Runs",
                     "battingAverage": "Avg",
-                    "seasonDetailBatSR": "SR",
+                    "seasonDetailBatSR": batting_sr_label,
                     "high_score": "HS",
                 },
                 link_label="View full batting stats",
@@ -18989,6 +19070,7 @@ def render_full_stats_section(dashboard_data: dict[str, object]) -> None:
     st.markdown('<div id="full-stats"></div>', unsafe_allow_html=True)
     render_section_heading("Detailed Stats 📊")
     render_hawks_match_count_footnote()
+    render_gwhcc_bbb_rate_note()
     with st.container(key="full_stats_card"):
         tabs = ["Batting", "Bowling", "Fielding"]
         batting_tab, bowling_tab, fielding_tab = st.tabs(tabs)
@@ -19326,7 +19408,10 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
         "Run Outs",
         "Total Dismissals",
     }
-    decimal_columns = {"Avg", "SR", "Bat Avg", "Bat SR", "Bowl Avg", "Eco", "Econ", "Economy", "Bowl SR"}
+    decimal_columns = {
+        "Avg", "SR", "SR (ball-by-ball)", "Bat Avg", "Bat SR", "Bat SR (ball-by-ball)",
+        "Bowl Avg", "Eco", "Econ", "Economy", "Bowl SR",
+    }
     for column in columns:
         if column in integer_columns:
             config[column] = st.column_config.NumberColumn(format="%d")
@@ -20054,9 +20139,10 @@ def build_full_stats_frame(
 
 
 def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
-    df = mask_historical_not_outs(df, get_active_club_id())
-    if get_active_club_id() in {"fvcc", "georges-river-district"} and "battingNotOuts" in df:
-        df.loc[~public_player_mask(df, get_active_club_id()), "battingNotOuts"] = pd.NA
+    club_id = get_active_club_id()
+    df = mask_historical_not_outs(df, club_id)
+    if club_id in {"fvcc", "georges-river-district", "glen-waverley-hawks"} and "battingNotOuts" in df:
+        df.loc[~public_player_mask(df, club_id=club_id), "battingNotOuts"] = pd.NA
     source_columns = [
         "player_name",
         "team_name",
@@ -20089,7 +20175,7 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
         "4s",
         "6s",
     ]
-    if get_active_club_id() in {"fvcc", "georges-river-district", "glen-waverley-hawks"}:
+    if club_id in {"fvcc", "georges-river-district", "glen-waverley-hawks"}:
         source_columns.insert(4, "battingNotOuts")
         display_columns.insert(4, "NO")
     output = prepare_curated_display_frame(
@@ -20097,10 +20183,12 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
         source_columns,
         display_columns,
     )
-    if get_active_club_id() in {"fvcc", "georges-river-district", "glen-waverley-hawks"}:
+    if club_id in {"fvcc", "georges-river-district", "glen-waverley-hawks"}:
         output = output.rename(columns={"NO": "Not Outs"})
-    return apply_batting_detail_fallbacks(output)
-
+    output = apply_batting_detail_fallbacks(output)
+    if club_id == "glen-waverley-hawks":
+        output = output.rename(columns={"Bat SR": "Bat SR (ball-by-ball)"})
+    return output
 
 def apply_batting_detail_fallbacks(df: pd.DataFrame) -> pd.DataFrame:
     output = df.copy()

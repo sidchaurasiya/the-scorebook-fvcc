@@ -282,7 +282,12 @@ def build_scorecard_bowling(frames: dict[str, pd.DataFrame], club_id: str | None
     )
 
 
-def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:
+def build_bbb_batting(
+    frames: dict[str, pd.DataFrame],
+    club_id: str | None = None,
+    *,
+    include_source_as_recorded: bool = False,
+) -> pd.DataFrame:
     batting = prepare_scorecard_rows(frames["batting"], frames["matches"], club_id=club_id)
     balls = frames["balls"].copy()
     if batting.empty or balls.empty:
@@ -291,6 +296,37 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
     batting["scorecard_runs"] = pd.to_numeric(batting.get("runs_scored"), errors="coerce")
     batting["scorecard_balls"] = pd.to_numeric(batting.get("balls_faced"), errors="coerce")
     batting["bbb_dismissed"] = dismissed_mask(batting).astype(int)
+    if include_source_as_recorded:
+        from src.data.gwhcc_incremental import source_as_recorded_bbb_innings
+
+        source_innings = source_as_recorded_bbb_innings(
+            batting,
+            balls,
+            group_columns(),
+            runs_column="scorecard_runs",
+            balls_column="scorecard_balls",
+            dismissed_column="bbb_dismissed",
+        )
+        if source_innings.empty:
+            return pd.DataFrame()
+        grouped = source_innings.groupby(group_columns(), dropna=False, as_index=False).agg(
+            display_player_name=("display_player_name", "first"),
+            bbb_runs=("bbb_runs", "sum"),
+            bbb_balls_faced=("bbb_balls_faced", "sum"),
+            bbb_dismissals=("bbb_dismissals", "sum"),
+            bbb_dot_balls=("bbb_dot_balls", "sum"),
+            bbb_dot_ball_balls_faced=("bbb_dot_ball_balls_faced", "sum"),
+            bbb_batting_innings=("bbb_batting_innings", "sum"),
+            bbb_matches=("bbb_matches", "sum"),
+            latest_match_date=("latest_match_date", "max"),
+        )
+        grouped["bat_sr"] = grouped.apply(
+            lambda row: layout.divide_or_none(float(row["bbb_runs"]) * 100, float(row["bbb_balls_faced"])), axis=1
+        )
+        grouped["batting_dot_ball_pct"] = grouped.apply(
+            lambda row: layout.divide_or_none(float(row["bbb_dot_balls"]) * 100, float(row["bbb_dot_ball_balls_faced"])), axis=1
+        )
+        return grouped
     lookup = batting.drop_duplicates(["match_id", "innings_id", "participant_id"])[
         scope_columns() + ["participant_id", "scorecard_runs", "scorecard_balls", "bbb_dismissed"]
     ].copy()
@@ -328,14 +364,7 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
         innings_grouped["summed_balls_faced"],
     )
     innings_grouped["bbb_dot_ball_balls_faced"] = innings_grouped["bbb_balls_faced"]
-    innings_grouped["verified_bbb_innings"] = (
-        innings_grouped["scorecard_runs"].notna()
-        & innings_grouped["scorecard_balls"].notna()
-        & innings_grouped["scorecard_balls"].gt(0)
-        & innings_grouped["bbb_balls_faced"].gt(0)
-        & innings_grouped["bbb_runs"].eq(innings_grouped["scorecard_runs"])
-        & innings_grouped["bbb_balls_faced"].eq(innings_grouped["scorecard_balls"])
-    )
+    innings_grouped["verified_bbb_innings"] = select_bbb_innings(innings_grouped)
     innings_grouped = innings_grouped[innings_grouped["verified_bbb_innings"]].copy()
     if innings_grouped.empty:
         return pd.DataFrame()
@@ -356,6 +385,18 @@ def build_bbb_batting(frames: dict[str, pd.DataFrame], club_id: str | None = Non
         axis=1,
     )
     return grouped
+
+
+def select_bbb_innings(innings: pd.DataFrame) -> pd.Series:
+    scorecard_matches = (
+        innings["scorecard_runs"].notna()
+        & innings["scorecard_balls"].notna()
+        & innings["scorecard_balls"].gt(0)
+        & innings["bbb_balls_faced"].gt(0)
+        & innings["bbb_runs"].eq(innings["scorecard_runs"])
+        & innings["bbb_balls_faced"].eq(innings["scorecard_balls"])
+    )
+    return scorecard_matches
 
 
 def build_bbb_bowling(frames: dict[str, pd.DataFrame], club_id: str | None = None) -> pd.DataFrame:
