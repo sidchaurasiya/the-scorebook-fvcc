@@ -338,10 +338,11 @@ def test_fvcc_cache_signature_contains_public_filter_policy(monkeypatch) -> None
     assert ("public_filter", hall_of_fame_prepared.FVCC_HOF_PUBLIC_FILTER_VERSION) in signature
 
 
-def test_grdcc_boundary_behavior_is_unchanged() -> None:
+def test_grdcc_current_source_privacy_projection_filters_private_rows() -> None:
     source = category_frame()
     result = layout.filter_public_hall_of_fame_rows(source, "georges-river-district")
-    assert_frame_equal(result.reset_index(drop=True), source.reset_index(drop=True))
+    assert_only_public(result, "canonical_player_name")
+    assert result.canonical_player_id.tolist() == [PUBLIC_ID]
 
 
 def test_gwhcc_existing_public_filter_behavior_is_preserved() -> None:

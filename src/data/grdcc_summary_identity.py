@@ -40,7 +40,9 @@ def alias_summary_ids(frame, club_id=None):
     output = frame.copy()
     output['__summary_namespace'] = output.canonical_player_id
     for row in aliases.itertuples():
-        selected = output.canonical_player_id.eq(row.legacy_summary_id) & public_player_mask(output)
+        selected = output.canonical_player_id.eq(row.legacy_summary_id) & public_player_mask(
+            output, club_id
+        )
         if not selected.any():
             continue
         names = output.loc[selected, 'canonical_player_name'].map(normalize_player_name_for_strict_merge)
@@ -86,5 +88,5 @@ def read_normalized_summary(frame, filename, club_id=None):
     if not namespace_signature(club_id):
         return frame.copy()
     from src.utils.player_identity import filter_public_player_rows
-    frame = filter_public_player_rows(frame)
+    frame = filter_public_player_rows(frame, club_id=club_id)
     return coalesce_summary_namespaces(alias_summary_ids(frame, club_id), filename, club_id)

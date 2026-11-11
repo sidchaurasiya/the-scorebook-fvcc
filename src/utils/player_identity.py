@@ -10,7 +10,13 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.config.club_config import get_active_club_id, get_feature_flag, get_mapping_path, get_processed_path
+from src.config.club_config import (
+    get_active_club_id,
+    get_feature_flag,
+    get_mapping_path,
+    get_processed_path,
+    normalize_club_id,
+)
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
@@ -109,7 +115,10 @@ def is_private_or_anonymised_player(
     return lowered in PRIVATE_PLAYER_MARKERS or set(text) <= {"*"}
 
 
-def public_player_mask(frame: pd.DataFrame) -> pd.Series:
+def public_player_mask(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.Series:
     """Build a public-display eligibility mask without mutating backend records."""
     if frame.empty:
         return pd.Series(dtype=bool, index=frame.index)
@@ -122,14 +131,26 @@ def public_player_mask(frame: pd.DataFrame) -> pd.Series:
     for column in PLAYER_NAME_COLUMNS:
         if column in frame:
             private |= frame[column].map(is_private_or_anonymised_player)
+
+    from src.data.grdcc_player_privacy import current_privacy_overrides
+
+    current_status, _ = current_privacy_overrides(frame, club_id)
+    private.loc[current_status.eq("public")] = False
+    private.loc[current_status.eq("private")] = True
     return ~private
 
 
-def filter_public_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
+def filter_public_player_rows(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     """Return customer-safe player rows while retaining all backend source rows."""
     if frame.empty:
         return frame.copy()
-    return frame.loc[public_player_mask(frame)].copy()
+    from src.data.grdcc_player_privacy import apply_current_privacy_presentation
+
+    output = apply_current_privacy_presentation(frame, club_id)
+    return output.loc[public_player_mask(output, club_id)].copy()
 
 
 def normalize_player_name_for_strict_merge(name: object) -> str:
@@ -234,6 +255,12 @@ def player_aliases_mtime(path: str | Path | None = None, *, club_id: str | None 
         load_player_aliases(path)
     manual_path = path.with_name(MANUAL_MERGES_PATH.name)
     mtimes = [candidate.stat().st_mtime for candidate in (path, manual_path) if candidate.exists()]
+    if normalize_club_id(club_id or get_active_club_id()) == "georges-river-district":
+        from src.data.grdcc_player_privacy import privacy_snapshot_path
+
+        privacy_path = privacy_snapshot_path(club_id)
+        if privacy_path.is_file():
+            mtimes.append(privacy_path.stat().st_mtime)
     return max(mtimes, default=0.0)
 
 
@@ -1061,10 +1088,12 @@ def get_player_profile_data(
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Resolve the privacy-ledger signature before consulting the profile cache."""
     from src.data.grdcc_legacy_composites import legacy_ledger_signature
+    from src.data.grdcc_player_privacy import privacy_snapshot_signature
+
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
     return _get_player_profile_data_cached(
         canonical_player_id, local_version, identity_version, club_id,
-        legacy_ledger_signature(active_club_id),
+        (legacy_ledger_signature(active_club_id), privacy_snapshot_signature(active_club_id)),
     )
 
 
@@ -1074,7 +1103,7 @@ def _get_player_profile_data_cached(
     local_version: float | None,
     identity_version: float | None,
     club_id: str | None,
-    legacy_signature: tuple[str, str],
+    legacy_signature: tuple[object, ...],
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
 
@@ -1106,7 +1135,10 @@ def _get_player_profile_data_cached(
     canonical_player_id = str(canonical_player_id).strip()
     selected_ids = {canonical_player_id}
     if active_club_id == "georges-river-district":
-        frames = {category: filter_public_player_rows(frame) for category, frame in frames.items()}
+        frames = {
+            category: filter_public_player_rows(frame, active_club_id)
+            for category, frame in frames.items()
+        }
         import json
         from src.config.club_config import get_hall_of_fame_dir
         from src.data.grdcc_legacy_composites import approved_component_id_map

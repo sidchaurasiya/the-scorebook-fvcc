@@ -10,6 +10,7 @@ from src.data.hat_tricks import (
     build_governed_club_hat_tricks,
     write_governed_hat_trick_outputs,
 )
+from match_centre_source_snapshot import historical_source_root
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,15 +18,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @pytest.fixture(scope="module")
 def governed_builds() -> dict[str, GovernedHatTrickBuildResult]:
+    archive_root = historical_source_root()
     return {
         "fvcc": build_governed_club_hat_tricks(
             club_id="fvcc",
-            match_centre_root=ROOT / "data" / "processed" / "match_centre",
+            match_centre_root=archive_root / "all_available",
             club_processed_root=ROOT / "clubs" / "fvcc" / "data" / "processed",
         ),
         "grdcc": build_governed_club_hat_tricks(
             club_id="georges-river-district",
-            match_centre_root=ROOT / "data" / "processed" / "match_centre" / "georges-river-district",
+            match_centre_root=archive_root / "georges-river-district" / "all_available",
             club_processed_root=ROOT / "clubs" / "georges-river-district" / "data" / "processed",
         ),
     }

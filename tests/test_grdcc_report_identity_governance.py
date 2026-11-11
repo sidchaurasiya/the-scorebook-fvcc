@@ -10,18 +10,24 @@ def output():
 def test_seven_report_identity_decisions_account_for_new_baseline():
     shown=output()
     # 2,125 canonical profiles, including the approved three-source grouping,
-    # plus the two existing unlinked report-only records.
-    assert len(shown)==2127
+    # plus two existing unlinked report records and one separately navigable
+    # report-backed historical record (not a newly verified primary player).
+    assert len(shown)==2128
     assert not shown.canonical_player_id.dropna().duplicated().any()
-    assert set(shown[shown.canonical_player_id.isna()].Player)=={'Warwick Geitz','Ben Worger'}
+    assert shown.canonical_player_id.dropna().nunique()==2125
+    assert set(shown[shown.canonical_player_id.isna()].Player)=={'Warwick Geitz','Ben Worger','Phil Eldridge'}
+    phil=shown.loc[shown.Player.eq('Phil Eldridge')].iloc[0]
+    assert phil.report_record_id=='report_grdcc_annual_2024_25_phil_eldridge'
+    assert phil.Wickets==227 and pd.isna(phil.Runs)
     assert not shown.Player.isin(['R. Davey','Matthew Grealy']).any()
 
 
-def test_matched_report_records_keep_existing_canonical_ids_and_totals():
+def test_matched_report_records_keep_canonical_ids_with_authoritative_report_totals():
     shown=output().set_index('Player')
     for name,pid,metric,value in [
-        ('Eric Reid','grdcc_excel_exact_e_reid','Runs',3985),
-        ('Gordon Parsons','grdcc_excel_exact_g_parsons','Runs',2850),
+        # Owner-approved 2024/25 ALL GRADES replaces the older Excel maxima.
+        ('Eric Reid','grdcc_excel_exact_e_reid','Runs',3790),
+        ('Gordon Parsons','grdcc_excel_exact_g_parsons','Runs',2599),
         ('Frank Griggs','grdcc_excel_exact_f_griggs','Wickets',333),
     ]:
         assert shown.loc[name,'canonical_player_id']==pid

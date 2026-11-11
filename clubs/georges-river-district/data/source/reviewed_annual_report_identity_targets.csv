@@ -1,0 +1,4 @@
+report_name,status,canonical_player_id,evidence,public_treatment
+Bruce Carrington,MATCHED_EXISTING_CANONICAL_PLAYER,grdcc_excel_exact_bruce_carrington,2022/23 p72 Second Grade 1976/77 309 and 2024/25 p115 cap231; existing batting rollup equals approved historical792 plus digital2789,Preserve all canonical IDs; report career Runs only; no alias or person merge
+Peter Huthnance,MATCHED_EXISTING_CANONICAL_PLAYER,grdcc_excel_exact_peter_huthnance,2022/23 p68 First Grade 1969/70 533 and 2024/25 p115 cap226; existing batting rollup historical1586 plus digital1835,Preserve all canonical IDs; report career Runs only; no alias or person merge
+Ian Fleming,MATCHED_EXISTING_CANONICAL_PLAYER,grdcc_excel_exact_ian_fleming,2022/23 p68 First Grade 1974/75 285 and 2024/25 p115 cap197; existing batting rollup historical1068 plus digital1680,Preserve all canonical IDs; report career Runs only; no alias or person merge

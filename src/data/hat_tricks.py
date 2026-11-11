@@ -9,6 +9,7 @@ from typing import Mapping
 
 import pandas as pd
 
+from src.data.grdcc_player_privacy import resolve_current_privacy
 from src.utils.player_identity import filter_public_player_rows, is_private_or_anonymised_player
 
 
@@ -116,6 +117,7 @@ def detect_hat_tricks(
     batting_scorecard: pd.DataFrame | None = None,
     selected_team_ids_by_match: Mapping[str, set[str]] | None = None,
     identity_lookup: Mapping[str, Mapping[str, str]] | None = None,
+    club_id: str | None = None,
     coverage_note: str = "Hat-tricks identified from available detailed records.",
     evidence_source: str = "PlayCricket ball-by-ball + bowling and batting scorecards",
 ) -> HatTrickDetectionResult:
@@ -171,6 +173,14 @@ def detect_hat_tricks(
             if not sequence["is_wicket_bool"].all():
                 continue
             player_name = clean_text(sequence.iloc[0].get("_canonical_bowler_name")) or "Unknown player"
+            source_bowler_id = clean_text(sequence.iloc[0].get("_raw_bowler_id"))
+            current_privacy, current_public_name = resolve_current_privacy(
+                canonical_player_id=canonical_id,
+                source_participant_id=source_bowler_id,
+                club_id=club_id,
+            )
+            if current_privacy == "public" and current_public_name:
+                player_name = current_public_name
             innings_ids = list(dict.fromkeys(sequence["innings_id"].dropna().astype(str)))
             innings_label = " | ".join(innings_ids)
             innings_number_values = pd.to_numeric(
@@ -208,7 +218,11 @@ def detect_hat_tricks(
             if not bool(sequence["_identity_resolved"].all()):
                 status = "AMBIGUOUS / REVIEW"
                 reason = "Bowler identity does not resolve to a canonical player ID and public name."
-            private_player = is_private_or_anonymised_player(player_name)
+            private_player = (
+                current_privacy == "private"
+                if current_privacy
+                else is_private_or_anonymised_player(player_name)
+            )
             if private_player:
                 status = "REJECTED"
                 reason = "Canonical bowler identity is private or masked."
@@ -316,10 +330,13 @@ def detect_hat_tricks(
     return HatTrickDetectionResult(events, audit, coverage)
 
 
-def public_hat_trick_events(events: pd.DataFrame) -> pd.DataFrame:
+def public_hat_trick_events(
+    events: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     if events.empty:
         return events.copy()
-    return filter_public_player_rows(events)
+    return filter_public_player_rows(events, club_id=club_id)
 
 
 def prepare_delivery_rows(ball_by_ball: pd.DataFrame) -> tuple[pd.DataFrame, int]:
@@ -573,10 +590,11 @@ def build_governed_club_hat_tricks(
         batting_scorecard=batting,
         selected_team_ids_by_match=selected,
         identity_lookup=identity_lookup,
+        club_id=club_id,
         coverage_note=coverage_note,
         evidence_source="PlayCricket ball-by-ball + batting scorecard dismissal reconciliation",
     )
-    events = public_hat_trick_events(detected.events)
+    events = public_hat_trick_events(detected.events, club_id=club_id)
     prepared_rows, _ = prepare_delivery_rows(balls)
     prepared_rows = prepared_rows[
         prepared_rows.apply(

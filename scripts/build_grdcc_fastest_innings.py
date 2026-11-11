@@ -69,6 +69,7 @@ def main() -> int:
         output=output,
         validation_dir=validation,
         prefix="grdcc",
+        club_id=CLUB_ID,
     )
     governance = result.governance
     print(

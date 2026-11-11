@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.data.featured_record_overrides import normalize_featured_player_name  # noqa: E402
+from src.data.grdcc_career_quarantine import blocked_report_names
 
 
 OVERRIDES = ROOT / "clubs/georges-river-district/data/processed/validation/annual_report_2024_25/all_time_overrides/grdcc_all_time_override_decisions.csv"
@@ -74,17 +75,26 @@ def row_name_variants(row: pd.Series) -> set[str]:
 def match_rows(frame: pd.DataFrame, player_name: str, normalized_name: str) -> tuple[pd.DataFrame, str, str]:
     if frame.empty:
         return frame.copy(), "", "low"
-    target_initial = initial_surname_key(player_name)
-    exact_mask = frame["_name_variants"].map(lambda values: normalized_name in values)
-    initial_mask = frame["_name_variants"].map(lambda values: target_initial in values)
+    exact_mask = frame.apply(lambda row: normalize_featured_player_name(display_name(row)) == normalized_name, axis=1)
     exact_rows = frame[exact_mask].copy()
-    initial_rows = frame[initial_mask].copy()
-    if not exact_rows.empty:
-        combined_rows = frame.loc[exact_rows.index.union(initial_rows.index)].copy()
-        aliases = sorted({display_name(row) for _, row in combined_rows.iterrows() if display_name(row)})
-        return combined_rows, "; ".join(aliases), "high"
-    aliases = sorted({display_name(row) for _, row in initial_rows.iterrows() if display_name(row)})
-    return initial_rows, "; ".join(aliases), ("medium" if not initial_rows.empty else "low")
+    if str(player_name).strip().casefold() in blocked_report_names('georges-river-district'):
+        aliases = sorted({display_name(row) for _,row in exact_rows.iterrows() if display_name(row)})
+        return exact_rows,'; '.join(aliases),'high' if not exact_rows.empty else 'low'
+    # A retained alias label alone is not source-person evidence. Different full
+    # names require an explicit reviewed canonical target, never initial matching.
+    from src.data.featured_record_overrides import load_report_identity_governance
+    governance = load_report_identity_governance('georges-river-district')
+    targets = set()
+    if not governance.empty:
+        decisions = governance.loc[governance.status.eq('MATCHED_EXISTING_CANONICAL_PLAYER') &
+            governance.report_name.map(normalize_featured_player_name).eq(normalized_name)]
+        targets = set(decisions.canonical_player_id.dropna().astype(str)) - {''}
+    selected = exact_mask.copy()
+    if len(targets) == 1 and 'canonical_player_id' in frame:
+        selected |= frame.canonical_player_id.fillna('').astype(str).isin(targets)
+    matched = frame.loc[selected].copy()
+    aliases = sorted({display_name(row) for _, row in matched.iterrows() if display_name(row)})
+    return matched, '; '.join(aliases), 'high' if not matched.empty else 'low'
 
 
 def prepare_frame(frame: pd.DataFrame) -> pd.DataFrame:

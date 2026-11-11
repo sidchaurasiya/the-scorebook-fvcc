@@ -1,0 +1,142 @@
+/* Injected only for GRDCC by active_club_theme_css(). */
+@font-face { font-family: 'GRDCC Manrope'; src: url(data:font/ttf;base64,__MANROPE__) format('truetype'); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'GRDCC Barlow'; src: url(data:font/ttf;base64,__BARLOW__) format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+:root {
+  --grdcc-blue: #144EA7;
+  --grdcc-navy: #102C50;
+  --grdcc-accent: #1C628F;
+  --grdcc-muted: #52657C;
+  --grdcc-line: #D9E4F0;
+  --grdcc-soft: #F2F7FC;
+  --grdcc-radius: 16px;
+  --grdcc-shadow: 0 7px 24px rgb(16 44 80 / 5%);
+  --grdcc-body: 'GRDCC Manrope', sans-serif;
+  --grdcc-display: 'GRDCC Barlow', sans-serif;
+}
+.stApp { background: linear-gradient(155deg,#F1F7FD 0%,#FAFCFF 42%,#F5F8FC 100%) !important; color: var(--grdcc-navy); font-family: var(--grdcc-body); }
+.stApp p, .stApp label, .stApp input, .stApp button, .stMarkdown, .stSelectbox { font-family: var(--grdcc-body); }
+.stApp [data-testid='stMarkdownContainer'], .stApp .performance-player, .stApp .premiership-wall-card, .stApp .profile-breakdown-card { font-family: var(--grdcc-body) !important; }
+.main .block-container { padding-top: .8rem; padding-bottom: 3rem; }
+[data-testid='stMainBlockContainer'] { padding-top: .8rem !important; }
+.page-title { color: var(--grdcc-navy) !important; font-family: var(--grdcc-display) !important; font-size: 3.25rem !important; font-weight: 600 !important; letter-spacing: -.02em; line-height: 1.08 !important; margin-bottom: 12px !important; }
+h2, .section-title, .section-heading h2, .milestone-section-heading h2 { font-family: var(--grdcc-display) !important; font-weight: 600 !important; color: var(--grdcc-navy) !important; letter-spacing: -.01em; }
+.page-subtitle { color: var(--grdcc-muted) !important; font-size: .92rem !important; line-height: 1.65 !important; font-weight: 500 !important; max-width: 76ch; }
+.card-title, .premiership-card-title { font-family: var(--grdcc-display) !important; font-size: 1.2rem !important; font-weight: 600 !important; letter-spacing: .01em; color: var(--grdcc-navy) !important; }
+.hof-card, .premiership-wall-card, .record-card, .player-hero-card, .profile-breakdown-card, .milestone-group-card, .milestone-club-card, .achievement-card { border-color: var(--grdcc-line) !important; border-radius: var(--grdcc-radius) !important; box-shadow: var(--grdcc-shadow) !important; }
+.hof-card, .premiership-wall-card { padding: 20px !important; }
+.performance-player strong { color: var(--grdcc-navy); font-weight: 750 !important; line-height: 1.4; }
+.performance-player strong a.player-profile-link, .performance-player strong a.player-profile-link:visited { color: var(--grdcc-blue) !important; font-weight: inherit; }
+.performance-player strong a.player-profile-link:hover { color: #092F6C !important; text-decoration: underline; text-underline-offset: 3px; }
+.performance-value, .progress-value { color: var(--grdcc-navy) !important; font-variant-numeric: tabular-nums; font-weight: 750 !important; }
+.performance-player > span, .premiership-captain, .premiership-grade { color: var(--grdcc-muted) !important; font-weight: 550 !important; line-height: 1.45 !important; }
+.premiership-title span, .premiership-result { color: var(--grdcc-accent) !important; }
+.premiership-row-body { gap: 16px; }
+.premiership-title { font-weight: 700 !important; line-height: 1.5 !important; }
+.premiership-result { font-size: .85rem !important; font-weight: 750 !important; }
+.premiership-wall-grid { align-items: stretch; }
+.premiership-wall-card { height: 560px; display: flex; flex-direction: column; }
+.premiership-card-scroll { flex: 1; min-height: 0; max-height: none !important; height: auto !important; overflow-y: auto; }
+.premiership-card-scroll { scrollbar-color: #A7BDD6 transparent; }
+section[data-testid='stSidebar'] { background: linear-gradient(180deg,#123F83,#0B2C60) !important; }
+section[data-testid='stSidebar'] > div { padding: 0 !important; }
+section[data-testid='stSidebar'] [data-testid='stSidebarUserContent'] { padding: 18px !important; }
+section[data-testid='stSidebar'] .side-brand { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; text-align: left; margin: 0 0 28px !important; }
+section[data-testid='stSidebar'] .side-shield-logo { flex: none; width: 92px; height: 94px; padding: 0 !important; border-radius: 20px; background: #FFF; border: 1px solid rgb(255 255 255 / 80%); overflow: visible; box-shadow: 0 0 0 5px rgb(255 255 255 / 8%); }
+section[data-testid='stSidebar'] .side-shield-logo img { object-fit: contain; transform: none !important; border-radius: 19px; }
+section[data-testid='stSidebar'] .side-title { font-family: var(--grdcc-display) !important; font-size: 1.75rem; line-height: 1; letter-spacing: .04em; }
+section[data-testid='stSidebar'] .side-subtitle { margin-top: 5px; font-size: .8rem; font-weight: 550; letter-spacing: .08em; }
+section[data-testid='stSidebar'] .side-nav { gap: 7px; }
+section[data-testid='stSidebar'] .side-nav-item { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 12px 14px !important; border-radius: 11px; font-size: .86rem !important; font-weight: 650 !important; line-height: 1.35; box-sizing: border-box; transition: background-color 140ms ease, color 140ms ease; }
+section[data-testid='stSidebar'] .side-nav-item span { flex: 0 0 18px; font-size: 1.12rem; }
+section[data-testid='stSidebar'] .side-nav-item:not(.active), section[data-testid='stSidebar'] .side-nav-item:not(.active) * { color: #E4EEFA !important; }
+section[data-testid='stSidebar'] .side-nav-item.active, section[data-testid='stSidebar'] .side-nav-item.active * { color: #123F83 !important; }
+section[data-testid='stSidebar'] .side-nav-item.active { background: #F2F7FF !important; border: 1px solid #FFF !important; box-shadow: inset 4px 0 0 #6EBDEB, 0 3px 12px rgb(0 0 0 / 8%) !important; }
+section[data-testid='stSidebar'] .side-nav-item:not(.active):hover { background: rgb(255 255 255 / 11%) !important; }
+.side-nav-item:focus-visible, .player-profile-link:focus-visible, .grdcc-grade-next:focus-visible, .grdcc-grade-prev:focus-visible { outline: 3px solid #56A5E4 !important; outline-offset: 3px; }
+div.st-key-mobile_nav_fallback .mobile-nav-link.active { background: #E7F0FD !important; color: #123F83 !important; border-color: #8FB7E8 !important; box-shadow: inset 4px 0 0 var(--grdcc-blue); }
+.grdcc-hat-trick-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-top: 12px; }
+.grdcc-hat-trick-grid > .performance-row { position: relative; display: block; margin: 0; padding: 18px; border: 1px solid var(--grdcc-line); border-left: 3px solid #7DA7D9; border-radius: 14px; background: #FFF; min-width: 0; }
+.grdcc-hat-trick-grid .progress-rank { display: none; }
+.grdcc-hat-trick-grid .performance-player { min-width: 0; }
+.grdcc-hat-trick-grid .performance-player strong { display: block; padding-right: 72px; font-size: .96rem; }
+.grdcc-hat-trick-grid .performance-player > span { display: block; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; margin-top: 6px; font-size: .76rem; }
+.grdcc-hat-trick-grid .performance-value { position: absolute; top: 18px; right: 16px; font-size: .64rem; letter-spacing: .04em; text-transform: uppercase; border-radius: 6px; padding: 4px 6px; background: #EAF2FD; }
+.grdcc-record-note { color: var(--grdcc-muted) !important; font-size: .77rem; line-height: 1.5; margin: 0 0 10px; }
+.grdcc-sequence-note { color: #75521B !important; font-weight: 600 !important; }
+.grdcc-partnership-panel .performance-row { align-items: start; grid-template-columns: 28px minmax(0,1fr) auto; gap: 12px; padding: 14px 0; }
+.grdcc-partnership-panel .performance-player > span { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+.grdcc-partnership-panel .performance-value { font-size: .87rem; padding-top: 2px; white-space: nowrap; }
+.grdcc-partnership-panel .performance-player strong { font-size: .88rem; }
+.season-round-grade-head { background: #F3F7FD; border-color: var(--grdcc-line); padding: 15px 16px; }
+.season-round-grade-head h3 { font-family: var(--grdcc-display); font-size: 1.25rem; font-weight: 600; }
+.season-round-grade-head .season-round-record { background: #E8F1FD; border-color: #BDD3EC; color: #164884; }
+.grdcc-round-shell .season-round-grade-card { flex-basis: min(1180px,94%); }
+.grdcc-round-shell .season-round-scroll { overflow: auto; max-height: 380px; overscroll-behavior-y: auto; }
+.grdcc-round-shell .season-round-grid { min-width: 1100px; }
+.grdcc-round-shell .season-round-row { grid-template-columns: 104px 56px minmax(190px,1.4fr) minmax(150px,1fr) minmax(140px,1fr) minmax(140px,1fr) 112px; color: var(--grdcc-muted); min-height: 56px; padding: 10px 14px; font-size: .8rem; line-height: 1.45; }
+.grdcc-round-shell .single-grade .season-round-row { grid-template-columns: 104px 56px minmax(110px,1fr) minmax(180px,1.4fr) minmax(150px,1fr) minmax(140px,1fr) minmax(140px,1fr) 112px; }
+.grdcc-round-shell .season-round-head { color: var(--grdcc-muted); background: #F5F8FC; font-size: .65rem; letter-spacing: .06em; }
+.grdcc-round-date { font-variant-numeric: tabular-nums; color: #23476D; font-size: .76rem; line-height: 1.55; }
+.grdcc-round-date time { display: block; white-space: nowrap; }
+.grdcc-date-unavailable { color: var(--grdcc-muted); font-size: .68rem; }
+.grdcc-grade-affordance { display: flex; align-items: center; justify-content: flex-end; gap: 9px; min-height: 34px; padding: 0 2px 8px; color: var(--grdcc-muted); font-size: .72rem; }
+.grdcc-grade-affordance [hidden] { display: none !important; }
+.grdcc-grade-next, .grdcc-grade-prev { width: 32px; height: 32px; border: 1px solid #B8CDE5; border-radius: 50%; color: #144EA7; background: #FFF; cursor: pointer; font-size: 1.3rem; line-height: 1; }
+.grdcc-grade-next:hover, .grdcc-grade-prev:hover { background: #EAF2FD; }
+.grdcc-round-shell .season-round-panel-strip { scrollbar-color: #A0BADA #EFF4FA; }
+.player-hero-card { background: linear-gradient(115deg,#FFF 65%,#EAF2FD) !important; border-left: 4px solid var(--grdcc-blue) !important; padding: 25px !important; }
+.profile-name { font-family: var(--grdcc-display) !important; color: var(--grdcc-navy); font-size: 2.8rem !important; font-weight: 600 !important; line-height: 1.1 !important; }
+.profile-kicker { color: var(--grdcc-blue); font-size: .65rem; font-weight: 750; letter-spacing: .12em; }
+.profile-insight, .profile-meta { color: var(--grdcc-muted) !important; line-height: 1.6; font-weight: 500 !important; }
+.profile-breakdown-card { padding: 20px !important; }
+.profile-breakdown-card h4 { font-family: var(--grdcc-display); font-size: 1.3rem; font-weight: 600; }
+.profile-breakdown-card strong { color: var(--grdcc-navy); font-variant-numeric: tabular-nums; font-weight: 750 !important; }
+.profile-breakdown-card span { color: var(--grdcc-muted) !important; }
+.milestone-group-title, .milestone-club-name { font-family: var(--grdcc-display); font-size: 1.4rem; font-weight: 600; }
+.milestone-watch-grid { align-items: start; }
+.milestone-group-rule { background: #F1F6FC !important; border-color: #C8D9ED !important; color: #345577 !important; }
+.profile-selector-help, .milestone-section-subtitle { color: var(--grdcc-muted) !important; }
+.st-key-milestone_page_view_folder_tabs [data-testid='stButtonGroup'] { background: #EDF3FA !important; border-color: #D1DFF0 !important; }
+.st-key-milestone_page_view_folder_tabs button { color: var(--grdcc-muted) !important; }
+.st-key-milestone_page_view_folder_tabs button[aria-checked='true'],
+.st-key-milestone_page_view_folder_tabs button[data-testid$='segmented_controlActive'] { color: #123F83 !important; background: #E7F0FD !important; box-shadow: inset 0 -2px 0 #144EA7 !important; }
+.milestone-progress-card, .milestone-empty-card { border-color: var(--grdcc-line) !important; border-radius: 12px !important; }
+.milestone-progress-card .progress-track { height: 7px; border-radius: 4px; background: #E8EFF7; }
+.milestone-progress-card .progress-track > div { background: var(--grdcc-blue) !important; }
+.milestone-member-row strong, .achievement-value { font-variant-numeric: tabular-nums; color: var(--grdcc-navy); }
+@media(hover:hover) { .grdcc-hat-trick-grid > .performance-row:hover { border-color: #84A9D6; background: #FBFDFF; } }
+@media(max-width: 960px) { .grdcc-round-shell .season-round-grade-card { flex-basis: 96%; } }
+@media(max-width: 640px) {
+  .main .block-container { padding-top: .6rem; }
+  [data-testid='stMainBlockContainer'] { padding-top: .6rem !important; }
+  div.st-key-mobile_nav_fallback .mobile-nav-links { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  div.st-key-mobile_nav_fallback .mobile-nav-link { font-size: .77rem !important; padding: 12px 9px !important; min-height: 48px; box-sizing: border-box; }
+  .premiership-wall-card { height: auto; }
+  .premiership-card-scroll { max-height: 500px !important; }
+  .page-title { font-size: 2.5rem !important; }
+  h2 { font-size: 1.8rem !important; }
+  .page-subtitle { font-size: .83rem !important; }
+  .hof-card, .premiership-wall-card { padding: 16px !important; }
+  .grdcc-hat-trick-grid { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  .grdcc-hat-trick-grid > .performance-row { padding: 16px; }
+  .grdcc-hat-trick-grid .performance-value { top: 16px; right: 14px; }
+  .grdcc-partnership-panel .performance-row { grid-template-columns: 24px minmax(0,1fr); }
+  .grdcc-partnership-panel .performance-value { grid-column: 2; padding: 0; }
+  .player-hero-card { padding: 20px !important; }
+  .profile-name { font-size: 2.3rem !important; }
+  .grdcc-grade-affordance { font-size: .68rem; }
+  .grdcc-grade-next, .grdcc-grade-prev { min-width: 40px; min-height: 40px; }
+  .grdcc-round-shell .season-round-grid { min-width: 0; display: grid; gap: 10px; padding: 10px; }
+  .grdcc-round-shell .season-round-row,
+  .grdcc-round-shell .single-grade .season-round-row { grid-template-columns: minmax(0,1fr) minmax(88px,34%); border-radius: 12px; padding: 12px; gap: 8px 10px; }
+  .grdcc-round-shell .season-round-head { display: grid !important; position: absolute; width: 1px; height: 1px; padding: 0 !important; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+  .grdcc-round-shell .season-round-row > .grdcc-round-date { grid-column: 1; grid-row: 1; }
+  .grdcc-round-shell .grdcc-round-date::before { content: 'Date'; display: block; color: var(--grdcc-muted); font-size: .6rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .grdcc-round-shell .season-round-row > strong { grid-column: 1; grid-row: 2; }
+  .grdcc-round-shell .season-round-opponent { grid-column: 1; grid-row: 3; }
+  .grdcc-round-shell .season-round-row > .season-round-result { grid-column: 2; grid-row: 1 / span 3; align-items: flex-end; text-align: right; }
+  .grdcc-round-shell .season-round-performer { grid-column: 1 / -1; grid-row: auto; }
+  .grdcc-round-shell .season-round-grade-cell { display: block; grid-column: 1 / -1; grid-row: auto; }
+  .grdcc-round-shell .season-round-scorecard { grid-column: 1 / -1 !important; margin-top: 0; }
+}
+@media(prefers-reduced-motion:reduce) { .side-nav-item, a.player-profile-link, .grdcc-hat-trick-grid > .performance-row { transition: none !important; scroll-behavior: auto !important; } }

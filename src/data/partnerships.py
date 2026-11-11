@@ -111,6 +111,7 @@ def prepare_ball_by_ball_partnerships(
     innings: pd.DataFrame,
     selected_team_ids_by_match: Mapping[str, set[str]],
     identity_lookup: Mapping[str, Mapping[str, str]],
+    club_id: str | None = None,
     grade_display: Callable[[object], str] | None = None,
 ) -> PartnershipPreparationResult:
     if partnerships.empty:
@@ -154,10 +155,10 @@ def prepare_ball_by_ball_partnerships(
         innings_id = clean_text(row.get("innings_id"))
         match = match_lookup.get(match_id, {})
         player_1 = governed_batter_identity(
-            row.get("batter_1_participant_id"), row.get("batter_1_name"), identity_lookup
+            row.get("batter_1_participant_id"), row.get("batter_1_name"), identity_lookup, club_id=club_id
         )
         player_2 = governed_batter_identity(
-            row.get("batter_2_participant_id"), row.get("batter_2_name"), identity_lookup
+            row.get("batter_2_participant_id"), row.get("batter_2_name"), identity_lookup, club_id=club_id
         )
         privacy_status = governed_partnership_privacy_status(player_1, player_2)
         public_1 = public_batter_identity(player_1)
@@ -486,10 +487,10 @@ def build_governed_club_partnerships(
         match = match_lookup.get(match_id, {})
         innings_context = innings_lookup.get(innings_id, {})
         player_1 = governed_batter_identity(
-            row.get("batter_1_participant_id"), row.get("batter_1_name"), identity_lookup
+            row.get("batter_1_participant_id"), row.get("batter_1_name"), identity_lookup, club_id=club_id
         )
         player_2 = governed_batter_identity(
-            row.get("batter_2_participant_id"), row.get("batter_2_name"), identity_lookup
+            row.get("batter_2_participant_id"), row.get("batter_2_name"), identity_lookup, club_id=club_id
         )
         privacy_status = governed_partnership_privacy_status(player_1, player_2)
         reason = governed_partnership_rejection_reason(row, player_1, player_2, privacy_status)
@@ -888,19 +889,35 @@ def governed_batter_identity(
     participant_id: object,
     source_name: object,
     identity_lookup: Mapping[str, Mapping[str, str]],
+    *,
+    club_id: str | None = None,
 ) -> dict[str, object]:
     raw_id = clean_text(participant_id)
     raw_name = clean_text(source_name)
     mapped = identity_lookup.get(raw_id, {})
     canonical_id = clean_text(mapped.get("canonical_player_id"))
     canonical_name = clean_text(mapped.get("canonical_player_name"))
+    from src.data.grdcc_player_privacy import resolve_current_privacy
+
+    current_status, current_public_name = resolve_current_privacy(
+        canonical_player_id=canonical_id,
+        source_participant_id=raw_id,
+        club_id=club_id,
+    )
+    if current_status == "public" and current_public_name:
+        canonical_name = current_public_name
+    private = (
+        current_status == "private"
+        if current_status
+        else is_private_or_anonymised_player(raw_name)
+        or is_private_or_anonymised_player(canonical_name)
+    )
     return {
         "raw_id": raw_id,
         "canonical_id": canonical_id,
         "canonical_name": canonical_name,
         "resolved": bool(canonical_id and canonical_name),
-        "private": is_private_or_anonymised_player(raw_name)
-        or is_private_or_anonymised_player(canonical_name),
+        "private": private,
     }
 
 

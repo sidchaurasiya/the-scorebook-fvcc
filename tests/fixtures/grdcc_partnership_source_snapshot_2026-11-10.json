@@ -1,0 +1,122 @@
+{
+  "snapshot": "official PlayCricket match-centre source files retrieved 2026-11-10",
+  "current_privacy_snapshot": {
+    "path": "clubs/georges-river-district/data/source/grdcc_current_privacy_status.csv",
+    "rows": 3,
+    "public": 2,
+    "private": 1,
+    "sha256": "bf9d4b62c683384c2257621da4e6406336907b5ab7053f605f7765e5e31bae7c"
+  },
+  "historical_scope": {
+    "club": "georges-river-district",
+    "directory": "georges-river-district/all_available",
+    "files": {
+      "all_matches.csv": {
+        "rows": 2604,
+        "sha256": "8e4a9228a65b8b677637713002ee01eda02419bb202a860ea0df5abc4671211e"
+      },
+      "all_ball_by_ball.csv": {
+        "rows": 155573,
+        "sha256": "95ebc74f296683a734c73b5f82190b95bef1a6bb085c82a1c91643f7f78f1ff7"
+      },
+      "all_scorecard_batting.csv": {
+        "rows": 51148,
+        "sha256": "b81584b0a354864b582df2d8a623f9d1c1d183319d0bd8afe8d7da23b84d3390"
+      },
+      "all_match_innings.csv": {
+        "rows": 5262,
+        "sha256": "4e62c73a244b4f70ade249a8e1a968db6d13bb26b2fb20a3cd4a32d8496e3dcd"
+      }
+    },
+    "expected_partnerships": {
+      "events": 2464,
+      "PUBLIC_PUBLIC": 2320,
+      "PUBLIC_PRIVATE": 144,
+      "rejected": 43
+    }
+  },
+  "fvcc_scope": {
+    "files": {
+      "all_matches.csv": {
+        "rows": 961,
+        "sha256": "fbd8dc64a8c493981763693145d99074ed8469aa3076fc5ea55ffbdf6e307736"
+      },
+      "all_ball_by_ball.csv": {
+        "rows": 50379,
+        "sha256": "38f00b1d48c8d5084067c056594ebf6f3cf1d2e3032e2d30fb49b20b017c8a91"
+      },
+      "all_scorecard_batting.csv": {
+        "rows": 19793,
+        "sha256": "4dd82f616fb1cfeeb99e6432aeb5ca52840f07840cbcf9aa2372738d1336a846"
+      },
+      "all_match_innings.csv": {
+        "rows": 1923,
+        "sha256": "3e6b4e23dbaa7854182abcca9ca445d403b3ba083cd5ac794748042c799186e0"
+      }
+    }
+  },
+  "current_season_scope": {
+    "club": "georges-river-district",
+    "directory": "grdcc-summer-2026-27-finalized",
+    "cutoff_local_date": "2026-10-31",
+    "timezone": "Australia/Sydney",
+    "full_snapshot_files": {
+      "all_matches.csv": {
+        "rows": 43,
+        "sha256": "bc732869f874483c28b6d5a99f45e0d8f3e2ef976f821bf9a5e951779fbf4e1f"
+      },
+      "all_ball_by_ball.csv": {
+        "rows": 12467,
+        "sha256": "547afb04bcf7132170e62e7be70735539f8aa1e4b0018bea09ad0f2ef5e99462"
+      },
+      "all_scorecard_batting.csv": {
+        "rows": 808,
+        "sha256": "7eb77b8b38843a791bea7ff7b0a4868ee1967bc7693ab0b2431e24b2e0ecbc40"
+      },
+      "all_match_innings.csv": {
+        "rows": 88,
+        "sha256": "f7513c55d55c6f7ebd806ad0bc4de5cba81ae4860ed7e4ea2d5a36efbbcd9003"
+      }
+    },
+    "cutoff_filtered_source_rows": {
+      "matches": 38,
+      "ball_by_ball": 10845,
+      "scorecard_batting": 695,
+      "match_innings": 78
+    },
+    "expected_partnerships": {
+      "events": 239,
+      "PUBLIC_PUBLIC": 238,
+      "PUBLIC_PRIVATE": 1,
+      "rejected": 1,
+      "rejected_reason": "Incomplete or invalid two-batter delivery sequence."
+    }
+  },
+  "source_as_recorded_exception": {
+    "partnership_id_sha256": "f24153e4446a5ba9fc8a475cb2298fcbfb58be6052fc203dacde979db6505bed",
+    "partnership_runs": 6,
+    "legal_balls": 6,
+    "scorecard_innings_runs": 116,
+    "ball_by_ball_reconstructed_runs": 117,
+    "difference": 1,
+    "unique_ball_event_ids": 201,
+    "privacy_status": "PUBLIC_PRIVATE",
+    "reconciliation_status": "SCORE_DIFFERENCE_ACCEPTED"
+  },
+  "combined_expected_partnerships": {
+    "baseline_commit": "657e9d99ea20f3cd6858e6b9fa44ef13609c63ee",
+    "old_public_events": 2686,
+    "common_events": 2685,
+    "added_events": 18,
+    "removed_events": 1,
+    "privacy_transitions": {
+      "PUBLIC_PRIVATE->PUBLIC_PUBLIC": 11
+    },
+    "events": 2703,
+    "PUBLIC_PUBLIC": 2558,
+    "PUBLIC_PRIVATE": 145,
+    "record_rows": 10,
+    "partnerships_sha256": "87b3bd95b10c3ee3b53ea86acce676b8128cc42e751e0a476966abf89e010d35",
+    "partnership_records_sha256": "b2fc003f656016e8c9d4b318c3b8230c8f4469875497ae0c0c18a8b88c783f98"
+  }
+}

@@ -8,7 +8,13 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data.grdcc_career_refresh import apply_later_season_totals, refresh_baseline_paths
+from src.data.grdcc_career_refresh import (
+    apply_later_season_totals,
+    apply_reviewed_playcricket_career_exceptions,
+    refresh_baseline_paths,
+    report_baselines_path,
+)
+from src.data.grdcc_career_quarantine import apply_career_quarantine, blocked_report_names, PATH as CAREER_QUARANTINE_PATH
 
 from src.config.club_config import REPO_ROOT, get_active_club_id, get_feature_flag, normalize_club_id
 
@@ -150,6 +156,7 @@ def featured_record_overrides_mtime(club_id: str | None = None) -> float:
         override_player_supplements_path(),
         report_identity_governance_path(),
         *refresh_baseline_paths(),
+        CAREER_QUARANTINE_PATH,
     ]
     return max((path.stat().st_mtime for path in paths if path.exists()), default=0.0)
 
@@ -164,6 +171,79 @@ def _load_override_csv(path: Path) -> pd.DataFrame:
     return _read_override_csv(str(path), path.stat().st_mtime).copy()
 
 
+def _verified_all_grades_report_baselines(club_id: str | None = None) -> pd.DataFrame:
+    if normalize_club_id(club_id or get_active_club_id()) != GRDCC_CLUB_ID:
+        return pd.DataFrame()
+    path = report_baselines_path()
+    if not path.exists():
+        return pd.DataFrame()
+    rows = pd.read_csv(path, dtype=str).fillna("")
+    required = {
+        "canonical_player_id",
+        "player_name",
+        "metric",
+        "through_season_start",
+        "governed_value",
+        "status",
+        "scope_type",
+        "source_reference",
+        "source_sha256",
+    }
+    if not required.issubset(rows.columns):
+        return pd.DataFrame()
+    rows = rows.loc[
+        rows.status.eq("source_verified")
+        & rows.scope_type.eq("all_grades_cumulative")
+        & rows.through_season_start.eq("2024")
+        & rows.metric.isin({"Runs", "Wickets"})
+        & rows.canonical_player_id.astype(str).str.strip().ne("")
+        & rows.source_sha256.astype(str).str.strip().ne("")
+    ].copy()
+    expected_page = rows.metric.map({"Runs": "p98", "Wickets": "p100"})
+    source_reference = rows.source_reference.astype(str).str.casefold()
+    rows = rows.loc[
+        source_reference.str.contains("all grades", regex=False)
+        & pd.Series(
+            [page in reference for page, reference in zip(expected_page, source_reference)],
+            index=rows.index,
+        )
+    ].copy()
+    if rows.duplicated(["canonical_player_id", "metric"]).any():
+        raise ValueError("Duplicate exact-ID ALL GRADES report baseline")
+    rows["_exact_report_name"] = rows.player_name.astype(str).str.strip().str.casefold()
+    ambiguous_names = rows.duplicated(["_exact_report_name", "metric"], keep=False)
+    return rows.loc[~ambiguous_names].reset_index(drop=True)
+
+
+def _verified_baseline_for_report_row(
+    baselines: pd.DataFrame,
+    *,
+    player_name: object,
+    metric: object,
+    page: object,
+    value: object,
+) -> pd.Series | None:
+    metric_name = str(metric or "").strip().casefold()
+    baseline_metric = {"runs": "Runs", "career_runs": "Runs", "wickets": "Wickets", "career_wickets": "Wickets"}.get(metric_name)
+    if baseline_metric is None:
+        return None
+    expected_page = {"Runs": "98", "Wickets": "100"}[baseline_metric]
+    if str(page or "").strip() != expected_page:
+        return None
+    exact_name = str(player_name or "").strip().casefold()
+    if not exact_name or baselines.empty:
+        return None
+    matches = baselines.loc[
+        baselines._exact_report_name.eq(exact_name)
+        & baselines.metric.eq(baseline_metric)
+    ]
+    if len(matches) != 1:
+        return None
+    actual = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    expected = pd.to_numeric(pd.Series([matches.iloc[0].governed_value]), errors="coerce").iloc[0]
+    return matches.iloc[0] if pd.notna(actual) and pd.notna(expected) and float(actual) == float(expected) else None
+
+
 def load_annual_report_override_decisions(club_id: str | None = None) -> pd.DataFrame:
     active_club_id = normalize_club_id(club_id or get_active_club_id())
     path = annual_report_override_decisions_path()
@@ -174,12 +254,80 @@ def load_annual_report_override_decisions(club_id: str | None = None) -> pd.Data
     ):
         return pd.DataFrame()
     rows = _load_override_csv(path)
-    required = {"player_name", "normalized_player_name", "metric", "displayed_value", "validation_status"}
+    required = {
+        "player_name",
+        "normalized_player_name",
+        "metric",
+        "displayed_value",
+        "validation_status",
+        "override_applies",
+        "annual_report_pages",
+    }
     if not required.issubset(rows.columns):
         return pd.DataFrame()
-    rows = rows[rows["validation_status"].astype(str).str.casefold().eq("pass")].copy()
+    rows = rows[
+        rows["validation_status"].astype(str).str.casefold().eq("pass")
+        & rows["override_applies"].astype(str).str.strip().str.casefold().eq("yes")
+    ].copy()
     rows["displayed_value"] = pd.to_numeric(rows["displayed_value"], errors="coerce")
-    return rows[rows["displayed_value"].notna()].reset_index(drop=True)
+    baselines = _verified_all_grades_report_baselines(active_club_id)
+    table = load_annual_report_all_time_leaders(active_club_id)
+    if baselines.empty or table.empty:
+        return pd.DataFrame()
+
+    accepted = []
+    for _, row in rows.loc[rows["displayed_value"].notna()].iterrows():
+        baseline = _verified_baseline_for_report_row(
+            baselines,
+            player_name=row.get("player_name"),
+            metric=row.get("metric"),
+            page=row.get("annual_report_pages"),
+            value=row.get("displayed_value"),
+        )
+        if baseline is None:
+            continue
+        same_table_row = table.loc[
+            table.player_name.astype(str).str.strip().str.casefold().eq(
+                str(row.get("player_name", "")).strip().casefold()
+            )
+            & table.metric.astype(str).str.casefold().eq(
+                {"career_runs": "runs", "career_wickets": "wickets"}.get(
+                    str(row.get("metric", "")).strip().casefold(), ""
+                )
+            )
+            & table.annual_report_page.astype(str).str.strip().eq(
+                str(row.get("annual_report_pages", "")).strip()
+            )
+            & pd.to_numeric(table["displayed_value"], errors="coerce").eq(
+                float(row["displayed_value"])
+            )
+        ]
+        if len(same_table_row) != 1:
+            continue
+        accepted_row = row.copy()
+        accepted_row["canonical_player_id"] = baseline.canonical_player_id
+        accepted_row["scope_type"] = baseline.scope_type
+        accepted_row["through_season_start"] = baseline.through_season_start
+        accepted_row["source_sha256"] = baseline.source_sha256
+        accepted.append(accepted_row)
+    return pd.DataFrame(accepted).reset_index(drop=True)
+
+
+def _verified_legacy_career_target(leader: pd.Series, target_column: str) -> str:
+    """Return an exact target only for a verified cumulative report baseline."""
+    metric_page = {"Runs": "98", "Wickets": "100"}.get(target_column)
+    if metric_page is None:
+        return ""
+    if str(leader.get("scope_type", "")).strip() != "all_grades_cumulative":
+        return ""
+    if str(leader.get("through_season_start", "")).strip() != "2024":
+        return ""
+    if not str(leader.get("source_sha256", "")).strip():
+        return ""
+    page = str(leader.get("annual_report_pages", leader.get("annual_report_page", ""))).strip()
+    if page != metric_page:
+        return ""
+    return str(leader.get("canonical_player_id", "")).strip()
 
 
 def _first_non_empty(series: pd.Series) -> str:
@@ -225,6 +373,9 @@ def load_override_player_supplements(club_id: str | None = None) -> pd.DataFrame
         return pd.DataFrame()
     for column in SUPPLEMENT_NUMERIC_COLUMNS.intersection(rows.columns):
         rows[column] = pd.to_numeric(rows[column], errors="coerce")
+    for column in ['override_metric','override_applies']:
+        if column not in rows:rows[column]=''
+    rows['_wicket_override_applies'] = rows.override_metric.eq('career_wickets') & rows.override_applies.eq('yes')
     aggregated = (
         rows.groupby("normalized_player_name", as_index=False)
         .agg(
@@ -236,6 +387,9 @@ def load_override_player_supplements(club_id: str | None = None) -> pd.DataFrame
                 "fifties_hundreds_source": _first_non_empty,
                 "source_confidence": _first_non_empty,
                 "notes": _first_non_empty,
+                "override_metric": lambda values: '; '.join(sorted(set(values.astype(str)) - {''})),
+                "override_applies": lambda values: 'yes' if values.eq('yes').any() else 'no',
+                "_wicket_override_applies": 'any',
                 **{
                     column: "max"
                     for column in SUPPLEMENT_NUMERIC_COLUMNS
@@ -385,7 +539,7 @@ def _extend_career_span(output: pd.DataFrame, index: object, seasons: list[str])
 
 
 def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | None = None) -> pd.DataFrame:
-    output = all_time.copy()
+    output = apply_career_quarantine(all_time,club_id).copy()
     if output.empty or "Player" not in output.columns:
         return output
     supplements = load_override_player_supplements(club_id)
@@ -394,6 +548,8 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
 
     normalized_players = output["Player"].map(normalize_featured_player_name)
     for _, supplement in supplements.iterrows():
+        if str(supplement.get('player_name','')).strip().casefold() in blocked_report_names(club_id):
+            continue
         variants = _normalized_name_variants(
             supplement.get("player_name", supplement.get("normalized_player_name", "")),
             supplement.get("excel_aliases_used", ""),
@@ -429,10 +585,8 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
                 output.loc[index, "HS"] = hs
         if "Overs" in output.columns and numeric_updates.get("Balls Bowled") is not None:
             _assign_override_value(output, index, "Overs", _balls_to_overs_display(numeric_updates["Balls Bowled"]))
-        if str(supplement.get("override_metric", "")).strip() == "career_wickets" and str(supplement.get("override_applies", "")).strip().casefold() == "yes":
-            for column in ["Bowl Avg", "Bowl SR"]:
-                if column in output.columns:
-                    _assign_override_value(output, index, column, pd.NA)
+        # Preserve scope metadata for audit. Reviewed exact-ID quarantine below
+        # is the compatibility guard; do not retroactively alter unaudited aliases.
         _assign_override_value(output, index, "Matches Source", str(supplement.get("matches_source", "") or ""))
         _assign_override_value(
             output,
@@ -454,7 +608,7 @@ def apply_override_player_supplements(all_time: pd.DataFrame, club_id: str | Non
         preferred_name = str(supplement.get("player_name", "") or "").strip()
         if preferred_name:
             _assign_override_value(output, index, "Player", preferred_name)
-    return output
+    return apply_career_quarantine(output,club_id)
 
 
 def load_annual_report_all_time_leaders(club_id: str | None = None) -> pd.DataFrame:
@@ -467,13 +621,54 @@ def load_annual_report_all_time_leaders(club_id: str | None = None) -> pd.DataFr
     ):
         return pd.DataFrame()
     rows = _load_override_csv(path)
-    required = {"section", "player_name", "normalized_player_name", "displayed_value", "included_in_app"}
+    required = {
+        "section",
+        "metric",
+        "player_name",
+        "normalized_player_name",
+        "displayed_value",
+        "annual_report_value",
+        "annual_report_page",
+        "included_in_app",
+    }
     if not required.issubset(rows.columns):
         return pd.DataFrame()
     included = rows["included_in_app"].astype(str).str.strip().str.casefold().isin({"1", "true", "yes"})
     rows = rows[included].copy()
     rows["displayed_value"] = pd.to_numeric(rows["displayed_value"], errors="coerce")
-    return rows[rows["displayed_value"].notna()].reset_index(drop=True)
+    rows["annual_report_value"] = pd.to_numeric(rows["annual_report_value"], errors="coerce")
+    baselines = _verified_all_grades_report_baselines(active_club_id)
+    if baselines.empty:
+        return pd.DataFrame()
+
+    accepted = []
+    for _, row in rows.loc[rows["annual_report_value"].notna()].iterrows():
+        metric_name = str(row.get("metric", "")).strip().casefold()
+        expected_section = {"runs": "most_runs", "wickets": "most_wickets"}.get(metric_name)
+        if expected_section is None or str(row.get("section", "")).strip().casefold() != expected_section:
+            continue
+        baseline = _verified_baseline_for_report_row(
+            baselines,
+            player_name=row.get("player_name"),
+            metric=metric_name,
+            page=row.get("annual_report_page"),
+            value=row.get("annual_report_value"),
+        )
+        if baseline is None:
+            continue
+        accepted_row = row.copy()
+        accepted_row["canonical_player_id"] = baseline.canonical_player_id
+        accepted_row["scope_type"] = baseline.scope_type
+        accepted_row["through_season_start"] = baseline.through_season_start
+        accepted_row["source_sha256"] = baseline.source_sha256
+        # The current app extraction may contain a computed value; the report
+        # figure remains authoritative for its historical cutoff.
+        accepted_row["displayed_value"] = float(baseline.governed_value)
+        accepted.append(accepted_row)
+    result = pd.DataFrame(accepted).reset_index(drop=True)
+    if not result.empty and result.duplicated(["canonical_player_id", "metric"]).any():
+        raise ValueError("Annual Report HOF rows must map to unique verified canonical metrics")
+    return result
 
 
 def load_featured_record_overrides(club_id: str | None = None) -> pd.DataFrame:
@@ -513,7 +708,7 @@ def apply_featured_record_overrides(
     add_missing_players: bool = True,
 ) -> pd.DataFrame:
     """Apply approved overrides to a presentation copy of an all-time table."""
-    output = all_time.copy()
+    output = apply_career_quarantine(all_time,club_id).copy()
     if output.empty or "Player" not in output.columns:
         return output
 
@@ -540,6 +735,8 @@ def apply_featured_record_overrides(
     )
     overrides = load_featured_record_overrides(club_id)
     for _, override in overrides.iterrows():
+        if str(override.get('player_name','')).strip().casefold() in blocked_report_names(club_id):
+            continue
         metric = str(override.get("metric", "")).strip()
         target_column = METRIC_COLUMNS.get(metric)
         if target_column is None or target_column not in output.columns:
@@ -585,6 +782,8 @@ def apply_featured_record_overrides(
             columns={"section": "legacy_section"}
         )
     for _, leader in decisions.iterrows():
+        if str(leader.get('player_name','')).strip().casefold() in blocked_report_names(club_id):
+            continue
         if normalize_featured_player_name(leader.get('player_name', '')) in held_names:
             continue
         metric = str(leader.get("metric", "")).strip()
@@ -593,34 +792,16 @@ def apply_featured_record_overrides(
             target_column = ANNUAL_REPORT_LEADER_COLUMNS.get(str(leader.get("legacy_section", "")).strip())
         if target_column is None or target_column not in output.columns:
             continue
-        normalized_name = str(leader.get("normalized_player_name", "")).strip()
-        variants = _normalized_name_variants(
-            leader.get("player_name", normalized_name),
-            supplement_alias_map.get(normalized_name, ""),
-        )
-        matches = _match_player_variants(normalized_players, variants)
-        if matches.any():
-            matching_rows = output.loc[matches].copy()
-            if _has_ambiguous_grdcc_identities(matching_rows, club_id, str(supplement_alias_map.get(normalized_name, ''))):
-                ids = approved_targets.get(normalize_featured_player_name(leader.get('player_name', normalized_name)), set()) - {''}
-                if len(ids) != 1 or 'canonical_player_id' not in matching_rows:
-                    continue
-                matching_rows = matching_rows.loc[matching_rows.canonical_player_id.astype(str).isin(ids)]
-                if len(matching_rows) != 1:
-                    continue
-            current_values = pd.to_numeric(matching_rows[target_column], errors="coerce").fillna(0)
-            featured_index = current_values.idxmax()
-            _preserve_merged_high_score(output, featured_index, matching_rows)
-            _extend_career_span(output, featured_index, [str(v) for c in ("Debut Season", "Latest Season", "Seasons") if c in matching_rows for v in matching_rows[c].dropna()])
-            duplicate_indices = matching_rows.index.difference([featured_index])
-            if len(duplicate_indices):
-                output = output.drop(index=duplicate_indices)
-        elif add_missing_players:
-            # Alias collapse leaves gaps; len(output) may still be an occupied label.
-            featured_index = max(output.index, default=-1) + 1
-            _assign_override_value(output, featured_index, "Player", str(leader.get("player_name", "")).strip())
-        else:
+        canonical_player_id = _verified_legacy_career_target(leader, target_column)
+        if not canonical_player_id or "canonical_player_id" not in output.columns:
             continue
+        matches = output.canonical_player_id.fillna("").astype(str).eq(canonical_player_id)
+        if int(matches.sum()) != 1:
+            continue
+        matching_rows = output.loc[matches].copy()
+        featured_index = matching_rows.index[0]
+        _preserve_merged_high_score(output, featured_index, matching_rows)
+        _extend_career_span(output, featured_index, [str(v) for c in ("Debut Season", "Latest Season", "Seasons") if c in matching_rows for v in matching_rows[c].dropna()])
         current_value = pd.to_numeric(pd.Series([output.loc[featured_index, target_column]]), errors="coerce").fillna(0).iloc[0]
         preferred_name = str(leader.get("player_name", "") or "").strip()
         if preferred_name:
@@ -630,7 +811,10 @@ def apply_featured_record_overrides(
         _assign_override_value(output, featured_index, "Featured Record Metric", metric)
         _assign_override_value(output, featured_index, "Featured Record Source", "GRDCC 2024/25 Annual Report")
         normalized_players = output["Player"].map(normalize_featured_player_name)
-    return apply_later_season_totals(
+    from src.data.grdcc_historical_records import apply_historical_records
+    governed = apply_historical_records(apply_career_quarantine(apply_later_season_totals(
         apply_override_player_supplements(output, club_id),
         club_id or get_active_club_id(), source_frame=all_time,
-    )
+    ),club_id), club_id, add_report_records=add_missing_players)
+    # Reviewed exact-ID exceptions must win after legacy supplements and career overlays.
+    return apply_reviewed_playcricket_career_exceptions(governed, club_id or get_active_club_id())

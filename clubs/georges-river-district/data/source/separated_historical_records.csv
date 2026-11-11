@@ -1,0 +1,6 @@
+record_id,record_kind,public_name,metric,value,through_season_start,scope,source_reference,status
+grdcc_excel_exact_percy_eldridge,primary_historical,Percy Eldridge,Runs,2208,2024,all_grades_cumulative,GRDCC Annual Report 2024/25 p98; corroborated 2022/23 p97,source_verified
+grdcc_excel_exact_percy_eldridge,primary_historical,Percy Eldridge,Wickets,184,2024,recorded_worksheet_only,Historical bowling worksheet: nine recorded seasons 1930/31 to 1947/48; full career coverage unestablished,source_verified
+report_grdcc_annual_2024_25_phil_eldridge,annual_report_record,Phil Eldridge,Wickets,227,2024,all_grades_cumulative,GRDCC Annual Report 2024/25 p100,source_verified
+report_grdcc_annual_2024_25_warwick_geitz,annual_report_record,Warwick Geitz,Runs,5119,2024,all_grades_cumulative,GRDCC Annual Report 2024/25 p98 ALL GRADES; identity governance LEGITIMATE_REPORT_ONLY_PLAYER,source_verified
+report_grdcc_annual_2024_25_ben_worger,annual_report_record,Ben Worger,Runs,2312,2024,all_grades_cumulative,GRDCC Annual Report 2024/25 p98 ALL GRADES; identity governance LEGITIMATE_REPORT_ONLY_PLAYER,source_verified
