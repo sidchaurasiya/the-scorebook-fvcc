@@ -92,6 +92,7 @@ def prepare(*, runs: tuple[int, int] = (40, 60), pair_ids: tuple[str, str] = ("p
         innings=innings,
         selected_team_ids_by_match={"match-1": {"hawks"}},
         identity_lookup=default_identity if identity is None else identity,
+        club_id="glen-waverley-hawks",
     )
 
 
@@ -180,6 +181,7 @@ def test_mismatched_innings_total_is_not_published() -> None:
         innings=innings,
         selected_team_ids_by_match={"match-1": {"hawks"}},
         identity_lookup=identity,
+        club_id="glen-waverley-hawks",
     )
     assert result.events.empty
     assert result.audit["validation_status"].eq("REVIEW").all()

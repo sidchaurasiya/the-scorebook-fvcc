@@ -29,8 +29,10 @@ def test_valid_manifest_loads_all_grdcc_frames() -> None:
     assert len(core["batting"]) == 2103
     assert len(core["bowling"]) == 1781
     assert len(core["fielding"]) == 1628
-    # Baseline IDs survive; the approved three-source group is one profile.
-    assert len(core["all_time"]) == 2125
+    # The public view carries 2,125 canonical identities plus three separate report-only rows.
+    assert len(core["all_time"]) == 2128
+    assert core["all_time"].canonical_player_id.notna().sum() == 2125
+    assert core["all_time"].report_record_id.notna().sum() == 3
 
 
 def test_missing_prepared_output_falls_back(tmp_path, monkeypatch) -> None:
@@ -58,10 +60,15 @@ def test_policy_version_mismatch_rejects_prepared_output() -> None:
     assert prepared.load_prepared_hall_of_fame_core(CLUB_ID, f"{DATA_VERSION}-stale") is None
 
 
-def test_prepared_canonical_player_ids_are_unique() -> None:
+def test_prepared_canonical_player_ids_and_report_only_ids_are_separately_unique() -> None:
     frame = load_core()["all_time"]
+    canonical = frame["canonical_player_id"].dropna()
+    report_ids = frame["report_record_id"].dropna()
 
-    assert not frame["canonical_player_id"].duplicated().any()
+    assert canonical.is_unique
+    assert len(canonical) == canonical.nunique() == 2125
+    assert len(report_ids) == report_ids.nunique() == 3
+    assert frame.loc[report_ids.index, "canonical_player_id"].isna().all()
 
 
 def test_prepared_all_time_has_major_hof_metrics() -> None:
