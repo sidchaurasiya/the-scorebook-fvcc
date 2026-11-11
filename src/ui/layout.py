@@ -8598,7 +8598,7 @@ def render_hat_trick_records(team_group_slug: str | None = None) -> None:
     club_id = get_active_club_id()
     from src.data.grdcc_player_privacy import privacy_snapshot_signature
 
-    if club_id not in {"glen-waverley-hawks", "georges-river-district"}:
+    if club_id != "glen-waverley-hawks":
         st.caption("Hat-tricks identified from available verified ball-by-ball records.")
     records = load_hat_trick_records(
         club_id,

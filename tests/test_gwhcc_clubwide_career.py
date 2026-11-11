@@ -132,9 +132,9 @@ def test_individual_cutoffs_and_current_season_contributions_survive():
     assert source.loc["Brett Powell", "batting_anchor_through_season"] == "Summer 2020/21"
     assert source.loc["Brett Powell", "bowling_anchor_through_season"] == "Summer 2025/26"
     actual = docs.apply_record_overrides(core_frame(), write_decisions=False).set_index("Player")
-    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 66
+    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 73
     assert actual.loc["Nathan Bungey", "Runs"] == 3330 + 50
-    assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 3
+    assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 5
 
 
 def test_partial_bundle_notes_do_not_claim_unsupported_history():
