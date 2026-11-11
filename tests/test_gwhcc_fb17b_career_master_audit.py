@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 
 import pandas as pd
 
@@ -10,6 +11,7 @@ DATA = ROOT / "clubs" / "glen-waverley-hawks" / "data"
 VALIDATION = DATA / "processed" / "validation"
 HOF = DATA / "processed" / "hall_of_fame"
 SOURCE = DATA / "source" / "document_overrides"
+SNAPSHOT = json.loads((ROOT / "tests/fixtures/gwhcc_refresh_2026_11_10.json").read_text())
 
 
 def identity_audit() -> pd.DataFrame:
@@ -80,12 +82,14 @@ def test_historical_only_rows_are_not_created_as_production_identities() -> None
 
 def test_simulation_preserves_historical_baseline_after_verified_refresh() -> None:
     career = pd.read_csv(HOF / "prepared_career_all_time.csv", low_memory=False)
-    assert len(career) == 1291
+    assert len(career) == 1295
     assert career["Debut Season"].ne("Summer 2026/27").sum() == 1228
     assert len(pd.read_csv(SOURCE / "gwhcc_historical_centuries.csv")) == 65
     assert len(pd.read_csv(HOF / "premiership_wins.csv")) + len(pd.read_csv(SOURCE / "gwhcc_historical_premiership_events.csv")) == 53
     assert len(pd.read_csv(HOF / "partnership_records.csv")) == 10
     assert len(pd.read_csv(HOF / "hat_tricks.csv")) == 1
     fastest = pd.read_csv(HOF / "fastest_batting_milestones.csv")
-    assert len(fastest) == 810
-    assert fastest["season"].ne("Summer 2026/27").sum() == 780
+    expected_fastest = SNAPSHOT["fastest_batting_milestones"]
+    assert len(fastest) == expected_fastest["total"] == 831
+    assert fastest["season"].eq("Summer 2026/27").sum() == expected_fastest["current"] == 51
+    assert fastest["season"].ne("Summer 2026/27").sum() == expected_fastest["historical"] == 780
