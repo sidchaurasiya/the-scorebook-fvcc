@@ -10852,8 +10852,7 @@ def hof_detail_display_value(column: str, value: object, row: pd.Series | None =
         numeric = pd.to_numeric(value, errors="coerce")
         if pd.isna(numeric):
             return ""
-        formatted = f"{float(numeric):.1f}"
-        return formatted if get_active_club_id() == "glen-waverley-hawks" else f"{formatted}%"
+        return f"{float(numeric):.1f}"
     if column in {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "Econ"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
@@ -10982,12 +10981,8 @@ def hall_of_fame_column_config(columns: list[str]) -> dict[str, object]:
         "Run Outs",
         "Dismissals",
     }
-    decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Econ", "Bowl SR", "Win %"}
+    decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Econ", "Bowl SR", "Win %", "Bat SR"}
     percent_columns = {"Win %"}
-    if get_active_club_id() != "glen-waverley-hawks":
-        percent_columns.add("Bat SR")
-    else:
-        decimal_columns.add("Bat SR")
     width_overrides = {
         "Seasons": 78,
         "Seasons Played": 95,
@@ -14533,7 +14528,9 @@ def get_player_peer_comparison(
         if get_active_club_id() == "glen-waverley-hawks"
         else "Strike Rate"
     )
-    strike_rate_format = "rate" if get_active_club_id() == "glen-waverley-hawks" else "percent"
+    # Strike rate is runs per 100 balls for every club. Only the Hawks label
+    # needs to call out its ball-by-ball provenance.
+    strike_rate_format = "rate"
     batting_metrics = build_peer_metric_rows(
         batting_rows,
         player_id,
@@ -15930,7 +15927,10 @@ def profile_performance_display_value(column: str, value: object, label_column: 
         return matches_text
     if column == "HS":
         return format_high_score_text(value)
-    if column in {"Strike Rate", "Extras %"}:
+    if column in {"Strike Rate", "Bat SR", "Bat SR (ball-by-ball)", "Strike Rate (ball-by-ball)"}:
+        numeric = pd.to_numeric(value, errors="coerce")
+        return "" if pd.isna(numeric) else f"{float(numeric):.1f}"
+    if column == "Extras %":
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Avg", "SR", "Eco"}:
@@ -16156,11 +16156,10 @@ def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[
         "Dismissals",
     }
     percent_columns = {"Extras %"}
-    decimal_columns = {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "SR", "Econ", "Eco"}
-    if get_active_club_id() == "glen-waverley-hawks":
-        decimal_columns.update({"Bat SR (ball-by-ball)", "Strike Rate (ball-by-ball)"})
-    else:
-        percent_columns.update({"Bat SR", "Bat SR (ball-by-ball)", "Strike Rate", "Strike Rate (ball-by-ball)"})
+    decimal_columns = {
+        "Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "SR", "Econ", "Eco",
+        "Bat SR", "Bat SR (ball-by-ball)", "Strike Rate", "Strike Rate (ball-by-ball)",
+    }
     for column in columns:
         if column == pinned_column:
             if column == "Season":
@@ -16612,8 +16611,7 @@ def format_bat_sr_display(value: object) -> str:
     number = pd.to_numeric(value, errors="coerce")
     if pd.isna(number):
         return ""
-    formatted = f"{float(number):.1f}"
-    return formatted if get_active_club_id() == "glen-waverley-hawks" else f"{formatted}%"
+    return f"{float(number):.1f}"
 
 
 def render_player_milestones(career: pd.Series) -> None:

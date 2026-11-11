@@ -141,7 +141,7 @@ def test_player_breakdown_keeps_grdcc_missingness_and_hawks_delivery_provenance(
     monkeypatch.setattr(layout, "get_active_club_id", lambda: GRDCC)
     grdcc_metrics = layout.player_profile_batting_career_metrics(career, "2")
     layout.render_player_breakdown(career)
-    assert any(label == "Strike Rate" and float(value.removesuffix("%")) == 150.0 for label, value in grdcc_metrics)
+    assert any(label == "Strike Rate" and value == "150.0" for label, value in grdcc_metrics)
     assert "Recorded wickets" in " ".join(rendered)
     assert "Recorded wickets</span><strong>—" in " ".join(rendered)
     assert not captions
@@ -152,7 +152,7 @@ def test_player_breakdown_keeps_grdcc_missingness_and_hawks_delivery_provenance(
     monkeypatch.setattr(gwhcc_historical_career, "has_dated_career_scope", lambda career, metric_scope: False)
     hawks_metrics = layout.player_profile_batting_career_metrics(career, "2")
     layout.render_player_breakdown(career)
-    assert any(label == "Strike Rate (ball-by-ball)" and float(value.removesuffix("%")) == 150.0 for label, value in hawks_metrics)
+    assert any(label == "Strike Rate (ball-by-ball)" and value == "150.0" for label, value in hawks_metrics)
     assert layout.GWHCC_BBB_RATE_NOTE in captions
     hawks_markup = " ".join(rendered)
     assert "Recorded wickets" not in hawks_markup
@@ -163,8 +163,65 @@ def test_player_breakdown_keeps_grdcc_missingness_and_hawks_delivery_provenance(
     monkeypatch.setattr(layout, "get_active_club_id", lambda: FVCC)
     fvcc_metrics = layout.player_profile_batting_career_metrics(career, "2")
     layout.render_player_breakdown(career)
-    assert any(label == "Strike Rate" and float(value.removesuffix("%")) == 150.0 for label, value in fvcc_metrics)
+    assert any(label == "Strike Rate" and value == "150.0" for label, value in fvcc_metrics)
     assert not captions
     fvcc_markup = " ".join(rendered)
     assert "Recorded wickets" not in fvcc_markup
     assert "Wickets</span>" in fvcc_markup
+
+
+def test_peer_batting_strike_rate_uses_run_per_100_ball_units_for_each_club(monkeypatch):
+    batting_rows = pd.DataFrame([
+        {
+            "canonical_player_id": "player-1",
+            "runs": 1.0,
+            "outs": 1.0,
+            "bat_avg": 1.0,
+            "bat_sr": 20.0,
+            "bbb_runs": 1.0,
+            "bbb_balls": 5.0,
+            "bbb_dismissals": 1.0,
+            "balls_per_dismissal": 5.0,
+            "boundaries": 0.0,
+            "innings": 1.0,
+            "boundary_rate": 0.0,
+            "ducks": 0.0,
+        },
+        {
+            "canonical_player_id": "player-2",
+            "runs": 559.0,
+            "outs": 10.0,
+            "bat_avg": 55.9,
+            "bat_sr": 55.9,
+            "bbb_runs": 559.0,
+            "bbb_balls": 1000.0,
+            "bbb_dismissals": 10.0,
+            "balls_per_dismissal": 100.0,
+            "boundaries": 10.0,
+            "innings": 10.0,
+            "boundary_rate": 1.0,
+            "ducks": 0.0,
+        },
+    ])
+    monkeypatch.setattr(layout, "load_player_peer_sources", lambda *args: (pd.DataFrame(), pd.DataFrame()))
+    monkeypatch.setattr(layout, "filter_peer_scope", lambda frame, *args: frame.copy())
+    monkeypatch.setattr(layout, "aggregate_peer_batting", lambda *args: batting_rows.copy())
+    monkeypatch.setattr(layout, "add_bbb_peer_batting_rates", lambda frame, *args: frame.copy())
+    monkeypatch.setattr(layout, "aggregate_peer_bowling", lambda *args: pd.DataFrame())
+    monkeypatch.setattr(layout, "export_player_vs_peers_debug", lambda *args: None)
+
+    for club in (GRDCC, HAWKS, FVCC):
+        monkeypatch.setattr(layout, "get_active_club_id", lambda club=club: club)
+        comparison = layout.get_player_peer_comparison.__wrapped__(
+            "player-1", ("Summer 2026/27",), (), 0.0, 0.0, club
+        )
+        expected_label = "Strike Rate (ball-by-ball)" if club == HAWKS else "Strike Rate"
+        strike_rate = next(row for row in comparison["batting"] if row["label"] == expected_label)
+
+        assert strike_rate["value"] == 20.0
+        assert strike_rate["format"] == "rate"
+        assert layout.format_peer_metric_value(strike_rate["value"], strike_rate["format"]) == "20.0"
+        assert layout.peer_metric_note(strike_rate["label"]) == "Verified ball-by-ball only"
+        assert layout.format_bat_sr_display(20.0) == "20.0"
+        assert layout.hof_detail_display_value("Bat SR", 20.0) == "20.0"
+        assert layout.profile_performance_display_value("Strike Rate", 20.0, "Season") == "20.0"
