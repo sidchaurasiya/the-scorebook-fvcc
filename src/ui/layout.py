@@ -14978,6 +14978,13 @@ def comparison_bar_html(average_marker: str = "", player_marker: str = "", fill_
     return f'<div class="peer-range">{fill_html}{average_marker}{player_marker}</div>'
 
 
+def profile_chart_widget_key(prefix: str, data: pd.DataFrame) -> str:
+    snapshot = hashlib.sha256(
+        data.to_csv(index=True, na_rep="<NA>", lineterminator="\n").encode("utf-8")
+    ).hexdigest()[:16]
+    return f"scorebook_{get_active_club_id()}_{prefix}_{snapshot}"
+
+
 def render_player_trends(season_table: pd.DataFrame) -> None:
     if season_table.empty:
         return
@@ -15001,7 +15008,7 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                     chart_height = min(340, max(150, 30 * season_count))
                     max_value = float(values[metric].max()) if not values.empty else 0.0
                     base = (
-                        alt.Chart(values)
+                        alt.Chart(alt.Data(values=values.to_dict(orient="records")))
                         .encode(
                             y=alt.Y(
                                 "Season:N",
@@ -15028,7 +15035,11 @@ def render_player_trends(season_table: pd.DataFrame) -> None:
                             fontWeight=800,
                         ).encode(text=alt.Text(f"{metric}:Q", format=",.0f"))
                     ).properties(height=chart_height, padding={"left": 4, "right": 10, "top": 8, "bottom": 4}).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
-                    st.altair_chart(chart, use_container_width=True)
+                    st.altair_chart(
+                        chart,
+                        use_container_width=True,
+                        key=profile_chart_widget_key(f"profile_trends_{metric.lower()}", values),
+                    )
 
 
 def render_player_best_season_cards(chart_data: pd.DataFrame) -> None:
@@ -15138,7 +15149,7 @@ def render_player_average_trends(chart_data: pd.DataFrame) -> None:
 def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], title: str, color: str, key: str) -> None:
     with st.container(key=key):
         st.markdown(f'<div class="profile-chart-title">{html.escape(title)}</div>', unsafe_allow_html=True)
-        base = alt.Chart(data).encode(
+        base = alt.Chart(alt.Data(values=data.to_dict(orient="records"))).encode(
             x=alt.X("Season:N", sort=season_order, axis=alt.Axis(labelAngle=-35, labelColor="#737998", title=None)),
             y=alt.Y("Season Average:Q", axis=alt.Axis(grid=False, labelColor="#737998", title=None)),
             tooltip=[
@@ -15151,7 +15162,7 @@ def render_filled_average_chart(data: pd.DataFrame, season_order: list[str], tit
             + base.mark_line(color=color, strokeWidth=3, interpolate="monotone")
             + base.mark_point(color=color, filled=True, size=58)
         ).properties(height=235).configure(background="#FFFFFF").configure_view(fill="#FFFFFF", stroke=None)
-        st.altair_chart(chart, use_container_width=True)
+        st.altair_chart(chart, use_container_width=True, key=profile_chart_widget_key(key, data))
 
 
 def render_player_performance_breakdown(profile_view: dict[str, pd.DataFrame]) -> None:
