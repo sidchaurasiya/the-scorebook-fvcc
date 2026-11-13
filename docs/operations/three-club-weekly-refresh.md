@@ -105,9 +105,9 @@ rtk /Users/preetkaur/CodexLocal/.venv-app/bin/python scripts/refresh_data.py --c
 rtk /Users/preetkaur/CodexLocal/.venv-app/bin/python scripts/refresh_club_outputs.py --club fvcc --dry-run
 ~~~
 
-**scripts/refresh_data.py --club <id>** performs an external PlayCricket aggregate refresh and writes to the selected club's processed tree by default. It also uses shared raw/cache roots. It is not a frozen-source candidate builder. Do not run it in the shared accepted checkout; first create a protected candidate and inventory all changed paths. The force-all flag is not a weekly option. The with-current-match-centre flag invokes an optional current-scope refresh; use it only after season/team IDs, cutoff, source bundle, and output scope have been verified for that club.
+**scripts/refresh_data.py --club ID** performs an external PlayCricket aggregate refresh and writes to the selected club's processed tree by default. It also uses shared raw/cache roots. It is not a frozen-source candidate builder. Do not run it in the shared accepted checkout; first create a protected candidate and inventory all changed paths. The force-all flag is not a weekly option. The with-current-match-centre flag invokes an optional current-scope refresh; use it only after season/team IDs, cutoff, source bundle, and output scope have been verified for that club.
 
-**scripts/refresh_club_outputs.py --club <id>** rebuilds deploy-safe summaries from existing local inputs and makes no external fetch. Use it only in the isolated candidate after the input tables are reconciled. Its dry-run prints the current sequence, including the match-centre commands and output roots.
+**scripts/refresh_club_outputs.py --club ID** rebuilds deploy-safe summaries from existing local inputs and makes no external fetch. Use it only in the isolated candidate after the input tables are reconciled. Its dry-run prints the current sequence, including the match-centre commands and output roots.
 
 Two offline candidate builders are available:
 
@@ -169,7 +169,7 @@ Also verify:
 
 Use installed Chrome through the supported Playwright runner in the restricted checkpoint. The integrated acceptance runner and screenshots are stored at:
 
-**/Users/preetkaur/Documents/Codex/checkpoints/three-club-integration-2026-11-11/restricted/browser_acceptance_runner_41c565b.py**
+The candidate-specific browser runner, machine-readable receipt, and screenshots are stored in the restricted checkpoint under names derived from the exact tested SHA. Keep older acceptance evidence; do not replace it with screenshots from a different candidate.
 
 Capture four active pages (Hall of Fame, Season Overview, Milestones, Player Profile) for all three clubs at 1440×1000 and 390×844. Test both cold and warm navigation, search, exact profile links, representative current and historical records, privacy-safe masked rows, valid scorecard links, no horizontal overflow, and no console/page exceptions. Confirm the served data version and exact selected club before saving each screenshot. Save the machine-readable result, hashes, and screenshots under a new restricted directory named for the accepted candidate SHA; do not reuse candidate-specific screenshots as evidence for a different application/data build.
 
