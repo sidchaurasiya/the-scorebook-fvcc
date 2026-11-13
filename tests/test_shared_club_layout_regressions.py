@@ -225,3 +225,35 @@ def test_peer_batting_strike_rate_uses_run_per_100_ball_units_for_each_club(monk
         assert layout.format_bat_sr_display(20.0) == "20.0"
         assert layout.hof_detail_display_value("Bat SR", 20.0) == "20.0"
         assert layout.profile_performance_display_value("Strike Rate", 20.0, "Season") == "20.0"
+
+
+def test_player_trend_chart_keys_change_with_profile_data_for_each_club(monkeypatch):
+    chart_keys = []
+    chart_specs = []
+    monkeypatch.setattr(layout, "render_section_heading", lambda label: None)
+    monkeypatch.setattr(layout.st, "columns", lambda count: [_Column() for _ in range(count)])
+    monkeypatch.setattr(layout.st, "container", lambda **kwargs: _Column())
+    monkeypatch.setattr(layout.st, "markdown", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        layout.st,
+        "altair_chart",
+        lambda chart, **kwargs: (chart_keys.append(kwargs["key"]), chart_specs.append(chart.to_dict())),
+    )
+
+    for club in (GRDCC, HAWKS, FVCC):
+        monkeypatch.setattr(layout, "get_active_club_id", lambda club=club: club)
+        first = pd.DataFrame({"Season": ["Summer 2024/25"], "Runs": [10], "Wickets": [1]})
+        second = pd.DataFrame({"Season": ["Summer 2024/25"], "Runs": [20], "Wickets": [2]})
+        layout.render_player_trends(first)
+        layout.render_player_trends(second)
+        averages_first = pd.DataFrame({"Season": ["Summer 2024/25"], "Season Average": [10.0]})
+        averages_second = pd.DataFrame({"Season": ["Summer 2024/25"], "Season Average": [20.0]})
+        layout.render_filled_average_chart(averages_first, ["Summer 2024/25"], "Average", "#123456", "profile_average")
+        layout.render_filled_average_chart(averages_second, ["Summer 2024/25"], "Average", "#123456", "profile_average")
+
+    assert len(chart_keys) == 18
+    for offset in (0, 6, 12):
+        assert chart_keys[offset] != chart_keys[offset + 2]
+        assert chart_keys[offset + 1] != chart_keys[offset + 3]
+        assert chart_keys[offset + 4] != chart_keys[offset + 5]
+    assert all("datasets" not in spec for spec in chart_specs)
