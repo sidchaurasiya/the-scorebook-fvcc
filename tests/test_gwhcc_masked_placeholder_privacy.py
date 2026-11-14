@@ -120,9 +120,13 @@ def test_processed_hawks_exports_do_not_retain_reused_participant_ids() -> None:
     assert pd.to_numeric(private_links["runs_scored"], errors="coerce").notna().any()
 
 
-def test_hawks_identity_revision_invalidates_metadata_cache_signature() -> None:
+def test_hawks_identity_revision_invalidates_metadata_cache_signature(monkeypatch) -> None:
     metadata = json.loads((ROOT / "clubs" / HAWKS_CLUB_ID / "data" / "metadata.json").read_text())
     assert metadata["public_identity_revision"] == "hawks-reused-masked-source-identifiers-v1"
+    monkeypatch.setenv("CLUB_ID", HAWKS_CLUB_ID)
+    from src.ui import layout
+
+    assert layout.metadata_mtime() == (ROOT / "clubs" / HAWKS_CLUB_ID / "data" / "metadata.json").stat().st_mtime
 
 
 def test_processed_tree_redaction_is_idempotent() -> None:
