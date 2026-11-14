@@ -9066,7 +9066,23 @@ def load_scorecard_record_rows(_signature: tuple[object, ...]) -> dict[str, pd.D
         if frame.empty:
             output[key] = frame
             continue
-        frame = add_missing_canonical_player_ids(frame)
+        if club_id == "glen-waverley-hawks":
+            from src.data.gwhcc_masked_privacy import mask_hawks_participant_rows
+
+            frame, _ = mask_hawks_participant_rows(
+                frame,
+                id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+            )
+        frame = add_missing_canonical_player_ids(frame, club_id=club_id)
+        if club_id == "glen-waverley-hawks":
+            from src.data.gwhcc_masked_privacy import ID_COLUMNS, is_generic_player_label
+
+            name_column = "canonical_player_name" if "canonical_player_name" in frame else "player_name"
+            if name_column in frame:
+                anonymous = frame[name_column].map(is_generic_player_label)
+                for column in ID_COLUMNS:
+                    if column in frame:
+                        frame.loc[anonymous, column] = ""
         if club_id == "georges-river-district":
             frame = filter_public_player_rows(frame, club_id=club_id)
         if not context.empty and "match_id" in frame:
