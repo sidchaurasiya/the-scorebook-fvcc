@@ -91,6 +91,14 @@ def main(argv: list[str] | None = None) -> int:
         print("No match-centre processed scopes found. No Player Profile insight exports built.")
         return 1
 
+    from src.data.gwhcc_masked_privacy import (
+        exclude_hawks_masked_source_rows,
+        sanitize_hawks_source_frames,
+    )
+
+    frames = sanitize_hawks_source_frames(frames, club_id=club_id)
+    frames = exclude_hawks_masked_source_rows(frames)
+
     batting = prepare_batting(frames, club_id=club_id)
     bowling = prepare_bowling(frames, club_id=club_id)
     fielding = prepare_fielding(frames, club_id=club_id)

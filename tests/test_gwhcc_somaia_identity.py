@@ -3,6 +3,7 @@ from __future__ import annotations
 import io
 import json
 import subprocess
+from collections import Counter
 from pathlib import Path
 
 import pandas as pd
@@ -10,6 +11,7 @@ import pytest
 
 from scripts.reconcile_gwhcc_somaia import CANONICAL, SOURCE_KEYS, SOURCE_NAMES, verify_disjoint_source_evidence
 from scripts.build_gwhcc_weekly_candidate import approved_redirects, canonicalise_summary, summary_specs
+from src.data.gwhcc_masked_privacy import mask_hawks_participant_rows
 from src.data.gwhcc_identity import NAME_VARIANT_APPROVAL, canonical_query_name, player_search_label
 from src.utils.player_identity import apply_player_identity_mapping, resolve_approved_disjoint_player_id, public_player_mask
 
@@ -28,6 +30,13 @@ def before(path, revision=BASELINE):
 
 def read(relative):
     return pd.read_csv(DATA / "processed" / relative, low_memory=False)
+
+
+def row_multiset(frame):
+    return Counter(
+        json.dumps(row, sort_keys=True, ensure_ascii=False, default=str, allow_nan=True)
+        for row in frame.fillna("").to_dict("records")
+    )
 
 
 @pytest.fixture
@@ -98,7 +107,16 @@ def test_historical_source_contributions_and_approved_identity_survive_refresh(k
     old_cards, new_cards = before(cards, REFRESH_BASELINE), pd.read_csv(cards, low_memory=False)
     old_history = old_cards[old_cards.season.ne(season)].sort_values(["match_id", "player_id"], kind="stable")
     new_history = new_cards[new_cards.season.ne(season)].sort_values(["match_id", "player_id"], kind="stable")
-    pd.testing.assert_frame_equal(old_history.reset_index(drop=True), new_history.reset_index(drop=True), check_dtype=False)
+    # Reused masked source IDs must be generic in public scorecards; compare
+    # against the same row-level redaction while retaining every numeric cell.
+    expected_history, masked_count = mask_hawks_participant_rows(
+        old_history,
+        id_columns=["player_id"],
+        name_columns=["player_name"],
+    )
+    assert masked_count == {"batting": 41, "bowling": 26, "fielding": 7}[kind]
+    new_history = new_cards[new_cards.season.ne(season)]
+    assert row_multiset(expected_history) == row_multiset(new_history)
 
 
 def test_source_overlap_is_quarantined_and_multi_innings_evidence_is_retained():
@@ -180,9 +198,39 @@ def test_fastest_evidence_keeps_source_identity_and_all_delivery_metrics():
     path = DATA / "processed/hall_of_fame/fastest_batting_milestones.csv"
     old, new = before(path, REFRESH_BASELINE), pd.read_csv(path)
     season = "Summer 2026/27"
-    old_history = old[old.season.ne(season)].sort_values(["player_id", "match_id", "innings_id"], kind="stable")
-    new_history = new[new.season.ne(season)].sort_values(["player_id", "match_id", "innings_id"], kind="stable")
-    pd.testing.assert_frame_equal(old_history.reset_index(drop=True), new_history.reset_index(drop=True), check_dtype=False)
+    old_history = old[old.season.ne(season)].copy()
+    # Anonymous fastest records retain delivery metrics with only reused
+    # participant IDs and their unverified public labels removed.
+    expected_history, masked_count = mask_hawks_participant_rows(
+        old_history,
+        id_columns=["player_id", "participant_id", "canonical_player_id"],
+    )
+    assert masked_count == 3
+    new_history = new[new.season.ne(season)].copy()
+    identity_columns = {
+        "player_id", "participant_id", "canonical_player_id", "player_key",
+        "player_name", "canonical_player_name", "display_player_name",
+    }
+
+    def non_identity_rows(frame):
+        columns = [column for column in frame.columns if column not in identity_columns]
+        return sorted(
+            json.dumps(
+                {column: row.get(column) for column in columns},
+                sort_keys=True,
+                ensure_ascii=False,
+                default=str,
+                allow_nan=True,
+            )
+            for row in frame.to_dict("records")
+        )
+
+    assert len(expected_history) == len(new_history)
+    assert non_identity_rows(expected_history) == non_identity_rows(new_history)
+    private_fastest = new_history[new_history["player_name"].eq("Private player")]
+    assert len(private_fastest) == 3
+    assert private_fastest["player_id"].fillna("").eq("").all()
+    assert private_fastest["participant_id"].fillna("").eq("").all()
     affected = old.player_id.isin(SOURCE_NAMES)
     assert affected.sum() == 19
     old_keys = set(zip(old.loc[affected, "player_id"], old.loc[affected, "match_id"], old.loc[affected, "innings_id"]))

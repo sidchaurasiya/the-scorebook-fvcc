@@ -2,11 +2,16 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 from pathlib import Path
 
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from src.data.gwhcc_masked_privacy import HAWKS_CLUB_ID, mask_hawks_participant_rows
 
 MATCH_COLUMNS = [
     "season",
@@ -141,7 +146,12 @@ def with_match_season(df: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
     return df.merge(matches[["match_id", "season"]], on="match_id", how="left")
 
 
-def build_batting_rows(batting: pd.DataFrame, matches: pd.DataFrame, club_team_ids: set[str]) -> pd.DataFrame:
+def build_batting_rows(
+    batting: pd.DataFrame,
+    matches: pd.DataFrame,
+    club_team_ids: set[str],
+    club_id: str | None = None,
+) -> pd.DataFrame:
     rows = batting[batting["team_id"].astype(str).isin(club_team_ids)].copy()
     rows = with_match_season(rows, matches)
     out = pd.DataFrame(
@@ -158,10 +168,18 @@ def build_batting_rows(batting: pd.DataFrame, matches: pd.DataFrame, club_team_i
             "dismissal": rows["dismissal_text"],
         }
     )
-    return out[BATTING_COLUMNS]
+    output = out[BATTING_COLUMNS]
+    if club_id == HAWKS_CLUB_ID:
+        output, _ = mask_hawks_participant_rows(output, id_columns=["player_id"], name_columns=["player_name"])
+    return output
 
 
-def build_bowling_rows(bowling: pd.DataFrame, matches: pd.DataFrame, club_team_ids: set[str]) -> pd.DataFrame:
+def build_bowling_rows(
+    bowling: pd.DataFrame,
+    matches: pd.DataFrame,
+    club_team_ids: set[str],
+    club_id: str | None = None,
+) -> pd.DataFrame:
     rows = bowling[bowling["team_id"].astype(str).isin(club_team_ids)].copy()
     rows = with_match_season(rows, matches)
     out = pd.DataFrame(
@@ -179,10 +197,18 @@ def build_bowling_rows(bowling: pd.DataFrame, matches: pd.DataFrame, club_team_i
             "economy": rows["economy"],
         }
     )
-    return out[BOWLING_COLUMNS]
+    output = out[BOWLING_COLUMNS]
+    if club_id == HAWKS_CLUB_ID:
+        output, _ = mask_hawks_participant_rows(output, id_columns=["player_id"], name_columns=["player_name"])
+    return output
 
 
-def build_fielding_rows(fielding: pd.DataFrame, matches: pd.DataFrame, club_team_ids: set[str]) -> pd.DataFrame:
+def build_fielding_rows(
+    fielding: pd.DataFrame,
+    matches: pd.DataFrame,
+    club_team_ids: set[str],
+    club_id: str | None = None,
+) -> pd.DataFrame:
     rows = fielding[fielding["team_id"].astype(str).isin(club_team_ids)].copy()
     rows = with_match_season(rows, matches)
     run_outs = rows.get("run_outs", 0).fillna(0) + rows.get("assisted_run_outs", 0).fillna(0)
@@ -197,7 +223,10 @@ def build_fielding_rows(fielding: pd.DataFrame, matches: pd.DataFrame, club_team
             "run_outs": run_outs,
         }
     )
-    return out[FIELDING_COLUMNS]
+    output = out[FIELDING_COLUMNS]
+    if club_id == HAWKS_CLUB_ID:
+        output, _ = mask_hawks_participant_rows(output, id_columns=["player_id"], name_columns=["player_name"])
+    return output
 
 
 def main() -> int:
@@ -219,9 +248,9 @@ def main() -> int:
 
     outputs = {
         "all_seasons_matches.csv": build_match_rows(matches, innings, teams),
-        "all_seasons_scorecard_batting.csv": build_batting_rows(batting, matches, club_team_ids),
-        "all_seasons_scorecard_bowling.csv": build_bowling_rows(bowling, matches, club_team_ids),
-        "all_seasons_scorecard_fielding.csv": build_fielding_rows(fielding, matches, club_team_ids),
+        "all_seasons_scorecard_batting.csv": build_batting_rows(batting, matches, club_team_ids, club_id),
+        "all_seasons_scorecard_bowling.csv": build_bowling_rows(bowling, matches, club_team_ids, club_id),
+        "all_seasons_scorecard_fielding.csv": build_fielding_rows(fielding, matches, club_team_ids, club_id),
     }
 
     processed.mkdir(parents=True, exist_ok=True)

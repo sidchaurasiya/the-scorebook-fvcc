@@ -79,6 +79,14 @@ def main(argv: list[str] | None = None) -> int:
     for label, command in commands:
         print(f"Running {label}")
         subprocess.run(command, cwd=ROOT, check=True)
+    if club_id == "glen-waverley-hawks":
+        from src.data.gwhcc_masked_privacy import sanitize_hawks_processed_tree
+
+        redacted = sanitize_hawks_processed_tree(
+            ROOT / "clubs" / club_id / "data" / "processed"
+        )
+        if redacted:
+            print(f"Applied Hawks masked-participant privacy handling to {len(redacted)} processed exports.")
     print("Club deploy-safe outputs rebuilt.")
     return 0
 
