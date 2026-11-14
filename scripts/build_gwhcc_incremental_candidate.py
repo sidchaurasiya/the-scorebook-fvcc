@@ -221,9 +221,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     from scripts import build_club_app_facing_scorecards as scorecards
     scorecard_outputs = {
         'all_seasons_matches.csv': scorecards.build_match_rows(frames['matches'], frames['innings'], teams),
-        'all_seasons_scorecard_batting.csv': scorecards.build_batting_rows(preserve_compact_dismissal_type(frames['batting']), frames['matches'], team_ids),
-        'all_seasons_scorecard_bowling.csv': scorecards.build_bowling_rows(frames['bowling'], frames['matches'], team_ids),
-        'all_seasons_scorecard_fielding.csv': scorecards.build_fielding_rows(frames['fielding'], frames['matches'], team_ids),
+        'all_seasons_scorecard_batting.csv': scorecards.build_batting_rows(preserve_compact_dismissal_type(frames['batting']), frames['matches'], team_ids, CLUB),
+        'all_seasons_scorecard_bowling.csv': scorecards.build_bowling_rows(frames['bowling'], frames['matches'], team_ids, CLUB),
+        'all_seasons_scorecard_fielding.csv': scorecards.build_fielding_rows(frames['fielding'], frames['matches'], team_ids, CLUB),
     }
     for filename, new in scorecard_outputs.items():
         old = pd.read_csv(processed / filename, low_memory=False)
@@ -245,6 +245,32 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     bowling_frames = frames.copy()
     bowling_frames['balls'], bowling_evidence = reconciled_delivery_innings(frames['innings'], frames['balls'])
     bowling_balls = profile.prepare_ball_rows(bowling_frames, club_id=CLUB)
+    from src.data.gwhcc_masked_privacy import (
+        mask_hawks_participant_rows,
+        mask_scorecard_record_links,
+        sanitize_hawks_processed_tree,
+    )
+
+    # Keep source-detail rows for unlinked scorecard records, but do not
+    # attribute reused masked IDs to a named profile or delivery-derived rate.
+    link_batting, _ = mask_hawks_participant_rows(
+        batting,
+        id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+    )
+    link_bowling, _ = mask_hawks_participant_rows(
+        bowling,
+        id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+    )
+    balls, _ = mask_hawks_participant_rows(
+        balls,
+        id_columns=["striker_participant_id", "bowler_participant_id"],
+        name_columns=[],
+    )
+    bowling_balls, _ = mask_hawks_participant_rows(
+        bowling_balls,
+        id_columns=["striker_participant_id", "bowler_participant_id"],
+        name_columns=[],
+    )
     bowling_evidence.to_csv(bundle/'current_bowling_delivery_evidence.csv', index=False)
     batting, bowling, fielding = [filter_public_player_rows(frame) for frame in [batting,bowling,fielding]]
     sums = ['innings','runs','outs','thirties','fifties','hundreds','ducks','fours','sixes',
@@ -350,7 +376,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     summary('hall_of_fame/player_win_rates.csv',win,['canonical_player_id'],['matches_with_result','wins','losses','raw_wins'],{'win_pct':('wins','matches_with_result',100)})
     path = processed / 'hall_of_fame/scorecard_record_links.csv'
     old = pd.read_csv(path,dtype=str)
-    pd.concat([old,hof.build_scorecard_record_links(batting,bowling)],ignore_index=True).to_csv(path,index=False)
+    new_links = hof.build_scorecard_record_links(link_batting, link_bowling)
+    new_links, _ = mask_scorecard_record_links(new_links, set())
+    pd.concat([old,new_links],ignore_index=True).to_csv(path,index=False)
 
     from src.data.match_centre_milestones import build_batting_milestones
     fastest = build_batting_milestones(bundle, players_path=processed/'players.csv',aliases_path=aliases_path,
@@ -388,6 +416,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     if not new_hat.empty:
         append_disjoint(old,new_hat,['event_id']).to_csv(path,index=False)
     detected.audit.to_csv(bundle/'current_hat_trick_audit.csv',index=False)
+    # Reapply the club-only redaction to every public processed CSV after all
+    # deploy-safe summaries and validation artifacts have been written.
+    sanitize_hawks_processed_tree(processed)
     update_metadata(bundle, candidate, cutoff)
     return {'included_matches':len(included),'selected_appearances':len(participation),'captain_matches':len(captains),
             'new_fastest_rows':len(new_fastest),'new_hat_tricks':len(new_hat),'new_partnership_events':len(calculated.events),

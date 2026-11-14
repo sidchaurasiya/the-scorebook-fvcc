@@ -202,6 +202,15 @@ def test_no_source_season_snapshot_or_other_club_files_changed():
                       'scripts/build_gwhcc_weekly_candidate.py','docs/gwhcc_refresh_2026_10_31.md',
                       'src/data/gwhcc_incremental.py','scripts/build_hall_of_fame_detail_exports.py',
                       'scripts/build_player_profile_insight_exports.py','scripts/build_season_overview_detail_exports.py'}
+    # The separate privacy/runtime remediation adds only the Hawks masking
+    # helper and the tested interpreter-compatible dependency pins.
+    allowed_exact |= {
+        'requirements.txt',
+        'src/data/gwhcc_masked_privacy.py',
+        'scripts/build_club_app_facing_scorecards.py',
+        'scripts/refresh_club_outputs.py',
+        'scripts/sanitize_gwhcc_masked_placeholders.py',
+    }
     assert all(p.startswith(allowed) or p in allowed_exact for p in changed)
     assert not any(("/data/source/" in p or "source/excel" in p)
                    and p not in {"clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv",
