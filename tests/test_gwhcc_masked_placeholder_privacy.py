@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.data.gwhcc_masked_privacy import (
+    ID_COLUMNS,
     HAWKS_CLUB_ID,
     MASKED_HAWKS_PARTICIPANT_ID_SHA256,
     PRIVATE_PLAYER_LABEL,
@@ -18,6 +19,7 @@ from src.data.gwhcc_masked_privacy import (
     sanitize_hawks_source_frames,
     sanitize_hawks_processed_tree,
 )
+from src.ui import layout
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -131,3 +133,53 @@ def test_hawks_identity_revision_invalidates_metadata_cache_signature(monkeypatc
 
 def test_processed_tree_redaction_is_idempotent() -> None:
     assert sanitize_hawks_processed_tree(PROCESSED) == {}
+
+
+def test_hawks_match_centre_fallback_masks_placeholder_rows_without_dropping_scores(tmp_path, monkeypatch) -> None:
+    import src.data.gwhcc_masked_privacy as privacy
+
+    monkeypatch.setenv("CLUB_ID", HAWKS_CLUB_ID)
+    scope = tmp_path / "all_available"
+    scope.mkdir()
+    pd.DataFrame([{"match_id": "match-1", "season": "Summer 2026/27", "first_match_day": "2026-10-31"}]).to_csv(
+        scope / "all_matches.csv", index=False
+    )
+    for filename in ("all_scorecard_batting.csv", "all_scorecard_bowling.csv"):
+        pd.DataFrame(
+            [
+                {"match_id": "match-1", "innings_id": "innings-1", "participant_id": "masked-source-id",
+                 "player_id": "masked-source-id", "player_name": "Unverified source label", "runs_scored": 47,
+                 "balls_faced": 30, "wickets_taken": 0, "runs_conceded": 0},
+                {"match_id": "match-1", "innings_id": "innings-1", "participant_id": "public-source-id",
+                 "player_id": "public-source-id", "player_name": "Public Player", "runs_scored": 12,
+                 "balls_faced": 8, "wickets_taken": 0, "runs_conceded": 0},
+            ]
+        ).to_csv(scope / filename, index=False)
+    monkeypatch.setattr(layout, "MATCH_CENTRE_PROCESSED_ROOT", tmp_path)
+    monkeypatch.setattr(
+        layout,
+        "load_deploy_scorecard_record_rows",
+        lambda club_id=None: {"batting": pd.DataFrame(), "bowling": pd.DataFrame()},
+    )
+
+    def mask_test_token(frame, *, id_columns=None, name_columns=None, **_kwargs):
+        output = frame.copy()
+        mask = output["participant_id"].eq("masked-source-id")
+        for column in name_columns or ["player_name", "canonical_player_name", "display_player_name"]:
+            if column in output:
+                output.loc[mask, column] = PRIVATE_PLAYER_LABEL
+        for column in id_columns or []:
+            if column in output:
+                output.loc[mask, column] = ""
+        return output, int(mask.sum())
+
+    monkeypatch.setattr(privacy, "mask_hawks_participant_rows", mask_test_token)
+    rows = layout.load_scorecard_record_rows.__wrapped__(("fallback-test",))["batting"]
+    masked = rows[rows.player_name.eq(PRIVATE_PLAYER_LABEL)]
+    assert len(masked) == 1
+    assert int(masked.iloc[0].runs_scored) == 47
+    for column in ID_COLUMNS:
+        if column in masked:
+            assert masked[column].fillna("").eq("").all()
+    public = rows[rows.player_name.eq("Public Player")]
+    assert len(public) == 1 and public.iloc[0].canonical_player_id
