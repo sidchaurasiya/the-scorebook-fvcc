@@ -71,6 +71,12 @@ from src.data.gwhcc_document_overrides import (
     merge_premiership_overrides as merge_gwhcc_premiership_overrides,
 )
 from src.data.gwhcc_governance import display_grade_name as gwhcc_display_grade_name
+from src.data.grdcc_anonymous_scorecard_contributions import (
+    GRDCC_CLUB_ID,
+    PRIVATE_PLAYER_LABEL,
+    read_public_anonymous_fastest_milestones,
+    read_public_anonymous_scorecard_contributions,
+)
 from src.data.gwhcc_player_status import (
     governed_active_player_ids as apply_gwhcc_active_player_id_overrides,
     governed_active_player_names as apply_gwhcc_active_player_name_overrides,
@@ -182,6 +188,7 @@ SEASON_OVERVIEW_PROCESSED_ROOT = get_season_overview_path()
 SEASON_OVERVIEW_BBB_BATTING_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_batting_rates_by_scope.csv"
 SEASON_OVERVIEW_BBB_BOWLING_DOT_RATES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "bbb_bowling_dot_rates_by_scope.csv"
 SEASON_OVERVIEW_SCORECARD_BATTING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_batting_milestones_by_scope.csv"
+SEASON_OVERVIEW_ANONYMOUS_SCORECARD_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "anonymous_scorecard_contributions.csv"
 SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "scorecard_bowling_milestones_by_scope.csv"
 SEASON_OVERVIEW_SEASON_BY_ROUND_PATH = SEASON_OVERVIEW_PROCESSED_ROOT / "season_by_round_scorecards.csv"
 PLAYER_PROFILE_PROCESSED_ROOT = get_player_profile_path()
@@ -192,6 +199,7 @@ PLAYER_PROFILE_DISMISSAL_FINGERPRINT_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "dis
 PLAYER_PROFILE_RECENT_FORM_BATTING_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "recent_form_batting.csv"
 PLAYER_PROFILE_RECENT_FORM_BOWLING_PATH = PLAYER_PROFILE_PROCESSED_ROOT / "recent_form_bowling.csv"
 HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH = get_hall_of_fame_path("fastest_batting_milestones.csv")
+HALL_OF_FAME_ANONYMOUS_FASTEST_MILESTONES_PATH = get_hall_of_fame_path("anonymous_fastest_milestones.csv")
 HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH = get_hall_of_fame_path("scorecard_record_links.csv")
 HALL_OF_FAME_PREMIERSHIP_WINS_PATH = get_hall_of_fame_path("premiership_wins.csv")
 HALL_OF_FAME_PLAYER_PREMIERSHIPS_PATH = get_hall_of_fame_path("player_premierships.csv")
@@ -1024,6 +1032,7 @@ def render_page() -> None:
         route_started_at = time.perf_counter()
         dashboard_data = render_data_source_panel()
         render_overview(dashboard_data)
+        render_anonymous_scorecard_contributions(dashboard_data or {})
         record_club_load_profile("season_overview_build", (time.perf_counter() - route_started_at) * 1000)
     elif SHOW_SEASON_OVERVIEW_V2 and selected_page == SEASON_OVERVIEW_V2_QUERY_PAGE:
         dashboard_data = render_data_source_panel(
@@ -1926,6 +1935,170 @@ def load_season_overview_detail_sources(
         "scorecard_bowling": read_match_centre_csv(SEASON_OVERVIEW_SCORECARD_BOWLING_MILESTONES_PATH),
         "season_by_round": read_match_centre_csv(SEASON_OVERVIEW_SEASON_BY_ROUND_PATH),
     }
+
+
+def anonymous_scorecard_contributions_signature(club_id: str | None = None) -> tuple[object, ...]:
+    active_club_id = str(club_id or get_active_club_id()).strip().casefold()
+    if active_club_id != GRDCC_CLUB_ID:
+        return tuple()
+    path = get_season_overview_path(
+        "anonymous_scorecard_contributions.csv",
+        club_id=active_club_id,
+    )
+    from src.data.grdcc_player_privacy import privacy_snapshot_signature
+
+    return (
+        str(path),
+        path.stat().st_mtime if path.exists() else None,
+        privacy_snapshot_signature(active_club_id),
+    )
+
+
+@st.cache_data(show_spinner=False, persist="disk")
+def load_anonymous_scorecard_contributions(
+    club_id: str,
+    signature: tuple[object, ...],
+) -> pd.DataFrame:
+    _ = signature
+    active_club_id = str(club_id or "").strip().casefold()
+    if active_club_id != GRDCC_CLUB_ID:
+        return pd.DataFrame()
+    path = get_season_overview_path(
+        "anonymous_scorecard_contributions.csv",
+        club_id=active_club_id,
+    )
+    return read_public_anonymous_scorecard_contributions(path, active_club_id)
+
+
+def _anonymous_scorecard_contribution_text(row: pd.Series) -> str:
+    discipline = str(row.get("discipline", "") or "").strip().casefold()
+    if discipline == "batting":
+        runs = safe_record_int(row.get("runs_scored"))
+        balls = safe_record_int(row.get("balls_faced"))
+        if runs == 0 and balls == 0 and "did not bat" in str(row.get("dismissal_type", "")).casefold():
+            return "Did not bat"
+        parts = [f"{runs if runs is not None else '—'} runs"]
+        if balls is not None:
+            parts.append(f"{balls} balls")
+        fours = safe_record_int(row.get("fours_scored"))
+        sixes = safe_record_int(row.get("sixes_scored"))
+        if fours:
+            parts.append(f"{fours} fours")
+        if sixes:
+            parts.append(f"{sixes} sixes")
+        bbb_runs = safe_record_int(row.get("bbb_batting_runs"))
+        bbb_balls = safe_record_int(row.get("bbb_batting_balls_faced"))
+        bbb_rate = pd.to_numeric(row.get("bbb_batting_strike_rate"), errors="coerce")
+        if bbb_runs is not None and bbb_balls is not None:
+            parts.append(f"Ball-by-ball: {bbb_runs} runs / {bbb_balls} balls")
+        if pd.notna(bbb_rate):
+            parts.append(f"SR {float(bbb_rate):.1f} runs/100 balls")
+        bbb_dots = safe_record_int(row.get("bbb_batting_dot_balls"))
+        bbb_dot_rate = pd.to_numeric(row.get("bbb_batting_dot_ball_rate"), errors="coerce")
+        if bbb_dots is not None and bbb_balls is not None and pd.notna(bbb_dot_rate):
+            parts.append(f"Ball-by-ball dots {bbb_dots}/{bbb_balls} ({float(bbb_dot_rate):.1f}%)")
+        return " · ".join(parts)
+    if discipline == "bowling":
+        wickets = safe_record_int(row.get("wickets_taken"))
+        conceded = safe_record_int(row.get("runs_conceded"))
+        overs = str(row.get("overs_bowled", "") or "").strip()
+        parts = []
+        if overs:
+            parts.append(f"{overs} overs")
+        parts.append(f"{wickets if wickets is not None else '—'} wickets")
+        parts.append(f"{conceded if conceded is not None else '—'} runs")
+        legal = safe_record_int(row.get("bbb_bowling_legal_balls"))
+        dots = safe_record_int(row.get("bbb_bowling_dot_balls"))
+        dot_rate = pd.to_numeric(row.get("bbb_bowling_dot_ball_rate"), errors="coerce")
+        if legal is not None and dots is not None and pd.notna(dot_rate):
+            parts.append(f"Ball-by-ball dots {dots}/{legal} legal balls ({float(dot_rate):.1f}%)")
+        return " · ".join(parts)
+    if discipline == "fielding":
+        catches = safe_record_int(row.get("catches")) or 0
+        run_outs = safe_record_int(row.get("run_outs")) or 0
+        stumpings = safe_record_int(row.get("stumpings")) or 0
+        return f"{catches} catches · {run_outs} run outs · {stumpings} stumpings"
+    return "Scorecard contribution"
+
+
+def render_anonymous_scorecard_contributions(dashboard_data: dict[str, object]) -> None:
+    if get_active_club_id() != GRDCC_CLUB_ID:
+        return
+    rows = load_anonymous_scorecard_contributions(
+        GRDCC_CLUB_ID,
+        anonymous_scorecard_contributions_signature(GRDCC_CLUB_ID),
+    )
+    if rows.empty:
+        return
+    season = dashboard_data.get("season") or {}
+    season_name = str(season.get("name", "") if isinstance(season, dict) else season).strip()
+    if season_name and "season" in rows:
+        selected = rows["season"].astype(str).str.casefold() == season_name.casefold()
+        rows = rows.loc[selected].copy()
+    if rows.empty:
+        return
+    team = dashboard_data.get("team") or {}
+    is_all_teams = bool(dashboard_data.get("is_all_teams", False))
+    team_name = str(team.get("name", "") if isinstance(team, dict) else team).strip()
+    if not is_all_teams and team_name:
+        rows = rows.loc[rows["team_name"].astype(str).str.casefold() == team_name.casefold()].copy()
+    if rows.empty:
+        return
+
+    st.markdown("### Unattributed scorecard entries")
+    st.caption(
+        "Official scorecard figures with unresolved identity are shown using a generic label. They are not included in named player career totals and have no player or scorecard links."
+    )
+    display = rows.copy()
+    display["display_match_date"] = pd.to_datetime(display["match_date"], errors="coerce").dt.strftime("%d %b %Y")
+    display["display_match_date"] = display["display_match_date"].fillna(display["match_date"])
+    display["Contribution"] = display.apply(_anonymous_scorecard_contribution_text, axis=1)
+    cards = []
+    for _, row in display.iterrows():
+        meta = " · ".join(
+            value
+            for value in (
+                str(row.get("display_match_date", "") or "").strip(),
+                str(row.get("grade_name", "") or "").strip(),
+                str(row.get("team_name", "") or "").strip(),
+                f"Innings {row.get('innings_number')}" if str(row.get("innings_number", "")).strip() else "",
+            )
+            if value
+        )
+        cards.append(
+            '<article class="grdcc-anonymous-scorecard-row" role="listitem">'
+            f'<div class="grdcc-anonymous-scorecard-meta">{html.escape(meta)}</div>'
+            f'<strong class="grdcc-anonymous-scorecard-player">{html.escape(str(row.get("display_player_name", PRIVATE_PLAYER_LABEL)))}</strong>'
+            f'<div class="grdcc-anonymous-scorecard-figures">{html.escape(str(row.get("Contribution", "")))}</div>'
+            "</article>"
+        )
+    st.markdown(
+        """
+        <style>
+        .grdcc-anonymous-scorecard-list { display: grid; gap: 0.55rem; }
+        .grdcc-anonymous-scorecard-row {
+            display: grid;
+            grid-template-columns: minmax(190px, 1.2fr) minmax(130px, 0.8fr) minmax(220px, 1.4fr);
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 0.85rem;
+            border: 1px solid rgba(83, 111, 150, 0.2);
+            border-radius: 0.65rem;
+            background: rgba(255, 255, 255, 0.86);
+        }
+        .grdcc-anonymous-scorecard-meta { color: #61738b; font-size: 0.88rem; }
+        .grdcc-anonymous-scorecard-player { color: #183e78; }
+        .grdcc-anonymous-scorecard-figures { color: #25456f; overflow-wrap: anywhere; }
+        @media (max-width: 720px) {
+            .grdcc-anonymous-scorecard-row { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+        }
+        </style>
+        <div class="grdcc-anonymous-scorecard-list" role="list">
+        """
+        + "".join(cards)
+        + "</div>",
+        unsafe_allow_html=True,
+    )
 
 
 def add_season_overview_detail_metrics(
@@ -3003,6 +3176,7 @@ def render_season_overview_v2(dashboard_data: dict[str, object] | None) -> None:
     render_depth_and_role_section(depth_chart, role_map)
     render_records_broken_section(records)
     render_strengths_watchouts_section(strengths_watchouts)
+    render_anonymous_scorecard_contributions(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
 
@@ -3482,6 +3656,8 @@ def player_dna_data_signature() -> tuple[tuple[str, float], ...]:
     paths: list[Path] = []
     if HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH.exists():
         paths.append(HALL_OF_FAME_FASTEST_BATTING_MILESTONES_PATH)
+    if HALL_OF_FAME_ANONYMOUS_FASTEST_MILESTONES_PATH.exists():
+        paths.append(HALL_OF_FAME_ANONYMOUS_FASTEST_MILESTONES_PATH)
     scope = MATCH_CENTRE_PROCESSED_ROOT / "all_available"
     if not (scope / "all_matches.csv").exists():
         scopes = available_match_centre_scopes()
@@ -5698,6 +5874,12 @@ def render_hall_of_fame_v2_fastest_verified() -> None:
         match_centre_milestones_mtime(),
         privacy_snapshot_signature(club_id),
     )
+    anonymous_milestones = pd.DataFrame()
+    ranked_milestones = milestones
+    if club_id == GRDCC_CLUB_ID and "anonymous_event" in milestones:
+        anonymous_mask = milestones["anonymous_event"].fillna("").astype(str).str.strip().str.casefold().eq("true")
+        anonymous_milestones = milestones.loc[anonymous_mask].copy()
+        ranked_milestones = milestones.loc[~anonymous_mask].copy()
     st.markdown(
         (
             hof_v2_section_heading_html(
@@ -5708,11 +5890,54 @@ def render_hall_of_fame_v2_fastest_verified() -> None:
             )
             + '<div class="hof-v2-fastest-panel"><span class="hof-v2-verified-badge">Verified ball-by-ball only</span>'
             + '<div class="hof-v2-grid-2">'
-            + hall_of_fame_v2_fastest_list_html(milestones, "Fastest 50s", "balls_to_50")
-            + hall_of_fame_v2_fastest_list_html(milestones, "Fastest 100s", "balls_to_100")
-            + "</div></div></section>"
+            + hall_of_fame_v2_fastest_list_html(ranked_milestones, "Fastest 50s", "balls_to_50")
+            + hall_of_fame_v2_fastest_list_html(ranked_milestones, "Fastest 100s", "balls_to_100")
+            + "</div>"
+            + hall_of_fame_v2_anonymous_fastest_list_html(anonymous_milestones)
+            + "</div></section>"
         ),
         unsafe_allow_html=True,
+    )
+
+
+def hall_of_fame_v2_anonymous_fastest_list_html(records: pd.DataFrame) -> str:
+    if records.empty:
+        return ""
+    cards = []
+    for _, row in records.iterrows():
+        context = " · ".join(
+            value
+            for value in (
+                safe_record_text(row.get("season")),
+                safe_record_text(row.get("grade_name")),
+            )
+            if value
+        )
+        milestones = " · ".join(
+            value
+            for value in (
+                f"50 in {safe_record_int(row.get('balls_to_50'))} balls"
+                if safe_record_int(row.get("balls_to_50")) is not None
+                else "",
+                f"100 in {safe_record_int(row.get('balls_to_100'))} balls"
+                if safe_record_int(row.get("balls_to_100")) is not None
+                else "",
+            )
+            if value
+        )
+        cards.append(
+            '<article class="hof-v2-race-row hof-v2-anonymous-fastest-row">'
+            '<strong>Private player</strong>'
+            f'<span>{html.escape(context)} · Scorecard runs: {html.escape(safe_record_text(row.get("final_score_display")))}</span>'
+            f'<span>{html.escape(milestones)}</span>'
+            "</article>"
+        )
+    return (
+        '<div class="hof-v2-anonymous-fastest">'
+        '<div class="hof-v2-kicker">Additional anonymous verified milestones</div>'
+        '<p class="hof-v2-muted">These records have no player profile or scorecard link.</p>'
+        + "".join(cards)
+        + "</div>"
     )
 
 
@@ -5726,6 +5951,10 @@ def hall_of_fame_v2_fastest_list_html(records: pd.DataFrame, title: str, value_c
             "</div></div></div>"
         )
     rows = records[records[value_col].notna()].copy()
+    if "anonymous_event" in rows:
+        rows = rows.loc[
+            ~rows["anonymous_event"].fillna("").astype(str).str.strip().str.casefold().eq("true")
+        ].copy()
     if rows.empty:
         return hall_of_fame_v2_fastest_list_html(pd.DataFrame(), title, value_col)
     rows = add_missing_canonical_player_ids(rows)
@@ -8574,11 +8803,18 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
         )
         return
 
+    anonymous_milestones = pd.DataFrame()
+    ranked_milestones = milestones
+    if club_id == GRDCC_CLUB_ID and "anonymous_event" in milestones:
+        anonymous_mask = milestones["anonymous_event"].fillna("").astype(str).str.strip().str.casefold().eq("true")
+        anonymous_milestones = milestones.loc[anonymous_mask].copy()
+        ranked_milestones = milestones.loc[~anonymous_mask].copy()
+
     columns = st.columns(2)
     with columns[0]:
         render_ranked_record_card(
             "Fastest 50s",
-            milestones,
+            ranked_milestones,
             "balls_to_50",
             "balls",
             "No verified 50s from available ball-by-ball data yet.",
@@ -8586,10 +8822,72 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
     with columns[1]:
         render_ranked_record_card(
             "Fastest 100s",
-            milestones,
+            ranked_milestones,
             "balls_to_100",
             "balls",
             "No verified 100s from available ball-by-ball data yet.",
+        )
+    if not anonymous_milestones.empty:
+        render_section_heading("Additional anonymous verified milestones")
+        st.caption(
+            "These ball-by-ball milestones are preserved without a player profile or scorecard link."
+        )
+        anonymous_cards = []
+        for _, row in anonymous_milestones.iterrows():
+            milestones_text = " · ".join(
+                text
+                for text in (
+                    f"50 in {safe_record_int(row.get('balls_to_50'))} balls"
+                    if safe_record_int(row.get("balls_to_50")) is not None
+                    else "",
+                    f"100 in {safe_record_int(row.get('balls_to_100'))} balls"
+                    if safe_record_int(row.get("balls_to_100")) is not None
+                    else "",
+                )
+                if text
+            )
+            context = " · ".join(
+                text
+                for text in (
+                    str(row.get("season", "") or "").strip(),
+                    str(row.get("grade_name", "") or "").strip(),
+                )
+                if text
+            )
+            anonymous_cards.append(
+                '<article class="grdcc-anonymous-fastest-row" role="listitem">'
+                '<div class="grdcc-anonymous-fastest-player">Private player</div>'
+                f'<div class="grdcc-anonymous-fastest-context">{html.escape(context)}</div>'
+                f'<div class="grdcc-anonymous-fastest-score">Scorecard runs: {html.escape(str(row.get("final_score_display", "")))}</div>'
+                f'<div class="grdcc-anonymous-fastest-milestone">{html.escape(milestones_text)}</div>'
+                "</article>"
+            )
+        st.markdown(
+            """
+            <style>
+            .grdcc-anonymous-fastest-list { display: grid; gap: 0.65rem; }
+            .grdcc-anonymous-fastest-row {
+                display: grid;
+                grid-template-columns: minmax(150px, 0.8fr) minmax(220px, 1.2fr) minmax(160px, 0.8fr) minmax(150px, 0.8fr);
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.75rem 0.9rem;
+                border: 1px solid rgba(83, 111, 150, 0.2);
+                border-radius: 0.65rem;
+                background: rgba(255, 255, 255, 0.86);
+            }
+            .grdcc-anonymous-fastest-player { color: #183e78; font-weight: 700; }
+            .grdcc-anonymous-fastest-context { color: #61738b; }
+            .grdcc-anonymous-fastest-score, .grdcc-anonymous-fastest-milestone { color: #25456f; font-weight: 600; }
+            @media (max-width: 720px) {
+                .grdcc-anonymous-fastest-row { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+            }
+            </style>
+            <div class="grdcc-anonymous-fastest-list" role="list">
+            """
+            + "".join(anonymous_cards)
+            + "</div>",
+            unsafe_allow_html=True,
         )
 
 
@@ -8999,8 +9297,30 @@ def load_batting_milestone_records(
         records.loc[missing_display & final_runs.notna(), "final_score_display"] = final_runs[missing_display & final_runs.notna()].astype(int).astype(str)
         star_rows = missing_display & final_runs.notna() & not_out
         records.loc[star_rows, "final_score_display"] = records.loc[star_rows, "final_score_display"].astype(str) + "*"
+    anonymous_records = pd.DataFrame()
+    if club_id == GRDCC_CLUB_ID:
+        expected_path = get_hall_of_fame_path("fastest_batting_milestones.csv", club_id=club_id)
+        if path.resolve() == expected_path.resolve():
+            anonymous_path = get_hall_of_fame_path("anonymous_fastest_milestones.csv", club_id=club_id)
+            anonymous_records = read_public_anonymous_fastest_milestones(anonymous_path, club_id)
     if club_id in {"georges-river-district", "glen-waverley-hawks"}:
         records = filter_public_player_rows(records, club_id=club_id)
+    if not anonymous_records.empty:
+        records = pd.concat([records, anonymous_records], ignore_index=True, sort=False)
+    for column in (
+        "final_runs",
+        "final_balls",
+        "balls_to_25",
+        "balls_to_50",
+        "balls_to_100",
+        "balls_to_150",
+        "team_runs",
+        "team_run_contribution_pct",
+        "scorecard_final_balls",
+        "verified_delivery_final_balls",
+    ):
+        if column in records:
+            records[column] = pd.to_numeric(records[column], errors="coerce")
     if club_id == "glen-waverley-hawks":
         if "grade_name" in records:
             records["grade_name"] = records["grade_name"].map(gwhcc_display_grade_name)
@@ -9025,10 +9345,13 @@ def batting_milestones_path() -> Path | None:
 
 
 def match_centre_milestones_mtime() -> float | None:
-    path = batting_milestones_path()
-    if path is None:
+    paths = [batting_milestones_path()]
+    if get_active_club_id() == GRDCC_CLUB_ID:
+        paths.append(HALL_OF_FAME_ANONYMOUS_FASTEST_MILESTONES_PATH)
+    mtimes = [path.stat().st_mtime for path in paths if path is not None and path.exists()]
+    if not mtimes:
         return None
-    return path.stat().st_mtime
+    return max(mtimes)
 
 
 def match_centre_all_available_signature() -> tuple[tuple[str, float], ...]:
@@ -9186,7 +9509,13 @@ def render_ranked_record_card(
     if rows.empty:
         render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
         return
-    rows = add_missing_canonical_player_ids(rows)
+    anonymous = pd.Series(False, index=rows.index)
+    if get_active_club_id() == GRDCC_CLUB_ID and "anonymous_event" in rows:
+        anonymous = rows["anonymous_event"].fillna("").astype(str).str.strip().str.casefold().eq("true")
+    rows = add_missing_canonical_player_ids(rows.loc[~anonymous].copy())
+    if rows.empty:
+        render_empty_milestone_card(title, empty_message, "This will update as more ball-by-ball seasons are refreshed.")
+        return
     rows["match_date_sort"] = pd.to_datetime(rows.get("match_date"), errors="coerce")
     rows = rows.sort_values(
         [value_col, "final_runs", "match_date_sort"],
