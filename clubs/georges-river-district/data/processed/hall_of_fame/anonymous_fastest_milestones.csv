@@ -1,0 +1,2 @@
+anonymous_event,anonymous_event_key,player_name,canonical_player_name,season,grade_name,final_runs,final_score_display,balls_to_25,balls_to_50,balls_to_100,balls_to_150,runs_source_used,balls_faced_source_used,source_ball_by_ball_available,governance_final_balls_source
+True,da5b3880857e21dbe856f0bba4b984fdbf3d425484f57967e075e88d69949085,Private player,Private player,Summer 2025/26,Fifth Grade (The Tim Creer Cup),55,55,,48,,,official_scorecard,verified_ball_by_ball,True,verified_delivery_events
