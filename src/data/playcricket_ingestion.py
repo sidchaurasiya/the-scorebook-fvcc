@@ -297,6 +297,12 @@ def read_processed_table(name: str) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
     frame = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    # FVCC permits a compatibility fallback to root-level processed files.
+    # Sanitize scorecard rows after cached loading so neither the club tree nor
+    # a legacy fallback can restore a reused masked participant identifier.
+    from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_table
+
+    frame = sanitize_fvcc_scorecard_table(name, frame, club_id=get_active_club_id())
     if name in {"all_seasons_batting", "all_seasons_bowling", "all_seasons_fielding"}:
         frame = _filter_grdcc_app_facing_player_rows(frame)
     if name == "all_seasons_batting":

@@ -170,6 +170,10 @@ def plan(scorecard, season_fielding, club_id='fvcc'):
         raise ValueError('FVCC-only correction boundary')
     from src.data.match_centre_parser import MatchCentrePayloads, parse_match_payloads
     from src.utils.player_identity import filter_public_player_rows
+    from src.data.fvcc_scorecard_privacy import (
+        assert_masked_scorecard_rows_unchanged,
+        sanitize_fvcc_scorecard_rows,
+    )
     from scripts import build_club_app_facing_scorecards as cards
     from scripts import build_player_profile_insight_exports as profile
 
@@ -208,25 +212,41 @@ def plan(scorecard, season_fielding, club_id='fvcc'):
             equal = a == b
         if not equal:
             raise ValueError('Match context changed outside fielding scope: ' + column)
-    new_bat = filter_public_player_rows(cards.build_batting_rows(frames['all_scorecard_batting'], matches, {team_id}))
-    new_field = filter_public_player_rows(cards.build_fielding_rows(frames['all_scorecard_fielding'], matches, {team_id}))
-    old_bat = read('all_seasons_scorecard_batting.csv')
+    new_bat_source = cards.build_batting_rows(frames['all_scorecard_batting'], matches, {team_id})
+    new_bat = sanitize_fvcc_scorecard_rows(new_bat_source, club_id='fvcc', discipline='batting')
     new_bat = new_bat.fillna('').astype(str)
-    batting, descriptions = reconcile_batting_descriptions(old_bat, new_bat, match_id)
-    roster = set(old_bat.loc[old_bat.match_id.eq(match_id), 'player_id'])
-    if not set(new_field.player_id).issubset(roster):
-        raise ValueError('Fielder not in existing roster')
+    old_bat = read('all_seasons_scorecard_batting.csv')
+    old_bat_match = old_bat.loc[old_bat.match_id.astype(str).eq(match_id)]
+    new_bat_match = new_bat.loc[new_bat.match_id.astype(str).eq(match_id)]
+    assert_masked_scorecard_rows_unchanged(old_bat_match, new_bat_match)
+    old_bat_public = filter_public_player_rows(old_bat_match, club_id='fvcc')
+    new_bat_public = filter_public_player_rows(new_bat_match, club_id='fvcc')
+    _, descriptions = reconcile_batting_descriptions(old_bat_public, new_bat_public, match_id)
+    roster = set(old_bat_public.player_id.astype(str))
+    new_field_source = cards.build_fielding_rows(frames['all_scorecard_fielding'], matches, {team_id})
+    new_field = sanitize_fvcc_scorecard_rows(new_field_source, club_id='fvcc', discipline='fielding')
+    new_field_match = new_field.loc[new_field.match_id.astype(str).eq(match_id)]
     old_fields = read('all_seasons_scorecard_fielding.csv')
-    previous = filter_public_player_rows(old_fields.loc[old_fields.match_id.eq(match_id)])
-    delta = catch_delta(previous, new_field)
+    old_fields_match = old_fields.loc[old_fields.match_id.astype(str).eq(match_id)]
+    assert_masked_scorecard_rows_unchanged(old_fields_match, new_field_match)
+    new_field_public = filter_public_player_rows(new_field_match, club_id='fvcc')
+    previous = filter_public_player_rows(old_fields_match, club_id='fvcc')
+    delta = catch_delta(previous, new_field_public)
+    if not set(new_field_public.player_id.astype(str)).issubset(roster):
+        raise ValueError('Fielder not in existing public roster')
     for column in ['stumpings', 'run_outs']:
         a = previous.set_index('player_id')[column].pipe(pd.to_numeric).to_dict()
-        b = new_field.set_index('player_id')[column].pipe(pd.to_numeric).to_dict()
+        b = new_field_public.set_index('player_id')[column].pipe(pd.to_numeric).to_dict()
         if any(float(a.get(k, 0)) != float(b.get(k, 0)) for k in set(a) | set(b)):
             raise ValueError('Other fielding contribution changed outside catch scope')
-    new_bowl = cards.build_bowling_rows(frames['all_scorecard_bowling'], matches, {team_id})
-    old_bowl = read('all_seasons_scorecard_bowling.csv').loc[lambda d: d.match_id.eq(match_id)]
-    validate_bowling(old_bowl, new_bowl)
+    new_bowl_source = cards.build_bowling_rows(frames['all_scorecard_bowling'], matches, {team_id})
+    new_bowl = sanitize_fvcc_scorecard_rows(new_bowl_source, club_id='fvcc', discipline='bowling')
+    old_bowl = read('all_seasons_scorecard_bowling.csv').loc[lambda d: d.match_id.astype(str).eq(match_id)]
+    assert_masked_scorecard_rows_unchanged(old_bowl, new_bowl)
+    validate_bowling(
+        filter_public_player_rows(old_bowl, club_id='fvcc'),
+        filter_public_player_rows(new_bowl, club_id='fvcc'),
+    )
     official = {str(r['id']): r['statistics'] for r in season_fielding}
     aggregate = apply_catch_deltas(read('all_seasons_fielding.csv'), delta, official, season_id, team_id)
     scoped = aggregate.loc[aggregate.season_id.eq(season_id) & aggregate.team_id.eq(team_id)]
@@ -236,7 +256,9 @@ def plan(scorecard, season_fielding, club_id='fvcc'):
     updates = {}
     if delta:
         updates['all_seasons_fielding.csv'] = aggregate
-        replacement = new_field.reindex(columns=old_fields.columns).fillna('')
+        replacement_columns = list(old_fields.columns)
+        replacement_columns.extend(column for column in new_field.columns if column not in replacement_columns)
+        replacement = new_field.reindex(columns=replacement_columns).fillna('')
         updates['all_seasons_scorecard_fielding.csv'] = replace_match_rows(old_fields, replacement, match_id)
         raw = frames['all_scorecard_fielding'].loc[lambda d: d.participant_id.isin(delta)].copy()
         raw['catches'] = raw.participant_id.map(delta)
@@ -245,7 +267,10 @@ def plan(scorecard, season_fielding, club_id='fvcc'):
         increments = profile.build_performance_breakdown(pd.DataFrame(), pd.DataFrame(), prepared, pd.DataFrame())
         updates['player_profile/performance_breakdown_by_dimension.csv'] = update_breakdown(read('player_profile/performance_breakdown_by_dimension.csv'), increments)
     if descriptions:
-        updates['all_seasons_scorecard_batting.csv'] = batting
+        replacement_columns = list(old_bat.columns)
+        replacement_columns.extend(column for column in new_bat.columns if column not in replacement_columns)
+        replacement = new_bat.reindex(columns=replacement_columns).fillna('')
+        updates['all_seasons_scorecard_batting.csv'] = replace_match_rows(old_bat, replacement, match_id)
     return updates, {'match_id': match_id, 'catch_deltas': delta, 'dismissal_changes': descriptions, 'new_matches': 0, 'new_appearances': 0}
 
 

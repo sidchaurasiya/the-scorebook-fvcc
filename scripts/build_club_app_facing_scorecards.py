@@ -12,6 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.data.gwhcc_masked_privacy import HAWKS_CLUB_ID, mask_hawks_participant_rows
+from src.data.fvcc_scorecard_privacy import FVCC_CLUB_ID, sanitize_fvcc_scorecard_rows
 
 MATCH_COLUMNS = [
     "season",
@@ -171,6 +172,8 @@ def build_batting_rows(
     output = out[BATTING_COLUMNS]
     if club_id == HAWKS_CLUB_ID:
         output, _ = mask_hawks_participant_rows(output, id_columns=["player_id"], name_columns=["player_name"])
+    elif club_id == FVCC_CLUB_ID:
+        output = sanitize_fvcc_scorecard_rows(output, club_id=club_id, discipline="batting")
     return output
 
 
@@ -200,6 +203,8 @@ def build_bowling_rows(
     output = out[BOWLING_COLUMNS]
     if club_id == HAWKS_CLUB_ID:
         output, _ = mask_hawks_participant_rows(output, id_columns=["player_id"], name_columns=["player_name"])
+    elif club_id == FVCC_CLUB_ID:
+        output = sanitize_fvcc_scorecard_rows(output, club_id=club_id, discipline="bowling")
     return output
 
 
@@ -226,6 +231,8 @@ def build_fielding_rows(
     output = out[FIELDING_COLUMNS]
     if club_id == HAWKS_CLUB_ID:
         output, _ = mask_hawks_participant_rows(output, id_columns=["player_id"], name_columns=["player_name"])
+    elif club_id == FVCC_CLUB_ID:
+        output = sanitize_fvcc_scorecard_rows(output, club_id=club_id, discipline="fielding")
     return output
 
 
