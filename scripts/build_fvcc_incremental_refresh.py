@@ -31,6 +31,22 @@ def append_disjoint(old, new, keys):
     return pd.concat([old, new], ignore_index=True, sort=False)
 
 
+def append_public_scorecard_rows(old, current, filename, *, club_id=CLUB):
+    """Append match scorecards without dropping anonymous numeric rows."""
+    if filename == 'all_seasons_matches.csv':
+        return pd.concat([old, current], ignore_index=True, sort=False)
+    if 'match_id' in old and 'match_id' in current:
+        overlap = set(old.match_id.dropna().astype(str)) & set(current.match_id.dropna().astype(str))
+        if overlap:
+            raise ValueError('Scorecard match overlap')
+    from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_table
+
+    table_name = str(filename).removesuffix('.csv')
+    old_public = sanitize_fvcc_scorecard_table(table_name, old, club_id=club_id)
+    current_public = sanitize_fvcc_scorecard_table(table_name, current, club_id=club_id)
+    return pd.concat([old_public, current_public], ignore_index=True, sort=False)
+
+
 def validate_same_season_match_partitions(new_match_ids, excluded_match_ids):
     overlap = set(map(str, new_match_ids)) & set(map(str, excluded_match_ids))
     if overlap:
@@ -463,17 +479,17 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     frames['matches']['club_captain_name'] = frames['matches']['match_id'].map(captains).fillna('')
     score_outputs = {
         'all_seasons_matches.csv':cards.build_match_rows(frames['matches'],frames['innings'],teams),
-        'all_seasons_scorecard_batting.csv':cards.build_batting_rows(frames['batting'],frames['matches'],team_ids),
-        'all_seasons_scorecard_bowling.csv':cards.build_bowling_rows(frames['bowling'],frames['matches'],team_ids),
-        'all_seasons_scorecard_fielding.csv':cards.build_fielding_rows(frames['fielding'],frames['matches'],team_ids),
+        'all_seasons_scorecard_batting.csv':cards.build_batting_rows(frames['batting'],frames['matches'],team_ids,club_id=CLUB),
+        'all_seasons_scorecard_bowling.csv':cards.build_bowling_rows(frames['bowling'],frames['matches'],team_ids,club_id=CLUB),
+        'all_seasons_scorecard_fielding.csv':cards.build_fielding_rows(frames['fielding'],frames['matches'],team_ids,club_id=CLUB),
     }
     for filename,current in score_outputs.items():
         old = pd.read_csv(processed/filename)
         if set(old.get('match_id',[])) & increment_ids:
             raise ValueError('Scorecard overlap')
-        if filename != 'all_seasons_matches.csv':
-            current = filter_public_player_rows(current)
-        pd.concat([old,current],ignore_index=True,sort=False).to_csv(processed/filename,index=False)
+        # Scorecard rows remain as authentic anonymous contributions, while
+        # named career and profile outputs continue through public filtering.
+        append_public_scorecard_rows(old,current,filename,club_id=CLUB).to_csv(processed/filename,index=False)
     batting = filter_public_player_rows(profile.prepare_batting(frames, club_id=CLUB))
     bowling = filter_public_player_rows(profile.prepare_bowling(frames, club_id=CLUB))
     fielding = filter_public_player_rows(profile.prepare_fielding(frames, club_id=CLUB))
