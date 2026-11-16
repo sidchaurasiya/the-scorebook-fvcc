@@ -114,7 +114,9 @@ def test_historical_source_contributions_and_approved_identity_survive_refresh(k
         id_columns=["player_id"],
         name_columns=["player_name"],
     )
-    assert masked_count == {"batting": 41, "bowling": 26, "fielding": 7}[kind]
+    # Five batting and three bowling rows in the reviewed nil-UUID matches are
+    # also genericized; the underlying numeric row multiset remains unchanged.
+    assert masked_count == {"batting": 46, "bowling": 29, "fielding": 7}[kind]
     new_history = new_cards[new_cards.season.ne(season)]
     assert row_multiset(expected_history) == row_multiset(new_history)
 
@@ -205,7 +207,9 @@ def test_fastest_evidence_keeps_source_identity_and_all_delivery_metrics():
         old_history,
         id_columns=["player_id", "participant_id", "canonical_player_id"],
     )
-    assert masked_count == 3
+    # One reviewed nil-UUID fastest record joins the three previously governed
+    # placeholder events; all delivery metrics remain in the comparison below.
+    assert masked_count == 4
     new_history = new[new.season.ne(season)].copy()
     identity_columns = {
         "player_id", "participant_id", "canonical_player_id", "player_key",
@@ -228,7 +232,7 @@ def test_fastest_evidence_keeps_source_identity_and_all_delivery_metrics():
     assert len(expected_history) == len(new_history)
     assert non_identity_rows(expected_history) == non_identity_rows(new_history)
     private_fastest = new_history[new_history["player_name"].eq("Private player")]
-    assert len(private_fastest) == 3
+    assert len(private_fastest) == 4
     assert private_fastest["player_id"].fillna("").eq("").all()
     assert private_fastest["participant_id"].fillna("").eq("").all()
     affected = old.player_id.isin(SOURCE_NAMES)

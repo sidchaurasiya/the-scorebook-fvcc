@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import re
 from pathlib import Path
 from typing import Iterable, Mapping
 
@@ -17,6 +18,16 @@ import pandas as pd
 
 HAWKS_CLUB_ID = "glen-waverley-hawks"
 PRIVATE_PLAYER_LABEL = "Private player"
+HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS = frozenset(
+    {
+        "53cac8a4-b211-4414-b4c2-23c6383a65cf",
+        "59c0c453-e1b3-463a-9709-7b123af37593",
+        "74fb0105-e36c-4bb2-97d5-33bb32c64160",
+    }
+)
+_INVALID_NIL_UUID_PLACEHOLDER_PATTERN = re.compile(
+    r"^00000000-0000-0000-0000-0000000000[0-9]{2}$", re.IGNORECASE
+)
 MASKED_HAWKS_PARTICIPANT_ID_SHA256 = frozenset(
     {
         "7ac1b8d7010bb6cd3a3e84e7f90136b880bbc899e428ece49333372911ab9052",
@@ -94,6 +105,16 @@ def is_masked_hawks_participant_id(
     return bool(text) and participant_fingerprint(text) in set(fingerprints)
 
 
+def is_match_scoped_hawks_placeholder(value: object, match_id: object) -> bool:
+    """Recognize only verified placeholder-shaped rows in the reviewed matches."""
+    match_text = text_value(match_id).casefold()
+    participant_text = text_value(value)
+    return (
+        match_text in HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS
+        and bool(_INVALID_NIL_UUID_PLACEHOLDER_PATTERN.fullmatch(participant_text))
+    )
+
+
 def is_generic_player_label(value: object) -> bool:
     text = text_value(value)
     return (
@@ -128,7 +149,10 @@ def collect_ambiguous_scorecard_link_keys(
              if text_value(row.get(column))),
             "",
         )
-        if not is_masked_hawks_participant_id(participant_id, fingerprints=fingerprints):
+        if not (
+            is_masked_hawks_participant_id(participant_id, fingerprints=fingerprints)
+            or is_match_scoped_hawks_placeholder(participant_id, row.get("match_id"))
+        ):
             continue
         label = next(
             (text_value(row.get(column)) for column in ("player_name", "raw_player_name", "canonical_player_name")
@@ -150,7 +174,7 @@ def mask_hawks_participant_rows(
     name_columns: Iterable[str] | None = None,
     fingerprints: Iterable[str] = MASKED_HAWKS_PARTICIPANT_ID_SHA256,
 ) -> tuple[pd.DataFrame, int]:
-    """Mask rows by exact reused participant-token fingerprint, keeping stats."""
+    """Mask governed Hawks placeholder rows, keeping scorecard statistics."""
     output = frame.copy()
     ids = [column for column in (id_columns or ID_COLUMNS) if column in output.columns]
     names = [column for column in (name_columns or NAME_COLUMNS) if column in output.columns]
@@ -180,7 +204,39 @@ def masked_hawks_participant_mask(
         masked |= frame[column].map(
             lambda value: is_masked_hawks_participant_id(value, fingerprints=fingerprint_set)
         )
+    if "match_id" in frame and HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS:
+        scoped_match = frame["match_id"].map(
+            lambda value: text_value(value).casefold() in HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS
+        )
+        malformed_placeholder = pd.Series(False, index=frame.index)
+        for column in ids:
+            malformed_placeholder |= frame[column].map(
+                lambda value: bool(_INVALID_NIL_UUID_PLACEHOLDER_PATTERN.fullmatch(text_value(value)))
+            )
+        masked |= scoped_match & malformed_placeholder
     return masked
+
+
+def mask_hawks_unscoped_match_count_diagnostic(frame: pd.DataFrame) -> tuple[pd.DataFrame, int]:
+    """Clear placeholder IDs only in the named Hawks match-count diagnostic."""
+    output = frame.copy()
+    ids = [column for column in ID_COLUMNS if column in output.columns]
+    names = [column for column in NAME_COLUMNS if column in output.columns]
+    if output.empty or not ids:
+        return output, 0
+    masked = pd.Series(False, index=output.index)
+    for column in ids:
+        masked |= output[column].map(
+            lambda value: bool(_INVALID_NIL_UUID_PLACEHOLDER_PATTERN.fullmatch(text_value(value)))
+        )
+    count = int(masked.sum())
+    if not count:
+        return output, 0
+    for column in names:
+        output.loc[masked, column] = PRIVATE_PLAYER_LABEL
+    for column in ids:
+        output.loc[masked, column] = ""
+    return output, count
 
 
 def sanitize_hawks_source_frames(
@@ -266,7 +322,7 @@ def _write_csv_rows(path: Path, columns: list[str], rows: list[dict[str, str]]) 
 
 
 def sanitize_hawks_processed_tree(processed_dir: str | Path) -> dict[str, int]:
-    """Idempotently sanitize public processed outputs for the two reused IDs."""
+    """Idempotently sanitize public output for governed token and match-scoped rows."""
     processed = Path(processed_dir)
     scorecard_paths = [
         processed / name
@@ -299,6 +355,13 @@ def sanitize_hawks_processed_tree(processed_dir: str | Path) -> dict[str, int]:
         if not id_columns:
             continue
         frame = pd.DataFrame(rows, columns=columns).fillna("")
+        relative = path.relative_to(processed).as_posix()
+        if relative == "validation/gwhcc_match_count_policy_player_impact.csv":
+            sanitized, count = mask_hawks_unscoped_match_count_diagnostic(frame)
+            if count:
+                _write_csv_rows(path, columns, sanitized.fillna("").to_dict("records"))
+                changed[relative] = count
+            continue
         sanitized, count = mask_hawks_participant_rows(
             frame,
             id_columns=id_columns,

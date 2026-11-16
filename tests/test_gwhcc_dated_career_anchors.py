@@ -207,15 +207,37 @@ def test_no_source_season_snapshot_or_other_club_files_changed():
     allowed_exact |= {
         'requirements.txt',
         'src/data/gwhcc_masked_privacy.py',
+        'src/data/fvcc_scorecard_privacy.py',
         'scripts/build_club_app_facing_scorecards.py',
         'scripts/refresh_club_outputs.py',
         'scripts/sanitize_gwhcc_masked_placeholders.py',
+        'scripts/sanitize_fvcc_public_scorecards.py',
+        'scripts/sanitize_legacy_public_milestone_placeholders.py',
+        'scripts/build_fvcc_incremental_refresh.py',
+        'scripts/build_hall_of_fame_detail_exports.py',
+        'scripts/validate_gwhcc_match_count_policy.py',
     }
-    assert all(p.startswith(allowed) or p in allowed_exact for p in changed)
+    approved_public_privacy_artifacts = {
+        'clubs/fvcc/data/processed/hall_of_fame/scorecard_record_links.csv',
+        'data/processed/hall_of_fame/scorecard_record_links.csv',
+        'clubs/ashwood/data/processed/hall_of_fame/fastest_batting_milestones.csv',
+        'clubs/ashwood/data/processed/hall_of_fame/scorecard_record_links.csv',
+        'clubs/plenty/data/processed/hall_of_fame/fastest_batting_milestones.csv',
+        'clubs/plenty/data/processed/hall_of_fame/scorecard_record_links.csv',
+        'clubs/reynella/data/processed/hall_of_fame/fastest_batting_milestones.csv',
+        'clubs/reynella/data/processed/hall_of_fame/scorecard_record_links.csv',
+        'clubs/southside-east-caulfield/data/processed/hall_of_fame/fastest_batting_milestones.csv',
+        'clubs/southside-east-caulfield/data/processed/hall_of_fame/scorecard_record_links.csv',
+    }
+    assert all(p.startswith(allowed) or p in allowed_exact or p in approved_public_privacy_artifacts for p in changed)
     assert not any(("/data/source/" in p or "source/excel" in p)
                    and p not in {"clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv",
                                  "clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_match_milestone_seasons.csv"} for p in changed)
-    assert not any(p.startswith(("clubs/fvcc/", "clubs/georges-river-district/")) for p in changed)
+    assert not any(
+        p.startswith(("clubs/fvcc/", "clubs/georges-river-district/"))
+        and p not in approved_public_privacy_artifacts
+        for p in changed
+    )
 
 
 @pytest.mark.parametrize("pid,name", [

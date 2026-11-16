@@ -9,13 +9,16 @@ import pandas as pd
 from src.data.gwhcc_masked_privacy import (
     ID_COLUMNS,
     HAWKS_CLUB_ID,
+    HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS,
     MASKED_HAWKS_PARTICIPANT_ID_SHA256,
     PRIVATE_PLAYER_LABEL,
     collect_ambiguous_scorecard_link_keys,
     exclude_hawks_masked_source_rows,
-    is_masked_hawks_participant_id,
+    is_match_scoped_hawks_placeholder,
     mask_hawks_participant_rows,
     mask_scorecard_record_links,
+    mask_hawks_unscoped_match_count_diagnostic,
+    masked_hawks_participant_mask,
     sanitize_hawks_source_frames,
     sanitize_hawks_processed_tree,
 )
@@ -77,11 +80,14 @@ def test_link_redaction_uses_same_match_and_label_and_keeps_numeric_record() -> 
 
 def test_hawks_source_masking_is_club_scoped_and_person_aggregates_exclude_ambiguous_rows() -> None:
     token = "reused-masked-token"
+    scoped_placeholder = "00000000-0000-0000-0000-000000000099"
+    scoped_match = sorted(HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS)[0]
     frame = pd.DataFrame(
         {
-            "participant_id": [token, "verified-player-id"],
-            "player_name": ["Unverified source label", "Public Player"],
-            "runs_scored": [47, 12],
+            "match_id": ["match-token", scoped_match, "other-match"],
+            "participant_id": [token, scoped_placeholder, "verified-player-id"],
+            "player_name": ["Unverified source label", "Another unverified label", "Public Player"],
+            "runs_scored": [47, 31, 12],
         }
     )
     hashes = {_sha(token)}
@@ -95,6 +101,75 @@ def test_hawks_source_masking_is_club_scoped_and_person_aggregates_exclude_ambig
     public = exclude_hawks_masked_source_rows({"batting": masked})["batting"]
     assert public["player_name"].tolist() == ["Public Player"]
     assert public["runs_scored"].tolist() == [12]
+    assert masked["_gwhcc_masked_placeholder"].tolist() == [True, True, False]
+
+
+def test_nil_uuid_placeholder_mask_is_scoped_to_reviewed_hawks_matches() -> None:
+    placeholder = "00000000-0000-0000-0000-000000000099"
+    reviewed_match = sorted(HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS)[0]
+    frame = pd.DataFrame(
+        {
+            "match_id": [reviewed_match, "unreviewed-match"],
+            "player_id": [placeholder, placeholder],
+            "player_name": ["Unverified source label", "Unreviewed label"],
+            "runs": [47, 12],
+            "balls": [31, 8],
+        }
+    )
+
+    redacted, count = mask_hawks_participant_rows(
+        frame, id_columns=["player_id"], name_columns=["player_name"]
+    )
+
+    assert is_match_scoped_hawks_placeholder(placeholder, reviewed_match)
+    assert not is_match_scoped_hawks_placeholder(placeholder, "unreviewed-match")
+    assert count == 1
+    assert redacted.loc[0, "player_id"] == ""
+    assert redacted.loc[0, "player_name"] == PRIVATE_PLAYER_LABEL
+    assert redacted.loc[0, ["runs", "balls"]].tolist() == [47, 31]
+    assert redacted.loc[1].to_dict() == frame.loc[1].to_dict()
+
+
+def test_scoped_placeholder_name_only_link_is_masked_without_changing_scorecard_values() -> None:
+    placeholder = "00000000-0000-0000-0000-000000000099"
+    match_id = sorted(HAWKS_SCOPED_PLACEHOLDER_MATCH_IDS)[0]
+    source = [{"match_id": match_id, "participant_id": placeholder, "player_name": "Unverified source label"}]
+    keys = collect_ambiguous_scorecard_link_keys(source)
+    links = pd.DataFrame(
+        [
+            {"match_id": match_id, "canonical_player_id": "profile-1", "canonical_player_name": "Unverified source label", "runs_scored": 47, "scorecard_url": "https://example.test/match"},
+            {"match_id": "other-match", "canonical_player_id": "profile-2", "canonical_player_name": "Unverified source label", "runs_scored": 12, "scorecard_url": "https://example.test/other"},
+        ]
+    )
+
+    redacted, count = mask_scorecard_record_links(links, keys)
+
+    assert count == 1
+    assert redacted.loc[0, "canonical_player_name"] == PRIVATE_PLAYER_LABEL
+    assert redacted.loc[0, "canonical_player_id"] == ""
+    assert redacted.loc[0, "runs_scored"] == 47
+    assert redacted.loc[0, "scorecard_url"] == links.loc[0, "scorecard_url"]
+    assert redacted.loc[1].to_dict() == links.loc[1].to_dict()
+
+
+def test_hawks_match_count_diagnostic_masks_only_placeholder_shaped_ids() -> None:
+    frame = pd.DataFrame(
+        {
+            "raw_player_id": ["00000000-0000-0000-0000-000000000099", "verified-player-id"],
+            "canonical_player_name": ["Unverified source label", "Public Player"],
+            "raw_playhq_matches": [20, 12],
+            "weighted_matches": [10, 12],
+            "match_delta": [10, 0],
+        }
+    )
+
+    redacted, count = mask_hawks_unscoped_match_count_diagnostic(frame)
+
+    assert count == 1
+    assert redacted.loc[0, "raw_player_id"] == ""
+    assert redacted.loc[0, "canonical_player_name"] == PRIVATE_PLAYER_LABEL
+    assert redacted.loc[0, ["raw_playhq_matches", "weighted_matches", "match_delta"]].tolist() == [20, 10, 10]
+    assert redacted.loc[1].to_dict() == frame.loc[1].to_dict()
 
 
 def test_accepted_placeholder_fingerprints_are_two_hawks_only_tokens() -> None:
@@ -106,14 +181,11 @@ def test_accepted_placeholder_fingerprints_are_two_hawks_only_tokens() -> None:
 def test_processed_hawks_exports_do_not_retain_reused_participant_ids() -> None:
     for path in PROCESSED.rglob("*.csv"):
         frame = pd.read_csv(path, dtype=str, keep_default_na=False)
-        for column in frame.columns:
-            if column not in {
-                "player_id", "participant_id", "raw_player_id", "source_participant_id",
-                "striker_participant_id", "bowler_participant_id", "canonical_player_id",
-                "player_key", "player_1_canonical_id", "player_2_canonical_id",
-            }:
-                continue
-            assert not frame[column].map(is_masked_hawks_participant_id).any(), path
+        if path.name == "gwhcc_match_count_policy_player_impact.csv":
+            _, would_mask = mask_hawks_unscoped_match_count_diagnostic(frame)
+            assert would_mask == 0, path
+        else:
+            assert not masked_hawks_participant_mask(frame).any(), path
 
     links = pd.read_csv(PROCESSED / "hall_of_fame" / "scorecard_record_links.csv", dtype=str, keep_default_na=False)
     private_links = links[links["canonical_player_name"].eq(PRIVATE_PLAYER_LABEL)]
@@ -124,7 +196,7 @@ def test_processed_hawks_exports_do_not_retain_reused_participant_ids() -> None:
 
 def test_hawks_identity_revision_invalidates_metadata_cache_signature(monkeypatch) -> None:
     metadata = json.loads((ROOT / "clubs" / HAWKS_CLUB_ID / "data" / "metadata.json").read_text())
-    assert metadata["public_identity_revision"] == "hawks-reused-masked-source-identifiers-v1"
+    assert metadata["public_identity_revision"] == "hawks-masked-placeholder-event-scope-v2"
     monkeypatch.setenv("CLUB_ID", HAWKS_CLUB_ID)
     from src.ui import layout
 

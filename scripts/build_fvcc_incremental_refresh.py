@@ -47,6 +47,20 @@ def append_public_scorecard_rows(old, current, filename, *, club_id=CLUB):
     return pd.concat([old_public, current_public], ignore_index=True, sort=False)
 
 
+def append_public_scorecard_record_links(old, current, *, club_id=CLUB):
+    """Append record links after applying FVCC's generic-row identity guard."""
+    from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
+
+    old_public = sanitize_fvcc_scorecard_record_links(old, club_id=club_id)
+    current_public = sanitize_fvcc_scorecard_record_links(current, club_id=club_id)
+    if "match_id" in old_public and "match_id" in current_public:
+        overlap = set(old_public.match_id.astype(str)) & set(current_public.match_id.astype(str))
+        if overlap:
+            raise ValueError("Scorecard record-link match overlap")
+    combined = pd.concat([old_public, current_public], ignore_index=True, sort=False)
+    return sanitize_fvcc_scorecard_record_links(combined, club_id=club_id)
+
+
 def validate_same_season_match_partitions(new_match_ids, excluded_match_ids):
     overlap = set(map(str, new_match_ids)) & set(map(str, excluded_match_ids))
     if overlap:
@@ -570,9 +584,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     path = processed/'hall_of_fame/scorecard_record_links.csv'
     old_links=pd.read_csv(path)
     new_links=filter_public_player_rows(hof.build_scorecard_record_links(batting,bowling))
-    if 'match_id' in old_links and 'match_id' in new_links and set(old_links.match_id.astype(str)) & set(new_links.match_id.astype(str)):
-        raise ValueError('Scorecard record-link match overlap')
-    pd.concat([old_links,new_links],ignore_index=True).to_csv(path,index=False)
+    combined_links=append_public_scorecard_record_links(old_links,new_links,club_id=CLUB)
+    combined_links.to_csv(path,index=False)
 
     from src.data.fastest_innings import build_governed_fastest_innings
     from src.data.partnerships import build_governed_club_partnerships, build_verified_partnership_record_holders

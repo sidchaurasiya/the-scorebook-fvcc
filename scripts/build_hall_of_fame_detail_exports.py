@@ -137,6 +137,12 @@ def main(argv: list[str] | None = None) -> int:
         outputs["fastest_batting_milestones.csv"], _ = mask_hawks_participant_rows(
             outputs["fastest_batting_milestones.csv"]
         )
+    if club_id == "fvcc":
+        from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
+
+        outputs["scorecard_record_links.csv"] = sanitize_fvcc_scorecard_record_links(
+            outputs["scorecard_record_links.csv"], club_id=club_id
+        )
     if club_id == "glen-waverley-hawks":
         from src.data.gwhcc_match_policy import write_weighted_win_rates
 

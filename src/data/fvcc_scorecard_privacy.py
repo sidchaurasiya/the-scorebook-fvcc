@@ -22,6 +22,23 @@ SCORECARD_TABLES = {
     "all_seasons_scorecard_bowling": "bowling",
     "all_seasons_scorecard_fielding": "fielding",
 }
+LINK_ID_COLUMNS = (
+    "canonical_player_id",
+    "player_id",
+    "raw_player_id",
+    "participant_id",
+    "player_1_canonical_id",
+    "player_2_canonical_id",
+    "player_1_id",
+    "player_2_id",
+)
+LINK_NAME_COLUMNS = (
+    "canonical_player_name",
+    "display_player_name",
+    "player_name",
+    "player_1_name",
+    "player_2_name",
+)
 
 
 def is_fvcc_placeholder_participant_id(value: object) -> bool:
@@ -109,6 +126,88 @@ def sanitize_fvcc_scorecard_table(
     return sanitize_fvcc_scorecard_rows(frame, club_id=FVCC_CLUB_ID, discipline=discipline)
 
 
+def sanitize_fvcc_scorecard_record_links(
+    frame: pd.DataFrame,
+    *,
+    club_id: str | None,
+) -> pd.DataFrame:
+    """Keep generic scorecard records while removing any canonical/profile ID."""
+    output = frame.copy()
+    if str(club_id or "").strip().casefold() != FVCC_CLUB_ID or output.empty:
+        return output
+    names = [column for column in LINK_NAME_COLUMNS if column in output]
+    ids = [column for column in LINK_ID_COLUMNS if column in output]
+    if not ids:
+        return output
+
+    from src.utils.player_identity import is_private_or_anonymised_player
+
+    generic = pd.Series(False, index=output.index)
+    for column in names:
+        generic |= output[column].map(is_private_or_anonymised_player).astype(bool)
+    has_id = pd.Series(False, index=output.index)
+    for column in ids:
+        has_id |= output[column].fillna("").astype(str).str.strip().ne("")
+    placeholder = pd.Series(False, index=output.index)
+    for column in ids:
+        placeholder |= output[column].map(is_fvcc_placeholder_participant_id)
+    anonymous = (generic & has_id) | placeholder
+    if not anonymous.any():
+        return output
+    if "match_id" not in output or "mode" not in output:
+        raise ValueError("FVCC anonymous scorecard links require match_id and mode")
+
+    for column in ids:
+        output.loc[anonymous, column] = ""
+    # If a known malformed source ID arrives with a newly visible label, keep
+    # the scorecard row generic until a unique identity is verified.
+    for column in names:
+        public_name = ~output[column].map(is_private_or_anonymised_player).astype(bool)
+        output.loc[anonymous & placeholder & public_name, column] = "Private player"
+
+    return output
+
+
+def sanitize_fvcc_scorecard_record_link_file(path: Path | str) -> dict[str, object]:
+    """Sanitize one FVCC public or legacy-fallback scorecard-link artifact."""
+    link_path = Path(path)
+    if not link_path.is_file():
+        raise FileNotFoundError(link_path)
+    before_bytes = link_path.read_bytes()
+    before = pd.read_csv(link_path, dtype=str, keep_default_na=False)
+    after = sanitize_fvcc_scorecard_record_links(before, club_id=FVCC_CLUB_ID)
+    id_columns = [column for column in LINK_ID_COLUMNS if column in before]
+    identity_cells_cleared = sum(
+        int(before[column].fillna("").astype(str).str.strip().ne("").where(after[column].fillna("").astype(str).str.strip().eq(""), False).sum())
+        for column in id_columns
+    )
+    rows_with_identity_removed = int(
+        pd.concat(
+            [
+                before[column].fillna("").astype(str).str.strip().ne("")
+                & after[column].fillna("").astype(str).str.strip().eq("")
+                for column in id_columns
+            ],
+            axis=1,
+        ).any(axis=1).sum()
+    ) if id_columns else 0
+    changed = not after.equals(before)
+    content = after.to_csv(index=False).encode("utf-8") if changed else before_bytes
+    if content != before_bytes:
+        temporary = link_path.with_name(f".{link_path.name}.privacy-tmp")
+        temporary.write_bytes(content)
+        temporary.replace(link_path)
+    return {
+        "rows_before": len(before),
+        "rows_after": len(after),
+        "sha256_before": hashlib.sha256(before_bytes).hexdigest(),
+        "sha256_after": hashlib.sha256(content).hexdigest(),
+        "changed": content != before_bytes,
+        "rows_with_identity_removed": rows_with_identity_removed,
+        "identity_cells_cleared": identity_cells_cleared,
+    }
+
+
 def masked_scorecard_projection(frame: pd.DataFrame) -> Counter[tuple[str, ...]]:
     """Multiset projection of anonymous scorecard rows, excluding identities/keys."""
     if frame.empty or "player_name" not in frame:
@@ -159,4 +258,6 @@ def sanitize_fvcc_processed_scorecards(processed_dir: Path | str) -> dict[str, d
             "changed": content != before_bytes,
             "sanitized_rows": int(after.get("public_scorecard_row_key", pd.Series(dtype=str)).astype(str).str.startswith("fvcc-anon-").sum()),
         }
+    link_path = root / "hall_of_fame" / "scorecard_record_links.csv"
+    result[link_path.as_posix()] = sanitize_fvcc_scorecard_record_link_file(link_path)
     return result

@@ -9406,6 +9406,12 @@ def load_scorecard_record_rows(_signature: tuple[object, ...]) -> dict[str, pd.D
                 for column in ID_COLUMNS:
                     if column in frame:
                         frame.loc[anonymous, column] = ""
+        if club_id == "fvcc":
+            from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
+
+            frame["mode"] = key
+            frame = sanitize_fvcc_scorecard_record_links(frame, club_id=club_id)
+            frame = frame.drop(columns=["mode"], errors="ignore")
         if club_id == "georges-river-district":
             frame = filter_public_player_rows(frame, club_id=club_id)
         if not context.empty and "match_id" in frame:
@@ -9420,6 +9426,10 @@ def load_scorecard_record_rows(_signature: tuple[object, ...]) -> dict[str, pd.D
 def load_deploy_scorecard_record_rows(club_id: str | None = None) -> dict[str, pd.DataFrame]:
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
     frame = read_match_centre_csv(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH)
+    if active_club_id == "fvcc" and not frame.empty:
+        from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
+
+        frame = sanitize_fvcc_scorecard_record_links(frame, club_id=active_club_id)
     if frame.empty or "mode" not in frame:
         return {"batting": pd.DataFrame(), "bowling": pd.DataFrame()}
     if active_club_id == "georges-river-district":
