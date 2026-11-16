@@ -21,6 +21,7 @@ from src.data.gwhcc_match_policy import (  # noqa: E402
     selected_player_rows,
     weighted_win_source_rows,
 )
+from src.data.gwhcc_masked_privacy import mask_hawks_unscoped_match_count_diagnostic  # noqa: E402
 
 OUTPUT = PROCESSED / "validation" / "gwhcc_match_count_policy_validation.csv"
 RAW_VS_WEIGHTED = PROCESSED / "validation" / "gwhcc_match_count_policy_player_impact.csv"
@@ -77,6 +78,7 @@ def impact_examples(weights: pd.DataFrame) -> pd.DataFrame:
     impact["weighted_matches"] = pd.to_numeric(impact["weighted_matches"], errors="coerce").fillna(0)
     impact["match_delta"] = impact["raw_playhq_matches"] - impact["weighted_matches"]
     impact = impact.sort_values(["match_delta", "raw_playhq_matches"], ascending=[False, False])
+    impact, _ = mask_hawks_unscoped_match_count_diagnostic(impact)
     impact.to_csv(RAW_VS_WEIGHTED, index=False)
     return impact
 

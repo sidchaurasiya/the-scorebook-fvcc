@@ -212,3 +212,121 @@ def test_anonymous_scorecard_rows_have_no_public_profile_link():
         assert not links[column].map(is_private_or_anonymised_player).any()
     for column in links.columns:
         assert not links[column].map(privacy.is_fvcc_placeholder_participant_id).any()
+
+
+def test_generic_fvcc_record_links_drop_ids_and_keep_every_numeric_value():
+    source = pd.DataFrame(
+        [
+            {
+                "mode": "batting",
+                "canonical_player_id": "ambiguous-canonical-id",
+                "canonical_player_name": "********",
+                "season": "Summer 2026/27",
+                "match_id": "anonymous-match",
+                "runs_scored": 0,
+                "balls_faced": 0,
+                "wickets_taken": 0,
+                "runs_conceded": 0,
+            },
+            {
+                "mode": "batting",
+                "canonical_player_id": "verified-public-id",
+                "canonical_player_name": "Public Player",
+                "season": "Summer 2026/27",
+                "match_id": "public-match",
+                "runs_scored": 44,
+                "balls_faced": 30,
+                "wickets_taken": 0,
+                "runs_conceded": 0,
+            },
+        ]
+    )
+
+    output = privacy.sanitize_fvcc_scorecard_record_links(source, club_id="fvcc")
+
+    assert len(output) == len(source) == 2
+    assert output.loc[0, "canonical_player_id"] == ""
+    assert output.loc[0, "canonical_player_name"] == "********"
+    assert "public_scorecard_row_key" not in output
+    assert output.loc[1, "canonical_player_id"] == "verified-public-id"
+    assert output.loc[1, "canonical_player_name"] == "Public Player"
+    assert output.loc[0, ["runs_scored", "balls_faced", "wickets_taken", "runs_conceded"]].tolist() == [0, 0, 0, 0]
+    assert output.loc[1, ["runs_scored", "balls_faced", "wickets_taken", "runs_conceded"]].tolist() == [44, 30, 0, 0]
+    assert privacy.sanitize_fvcc_scorecard_record_links(output, club_id="fvcc").equals(output)
+    assert privacy.sanitize_fvcc_scorecard_record_links(source, club_id="glen-waverley-hawks").equals(source)
+
+
+def test_incremental_record_link_builder_scrubs_old_and_new_generic_rows():
+    old = pd.DataFrame(
+        [{"mode": "batting", "canonical_player_id": "old-ambiguous-id", "canonical_player_name": "Private player", "match_id": "old-match", "runs_scored": 7}]
+    )
+    current = pd.DataFrame(
+        [{"mode": "batting", "canonical_player_id": "new-ambiguous-id", "canonical_player_name": "********", "match_id": "new-match", "runs_scored": 19}]
+    )
+
+    output = incremental.append_public_scorecard_record_links(old, current, club_id="fvcc")
+
+    assert len(output) == 2
+    assert output.canonical_player_id.eq("").all()
+    assert output.runs_scored.astype(int).tolist() == [7, 19]
+
+
+def test_cached_and_match_centre_fallback_scorecard_links_are_sanitized(monkeypatch, tmp_path):
+    from src.ui import layout
+
+    scope = tmp_path / "all_available"
+    scope.mkdir()
+    monkeypatch.setattr(layout, "get_active_club_id", lambda: "fvcc")
+    monkeypatch.setattr(layout, "MATCH_CENTRE_PROCESSED_ROOT", tmp_path)
+    monkeypatch.setattr(layout, "HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH", tmp_path / "no-deploy-links.csv")
+    monkeypatch.setattr(layout, "add_missing_canonical_player_ids", lambda frame, club_id: frame)
+
+    def read_csv(path):
+        filename = Path(path).name
+        if filename == "all_matches.csv":
+            return pd.DataFrame([{"match_id": "fallback-match", "season": "Summer 2026/27"}])
+        if filename == "all_scorecard_batting.csv":
+            return pd.DataFrame([{"match_id": "fallback-match", "player_id": "fallback-id", "player_name": "********", "runs_scored": 5}])
+        if filename == "all_scorecard_bowling.csv":
+            return pd.DataFrame(columns=["match_id", "player_id", "player_name", "wickets_taken"])
+        return pd.DataFrame()
+
+    monkeypatch.setattr(layout, "read_match_centre_csv", read_csv)
+    layout.load_scorecard_record_rows.clear()
+    output = layout.load_scorecard_record_rows(("fresh-test-signature",))
+    layout.load_scorecard_record_rows.clear()
+
+    batting = output["batting"]
+    assert len(batting) == 1
+    assert batting.loc[0, "player_id"] == ""
+    assert batting.loc[0, "player_name"] == "********"
+    assert "public_scorecard_row_key" not in batting
+    assert batting.loc[0, "runs_scored"] == 5
+
+
+def test_deploy_link_loader_sanitizes_club_artifact_after_read(monkeypatch):
+    from src.ui import layout
+
+    source = pd.DataFrame(
+        [{"mode": "batting", "canonical_player_id": "ambiguous-id", "canonical_player_name": "********", "match_id": "deploy-match", "runs_scored": 13}]
+    )
+    monkeypatch.setattr(layout, "read_match_centre_csv", lambda path: source.copy())
+
+    batting = layout.load_deploy_scorecard_record_rows("fvcc")["batting"]
+
+    assert len(batting) == 1
+    assert batting.loc[0, "canonical_player_id"] == ""
+    assert batting.loc[0, "canonical_player_name"] == "********"
+    assert batting.loc[0, "runs_scored"] == 13
+
+
+def test_published_fvcc_record_links_have_no_ids_for_generic_rows():
+    links = pd.read_csv(
+        FVCC_PROCESSED / "hall_of_fame" / "scorecard_record_links.csv",
+        dtype=str,
+        keep_default_na=False,
+    )
+    generic = links.canonical_player_name.map(is_private_or_anonymised_player)
+    assert int(generic.sum()) == 35
+    assert links.loc[generic, "canonical_player_id"].eq("").all()
+    assert links.loc[generic, "canonical_player_id"].eq("").all()
