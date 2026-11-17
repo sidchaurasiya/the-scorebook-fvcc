@@ -67,3 +67,59 @@ def test_profile_loading_replaces_the_grdcc_record_before_building_it(monkeypatc
         assert rendered == ["loading", "load", "replace loading", "render"]
     else:
         assert rendered == ["load", "render"]
+
+
+@pytest.mark.parametrize(
+    ("club_id", "analytics_enabled"),
+    [
+        ("georges-river-district", True),
+        ("georges-river-district", False),
+        ("glen-waverley-hawks", True),
+        ("fvcc", True),
+    ],
+)
+def test_profile_rerun_keeps_grdcc_output_position_when_analytics_is_skipped(
+    monkeypatch, club_id, analytics_enabled
+):
+    import streamlit as st
+    from streamlit.testing.v1 import AppTest
+
+    from src.utils import analytics
+
+    monkeypatch.setattr(layout, "get_active_club_id", lambda: club_id)
+    monkeypatch.setattr(analytics, "_measurement_id", lambda: "G-LOCALTEST1" if analytics_enabled else "")
+    monkeypatch.setattr(layout, "inject_theme", lambda: st.markdown("Layout start"))
+    monkeypatch.setattr(layout, "render_mobile_page_footer", lambda: None)
+
+    def navigation():
+        st.markdown("Profile navigation")
+        return "player-profile"
+
+    def profile():
+        player = st.selectbox("Player", ["Mark Burgess", "Ryan Croom"])
+        st.markdown(f"Selected profile: {player}")
+
+    def result_slot(app, name):
+        return next(
+            slot
+            for slot, element in app.main.children.items()
+            if getattr(element, "value", None) == f"Selected profile: {name}"
+        )
+
+    monkeypatch.setattr(layout, "render_sidebar", navigation)
+    monkeypatch.setattr(layout, "render_player_profile_page", profile)
+    app = AppTest.from_string("from src.ui import layout\nlayout.render_page()").run()
+    assert not app.exception
+    assert len(app.get("iframe")) == (3 if analytics_enabled else 0)
+    first_slot = result_slot(app, "Mark Burgess")
+    if club_id != "georges-river-district":
+        # Other clubs continue to render their analytics at the original root level.
+        assert sum(child.type == "iframe" for child in app.main.children.values()) == 3
+
+    app.selectbox[0].select("Ryan Croom").run()
+    assert not app.exception
+    assert not app.get("iframe")
+    assert "Selected profile: Mark Burgess" not in [item.value for item in app.markdown]
+    switched_slot = result_slot(app, "Ryan Croom")
+    if club_id == "georges-river-district":
+        assert switched_slot == first_slot

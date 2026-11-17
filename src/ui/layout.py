@@ -1023,9 +1023,16 @@ def render_page() -> None:
         files_loaded=1,
         notes="Club config is memoized; this includes theme CSS construction.",
     )
-    inject_ga4()
+    # Analytics may emit three main elements on the first run and none on a
+    # rerun. Reserve one slot so GRDCC can replace the same profile area.
+    analytics_area = (
+        st.container(key="grdcc_page_analytics") if get_active_club_id() == GRDCC_CLUB_ID else nullcontext()
+    )
+    with analytics_area:
+        inject_ga4()
     selected_page = render_sidebar()
-    track_page_view(selected_page, page_title_for_slug(selected_page))
+    with analytics_area:
+        track_page_view(selected_page, page_title_for_slug(selected_page))
     if selected_page == "hall-of-fame":
         render_hall_of_fame_page()
     elif SHOW_HALL_OF_FAME_V2 and selected_page == HALL_OF_FAME_V2_QUERY_PAGE:
