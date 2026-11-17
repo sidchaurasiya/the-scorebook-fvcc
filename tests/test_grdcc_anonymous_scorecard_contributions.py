@@ -405,6 +405,24 @@ def test_public_anonymous_fastest_loader_requires_generic_verified_rows(tmp_path
     assert read_public_anonymous_fastest_milestones(path, "georges-river-district").empty
 
 
+def test_hall_of_fame_v2_hero_copy_is_club_neutral(monkeypatch) -> None:
+    from src.ui import layout
+
+    rendered = []
+    monkeypatch.setattr(layout.st, "markdown", lambda value, **_kwargs: rendered.append(value))
+    monkeypatch.setattr(layout, "configured_club_label_html", lambda _class_name="club-label": "<div>GRDCC</div>")
+    monkeypatch.setattr(layout, "hall_of_fame_v2_verified_fastest_count", lambda: 1)
+
+    layout.render_hall_of_fame_v2_hero(
+        {"kpis": {"total_seasons": 72, "total_matches": 3605, "total_players": 1703}}
+    )
+
+    output = "\n".join(rendered)
+    assert "GRDCC" in output
+    assert "A club record book for legends, premierships and iconic performances." in output
+    assert "FVCC legends" not in output
+
+
 def test_hall_of_fame_loads_verified_anonymous_fastest_event_without_profile_or_scorecard_link(monkeypatch) -> None:
     from src.ui import layout
 
