@@ -7,6 +7,7 @@ import re
 import textwrap
 import time
 from collections.abc import MutableMapping
+from contextlib import nullcontext
 from urllib.parse import quote, unquote, urlparse
 from pathlib import Path
 
@@ -14,6 +15,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit.delta_generator import DeltaGenerator
 from src.data.grdcc_career_quarantine import (
     apply_career_quarantine, eligible_career_rows, quarantine_mask,
     quarantine_signature, career_under_review, REVIEW_FLAG, REVIEW_NOTE,
@@ -11936,8 +11938,11 @@ def render_player_profile_page() -> None:
             '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
             unsafe_allow_html=True,
         )
+    # Replace the complete previous GRDCC card before loading the next player's data.
+    profile_slot = st.empty() if get_active_club_id() == GRDCC_CLUB_ID else None
+    profile_output = profile_slot if profile_slot is not None else st
     if not selected_id:
-        st.markdown(
+        profile_output.markdown(
             """
             <div class="empty-profile-state">
                 <div class="empty-profile-title">Find a player to unlock their career profile 🔎</div>
@@ -11955,7 +11960,9 @@ def render_player_profile_page() -> None:
         )
         return
 
-    if render_report_record_profile(selected_id):
+    if profile_slot is not None:
+        profile_slot.info("Loading player profile…")
+    if render_report_record_profile(selected_id, profile_slot=profile_slot):
         return
     profile = get_player_profile_data(
         selected_id,
@@ -11965,48 +11972,49 @@ def render_player_profile_page() -> None:
     )
     profile_view = build_player_profile_view(profile, player_profile_view_signature())
     if profile_view["career"].empty:
-        st.info("No local historical data is available for this player yet.")
+        profile_output.info("No local historical data is available for this player yet.")
         return
-    profile_source = (
-        "dropdown"
-        if st.session_state.get("manual_player_profile_selection")
-        else "deep_link"
-        if current_player_query_token()
-        else "dropdown"
-    )
-    player_name = player_names_by_id.get(selected_id, selected_id)
-    track_event_once(
-        "player_profile_view",
-        {
-            "page_slug": PLAYER_PROFILE_QUERY_PAGE,
-            "player_name": player_name,
-            "player_slug": analytics_player_slug(player_name, selected_id),
-            "player_id": selected_id,
-            "source": profile_source,
-        },
-        key=f"player-profile-view:{selected_id}",
-    )
+    with profile_slot.container() if profile_slot is not None else nullcontext():
+        profile_source = (
+            "dropdown"
+            if st.session_state.get("manual_player_profile_selection")
+            else "deep_link"
+            if current_player_query_token()
+            else "dropdown"
+        )
+        player_name = player_names_by_id.get(selected_id, selected_id)
+        track_event_once(
+            "player_profile_view",
+            {
+                "page_slug": PLAYER_PROFILE_QUERY_PAGE,
+                "player_name": player_name,
+                "player_slug": analytics_player_slug(player_name, selected_id),
+                "player_id": selected_id,
+                "source": profile_source,
+            },
+            key=f"player-profile-view:{selected_id}",
+        )
 
-    if is_scoped_historical(profile_view['career'].iloc[0]):
-        render_scoped_historical_profile(profile_view)
-        return
-    render_player_header_card(profile_view)
-    render_player_breakdown(profile_view["career"].iloc[0])
-    if career_under_review(profile_view['career'].iloc[0]):
-        render_reviewed_historical_sources(profile_view)
-        if reviewed_career_metric_name(profile_view['career'].iloc[0]):
-            render_player_milestones(profile_view['career'].iloc[0])
-        return
-    render_player_recent_form(profile_view["career"].iloc[0])
-    render_player_highlights(profile_view)
-    render_player_intelligence(profile_view)
-    render_player_peer_comparison(profile_view)
-    render_player_trends(profile_view["season_table"])
-    render_player_performance_breakdown(profile_view)
-    render_player_milestones(profile_view["career"].iloc[0])
+        if is_scoped_historical(profile_view['career'].iloc[0]):
+            render_scoped_historical_profile(profile_view)
+            return
+        render_player_header_card(profile_view)
+        render_player_breakdown(profile_view["career"].iloc[0])
+        if career_under_review(profile_view['career'].iloc[0]):
+            render_reviewed_historical_sources(profile_view)
+            if reviewed_career_metric_name(profile_view['career'].iloc[0]):
+                render_player_milestones(profile_view['career'].iloc[0])
+            return
+        render_player_recent_form(profile_view["career"].iloc[0])
+        render_player_highlights(profile_view)
+        render_player_intelligence(profile_view)
+        render_player_peer_comparison(profile_view)
+        render_player_trends(profile_view["season_table"])
+        render_player_performance_breakdown(profile_view)
+        render_player_milestones(profile_view["career"].iloc[0])
 
 
-def render_report_record_profile(record_id: str) -> bool:
+def render_report_record_profile(record_id: str, *, profile_slot: DeltaGenerator | None = None) -> bool:
     index = report_profile_index(get_active_club_id())
     if record_id not in set(index.id):
         return False
@@ -12014,9 +12022,11 @@ def render_report_record_profile(record_id: str) -> bool:
         HALL_OF_FAME_DATA_VERSION, hall_of_fame_override_signature(), club_id=get_active_club_id())
     row = governed.loc[governed.report_record_id.eq(record_id)].copy()
     if len(row) != 1:
-        st.error('The governed Annual Report record is unavailable.')
+        profile_output = profile_slot if profile_slot is not None else st
+        profile_output.error('The governed Annual Report record is unavailable.')
         return True
-    render_scoped_historical_profile({'career':row})
+    with profile_slot.container() if profile_slot is not None else nullcontext():
+        render_scoped_historical_profile({'career':row})
     return True
 
 
