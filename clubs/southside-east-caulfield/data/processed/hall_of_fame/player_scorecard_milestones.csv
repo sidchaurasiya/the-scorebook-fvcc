@@ -1,7 +1,7 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,thirties,fifties,hundreds,ducks,hs,hs_sort
-raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,0,1,0,2,50*,50
-raw_8acd5d06_ea98_4c8b_9ddb_b74e794f645c,raw_8acd5d06_ea98_4c8b_9ddb_b74e794f645c,********,********,0,0,0,0,1,1
-raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,2,0,0,1,49,49
+,,********,********,0,1,0,2,50*,50
+,,********,********,0,0,0,0,1,1
+,,********,********,2,0,0,1,49,49
 raw_c9f63113_9374_46ce_bed8_b3ca85cc0c59,raw_c9f63113_9374_46ce_bed8_b3ca85cc0c59,A Jones,A Jones,0,0,0,1,0,0
 raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,25,16,1,8,130*,130
 raw_783020cf_409e_4d98_9b14_200c3fcff343,raw_783020cf_409e_4d98_9b14_200c3fcff343,Aarav Mehta,Aarav Mehta,1,1,0,0,50*,50

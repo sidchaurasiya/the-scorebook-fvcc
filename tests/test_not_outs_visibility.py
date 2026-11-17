@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import json
+from pathlib import Path
 
 import pandas as pd
 
@@ -210,9 +212,18 @@ def test_gwhcc_existing_helper_behaviour_is_unchanged() -> None:
 
 
 def test_current_fvcc_and_grdcc_sources_reconcile_without_average_changes() -> None:
+    fvcc_snapshot = json.loads(
+        Path("tests/fixtures/fvcc_weekly_output_snapshot_2026-11-16.json").read_text()
+    )
     sources = [
-        ("clubs/fvcc/data/processed/all_seasons_batting.csv", 1982, 1982, 0, 0),
-        ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 7991, 7991, 0, 0),
+        (
+            "clubs/fvcc/data/processed/all_seasons_batting.csv",
+            fvcc_snapshot["processed_rows_per_discipline"],
+            fvcc_snapshot["processed_rows_per_discipline"],
+            0,
+            0,
+        ),
+        ("clubs/georges-river-district/data/processed/all_seasons_batting.csv", 8013, 8013, 0, 0),
         (
             "clubs/georges-river-district/data/processed/supplemental/excel_all_seasons_batting.csv",
             4980,
@@ -260,16 +271,16 @@ def test_fvcc_refresh_preserves_all_historical_batting_keys_and_values() -> None
 def test_fvcc_refresh_has_exact_verified_new_contributions() -> None:
     contributions = []
     for kind, metric, total in [
-        ("batting", "battingAggregate", 1459),
-        ("bowling", "bowlingWickets", 85),
-        ("fielding", "fieldingTotalCatches", 42),
+        ("batting", "battingAggregate", 2002),
+        ("bowling", "bowlingWickets", 112),
+        ("fielding", "fieldingTotalCatches", 53),
     ]:
         frame = pd.read_csv(f"clubs/fvcc/data/processed/all_seasons_{kind}.csv", low_memory=False)
         current = frame.loc[frame["season"].eq("Summer 2026/27")]
-        assert len(frame) == 1982
-        assert len(current) == 70
-        assert current["matches"].sum() == 132
-        assert current["matches"].isin([1, 2, 3, 4]).all()
+        assert len(frame) == 1991
+        assert len(current) == 79
+        assert current["matches"].sum() == 182
+        assert current["matches"].isin([1, 2, 3, 4, 5, 6]).all()
         assert current[metric].sum() == total
         assert current["canonical_player_id"].notna().all()
         assert not current.duplicated(["season_id", "team_id", "player_id"]).any()

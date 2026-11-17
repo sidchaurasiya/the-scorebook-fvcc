@@ -16,6 +16,19 @@ FIELDS = {
 }
 
 
+def filter_club_appearances(appearances: pd.DataFrame, team_ids: set[str]) -> pd.DataFrame:
+    """Keep only appearances for teams in the selected club's official season list.
+
+    A match-centre match can expose both sides. Its source_team_ids field is a
+    match context field, not a safe substitute for the configured club team
+    inventory when building club aggregates.
+    """
+    if appearances.empty or "team_id" not in appearances:
+        return appearances.copy()
+    allowed = {str(value) for value in team_ids}
+    return appearances[appearances["team_id"].astype(str).isin(allowed)].copy()
+
+
 def missing_provider_rows(provider: pd.DataFrame, appearances: pd.DataFrame,
                             source_frames: dict[str, pd.DataFrame], public_ids: set[str],
                             kind: str | None = None, corrections: pd.DataFrame | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -38,19 +51,33 @@ def missing_provider_rows(provider: pd.DataFrame, appearances: pd.DataFrame,
         certificate = (corrections.loc[corrections.discipline.eq(kind) & corrections.team_id.eq(key[0]) &
                                        corrections.source_player_id.eq(key[1]) & corrections.metric.eq('__missing_row__')]
                        if corrections is not None and not corrections.empty else pd.DataFrame())
-        certified = len(certificate)==1 and certificate.iloc[0].evidence_status=='independently_reconciled_scorecard_and_delivery'
-        for discipline,columns in {
+        evidence_status = str(certificate.iloc[0].evidence_status) if len(certificate) == 1 else ""
+        certified = evidence_status in {
+            "independently_reconciled_scorecard_and_delivery",
+            "independently_reconciled_official_scorecard",
+        }
+        source_columns = {
             'batting':['runs_scored','balls_faced','fours_scored','sixes_scored'],
             'bowling':['overs_bowled','runs_conceded','wickets_taken','wides','no_balls'],
             'fielding':['catches','stumpings','run_outs','assisted_run_outs'],
-        }.items():
-            frame=source_frames[discipline]
-            rows=frame[frame.team_id.eq(key[0]) & frame.participant_id.eq(key[1])]
-            if rows[columns].apply(pd.to_numeric,errors='raise').fillna(0).gt(0).any().any() and not certified:
+        }
+        disciplines_to_check = [kind] if kind in source_columns else list(source_columns)
+        for discipline in disciplines_to_check:
+            source_rows = source_frames[discipline]
+            source_rows = source_rows[source_rows.team_id.eq(key[0]) & source_rows.participant_id.eq(key[1])]
+            has_performance = (
+                source_rows[source_columns[discipline]]
+                .apply(pd.to_numeric, errors='raise')
+                .fillna(0)
+                .gt(0)
+                .any()
+                .any()
+            ) if not source_rows.empty else False
+            if has_performance and not certified:
                 raise ValueError('Missing provider performance must be independently reconciled')
-            if discipline=='batting' and not rows.empty:
+            if discipline == 'batting' and not source_rows.empty:
                 from src.data.dismissal_status import batting_innings_mask
-                if batting_innings_mask(rows).any() and not certified:
+                if batting_innings_mask(source_rows).any() and not certified:
                     raise ValueError('Cannot invent a zero-performance row for an actual batting innings')
         context=provider[provider.team_id.eq(key[0])]
         if context.empty:
@@ -66,7 +93,10 @@ def missing_provider_rows(provider: pd.DataFrame, appearances: pd.DataFrame,
             if not set(values).issubset(set(provider.columns)-metadata-{'matches'}):
                 raise ValueError('Source certificate cannot replace identity or team metadata')
             row.update({key:pd.NA if value is None else value for key,value in values.items()})
-            row['source_coverage_note']='Selected-team participation and figures verified from scorecard/deliveries; provider aggregate row absent.'
+            if evidence_status == "independently_reconciled_official_scorecard":
+                row['source_coverage_note']='Selected-team participation and figures verified from the official scorecard; provider aggregate row absent.'
+            else:
+                row['source_coverage_note']='Selected-team participation and figures verified from scorecard/deliveries; provider aggregate row absent.'
         additions.append(row)
     if not additions:
         return provider.copy(),pd.DataFrame()

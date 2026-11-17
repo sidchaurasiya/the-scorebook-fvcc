@@ -32,7 +32,7 @@ def public_performance_frames(
     for frame in frames.values():
         if not frame.empty:
             keys = _keys(frame)
-            protected.update(keys.loc[~public_player_mask(frame)])
+            protected.update(keys.loc[~public_player_mask(frame, club_id)])
     public = {}
     for key, frame in frames.items():
         public[key] = frame.copy() if frame.empty else frame.loc[~_keys(frame).isin(protected)].copy()

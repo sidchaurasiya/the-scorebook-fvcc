@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import subprocess
+from io import BytesIO
 from pathlib import Path
 
 import pandas as pd
@@ -63,10 +64,10 @@ def test_actual_profile_view_has_final_name_and_source_backed_refreshed_statisti
     view = layout.build_player_profile_view.__wrapped__(profile, layout.player_profile_view_signature())
     row = view["career"].iloc[0]
     assert row.Player == "Sunny Somaia"
-    for metric, expected in {"Matches": 276, "Runs": 8495, "Wickets": 26, "Innings": 282, "Not Outs": 31, "100s": 21}.items():
+    for metric, expected in {"Matches": 277, "Runs": 8495, "Wickets": 26, "Innings": 283, "Not Outs": 31, "100s": 21}.items():
         assert row[metric] == expected
     assert view["season_table"].Runs.sum() == 8495
-    assert view["season_table"].Innings.sum() == 282
+    assert view["season_table"].Innings.sum() == 283
     assert all(card["player"] != "Sunil Somaia" for card in layout.player_highlight_cards(view))
     original_career = row.copy()
     original_career["Player"] = "Sunil Somaia"
@@ -80,4 +81,17 @@ def test_identity_mappings_persist_across_weekly_refresh():
     for relative in paths:
         path = ROOT / "clubs" / CLUB / relative
         released = subprocess.check_output(["git", "show", f"{RELEASE}:{path.relative_to(ROOT)}"], cwd=ROOT)
-        assert path.read_bytes() == released
+        if relative != "player_aliases.csv":
+            assert path.read_bytes() == released
+            continue
+
+        released_rows = pd.read_csv(BytesIO(released), dtype=str).fillna("")
+        current_rows = pd.read_csv(path, dtype=str).fillna("")
+        assert len(current_rows) == len(released_rows) + 1
+        pd.testing.assert_frame_equal(current_rows.iloc[:-1].reset_index(drop=True), released_rows)
+        added = current_rows.iloc[-1]
+        assert added["canonical_player_id"] == "raw_9842b38d_712c_411b_8692_92ba5b77308e"
+        assert added["canonical_player_name"] == "Lincoln Martin"
+        assert added["raw_player_id"] == "9842b38d-712c-411b-8692-92ba5b77308e"
+        assert added["is_active"] == "true"
+        assert added["merge_source"] == "verified_source_id_display_name"

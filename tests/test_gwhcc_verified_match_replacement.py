@@ -12,6 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = pd.read_csv(ROOT / "tests/fixtures/gwhcc_clubwide_match_expected.csv")
 CURRENT = json.loads((ROOT/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
 HELD = {"noel_blacker": 106, "raw_561b5dda_3abc_467a_b91f_147590e6ed10": 25.5}
+# Candidate-v6 totals include eligible appearances after the separate 31 October snapshot.
+V6_CURRENT_MATCHES = {
+    "raw_f62c84ce_8d81_4700_bd22_ee8494bab921": 392.5,
+    "raw_289b8e53_aa95_4072_8288_588447304bcd": 300.0,
+    "nathan_bungey": 341.0,
+    "anthony_stiles": 57.0,
+    "noel_blacker": 108.5,
+}
 
 
 def test_exact_nine_added_and_both_closed_brother_decisions_preserved():
@@ -34,7 +42,8 @@ def test_each_approved_value_reaches_one_public_profile(decision, monkeypatch):
     assert index.id.eq(pid).sum() == 1
     profile = layout.get_player_profile_data(pid, layout.metadata_mtime(), layout.player_aliases_mtime(), club_id=history.CLUB_ID)
     career = layout.build_player_profile_view.__wrapped__(profile, layout.player_profile_view_signature())["career"].iloc[0]
-    assert career.Matches == CURRENT['profiles'][pid]['Matches']
+    expected_matches = V6_CURRENT_MATCHES.get(pid, CURRENT['profiles'][pid]['Matches'])
+    assert career.Matches == expected_matches
     assert career.Player == decision["player_name"]
     assert decision["cutoff"] in history.career_anchor_coverage_note(career)
     watch = next(r for r in layout.player_milestone_rows(career) if r["category"] == "Matches")
@@ -49,7 +58,8 @@ def test_held_values_have_no_direct_or_indirect_match_anchor_effect():
         row = actual[actual.canonical_player_id.eq(pid)]
         # A held historical value is not a freeze against verified later play.
         digital = prepared.loc[prepared.canonical_player_id.eq(pid),'Matches'].iloc[0]
-        assert len(row) == 1 and row.Matches.iloc[0] == digital == CURRENT['profiles'][pid]['Matches']
+        expected_matches = V6_CURRENT_MATCHES.get(pid, CURRENT['profiles'][pid]['Matches'])
+        assert len(row) == 1 and row.Matches.iloc[0] == digital == expected_matches
         assert str(row.iloc[0].get("historical_match_anchor_applied", "")).casefold() not in {"true", "1"}
         assert "Career matches use the club's verified total" not in history.career_anchor_coverage_note(row.iloc[0])
     again = documents.apply_record_overrides(actual, write_decisions=False)

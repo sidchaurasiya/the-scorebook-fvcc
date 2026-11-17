@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from scripts import build_club_review_pack
 from scripts.build_club_review_pack import build_strict_duplicate_merge_review
 from scripts import refresh_data
 from src.config.club_config import REPO_ROOT, allow_legacy_fallback, get_processed_path
@@ -64,7 +65,8 @@ def test_ga4_event_params_include_club_context(monkeypatch) -> None:
     assert params["app_area"] == "scorebook"
     assert params["club_id"] == "reynella"
     assert params["club_name"] == "Reynella Cricket Club"
-    assert params["page_name"] == "Hall of Fame"
+    assert params["page_name"] == "Hall Of Fame"
+    assert params["page_title"] == "Hall of Fame"
     assert params["section_name"] == "batting"
 
 
@@ -85,7 +87,12 @@ def test_strict_merge_name_normalization() -> None:
     assert normalize_player_name_for_strict_merge("Gopi Krishna") != normalize_player_name_for_strict_merge("Gopi Krishna Inturi")
 
 
-def test_strict_merge_review_blocks_season_overlap() -> None:
+def test_strict_merge_review_blocks_season_overlap(monkeypatch, tmp_path) -> None:
+    monkeypatch.setattr(
+        build_club_review_pack,
+        "get_mapping_path",
+        lambda *args, **kwargs: tmp_path / "manual_player_merges.csv",
+    )
     frames = {
         "batting": pd.DataFrame(
             [
@@ -104,7 +111,12 @@ def test_strict_merge_review_blocks_season_overlap() -> None:
     assert "Summer 2024/25" in set(manual["overlap_seasons"])
 
 
-def test_strict_merge_review_allows_no_overlap_exact_names() -> None:
+def test_strict_merge_review_allows_no_overlap_exact_names(monkeypatch, tmp_path) -> None:
+    monkeypatch.setattr(
+        build_club_review_pack,
+        "get_mapping_path",
+        lambda *args, **kwargs: tmp_path / "manual_player_merges.csv",
+    )
     frames = {
         "batting": pd.DataFrame(
             [

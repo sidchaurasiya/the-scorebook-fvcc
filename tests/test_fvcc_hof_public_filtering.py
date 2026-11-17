@@ -244,9 +244,9 @@ def test_non_prepared_fvcc_path_filters_before_aggregation(monkeypatch) -> None:
         captured["fielding_raw"] = fielding_raw.copy()
         return pd.DataFrame({"canonical_player_id": [PUBLIC_ID], "Player": ["Public Player"]})
 
-    monkeypatch.setattr(layout, "read_processed_table", lambda name: sources[name].copy())
+    monkeypatch.setattr(layout, "read_processed_table", lambda name, **_kwargs: sources[name].copy())
     monkeypatch.setattr(layout, "normalise_player_names", lambda frame: frame.copy())
-    monkeypatch.setattr(layout, "load_player_aliases", lambda: pd.DataFrame())
+    monkeypatch.setattr(layout, "load_player_aliases", lambda **_kwargs: pd.DataFrame())
     monkeypatch.setattr(layout, "apply_player_identity_mapping", lambda frame, *_args, **_kwargs: frame.copy())
     monkeypatch.setattr(layout, "apply_team_grade_display_columns", lambda frame: frame.copy())
     monkeypatch.setattr(layout, "runtime_identity_maintenance_enabled", lambda: False)
@@ -281,9 +281,9 @@ def test_prepared_fvcc_path_filters_defensively(monkeypatch) -> None:
         "seasons": pd.DataFrame({"id": ["season"]}),
         "players": pd.DataFrame({"player_id": ["public-raw"]}),
     }
-    monkeypatch.setattr(layout, "read_processed_table", lambda name: sources[name].copy())
+    monkeypatch.setattr(layout, "read_processed_table", lambda name, **_kwargs: sources[name].copy())
     monkeypatch.setattr(layout, "normalise_player_names", lambda frame: frame.copy())
-    monkeypatch.setattr(layout, "load_player_aliases", lambda: pd.DataFrame())
+    monkeypatch.setattr(layout, "load_player_aliases", lambda **_kwargs: pd.DataFrame())
     monkeypatch.setattr(layout, "apply_player_identity_mapping", lambda frame, *_args, **_kwargs: frame.copy())
     monkeypatch.setattr(layout, "apply_team_grade_display_columns", lambda frame: frame.copy())
     monkeypatch.setattr(layout, "add_batting_display_columns", lambda frame: frame.copy())
@@ -338,10 +338,11 @@ def test_fvcc_cache_signature_contains_public_filter_policy(monkeypatch) -> None
     assert ("public_filter", hall_of_fame_prepared.FVCC_HOF_PUBLIC_FILTER_VERSION) in signature
 
 
-def test_grdcc_boundary_behavior_is_unchanged() -> None:
+def test_grdcc_current_source_privacy_projection_filters_private_rows() -> None:
     source = category_frame()
     result = layout.filter_public_hall_of_fame_rows(source, "georges-river-district")
-    assert_frame_equal(result.reset_index(drop=True), source.reset_index(drop=True))
+    assert_only_public(result, "canonical_player_name")
+    assert result.canonical_player_id.tolist() == [PUBLIC_ID]
 
 
 def test_gwhcc_existing_public_filter_behavior_is_preserved() -> None:

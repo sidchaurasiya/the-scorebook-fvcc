@@ -20,7 +20,12 @@ from src.data.match_centre_milestones import (
     build_batting_milestones,
     load_scope,
 )
-from src.utils.player_identity import apply_player_identity_mapping, is_private_or_anonymised_player
+from src.utils.player_identity import (
+    apply_player_identity_mapping,
+    filter_public_player_rows,
+    is_private_or_anonymised_player,
+)
+from src.data.grdcc_player_privacy import apply_current_privacy_presentation, resolve_current_privacy
 
 
 EVENT_KEY_COLUMNS = ["match_id", "innings_id", "participant_id"]
@@ -84,7 +89,9 @@ def build_governed_fastest_innings(
         )
     candidates = resolve_candidate_identities(detected.milestones, club_id=club_id)
     candidates = apply_detector_evidence(candidates, detected.validation)
-    governance = govern_fastest_innings_candidates(candidates, detected.validation)
+    governance = govern_fastest_innings_candidates(
+        candidates, detected.validation, club_id=club_id
+    )
     coverage, scorecard_only = build_fastest_innings_coverage(
         processed_root,
         club_team_ids=club_team_ids,
@@ -92,7 +99,10 @@ def build_governed_fastest_innings(
     )
     scorecard_only = resolve_candidate_identities(scorecard_only, club_id=club_id)
     if not scorecard_only.empty:
-        safe_scorecard_only = ~scorecard_only.apply(private_candidate, axis=1)
+        scorecard_only = apply_current_privacy_presentation(scorecard_only, club_id)
+        safe_scorecard_only = ~scorecard_only.apply(
+            lambda row: private_candidate(row, club_id), axis=1
+        )
         safe_scorecard_only &= ~scorecard_only.apply(unresolved_candidate_identity, axis=1)
         scorecard_only = stable_sort(scorecard_only.loc[safe_scorecard_only].copy()).reset_index(drop=True)
     return FastestInningsBuildResult(
@@ -110,18 +120,30 @@ def write_fastest_innings_outputs(
     output: Path,
     validation_dir: Path,
     prefix: str,
+    club_id: str | None = None,
 ) -> None:
     """Write only the compact prepared output and its directly related audits."""
     governance = result.governance
+    published = governance.published
+    audit = governance.audit
+    review = governance.review
+    rejected = governance.rejected
+    scorecard_only = result.scorecard_only_achievements
+    if club_id == "georges-river-district":
+        published = filter_public_player_rows(published, club_id=club_id)
+        audit = filter_public_player_rows(audit, club_id=club_id)
+        review = filter_public_player_rows(review, club_id=club_id)
+        rejected = filter_public_player_rows(rejected, club_id=club_id)
+        scorecard_only = filter_public_player_rows(scorecard_only, club_id=club_id)
     validation_dir.mkdir(parents=True, exist_ok=True)
     output.parent.mkdir(parents=True, exist_ok=True)
-    write_csv_atomic(governance.published, output)
-    write_csv_atomic(governance.audit, validation_dir / f"{prefix}_fastest_innings_validation.csv")
-    write_csv_atomic(governance.review, validation_dir / f"{prefix}_fastest_innings_review_candidates.csv")
-    write_csv_atomic(governance.rejected, validation_dir / f"{prefix}_fastest_innings_rejected_candidates.csv")
+    write_csv_atomic(published, output)
+    write_csv_atomic(audit, validation_dir / f"{prefix}_fastest_innings_validation.csv")
+    write_csv_atomic(review, validation_dir / f"{prefix}_fastest_innings_review_candidates.csv")
+    write_csv_atomic(rejected, validation_dir / f"{prefix}_fastest_innings_rejected_candidates.csv")
     write_csv_atomic(result.coverage, validation_dir / f"{prefix}_fastest_innings_coverage.csv")
     write_csv_atomic(
-        result.scorecard_only_achievements,
+        scorecard_only,
         validation_dir / f"{prefix}_scorecard_only_batting_achievements.csv",
     )
     write_csv_atomic(
@@ -195,6 +217,8 @@ def apply_detector_evidence(candidates: pd.DataFrame, validation: pd.DataFrame) 
 def govern_fastest_innings_candidates(
     candidates: pd.DataFrame,
     detector_validation: pd.DataFrame,
+    *,
+    club_id: str | None = None,
 ) -> FastestInningsGovernanceResult:
     """Classify detector candidates using strict publication governance."""
     if candidates.empty:
@@ -205,6 +229,7 @@ def govern_fastest_innings_candidates(
     for column in [*EVENT_KEY_COLUMNS, "canonical_player_id", "canonical_player_name"]:
         if column not in rows:
             rows[column] = ""
+    rows = apply_current_privacy_presentation(rows, club_id)
     duplicate_keys = rows.duplicated(EVENT_KEY_COLUMNS, keep=False)
     detector_checks = detector_checks_by_event(detector_validation)
     classifications: list[dict[str, object]] = []
@@ -218,7 +243,7 @@ def govern_fastest_innings_candidates(
             reasons.append("missing_event_key")
         if bool(duplicate_keys.iloc[position]):
             reasons.append("duplicate_event")
-        if private_candidate(row):
+        if private_candidate(row, club_id):
             reasons.append("private_or_masked_player")
         if unresolved_candidate_identity(row):
             reasons.append("unresolved_identity")
@@ -484,7 +509,14 @@ def detector_evidence_by_event(validation: pd.DataFrame) -> dict[tuple[str, str,
     return output
 
 
-def private_candidate(row: pd.Series) -> bool:
+def private_candidate(row: pd.Series, club_id: str | None = None) -> bool:
+    current_status, _ = resolve_current_privacy(
+        canonical_player_id=row.get("canonical_player_id", ""),
+        source_participant_id=row.get("participant_id", row.get("raw_player_id", "")),
+        club_id=club_id,
+    )
+    if current_status:
+        return current_status == "private"
     return any(
         is_private_or_anonymised_player(row.get(column))
         for column in ["player_name", "canonical_player_name"]

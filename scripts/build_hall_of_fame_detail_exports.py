@@ -25,6 +25,14 @@ from scripts.club_refresh_utils import add_club_args, get_club_team_ids, print_c
 from src.config.club_config import get_club_name, get_club_short_name, get_hall_of_fame_dir, get_mapping_path, get_processed_match_centre_dir, get_processed_path  # noqa: E402
 from src.data.match_centre_milestones import build_batting_milestones  # noqa: E402
 from src.data.gwhcc_document_overrides import merge_fastest_innings_supplements  # noqa: E402
+from src.data.gwhcc_masked_privacy import (  # noqa: E402
+    HAWKS_CLUB_ID,
+    collect_ambiguous_scorecard_link_keys,
+    is_generic_player_label,
+    mask_hawks_participant_rows,
+    mask_scorecard_record_links,
+    sanitize_hawks_source_frames,
+)
 from src.ui import layout  # noqa: E402
 
 
@@ -71,10 +79,40 @@ def main(argv: list[str] | None = None) -> int:
         print("No match-centre processed scopes found. No Hall of Fame detail exports built.")
         return 1
 
+    hawks_link_keys: set[tuple[str, str]] = set()
+    if club_id == HAWKS_CLUB_ID:
+        hawks_link_keys = collect_ambiguous_scorecard_link_keys(
+            [*frames.get("batting", pd.DataFrame()).to_dict("records"),
+             *frames.get("bowling", pd.DataFrame()).to_dict("records")]
+        )
+        frames = sanitize_hawks_source_frames(frames, club_id=club_id)
+
     batting = profile_exports.prepare_batting(frames, club_id=club_id)
     bowling = profile_exports.prepare_bowling(frames, club_id=club_id)
     fielding = profile_exports.prepare_fielding(frames, club_id=club_id)
     balls = profile_exports.prepare_ball_rows(frames, club_id=club_id)
+
+    link_batting = batting.copy()
+    link_bowling = bowling.copy()
+    if club_id == HAWKS_CLUB_ID:
+        link_batting, _ = mask_hawks_participant_rows(
+            link_batting,
+            id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+        )
+        link_bowling, _ = mask_hawks_participant_rows(
+            link_bowling,
+            id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+        )
+        profile_batting = _exclude_generic_player_rows(link_batting)
+        profile_bowling = _exclude_generic_player_rows(link_bowling)
+        profile_fielding = _exclude_generic_player_rows(fielding)
+        balls, _ = mask_hawks_participant_rows(
+            balls,
+            id_columns=["striker_participant_id", "bowler_participant_id"],
+            name_columns=[],
+        )
+    else:
+        profile_batting, profile_bowling, profile_fielding = batting, bowling, fielding
 
     if club_id == 'georges-river-district':
         from src.utils.player_identity import filter_public_player_rows
@@ -85,13 +123,26 @@ def main(argv: list[str] | None = None) -> int:
         fielding = filter_public_player_rows(fielding)
 
     outputs = {
-        "player_win_rates.csv": build_player_win_rates(frames["matches"], batting, bowling, fielding, club_id=club_id),
-        "player_bbb_batting_rates.csv": build_player_bbb_batting_rates(batting, balls),
-        "player_scorecard_milestones.csv": build_player_scorecard_milestones(batting),
-        "player_bowling_milestones.csv": build_player_bowling_milestones(bowling),
-        "scorecard_record_links.csv": build_scorecard_record_links(batting, bowling),
+        "player_win_rates.csv": build_player_win_rates(frames["matches"], profile_batting, profile_bowling, profile_fielding, club_id=club_id),
+        "player_bbb_batting_rates.csv": build_player_bbb_batting_rates(profile_batting, balls),
+        "player_scorecard_milestones.csv": build_player_scorecard_milestones(profile_batting),
+        "player_bowling_milestones.csv": build_player_bowling_milestones(profile_bowling),
+        "scorecard_record_links.csv": build_scorecard_record_links(link_batting, link_bowling),
         "fastest_batting_milestones.csv": build_fastest_batting_milestones(club_id=club_id),
     }
+    if club_id == HAWKS_CLUB_ID:
+        outputs["scorecard_record_links.csv"], _ = mask_scorecard_record_links(
+            outputs["scorecard_record_links.csv"], hawks_link_keys
+        )
+        outputs["fastest_batting_milestones.csv"], _ = mask_hawks_participant_rows(
+            outputs["fastest_batting_milestones.csv"]
+        )
+    if club_id == "fvcc":
+        from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
+
+        outputs["scorecard_record_links.csv"] = sanitize_fvcc_scorecard_record_links(
+            outputs["scorecard_record_links.csv"], club_id=club_id
+        )
     if club_id == "glen-waverley-hawks":
         from src.data.gwhcc_match_policy import write_weighted_win_rates
 
@@ -103,6 +154,19 @@ def main(argv: list[str] | None = None) -> int:
     for filename, frame in outputs.items():
         print(f"- {output_dir / filename}: {len(frame):,} rows")
     return 0
+
+
+def _exclude_generic_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
+    if frame.empty:
+        return frame.copy()
+    name_columns = [
+        column for column in ("canonical_player_name", "display_player_name", "player_name")
+        if column in frame
+    ]
+    generic = pd.Series(False, index=frame.index)
+    for column in name_columns:
+        generic |= frame[column].map(is_generic_player_label)
+    return frame.loc[~generic].copy()
 
 
 def build_player_win_rates(
@@ -278,12 +342,22 @@ def clean_text(value: object) -> str:
     return "" if text.casefold() in {"", "nan", "none", "nat"} else text
 
 
-def build_player_bbb_batting_rates(batting: pd.DataFrame, balls: pd.DataFrame) -> pd.DataFrame:
+def build_player_bbb_batting_rates(
+    batting: pd.DataFrame,
+    balls: pd.DataFrame,
+    *,
+    include_source_as_recorded: bool = False,
+) -> pd.DataFrame:
     if batting.empty or balls.empty:
         return pd.DataFrame()
     rows = batting.copy()
     rows["career_scope"] = "career"
-    grouped = profile_exports.build_dimension_bbb_batting(rows, balls, "career_scope")
+    grouped = profile_exports.build_dimension_bbb_batting(
+        rows,
+        balls,
+        "career_scope",
+        include_source_as_recorded=include_source_as_recorded,
+    )
     if grouped.empty:
         return pd.DataFrame()
     grouped = grouped.rename(columns={"canonical_player_id": "player_key"})

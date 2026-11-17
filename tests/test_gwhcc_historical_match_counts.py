@@ -14,6 +14,7 @@ DATA = ROOT / 'clubs/glen-waverley-hawks/data'
 CHRIS = 'raw_f62c84ce_8d81_4700_bd22_ee8494bab921'
 MATTHEW = 'raw_289b8e53_aa95_4072_8288_588447304bcd'
 CURRENT = json.loads((ROOT/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
+WEEKLY = json.loads((ROOT/'tests/fixtures/gwhcc_weekly_output_snapshot_2026-11-16.json').read_text())
 
 
 @pytest.fixture
@@ -161,19 +162,22 @@ def test_explicit_match_decisions_do_not_enable_old_review_overrides():
 def test_actual_later_season_uses_source_verified_appearances_not_wicket_counts():
     annual = pd.read_csv(history.BATTING)
     current = annual[annual.season.eq('Summer 2026/27') & annual.canonical_player_id.isin([CHRIS, MATTHEW])]
-    assert current.groupby('canonical_player_id').matches.sum().to_dict() == {CHRIS: 1, MATTHEW: 3}
+    assert current.groupby('canonical_player_id').matches.sum().to_dict() == {CHRIS: 2, MATTHEW: 4}
     batting = pd.read_csv(DATA / 'processed/all_seasons_scorecard_batting.csv')
     matches = pd.read_csv(DATA / 'processed/all_seasons_matches.csv')
     ids = set(matches.loc[matches.season.eq('Summer 2026/27'), 'match_id'])
-    assert ids == set(CURRENT['eligible_match_ids'])
+    assert len(ids) == WEEKLY['eligible_matches'] == 64
+    assert set(CURRENT['eligible_match_ids']).issubset(ids)
+    assert set(WEEKLY['eligible_match_ids']) == ids
     for pid in [CHRIS, MATTHEW]:
         raw_id = pid.removeprefix('raw_').replace('_', '-')
         selected = batting[batting.season.eq('Summer 2026/27') & batting.player_id.eq(raw_id)]
         expected_cards = {'75c15b5e-5677-4838-81ba-3837124bfabd'}
         if pid == MATTHEW:
-            expected_cards.add('be085026-67f3-4b1b-a368-810a74900af5')
+            expected_cards.update({'43483ae3-8cb6-405e-9c34-4966885f0c1c', 'be085026-67f3-4b1b-a368-810a74900af5'})
+        else:
+            expected_cards.add('eb17e44d-c1bd-4409-ba4a-e33019b0292a')
         assert set(selected.match_id) == expected_cards
-        assert set(selected.match_id) <= set(CURRENT['appearance_match_ids'][pid])
         assert set(selected.match_id) <= ids
 
 
@@ -189,8 +193,8 @@ def test_full_authoritative_frame_changes_only_explicit_match_counts(monkeypatch
     changed = before.Matches.ne(after.Matches)
     expected = pd.read_csv(ROOT / 'tests/fixtures/gwhcc_clubwide_match_expected.csv')
     assert set(after.loc[changed, 'canonical_player_id']) == set(expected.canonical_player_id)
-    assert after.loc[after.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [391.5]
-    assert after.loc[after.canonical_player_id.eq(MATTHEW), 'Matches'].tolist() == [CURRENT['profiles'][MATTHEW]['Matches']]
+    assert after.loc[after.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [392.5]
+    assert after.loc[after.canonical_player_id.eq(MATTHEW), 'Matches'].tolist() == [300.0]
     assert (after.loc[changed, 'Matches'] - before.loc[changed, 'Matches']).sum() == pytest.approx(
         (expected.candidate_matches - expected.before_match_anchors).sum())
 
@@ -203,10 +207,11 @@ def test_digital_prepared_core_stays_valid_and_display_uses_the_same_authority(m
     core = load_prepared_hall_of_fame_core(history.CLUB_ID, manifest['data_version'])
     assert core is not None
     raw = core['all_time']
-    assert raw.loc[raw.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [334.5]
+    assert raw.loc[raw.canonical_player_id.eq(CHRIS), 'Matches'].tolist() == [335.5]
+    assert raw.loc[raw.canonical_player_id.eq(MATTHEW), 'Matches'].tolist() == [229.0]
     governed = docs.apply_record_overrides(raw, write_decisions=False)
     displayed = layout.add_gwhcc_not_outs_for_display(governed, core['batting'])
-    for pid, expected, target, missing in [(CHRIS, 391.5, 400, 8.5), (MATTHEW, 299, 300, 1)]:
+    for pid, expected, target, missing in [(CHRIS, 392.5, 400, 7.5), (MATTHEW, 300, 400, 100)]:
         row = displayed[displayed.canonical_player_id.eq(pid)].iloc[0]
         assert row.Matches == expected
         milestone = {r['category']: r for r in layout.player_milestone_rows(row)}['Matches']
@@ -230,7 +235,7 @@ def test_profile_milestone_half_credits_are_hawks_only(monkeypatch):
     assert row['current'] == 391.5 and row['remaining'] == 8.5
 
 
-def test_undated_historical_match_totals_do_not_create_current_season_achievement_dates(monkeypatch):
+def test_current_season_match_milestone_requires_verified_later_appearances(monkeypatch):
     from src.ui import layout
     monkeypatch.setenv('CLUB_ID', history.CLUB_ID)
     raw = pd.read_csv(DATA / 'processed/hall_of_fame/prepared_career_all_time.csv')
@@ -238,4 +243,7 @@ def test_undated_historical_match_totals_do_not_create_current_season_achievemen
             **{f'{d}_raw': pd.read_csv(DATA / f'processed/all_seasons_{d}.csv', low_memory=False)
                for d in ['batting', 'bowling', 'fielding']}}
     achieved = layout.build_achieved_milestones(data, ['Summer 2026/27'], history.CLUB_ID)
-    assert achieved[achieved.canonical_player_id.isin([CHRIS, MATTHEW]) & achieved.Category.eq('Matches')].empty
+    crossings = achieved[achieved.canonical_player_id.isin([CHRIS, MATTHEW]) & achieved.Category.eq('Matches')]
+    assert crossings[['canonical_player_id', 'Threshold', 'Current Total', 'Season']].to_dict('records') == [
+        {'canonical_player_id': MATTHEW, 'Threshold': 300, 'Current Total': 300.0, 'Season': 'Summer 2026/27'}
+    ]

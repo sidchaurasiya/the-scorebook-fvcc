@@ -8161,7 +8161,12 @@ def inject_theme() -> None:
         """,
         unsafe_allow_html=True,
     )
-    st.markdown(active_club_theme_css(), unsafe_allow_html=True)
+    club_styles = active_club_theme_css()
+    if get_active_club_id() == "georges-river-district":
+        from src.ui.grdcc_presentation import premium_css
+        # Keep HTML blocks unindented when combining them in one Markdown slot.
+        club_styles = club_styles.strip() + "\n<style>\n" + premium_css() + "\n</style>"
+    st.markdown(club_styles, unsafe_allow_html=True)
 
 
 def grdcc_hof_refinements_css() -> str:
