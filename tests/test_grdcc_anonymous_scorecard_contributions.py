@@ -506,3 +506,66 @@ def test_scorecard_loader_is_club_scoped_and_privacy_signature_invalidates_cache
     assert len(events) == weekly_source_manifest()["anonymous_scorecard_events"] == 56
     assert events["display_player_name"].eq(PRIVATE_PLAYER_LABEL).all()
     assert layout.load_anonymous_scorecard_contributions("fvcc", ()).empty
+
+
+def test_scorecard_renderer_preserves_melbourne_dates_and_undated_contributions(monkeypatch) -> None:
+    from src.ui import layout
+
+    rows = pd.DataFrame(
+        [
+            {
+                "match_date": "2026-09-26T08:15:00.0000000+10:00",
+                "grade_name": "Fifth Grade",
+                "discipline": "batting",
+                "runs_scored": 15,
+                "balls_faced": 22,
+            },
+            {
+                "match_date": "2026-10-04T08:15:00.0000000+11:00",
+                "grade_name": "Fourth Grade",
+                "discipline": "bowling",
+                "overs_bowled": "3.2",
+                "wickets_taken": 2,
+                "runs_conceded": 19,
+            },
+            {
+                "match_date": pd.NA,
+                "grade_name": "Third Grade",
+                "discipline": "fielding",
+                "catches": 1,
+            },
+            {
+                "match_date": "invalid-date",
+                "grade_name": "Second Grade",
+                "discipline": "batting",
+                "runs_scored": 6,
+                "balls_faced": 10,
+            },
+        ]
+    ).assign(
+        season="Summer 2026/27",
+        team_name="GRDCC",
+        innings_number="1",
+        display_player_name=PRIVATE_PLAYER_LABEL,
+    )
+    monkeypatch.setattr(layout, "get_active_club_id", lambda: "georges-river-district")
+    monkeypatch.setattr(layout, "anonymous_scorecard_contributions_signature", lambda _club_id: ())
+    monkeypatch.setattr(layout, "load_anonymous_scorecard_contributions", lambda _club_id, _signature: rows)
+    markdown = []
+    monkeypatch.setattr(layout.st, "markdown", lambda text, **_kwargs: markdown.append(text))
+    monkeypatch.setattr(layout.st, "caption", lambda _text: None)
+
+    layout.render_anonymous_scorecard_contributions({"season": {"name": "Summer 2026/27"}, "is_all_teams": True})
+
+    cards = markdown[-1]
+    assert cards.count('role="listitem"') == cards.count(PRIVATE_PLAYER_LABEL) == len(rows)
+    assert "26 Sep 2026 · Fifth Grade · GRDCC · Innings 1" in cards
+    assert "04 Oct 2026 · Fourth Grade · GRDCC · Innings 1" in cards
+    assert 'meta">Third Grade · GRDCC · Innings 1' in cards
+    assert 'meta">Second Grade · GRDCC · Innings 1' in cards
+    assert "15 runs · 22 balls" in cards
+    assert "3.2 overs · 2 wickets · 19 runs" in cards
+    assert "1 catches · 0 run outs · 0 stumpings" in cards
+    assert "6 runs · 10 balls" in cards
+    assert "invalid-date" not in cards
+    assert "<a " not in cards and "href=" not in cards

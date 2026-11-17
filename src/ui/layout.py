@@ -2050,8 +2050,12 @@ def render_anonymous_scorecard_contributions(dashboard_data: dict[str, object]) 
         "Official scorecard figures with unresolved identity are shown using a generic label. They are not included in named player career totals and have no player or scorecard links."
     )
     display = rows.copy()
-    display["display_match_date"] = pd.to_datetime(display["match_date"], errors="coerce").dt.strftime("%d %b %Y")
-    display["display_match_date"] = display["display_match_date"].fillna(display["match_date"])
+    display["display_match_date"] = (
+        pd.to_datetime(display["match_date"], format="ISO8601", errors="coerce", utc=True)
+        .dt.tz_convert("Australia/Melbourne")
+        .dt.strftime("%d %b %Y")
+        .fillna("")
+    )
     display["Contribution"] = display.apply(_anonymous_scorecard_contribution_text, axis=1)
     cards = []
     for _, row in display.iterrows():
