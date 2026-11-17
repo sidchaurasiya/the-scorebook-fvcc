@@ -1,6 +1,6 @@
 # Three-Club Weekly Refresh and Release Handover
 
-Updated: 14 November 2026 (Australia/Melbourne)
+Updated: 17 November 2026 (Australia/Melbourne)
 
 This is the operational handover for future GRDCC, Glen Waverley Hawks, and FVCC refreshes. It describes the verified local baseline and existing refresh entry points. It does not authorize a new refresh, publication, push, merge to main, or deployment.
 
@@ -14,7 +14,23 @@ This is the operational handover for future GRDCC, Glen Waverley Hawks, and FVCC
 - The GRDCC reconstruction and all three candidates descend from the rollback. Rejected commits f525fc4, d7eaa15, 7f6d483, and f0695cf are excluded from integration ancestry.
 - Local main, origin/main, and GitHub main were verified at the rollback SHA. No production action was performed.
 
-After this handover is committed, the exact branch tip including documentation is recorded in the restricted final acceptance receipt. Use that receipt to identify the current accepted candidate SHA; do not rely on a branch name alone.
+The 16 November weekly refresh was built locally from **c54cd95f8967ad6d4b4aba5fcaa517b4a9d21320** on branch **data/three-club-weekly-refresh-2026-11-16**. The application/data commit is **287f9c0d4e462413d5a92584ce8c302ef5c9d26a**. This candidate has local regression, privacy, deterministic-build, and browser acceptance only; it has not been pushed, Cloud-staged, or released. It is not a production rollback target or the next refresh baseline until the owner approves it and records the actual approved/deployed SHA.
+
+## Latest local weekly candidate
+
+The frozen candidate cutoffs are GRDCC **16 November 2026 16:51 AEDT**, Hawks **16 November 2026 16:53 AEDT**, and FVCC **16 November 2026 16:56 AEDT**. A read-only PlayCricket recheck on 17 November fetched team-match lists, scorecards, delivery payloads, and aggregate tables. It found no changed fixture inventory, result, scorecard, delivery payload, or aggregate table; the parsed match inventory was unchanged. The new team-list response hashes are recorded in the restricted source receipt.
+
+| Club | Candidate population and totals |
+|---|---|
+| GRDCC | 52 current fixtures (46 completed, six abandoned; 45 statistics-bearing), 2,135 canonical identities and 2,138 governed display records, 2,812 partnerships, and 602 governed fastest-innings rows. The 56 generic scorecard event rows include the 53 recovered source-backed events; the separate verified anonymous fastest-50 event remains unlinked. |
+| Hawks | 64 eligible matches (59 completed, five abandoned with verified play; 14 terminal no-play fixtures excluded), 1,296 public profiles, 3,666 partnership events, and 837 fastest-milestone rows. |
+| FVCC | 17 eligible completed Summer matches, 298 public profiles, 9,811 career appearances, 127,955 runs, 6,839 wickets, 3,687 catches, 1,006 partnerships, 67 verified fastest 50s, two fastest 100s, zero confirmed hat-tricks, and all 669 restored authentic deliveries. |
+
+Current served career anchors in this candidate: GRDCC Mark Burgess 225 runs, Percy Eldridge 2,208 runs/184 incomplete-coverage wickets, Phil Eldridge separate report-only/227 wickets, Nick Condylios 3,539 runs, Ryan Croom 6,209 runs/284 matches, Daniel Yates 491 wickets, Gavin Scott 7,395 runs/497 wickets, Ali Ali 2,232 runs/333 wickets, Peter Remfrey 6,195 runs/19 wickets/393 matches, and Kevin Croom 9,356 runs/5 wickets/444 matches. Hawks Chris Briginshaw 392.5 matches/7,055 runs/35 wickets, Matthew Briginshaw 300/2,430/538, Noel Blacker 108.5 matches, Mujib Timori 25.5, Jarrod Greaves 170, Akshath Mantripragada 47, Sundara Moorthi 4.5, Yojit Sardana 9, Cameron Stow 4.5, Jordin Dias 12, Nathan Bungey 341, and exact-ID alias “Lincoln Martin” 8 matches/203 runs. FVCC Arun Sevugan is 7 runs/2 matches; Vinay Sharma remains 3,985 runs/239 matches.
+
+The new FVCC match's official scorecard total is 150 and its authentic delivery reconstruction is 147; keep the source-as-recorded difference. All previously accepted arithmetic exceptions remain unchanged. GRDCC's 98 Annual Report baseline equations and the 2,703-partnership baseline remain preserved; the current partnership output adds 109 source-eligible events.
+
+GRDCC still uses the exact-ID privacy snapshot verified on 16 November (two public identities and one private identity in its reviewed scope). The 17 November aggregate recheck was byte-identical to the accepted source snapshot and showed no transition in that scope. The latest direct privacy receipt remains dated 16 November; recheck current official privacy evidence again before any Cloud staging or production approval. Across the active trees, FVCC fallback, and four inactive legacy trees, the v8 privacy scan found no generic name/identifier pairs, no further sanitizer changes, and no JSON findings. Historical Git blobs remain under the owner-approved potential-exposure decision.
 
 ## Application and data locations
 
@@ -50,7 +66,7 @@ Club IDs are **georges-river-district**, **glen-waverley-hawks**, and **fvcc**. 
 - Preserve the other verified report anchors: Bruce Carrington 3,524 runs, Peter Huthnance 3,240, Ian Fleming 2,558, Eric Reid 3,790, and Gordon Parsons 2,599. The two Bruce Carrington rows remain separate exact identities; do not merge by name.
 - The accepted partnership snapshot is 2,464 historical plus 239 current-season events through 31 October 2026, 2,703 total. The accepted six-run, six-ball event remains source-as-recorded: official innings 116 and delivery reconstruction 117. Its private partner remains masked and unlinked.
 - The accepted population is 2,125 canonical identities and 2,128 display records, including three report-only entries.
-- Refresh the GRDCC exact-ID privacy snapshot from current official source evidence. Its signature is part of cache invalidation. Do not replace the accepted 31 October cutoff during a handover or integration-only task.
+- Refresh the GRDCC exact-ID privacy snapshot from current official source evidence. Its signature is part of cache invalidation. For a weekly refresh, advance the 31 October cutoff only from a reviewed official-source receipt; for a handover or integration-only task, do not advance it.
 
 ### Glen Waverley Hawks
 
@@ -86,11 +102,12 @@ Run a weekly refresh only after a separate explicit instruction names the baseli
 7. Rebuild scorecard-derived career and match statistics separately from delivery-derived statistics. Preserve historical career-source authority, approved baselines, and original historical rows. Confirm that corrections replace earlier versions idempotently and do not double-count.
 8. Build the club candidate from its frozen source snapshot. Keep candidate roots outside the integration worktree until each club's source and output audit passes.
 9. Rebuild Hall of Fame, Season Overview, Milestones, Player Profile, prepared data, and fallback data using the verified club-aware export path. Confirm club configuration, per-club file resolution, data-version signatures, and privacy-aware cache invalidation.
-10. Run focused source reconciliation, then the full test selections below. Do not convert skipped tests into a pass; mount their pinned source archive or record the exact blocker.
-11. Run two isolated builds with the same source bundle and configuration. Compare file lists and SHA-256 hashes, explain version markers that are intentionally finalized later, and compare prepared/fallback outputs.
-12. Run real Chrome desktop and mobile checks for all four pages and all three clubs. Test cold and warm navigation, exact player search, masked records, source links, and console/page errors.
-13. Produce a per-club and combined change report. Review the public artifact and Git path manifests for private identifiers, restricted receipts, stale links, root fallbacks, and cross-club changes.
-14. Commit only after acceptance. Keep the candidate local until separate owner release approval. Do not push, merge to main, deploy, clear production caches, or enable scheduled refreshes from this procedure.
+10. Run the club-aware generic identity sanitizer after derived exports: **rtk /Users/preetkaur/CodexLocal/venvs/the-scorebook-py314-final-2026-11-14/bin/python scripts/sanitize_public_generic_identity_ids.py --all-public**. The current policy revision is **public-generic-identity-v8**. Verify idempotence, preserved numeric/context projections, and the public privacy scan afterward.
+11. Run focused source reconciliation, then the full test selections below. Do not convert skipped tests into a pass; mount their pinned source archive or record the exact blocker.
+12. Run two isolated builds with the same source bundle and configuration. Compare file lists and SHA-256 hashes, explain version markers that are intentionally finalized later, and compare prepared/fallback outputs.
+13. Run real Chrome desktop and mobile checks for all four pages and all three clubs. Test cold and warm navigation, exact player search, masked records, source links, and console/page errors.
+14. Produce a per-club and combined change report. Review the public artifact and Git path manifests for private identifiers, restricted receipts, stale links, root fallbacks, and cross-club changes.
+15. Commit only after acceptance. Keep the candidate local until separate owner release approval. Do not push, merge to main, deploy, clear production caches, or enable scheduled refreshes from this procedure.
 
 ### Verified refresh entry points
 
@@ -148,13 +165,13 @@ The historical test fixture verifies source hashes and row counts before buildin
 Run these selections from the integration worktree:
 
 ~~~sh
-rtk proxy env SCOREBOOK_MATCH_CENTRE_ROOT=/Users/preetkaur/CodexArchiveRecovery-2026-11-10/data/processed/match_centre SCOREBOOK_GRDCC_CURRENT_MATCH_CENTRE_ROOT=/Users/preetkaur/Documents/Codex/checkpoints/grdcc-archive-policy-audit-2026-11-10/current-season-snapshots/grdcc-summer-2026-27-finalized /Users/preetkaur/CodexLocal/.venv-app/bin/python -m pytest -q -rs tests/test_grdcc*.py tests/test_fastest_innings_governance.py tests/test_fvcc_grdcc_partnerships.py tests/test_fvcc_grdcc_hat_tricks.py tests/test_fvcc_hof_public_filtering.py tests/test_match_centre_milestones.py tests/test_gwhcc_targeted_ui.py tests/test_shared_club_layout_regressions.py
-rtk /Users/preetkaur/CodexLocal/.venv-app/bin/python -m pytest -q -rs tests/test_gwhcc*.py
-rtk proxy env SCOREBOOK_MATCH_CENTRE_ROOT=/Users/preetkaur/CodexArchiveRecovery-2026-11-10/data/processed/match_centre SCOREBOOK_GRDCC_CURRENT_MATCH_CENTRE_ROOT=/Users/preetkaur/Documents/Codex/checkpoints/grdcc-archive-policy-audit-2026-11-10/current-season-snapshots/grdcc-summer-2026-27-finalized /Users/preetkaur/CodexLocal/.venv-app/bin/python -m pytest -q -rs tests/test_fvcc*.py tests/test_hat_tricks.py tests/test_not_outs_visibility.py
-rtk /Users/preetkaur/CodexLocal/.venv-app/bin/python -m pytest -q tests/test_multi_club_onboarding.py tests/test_release_version_tracking.py
+rtk proxy env SCOREBOOK_MATCH_CENTRE_ROOT=/Users/preetkaur/CodexArchiveRecovery-2026-11-10/data/processed/match_centre SCOREBOOK_GRDCC_CURRENT_MATCH_CENTRE_ROOT=/Users/preetkaur/Documents/Codex/checkpoints/grdcc-archive-policy-audit-2026-11-10/current-season-snapshots/grdcc-summer-2026-27-finalized /Users/preetkaur/CodexLocal/venvs/the-scorebook-py314-final-2026-11-14/bin/python -m pytest -q -rs tests/test_grdcc*.py tests/test_fastest_innings_governance.py tests/test_fvcc_grdcc_partnerships.py tests/test_fvcc_grdcc_hat_tricks.py tests/test_fvcc_hof_public_filtering.py tests/test_match_centre_milestones.py tests/test_gwhcc_targeted_ui.py tests/test_shared_club_layout_regressions.py
+rtk /Users/preetkaur/CodexLocal/venvs/the-scorebook-py314-final-2026-11-14/bin/python -m pytest -q -rs tests/test_gwhcc*.py
+rtk proxy env SCOREBOOK_MATCH_CENTRE_ROOT=/Users/preetkaur/CodexArchiveRecovery-2026-11-10/data/processed/match_centre SCOREBOOK_GRDCC_CURRENT_MATCH_CENTRE_ROOT=/Users/preetkaur/Documents/Codex/checkpoints/grdcc-archive-policy-audit-2026-11-10/current-season-snapshots/grdcc-summer-2026-27-finalized /Users/preetkaur/CodexLocal/venvs/the-scorebook-py314-final-2026-11-14/bin/python -m pytest -q -rs tests/test_fvcc*.py tests/test_hat_tricks.py tests/test_not_outs_visibility.py
+rtk /Users/preetkaur/CodexLocal/venvs/the-scorebook-py314-final-2026-11-14/bin/python -m pytest -q tests/test_multi_club_onboarding.py tests/test_release_version_tracking.py
 ~~~
 
-The acceptance run on the application/data baseline passed 362 GRDCC/shared tests, 382 Hawks tests, 167 FVCC tests, and 14 multi-club/version tests; none were skipped after the verified archive roots were supplied. The two archive-focused files passed 21 tests. See the restricted final acceptance receipt for timestamps and exact commands.
+For the 16 November weekly candidate under Python 3.14.2, the final full selections passed 376 GRDCC/shared/archive tests (15 pandas warnings), 401 Hawks tests (three pandas warnings), 181 FVCC tests, and 14 multi-club/version tests. No tests were skipped. The final privacy/cache selection passed 81 tests. Exact commands, durations, and logs are in the restricted checkpoint `three-club-weekly-refresh-2026-11-16/restricted/phase_c_validation/`.
 
 Also verify:
 
@@ -180,21 +197,31 @@ Representative searches: GRDCC Mark Burgess, Percy Eldridge, and Phil Eldridge; 
 - Pin source bundles and configuration before building. Run each club build twice in separate empty output roots. Compare complete relative file lists and SHA-256 hashes; explain any final version marker separately.
 - Preserve the input receipt, the two build manifests, prepared/fallback parity output, privacy snapshot signature, and changed-file manifest in the restricted checkpoint.
 - Never overwrite a candidate output in place. Keep the original approved inputs and each club's candidate directory until the combined acceptance is reviewed.
-- For a local rollback, create a fresh worktree at the exact last accepted integration SHA or the authenticated rollback SHA. Keep main and existing worktrees untouched. The rollback baseline for this integration is **7c893f19328f29c92743b8ac2ee66652ce93670f**.
-- No production state changed during this integration. Before any separately approved deployment, record the currently deployed SHA for each app. If release smoke checks fail, restore that exact previously deployed SHA through the approved hosting workflow; do not clear caches or change production data as a troubleshooting shortcut.
+- The authenticated rollback baseline **7c893f19328f29c92743b8ac2ee66652ce93670f** is a historical Git base, not a privacy-safe production rollback target; restoring its tree can restore older identity fields. The earlier Cloud-staged **d88d3a735010494fe50bd35260fbc7a7f5d1a1c2** predates the v8 privacy revision and this weekly snapshot, so it is not a recovery target for this candidate.
+- The weekly candidate code/data commit **287f9c0d4e462413d5a92584ce8c302ef5c9d26a** is local-only and has not been Cloud-staged. No exact production-safe recovery SHA is established yet. After a candidate is privately staged and approved for production, record its exact SHA as the safe recovery snapshot. If a later release fails, create a new recovery branch and ordinary forward commit/PR that restores the exact approved safe tree, then rerun privacy, statistics, deterministic, prepared/fallback, and browser checks before updating the shared production branch. Do not reset or rewrite history.
+- If deployment is partial across the three apps, record each app's deployed SHA and status. Use a per-app Cloud rollback only when that exact prior deployment is confirmed privacy-safe; otherwise prepare and stage a coordinated forward recovery commit for all three apps. Verify each app serves the same approved recovery SHA before declaring recovery complete. This recovery workflow has not been exercised in production.
+- No production state changed during this refresh. The next private Cloud validation and a production-safe recovery release require separate owner approval; do not clear caches or change production data as a troubleshooting shortcut.
 
 ## Deployment handover
 
-The repository's **STREAMLIT_DEPLOYMENT.md** documents Streamlit Community Cloud, Python 3.12, repository **sidchaurasiya/the-scorebook-fvcc**, branch **main**, and **app_gwhcc.py** for Hawks. Club configs identify **app_grdcc.py** for GRDCC, **app_gwhcc.py** for Hawks, and **app.py** for FVCC.
+The earlier private Streamlit Cloud staging accepted **d88d3a735010494fe50bd35260fbc7a7f5d1a1c2** under Python 3.14.10. The weekly candidate **287f9c0d4e462413d5a92584ce8c302ef5c9d26a** has local acceptance only; its private staging ref and app have not been updated. Do not push or recreate staging resources without separate owner authorization.
 
-The actual hosted project settings for GRDCC and FVCC were not inspected during this local-only task. Before owner production approval, verify each app's hosting project, branch, entrypoint, Python version, club context, and deployed build SHA. Do not assume the Hawks Cloud settings apply to the other clubs. After a separately approved release, run the full desktop/mobile browser checklist against each live app and record the deployed SHA and rollback target. This procedure itself does not push, merge, or deploy.
+Club configs identify **app_grdcc.py** for GRDCC, **app_gwhcc.py** for Hawks, and **app.py** for FVCC. Revalidate all three entrypoints, Python 3.14.10, dependency resolution, private access, current privacy, statistics, and desktop/mobile behavior in private Cloud against the exact candidate SHA before any production approval.
+
+The production apps and remote `main` were not changed by this task. At the last production inventory, the exact deployed SHA for each club still needed independent Cloud build-log confirmation. Before owner production approval, verify each app's hosting project, branch, entrypoint, Python version, club context, access settings, and deployed build SHA. Do not assume one club's Cloud settings apply to another. After a separately approved release, run the full desktop/mobile browser checklist against each live app and record the deployed SHA and safe recovery target. This procedure itself does not push, merge, or deploy.
 
 ## Restricted evidence
 
-The restricted integration checkpoint is:
+The restricted weekly-refresh checkpoint is:
+
+**/Users/preetkaur/Documents/Codex/checkpoints/three-club-weekly-refresh-2026-11-16/restricted/**
+
+It contains the 16 November source bundles, 17 November read-only recheck, per-club reconciliation, v8 privacy scan, deterministic repeat receipts, prepared/fallback comparisons, full test logs, and final Chrome screenshots. Do not stage restricted material in Git.
+
+The earlier restricted integration checkpoint is:
 
 **/Users/preetkaur/Documents/Codex/checkpoints/three-club-integration-2026-11-11/restricted/**
 
 Key records include the final acceptance receipt, source manifest, ancestry and changed-file manifests, GRDCC reconstruction provenance, Hawks assertion reconciliation, placeholder source-context register, prepared/fallback receipts, and integrated Chrome screenshots. Keep them outside public application output and Git.
 
-The exact updated release classification, branch tip, source hashes, test outputs, screenshots, and remaining source/deployment limitations are in **final_acceptance_receipt_2026-11-14.json**.
+The exact local weekly-candidate SHA, source hashes, test outcomes, screenshot receipt, changed-file manifest, privacy findings, and remaining Cloud/recovery limitations are in **phase_c_validation/final_candidate_acceptance_2026-11-17.json** in the restricted weekly-refresh checkpoint. Treat that receipt and the per-club source reports as the evidence for this candidate; do not infer production or Cloud approval from the local branch.
