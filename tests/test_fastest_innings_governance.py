@@ -1,13 +1,19 @@
 from __future__ import annotations
 
+import hashlib
+
 import pandas as pd
 import pytest
 
+from src.data import grdcc_player_privacy as privacy
 from src.data.fastest_innings import (
+    FastestInningsBuildResult,
+    FastestInningsGovernanceResult,
     apply_detector_evidence,
     build_governed_fastest_innings,
     coverage_summary_row,
     govern_fastest_innings_candidates,
+    write_fastest_innings_outputs,
 )
 
 
@@ -102,8 +108,8 @@ def test_impossible_and_private_candidates_are_rejected() -> None:
             candidate(
                 match_id="match-2",
                 innings_id="innings-2",
-                participant_id="00000000-0000-0000-0000-000000000001",
-                canonical_player_id="raw_00000000_0000_0000_0000_000000000001",
+                participant_id="00000000-0000-0000-0000-000000000042",
+                canonical_player_id="raw_00000000_0000_0000_0000_000000000042",
                 player_name="********",
                 canonical_player_name="********",
             ),
@@ -116,6 +122,75 @@ def test_impossible_and_private_candidates_are_rejected() -> None:
     assert len(result.rejected) == 2
     assert result.rejected["reason_codes"].str.contains("exceeds_final_balls").any()
     assert result.rejected["reason_codes"].str.contains("private_or_masked_player").any()
+
+
+def test_grdcc_fastest_diagnostics_omit_current_private_identity(tmp_path, monkeypatch) -> None:
+    club = "georges-river-district"
+    snapshot_path = tmp_path / "privacy.csv"
+    pd.DataFrame(
+        [
+            {
+                "canonical_player_id_sha256": hashlib.sha256(b"private-canonical").hexdigest(),
+                "source_participant_id_sha256": hashlib.sha256(b"private-source").hexdigest(),
+                "status": "private",
+                "public_name": "",
+                "verified_at": "2026-11-10T00:00:00+00:00",
+                "source": "focused privacy test",
+                "source_record_sha256": "a" * 64,
+                "source_payload_sha256": "b" * 64,
+            }
+        ],
+        columns=privacy.SNAPSHOT_COLUMNS,
+    ).to_csv(snapshot_path, index=False)
+    monkeypatch.setattr(privacy, "SNAPSHOT_PATH", snapshot_path)
+    privacy._load_snapshot.cache_clear()
+    privacy._status_index_for_signature.cache_clear()
+
+    governed = govern_fastest_innings_candidates(
+        pd.DataFrame(
+            [
+                candidate(
+                    participant_id="private-source",
+                    canonical_player_id="private-canonical",
+                    player_name="Stale Public Name",
+                    canonical_player_name="Stale Public Name",
+                )
+            ]
+        ),
+        pd.DataFrame(),
+        club_id=club,
+    )
+    assert len(governed.rejected) == 1
+    result = FastestInningsBuildResult(
+        governance=governed,
+        detector_validation=pd.DataFrame(),
+        coverage=pd.DataFrame(),
+        scorecard_only_achievements=pd.DataFrame(),
+        scopes=(),
+    )
+
+    write_fastest_innings_outputs(
+        result,
+        output=tmp_path / "published.csv",
+        validation_dir=tmp_path / "validation",
+        prefix="grdcc",
+        club_id=club,
+    )
+
+    audit = pd.read_csv(tmp_path / "validation/grdcc_fastest_innings_validation.csv")
+    rejected = pd.read_csv(tmp_path / "validation/grdcc_fastest_innings_rejected_candidates.csv")
+    assert audit.empty and rejected.empty
+
+    write_fastest_innings_outputs(
+        result,
+        output=tmp_path / "fvcc-published.csv",
+        validation_dir=tmp_path / "fvcc-validation",
+        prefix="fvcc",
+        club_id="fvcc",
+    )
+    other_club_audit = pd.read_csv(tmp_path / "fvcc-validation/fvcc_fastest_innings_validation.csv")
+    assert len(other_club_audit) == 1
+    assert other_club_audit.canonical_player_id.tolist() == ["private-canonical"]
 
 
 def test_scorecard_only_candidate_is_review_only() -> None:

@@ -24,6 +24,49 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+
+def prepare_core_export_frames(club_id: str, historical: dict[str, object], layout_module) -> dict[str, object]:
+    frames = {
+        "batting": historical["batting"],
+        "bowling": historical["bowling"],
+        "fielding": historical["fielding"],
+        "all_time": historical["all_time"],
+    }
+    if club_id != "georges-river-district":
+        return frames
+
+    from src.data.grdcc_career_refresh import (
+        apply_reviewed_playcricket_career_exceptions,
+        mask_unapproved_playcricket_exception_metrics,
+    )
+
+    for category in ("batting", "bowling", "fielding"):
+        frames[category] = mask_unapproved_playcricket_exception_metrics(frames[category], club_id)
+    all_time = layout_module.apply_featured_record_overrides(
+        frames["all_time"].copy(), club_id=club_id, add_missing_players=True
+    )
+    all_time = layout_module.add_club_not_outs_for_display(all_time, frames["batting"], club_id)
+    frames["all_time"] = apply_reviewed_playcricket_career_exceptions(all_time, club_id)
+    return frames
+
+
+def sanitize_core_export_frames(club_id: str, frames: dict[str, object]) -> dict[str, object]:
+    """Apply the public identity projection to every prepared career frame."""
+    from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+    output: dict[str, object] = {}
+    for key, frame in frames.items():
+        if not hasattr(frame, "copy"):
+            output[key] = frame
+            continue
+        safe, _ = sanitize_public_identity_frame(
+            frame.copy(),
+            club_id=club_id,
+            relative_path=f"hall_of_fame/prepared_career_{key}.csv",
+        )
+        output[key] = safe
+    return output
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     club_id = resolve_club_id(args.club)
@@ -57,12 +100,10 @@ def main(argv: list[str] | None = None) -> int:
     written = write_prepared_hall_of_fame_core(
         club_id,
         layout.HALL_OF_FAME_DATA_VERSION,
-        {
-            "batting": historical["batting"],
-            "bowling": historical["bowling"],
-            "fielding": historical["fielding"],
-            "all_time": historical["all_time"],
-        },
+        sanitize_core_export_frames(
+            club_id,
+            prepare_core_export_frames(club_id, historical, layout),
+        ),
         best_batting,
         best_bowling,
         output_dir=output_dir,

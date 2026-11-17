@@ -92,6 +92,7 @@ def prepare(*, runs: tuple[int, int] = (40, 60), pair_ids: tuple[str, str] = ("p
         innings=innings,
         selected_team_ids_by_match={"match-1": {"hawks"}},
         identity_lookup=default_identity if identity is None else identity,
+        club_id="glen-waverley-hawks",
     )
 
 
@@ -180,6 +181,7 @@ def test_mismatched_innings_total_is_not_published() -> None:
         innings=innings,
         selected_team_ids_by_match={"match-1": {"hawks"}},
         identity_lookup=identity,
+        club_id="glen-waverley-hawks",
     )
     assert result.events.empty
     assert result.audit["validation_status"].eq("REVIEW").all()
@@ -385,10 +387,10 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     events = pd.read_csv(PROCESSED / "partnerships" / "partnership_events.csv", low_memory=False)
     records = pd.read_csv(PROCESSED / "hall_of_fame" / "partnership_records.csv", low_memory=False)
     validation = pd.read_csv(PROCESSED / "validation" / "gwhcc_partnership_validation.csv")
-    assert len(events) == 3565
+    assert len(events) == 3666
     assert events["privacy_status"].value_counts().to_dict() == {
-        "PUBLIC_PUBLIC": 3525,
-        "PUBLIC_PRIVATE": 40,
+        "PUBLIC_PUBLIC": 3621,
+        "PUBLIC_PRIVATE": 45,
     }
     historical = events[events["season"].ne("Summer 2026/27")]
     assert len(historical) == 3350
@@ -407,7 +409,7 @@ def test_deployed_partnership_outputs_are_public_and_validated() -> None:
     assert len(protected_slots) == len(private_rows)
     assert protected_slots.fillna("").eq("").all()
     assert events["wicket_ordinal_status"].value_counts().to_dict() == {
-        "CONFIRMED": 3191,
+        "CONFIRMED": 3292,
         "REVIEW": 374,
     }
     assert records["wicket_ordinal_status"].eq("CONFIRMED").all()

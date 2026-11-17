@@ -73,6 +73,7 @@ def run_build(dry_run: bool = False, *, output_dir: Path | None = None) -> int:
         output=output,
         validation_dir=validation,
         prefix="fvcc",
+        club_id=CLUB_ID,
     )
     governance = result.governance
     print(

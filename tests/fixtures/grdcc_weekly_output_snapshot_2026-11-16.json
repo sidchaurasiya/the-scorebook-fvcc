@@ -1,0 +1,118 @@
+{
+  "snapshot": "GRDCC generated weekly output fingerprint, source cutoff 2026-11-16",
+  "club_id": "georges-river-district",
+  "partnership_reconciliation_receipt_sha256": "0b2030c354d3b5d941ba9146f4461c4bcd93d87bc4f67d15460ab2f524c5c140",
+  "match_centre_receipt_sha256": "38eb3c7f4df7acece64552c447b8ce7d4d2fab19afb9297b0c086236d9fdd246",
+  "stat_rows_per_discipline": 8013,
+  "current_stat_rows_per_discipline": 224,
+  "zero_activity_current_rows_removed": 5,
+  "current_match_count": 52,
+  "completed_matches": 46,
+  "abandoned_matches": 6,
+  "statistics_bearing_matches": 45,
+  "unique_match_centre_ids": 2656,
+  "canonical_identity_count": 2135,
+  "governed_display_record_count": 2138,
+  "new_source_verified_canonical_identities": 10,
+  "current_privacy_status_counts": {
+    "public": 2,
+    "private": 1
+  },
+  "exclusive_membership_counts": {
+    "runs": 211,
+    "wickets": 95,
+    "matches": 85,
+    "catches": 12
+  },
+  "baseline_partnerships": 2703,
+  "new_partnerships": 109,
+  "events": 2812,
+  "partnerships_sha256": "7892961bb8e7594f86b63ef5da9f5d5e97ea1a111656a73da440e651004c0049",
+  "record_rows": 10,
+  "partnership_records_sha256": "b2fc003f656016e8c9d4b318c3b8230c8f4469875497ae0c0c18a8b88c783f98",
+  "PUBLIC_PUBLIC": 2666,
+  "PUBLIC_PRIVATE": 146,
+  "PRIVATE_PRIVATE": 0,
+  "anonymous_scorecard_events": 56,
+  "anonymous_scorecard_events_sha256": "80be114de6f5a0a2368569d692d787170bc6e60ba531f5d87b12ad8c8e3c15ef",
+  "source_cutoff_melbourne": "2026-11-16T16:51:08.283782+11:00",
+  "career_anchors": {
+    "Mark Burgess": {
+      "runs": 225
+    },
+    "Percy Eldridge": {
+      "runs": 2208,
+      "wickets": 184
+    },
+    "Phil Eldridge": {
+      "report_only": true,
+      "wickets": 227
+    },
+    "Nick Condylios": {
+      "runs": 3539
+    },
+    "Ryan Croom": {
+      "matches": 284,
+      "runs": 6209
+    },
+    "Daniel Yates": {
+      "wickets": 491
+    },
+    "Gavin Scott": {
+      "matches": 322,
+      "runs": 7395,
+      "wickets": 497
+    },
+    "Ali Ali": {
+      "matches": 282,
+      "runs": 2232,
+      "wickets": 333
+    },
+    "Peter Remfrey": {
+      "matches": 393,
+      "runs": 6195,
+      "wickets": 19
+    },
+    "Kevin Croom": {
+      "matches": 444,
+      "runs": 9356,
+      "wickets": 5
+    }
+  },
+  "derived_public_output_rows": {
+    "fastest_batting_milestones": 602,
+    "player_scorecard_milestones": 1059,
+    "player_win_rates": 1089,
+    "scorecard_record_links": 37674,
+    "batting_position_summary": 4337,
+    "bowling_phase_summary": 852,
+    "dismissal_fingerprint_summary": 3055,
+    "performance_breakdown_by_dimension": 49897,
+    "recent_form_batting": 22936,
+    "recent_form_bowling": 14660,
+    "bbb_batting_rates_by_scope": 1052,
+    "bbb_bowling_dot_rates_by_scope": 765,
+    "scorecard_batting_milestones_by_scope": 5294,
+    "scorecard_bowling_milestones_by_scope": 3682,
+    "season_by_round_scorecards": 2656
+  },
+  "premiership_match_count": 16,
+  "premiership_match_ids": [
+    "0310fb37-6439-4c36-8acd-519400244bba",
+    "15437118-390d-4a2d-a433-7a301e4f09ba",
+    "1f387468-81d6-4459-9962-35fd64dd9b71",
+    "207a9629-8867-4850-b493-50bf0182bbce",
+    "3d9f87cb-01b9-4ada-b8e8-00436fee077d",
+    "48c02648-e9de-4029-b7b9-fa6691bc393a",
+    "5158232c-7923-483e-b5ec-584f23702c01",
+    "72778169-b055-4320-a382-7b7d4d42a50b",
+    "7f26d501-112a-4f5c-8974-a3b13bca6e91",
+    "a8ec2dfe-3d7b-46c1-b552-ce3067b166b2",
+    "b6aba9e3-19a9-4c69-9389-bcc818e84dc5",
+    "c9781c8d-f443-408d-bdaa-ce6a50b392c3",
+    "dbd93ffd-5dc3-4b46-95f7-f8da851c2e05",
+    "e06a46d4-74ce-4f0b-bbbd-7d24d3270d99",
+    "e5c28182-4336-4add-a05e-bcd489c59ab1",
+    "fa1cc5f2-19ae-4c27-b4b8-7c0ba9d70462"
+  ]
+}

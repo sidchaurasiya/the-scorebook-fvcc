@@ -116,9 +116,10 @@ def test_closed_customer_decisions_and_private_filtering_remain_unchanged() -> N
     frame = authoritative_frame()
     expected = {
         "Greg Mccormick": (427.0, 8664.0, 393.0, 87.0),
-            # Current-season 1st XI scorecard: one non-T20 appearance and 1 not-out run.
-            "James Anderson": (110.0, 301.0, 3.0, 114.0),
-        "Kashif Javed": (156.5, 3550.0, 6.0, 34.0),
+        # Seven later eligible matches add one T20 appearance and 29 runs to James.
+        "James Anderson": (112.5, 330.0, 3.0, 118.0),
+        # The added 2026/27 scorecard eb17e44d contributes one match and 15 runs.
+        "Kashif Javed": (157.5, 3565.0, 6.0, 34.0),
     }
     for name, values in expected.items():
         row = frame[frame["Player"].astype(str).str.casefold().eq(name.casefold())].iloc[0]
@@ -179,6 +180,6 @@ def test_governed_replacements_recompute_hof_rankings_without_double_counting() 
         assert rank_for(after, metric, player["canonical_player_id"]) == int(ahead.sum()) + 1
     assert (after["canonical_player_id"].eq("paul_young")).sum() == 1
     assert (after["canonical_player_id"].eq("raw_e8f5b374_e618_4735_9419_cc4e8c4511e8")).sum() == 1
-    assert float(after.loc[after["Player"].eq("Chris Briginshaw"), "Runs"].iloc[0]) == 7051.0
-    assert float(after.loc[after["Player"].eq("Matthew Briginshaw"), "Wickets"].iloc[0]) == 536.0
+    assert float(after.loc[after["Player"].eq("Chris Briginshaw"), "Runs"].iloc[0]) == 7055.0
+    assert float(after.loc[after["Player"].eq("Matthew Briginshaw"), "Wickets"].iloc[0]) == 538.0
     assert after["canonical_player_id"].nunique() == before["canonical_player_id"].nunique()

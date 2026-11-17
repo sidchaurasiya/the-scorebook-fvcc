@@ -1,0 +1,96 @@
+{
+  "snapshot": "FVCC Summer 2026/27 weekly output fingerprint, 16 November 2026",
+  "club_id": "fvcc",
+  "cutoff_melbourne": "2026-11-16T16:56:38.704548+11:00",
+  "source_receipt_sha256": "949cfdeb5a6cca21c202f11af01c317e867790199219402cc64412dc5d8f101a",
+  "aggregate_receipt_sha256": "b41a9182c9ac563676e73ba1b8ca9c51e96c6306b9db0d1de6d6bc160eb6bbd3",
+  "deterministic_build_receipt_sha256": "fcc3e6ffeed41d524fae74a923c022828f79977f527f7420c2d3631dea90269e",
+  "selected_source_matches": 21,
+  "eligible_completed_matches": 17,
+  "new_match_ids": [
+    "8690c5cd-0280-43d7-936e-b76c3162246e"
+  ],
+  "excluded_cancelled_or_no_play_matches": 4,
+  "public_profiles": 298,
+  "processed_rows_per_discipline": 1991,
+  "current_rows_per_discipline": 79,
+  "current_appearance_sum": 182,
+  "current_scorecard_rows": {
+    "batting": 193,
+    "bowling": 118,
+    "fielding": 54
+  },
+  "anonymous_scorecard_rows": {
+    "batting": 8,
+    "bowling": 4,
+    "fielding": 1
+  },
+  "anonymous_scorecard_figures": {
+    "batting_dismissals": {
+      "did not bat": 3,
+      "Caught": 2,
+      "Lbw": 2,
+      "not out": 1
+    },
+    "batting_numeric_totals": {
+      "runs": 31,
+      "balls": 88,
+      "fours": 3,
+      "sixes": 0
+    },
+    "bowling_numeric_totals": {
+      "overs": 22,
+      "maidens": 3,
+      "runs_conceded": 59,
+      "wickets": 4,
+      "wides": 3,
+      "no_balls": 3
+    },
+    "fielding_numeric_totals": {
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 1
+    }
+  },
+  "new_public_identity_anchor": {
+    "Arun Sevugan": {
+      "runs": 7,
+      "matches": 2,
+      "new_match_runs": 6,
+      "baseline_runs_before_new_match": 1,
+      "new_match_id": "8690c5cd-0280-43d7-936e-b76c3162246e"
+    }
+  },
+  "six_appearance_provider_exceptions": {
+    "records": 2,
+    "provider_aggregate_matches": 7,
+    "verified_scorecard_appearances": 6,
+    "policy": "The finalized public scorecard participant count governs FVCC appearances; the raw provider aggregate count is retained separately."
+  },
+  "current_runs": 2002,
+  "current_wickets": 112,
+  "current_catches": 53,
+  "processed_file_sha256": {
+    "all_seasons_batting.csv": "b9c1bb090aef91eebac538f0f7405349e1abd33c97b8125a186078197e7f532a",
+    "all_seasons_bowling.csv": "5c54296efc034f801bbffc1ed8a3c7b78b36fe54e9cc1e41a0a12cfa383fef5a",
+    "all_seasons_fielding.csv": "2eaf053c2df4a17f2537a05c1157f92d6cd4a01954b25bca13922a1ca4bd3c5d"
+  },
+  "career_appearances": 9811,
+  "career_runs": 127955,
+  "career_wickets": 6839,
+  "career_catches": 3687,
+  "partnerships": 1006,
+  "partnerships_sha256": "e658e32a0996d9270142999d01381a4d9f39f7008b2f2912f0b0cba0a063ef3e",
+  "fastest_milestone_rows": 230,
+  "verified_fastest_50s": 67,
+  "verified_fastest_100s": 2,
+  "confirmed_hat_tricks": 0,
+  "restored_authentic_delivery_rows": 669,
+  "new_match_source_exception": {
+    "match_id": "8690c5cd-0280-43d7-936e-b76c3162246e",
+    "scorecard_runs": 150,
+    "verified_delivery_runs": 147,
+    "difference": -3,
+    "policy": "owner_approved_source_as_recorded"
+  }
+}

@@ -525,9 +525,9 @@
   "players_fetched": 1713,
   "teams_fetched": 445,
   "stat_rows": {
-    "batting": 7991,
-    "bowling": 7991,
-    "fielding": 7991
+    "batting": 8013,
+    "bowling": 8013,
+    "fielding": 8013
   },
   "live_requests": 44,
   "cache_hits": 1324,
@@ -539,12 +539,13 @@
     "Summer2026/27 incremental snapshot checked2026-10-11 04:00 Australia/Melbourne; prior full-refresh timestamps and request counters retained as historical provenance.",
     "End-of-day11October delta: two finalized matches added after the preserved04:00snapshot; only two affected-team aggregates fetched.",
     "GRDCC 24 October 2026 candidate: only governed current-season partitions were updated; historical sufficient statistics and source mappings were retained.",
-    "GRDCC 24 October 2026 candidate: only governed current-season partitions were updated; historical sufficient statistics and source mappings were retained."
+    "GRDCC 24 October 2026 candidate: only governed current-season partitions were updated; historical sufficient statistics and source mappings were retained.",
+    "GRDCC weekly source snapshot through 16 November 2026 was reconciled from exact official participant, team, match, and scorecard IDs; all 2,604 authenticated historical match rows remain preserved."
   ],
-  "last_refreshed_at": "2026-10-17T13:06:16.661090+00:00",
+  "last_refreshed_at": "2026-11-16T05:51:08.283782+00:00",
   "incremental_refresh": {
     "season": "Summer 2026/27",
-    "cutoff": "2026-10-31",
+    "cutoff": "2026-11-16",
     "timezone": "Australia/Sydney",
     "teams": 13,
     "finalized_match_ids": [
@@ -558,7 +559,10 @@
       "341adaa3-df9e-4c23-8b2b-1ffb2e22ef71",
       "3467679e-4fb9-4bca-a042-4887eae93748",
       "3d5e24ac-f5a4-4532-a48b-369612a22c29",
+      "3de3798a-e672-46de-85e5-fc3dcd7d9b4a",
       "3f887215-ffd6-481f-89da-ed4b6a2f9dd6",
+      "422922d0-28ee-422f-a0de-9367bfcc5e78",
+      "46a7a12c-9eab-4f54-8cbf-fa58dc4b17af",
       "4b964016-7ace-481a-a3aa-a708ea792799",
       "55d3f1c8-da78-4889-b940-e96bd6188455",
       "5810993c-e198-413c-bdb9-1f9b798a32d1",
@@ -570,30 +574,47 @@
       "6c4c42c4-b522-4e4d-9a72-675ce0754ba3",
       "6e5c94a0-4646-41af-bed0-e179dcfa9bff",
       "842a865f-54a8-4369-9d60-f531087376c2",
+      "86186bb4-99ea-4fc2-9f4d-87fa5bef535f",
+      "8693da0c-dd3a-48b8-8fe4-19d16cd5d62f",
       "8d743e57-6081-43b1-97ac-3766b4cca7f8",
       "8ff6a140-b3f2-4e10-a7be-990d1fac6294",
       "91188b6c-338d-460c-9209-7865f09302b6",
+      "9a032fa5-53aa-4901-b417-f9202fb3a1ef",
       "9ccc8770-251f-4e54-8454-61f1f6d61f92",
       "9f638d82-f963-4eec-be14-a1a952342446",
+      "a2962bc1-e929-426d-8db9-d25c0a02cc7a",
       "a666f403-4220-4d3a-b901-f98c56fc3409",
       "a9efa4c3-3a3b-49ec-ac99-d8bfeb848df0",
       "b0868e4e-5bae-4582-9ac7-01cba8cb58ba",
+      "b438232f-ebf0-4088-8f77-3dcca5e189a9",
+      "b7d6e1f5-bda4-468f-b408-e60b42606f32",
       "c1166912-1497-4fb6-a704-0d5e4360cce6",
       "c2d1c29d-0374-4fbf-922f-8394c7b71c09",
       "c35d1927-65ae-4229-b6df-8ca0e738f2ef",
+      "c62d1f1e-88e4-4b90-a030-8e78981e9237",
       "c78672a0-3f9f-4a04-ab1f-ea873824e1e4",
       "d6a310db-eb24-4e9a-b9df-7c99ed822edd",
+      "d8e91949-d436-4e7e-958f-7f3be7741362",
       "dc81a446-d4a1-4f64-8d62-55c1faf69491",
+      "ea52e638-cf81-4d15-91f9-5921eb9eb629",
       "ebd65094-52a8-4c4a-898b-a242b86fed7d",
-      "f7b7c018-5460-45b1-952b-4ef5496107c4"
+      "f7b7c018-5460-45b1-952b-4ef5496107c4",
+      "fac5b434-2ce6-47e1-b3a2-d328aaa04b38",
+      "ff064b6f-0b71-4f32-b92c-f105d73c6473"
     ],
-    "source_snapshot_checked_at": "2026-11-01T05:31:52.135557+00:00",
+    "source_snapshot_checked_at": "2026-11-16T05:51:08.283782+00:00",
     "historical_match_ids_retained": 2604,
-    "unique_match_centre_ids": 2642,
-    "statistics_bearing_matches": 31,
-    "cutoff_coverage": "Official finalized fixtures scheduled through 31 October 2026; source and aggregate retrieval timestamps are recorded in the external checkpoint. Previously approved, bounded opponent-scorecard exceptions remain documented.",
+    "unique_match_centre_ids": 2656,
+    "statistics_bearing_matches": 45,
+    "cutoff_coverage": "Official GRDCC Summer 2026/27 source snapshot retrieved 16 November 2026; 46 completed results and six abandoned fixtures. One abandoned fixture has verified GRDCC play; five are no-play for GRDCC. The 31 October accepted baseline and all historical rows are retained.",
     "discovery_cutoff_sydney": "2026-11-01T16:31:52.135557+11:00",
-    "public_privacy_policy": "Approved public historical profiles retained; masked performances excluded"
+    "public_privacy_policy": "Approved public historical profiles retained; masked performances excluded",
+    "source_cutoff_melbourne": "2026-11-16T16:51:08.283782+11:00",
+    "source_receipt_sha256": "38eb3c7f4df7acece64552c447b8ce7d4d2fab19afb9297b0c086236d9fdd246",
+    "current_source_match_count": 52,
+    "completed_match_count": 46,
+    "abandoned_match_count": 6,
+    "verified_ball_payload_matches": 37
   },
   "previous_full_refresh_counts": {
     "players": 1650,
@@ -604,5 +625,6 @@
       "fielding": 7789
     }
   },
-  "last_successful_incremental_refresh_time": "2026-11-01T05:31:52.135557+00:00"
+  "last_successful_incremental_refresh_time": "2026-11-16T05:51:08.283782+00:00",
+  "public_generic_identity_revision": "public-generic-identity-v8"
 }

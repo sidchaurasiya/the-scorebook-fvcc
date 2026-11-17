@@ -1,16 +1,16 @@
 canonical_player_id,canonical_player_name,display_player_name,match_id,match_date,order_sort,display_value,chip_classes,discipline
-raw_00000000_0000_0000_0000_000000000001,********,********,fc789240-f7f8-4a9e-b76a-ea719c5885dc,2025-12-13 01:30:00+00:00,7,0/21,quiet,bowling
-raw_00000000_0000_0000_0000_000000000002,********,********,81d22cd1-0f50-4e64-be5f-21619407e65d,2025-12-06 01:30:00+00:00,5,1/18,,bowling
-raw_00000000_0000_0000_0000_000000000001,********,********,81d22cd1-0f50-4e64-be5f-21619407e65d,2025-12-06 01:30:00+00:00,6,0/14,quiet,bowling
-raw_00000000_0000_0000_0000_000000000005,********,********,fc9612a0-2ff7-4c9c-8f6b-04b74bf61a34,2025-03-01 01:30:00+00:00,5,0/28,quiet,bowling
-raw_00000000_0000_0000_0000_000000000002,********,********,f6698954-ed5f-4ec1-a056-e8df346efad6,2025-01-18 01:30:00+00:00,7,2/16,,bowling
-raw_00000000_0000_0000_0000_000000000003,********,********,f6698954-ed5f-4ec1-a056-e8df346efad6,2025-01-18 01:30:00+00:00,8,0/20,quiet,bowling
-raw_00000000_0000_0000_0000_000000000001,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,3,1/17,,bowling
-raw_00000000_0000_0000_0000_000000000002,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,4,1/27,,bowling
-raw_00000000_0000_0000_0000_000000000004,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,8,0/27,quiet,bowling
-raw_00000000_0000_0000_0000_000000000003,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,9,0/17,quiet,bowling
-raw_00000000_0000_0000_0000_000000000001,********,********,d41400fd-2205-4f03-bf08-b781d5dd8ffa,2024-11-23 01:30:00+00:00,2,0/17,quiet,bowling
-raw_00000000_0000_0000_0000_000000000001,********,********,82b0e3ea-86cf-4c86-b81b-b2715127e2c7,2024-11-16 01:30:00+00:00,9,1/11,,bowling
+,********,********,fc789240-f7f8-4a9e-b76a-ea719c5885dc,2025-12-13 01:30:00+00:00,7,0/21,quiet,bowling
+,********,********,81d22cd1-0f50-4e64-be5f-21619407e65d,2025-12-06 01:30:00+00:00,5,1/18,,bowling
+,********,********,81d22cd1-0f50-4e64-be5f-21619407e65d,2025-12-06 01:30:00+00:00,6,0/14,quiet,bowling
+,********,********,fc9612a0-2ff7-4c9c-8f6b-04b74bf61a34,2025-03-01 01:30:00+00:00,5,0/28,quiet,bowling
+,********,********,f6698954-ed5f-4ec1-a056-e8df346efad6,2025-01-18 01:30:00+00:00,7,2/16,,bowling
+,********,********,f6698954-ed5f-4ec1-a056-e8df346efad6,2025-01-18 01:30:00+00:00,8,0/20,quiet,bowling
+,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,3,1/17,,bowling
+,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,4,1/27,,bowling
+,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,8,0/27,quiet,bowling
+,********,********,01da8d9c-aefd-4351-a684-0df9cfe774cd,2024-12-14 01:30:00+00:00,9,0/17,quiet,bowling
+,********,********,d41400fd-2205-4f03-bf08-b781d5dd8ffa,2024-11-23 01:30:00+00:00,2,0/17,quiet,bowling
+,********,********,82b0e3ea-86cf-4c86-b81b-b2715127e2c7,2024-11-16 01:30:00+00:00,9,1/11,,bowling
 raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,d084e880-ce48-4301-930f-40b242dced06,2018-02-10 13:00:00+00:00,5,0/7,quiet,bowling
 raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,f7e11055-31e5-489d-afe6-3fe1085b5bb0,2018-01-27 13:00:00+00:00,2,1/10,,bowling
 raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,a1e5e893-2fb7-4771-8cc2-0b8a7de55684,2018-01-13 13:00:00+00:00,7,0/7,quiet,bowling
@@ -5613,3 +5613,32 @@ raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,4318991d-6757
 raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,e3690747-8946-449e-afdb-cbc27e8ae537,2026-10-31 01:30:00+00:00,5,1/13,,bowling
 vishnu_para,Vishnu Para,Vishnu Para,e3690747-8946-449e-afdb-cbc27e8ae537,2026-10-31 01:30:00+00:00,4,0/14,quiet,bowling
 wajhi_syed,Wajhi Syed,Wajhi Syed,e3690747-8946-449e-afdb-cbc27e8ae537,2026-10-31 01:30:00+00:00,3,0/23,quiet,bowling
+raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,Arun Sevugan,Arun Sevugan,7e3dd365-03c0-4ac7-a601-fc0088327426,2026-11-07 01:30:00+00:00,6,0/4,quiet,bowling
+balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,3,1/20,,bowling
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,5d2b32ff-c7c3-4900-81c9-548b1d918ffa,2026-11-07 01:30:00+00:00,5,0/24,quiet,bowling
+raw_b8280555_96bf_427b_b15e_ecaf70081627,Joel Spiller,Joel Spiller,5d2b32ff-c7c3-4900-81c9-548b1d918ffa,2026-11-07 01:30:00+00:00,6,1/9,,bowling
+raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,6,0/17,quiet,bowling
+mayur_mohan,Mayur Mohan,Mayur Mohan,e734e2b8-d92b-4760-b9e8-489984e47547,2026-11-07 01:30:00+00:00,2,0/27,quiet,bowling
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,e734e2b8-d92b-4760-b9e8-489984e47547,2026-11-07 01:30:00+00:00,1,0/14,quiet,bowling
+nikhil_sawant,Nikhil Sawant,Nikhil Sawant,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,7,1/37,,bowling
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,7e3dd365-03c0-4ac7-a601-fc0088327426,2026-11-07 01:30:00+00:00,4,2/39,,bowling
+raw_cc39f432_071b_4940_b2d8_1a8218d46cc3,Paul Silva,Paul Silva,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,1,1/12,,bowling
+raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc,Rashim Kandel,Rashim Kandel,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,5,0/26,quiet,bowling
+ravi_chowdary,Ravi Chowdary,Ravi Chowdary,7e3dd365-03c0-4ac7-a601-fc0088327426,2026-11-07 01:30:00+00:00,3,0/20,quiet,bowling
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,5d2b32ff-c7c3-4900-81c9-548b1d918ffa,2026-11-07 01:30:00+00:00,4,2/26,,bowling
+sandeep_gill,Sandeep Gill,Sandeep Gill,7e3dd365-03c0-4ac7-a601-fc0088327426,2026-11-07 01:30:00+00:00,1,2/12,,bowling
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,5d2b32ff-c7c3-4900-81c9-548b1d918ffa,2026-11-07 01:30:00+00:00,2,1/11,,bowling
+raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,2,0/12,quiet,bowling
+shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,e734e2b8-d92b-4760-b9e8-489984e47547,2026-11-07 01:30:00+00:00,4,2/36,,bowling
+raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,5d2b32ff-c7c3-4900-81c9-548b1d918ffa,2026-11-07 01:30:00+00:00,3,2/12,,bowling
+raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,e734e2b8-d92b-4760-b9e8-489984e47547,2026-11-07 01:30:00+00:00,6,2/24,,bowling
+vinit_naidu,Vinit Naidu,Vinit Naidu,f31cfd8e-4345-4a2a-84e0-5aabf75bafb5,2026-11-07 01:30:00+00:00,4,2/28,,bowling
+wajhi_syed,Wajhi Syed,Wajhi Syed,e734e2b8-d92b-4760-b9e8-489984e47547,2026-11-07 01:30:00+00:00,3,2/21,,bowling
+raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,Arun Sevugan,Arun Sevugan,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,6,0/5,quiet,bowling
+feroz_hassan,Feroz Hassan,Feroz Hassan,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,8,1/15,,bowling
+kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,7,1/12,,bowling
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,4,0/20,quiet,bowling
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,5,1/43,,bowling
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,2,3/10,hot,bowling
+sandeep_gill,Sandeep Gill,Sandeep Gill,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,1,0/14,quiet,bowling
+raw_1876a444_275e_4ae9_92aa_1eebf5760833,Syedzainulla Abedin,Syedzainulla Abedin,8690c5cd-0280-43d7-936e-b76c3162246e,2026-11-14 01:30:00+00:00,3,0/30,quiet,bowling

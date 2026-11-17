@@ -33,6 +33,197 @@ def preserve_existing_profile_names(frame: pd.DataFrame, canonical_names: dict[s
     return output
 
 
+def add_verified_scorecard_appearances(
+    appearances: pd.DataFrame,
+    scorecard_frames: dict[str, pd.DataFrame],
+    *,
+    team_ids: set[str],
+    match_weights: dict[str, float],
+    baseline_public_ids: set[str],
+) -> pd.DataFrame:
+    """Union exact scorecard participants into selected-team appearances.
+
+    Some finalized scorecards list an exact public participant omitted from the
+    team-summary player list. Use only participant/team/match IDs from the
+    official scorecard and keep identities that already resolve to a governed
+    public profile. Ambiguous labels and reused masked tokens do not create a
+    career identity here.
+    """
+    from src.data.gwhcc_masked_privacy import is_masked_hawks_participant_id
+    from src.utils.player_identity import apply_player_identity_mapping, public_player_mask
+
+    allowed_teams = {str(value) for value in team_ids}
+    scorecard_rows = []
+    for category in ("batting", "bowling", "fielding"):
+        frame = scorecard_frames.get(category, pd.DataFrame())
+        if frame.empty or not {"match_id", "team_id", "participant_id", "player_name"}.issubset(frame.columns):
+            continue
+        selected = frame.loc[
+            frame["team_id"].astype(str).isin(allowed_teams)
+            & frame["match_id"].astype(str).isin(match_weights)
+        ]
+        for row in selected[["match_id", "team_id", "participant_id", "player_name"]].to_dict("records"):
+            match_id = str(row.get("match_id", "")).strip()
+            team_id = str(row.get("team_id", "")).strip()
+            player_id = str(row.get("participant_id", "")).strip()
+            player_name = str(row.get("player_name", "")).strip()
+            if not match_id or not team_id or not player_id or not player_name:
+                continue
+            if player_name.casefold() in {"nan", "none", "null"}:
+                continue
+            if is_masked_hawks_participant_id(player_id):
+                continue
+            # A DNB-only batting line does not establish a scorecard-only
+            # appearance. Count it only when another official scorecard
+            # discipline records actual play; existing selected-team roster
+            # appearances remain in the base input.
+            if category == "batting" and "dismissal_type" in frame.columns:
+                source_row = selected.loc[
+                    selected["match_id"].astype(str).eq(match_id)
+                    & selected["team_id"].astype(str).eq(team_id)
+                    & selected["participant_id"].astype(str).eq(player_id)
+                ].iloc[0]
+                dismissal = str(source_row.get("dismissal_type", "")).strip().casefold()
+                runs = pd.to_numeric(pd.Series([source_row.get("runs_scored")]), errors="coerce").fillna(0).iloc[0]
+                balls = pd.to_numeric(pd.Series([source_row.get("balls_faced")]), errors="coerce").fillna(0).iloc[0]
+                if "did not bat" in dismissal and float(runs) == 0 and float(balls) == 0:
+                    continue
+            if category == "bowling":
+                source_rows = selected.loc[
+                    selected["match_id"].astype(str).eq(match_id)
+                    & selected["team_id"].astype(str).eq(team_id)
+                    & selected["participant_id"].astype(str).eq(player_id)
+                ]
+                evidence_columns = [
+                    column
+                    for column in ("overs_bowled", "runs_conceded", "wickets_taken", "wides", "no_balls", "maidens_bowled")
+                    if column in source_rows.columns
+                ]
+                has_play = any(
+                    pd.to_numeric(source_rows[column], errors="coerce").fillna(0).gt(0).any()
+                    for column in evidence_columns
+                )
+                if not has_play:
+                    continue
+            if category == "fielding":
+                source_rows = selected.loc[
+                    selected["match_id"].astype(str).eq(match_id)
+                    & selected["team_id"].astype(str).eq(team_id)
+                    & selected["participant_id"].astype(str).eq(player_id)
+                ]
+                evidence_columns = [
+                    column
+                    for column in ("catches", "stumpings", "run_outs", "assisted_run_outs")
+                    if column in source_rows.columns
+                ]
+                has_play = any(
+                    pd.to_numeric(source_rows[column], errors="coerce").fillna(0).gt(0).any()
+                    for column in evidence_columns
+                )
+                if not has_play:
+                    continue
+            scorecard_rows.append(
+                {
+                    "match_id": match_id,
+                    "team_id": team_id,
+                    "player_id": player_id,
+                    "player_name": player_name,
+                    "weight": float(match_weights[match_id]),
+                }
+            )
+    if not scorecard_rows:
+        return appearances.copy()
+
+    scorecard_appearances = pd.DataFrame(scorecard_rows)
+    # If one source ID carries conflicting visible labels in the selected
+    # scorecards, do not use it to create an aggregate identity.
+    names_per_id = scorecard_appearances.groupby("player_id")["player_name"].nunique()
+    conflict_ids = set(names_per_id[names_per_id.gt(1)].index.astype(str))
+    scorecard_appearances = scorecard_appearances.loc[
+        ~scorecard_appearances["player_id"].astype(str).isin(conflict_ids)
+    ].copy()
+    if scorecard_appearances.empty:
+        return appearances.copy()
+
+    identity_rows = scorecard_appearances[["player_id", "player_name"]].drop_duplicates().copy()
+    identity_rows["raw_player_id"] = identity_rows["player_id"]
+    mapped = apply_player_identity_mapping(identity_rows, club_id=CLUB)
+    public = public_player_mask(mapped, club_id=CLUB)
+    mapped = mapped.loc[public & mapped["canonical_player_id"].astype(str).isin(baseline_public_ids)]
+    safe_ids = set(mapped["player_id"].astype(str))
+    scorecard_appearances = scorecard_appearances.loc[
+        scorecard_appearances["player_id"].astype(str).isin(safe_ids)
+    ].copy()
+    if scorecard_appearances.empty:
+        return appearances.copy()
+
+    base = appearances.copy()
+    for column in ("match_id", "team_id", "player_id", "player_name", "weight"):
+        if column not in base:
+            base[column] = pd.NA
+    combined = pd.concat([scorecard_appearances, base], ignore_index=True, sort=False)
+    combined = combined.drop_duplicates(["match_id", "team_id", "player_id"], keep="last")
+    return combined.reset_index(drop=True)
+
+
+def append_current_aggregates_preserving_anonymous_history(
+    historical: pd.DataFrame,
+    current: pd.DataFrame,
+    keys: list[str],
+) -> pd.DataFrame:
+    """Append current public aggregates without merging anonymous history.
+
+    The accepted baseline may contain privacy-safe historical rows whose
+    player IDs were cleared. Keep those rows as separate anonymous statistics;
+    validate the person-level append only for rows with an exact public identity.
+    """
+    from src.data.gwhcc_incremental import append_disjoint
+    from src.utils.player_identity import is_private_or_anonymised_player
+
+    from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+    old = historical.copy()
+    new = current.copy()
+    for frame, label in ((old, "historical"), (new, "current")):
+        if "player_id" not in frame:
+            raise ValueError(f"{label} aggregate is missing player_id")
+
+    # Clear source IDs from generic rows before they enter an aggregate output.
+    # Their separate rows and numbers remain present, but they never participate
+    # in the person-key duplicate check or a named career record.
+    old, _ = sanitize_public_identity_frame(
+        old, club_id=CLUB, relative_path="all_seasons_historical_aggregate.csv"
+    )
+    new, _ = sanitize_public_identity_frame(
+        new, club_id=CLUB, relative_path="all_seasons_current_aggregate.csv"
+    )
+    name_columns = [column for column in ("player_name", "canonical_player_name", "Player") if column in old.columns]
+    generic = pd.Series(False, index=old.index)
+    for column in name_columns:
+        generic |= old[column].map(is_private_or_anonymised_player)
+    missing_id = old["player_id"].fillna("").astype(str).str.strip().eq("")
+    anonymous = generic | missing_id
+    unsupported_unidentified = missing_id & ~generic
+    if unsupported_unidentified.any():
+        raise ValueError(
+            "Historical aggregate has blank player IDs without a generic privacy label"
+        )
+    new_generic = pd.Series(False, index=new.index)
+    for column in ("player_name", "canonical_player_name", "Player"):
+        if column in new.columns:
+            new_generic |= new[column].map(is_private_or_anonymised_player)
+    new_missing_id = new["player_id"].fillna("").astype(str).str.strip().eq("")
+    if (new_missing_id & ~new_generic).any():
+        raise ValueError("Current aggregate has blank player IDs without a generic privacy label")
+    new_anonymous = new_generic | new_missing_id
+
+    # Validate exact-identity historical/current keys; retain anonymous history
+    # and scorecard-backed anonymous current rows separately, without
+    # consolidating them through blank IDs.
+    append_disjoint(old.loc[~anonymous].copy(), new.loc[~new_anonymous].copy(), keys)
+    return pd.concat([old, new], ignore_index=True, sort=False)
+
+
 def update_metadata(bundle: Path, candidate: Path, cutoff: str) -> None:
     data = candidate / 'clubs' / CLUB / 'data'
     path = data / 'metadata.json'
@@ -132,12 +323,14 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     selected = {str(row.match_id): set(str(row.source_team_ids).split('|')) for row in frames['matches'].itertuples()}
     team_ids = {team['id'] for team in teams_payload}
     captains, participation = {}, []
+    match_weights = {}
     from src.data.gwhcc_match_policy import match_format
     for match in frames['matches'].to_dict('records'):
         payload = json.loads((cache / f"match={match['match_id']}__scorecard.json").read_text())['payload']
         weight = 0.5 if match_format(pd.Series(match)) == 'T20' else 1.0
+        match_weights[str(match['match_id'])] = weight
         for team in payload.get('teams', []):
-            if team['id'] not in selected[match['match_id']]:
+            if team['id'] not in selected[match['match_id']] or team['id'] not in team_ids:
                 continue
             for player in team.get('players', []):
                 if player.get('participantId'):
@@ -146,6 +339,13 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
                 if 'Captain' in player.get('roles', []):
                     captains[match['match_id']] = player.get('name','')
     appearances = pd.DataFrame(participation).drop_duplicates(['match_id','team_id','player_id'])
+    appearances = add_verified_scorecard_appearances(
+        appearances,
+        {key: frames[key] for key in ('batting', 'bowling', 'fielding')},
+        team_ids=team_ids,
+        match_weights=match_weights,
+        baseline_public_ids=baseline_ids,
+    )
     frames['matches']['club_captain_name'] = frames['matches']['match_id'].map(captains).fillna('')
     weights = appearances.groupby(['team_id','player_id'])['weight'].sum()
     new_teams = []
@@ -158,7 +358,11 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     pd.concat([old_teams[~old_teams['season_id'].eq(season['id'])], teams], ignore_index=True).to_csv(processed / 'teams.csv', index=False)
     aggregate_parts = {}
     from scripts import build_player_profile_insight_exports as profile
-    from src.data.gwhcc_finalised_aggregates import finalised_aggregate, missing_provider_rows
+    from src.data.gwhcc_finalised_aggregates import (
+        filter_club_appearances,
+        finalised_aggregate,
+        missing_provider_rows,
+    )
 
     excluded = {}
     excluded_dir = bundle / 'parsed_excluded'
@@ -186,6 +390,7 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
             digest = hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
             if digest != correction[field]:
                 raise ValueError('Correction source payload changed since independent verification')
+    appearances = filter_club_appearances(appearances, team_ids)
     canonical_appearances = apply_player_identity_mapping(appearances,club_id=CLUB)
     for kind in ['batting','bowling','fielding']:
         new = pd.read_csv(bundle / f'current_aggregate_{kind}.csv')
@@ -207,7 +412,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         new['record_scope'] = 'Whole club'
         new['match_count_policy_note'] = 'T20=0.5; played non-T20=1; no-play=0'
         old = pd.read_csv(processed / f'all_seasons_{kind}.csv', low_memory=False)
-        combined = append_disjoint(old, new, ['season_id','team_id','player_id'])
+        combined = append_current_aggregates_preserving_anonymous_history(
+            old, new, ['season_id', 'team_id', 'player_id']
+        )
         combined.to_csv(processed / f'all_seasons_{kind}.csv', index=False)
         aggregate_parts[kind] = combined
     players = normalize_players(aggregate_parts)
@@ -221,9 +428,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     from scripts import build_club_app_facing_scorecards as scorecards
     scorecard_outputs = {
         'all_seasons_matches.csv': scorecards.build_match_rows(frames['matches'], frames['innings'], teams),
-        'all_seasons_scorecard_batting.csv': scorecards.build_batting_rows(preserve_compact_dismissal_type(frames['batting']), frames['matches'], team_ids),
-        'all_seasons_scorecard_bowling.csv': scorecards.build_bowling_rows(frames['bowling'], frames['matches'], team_ids),
-        'all_seasons_scorecard_fielding.csv': scorecards.build_fielding_rows(frames['fielding'], frames['matches'], team_ids),
+        'all_seasons_scorecard_batting.csv': scorecards.build_batting_rows(preserve_compact_dismissal_type(frames['batting']), frames['matches'], team_ids, CLUB),
+        'all_seasons_scorecard_bowling.csv': scorecards.build_bowling_rows(frames['bowling'], frames['matches'], team_ids, CLUB),
+        'all_seasons_scorecard_fielding.csv': scorecards.build_fielding_rows(frames['fielding'], frames['matches'], team_ids, CLUB),
     }
     for filename, new in scorecard_outputs.items():
         old = pd.read_csv(processed / filename, low_memory=False)
@@ -245,6 +452,32 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     bowling_frames = frames.copy()
     bowling_frames['balls'], bowling_evidence = reconciled_delivery_innings(frames['innings'], frames['balls'])
     bowling_balls = profile.prepare_ball_rows(bowling_frames, club_id=CLUB)
+    from src.data.gwhcc_masked_privacy import (
+        mask_hawks_participant_rows,
+        mask_scorecard_record_links,
+        sanitize_hawks_processed_tree,
+    )
+
+    # Keep source-detail rows for unlinked scorecard records, but do not
+    # attribute reused masked IDs to a named profile or delivery-derived rate.
+    link_batting, _ = mask_hawks_participant_rows(
+        batting,
+        id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+    )
+    link_bowling, _ = mask_hawks_participant_rows(
+        bowling,
+        id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
+    )
+    balls, _ = mask_hawks_participant_rows(
+        balls,
+        id_columns=["striker_participant_id", "bowler_participant_id"],
+        name_columns=[],
+    )
+    bowling_balls, _ = mask_hawks_participant_rows(
+        bowling_balls,
+        id_columns=["striker_participant_id", "bowler_participant_id"],
+        name_columns=[],
+    )
     bowling_evidence.to_csv(bundle/'current_bowling_delivery_evidence.csv', index=False)
     batting, bowling, fielding = [filter_public_player_rows(frame) for frame in [batting,bowling,fielding]]
     sums = ['innings','runs','outs','thirties','fifties','hundreds','ducks','fours','sixes',
@@ -264,7 +497,10 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         result.to_csv(path, index=False)
         merged_paths.append(relative)
         return result
-    new_perf = profile.build_performance_breakdown(batting,bowling,fielding,balls)
+    new_perf = profile.build_performance_breakdown(
+        batting, bowling, fielding, balls,
+        include_source_as_recorded=True,
+    )
     perf = summary('player_profile/performance_breakdown_by_dimension.csv', new_perf,
                    ['canonical_player_id','dimension','discipline','breakdown_label'], sums, rates,
                    {'high_score':profile.best_high_score_from_labels,'bbi':profile.best_bbi_from_labels})
@@ -306,7 +542,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     season_outputs = {
         'scorecard_batting_milestones_by_scope.csv': seasons.build_scorecard_batting(frames, club_id=CLUB),
         'scorecard_bowling_milestones_by_scope.csv': seasons.build_scorecard_bowling(frames, club_id=CLUB),
-        'bbb_batting_rates_by_scope.csv': seasons.build_bbb_batting(frames, club_id=CLUB),
+        'bbb_batting_rates_by_scope.csv': seasons.build_bbb_batting(
+            frames, club_id=CLUB, include_source_as_recorded=True
+        ),
         'bbb_bowling_dot_rates_by_scope.csv': seasons.build_bbb_bowling(bowling_frames, club_id=CLUB),
         'season_by_round_scorecards.csv': seasons.build_season_by_round(frames, club_id=CLUB),
     }
@@ -316,7 +554,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         if old['season'].eq(season['name']).any():
             raise ValueError('Detailed season overlap')
         pd.concat([old,filter_public_player_rows(new)],ignore_index=True,sort=False).to_csv(path,index=False)
-    summary('hall_of_fame/player_bbb_batting_rates.csv', hof.build_player_bbb_batting_rates(batting, balls),
+    summary('hall_of_fame/player_bbb_batting_rates.csv', hof.build_player_bbb_batting_rates(
+                batting, balls, include_source_as_recorded=True
+            ),
             ['canonical_player_id'], ['bbb_runs','bbb_balls_faced','bbb_dismissals','bbb_batting_innings','bbb_matches'],
             {'bat_sr':('bbb_runs','bbb_balls_faced',100)})
     milestones = summary('hall_of_fame/player_scorecard_milestones.csv', hof.build_player_scorecard_milestones(batting),
@@ -343,7 +583,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     summary('hall_of_fame/player_win_rates.csv',win,['canonical_player_id'],['matches_with_result','wins','losses','raw_wins'],{'win_pct':('wins','matches_with_result',100)})
     path = processed / 'hall_of_fame/scorecard_record_links.csv'
     old = pd.read_csv(path,dtype=str)
-    pd.concat([old,hof.build_scorecard_record_links(batting,bowling)],ignore_index=True).to_csv(path,index=False)
+    new_links = hof.build_scorecard_record_links(link_batting, link_bowling)
+    new_links, _ = mask_scorecard_record_links(new_links, set())
+    pd.concat([old,new_links],ignore_index=True).to_csv(path,index=False)
 
     from src.data.match_centre_milestones import build_batting_milestones
     fastest = build_batting_milestones(bundle, players_path=processed/'players.csv',aliases_path=aliases_path,
@@ -381,6 +623,9 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     if not new_hat.empty:
         append_disjoint(old,new_hat,['event_id']).to_csv(path,index=False)
     detected.audit.to_csv(bundle/'current_hat_trick_audit.csv',index=False)
+    # Reapply the club-only redaction to every public processed CSV after all
+    # deploy-safe summaries and validation artifacts have been written.
+    sanitize_hawks_processed_tree(processed)
     update_metadata(bundle, candidate, cutoff)
     return {'included_matches':len(included),'selected_appearances':len(participation),'captain_matches':len(captains),
             'new_fastest_rows':len(new_fastest),'new_hat_tricks':len(new_hat),'new_partnership_events':len(calculated.events),

@@ -9,9 +9,9 @@ from src.ui import layout
 
 
 FORMATTERS = [
-    layout.format_all_time_batting_table,
-    layout.format_all_time_bowling_table,
-    layout.format_all_time_fielding_table,
+    (layout.format_all_time_batting_table, "Runs"),
+    (layout.format_all_time_bowling_table, "Wickets"),
+    (layout.format_all_time_fielding_table, "Catches"),
 ]
 MISSING_IDS = [None, float("nan"), pd.NA, "", "  ", "nan", "NaN", "None", "null", "NULL", "<NA>", "NaT"]
 
@@ -56,23 +56,47 @@ def render(frame, formatter):
     return markup, PlayerCells(markup).cells
 
 
-@pytest.mark.parametrize("formatter", FORMATTERS)
-def test_governed_report_only_records_in_actual_table(governed, formatter):
+@pytest.mark.parametrize("formatter,metric", FORMATTERS)
+def test_governed_report_only_records_in_actual_table(governed, formatter, metric):
     before = governed.copy(deep=True)
     markup, cells = render(governed, formatter)
     by_name = {cell["text"]: cell for cell in cells}
-    assert len(cells) == 2090
-    for name in ["Warwick Geitz", "Ben Worger"]:
-        assert governed.loc[governed.Player.eq(name), "canonical_player_id"].isna().all()
-        assert by_name[name]["hrefs"] == []
+    eligible = layout.eligible_career_rows(governed, "georges-river-district")
+    values = pd.to_numeric(eligible.get(metric, pd.Series(pd.NA, index=eligible.index)), errors="coerce")
+    kind = eligible.get(layout.RECORD_KIND, pd.Series("", index=eligible.index)).fillna("").astype(str)
+    scoped = kind.isin({"primary_historical", "annual_report_record"})
+    incompatible = scoped & values.isna()
+    if metric == "Wickets":
+        incompatible |= kind.eq("primary_historical")
+    assert len(cells) == int((~incompatible).sum())
+
+    report_records = {
+        "Warwick Geitz": ("report_grdcc_annual_2024_25_warwick_geitz", "Runs", 5119),
+        "Ben Worger": ("report_grdcc_annual_2024_25_ben_worger", "Runs", 2312),
+        "Phil Eldridge": ("report_grdcc_annual_2024_25_phil_eldridge", "Wickets", 227),
+    }
+    for name, (record_id, record_metric, value) in report_records.items():
+        row = governed.loc[governed.Player.eq(name)]
+        assert len(row) == 1 and pd.isna(row.iloc[0].canonical_player_id)
+        if metric != record_metric:
+            assert name not in by_name
+            assert pd.isna(row.iloc[0][metric])
+            continue
+        assert name in by_name
+        assert len(by_name[name]["hrefs"]) == 1
+        assert parse_qs(urlsplit(by_name[name]["hrefs"][0]).query) == {
+            "page": ["player-profile"],
+            "player_id": [record_id],
+        }
+        assert pd.to_numeric(row.iloc[0][metric], errors="coerce") == value
     assert "player_id=nan" not in markup
     assert not governed.canonical_player_id.dropna().duplicated().any()
     pd.testing.assert_frame_equal(governed, before)
 
 
-@pytest.mark.parametrize("formatter", FORMATTERS)
+@pytest.mark.parametrize("formatter,metric", FORMATTERS)
 @pytest.mark.parametrize("missing_id", MISSING_IDS)
-def test_missing_id_variants_are_escaped_plain_names(governed, formatter, missing_id):
+def test_missing_id_variants_are_escaped_plain_names(governed, formatter, metric, missing_id):
     row = governed.loc[governed.Player.eq("Nick Condylios")].copy()
     row["canonical_player_id"] = pd.Series([missing_id], index=row.index, dtype=object)
     row["Player"] = "A & <Club>"
@@ -82,9 +106,9 @@ def test_missing_id_variants_are_escaped_plain_names(governed, formatter, missin
     assert "page=player-profile" not in markup
 
 
-@pytest.mark.parametrize("formatter", FORMATTERS)
+@pytest.mark.parametrize("formatter,metric", FORMATTERS)
 @pytest.mark.parametrize("club_id", ["georges-river-district", "fvcc", "glen-waverley-hawks"])
-def test_public_canonical_link_target_preserved(governed, formatter, club_id, monkeypatch):
+def test_public_canonical_link_target_preserved(governed, formatter, metric, club_id, monkeypatch):
     monkeypatch.setenv("CLUB_ID", club_id)
     row = governed.loc[governed.Player.eq("Nick Condylios")].copy()
     _, cells = render(row, formatter)
@@ -96,9 +120,9 @@ def test_public_canonical_link_target_preserved(governed, formatter, club_id, mo
     }
 
 
-@pytest.mark.parametrize("formatter", FORMATTERS)
+@pytest.mark.parametrize("formatter,metric", FORMATTERS)
 @pytest.mark.parametrize("name", ["Private player", "********", "Name withheld"])
-def test_protected_names_never_gain_profile_links(governed, formatter, name):
+def test_protected_names_never_gain_profile_links(governed, formatter, metric, name):
     row = governed.loc[governed.Player.eq("Nick Condylios")].copy()
     row["Player"] = name
     row["canonical_player_id"] = "synthetic_protected_id"

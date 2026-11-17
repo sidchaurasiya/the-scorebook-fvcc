@@ -18,6 +18,7 @@ from src.config.club_config import (
 MANIFEST_FILENAME = "prepared_core_manifest.json"
 GREATEST_SEASONS_FILENAME = "prepared_greatest_seasons.json"
 FVCC_HOF_PUBLIC_FILTER_VERSION = "fvcc-hof-public-filter-v1"
+GRDCC_HOF_PUBLIC_FILTER_VERSION = "grdcc-current-playcricket-privacy-and-career-v2"
 FRAME_FILENAMES = {
     "batting": "prepared_career_batting.csv",
     "bowling": "prepared_career_bowling.csv",
@@ -52,6 +53,9 @@ def prepared_core_source_paths(club_id: str) -> list[Path]:
         paths.append(hall_of_fame_dir / "legacy_display_composites.json")
         paths.append(REPO_ROOT / 'clubs' / club_id / 'data/source/canonical_player_continuity.csv')
         paths.append(REPO_ROOT / 'clubs' / club_id / 'data/source/summary_identity_namespace_aliases.csv')
+        from src.data.grdcc_player_privacy import privacy_snapshot_path
+
+        paths.append(privacy_snapshot_path(club_id))
         paths.extend(
             get_processed_path("supplemental", filename, club_id=club_id)
             for filename in (
@@ -84,7 +88,11 @@ def prepared_core_manifest_signature(club_id: str) -> tuple[object, ...]:
 
 
 def prepared_core_public_filter_version(club_id: str) -> str:
-    return FVCC_HOF_PUBLIC_FILTER_VERSION if club_id == "fvcc" else ""
+    if club_id == "fvcc":
+        return FVCC_HOF_PUBLIC_FILTER_VERSION
+    if club_id == "georges-river-district":
+        return GRDCC_HOF_PUBLIC_FILTER_VERSION
+    return ""
 
 
 def load_prepared_hall_of_fame_core(club_id: str, data_version: str) -> dict[str, object] | None:

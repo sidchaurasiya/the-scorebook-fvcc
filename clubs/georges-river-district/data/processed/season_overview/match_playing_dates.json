@@ -1,0 +1,241 @@
+{
+  "matches": {
+    "0f0bcc20-1904-4ead-be97-b876792b55c2": {
+      "playing_dates": [
+        "2026-10-04"
+      ],
+      "source_receipt_sha256": "324b99fc9beb1b3c4d6b05f05d69cf2fb2b7caeceec799a628b625e5c3988124"
+    },
+    "1957f23a-6239-49b4-a6f9-fb85c0f66b57": {
+      "playing_dates": [
+        "2026-10-25"
+      ],
+      "source_receipt_sha256": "00694632d561937cd8a06a1b9db8db4aac3487e5b376a20d0dc6ee4bf7b9f28c"
+    },
+    "2185f944-428d-4ca0-9dad-451de9281cd7": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "380987532c8a4ec5c883f8c5ac693d59863c7527a82135ac2b4d8e4fb66bdc3c"
+    },
+    "2449f477-0847-4f82-8b45-b93c1fe192b3": {
+      "playing_dates": [
+        "2026-10-18"
+      ],
+      "source_receipt_sha256": "32c18cc60d8b941ffdd9d6800e63062a9759dc200d08af0ac41741362d52ca1a"
+    },
+    "27418800-8ec6-4cd2-9119-ca4134bf0980": {
+      "playing_dates": [
+        "2026-10-10",
+        "2026-10-17"
+      ],
+      "source_receipt_sha256": "c8072db48114ed53de2002da12fefd51a9b2e7562119204e4e7c1f2b001c543a"
+    },
+    "312736b4-3607-4bc8-86c5-25c30b652ca9": {
+      "playing_dates": [
+        "2026-10-10",
+        "2026-10-17"
+      ],
+      "source_receipt_sha256": "d5e7e2b76582e335b5ab3166be9b41d7288398315378abc96b7bb0f32ef8a21a"
+    },
+    "3401b0e2-b2c2-4e7e-aa32-a7e5b2a52e88": {
+      "playing_dates": [
+        "2026-10-11",
+        "2026-10-18"
+      ],
+      "source_receipt_sha256": "6118506b122f8e79fbb01c3fdc5d41789fa20768f9532493776f59885dde7730"
+    },
+    "341adaa3-df9e-4c23-8b2b-1ffb2e22ef71": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "7f92c6a9ffcd66610ab6ca683ba4d737f47a3866cebc4c8a55d7fcf33ea89ebe"
+    },
+    "3467679e-4fb9-4bca-a042-4887eae93748": {
+      "playing_dates": [
+        "2026-09-27"
+      ],
+      "source_receipt_sha256": "fcc1f1e88c2a1948af1fed93a228bad54c22ac14288ffe661bd2e4eca862fd84"
+    },
+    "3d5e24ac-f5a4-4532-a48b-369612a22c29": {
+      "playing_dates": [
+        "2026-10-18"
+      ],
+      "source_receipt_sha256": "b0daccacc02f9405edd38fe2883aa77d593c8c5a2d1001dc55fb144d0f3db8e2"
+    },
+    "3f887215-ffd6-481f-89da-ed4b6a2f9dd6": {
+      "playing_dates": [
+        "2026-10-11"
+      ],
+      "source_receipt_sha256": "72d4a5189d3b3a57251dc53d3e2cd30058f3e0d154f3f4e56009c37f734eeed9"
+    },
+    "4b964016-7ace-481a-a3aa-a708ea792799": {
+      "playing_dates": [
+        "2026-10-17",
+        "2026-10-24"
+      ],
+      "source_receipt_sha256": "db7365c316880cc79e82634c8d3c220549aa0be366798222e1245776070c4367"
+    },
+    "55d3f1c8-da78-4889-b940-e96bd6188455": {
+      "playing_dates": [
+        "2026-10-10",
+        "2026-10-17"
+      ],
+      "source_receipt_sha256": "24cb7fe25292a69f98d7626f93feb600eff8675063cd337f6ab34da0aa8bdb57"
+    },
+    "5810993c-e198-413c-bdb9-1f9b798a32d1": {
+      "playing_dates": [
+        "2026-10-18"
+      ],
+      "source_receipt_sha256": "f4b30635c3c22f976dc10ac174fad694aa6fdaa8683de3fc70aeb66c9bdc5911"
+    },
+    "5cb36bc6-cda7-46db-9767-3c027575df46": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "fa6cf692667069c2b79d11fbfa3cc78d8538713ba567c8e703f74fc901f4b255"
+    },
+    "61eac62d-2725-405e-8200-afa13d0ebbfd": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "be13784977ac181e548db67478c0486e7e8c3270e338555d9333edecfcc75ee9"
+    },
+    "678da287-ecff-4325-91e1-a926e5128d56": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "d28257a77d7289e038148a90151ddfb9f3a18d7b6591d340986926fefd92298f"
+    },
+    "696805e2-54ed-4865-b98d-81a5bf8103d3": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "203b81db53c7b91cb5415bde159aba6f75f2c2930db87da95a4d80b6c39d0421"
+    },
+    "6b5a6222-355b-48e1-aeae-174d800920e4": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "5b5becd93c9c8f6e6111b57ef4e1dab7e7dbf49f736fbc2a5d503af8d3f2f2bf"
+    },
+    "6c4c42c4-b522-4e4d-9a72-675ce0754ba3": {
+      "playing_dates": [
+        "2026-10-25"
+      ],
+      "source_receipt_sha256": "34d607fc30c9ae5e41ef8bda57253982496b7e64ae867db7e3d07f554bc6988a"
+    },
+    "6e5c94a0-4646-41af-bed0-e179dcfa9bff": {
+      "playing_dates": [
+        "2026-10-31"
+      ],
+      "source_receipt_sha256": "7e152b1192bddeb58f065468d9212a34ea0782a66f77568a772b048dff1be3ef"
+    },
+    "842a865f-54a8-4369-9d60-f531087376c2": {
+      "playing_dates": [
+        "2026-09-27"
+      ],
+      "source_receipt_sha256": "b1856721eb06164cb9e8247c62b0e0b0343607ce6ee08bef3ae2943bcd030c10"
+    },
+    "8d743e57-6081-43b1-97ac-3766b4cca7f8": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "fbb80df0a71474d8f4bf76ac767aaf0cdc3200719cc0966849234196e9e05e8c"
+    },
+    "8ff6a140-b3f2-4e10-a7be-990d1fac6294": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "afcf2e3ea39daa2fd4c173cce94f651b11dfbe8ac54eb57be804648796efe69d"
+    },
+    "91188b6c-338d-460c-9209-7865f09302b6": {
+      "playing_dates": [
+        "2026-10-04"
+      ],
+      "source_receipt_sha256": "eedb6017dd3c44c75fad2771252c091e568fa75b06079814638c7df29018eeef"
+    },
+    "9ccc8770-251f-4e54-8454-61f1f6d61f92": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "7a0086833d68a0021903f3820cab7643c30495bcce6fe5b2a9a823aa53939f9c"
+    },
+    "9f638d82-f963-4eec-be14-a1a952342446": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "6ca7eb3d2d06619dece2ba6ee877bddae5b3ce4aa1a394455c978be2158fb490"
+    },
+    "a666f403-4220-4d3a-b901-f98c56fc3409": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "b086c3f98e83c7cc1003def9ea80b872bff4d71c4de8182ed7f1529aa1784151"
+    },
+    "a9efa4c3-3a3b-49ec-ac99-d8bfeb848df0": {
+      "playing_dates": [
+        "2026-10-18"
+      ],
+      "source_receipt_sha256": "81faef349ac59598c0a1b40025734db0316b4c0c9e4e2ae1e27e6983d719cfc7"
+    },
+    "b0868e4e-5bae-4582-9ac7-01cba8cb58ba": {
+      "playing_dates": [
+        "2026-09-26"
+      ],
+      "source_receipt_sha256": "0f69936290574e9c3e08309ac415edcda59fe8e0658a5ca936c4d92d273701c5"
+    },
+    "c1166912-1497-4fb6-a704-0d5e4360cce6": {
+      "playing_dates": [
+        "2026-10-10",
+        "2026-10-17"
+      ],
+      "source_receipt_sha256": "c8c9082e7f017f94d19b85a64c8941256f3b719bab100da1329f9148e04365df"
+    },
+    "c2d1c29d-0374-4fbf-922f-8394c7b71c09": {
+      "playing_dates": [
+        "2026-10-11"
+      ],
+      "source_receipt_sha256": "a22d7ccc851229ab4e1e497b854fae3a0fa0285c0fae7fb100803e9da1933b49"
+    },
+    "c35d1927-65ae-4229-b6df-8ca0e738f2ef": {
+      "playing_dates": [
+        "2026-10-03"
+      ],
+      "source_receipt_sha256": "8c9ddd51a086ac48f64c1ed5afdd36f5ec6ef57c2608e1163979f878699c2343"
+    },
+    "c78672a0-3f9f-4a04-ab1f-ea873824e1e4": {
+      "playing_dates": [
+        "2026-10-25"
+      ],
+      "source_receipt_sha256": "76ea46b9dc0a72efd2ff9ef53f2525e007a3e0c565808c0f2c4f3d1a3fa4f8d7"
+    },
+    "d6a310db-eb24-4e9a-b9df-7c99ed822edd": {
+      "playing_dates": [
+        "2026-09-27"
+      ],
+      "source_receipt_sha256": "414792fa1ee8aaaa09bce5591eff4acbc061fda912dd4f90bbaae464029c8efb"
+    },
+    "dc81a446-d4a1-4f64-8d62-55c1faf69491": {
+      "playing_dates": [
+        "2026-10-11"
+      ],
+      "source_receipt_sha256": "72d422aee7fb061c9ffc17659f8fc0aa2b70c9f5057001ca62cb3987fa2aa409"
+    },
+    "ebd65094-52a8-4c4a-898b-a242b86fed7d": {
+      "playing_dates": [
+        "2026-10-10"
+      ],
+      "source_receipt_sha256": "6c4aa6853bfdc5d9a7a8a92fce7800d1540de99e721005750f683410c1d83343"
+    },
+    "f7b7c018-5460-45b1-952b-4ef5496107c4": {
+      "playing_dates": [
+        "2026-10-25"
+      ],
+      "source_receipt_sha256": "bd161a2bcf5e20a08cf8d2e1b8709e15c864dec1736439756ed962b7433b58ef"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Official scheduled playing dates for the 38 accepted current-season records; statistics and eligibility unchanged",
+  "timezone": "Australia/Sydney"
+}

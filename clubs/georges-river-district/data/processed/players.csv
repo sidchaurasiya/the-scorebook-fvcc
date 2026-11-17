@@ -1,5 +1,5 @@
 player_id,player_name,seasons_played,teams_played_for
-3b4c82fd-7f94-4bd3-9d17-56e06516207d,NOOKARAJESH VARMA SANGADI,Summer 2024/25 | Summer 2025/26,GRDCC | Georges River Sharks
+,Nookarajesh Varma Sangadi,Summer 2024/25 | Summer 2025/26,GRDCC | Georges River Sharks
 a7c2695a-438f-4077-a772-52e038624dd0,Balamurali Balagurusamy,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks
 b36316aa-c951-4c74-ba60-0e9e518cfa6d,Vinoth Kumar,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | GRDCC 4th Grade | Georges River DCC | Georges River Sharks
 06c9ee56-62f1-4e14-a46e-455d4b9cd038,Manikandan Kamalakaran,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks | Georges River Stingrays
@@ -21,7 +21,7 @@ c8fd996a-c5c9-4cb2-9ce8-24494df3324f,Dinesh Kumar Velsam,Summer 2023/24 | Summer
 d91ec6f0-17fa-4234-920b-bf92fa0720ab,Thaman Veerapaneni,Summer 2025/26 | Summer 2026/27,Georges River DCC | Georges River Sharks | Georges River Stingrays
 22f30c4f-5252-417c-9419-696800cb510c,Ravi Kumereshan,Summer 2023/24 | Summer 2025/26,Georges River DCC | Georges River Sharks | Georges River Stingrays
 8092c0bf-034c-44c0-bd8a-c1a7584c0ffc,Bagath Singh,Summer 2023/24 | Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC | Georges River DCC | Georges River Sharks | Georges River Stingrays
-bc791950-7f70-4d30-83e9-15a982c0bfe7,********,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC 5th Grade | Georges River Stingrays
+,********,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC 5th Grade | Georges River Stingrays
 864da9ab-b90c-418f-8562-619a1de45550,Muhammad Shoaib,Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC 5th Grade | Georges River Stingrays
 ef2eba2d-e1bd-4489-9cf0-49df9becf9b3,Rameshraja Deenadayalan,Summer 2023/24 | Summer 2024/25 | Summer 2025/26,GRDCC | Georges River DCC | Georges River Stingrays
 e134fd56-69dc-4438-bb38-6cd7da342391,Bilawal Javed,Summer 2025/26,Georges River Stingrays
@@ -74,7 +74,7 @@ b8696c69-d7c9-472b-a68c-57d6ee7c3132,Jason Stone,Summer 2025/26,GRDCC Classics
 096ad2b5-d4a3-4c38-816b-14048f2f1dbb,Scott Sigmond,Summer 2024/25 | Summer 2025/26 | Summer 2026/27,GRDCC Classics | GRDCC Vintage
 30c900c0-e94a-4abd-a36b-a88ced7d30fe,Darren McLean,Summer 2025/26,GRDCC Classics
 b9eba4be-d449-4fa9-95bb-d851e4ded7ba,Shane Pargeter,Summer 2023/24 | Summer 2025/26 | Summer 2026/27,GRDCC 1st Grade | GRDCC Masters
-d4a6a1eb-7d61-4d79-8959-16d99efb4dee,********,Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2024/25 | Summer 2025/26,Fourth Grade | GRDCC 3rd Grade | GRDCC 4th Grade | GRDCC Masters | Second Grade | Third Grade | Tim Creer Cup A Division
+,********,Summer 2012/13 | Summer 2013/14 | Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2024/25 | Summer 2025/26,Fourth Grade | GRDCC 3rd Grade | GRDCC 4th Grade | GRDCC Masters | Second Grade | Third Grade | Tim Creer Cup A Division
 167a5e49-1d68-470b-be48-70e4efec0afb,Khurram Mahmood,Summer 2025/26 | Summer 2026/27,GRDCC 5th Grade | GRDCC Classics | GRDCC Masters
 363e3574-a435-4f1d-9e0f-8f2c323406af,Pulok Rema,Summer 2025/26 | Summer 2026/27,GRDCC Masters
 fd54f20a-4047-42db-b4e5-f550fea53185,Muhammad Raheel Maan,Summer 2025/26,GRDCC Masters
@@ -159,8 +159,8 @@ d84fe81d-2329-4bfa-b19e-165a1370add5,Francis Weeding,Summer 2025/26 | Summer 202
 98fae050-8373-4d10-b366-d3ad6dbae28e,Tasbeeh Hossain,Summer 2025/26 | Summer 2026/27,GRDCC 3rd Grade | GRDCC 4th Grade | GRDCC 5th Grade
 db24e19c-f42c-4893-8345-9c8e5db46f56,Nirmay Bakliwal,Summer 2024/25 | Summer 2025/26,Frank Gray Shield | GRDCC 2nd Grade | GRDCC 3rd Grade | GRDCC 4th Grade | GRDCC 5th Grade | Georges River DCC
 a905a8d5-480a-4761-837b-ad112d23a78d,Evan Hoskin,Summer 2025/26,GRDCC 4th Grade | GRDCC 5th Grade
-8c4d9fb6-0061-44bb-9300-c1f54636eee2,********,Summer 2025/26 | Summer 2026/27,GRDCC 4th Grade | GRDCC 5th Grade
-283baa42-cf3c-4d19-bd1f-5861a7738ad8,********,Summer 2025/26,GRDCC 4th Grade | GRDCC 5th Grade
+,Lucas Barrientos,Summer 2025/26 | Summer 2026/27,GRDCC 4th Grade | GRDCC 5th Grade
+,********,Summer 2025/26,GRDCC 4th Grade | GRDCC 5th Grade
 d8ff7a44-bbad-4149-aca1-0d919c1f6d96,Zach Pagano,Summer 2025/26,GRDCC 4th Grade | GRDCC 5th Grade
 1a28f5a7-dc04-4f68-a96b-eef3cddffd04,Elias Habib,Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Fourth Grade | GRDCC 3rd Grade | GRDCC 4th Grade | GRDCC 5th Grade | Georges River DCC | Metropolitan Cup
 bca3dfaf-8b07-41ec-90ce-6348c5c1e544,Amaan Ansari,Summer 2020/21 | Summer 2021/22 | Summer 2022/23 | Summer 2023/24 | Summer 2024/25 | Summer 2025/26,Fifth Grade | Fourth Grade | GRDCC 3rd Grade | GRDCC 4th Grade | GRDCC 5th Grade | Metropolitan Cup | Third Grade
@@ -191,7 +191,7 @@ ffbc736f-35ea-42fa-a3ff-ee64f86189f0,Muhammad Tanzeel ur Rehman,Summer 2024/25,G
 bf8fd4a7-1028-4548-a361-3f4df1e9668c,Luke Wood,Summer 2024/25,Frank Gray Shield | GRDCC 2nd Grade | GRDCC 3rd Grade | Georges River District Cricket Club
 095bbe27-a8c1-4a08-8813-e11fd023c509,Curtis Cheney,Summer 2022/23 | Summer 2023/24 | Summer 2024/25,GRDCC 1st Grade | GRDCC 2nd Grade | Georges River 1st Grade L/O | Georges River District Cricket Club
 9360bea7-9b1d-436c-b68f-87eaff3fea7d,Brendan Dodd,Summer 2024/25,GRDCC 2nd Grade | GRDCC 3rd Grade | Georges River District Cricket Club
-ec214c4a-a69b-49b8-a1f7-5e41ee81e12b,********,Summer 2023/24 | Summer 2024/25,GRDCC 2nd Grade | GRDCC 3rd Grade | GRDCC 4th Grade | Georges River District Cricket Club
+,********,Summer 2023/24 | Summer 2024/25,GRDCC 2nd Grade | GRDCC 3rd Grade | GRDCC 4th Grade | Georges River District Cricket Club
 df2bdfac-2b7e-47bc-88ce-7d55f4943244,Jim Arsovski,Summer 2022/23 | Summer 2023/24 | Summer 2024/25,GRDCC Classics | GRDCC Prime
 41504e3c-e18b-4b26-8c67-1d84661a19d3,BRETT PALMER,Summer 2023/24 | Summer 2024/25,GRDCC Classics
 18ea57c7-df15-488d-a02d-909101f5c7b8,Craig Butler,Summer 2024/25,GRDCC Classics
@@ -253,7 +253,7 @@ fcd0c0a6-716e-4c76-9cff-843a9da13978,Ammar Humayun,Summer 2023/24,GRDCC 3rd Grad
 c0a813f9-a4f6-4a1e-8244-e06a2ad65fa2,Tyler Hull,Summer 2023/24,GRDCC 3rd Grade
 ea00e738-1d84-45d5-8b9e-23ff9344a2b3,Jett Lenzo,Summer 2022/23 | Summer 2023/24,GRDCC 3rd Grade | GRDCC 4th Grade
 00e706c1-4347-4617-aeeb-2aa3d817b912,Sudan Khanal,Summer 2023/24,GRDCC 4th Grade
-8acfb4c4-fa83-43b0-9f65-b5bbb73c91b3,********,Summer 2023/24,GRDCC 4th Grade
+,********,Summer 2023/24,GRDCC 4th Grade
 3c31f108-869d-4468-93c0-73fb3a43da4d,Gosakan Badrinarayanan,Summer 2023/24,GRDCC 4th Grade
 68e5a411-2aac-4fc1-b023-7dbeddf0459b,Javed Aslam,Summer 2022/23 | Summer 2023/24,GRDCC 5th Grade
 8a9d8e56-1f7f-461a-b31a-699a80224566,Asfand Tahir,Summer 2023/24,GRDCC 5th Grade
@@ -304,7 +304,7 @@ a03ad435-6a31-4e08-a0cd-010d8aa4ae92,James Brown,Summer 2015/16 | Summer 2016/17
 c7a78524-df42-45b2-bae7-6f8628544ef8,Aidan Wood,Summer 2022/23,GRDCC 3rd Grade | GRDCC 4th Grade
 a8373452-32cc-452b-9901-bb5052139c51,Brett Wood,Summer 2022/23,GRDCC 3rd Grade | GRDCC 4th Grade
 ed7cfabe-85ec-4caf-a670-8605612c4644,Chris Benjamin,Summer 2022/23,GRDCC 4th Grade
-f5091c31-a4cc-4608-b3fb-7755f1d77ce1,********,Summer 2022/23,GRDCC 4th Grade
+,********,Summer 2022/23,GRDCC 4th Grade
 a78b8abe-45d4-4df3-be88-0018e40e6970,Luke Carter-Benjamin,Summer 2022/23,GRDCC 4th Grade
 4ef0b983-3664-409d-ba87-f42afd49b996,Dylan Davies,Summer 2022/23 | Summer 2026/27,Frank Gray Shield | GRDCC 3rd Grade | GRDCC 4th Grade
 e40263b1-547d-43fe-9346-f75b4281fbff,Haidar Ali Syed,Summer 2022/23,GRDCC 4th Grade
@@ -347,7 +347,7 @@ c97eac6c-4c47-4b41-bb56-fe79b9617ab3,Todd O'Keefe,Summer 2017/18 | Summer 2018/1
 a40d7379-7e05-4a3f-9342-235ef14cfb72,Chris Hughes,Summer 2014/15 | Summer 2015/16 | Summer 2016/17 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Sydney Masters Over 40's
 f0c6423f-62fc-4172-9bcc-bbacbf825989,Nathan Osborne,Summer 2021/22,Sydney Masters Over 40's
 3f0e859d-dfee-4c59-bfe8-857c9ccab236,Christopher Morris,Summer 2000/01 | Summer 2001/02 | Summer 2002/03 | Summer 2003/04 | Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Fourth Grade | Second Grade | Sydney Masters Over 40's
-90196315-0c93-4f37-a44d-1f4f963aa015,********,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Sydney Masters Over 40's
+,********,Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Sydney Masters Over 40's
 3bede9a1-9979-4f2c-8d33-2fb5af821444,Adam Wilson,Summer 2017/18 | Summer 2018/19 | Summer 2019/20 | Summer 2020/21 | Summer 2021/22,Sydney Masters Over 40's
 ccc620c2-ef0d-41ea-a4c8-9ef08ecd7735,Greg Waights,Summer 2021/22,Sydney Masters Over 40's
 9ea7fd46-3c88-4a1b-ad14-cfa7c76f73f6,Phillip Garrard,Summer 2021/22,Sydney Masters Over 40's
@@ -821,7 +821,7 @@ e30be604-697c-4aef-bc6a-c83a596451f0,Jack Anthony,Summer 2012/13 | Summer 2013/1
 d5fffe36-e74a-45b2-b771-dee5f08699a8,Steve Milliken,Summer 2014/15,Tim Creer Cup A Division
 3d04d7ba-d9f1-4a51-98ac-2f8a01a633a1,Luke Morgan,Summer 2008/09 | Summer 2009/10 | Summer 2012/13 | Summer 2014/15,First Grade | Frank Gray Shield | Second Grade
 b4a04d8b-e0fc-4077-96bb-3849c19b4a76,Nicholas Robertson,Summer 2011/12 | Summer 2012/13 | Summer 2013/14 | Summer 2014/15,Fourth Grade | Frank Gray Shield | Second Grade | Third Grade | Tim Creer Cup A Division
-f01efa50-c69e-4d03-90e3-5ce18a37f6a1,********,Summer 2014/15,Second Grade
+,********,Summer 2014/15,Second Grade
 f4ef8968-9308-4441-a3b0-c4683f91a6a0,Mark Wall,Summer 2013/14,Sydney Masters Over 40's
 279e097f-8c0f-4c56-b812-331ad795a4c8,Mark Bosomworth,Summer 2013/14,Sydney Masters Over 40's
 1ad17e47-2869-424e-bae9-bc3dc26ed43f,david strachan,Summer 2013/14,Sydney Masters Over 40's

@@ -503,5 +503,6 @@
     "Public batting, bowling, and fielding stats are backed up locally to reduce PlayCricket load.",
     "Refresh should be used sparingly; normal dashboard usage reads the active club processed data first.",
     "Public match/result/scorecard endpoints were not available without API access during implementation, so stable empty tables are created for future population."
-  ]
+  ],
+  "public_generic_identity_revision": "public-generic-identity-v7"
 }

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -16,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CLUB_DATA = ROOT / "clubs" / "glen-waverley-hawks" / "data"
 SOURCE = CLUB_DATA / "source" / "document_overrides"
 PROCESSED = CLUB_DATA / "processed"
+SNAPSHOT = json.loads((ROOT / "tests/fixtures/gwhcc_weekly_output_snapshot_2026-11-16.json").read_text())
 
 
 def test_verified_historical_seasons_cover_1980_81_through_1990_91() -> None:
@@ -138,10 +140,11 @@ def test_historical_and_verified_refresh_outputs_are_preserved() -> None:
     assert len(pd.read_csv(PROCESSED / "hall_of_fame" / "hat_tricks.csv")) == 1
     fastest = pd.read_csv(PROCESSED / "hall_of_fame" / "fastest_batting_milestones.csv")
     career = pd.read_csv(PROCESSED / "hall_of_fame" / "prepared_career_all_time.csv")
-    assert len(fastest) == 810
-    assert fastest["season"].ne("Summer 2026/27").sum() == 780
-    assert len(career) == 1291
-    assert career["Debut Season"].ne("Summer 2026/27").sum() == 1228
+    assert len(fastest) == SNAPSHOT["fastest_batting_milestones"]["total"]
+    assert fastest["season"].ne("Summer 2026/27").sum() == SNAPSHOT["fastest_batting_milestones"]["historical"]
+    assert fastest["season"].eq("Summer 2026/27").sum() == SNAPSHOT["fastest_batting_milestones"]["current"]
+    assert len(career) == SNAPSHOT["population"]
+    assert career["Debut Season"].ne("Summer 2026/27").sum() == SNAPSHOT["population"] - SNAPSHOT["current_debuts"]
 
 
 def test_private_player_filtering_outputs_remain_public() -> None:

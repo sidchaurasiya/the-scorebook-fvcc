@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import hashlib
 
 import pandas as pd
 
@@ -11,7 +12,7 @@ from src.utils.player_identity import apply_player_identity_mapping, filter_publ
 CLUB = 'glen-waverley-hawks'
 DATA = Path(__file__).resolve().parents[1] / 'clubs' / CLUB / 'data/processed'
 SEASON = 'Summer 2026/27'
-SNAPSHOT=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
+SNAPSHOT=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/gwhcc_weekly_output_snapshot_2026-11-16.json').read_text())
 
 
 def test_current_season_has_the_exact_source_verified_played_match_inventory():
@@ -29,21 +30,25 @@ def test_current_aggregates_use_only_verified_selected_appearances():
         new = frame[frame.season.eq(SEASON)]
         expected=SNAPSHOT['current_aggregates'][category]
         assert len(new) == expected['rows']
-        assert new.matches.ge(1).all() and new.matches.le(expected['maximum_matches']).all()
+        # Hawks T20 appearances carry 0.5; no eligible participant should have zero credit.
+        assert new.matches.gt(0).all() and new.matches.le(expected['maximum_matches']).all()
         assert new.matches.sum() == expected['weighted_matches']
         assert new.raw_playhq_matches.sum() == expected['known_provider_matches']
         assert new.raw_playhq_matches.isna().sum() == expected['missing_provider_counts']
         assert not new.duplicated(['season_id', 'team_id', 'player_id']).any()
         known=new.raw_playhq_matches.notna()
-        # Official team-sheet credits can exceed the provider's lagging aggregate.
+        # The frozen 16 November source snapshot pins team-sheet/provider differences by ID hash.
         lagging = new[known & new.matches.gt(new.raw_playhq_matches)]
-        assert set(lagging.player_id) == {
-            'c29fd8b6-4284-4799-a52d-73d58004cf16',
-            '577c54ec-5298-41c7-bd0a-b56d36240a6d',
-        }
-        assert lagging.matches.eq(2).all()
-        assert lagging.raw_playhq_matches.eq(1).all()
-        assert new.loc[~known,'source_coverage_note'].str.contains('verified',case=False).all()
+        expected_lagging = set(expected["team_sheet_credit_exception_id_sha256"])
+        actual_lagging = {hashlib.sha256(str(value).encode()).hexdigest() for value in lagging.player_id.astype(str)}
+        assert actual_lagging == expected_lagging
+        if expected_lagging:
+            assert lagging.matches.eq(2).all()
+            assert lagging.raw_playhq_matches.eq(1).all()
+        if expected["missing_provider_counts"]:
+            assert new.loc[~known, "source_coverage_note"].fillna("").astype(str).str.contains("verified", case=False).all()
+        else:
+            assert known.all()
 
 
 def test_customer_confirmed_new_ids_resolve_to_existing_canonical_identities():
@@ -81,12 +86,18 @@ def test_current_profile_index_uses_one_existing_canonical_label(monkeypatch):
         assert index.loc[index.id.eq(canonical_id), 'name'].tolist() == [name]
     batting = pd.read_csv(DATA / 'all_seasons_batting.csv')
     for canonical_id, raw_name, canonical_name in [
-        ('raw_f62c84ce_8d81_4700_bd22_ee8494bab921', 'Briginshaw, Chris', 'Chris Briginshaw'),
-        ('raw_289b8e53_aa95_4072_8288_588447304bcd', 'Briginshaw, Matthew', 'Matthew Briginshaw'),
+        ('raw_f62c84ce_8d81_4700_bd22_ee8494bab921', 'Chris Briginshaw', 'Chris Briginshaw'),
+        ('raw_289b8e53_aa95_4072_8288_588447304bcd', 'Matthew Briginshaw', 'Matthew Briginshaw'),
     ]:
         row = batting[batting.canonical_player_id.eq(canonical_id) & batting.season.eq(SEASON)].iloc[0]
         assert row.raw_player_name == raw_name
         assert row.canonical_player_name == canonical_name
+    arya = index.loc[index.name.eq("Arya Gupta")]
+    assert len(arya) == 1
+    profile = pd.read_csv(DATA / "hall_of_fame/prepared_career_all_time.csv", low_memory=False)
+    arya_career = profile.loc[profile.canonical_player_id.astype(str).eq(str(arya.iloc[0].id))]
+    assert len(arya_career) == 1
+    assert (float(arya_career.iloc[0].Matches), float(arya_career.iloc[0].Runs), float(arya_career.iloc[0].Catches)) == (0.5, 6.0, 1.0)
 
 
 def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables():
@@ -104,7 +115,7 @@ def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables()
 
 def test_historical_captain_premiership_and_delivery_records_survive():
     breakdown = pd.read_csv(DATA / 'player_profile/performance_breakdown_by_dimension.csv',low_memory=False)
-    # Same contributions, four duplicate identity/dimension groups consolidated.
+    # Current source receipts add five captain-context groups since the 31 October snapshot.
     assert breakdown.dimension.eq('Captain').sum() == SNAPSHOT['captain_rows']
     assert len(pd.read_csv(DATA / 'hall_of_fame/premiership_wins.csv')) == 24
     assert len(pd.read_csv(DATA / 'hall_of_fame/player_premierships.csv')) == 170

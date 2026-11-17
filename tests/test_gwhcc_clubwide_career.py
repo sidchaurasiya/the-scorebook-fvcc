@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import hashlib
 
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from src.data import gwhcc_historical_career as history
 
 ROOT = Path(__file__).resolve().parents[1]
 HOF = ROOT / "clubs/glen-waverley-hawks/data/processed/hall_of_fame"
-EXPECTED = pd.read_csv(ROOT / "tests/fixtures/gwhcc_clubwide_expected_career_metrics.csv")
+EXPECTED = pd.read_csv(ROOT / "tests/fixtures/gwhcc_clubwide_expected_career_metrics_2026-11-16.csv")
 
 
 def core_frame():
@@ -48,6 +49,26 @@ def test_all_authoritative_metrics_match_independently_reconciled_fixture():
         left = pd.to_numeric(selected[column], errors="coerce")
         right = pd.to_numeric(expected[column], errors="coerce")
         pd.testing.assert_series_equal(left, right, check_names=False, check_dtype=False, atol=1e-9)
+
+
+def test_grant_haye_45_run_delta_is_tied_to_the_same_exact_profile():
+    exact = EXPECTED[
+        EXPECTED.canonical_player_id.astype(str).map(
+            lambda value: hashlib.sha256(value.encode()).hexdigest()
+        ).eq("81ce6b6d5cb11454a60b27f3117e9150245a529a4478da87e2b0da71eca5234f")
+    ]
+    assert len(exact) == 1 and exact.iloc[0].Player == "Grant Haye"
+    participant_id = str(exact.iloc[0].canonical_player_id).removeprefix("raw_").replace("_", "-")
+    scorecards = pd.read_csv(ROOT / "clubs/glen-waverley-hawks/data/processed/all_seasons_scorecard_batting.csv")
+    row = scorecards[
+        scorecards.season.eq("Summer 2026/27")
+        & scorecards.player_id.astype(str).eq(participant_id)
+        & scorecards.match_id.eq("3688da60-38ce-4208-95a4-4fd5d7b0d4b0")
+    ]
+    assert len(row) == 1
+    assert (int(row.iloc[0].runs), int(row.iloc[0].balls)) == (45, 23)
+    assert float(exact.iloc[0].Runs) == 6260
+    assert float(exact.iloc[0].Matches) == 247
 
 
 @pytest.mark.parametrize("pid", EXPECTED.canonical_player_id.tolist())
@@ -132,9 +153,9 @@ def test_individual_cutoffs_and_current_season_contributions_survive():
     assert source.loc["Brett Powell", "batting_anchor_through_season"] == "Summer 2020/21"
     assert source.loc["Brett Powell", "bowling_anchor_through_season"] == "Summer 2025/26"
     actual = docs.apply_record_overrides(core_frame(), write_decisions=False).set_index("Player")
-    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 66
+    assert actual.loc["Jarrod Greaves", "Runs"] == 7098 + 73
     assert actual.loc["Nathan Bungey", "Runs"] == 3330 + 50
-    assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 3
+    assert actual.loc["Matthew Briginshaw", "Wickets"] == 533 + 5
 
 
 def test_partial_bundle_notes_do_not_claim_unsupported_history():

@@ -31,6 +31,36 @@ def append_disjoint(old, new, keys):
     return pd.concat([old, new], ignore_index=True, sort=False)
 
 
+def append_public_scorecard_rows(old, current, filename, *, club_id=CLUB):
+    """Append match scorecards without dropping anonymous numeric rows."""
+    if filename == 'all_seasons_matches.csv':
+        return pd.concat([old, current], ignore_index=True, sort=False)
+    if 'match_id' in old and 'match_id' in current:
+        overlap = set(old.match_id.dropna().astype(str)) & set(current.match_id.dropna().astype(str))
+        if overlap:
+            raise ValueError('Scorecard match overlap')
+    from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_table
+
+    table_name = str(filename).removesuffix('.csv')
+    old_public = sanitize_fvcc_scorecard_table(table_name, old, club_id=club_id)
+    current_public = sanitize_fvcc_scorecard_table(table_name, current, club_id=club_id)
+    return pd.concat([old_public, current_public], ignore_index=True, sort=False)
+
+
+def append_public_scorecard_record_links(old, current, *, club_id=CLUB):
+    """Append record links after applying FVCC's generic-row identity guard."""
+    from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
+
+    old_public = sanitize_fvcc_scorecard_record_links(old, club_id=club_id)
+    current_public = sanitize_fvcc_scorecard_record_links(current, club_id=club_id)
+    if "match_id" in old_public and "match_id" in current_public:
+        overlap = set(old_public.match_id.astype(str)) & set(current_public.match_id.astype(str))
+        if overlap:
+            raise ValueError("Scorecard record-link match overlap")
+    combined = pd.concat([old_public, current_public], ignore_index=True, sort=False)
+    return sanitize_fvcc_scorecard_record_links(combined, club_id=club_id)
+
+
 def validate_same_season_match_partitions(new_match_ids, excluded_match_ids):
     overlap = set(map(str, new_match_ids)) & set(map(str, excluded_match_ids))
     if overlap:
@@ -46,6 +76,14 @@ def validate_delivery_quarantine(frames, excluded_innings_ids):
             raise ValueError(f'Cannot verify delivery quarantine for {name}')
         if 'innings_id' in frame and frame['innings_id'].astype(str).isin(excluded).any():
             raise ValueError(f'Quarantined delivery innings remains in {name}')
+
+
+def accepted_delivery_rows(balls, quarantined_innings_ids):
+    """Keep source-authentic BBB; only explicitly invalidated innings are removed."""
+    excluded = set(map(str, quarantined_innings_ids))
+    if not excluded:
+        return balls.copy()
+    return balls.loc[~balls['innings_id'].astype(str).isin(excluded)].copy()
 
 
 def merge_batting_dot_coverage(result, history, increment, keys):
@@ -455,24 +493,22 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     frames['matches']['club_captain_name'] = frames['matches']['match_id'].map(captains).fillna('')
     score_outputs = {
         'all_seasons_matches.csv':cards.build_match_rows(frames['matches'],frames['innings'],teams),
-        'all_seasons_scorecard_batting.csv':cards.build_batting_rows(frames['batting'],frames['matches'],team_ids),
-        'all_seasons_scorecard_bowling.csv':cards.build_bowling_rows(frames['bowling'],frames['matches'],team_ids),
-        'all_seasons_scorecard_fielding.csv':cards.build_fielding_rows(frames['fielding'],frames['matches'],team_ids),
+        'all_seasons_scorecard_batting.csv':cards.build_batting_rows(frames['batting'],frames['matches'],team_ids,club_id=CLUB),
+        'all_seasons_scorecard_bowling.csv':cards.build_bowling_rows(frames['bowling'],frames['matches'],team_ids,club_id=CLUB),
+        'all_seasons_scorecard_fielding.csv':cards.build_fielding_rows(frames['fielding'],frames['matches'],team_ids,club_id=CLUB),
     }
     for filename,current in score_outputs.items():
         old = pd.read_csv(processed/filename)
         if set(old.get('match_id',[])) & increment_ids:
             raise ValueError('Scorecard overlap')
-        if filename != 'all_seasons_matches.csv':
-            current = filter_public_player_rows(current)
-        pd.concat([old,current],ignore_index=True,sort=False).to_csv(processed/filename,index=False)
+        # Scorecard rows remain as authentic anonymous contributions, while
+        # named career and profile outputs continue through public filtering.
+        append_public_scorecard_rows(old,current,filename,club_id=CLUB).to_csv(processed/filename,index=False)
     batting = filter_public_player_rows(profile.prepare_batting(frames, club_id=CLUB))
     bowling = filter_public_player_rows(profile.prepare_bowling(frames, club_id=CLUB))
     fielding = filter_public_player_rows(profile.prepare_fielding(frames, club_id=CLUB))
     balls = profile.prepare_ball_rows(frames, club_id=CLUB)
-    totals = frames['balls'].groupby('innings_id')['total_runs'].sum(min_count=1)
-    reconciled = frames['innings']['innings_id'][frames['innings']['runs_scored'].eq(frames['innings']['innings_id'].map(totals))]
-    phase_frames = dict(frames, balls=frames['balls'][frames['balls']['innings_id'].isin(reconciled)].copy())
+    phase_frames = dict(frames, balls=accepted_delivery_rows(frames['balls'], state.get('quarantined_delivery_innings_ids', [])))
     phase_balls = profile.prepare_ball_rows(phase_frames, club_id=CLUB)
     paths = []
     def summary(relative,current,keys):
@@ -548,9 +584,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     path = processed/'hall_of_fame/scorecard_record_links.csv'
     old_links=pd.read_csv(path)
     new_links=filter_public_player_rows(hof.build_scorecard_record_links(batting,bowling))
-    if 'match_id' in old_links and 'match_id' in new_links and set(old_links.match_id.astype(str)) & set(new_links.match_id.astype(str)):
-        raise ValueError('Scorecard record-link match overlap')
-    pd.concat([old_links,new_links],ignore_index=True).to_csv(path,index=False)
+    combined_links=append_public_scorecard_record_links(old_links,new_links,club_id=CLUB)
+    combined_links.to_csv(path,index=False)
 
     from src.data.fastest_innings import build_governed_fastest_innings
     from src.data.partnerships import build_governed_club_partnerships, build_verified_partnership_record_holders
@@ -601,7 +636,9 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                                          'current_finalized_match_ids':current_finalized_ids,
                                          'verified_public_appearance_counts':verified_appearance_counts,
                                          'excluded_incomplete_match_ids':remaining_incomplete,
-                                         'excluded_match_ids':sorted(state.get('excluded_match_ids',[]))})
+                                         'excluded_match_ids':sorted(state.get('excluded_match_ids',[])),
+                                         'owner_accepted_delivery_discrepancies':state.get('owner_accepted_delivery_discrepancies',[]),
+                                         'quarantined_delivery_innings_ids':sorted(map(str,state.get('quarantined_delivery_innings_ids',[])))})
     receipt = max(json.loads(p.read_text())['request']['fetched_at'] for p in (bundle/'source_payloads').glob('*.json'))
     metadata['fetch_date_time'] = metadata['last_successful_refresh_time'] = receipt
     metadata_path.write_text(json.dumps(metadata,indent=2)+'\n')
@@ -614,6 +651,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                    cutoff_utc=state['cutoff_utc'],cutoff_melbourne=state['cutoff_melbourne'],new_match_ids=sorted(increment_ids),
                    excluded_match_ids=sorted(state.get('excluded_match_ids',[])),
                    excluded_incomplete_match_ids=remaining_incomplete,
+                   quarantined_delivery_innings_ids=sorted(map(str,state.get('quarantined_delivery_innings_ids',[]))),
+                   owner_accepted_delivery_discrepancies=state.get('owner_accepted_delivery_discrepancies',[]),
                    current_finalized_match_ids=current_finalized,
                    source_issue_match_ids=sorted(set(map(str,version.get('source_issue_match_ids',[])))|set(map(str,state.get('excluded_match_ids',[])))),
                    source_limitations=source_limitations,
@@ -621,7 +660,24 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                    latest_match_round=latest.get('round_short_name',latest.get('round_name','')),
                    latest_match_opponent=opponent,latest_match_result=latest.get('result_text',''),latest_statistical_season=season['name'])
     version_path.write_text(json.dumps(version,indent=2)+'\n')
+    from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
+
+    privacy = sanitize_public_processed_tree(processed, club_id=CLUB)
+    root_fallback = candidate / "data" / "processed"
+    if root_fallback.exists():
+        sanitize_public_processed_tree(root_fallback, club_id=CLUB, update_metadata=False)
     write_prepared_fvcc_core(candidate,processed)
+    prepared_privacy = sanitize_public_processed_tree(processed, club_id=CLUB)
+    if prepared_privacy["files"]:
+        write_prepared_fvcc_core(candidate,processed)
+        final_privacy = sanitize_public_processed_tree(processed, club_id=CLUB)
+        if final_privacy["files"]:
+            raise RuntimeError('Prepared FVCC outputs reintroduced generic identity fields')
+    result['generic_identity_privacy'] = {
+        'first_pass_changed_files': len(privacy['files']),
+        'rows_scanned': privacy['rows_processed'],
+        'prepared_second_pass_changes': len(prepared_privacy['files']),
+    }
     return result
 
 
@@ -632,8 +688,8 @@ def write_prepared_fvcc_core(candidate: Path, processed: Path) -> None:
     from src.data.playcricket_ingestion import metadata_mtime
     from src.utils.player_identity import player_aliases_mtime
     from src.ui import layout
-    layout.load_hall_of_fame_data.clear()
-    prepared=layout.load_hall_of_fame_data(
+    # Read the candidate directly without clearing the shared serving cache.
+    prepared=layout.load_hall_of_fame_data.__wrapped__(
         metadata_mtime(),player_aliases_mtime(club_id=CLUB),layout.HALL_OF_FAME_DATA_VERSION,club_id=CLUB)
     if prepared is None:
         raise RuntimeError('Unable to build candidate prepared HOF from candidate aggregates')
@@ -644,6 +700,38 @@ def write_prepared_fvcc_core(candidate: Path, processed: Path) -> None:
         output_dir=processed/'hall_of_fame')
     if not written:
         raise RuntimeError('Candidate prepared HOF writer produced no files')
+    # Pandas groupby hash ordering can vary across offline build processes.
+    # Stabilize only FVCC candidate snapshots, not shared runtime behavior.
+    for path in written:
+        if path.suffix != '.csv':
+            continue
+        frame = pd.read_csv(path, low_memory=False)
+        previous = pd.read_csv(path, low_memory=False)
+        frame = stable_candidate_rows(frame, previous=previous)
+        frame.to_csv(path, index=False)
+
+
+def stable_candidate_rows(frame: pd.DataFrame, previous: pd.DataFrame | None = None) -> pd.DataFrame:
+    if frame.empty:
+        return frame.copy()
+    identity = next((c for c in ['canonical_player_id', 'player_key', 'player_id'] if c in frame), None)
+    if identity is not None and previous is not None and identity in previous:
+        historic = previous[identity].astype(str).tolist()
+        if len(historic) != len(set(historic)):
+            raise ValueError(f'Cannot stabilize prepared row order: duplicated historical {identity}')
+        order = {key: index for index, key in enumerate(historic)}
+        identifiers = frame[identity].astype(str)
+        row_key = frame.astype('string').fillna('').agg('\x1f'.join, axis=1)
+        output = frame.assign(
+            _historic_order=identifiers.map(order).fillna(len(order)),
+            _new_identity=identifiers.where(~identifiers.isin(order), ''),
+            _row_key=row_key,
+        )
+        return output.sort_values(['_historic_order', '_new_identity', '_row_key'], kind='stable').drop(
+            columns=['_historic_order', '_new_identity', '_row_key']
+        ).reset_index(drop=True)
+    sort_key = frame.astype('string').fillna('').agg('\x1f'.join, axis=1)
+    return frame.assign(_candidate_order=sort_key).sort_values('_candidate_order', kind='stable').drop(columns='_candidate_order').reset_index(drop=True)
 
 
 if __name__ == '__main__':

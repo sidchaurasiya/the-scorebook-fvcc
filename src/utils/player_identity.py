@@ -6,11 +6,18 @@ import unicodedata
 from difflib import SequenceMatcher
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 import streamlit as st
 
-from src.config.club_config import get_active_club_id, get_feature_flag, get_mapping_path, get_processed_path
+from src.config.club_config import (
+    get_active_club_id,
+    get_feature_flag,
+    get_mapping_path,
+    get_processed_path,
+    normalize_club_id,
+)
 from src.data.playcricket_ingestion import metadata_mtime, read_processed_table
 
 DATA_DIR = Path("data")
@@ -109,7 +116,10 @@ def is_private_or_anonymised_player(
     return lowered in PRIVATE_PLAYER_MARKERS or set(text) <= {"*"}
 
 
-def public_player_mask(frame: pd.DataFrame) -> pd.Series:
+def public_player_mask(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.Series:
     """Build a public-display eligibility mask without mutating backend records."""
     if frame.empty:
         return pd.Series(dtype=bool, index=frame.index)
@@ -122,14 +132,26 @@ def public_player_mask(frame: pd.DataFrame) -> pd.Series:
     for column in PLAYER_NAME_COLUMNS:
         if column in frame:
             private |= frame[column].map(is_private_or_anonymised_player)
+
+    from src.data.grdcc_player_privacy import current_privacy_overrides
+
+    current_status, _ = current_privacy_overrides(frame, club_id)
+    private.loc[current_status.eq("public")] = False
+    private.loc[current_status.eq("private")] = True
     return ~private
 
 
-def filter_public_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
+def filter_public_player_rows(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     """Return customer-safe player rows while retaining all backend source rows."""
     if frame.empty:
         return frame.copy()
-    return frame.loc[public_player_mask(frame)].copy()
+    from src.data.grdcc_player_privacy import apply_current_privacy_presentation
+
+    output = apply_current_privacy_presentation(frame, club_id)
+    return output.loc[public_player_mask(output, club_id)].copy()
 
 
 def normalize_player_name_for_strict_merge(name: object) -> str:
@@ -234,6 +256,12 @@ def player_aliases_mtime(path: str | Path | None = None, *, club_id: str | None 
         load_player_aliases(path)
     manual_path = path.with_name(MANUAL_MERGES_PATH.name)
     mtimes = [candidate.stat().st_mtime for candidate in (path, manual_path) if candidate.exists()]
+    if normalize_club_id(club_id or get_active_club_id()) == "georges-river-district":
+        from src.data.grdcc_player_privacy import privacy_snapshot_path
+
+        privacy_path = privacy_snapshot_path(club_id)
+        if privacy_path.is_file():
+            mtimes.append(privacy_path.stat().st_mtime)
     return max(mtimes, default=0.0)
 
 
@@ -292,18 +320,75 @@ def apply_player_identity_mapping(
 
     output["raw_player_id"] = output["raw_player_id"].fillna("").astype(str)
     output["raw_player_name"] = output["raw_player_name"].map(display_player_name)
+    existing_canonical_id = (
+        output.get("canonical_player_id", pd.Series("", index=output.index))
+        .fillna("")
+        .astype(str)
+        .str.strip()
+    )
+    from src.data.grdcc_player_privacy import current_privacy_overrides
+
+    current_status, current_names = current_privacy_overrides(output, club_id)
     output["canonical_player_id"] = output.apply(default_canonical_id, axis=1)
+    # Current-public records may already carry the governed canonical ID after
+    # a privacy-safe source projection removed the raw participant field. Keep
+    # that exact ID instead of replacing it with a name-derived slug, so the
+    # same current-privacy decision still resolves in prepared and fallback
+    # career outputs.
+    preserve_verified_canonical_id = (
+        current_status.eq("public")
+        & output["raw_player_id"].astype(str).str.strip().eq("")
+        & existing_canonical_id.ne("")
+    )
+    output.loc[preserve_verified_canonical_id, "canonical_player_id"] = existing_canonical_id.loc[
+        preserve_verified_canonical_id
+    ]
     output["canonical_player_name"] = output["raw_player_name"]
+
+    # A generic or explicitly private source label is not sufficient evidence
+    # to reuse an old alias mapping. GRDCC exact-current-public evidence can
+    # restore the verified name; otherwise keep the row generic before any
+    # career aggregation so a reused placeholder cannot enter a named career.
+    generic_source = output["raw_player_name"].map(is_private_or_anonymised_player)
+    private_flag = pd.Series(False, index=output.index)
+    for column in PRIVATE_PLAYER_FLAG_COLUMNS:
+        if column in output:
+            private_flag |= output[column].fillna("").astype(str).str.strip().str.casefold().isin(
+                {"true", "1", "yes", "y", "private", "anonymous"}
+            )
+    exact_public = current_status.eq("public")
+    exact_private = current_status.eq("private")
+    if exact_public.any():
+        verified_names = current_names.loc[exact_public].map(display_player_name)
+        for column in ("raw_player_name", "canonical_player_name", "display_player_name", "player_name", "Player"):
+            if column in output:
+                output.loc[exact_public, column] = verified_names
+    protected_generic = (generic_source | private_flag | exact_private) & ~exact_public
+    if protected_generic.any():
+        generic_columns = [
+            column
+            for column in ("raw_player_name", "canonical_player_name", "display_player_name", "player_name", "Player")
+            if column in output
+        ]
+        for column in generic_columns:
+            output.loc[protected_generic, column] = "Private player"
 
     aliases_df = load_player_aliases(club_id=club_id) if aliases_df is None else aliases_df.copy()
     manual_merges_df = load_manual_player_merges(club_id=club_id) if manual_merges_df is None else manual_merges_df
-    manual_aliases = manual_alias_candidates(manual_merges_df, output)
+    manual_aliases = manual_alias_candidates(
+        manual_merges_df, output.loc[~protected_generic].copy()
+    )
     if manual_aliases:
         aliases_df = pd.concat([aliases_df, pd.DataFrame(manual_aliases)], ignore_index=True)
     aliases_df = active_aliases(aliases_df)
 
     if aliases_df.empty:
-        return apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+        output = apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+        if exact_public.any():
+            output.loc[exact_public, "canonical_player_name"] = current_names.loc[exact_public]
+            if "display_player_name" in output:
+                output.loc[exact_public, "display_player_name"] = current_names.loc[exact_public]
+        return output
 
     id_map = {}
     name_map = {}
@@ -321,17 +406,31 @@ def apply_player_identity_mapping(
             if clean_name:
                 name_map[clean_name] = mapped
 
-    def resolve(row: pd.Series) -> tuple[str, str]:
+    def resolve(row: dict[str, Any], protect_identity: bool) -> tuple[str, str]:
+        if protect_identity:
+            return str(row["canonical_player_id"]), "Private player"
         raw_id = str(row.get("raw_player_id", "")).strip()
         if raw_id and raw_id in id_map:
             return id_map[raw_id]
         clean_name = clean_player_name(row.get("raw_player_name", ""))
         return name_map.get(clean_name, (row["canonical_player_id"], row["canonical_player_name"]))
 
-    resolved = output.apply(resolve, axis=1, result_type="expand")
+    resolved = pd.DataFrame(
+        [
+            resolve(row, bool(protect_identity))
+            for row, protect_identity in zip(
+                output.to_dict("records"), protected_generic.to_numpy()
+            )
+        ],
+        index=output.index,
+    )
     output["canonical_player_id"] = resolved[0]
     output["canonical_player_name"] = resolved[1]
     output = apply_grdcc_historical_exact_name_mapping(output, club_id=club_id)
+    if exact_public.any():
+        output.loc[exact_public, "canonical_player_name"] = current_names.loc[exact_public]
+        if "display_player_name" in output:
+            output.loc[exact_public, "display_player_name"] = current_names.loc[exact_public]
     if str(club_id or get_active_club_id()).strip().casefold() == 'georges-river-district':
         sources = aliases_df.get('merge_source', pd.Series('', index=aliases_df.index))
         continuity = aliases_df.loc[sources.eq('verified_2026_27_source_id_continuity')]
@@ -366,6 +465,8 @@ def apply_grdcc_historical_exact_name_mapping(
     output = frame.copy()
     raw_ids = output["raw_player_id"].fillna("").astype(str)
     merge_candidates = raw_ids.ne("")
+    source_names = output.get("raw_player_name", output.get("player_name", pd.Series("", index=output.index)))
+    merge_candidates &= ~source_names.map(is_private_or_anonymised_player)
     if not merge_candidates.any():
         return output
 
@@ -1061,10 +1162,12 @@ def get_player_profile_data(
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Resolve the privacy-ledger signature before consulting the profile cache."""
     from src.data.grdcc_legacy_composites import legacy_ledger_signature
+    from src.data.grdcc_player_privacy import privacy_snapshot_signature
+
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
     return _get_player_profile_data_cached(
         canonical_player_id, local_version, identity_version, club_id,
-        legacy_ledger_signature(active_club_id),
+        (legacy_ledger_signature(active_club_id), privacy_snapshot_signature(active_club_id)),
     )
 
 
@@ -1074,7 +1177,7 @@ def _get_player_profile_data_cached(
     local_version: float | None,
     identity_version: float | None,
     club_id: str | None,
-    legacy_signature: tuple[str, str],
+    legacy_signature: tuple[object, ...],
 ) -> dict[str, pd.DataFrame | dict[str, str]]:
     """Data helper for the future Player Profile page.
 
@@ -1106,7 +1209,10 @@ def _get_player_profile_data_cached(
     canonical_player_id = str(canonical_player_id).strip()
     selected_ids = {canonical_player_id}
     if active_club_id == "georges-river-district":
-        frames = {category: filter_public_player_rows(frame) for category, frame in frames.items()}
+        frames = {
+            category: filter_public_player_rows(frame, active_club_id)
+            for category, frame in frames.items()
+        }
         import json
         from src.config.club_config import get_hall_of_fame_dir
         from src.data.grdcc_legacy_composites import approved_component_id_map

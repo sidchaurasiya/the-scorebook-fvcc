@@ -1,8 +1,8 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,player_name_key,matches_with_result,wins,losses,win_pct,source_coverage_note
-raw_8acd5d06_ea98_4c8b_9ddb_b74e794f645c,raw_8acd5d06_ea98_4c8b_9ddb_b74e794f645c,********,********,,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000004,raw_00000000_0000_0000_0000_000000000004,********,********,,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,,5,2,3,40.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,,14,9,5,64.28571428571429,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,2,0,2,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,5,2,3,40.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,14,9,5,64.28571428571429,Tracked deploy-safe summary from local match-centre result rows.
 raw_c9f63113_9374_46ce_bed8_b3ca85cc0c59,raw_c9f63113_9374_46ce_bed8_b3ca85cc0c59,A Jones,A Jones,a jones,1,1,0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,aamir rana,113,58,55,51.32743362831859,Tracked deploy-safe summary from local match-centre result rows.
 raw_783020cf_409e_4d98_9b14_200c3fcff343,raw_783020cf_409e_4d98_9b14_200c3fcff343,Aarav Mehta,Aarav Mehta,aarav mehta,5,3,2,60.0,Tracked deploy-safe summary from local match-centre result rows.
