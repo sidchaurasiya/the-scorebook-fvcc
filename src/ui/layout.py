@@ -4420,11 +4420,18 @@ def load_match_centre_archive(scope_name: str, _signature: tuple[tuple[str, floa
     return {name.removeprefix("all_"): read_match_centre_csv(scope_path / f"{name}.csv") for name in table_names}
 
 
-def read_match_centre_csv(path: Path) -> pd.DataFrame:
+def read_match_centre_csv(path: Path, *, sanitize: bool = True, club_id: str | None = None) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
     try:
-        return pd.read_csv(path)
+        frame = pd.read_csv(path)
+        if not sanitize:
+            return frame
+        from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+        return sanitize_public_identity_frame(
+            frame, club_id=club_id or get_active_club_id(), relative_path=path.name
+        )[0]
     except (OSError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return pd.DataFrame()
 
@@ -6894,11 +6901,11 @@ def _load_hall_of_fame_data_cached(
     _ = serving_signature
     _ = (local_version, identity_version, data_version)
     started_at = time.perf_counter()
-    batting_raw = read_processed_table("all_seasons_batting")
-    bowling_raw = read_processed_table("all_seasons_bowling")
-    fielding_raw = read_processed_table("all_seasons_fielding")
-    seasons = read_processed_table("seasons")
-    players = read_processed_table("players")
+    batting_raw = read_processed_table("all_seasons_batting", club_id=active_club_id)
+    bowling_raw = read_processed_table("all_seasons_bowling", club_id=active_club_id)
+    fielding_raw = read_processed_table("all_seasons_fielding", club_id=active_club_id)
+    seasons = read_processed_table("seasons", club_id=active_club_id)
+    players = read_processed_table("players", club_id=active_club_id)
     log_hof_timing(
         "source data loading",
         started_at,
@@ -6914,7 +6921,7 @@ def _load_hall_of_fame_data_cached(
     batting_raw = normalise_player_names(batting_raw)
     bowling_raw = normalise_player_names(bowling_raw)
     fielding_raw = normalise_player_names(fielding_raw)
-    aliases = load_player_aliases()
+    aliases = load_player_aliases(club_id=active_club_id)
     batting_raw = apply_player_identity_mapping(batting_raw, aliases)
     bowling_raw = apply_player_identity_mapping(bowling_raw, aliases)
     fielding_raw = apply_player_identity_mapping(fielding_raw, aliases)
@@ -6938,7 +6945,7 @@ def _load_hall_of_fame_data_cached(
     if allow_legacy_fallback() and runtime_identity_maintenance_enabled():
         export_team_grade_display_audit(
             [batting_raw, bowling_raw, fielding_raw],
-            path=get_mapping_path("team_grade_display_audit.csv"),
+            path=get_mapping_path("team_grade_display_audit.csv", club_id=active_club_id),
         )
     log_hof_timing("apply canonical player and team-grade mapping", started_at)
 
@@ -6960,8 +6967,8 @@ def _load_hall_of_fame_data_cached(
         )
         mapping_update = ensure_player_alias_mappings(identity_source)
         if mapping_update["added"]:
-            rebuild_canonical_processed_tables(processed_dir=get_processed_dir())
-        aliases = load_player_aliases()
+            rebuild_canonical_processed_tables(processed_dir=get_processed_dir(club_id=active_club_id))
+        aliases = load_player_aliases(club_id=active_club_id)
         batting_raw = apply_player_identity_mapping(batting_raw, aliases)
         bowling_raw = apply_player_identity_mapping(bowling_raw, aliases)
         fielding_raw = apply_player_identity_mapping(fielding_raw, aliases)
@@ -9360,6 +9367,7 @@ def match_centre_all_available_signature() -> tuple[tuple[str, float], ...]:
 
 def scorecard_record_rows_signature() -> tuple[object, ...]:
     from src.data.grdcc_player_privacy import privacy_snapshot_signature
+    from src.data.public_generic_identity_privacy import PUBLIC_IDENTITY_POLICY_VERSION
 
     club_id = get_active_club_id()
     if HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH.exists():
@@ -9368,7 +9376,10 @@ def scorecard_record_rows_signature() -> tuple[object, ...]:
         )
     else:
         sources = match_centre_all_available_signature()
-    return sources + (privacy_snapshot_signature(club_id),)
+    return sources + (
+        privacy_snapshot_signature(club_id),
+        ("public_identity_policy", PUBLIC_IDENTITY_POLICY_VERSION),
+    )
 
 
 @st.cache_data(show_spinner=False)
@@ -9397,6 +9408,11 @@ def load_scorecard_record_rows(_signature: tuple[object, ...]) -> dict[str, pd.D
                 id_columns=["participant_id", "player_id", "raw_player_id", "canonical_player_id"],
             )
         frame = add_missing_canonical_player_ids(frame, club_id=club_id)
+        from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+        frame, _ = sanitize_public_identity_frame(
+            frame, club_id=club_id, relative_path=f"all_scorecard_{key}.csv"
+        )
         if club_id == "glen-waverley-hawks":
             from src.data.gwhcc_masked_privacy import ID_COLUMNS, is_generic_player_label
 
@@ -9425,7 +9441,24 @@ def load_scorecard_record_rows(_signature: tuple[object, ...]) -> dict[str, pd.D
 
 def load_deploy_scorecard_record_rows(club_id: str | None = None) -> dict[str, pd.DataFrame]:
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
-    frame = read_match_centre_csv(HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH)
+    frame = read_match_centre_csv(
+        HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH,
+        sanitize=active_club_id != "georges-river-district",
+        club_id=active_club_id,
+    )
+    if active_club_id == "georges-river-district":
+        # Exact current-public evidence may restore a verified identity that an
+        # older scorecard export carried under a generic label. Apply that
+        # source-backed decision before generic-ID sanitization clears IDs from
+        # ambiguous rows; current-private and unresolved rows remain protected.
+        from src.data.grdcc_player_privacy import apply_current_privacy_presentation
+
+        frame = apply_current_privacy_presentation(frame, club_id=active_club_id)
+    from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+    frame, _ = sanitize_public_identity_frame(
+        frame, club_id=active_club_id, relative_path="hall_of_fame/scorecard_record_links.csv"
+    )
     if active_club_id == "fvcc" and not frame.empty:
         from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_record_links
 

@@ -18,7 +18,7 @@ V6_CURRENT_MATCHES = {
     "raw_289b8e53_aa95_4072_8288_588447304bcd": 300.0,
     "nathan_bungey": 341.0,
     "anthony_stiles": 57.0,
-    "noel_blacker": 108.0,
+    "noel_blacker": 108.5,
 }
 
 

@@ -292,30 +292,39 @@ def _read_metadata_cached(path_value: str, metadata_version: float) -> dict[str,
         return {}
 
 
-def read_processed_table(name: str) -> pd.DataFrame:
-    path = get_processed_path(f"{name}.csv")
+def read_processed_table(name: str, club_id: str | None = None) -> pd.DataFrame:
+    active_club_id = str(club_id or get_active_club_id()).strip().casefold()
+    path = get_processed_path(f"{name}.csv", club_id=active_club_id)
     if not path.exists():
         return pd.DataFrame()
     frame = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+    frame, _ = sanitize_public_identity_frame(
+        frame, club_id=active_club_id, relative_path=f"{name}.csv"
+    )
     # FVCC permits a compatibility fallback to root-level processed files.
     # Sanitize scorecard rows after cached loading so neither the club tree nor
     # a legacy fallback can restore a reused masked participant identifier.
     from src.data.fvcc_scorecard_privacy import sanitize_fvcc_scorecard_table
 
-    frame = sanitize_fvcc_scorecard_table(name, frame, club_id=get_active_club_id())
+    frame = sanitize_fvcc_scorecard_table(name, frame, club_id=active_club_id)
     if name in {"all_seasons_batting", "all_seasons_bowling", "all_seasons_fielding"}:
-        frame = _filter_grdcc_app_facing_player_rows(frame)
+        frame = _filter_grdcc_app_facing_player_rows(frame, club_id=active_club_id)
     if name == "all_seasons_batting":
-        frame = _filter_grdcc_app_facing_batting_rows(frame)
+        frame = _filter_grdcc_app_facing_batting_rows(frame, club_id=active_club_id)
     if name == "all_seasons_bowling":
-        frame = _filter_grdcc_app_facing_bowling_rows(frame)
-    combined = _append_supplemental_processed_rows(name, frame)
+        frame = _filter_grdcc_app_facing_bowling_rows(frame, club_id=active_club_id)
+    combined = _append_supplemental_processed_rows(name, frame, club_id=active_club_id)
+    combined, _ = sanitize_public_identity_frame(
+        combined, club_id=active_club_id, relative_path=f"{name}.csv"
+    )
     if name in {"all_seasons_batting", "all_seasons_bowling"}:
-        combined = _filter_grdcc_app_facing_player_rows(combined)
+        combined = _filter_grdcc_app_facing_player_rows(combined, club_id=active_club_id)
     if name == "all_seasons_batting":
-        combined = _filter_grdcc_app_facing_batting_rows(combined)
+        combined = _filter_grdcc_app_facing_batting_rows(combined, club_id=active_club_id)
     if name == "all_seasons_bowling":
-        combined = _filter_grdcc_app_facing_bowling_rows(combined)
+        combined = _filter_grdcc_app_facing_bowling_rows(combined, club_id=active_club_id)
     return combined
 
 
@@ -331,9 +340,15 @@ def _read_processed_table_cached(path_value: str, file_version: float) -> pd.Dat
         return pd.DataFrame()
 
 
-def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.DataFrame:
+def _append_supplemental_processed_rows(
+    name: str,
+    frame: pd.DataFrame,
+    *,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     """Apply the final GRDCC source split to aggregate batting and bowling tables."""
-    if not get_feature_flag("has_historical_excel", False):
+    active_club_id = str(club_id or get_active_club_id()).strip().casefold()
+    if not get_feature_flag("has_historical_excel", False, club_id=active_club_id):
         return frame
     supplemental_names = {
         "all_seasons_batting": "excel_all_seasons_batting.csv",
@@ -343,7 +358,7 @@ def _append_supplemental_processed_rows(name: str, frame: pd.DataFrame) -> pd.Da
     if not supplemental_filename:
         return frame
 
-    path = get_processed_dir() / "supplemental" / supplemental_filename
+    path = get_processed_dir(club_id=active_club_id) / "supplemental" / supplemental_filename
     if not path.exists():
         return frame
     supplemental = _read_processed_table_cached(str(path), path.stat().st_mtime)
@@ -382,9 +397,12 @@ def _grdcc_season_sort_key(value: object) -> int:
     return year * 10
 
 
-def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
+def _filter_grdcc_app_facing_bowling_rows(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     """Exclude impossible GRDCC primary bowling aggregates from client-visible records."""
-    if not get_feature_flag("has_historical_excel", False) or frame.empty:
+    if not get_feature_flag("has_historical_excel", False, club_id=club_id) or frame.empty:
         return frame
     required = {"bowlingWickets", "bowlingRuns", "bowlingBalls"}
     if not required.issubset(frame.columns):
@@ -413,9 +431,12 @@ def _filter_grdcc_app_facing_bowling_rows(frame: pd.DataFrame) -> pd.DataFrame:
     return output.loc[~invalid].copy()
 
 
-def _filter_grdcc_app_facing_batting_rows(frame: pd.DataFrame) -> pd.DataFrame:
+def _filter_grdcc_app_facing_batting_rows(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     """Exclude structurally impossible GRDCC batting aggregates from visible records."""
-    if not get_feature_flag("has_historical_excel", False) or frame.empty:
+    if not get_feature_flag("has_historical_excel", False, club_id=club_id) or frame.empty:
         return frame
     required = {"battingAggregate", "battingInnings", "battingNotOuts"}
     if not required.issubset(frame.columns):
@@ -431,9 +452,12 @@ def _filter_grdcc_app_facing_batting_rows(frame: pd.DataFrame) -> pd.DataFrame:
     return output.loc[~invalid].copy()
 
 
-def _filter_grdcc_app_facing_player_rows(frame: pd.DataFrame) -> pd.DataFrame:
+def _filter_grdcc_app_facing_player_rows(
+    frame: pd.DataFrame,
+    club_id: str | None = None,
+) -> pd.DataFrame:
     """Remove hidden and structurally invalid GRDCC player labels from visible data."""
-    if not get_feature_flag("has_historical_excel", False) or frame.empty:
+    if not get_feature_flag("has_historical_excel", False, club_id=club_id) or frame.empty:
         return frame
     name_column = next((column for column in ["canonical_player_name", "player_name", "raw_player_name"] if column in frame.columns), None)
     if name_column is None:

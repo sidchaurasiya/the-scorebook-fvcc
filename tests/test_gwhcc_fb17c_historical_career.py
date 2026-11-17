@@ -116,8 +116,8 @@ def test_closed_customer_decisions_and_private_filtering_remain_unchanged() -> N
     frame = authoritative_frame()
     expected = {
         "Greg Mccormick": (427.0, 8664.0, 393.0, 87.0),
-        # Current-season verified scorecards add two eligible appearances and four catches.
-        "James Anderson": (112.0, 301.0, 3.0, 118.0),
+        # Seven later eligible matches add one T20 appearance and 29 runs to James.
+        "James Anderson": (112.5, 330.0, 3.0, 118.0),
         # The added 2026/27 scorecard eb17e44d contributes one match and 15 runs.
         "Kashif Javed": (157.5, 3565.0, 6.0, 34.0),
     }

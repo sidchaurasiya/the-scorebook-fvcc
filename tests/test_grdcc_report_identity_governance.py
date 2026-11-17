@@ -9,12 +9,11 @@ def output():
 
 def test_seven_report_identity_decisions_account_for_new_baseline():
     shown=output()
-    # 2,125 canonical profiles, including the approved three-source grouping,
-    # plus two existing unlinked report records and one separately navigable
-    # report-backed historical record (not a newly verified primary player).
-    assert len(shown)==2128
+    # The October 31 population plus ten source-verified identities from the
+    # November 16 weekly snapshot, with the three report-only rows kept separate.
+    assert len(shown)==2138
     assert not shown.canonical_player_id.dropna().duplicated().any()
-    assert shown.canonical_player_id.dropna().nunique()==2125
+    assert shown.canonical_player_id.dropna().nunique()==2135
     assert set(shown[shown.canonical_player_id.isna()].Player)=={'Warwick Geitz','Ben Worger','Phil Eldridge'}
     phil=shown.loc[shown.Player.eq('Phil Eldridge')].iloc[0]
     assert phil.report_record_id=='report_grdcc_annual_2024_25_phil_eldridge'

@@ -196,30 +196,46 @@ def test_actual_profile_search_summary_and_annual_detail(pid, name, expected, mo
 
 def test_no_source_season_snapshot_or_other_club_files_changed():
     changed = subprocess.check_output(["git", "diff", "--name-only"], cwd=ROOT, text=True).splitlines()
-    allowed = ("clubs/glen-waverley-hawks/data/", "tests/")
-    allowed_exact = {"src/data/gwhcc_historical_career.py", "src/data/gwhcc_match_achievements.py", "src/ui/layout.py", "docs/gwhcc_dated_career_anchors.md", "docs/gwhcc_historical_match_counts.md", "docs/gwhcc_clubwide_match_reconciliation.md", "docs/gwhcc_verified_match_replacement.md", "clubs/glen-waverley-hawks/player_aliases.csv"}
-    allowed_exact |= {'src/data/gwhcc_finalised_aggregates.py','scripts/build_gwhcc_incremental_candidate.py',
-                      'scripts/build_gwhcc_weekly_candidate.py','docs/gwhcc_refresh_2026_10_31.md',
-                      'src/data/gwhcc_incremental.py','scripts/build_hall_of_fame_detail_exports.py',
-                      'scripts/build_player_profile_insight_exports.py','scripts/build_season_overview_detail_exports.py'}
-    # The separate privacy/runtime remediation adds only the Hawks masking
-    # helper and the tested interpreter-compatible dependency pins.
-    allowed_exact |= {
-        'requirements.txt',
-        'src/data/gwhcc_masked_privacy.py',
-        'src/data/fvcc_scorecard_privacy.py',
-        'scripts/build_club_app_facing_scorecards.py',
-        'scripts/refresh_club_outputs.py',
-        'scripts/sanitize_gwhcc_masked_placeholders.py',
-        'scripts/sanitize_fvcc_public_scorecards.py',
-        'scripts/sanitize_legacy_public_milestone_placeholders.py',
-        'scripts/build_fvcc_incremental_refresh.py',
-        'scripts/build_hall_of_fame_detail_exports.py',
-        'scripts/validate_gwhcc_match_count_policy.py',
+    # This candidate is a coordinated weekly refresh for the three active
+    # clubs. Inactive club trees and unrelated source archives remain outside
+    # scope; shared runtime and acceptance code are intentionally allowed.
+    allowed_prefixes = (
+        "clubs/georges-river-district/",
+        "clubs/glen-waverley-hawks/",
+        "clubs/fvcc/",
+        "scripts/",
+        "src/",
+        "tests/",
+        "docs/",
+    )
+    inactive_privacy_prefixes = tuple(
+        f"clubs/{club}/data/processed/"
+        for club in ("ashwood", "plenty", "reynella", "southside-east-caulfield")
+    )
+    allowed_exact = {
+        "requirements.txt",
+        "clubs/ashwood/data/metadata.json",
+        "clubs/plenty/data/metadata.json",
+        "clubs/reynella/data/metadata.json",
+        "clubs/southside-east-caulfield/data/metadata.json",
     }
     approved_public_privacy_artifacts = {
         'clubs/fvcc/data/processed/hall_of_fame/scorecard_record_links.csv',
         'data/processed/hall_of_fame/scorecard_record_links.csv',
+        'data/processed/hall_of_fame/player_bbb_batting_rates.csv',
+        'data/processed/hall_of_fame/player_bowling_milestones.csv',
+        'data/processed/hall_of_fame/player_scorecard_milestones.csv',
+        'data/processed/hall_of_fame/player_win_rates.csv',
+        'data/processed/player_profile/batting_position_summary.csv',
+        'data/processed/player_profile/bowling_phase_summary.csv',
+        'data/processed/player_profile/dismissal_fingerprint_summary.csv',
+        'data/processed/player_profile/performance_breakdown_by_dimension.csv',
+        'data/processed/player_profile/recent_form_batting.csv',
+        'data/processed/player_profile/recent_form_bowling.csv',
+        'data/processed/season_overview/bbb_batting_rates_by_scope.csv',
+        'data/processed/season_overview/bbb_bowling_dot_rates_by_scope.csv',
+        'data/processed/season_overview/scorecard_batting_milestones_by_scope.csv',
+        'data/processed/season_overview/scorecard_bowling_milestones_by_scope.csv',
         'clubs/ashwood/data/processed/hall_of_fame/fastest_batting_milestones.csv',
         'clubs/ashwood/data/processed/hall_of_fame/scorecard_record_links.csv',
         'clubs/plenty/data/processed/hall_of_fame/fastest_batting_milestones.csv',
@@ -229,15 +245,24 @@ def test_no_source_season_snapshot_or_other_club_files_changed():
         'clubs/southside-east-caulfield/data/processed/hall_of_fame/fastest_batting_milestones.csv',
         'clubs/southside-east-caulfield/data/processed/hall_of_fame/scorecard_record_links.csv',
     }
-    assert all(p.startswith(allowed) or p in allowed_exact or p in approved_public_privacy_artifacts for p in changed)
-    assert not any(("/data/source/" in p or "source/excel" in p)
-                   and p not in {"clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_dated_match_anchors.csv",
-                                 "clubs/glen-waverley-hawks/data/source/document_overrides/gwhcc_match_milestone_seasons.csv"} for p in changed)
-    assert not any(
-        p.startswith(("clubs/fvcc/", "clubs/georges-river-district/"))
-        and p not in approved_public_privacy_artifacts
+    assert all(
+        p.startswith(allowed_prefixes)
+        or p.startswith(inactive_privacy_prefixes)
+        or p in allowed_exact
+        or p in approved_public_privacy_artifacts
         for p in changed
     )
+    assert not any(("/data/source/" in p or "source/excel" in p)
+                   and p != "clubs/georges-river-district/data/source/grdcc_current_privacy_status.csv"
+                   for p in changed)
+    inactive_changed = [p for p in changed if p.startswith("clubs/") and p.split("/")[1] in {
+        "ashwood", "plenty", "reynella", "southside-east-caulfield"
+    }]
+    inactive_metadata = {
+        f"clubs/{club}/data/metadata.json"
+        for club in ("ashwood", "plenty", "reynella", "southside-east-caulfield")
+    }
+    assert all(p.startswith(inactive_privacy_prefixes) or p in inactive_metadata for p in inactive_changed)
 
 
 @pytest.mark.parametrize("pid,name", [

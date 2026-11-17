@@ -1,9 +1,9 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,player_name_key,matches_with_result,wins,losses,win_pct,source_coverage_note
-raw_00000000_0000_0000_0000_000000000005,raw_00000000_0000_0000_0000_000000000005,********,********,,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000004,raw_00000000_0000_0000_0000_000000000004,********,********,,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000003,raw_00000000_0000_0000_0000_000000000003,********,********,,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,,7,0,7,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,,10,2,8,20.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,1,0,1,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,4,0,4,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,7,0,7,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,10,2,8,20.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_9afec348_83dd_4631_a022_a981b7a860dd,raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,aaron dass,4,1,3,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_99a2913d_f3c5_472e_914f_f3e1985965ae,raw_99a2913d_f3c5_472e_914f_f3e1985965ae,Aashish Chhetri,Aashish Chhetri,aashish chhetri,7,5,2,71.42857142857143,Tracked deploy-safe summary from local match-centre result rows.
 raw_c3a31191_6c5e_438e_9288_354845031832,raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,abcin thomas,47,24,23,51.06382978723404,Tracked deploy-safe summary from local match-centre result rows.

@@ -1,25 +1,25 @@
 canonical_player_id,canonical_player_name,display_player_name,dismissal_bucket,count,scope,total_dismissals,pct,dismissal_order
-__club__,Club average,Club average,Caught,10895,club,19599,55.58957089647431,1
-__club__,Club average,Club average,Bowled,5496,club,19599,28.042247053421093,2
-__club__,Club average,Club average,LBW,1209,club,19599,6.168682075616103,3
-__club__,Club average,Club average,Run out,1467,club,19599,7.485075769171896,4
-__club__,Club average,Club average,Stumped,367,club,19599,1.8725445175774273,5
-__club__,Club average,Club average,Other,165,club,19599,0.8418796877391703,6
-raw_00000000_0000_0000_0000_000000000001,********,********,Caught,3,player,11,27.272727272727273,1
-raw_1ed880b6_ff58_4e56_aa3f_4296eb687dec,********,********,Caught,2,player,4,50.0,1
-raw_270f6060_71b5_4a9f_adee_d3186f66c2a1,********,********,Caught,6,player,8,75.0,1
-raw_94b482bd_19fc_498c_a513_920887408155,********,********,Caught,1,player,5,20.0,1
-raw_00000000_0000_0000_0000_000000000001,********,********,Bowled,2,player,11,18.181818181818183,2
-raw_00000000_0000_0000_0000_000000000003,********,********,Bowled,1,player,1,100.0,2
-raw_1ed880b6_ff58_4e56_aa3f_4296eb687dec,********,********,Bowled,1,player,4,25.0,2
-raw_270f6060_71b5_4a9f_adee_d3186f66c2a1,********,********,Bowled,2,player,8,25.0,2
-raw_94b482bd_19fc_498c_a513_920887408155,********,********,Bowled,2,player,5,40.0,2
-raw_00000000_0000_0000_0000_000000000001,********,********,LBW,1,player,11,9.090909090909092,3
-raw_94b482bd_19fc_498c_a513_920887408155,********,********,LBW,1,player,5,20.0,3
-raw_00000000_0000_0000_0000_000000000001,********,********,Run out,1,player,11,9.090909090909092,4
-raw_94b482bd_19fc_498c_a513_920887408155,********,********,Run out,1,player,5,20.0,4
-raw_00000000_0000_0000_0000_000000000001,********,********,Stumped,1,player,11,9.090909090909092,5
-raw_1ed880b6_ff58_4e56_aa3f_4296eb687dec,********,********,Stumped,1,player,4,25.0,5
+__club__,Club average,Club average,Caught,10911,club,19629,55.586122573742934,1
+__club__,Club average,Club average,Bowled,5504,club,19629,28.040144683886087,2
+__club__,Club average,Club average,LBW,1209,club,19629,6.159254164756228,3
+__club__,Club average,Club average,Run out,1473,club,19629,7.504202965000764,4
+__club__,Club average,Club average,Stumped,367,club,19629,1.8696826124611545,5
+__club__,Club average,Club average,Other,165,club,19629,0.8405930001528351,6
+,********,********,Caught,3,player,11,27.272727272727273,1
+,********,********,Caught,2,player,4,50.0,1
+,********,********,Caught,6,player,8,75.0,1
+,********,********,Caught,1,player,5,20.0,1
+,********,********,Bowled,2,player,11,18.181818181818183,2
+,********,********,Bowled,1,player,1,100.0,2
+,********,********,Bowled,1,player,4,25.0,2
+,********,********,Bowled,2,player,8,25.0,2
+,********,********,Bowled,2,player,5,40.0,2
+,********,********,LBW,1,player,11,9.090909090909092,3
+,********,********,LBW,1,player,5,20.0,3
+,********,********,Run out,1,player,11,9.090909090909092,4
+,********,********,Run out,1,player,5,20.0,4
+,********,********,Stumped,1,player,11,9.090909090909092,5
+,********,********,Stumped,1,player,4,25.0,5
 raw_3710b123_d271_495d_a4b6_f1deee3d5204,A Blake,A Blake,Caught,6,player,13,46.15384615384615,1
 raw_3710b123_d271_495d_a4b6_f1deee3d5204,A Blake,A Blake,Bowled,4,player,13,30.76923076923077,2
 raw_3710b123_d271_495d_a4b6_f1deee3d5204,A Blake,A Blake,LBW,1,player,13,7.6923076923076925,3
@@ -565,11 +565,11 @@ raw_1447cf96_4ff1_47ca_95a8_a68713e997a2,Binu Joseph,Binu Joseph,Bowled,3,player
 raw_8fc07352_380c_4d27_8b75_427d016dca9c,Bivaan Negi,Bivaan Negi,Caught,5,player,15,33.333333333333336,1
 raw_8fc07352_380c_4d27_8b75_427d016dca9c,Bivaan Negi,Bivaan Negi,Bowled,8,player,15,53.333333333333336,2
 raw_8fc07352_380c_4d27_8b75_427d016dca9c,Bivaan Negi,Bivaan Negi,Run out,2,player,15,13.333333333333334,4
-biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Caught,6,player,21,28.571428571428573,1
-biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Bowled,8,player,21,38.095238095238095,2
-biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Run out,2,player,21,9.523809523809524,4
-biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Stumped,3,player,21,14.285714285714286,5
-biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Other,2,player,21,9.523809523809524,6
+biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Caught,7,player,22,31.818181818181817,1
+biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Bowled,8,player,22,36.36363636363637,2
+biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Run out,2,player,22,9.090909090909092,4
+biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Stumped,3,player,22,13.636363636363637,5
+biyon_mulleriyawa,Biyon Mulleriyawa,Biyon Mulleriyawa,Other,2,player,22,9.090909090909092,6
 raw_5708f8da_1943_4854_999d_5b54aa0e4f4a,Brad Coster,Brad Coster,Caught,35,player,48,72.91666666666667,1
 raw_5708f8da_1943_4854_999d_5b54aa0e4f4a,Brad Coster,Brad Coster,Bowled,9,player,48,18.75,2
 raw_5708f8da_1943_4854_999d_5b54aa0e4f4a,Brad Coster,Brad Coster,LBW,2,player,48,4.166666666666667,3
@@ -1129,12 +1129,12 @@ raw_47931087_deec_4394_9da5_cec94a162d4c,Grant Broadley,Grant Broadley,Caught,8,
 raw_47931087_deec_4394_9da5_cec94a162d4c,Grant Broadley,Grant Broadley,Bowled,7,player,17,41.1764705882353,2
 raw_47931087_deec_4394_9da5_cec94a162d4c,Grant Broadley,Grant Broadley,Stumped,1,player,17,5.882352941176471,5
 raw_47931087_deec_4394_9da5_cec94a162d4c,Grant Broadley,Grant Broadley,Other,1,player,17,5.882352941176471,6
-raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Caught,168,player,237,70.88607594936708,1
-raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Bowled,36,player,237,15.189873417721518,2
-raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,LBW,21,player,237,8.860759493670885,3
-raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Run out,8,player,237,3.3755274261603376,4
-raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Stumped,3,player,237,1.2658227848101267,5
-raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Other,1,player,237,0.4219409282700422,6
+raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Caught,169,player,238,71.00840336134453,1
+raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Bowled,36,player,238,15.126050420168067,2
+raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,LBW,21,player,238,8.823529411764707,3
+raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Run out,8,player,238,3.361344537815126,4
+raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Stumped,3,player,238,1.2605042016806722,5
+raw_237ceb1c_17d7_4296_9506_e785f681755a,Grant Haye,Grant Haye,Other,1,player,238,0.42016806722689076,6
 raw_f5860e82_6516_4516_81d8_a1439b3aa8ff,Greg Brown,Greg Brown,Caught,16,player,29,55.172413793103445,1
 raw_f5860e82_6516_4516_81d8_a1439b3aa8ff,Greg Brown,Greg Brown,Bowled,11,player,29,37.93103448275862,2
 raw_f5860e82_6516_4516_81d8_a1439b3aa8ff,Greg Brown,Greg Brown,LBW,1,player,29,3.4482758620689653,3
@@ -1188,11 +1188,11 @@ raw_9b718a89_6b8b_4f4e_8867_6533abc64950,Hari Rambhatla,Hari Rambhatla,Run out,2
 raw_2664c710_becf_46b8_ac9a_db219e734313,Harindra Krishna Mendu,Harindra Krishna Mendu,Caught,5,player,8,62.5,1
 raw_2664c710_becf_46b8_ac9a_db219e734313,Harindra Krishna Mendu,Harindra Krishna Mendu,LBW,2,player,8,25.0,3
 raw_2664c710_becf_46b8_ac9a_db219e734313,Harindra Krishna Mendu,Harindra Krishna Mendu,Run out,1,player,8,12.5,4
-harindra_mendu,Harindra Mendu,Harindra Mendu,Caught,25,player,50,50.0,1
-harindra_mendu,Harindra Mendu,Harindra Mendu,Bowled,7,player,50,14.0,2
-harindra_mendu,Harindra Mendu,Harindra Mendu,LBW,3,player,50,6.0,3
-harindra_mendu,Harindra Mendu,Harindra Mendu,Run out,13,player,50,26.0,4
-harindra_mendu,Harindra Mendu,Harindra Mendu,Stumped,2,player,50,4.0,5
+harindra_mendu,Harindra Mendu,Harindra Mendu,Caught,25,player,51,49.01960784313726,1
+harindra_mendu,Harindra Mendu,Harindra Mendu,Bowled,7,player,51,13.72549019607843,2
+harindra_mendu,Harindra Mendu,Harindra Mendu,LBW,3,player,51,5.882352941176471,3
+harindra_mendu,Harindra Mendu,Harindra Mendu,Run out,14,player,51,27.45098039215686,4
+harindra_mendu,Harindra Mendu,Harindra Mendu,Stumped,2,player,51,3.9215686274509802,5
 raw_0227ee3e_1224_4fd9_9949_bc23785d2b07,Harindu Abhayaratne,Harindu Abhayaratne,Caught,7,player,16,43.75,1
 raw_0227ee3e_1224_4fd9_9949_bc23785d2b07,Harindu Abhayaratne,Harindu Abhayaratne,Bowled,9,player,16,56.25,2
 raw_2c36cda9_5d38_4db9_acf9_f0ca6d9dfee4,Harish Siva,Harish Siva,Caught,1,player,2,50.0,1
@@ -1339,11 +1339,11 @@ raw_a6721f2e_5831_42c0_be6d_ac7073df8b92,Jahaan Goel,Jahaan Goel,Other,1,player,
 raw_7b0c3cbb_bc0b_49ef_a5f2_f94680a178f6,Jai Westbury,Jai Westbury,Bowled,3,player,4,75.0,2
 raw_7b0c3cbb_bc0b_49ef_a5f2_f94680a178f6,Jai Westbury,Jai Westbury,Run out,1,player,4,25.0,4
 raw_f56b0bd2_5515_4684_8fe2_8fb4959673dc,Jaime Agaliotis,Jaime Agaliotis,Caught,4,player,4,100.0,1
-jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Caught,27,player,59,45.76271186440678,1
-jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Bowled,19,player,59,32.20338983050848,2
-jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,LBW,5,player,59,8.474576271186441,3
-jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Run out,7,player,59,11.864406779661017,4
-jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Stumped,1,player,59,1.694915254237288,5
+jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Caught,28,player,60,46.666666666666664,1
+jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Bowled,19,player,60,31.666666666666668,2
+jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,LBW,5,player,60,8.333333333333334,3
+jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Run out,7,player,60,11.666666666666666,4
+jaimee_ellwood,Jaimee Ellwood,Jaimee Ellwood,Stumped,1,player,60,1.6666666666666667,5
 raw_3ca93cb9_9d41_446a_982a_bc07b008daa4,Jake Bunce,Jake Bunce,Caught,4,player,5,80.0,1
 raw_3ca93cb9_9d41_446a_982a_bc07b008daa4,Jake Bunce,Jake Bunce,Other,1,player,5,20.0,6
 raw_60410712_d354_41d1_8da7_71c889b96c60,Jake Burrell,Jake Burrell,Caught,6,player,9,66.66666666666667,1
@@ -1354,10 +1354,10 @@ raw_c5c70bd0_f3a3_43c5_8065_92e6084b94dc,Jake Pascoe,Jake Pascoe,LBW,1,player,20
 raw_ed2a3c4f_31ae_4fb6_b217_849d1d6731ec,Jake Zinner,Jake Zinner,Caught,1,player,5,20.0,1
 raw_ed2a3c4f_31ae_4fb6_b217_849d1d6731ec,Jake Zinner,Jake Zinner,Bowled,3,player,5,60.0,2
 raw_ed2a3c4f_31ae_4fb6_b217_849d1d6731ec,Jake Zinner,Jake Zinner,Run out,1,player,5,20.0,4
-raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,Caught,31,player,48,64.58333333333333,1
-raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,Bowled,13,player,48,27.083333333333332,2
-raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,LBW,2,player,48,4.166666666666667,3
-raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,Run out,2,player,48,4.166666666666667,4
+raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,Caught,32,player,49,65.3061224489796,1
+raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,Bowled,13,player,49,26.53061224489796,2
+raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,LBW,2,player,49,4.081632653061225,3
+raw_7da2b1b9_d764_4449_a12b_db21c554ba9a,James Anderson,James Anderson,Run out,2,player,49,4.081632653061225,4
 raw_35418e3a_696a_4e58_9dbb_45e5854e73f8,James Connolly,James Connolly,Bowled,1,player,1,100.0,2
 raw_d9cce18e_9a65_45a2_842d_93d5abaf9872,James Davis,James Davis,Bowled,1,player,1,100.0,2
 raw_70bfdd05_ad94_4875_af45_c8dc8007bb63,James Diskin,James Diskin,Caught,1,player,1,100.0,1
@@ -2124,11 +2124,11 @@ raw_b52989e1_4d30_429b_84ed_5bdbe89356f2,P Cochrane,P Cochrane,Run out,1,player,
 raw_b52989e1_4d30_429b_84ed_5bdbe89356f2,P Cochrane,P Cochrane,Stumped,2,player,6,33.333333333333336,5
 raw_2b4a8dd6_26df_44f7_9592_41f25c7823d4,P Gordon,P Gordon,Caught,2,player,3,66.66666666666667,1
 raw_2b4a8dd6_26df_44f7_9592_41f25c7823d4,P Gordon,P Gordon,Stumped,1,player,3,33.333333333333336,5
-raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Caught,19,player,34,55.88235294117647,1
-raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Bowled,9,player,34,26.470588235294116,2
-raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,LBW,1,player,34,2.9411764705882355,3
-raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Run out,3,player,34,8.823529411764707,4
-raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Stumped,2,player,34,5.882352941176471,5
+raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Caught,20,player,35,57.142857142857146,1
+raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Bowled,9,player,35,25.714285714285715,2
+raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,LBW,1,player,35,2.857142857142857,3
+raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Run out,3,player,35,8.571428571428571,4
+raw_577c54ec_5298_41c7_bd0a_b56d36240a6d,Panav Negi,Panav Negi,Stumped,2,player,35,5.714285714285714,5
 raw_f58aec9b_7225_4d9b_8ea0_bf679b36780d,Panshul Puri,Panshul Puri,Caught,3,player,6,50.0,1
 raw_f58aec9b_7225_4d9b_8ea0_bf679b36780d,Panshul Puri,Panshul Puri,Bowled,3,player,6,50.0,2
 raw_d2a6a7de_55af_434e_ac48_a96763f6dc07,Parth Mehta,Parth Mehta,Bowled,1,player,2,50.0,2
@@ -2161,10 +2161,10 @@ raw_55f49363_7583_4b40_b4a6_a4b23479dbbb,Paul Newman,Paul Newman,Stumped,1,playe
 raw_43282b51_f1e7_45f5_b9c4_0e5aa677ef94,Paul Seddon,Paul Seddon,Caught,11,player,12,91.66666666666667,1
 raw_43282b51_f1e7_45f5_b9c4_0e5aa677ef94,Paul Seddon,Paul Seddon,Bowled,1,player,12,8.333333333333334,2
 raw_48d0f39b_6e70_421c_8538_3b7a40f05554,Paul Shaw,Paul Shaw,Bowled,1,player,1,100.0,2
-paul_young,Paul Young,Paul Young,Caught,79,player,113,69.91150442477876,1
-paul_young,Paul Young,Paul Young,Bowled,30,player,113,26.548672566371682,2
-paul_young,Paul Young,Paul Young,LBW,1,player,113,0.8849557522123894,3
-paul_young,Paul Young,Paul Young,Run out,3,player,113,2.6548672566371683,4
+paul_young,Paul Young,Paul Young,Caught,80,player,114,70.17543859649123,1
+paul_young,Paul Young,Paul Young,Bowled,30,player,114,26.31578947368421,2
+paul_young,Paul Young,Paul Young,LBW,1,player,114,0.8771929824561403,3
+paul_young,Paul Young,Paul Young,Run out,3,player,114,2.6315789473684212,4
 raw_e1612848_b49e_4af1_a1bb_de2ac3a148b4,Pavneet Arneja,Pavneet Arneja,Caught,16,player,24,66.66666666666667,1
 raw_e1612848_b49e_4af1_a1bb_de2ac3a148b4,Pavneet Arneja,Pavneet Arneja,Bowled,6,player,24,25.0,2
 raw_e1612848_b49e_4af1_a1bb_de2ac3a148b4,Pavneet Arneja,Pavneet Arneja,LBW,2,player,24,8.333333333333334,3
@@ -2228,11 +2228,11 @@ raw_3522aaed_79bd_4460_b4b8_f32b4d6fff55,Prashanth Aravinthan,Prashanth Aravinth
 raw_c179103e_b86f_4695_b7e9_720779fb1a5e,Pratham Kalyani,Pratham Kalyani,Caught,3,player,12,25.0,1
 raw_c179103e_b86f_4695_b7e9_720779fb1a5e,Pratham Kalyani,Pratham Kalyani,Bowled,7,player,12,58.333333333333336,2
 raw_c179103e_b86f_4695_b7e9_720779fb1a5e,Pratham Kalyani,Pratham Kalyani,Run out,2,player,12,16.666666666666668,4
-raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Caught,25,player,46,54.34782608695652,1
-raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Bowled,13,player,46,28.26086956521739,2
-raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,LBW,2,player,46,4.3478260869565215,3
-raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Run out,5,player,46,10.869565217391305,4
-raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Stumped,1,player,46,2.1739130434782608,5
+raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Caught,25,player,47,53.191489361702125,1
+raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Bowled,13,player,47,27.659574468085108,2
+raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,LBW,2,player,47,4.25531914893617,3
+raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Run out,6,player,47,12.76595744680851,4
+raw_7553d1cb_7425_4da8_a7ee_d252d818a4b3,Pratheek Nelluri,Pratheek Nelluri,Stumped,1,player,47,2.127659574468085,5
 pravbir_gill,Pravbir Gill,Pravbir Gill,Caught,29,player,40,72.5,1
 pravbir_gill,Pravbir Gill,Pravbir Gill,Bowled,7,player,40,17.5,2
 pravbir_gill,Pravbir Gill,Pravbir Gill,LBW,1,player,40,2.5,3
@@ -2277,8 +2277,8 @@ raw_ad98cd75_8cd1_4d9c_8b5c_8b5184d4d4ca,Raghu Bharadwaj,Raghu Bharadwaj,LBW,2,p
 raw_ad98cd75_8cd1_4d9c_8b5c_8b5184d4d4ca,Raghu Bharadwaj,Raghu Bharadwaj,Run out,1,player,15,6.666666666666667,4
 raw_13f275e2_3b04_4592_9126_40b496587372,Raghu Mendu,Raghu Mendu,Bowled,1,player,3,33.333333333333336,2
 raw_13f275e2_3b04_4592_9126_40b496587372,Raghu Mendu,Raghu Mendu,Run out,2,player,3,66.66666666666667,4
-raw_84183f3c_946d_44be_8854_e34043617695,Raghuveer Gomatam,Raghuveer Gomatam,Caught,4,player,6,66.66666666666667,1
-raw_84183f3c_946d_44be_8854_e34043617695,Raghuveer Gomatam,Raghuveer Gomatam,Bowled,2,player,6,33.333333333333336,2
+raw_84183f3c_946d_44be_8854_e34043617695,Raghuveer Gomatam,Raghuveer Gomatam,Caught,5,player,7,71.42857142857143,1
+raw_84183f3c_946d_44be_8854_e34043617695,Raghuveer Gomatam,Raghuveer Gomatam,Bowled,2,player,7,28.571428571428573,2
 raw_b8f80585_8c86_40ad_94d9_0d49b1615969,Raghuveer Rangan,Raghuveer Rangan,Caught,1,player,11,9.090909090909092,1
 raw_b8f80585_8c86_40ad_94d9_0d49b1615969,Raghuveer Rangan,Raghuveer Rangan,Bowled,7,player,11,63.63636363636363,2
 raw_b8f80585_8c86_40ad_94d9_0d49b1615969,Raghuveer Rangan,Raghuveer Rangan,Run out,2,player,11,18.181818181818183,4
@@ -2343,11 +2343,11 @@ raw_180518c4_ab5d_4fc5_893d_75a9ab85035c,Ravin Mehra,Ravin Mehra,LBW,4,player,17
 raw_180518c4_ab5d_4fc5_893d_75a9ab85035c,Ravin Mehra,Ravin Mehra,Run out,1,player,17,5.882352941176471,4
 raw_dd357667_d2a7_4f78_94a1_e17b9a182481,Ray Camilleri,Ray Camilleri,Bowled,1,player,2,50.0,2
 raw_dd357667_d2a7_4f78_94a1_e17b9a182481,Ray Camilleri,Ray Camilleri,Run out,1,player,2,50.0,4
-reece_anderson,Reece Anderson,Reece Anderson,Caught,48,player,86,55.81395348837209,1
-reece_anderson,Reece Anderson,Reece Anderson,Bowled,24,player,86,27.906976744186046,2
-reece_anderson,Reece Anderson,Reece Anderson,LBW,5,player,86,5.813953488372093,3
-reece_anderson,Reece Anderson,Reece Anderson,Run out,7,player,86,8.13953488372093,4
-reece_anderson,Reece Anderson,Reece Anderson,Stumped,2,player,86,2.3255813953488373,5
+reece_anderson,Reece Anderson,Reece Anderson,Caught,49,player,87,56.32183908045977,1
+reece_anderson,Reece Anderson,Reece Anderson,Bowled,24,player,87,27.586206896551722,2
+reece_anderson,Reece Anderson,Reece Anderson,LBW,5,player,87,5.747126436781609,3
+reece_anderson,Reece Anderson,Reece Anderson,Run out,7,player,87,8.045977011494253,4
+reece_anderson,Reece Anderson,Reece Anderson,Stumped,2,player,87,2.2988505747126435,5
 raw_3a15fda4_32d3_4d3f_b833_92c3db0e01fc,Revan Patil,Revan Patil,Caught,1,player,2,50.0,1
 raw_3a15fda4_32d3_4d3f_b833_92c3db0e01fc,Revan Patil,Revan Patil,Bowled,1,player,2,50.0,2
 raw_184510d4_e736_4675_88c6_ad2e26bc3b4c,Reya Pandya,Reya Pandya,Caught,1,player,6,16.666666666666668,1
@@ -2640,10 +2640,10 @@ raw_0e6dbc75_7ead_4d9a_aeca_f0616cda68d2,Senon Hewawasam,Senon Hewawasam,Other,1
 raw_65062bd5_4b58_4f02_8d8d_b957d8290941,Seran Parathan,Seran Parathan,Caught,2,player,5,40.0,1
 raw_65062bd5_4b58_4f02_8d8d_b957d8290941,Seran Parathan,Seran Parathan,Bowled,2,player,5,40.0,2
 raw_65062bd5_4b58_4f02_8d8d_b957d8290941,Seran Parathan,Seran Parathan,Run out,1,player,5,20.0,4
-raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,Caught,17,player,29,58.62068965517241,1
-raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,Bowled,6,player,29,20.689655172413794,2
-raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,LBW,1,player,29,3.4482758620689653,3
-raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,Run out,5,player,29,17.24137931034483,4
+raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,Caught,18,player,30,60.0,1
+raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,Bowled,6,player,30,20.0,2
+raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,LBW,1,player,30,3.3333333333333335,3
+raw_bbd3f925_daf9_4610_b338_993f0b73feb2,Shaan Kandola,Shaan Kandola,Run out,5,player,30,16.666666666666668,4
 raw_8d7f8057_2f4a_4574_8c2c_6c2ea00221a9,Shahid Ghani,Shahid Ghani,Caught,7,player,11,63.63636363636363,1
 raw_8d7f8057_2f4a_4574_8c2c_6c2ea00221a9,Shahid Ghani,Shahid Ghani,Bowled,4,player,11,36.36363636363637,2
 raw_9d621f1e_2931_4432_8b45_842eae7b32bb,Shailendra Sircar,Shailendra Sircar,Caught,2,player,3,66.66666666666667,1
@@ -2694,10 +2694,10 @@ raw_49c78517_9bae_45c4_a6a0_7cac857c075b,Shiju Vargheer,Shiju Vargheer,Caught,3,
 raw_c0d9fa9f_1ced_4b96_a9e4_64b5c15ca6e4,Shithy Chandrasekaran,Shithy Chandrasekaran,Caught,4,player,9,44.44444444444444,1
 raw_c0d9fa9f_1ced_4b96_a9e4_64b5c15ca6e4,Shithy Chandrasekaran,Shithy Chandrasekaran,Bowled,3,player,9,33.333333333333336,2
 raw_c0d9fa9f_1ced_4b96_a9e4_64b5c15ca6e4,Shithy Chandrasekaran,Shithy Chandrasekaran,Stumped,2,player,9,22.22222222222222,5
-raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Caught,13,player,25,52.0,1
-raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Bowled,7,player,25,28.0,2
-raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Run out,4,player,25,16.0,4
-raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Stumped,1,player,25,4.0,5
+raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Caught,13,player,26,50.0,1
+raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Bowled,8,player,26,30.76923076923077,2
+raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Run out,4,player,26,15.384615384615385,4
+raw_3d53c671_8a3a_47a2_9ca0_7eac6d578264,Shiv Patel,Shiv Patel,Stumped,1,player,26,3.8461538461538463,5
 raw_9792612e_fca8_4ac8_ba09_e82e77057b98,Shivo Arivalakan,Shivo Arivalakan,Caught,5,player,17,29.41176470588235,1
 raw_9792612e_fca8_4ac8_ba09_e82e77057b98,Shivo Arivalakan,Shivo Arivalakan,Bowled,11,player,17,64.70588235294117,2
 raw_9792612e_fca8_4ac8_ba09_e82e77057b98,Shivo Arivalakan,Shivo Arivalakan,Run out,1,player,17,5.882352941176471,4
@@ -2740,8 +2740,8 @@ raw_46924919_7f28_4f0b_a6dd_a2d9c8ce815a,Siddharth Bhatt,Siddharth Bhatt,Bowled,
 raw_46924919_7f28_4f0b_a6dd_a2d9c8ce815a,Siddharth Bhatt,Siddharth Bhatt,Run out,2,player,6,33.333333333333336,4
 raw_4d2abb15_cdc1_4459_98b3_dfb8e6541b47,Siddharth Dhall,Siddharth Dhall,Bowled,4,player,5,80.0,2
 raw_4d2abb15_cdc1_4459_98b3_dfb8e6541b47,Siddharth Dhall,Siddharth Dhall,Run out,1,player,5,20.0,4
-raw_b87aa1b8_3610_48e4_8d91_5207f4650c42,Siddharth Gomatam,Siddharth Gomatam,Caught,4,player,12,33.333333333333336,1
-raw_b87aa1b8_3610_48e4_8d91_5207f4650c42,Siddharth Gomatam,Siddharth Gomatam,Bowled,7,player,12,58.333333333333336,2
+raw_b87aa1b8_3610_48e4_8d91_5207f4650c42,Siddharth Gomatam,Siddharth Gomatam,Caught,4,player,13,30.76923076923077,1
+raw_b87aa1b8_3610_48e4_8d91_5207f4650c42,Siddharth Gomatam,Siddharth Gomatam,Bowled,8,player,13,61.53846153846154,2
 raw_8846b304_210d_4ca4_826f_e23a482df465,Siddharth Kelaiya,Siddharth Kelaiya,Caught,6,player,25,24.0,1
 raw_8846b304_210d_4ca4_826f_e23a482df465,Siddharth Kelaiya,Siddharth Kelaiya,Bowled,13,player,25,52.0,2
 raw_8846b304_210d_4ca4_826f_e23a482df465,Siddharth Kelaiya,Siddharth Kelaiya,Run out,6,player,25,24.0,4
@@ -3156,10 +3156,10 @@ raw_39a61dac_97cd_44b8_b618_d19d6c61589b,Yash Bilagi,Yash Bilagi,Run out,6,playe
 raw_39a61dac_97cd_44b8_b618_d19d6c61589b,Yash Bilagi,Yash Bilagi,Stumped,1,player,41,2.4390243902439024,5
 raw_2234f147_bea4_4844_9103_ff726405d79e,Yash Pendse,Yash Pendse,Caught,1,player,2,50.0,1
 raw_2234f147_bea4_4844_9103_ff726405d79e,Yash Pendse,Yash Pendse,Run out,1,player,2,50.0,4
-raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Caught,7,player,20,35.0,1
-raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Bowled,8,player,20,40.0,2
-raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Run out,3,player,20,15.0,4
-raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Stumped,2,player,20,10.0,5
+raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Caught,8,player,21,38.095238095238095,1
+raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Bowled,8,player,21,38.095238095238095,2
+raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Run out,3,player,21,14.285714285714286,4
+raw_361fb9d4_4d92_4260_9744_53d07fe2c185,Yochith Mandala,Yochith Mandala,Stumped,2,player,21,9.523809523809524,5
 raw_88b767ef_bba7_4e59_b73e_aeffcdd214e0,Yogesh Khadilkar,Yogesh Khadilkar,Bowled,1,player,1,100.0,2
 raw_6546f40a_595f_4f8f_92f3_3e4db90b3521,Yohan Karunatileke,Yohan Karunatileke,Caught,23,player,34,67.6470588235294,1
 raw_6546f40a_595f_4f8f_92f3_3e4db90b3521,Yohan Karunatileke,Yohan Karunatileke,Bowled,6,player,34,17.647058823529413,2
@@ -3197,11 +3197,11 @@ raw_a6c1b437_7369_4383_bbed_a43eef1240ec,Aaditya Sharma,Aaditya Sharma,Stumped,1
 raw_05ba16c3_fa03_47ab_a49c_7820447de2a6,Darsh Singh,Darsh Singh,Caught,5,player,14,35.714285714285715,1
 raw_05ba16c3_fa03_47ab_a49c_7820447de2a6,Darsh Singh,Darsh Singh,Bowled,8,player,14,57.14285714285714,2
 raw_05ba16c3_fa03_47ab_a49c_7820447de2a6,Darsh Singh,Darsh Singh,Run out,1,player,14,7.142857142857142,4
-raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Caught,58,player,96,60.416666666666664,1
-raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Bowled,20,player,96,20.833333333333336,2
-raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,LBW,9,player,96,9.375,3
-raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Run out,7,player,96,7.291666666666667,4
-raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Stumped,2,player,96,2.083333333333333,5
+raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Caught,59,player,97,60.824742268041234,1
+raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Bowled,20,player,97,20.61855670103093,2
+raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,LBW,9,player,97,9.278350515463918,3
+raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Run out,7,player,97,7.216494845360825,4
+raw_24649df8_2ba9_4218_b562_4c462edaad1b,Liam O'Rourke,Liam O'Rourke,Stumped,2,player,97,2.0618556701030926,5
 raw_c2cc6ae8_46c4_4922_9715_112d64cabe3a,Mitchell Kohne,Mitchell Kohne,Caught,79,player,126,62.698412698412696,1
 raw_c2cc6ae8_46c4_4922_9715_112d64cabe3a,Mitchell Kohne,Mitchell Kohne,Bowled,26,player,126,20.634920634920633,2
 raw_c2cc6ae8_46c4_4922_9715_112d64cabe3a,Mitchell Kohne,Mitchell Kohne,LBW,10,player,126,7.936507936507936,3
@@ -3214,10 +3214,10 @@ raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Stumped,8,pla
 raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Run out,9,player,252,3.5714285714285716,4
 raw_7ceaa8ee_ed93_4785_a4b4_8c670b67fd97,Sunil Somaia,Sunil Somaia,Other,1,player,252,0.3968253968253968,6
 raw_44ef0345_e5d1_4896_8494_4564fbbdb792,Aakash Kokulan,Aakash Kokulan,Caught,1,player,6,16.666666666666668,1
-raw_0b985860_2264_4455_b19b_bf2813eb9322,Aarav Jain,Aarav Jain,Caught,1,player,2,50.0,1
-raw_0b985860_2264_4455_b19b_bf2813eb9322,Aarav Jain,Aarav Jain,LBW,1,player,2,50.0,3
-raw_4353423d_399e_4f7b_982f_c7a10ee236af,Aditya Arya,Aditya Arya,Bowled,1,player,2,50.0,2
-raw_4353423d_399e_4f7b_982f_c7a10ee236af,Aditya Arya,Aditya Arya,Other,1,player,2,50.0,6
+raw_0b985860_2264_4455_b19b_bf2813eb9322,Aarav Jain,Aarav Jain,Caught,2,player,3,66.66666666666667,1
+raw_0b985860_2264_4455_b19b_bf2813eb9322,Aarav Jain,Aarav Jain,LBW,1,player,3,33.333333333333336,3
+raw_4353423d_399e_4f7b_982f_c7a10ee236af,Aditya Arya,Aditya Arya,Bowled,2,player,3,66.66666666666667,2
+raw_4353423d_399e_4f7b_982f_c7a10ee236af,Aditya Arya,Aditya Arya,Other,1,player,3,33.333333333333336,6
 raw_cd62d17f_9d3c_41ec_a485_30df8c60016e,Aidan Griffin,Aidan Griffin,Caught,1,player,2,50.0,1
 raw_cd62d17f_9d3c_41ec_a485_30df8c60016e,Aidan Griffin,Aidan Griffin,Bowled,1,player,2,50.0,2
 raw_510998cf_43bc_478a_98d7_9b6a8e649657,Akshaj Singh Rawat,Akshaj Singh Rawat,Caught,2,player,3,66.66666666666667,1
@@ -3225,28 +3225,30 @@ raw_510998cf_43bc_478a_98d7_9b6a8e649657,Akshaj Singh Rawat,Akshaj Singh Rawat,S
 raw_01031422_b2a8_47e1_a58f_bfebd8026746,Amay Sharma,Amay Sharma,Bowled,1,player,2,50.0,2
 raw_01031422_b2a8_47e1_a58f_bfebd8026746,Amay Sharma,Amay Sharma,Run out,1,player,2,50.0,4
 raw_0c662af5_9a2d_4057_868d_2bf537805045,Aneesh Kosgodage,Aneesh Kosgodage,Caught,2,player,2,100.0,1
-raw_033108c7_655c_4ead_8b51_4c2e99c9ee94,Anesh Sundara,Anesh Sundara,Caught,1,player,2,50.0,1
-raw_033108c7_655c_4ead_8b51_4c2e99c9ee94,Anesh Sundara,Anesh Sundara,Bowled,1,player,2,50.0,2
+raw_033108c7_655c_4ead_8b51_4c2e99c9ee94,Anesh Sundara,Anesh Sundara,Caught,1,player,3,33.333333333333336,1
+raw_033108c7_655c_4ead_8b51_4c2e99c9ee94,Anesh Sundara,Anesh Sundara,Bowled,1,player,3,33.333333333333336,2
+raw_033108c7_655c_4ead_8b51_4c2e99c9ee94,Anesh Sundara,Anesh Sundara,Run out,1,player,3,33.333333333333336,4
 raw_7c4dc2d0_ab32_4788_9343_63b1aa45b4ed,Anvita Shinde,Anvita Shinde,Bowled,1,player,1,100.0,2
 raw_9682299c_bfb7_4d65_b6d8_0b17027179b4,Aprameya Ravi Nandan,Aprameya Ravi Nandan,Caught,1,player,2,50.0,1
 raw_9682299c_bfb7_4d65_b6d8_0b17027179b4,Aprameya Ravi Nandan,Aprameya Ravi Nandan,Bowled,1,player,2,50.0,2
 raw_73a158cf_df70_47e5_befb_08f64ce4051e,Aradhya Srimayi Tummalapalli,Aradhya Srimayi Tummalapalli,LBW,1,player,1,100.0,3
 raw_fcdaf0f5_534e_4c38_83b9_a11a3163c3b6,Arjun Kartik Ganeshkumar,Arjun Kartik Ganeshkumar,Run out,1,player,1,100.0,4
-raw_695c191d_bcf4_44ce_aa4c_e94092aca16f,Ayansh Dhariwal,Ayansh Dhariwal,Bowled,2,player,2,100.0,2
+raw_45f1070e_99ae_4155_ae9e_a8199e10d246,Arya Gupta,Arya Gupta,Caught,1,player,1,100.0,1
+raw_695c191d_bcf4_44ce_aa4c_e94092aca16f,Ayansh Dhariwal,Ayansh Dhariwal,Bowled,3,player,3,100.0,2
 raw_c4eece01_a2be_4ef6_a369_4084b07a0fb3,Caia Bungey,Caia Bungey,Caught,1,player,2,50.0,1
 raw_c4eece01_a2be_4ef6_a369_4084b07a0fb3,Caia Bungey,Caia Bungey,Other,1,player,2,50.0,6
-raw_924e6387_5272_4b8c_8f33_2706f1d25472,Cameron Stow,Cameron Stow,Caught,1,player,1,100.0,1
+raw_924e6387_5272_4b8c_8f33_2706f1d25472,Cameron Stow,Cameron Stow,Caught,2,player,2,100.0,1
 raw_d51567ac_f015_4f2e_8d81_7d0cb2f1774f,Deb Bhattacharya,Deb Bhattacharya,Caught,1,player,1,100.0,1
 raw_1871f22e_66fc_47b7_9f53_a806420d62be,Deep Khanchandani,Deep Khanchandani,Run out,1,player,10,10.0,4
 raw_4a716fe6_3f6f_46a3_b8a8_748b15dd454a,Devam Shah,Devam Shah,Caught,2,player,2,100.0,1
 raw_f5951ed4_5fc1_45de_ac74_b6f1db1e0aff,Dheera Wijetunge,Dheera Wijetunge,Run out,1,player,1,100.0,4
 raw_dab96057_0167_480d_b2f7_25632e4891c3,Diyon Silva,Diyon Silva,Caught,2,player,2,100.0,1
 raw_42015b9f_d48c_4fdf_8c1c_9365b825bb52,Dulith Gunaratne,Dulith Gunaratne,Stumped,1,player,21,4.761904761904762,5
-raw_0fe2589b_cfbe_430f_b2de_760180df20a3,Dylan Singh,Dylan Singh,Bowled,2,player,2,100.0,2
+raw_0fe2589b_cfbe_430f_b2de_760180df20a3,Dylan Singh,Dylan Singh,Bowled,3,player,3,100.0,2
 raw_ac777130_399c_4a03_8533_dcc7c1d0017c,Harsha Krishna Mendu,Harsha Krishna Mendu,Stumped,1,player,23,4.3478260869565215,5
 raw_64f280b9_6bcf_4a94_9a00_3b5a2e258e1c,Harvin Dhillon,Harvin Dhillon,Caught,2,player,2,100.0,1
-raw_44f84638_9b41_409a_9582_980efbe52240,Havish Katta,Havish Katta,Bowled,1,player,2,50.0,2
-raw_44f84638_9b41_409a_9582_980efbe52240,Havish Katta,Havish Katta,Run out,1,player,2,50.0,4
+raw_44f84638_9b41_409a_9582_980efbe52240,Havish Katta,Havish Katta,Bowled,1,player,3,33.333333333333336,2
+raw_44f84638_9b41_409a_9582_980efbe52240,Havish Katta,Havish Katta,Run out,2,player,3,66.66666666666667,4
 raw_a8bbc19b_5055_47fa_8b70_ebb5860bc8af,Hridhaan Meshram,Hridhaan Meshram,Bowled,1,player,2,50.0,2
 raw_a8bbc19b_5055_47fa_8b70_ebb5860bc8af,Hridhaan Meshram,Hridhaan Meshram,Run out,1,player,2,50.0,4
 raw_91670ad8_aede_48c1_ade7_f250dac8d744,Ivy Hammerton,Ivy Hammerton,Caught,1,player,2,50.0,1
@@ -3265,24 +3267,26 @@ raw_5638fbcb_9346_471c_a147_c28afde5a7e4,Manvidu Abeyawardana,Manvidu Abeyawarda
 raw_3cac631a_4d26_4f9d_91f8_18d0966803cd,Michael Killeen,Michael Killeen,Run out,1,player,1,100.0,4
 raw_3be0a0d6_220c_4140_a056_1e4cd2a92fc9,Mohammad Zuhair Toor,Mohammad Zuhair Toor,Caught,1,player,1,100.0,1
 raw_84c67d3b_bd0f_4a19_a446_ff1943b60a70,Morgan Arundell,Morgan Arundell,Bowled,1,player,7,14.285714285714286,2
-raw_da3ad2d9_d421_4d96_a479_2371768a57be,Neev Patel,Neev Patel,Bowled,1,player,2,50.0,2
-raw_da3ad2d9_d421_4d96_a479_2371768a57be,Neev Patel,Neev Patel,Run out,1,player,2,50.0,4
+raw_da3ad2d9_d421_4d96_a479_2371768a57be,Neev Patel,Neev Patel,Bowled,2,player,3,66.66666666666667,2
+raw_da3ad2d9_d421_4d96_a479_2371768a57be,Neev Patel,Neev Patel,Run out,1,player,3,33.333333333333336,4
 raw_51e92aa1_d121_43db_8b02_edf634a12236,Neo Das,Neo Das,Bowled,2,player,2,100.0,2
-raw_d944a1f8_4950_465d_8016_ccab0dc5a5cb,Niwayne Yatawara,Niwayne Yatawara,Bowled,2,player,2,100.0,2
-raw_c4d8c39d_d8e2_4a27_bf67_b64a66bcd338,Panav Chaudhary,Panav Chaudhary,Bowled,2,player,2,100.0,2
+raw_d944a1f8_4950_465d_8016_ccab0dc5a5cb,Niwayne Yatawara,Niwayne Yatawara,Bowled,2,player,3,66.66666666666667,2
+raw_d944a1f8_4950_465d_8016_ccab0dc5a5cb,Niwayne Yatawara,Niwayne Yatawara,Run out,1,player,3,33.333333333333336,4
+raw_c4d8c39d_d8e2_4a27_bf67_b64a66bcd338,Panav Chaudhary,Panav Chaudhary,Bowled,3,player,3,100.0,2
 raw_a44f2e20_e168_4bfe_9b98_39b7591da449,Pranavan Kalaiarul,Pranavan Kalaiarul,Run out,1,player,11,9.090909090909092,4
 raw_a85a1de9_5d5a_4bdc_b4c5_5b1c6b77297c,Rahel Kosgodage,Rahel Kosgodage,Caught,1,player,4,25.0,1
 raw_a85a1de9_5d5a_4bdc_b4c5_5b1c6b77297c,Rahel Kosgodage,Rahel Kosgodage,Bowled,3,player,4,75.0,2
 raw_d6557373_569a_4982_b8f2_56d5e05b6708,Riyanshu Dharmavaram,Riyanshu Dharmavaram,Bowled,2,player,3,66.66666666666667,2
 raw_d6557373_569a_4982_b8f2_56d5e05b6708,Riyanshu Dharmavaram,Riyanshu Dharmavaram,Run out,1,player,3,33.333333333333336,4
-raw_efe243e6_bec1_45ed_ab5d_297e6443273c,Samar Patel,Samar Patel,Run out,1,player,1,100.0,4
+raw_efe243e6_bec1_45ed_ab5d_297e6443273c,Samar Patel,Samar Patel,Bowled,1,player,2,50.0,2
+raw_efe243e6_bec1_45ed_ab5d_297e6443273c,Samar Patel,Samar Patel,Run out,1,player,2,50.0,4
 raw_3f843f0b_53a8_4f38_b6c9_a1693a8e21e8,Samrat Sharma,Samrat Sharma,Bowled,2,player,2,100.0,2
 raw_c29fd8b6_4284_4799_a52d_73d58004cf16,Shoaib Virk,Shoaib Virk,Bowled,1,player,5,20.0,2
 raw_6923c81d_de2e_4cfb_b3a3_77509ad7e4cd,Siddhant Verma,Siddhant Verma,Run out,1,player,8,12.5,4
-raw_b87aa1b8_3610_48e4_8d91_5207f4650c42,Siddharth Gomatam,Siddharth Gomatam,Run out,1,player,12,8.333333333333334,4
+raw_b87aa1b8_3610_48e4_8d91_5207f4650c42,Siddharth Gomatam,Siddharth Gomatam,Run out,1,player,13,7.6923076923076925,4
 raw_709e6451_eeec_440c_8271_aec7b1c17d73,Srinandana Dadi,Srinandana Dadi,Caught,1,player,1,100.0,1
-raw_5190f899_ce10_444d_a5a8_07671a06c99f,Sundara Moorthi,Sundara Moorthi,Caught,1,player,2,50.0,1
-raw_5190f899_ce10_444d_a5a8_07671a06c99f,Sundara Moorthi,Sundara Moorthi,LBW,1,player,2,50.0,3
+raw_5190f899_ce10_444d_a5a8_07671a06c99f,Sundara Moorthi,Sundara Moorthi,Caught,2,player,3,66.66666666666667,1
+raw_5190f899_ce10_444d_a5a8_07671a06c99f,Sundara Moorthi,Sundara Moorthi,LBW,1,player,3,33.333333333333336,3
 raw_648b2094_1030_4e6e_a131_634441095935,Taha Calcuttawala,Taha Calcuttawala,Caught,2,player,2,100.0,1
 raw_89bb6af8_0cc1_4c35_b563_f775cc106f89,Tanmay Patel,Tanmay Patel,Bowled,1,player,1,100.0,2
 raw_8c8133d6_6eb8_4dca_a7fb_9e37d3ed51cd,Theviru Perera,Theviru Perera,Bowled,3,player,6,50.0,2
@@ -3298,10 +3302,11 @@ raw_7f04b5ce_8a32_449f_bff9_07b645163710,Vihaan Patel,Vihaan Patel,Run out,1,pla
 raw_aa6bd8c6_c2cc_4154_8f0e_efba5eb723d1,Vihaan Tomer,Vihaan Tomer,Other,1,player,18,5.555555555555555,6
 raw_11e0b331_a0a9_4fa6_9d1e_40e956c19c3c,Vimal Ahuja,Vimal Ahuja,Caught,1,player,2,50.0,1
 raw_11e0b331_a0a9_4fa6_9d1e_40e956c19c3c,Vimal Ahuja,Vimal Ahuja,Bowled,1,player,2,50.0,2
-raw_581abbf3_d832_4ded_8ebd_48efdcba373e,Vishruth Mantrala,Vishruth Mantrala,Bowled,1,player,2,50.0,2
-raw_581abbf3_d832_4ded_8ebd_48efdcba373e,Vishruth Mantrala,Vishruth Mantrala,Run out,1,player,2,50.0,4
+raw_581abbf3_d832_4ded_8ebd_48efdcba373e,Vishruth Mantrala,Vishruth Mantrala,Bowled,1,player,3,33.333333333333336,2
+raw_581abbf3_d832_4ded_8ebd_48efdcba373e,Vishruth Mantrala,Vishruth Mantrala,Run out,2,player,3,66.66666666666667,4
 raw_36d2e795_187c_47c8_87fc_7d9a56ebb38e,Vivaan Bhatt,Vivaan Bhatt,Caught,2,player,6,33.333333333333336,1
 raw_ae9c0aee_2339_4af0_ac66_dcb9a0bd9b65,Vivaan Das,Vivaan Das,Bowled,2,player,2,100.0,2
 raw_ebd252f9_62e1_4556_b035_bf6ad05d4e64,Yash Singh,Yash Singh,Caught,2,player,2,100.0,1
-raw_55619c6b_cfb9_452c_8047_abd366d5a71a,Yogesh Sharma,Yogesh Sharma,Bowled,1,player,1,100.0,2
+raw_55619c6b_cfb9_452c_8047_abd366d5a71a,Yogesh Sharma,Yogesh Sharma,Caught,1,player,2,50.0,1
+raw_55619c6b_cfb9_452c_8047_abd366d5a71a,Yogesh Sharma,Yogesh Sharma,Bowled,1,player,2,50.0,2
 raw_9a14524a_f7d8_42c2_885d_397cb19e7efb,Yuvan Mantrala,Yuvan Mantrala,Caught,3,player,3,100.0,1

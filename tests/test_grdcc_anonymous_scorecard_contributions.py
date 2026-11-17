@@ -14,6 +14,7 @@ from src.data.grdcc_anonymous_scorecard_contributions import (
     read_public_anonymous_fastest_milestones,
     read_public_anonymous_scorecard_contributions,
 )
+from match_centre_source_snapshot import weekly_source_manifest
 
 
 def _fingerprint(value: str) -> str:
@@ -484,6 +485,6 @@ def test_scorecard_loader_is_club_scoped_and_privacy_signature_invalidates_cache
         "georges-river-district",
         layout.anonymous_scorecard_contributions_signature("georges-river-district"),
     )
-    assert len(events) == 53
+    assert len(events) == weekly_source_manifest()["anonymous_scorecard_events"] == 56
     assert events["display_player_name"].eq(PRIVATE_PLAYER_LABEL).all()
     assert layout.load_anonymous_scorecard_contributions("fvcc", ()).empty

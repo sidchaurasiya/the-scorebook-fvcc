@@ -73,8 +73,8 @@ def test_incremental_metadata_matches_published_source_partitions():
     metadata = json.loads((root / 'metadata.json').read_text())
     for category in ['batting', 'bowling', 'fielding']:
         frame = pd.read_csv(root / 'processed' / f'all_seasons_{category}.csv', usecols=['player_id'])
-        assert metadata['stat_rows'][category] == len(frame) == 7991
+        assert metadata['stat_rows'][category] == len(frame) == 8013
     assert metadata['players_fetched'] == len(pd.read_csv(root / 'processed/players.csv'))
     assert metadata['teams_fetched'] == len(pd.read_csv(root / 'processed/teams.csv'))
-    assert metadata['incremental_refresh']['unique_match_centre_ids'] == 2642
-    assert metadata['incremental_refresh']['statistics_bearing_matches'] == 31
+    assert metadata['incremental_refresh']['unique_match_centre_ids'] == 2656
+    assert metadata['incremental_refresh']['statistics_bearing_matches'] == 45

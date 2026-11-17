@@ -288,8 +288,8 @@ def test_served_prepared_and_forced_fallback_career_outputs_match(monkeypatch):
     prepared_view = prepared_view[columns].sort_values(columns[:3]).reset_index(drop=True)
     fallback_view = fallback_view[columns].sort_values(columns[:3]).reset_index(drop=True)
     pd.testing.assert_frame_equal(prepared_view, fallback_view, check_dtype=False)
-    assert len(prepared_view) == 2128
-    assert prepared_view.canonical_player_id.astype(str).ne("").sum() == 2125
+    assert len(prepared_view) == 2138
+    assert prepared_view.canonical_player_id.astype(str).ne("").sum() == 2135
     assert prepared_view.report_record_id.astype(str).ne("").sum() == 3
     privacy_snapshot = player_privacy.load_current_privacy_snapshot(CLUB)
     for policy in privacy_snapshot.itertuples(index=False):
@@ -346,6 +346,8 @@ def test_served_prepared_and_forced_fallback_career_outputs_match(monkeypatch):
 
 
 def test_reviewed_source_guard_preserves_exclusive_club_membership_counts():
+    from match_centre_source_snapshot import weekly_source_manifest
+
     version = layout.HALL_OF_FAME_DATA_VERSION
     loaded = layout.load_hall_of_fame_data.__wrapped__(
         0, None, version, CLUB, ("exclusive-club-source-policy-test",)
@@ -354,7 +356,11 @@ def test_reviewed_source_guard_preserves_exclusive_club_membership_counts():
         overrides.apply_featured_record_overrides(loaded["all_time"], CLUB), CLUB
     )
     eligible = quarantine.eligible_career_rows(served, CLUB)
-    expected = {"runs": 212, "wickets": 96, "matches": 85, "catches": 12}
+    # The current exact-ID report baseline is published once under its
+    # governed identity. The October snapshot counted one duplicated same-name
+    # report value in both Runs and Wickets; the source receipts now preserve
+    # separate non-overlapping identities without counting that value twice.
+    expected = weekly_source_manifest()["exclusive_membership_counts"]
     actual = {}
     for category in expected:
         spec = layout.exclusive_club_specs(category, CLUB)[0]
@@ -368,6 +374,29 @@ def test_reviewed_source_guard_preserves_exclusive_club_membership_counts():
         )
         actual[category] = int(rows.milestone_band.notna().sum())
     assert actual == expected
+
+
+def test_annual_report_baselines_are_not_duplicated_across_same_name_source_ids():
+    from pathlib import Path
+
+    core = pd.read_csv(
+        Path("clubs/georges-river-district/data/processed/hall_of_fame/prepared_career_all_time.csv")
+    )
+    graham_report = core.loc[core.canonical_player_id.eq("grdcc_excel_exact_graham_butt")].iloc[0]
+    graham_separate = core.loc[
+        core.canonical_player_id.eq("raw_49526263_9cbe_41c4_b8cf_a57e590ac665")
+    ].iloc[0]
+    john_report = core.loc[
+        core.canonical_player_id.eq("raw_1b65e67d_d088_4e53_96ee_896a08605873")
+    ].iloc[0]
+    john_separate = core.loc[
+        core.canonical_player_id.eq("grdcc_excel_exact_john_young")
+    ].iloc[0]
+
+    assert graham_report.Player == "Graham Butt" and graham_report.Runs == 2409
+    assert pd.isna(graham_separate.Runs)
+    assert john_report.Player == "John Young" and john_report.Wickets == 332
+    assert pd.isna(john_separate.Wickets)
 
 
 def test_mark_profile_sources_reconcile_without_adding_the_48_or_177_subtotals():

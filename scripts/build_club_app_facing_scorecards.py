@@ -216,7 +216,11 @@ def build_fielding_rows(
 ) -> pd.DataFrame:
     rows = fielding[fielding["team_id"].astype(str).isin(club_team_ids)].copy()
     rows = with_match_season(rows, matches)
-    run_outs = rows.get("run_outs", 0).fillna(0) + rows.get("assisted_run_outs", 0).fillna(0)
+    # The official source's run_outs field is the total; assisted_run_outs is
+    # a subset. Adding the two counts the assisted contributions twice.
+    run_outs = pd.to_numeric(
+        rows.get("run_outs", pd.Series(0, index=rows.index)), errors="coerce"
+    ).fillna(0)
     out = pd.DataFrame(
         {
             "season": rows["season"],

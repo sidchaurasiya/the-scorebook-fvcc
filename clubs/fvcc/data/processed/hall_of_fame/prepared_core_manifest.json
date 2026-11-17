@@ -9,43 +9,43 @@
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_batting.csv",
-      "size": 1009804,
-      "sha256": "068f934c1fec84aec24ba740ac597e1e46274f75776b979bf58d8bbddff931e7"
+      "size": 1010809,
+      "sha256": "b9c1bb090aef91eebac538f0f7405349e1abd33c97b8125a186078197e7f532a"
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_bowling.csv",
-      "size": 997199,
-      "sha256": "b1308cea779be297aab0d5791a7eafd5145d3980bf52145114404feae73f8603"
+      "size": 1000439,
+      "sha256": "5c54296efc034f801bbffc1ed8a3c7b78b36fe54e9cc1e41a0a12cfa383fef5a"
     },
     {
       "path": "clubs/fvcc/data/processed/all_seasons_fielding.csv",
-      "size": 949829,
-      "sha256": "54b16be294524edf4ea79e57088e29333670e9f3e1629b22ecd962b33995e915"
+      "size": 950758,
+      "sha256": "2eaf053c2df4a17f2537a05c1157f92d6cd4a01954b25bca13922a1ca4bd3c5d"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_bbb_batting_rates.csv",
-      "size": 11898,
-      "sha256": "c409dbf443c482a1d3931646578a2e9c5ca40e32fbb8959f70571edd77d95429"
+      "size": 11726,
+      "sha256": "eef6b51cafdfe68868dc987eb27f24ee9616fcb2115455c9163007a00c291af5"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_bowling_milestones.csv",
-      "size": 32290,
-      "sha256": "1fdf9b581a5e522b6c29e9a80060194933edcc22a761bad81abc47c4b7aab593"
+      "size": 31892,
+      "sha256": "bd6b8c73ed0bcd320f74d400d77d86efefee2393910360f73967bd539255337a"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_scorecard_milestones.csv",
-      "size": 37941,
-      "sha256": "ec8daeb13dbdea24461a0e1e8fb4f7cdd0a864263a48ed5de2d251540a3d5296"
+      "size": 37541,
+      "sha256": "e9e69f7a130282964e6cc1233bff36f536ed54119df9adf17d11edeff6733561"
     },
     {
       "path": "clubs/fvcc/data/processed/hall_of_fame/player_win_rates.csv",
-      "size": 63192,
-      "sha256": "abe5b29af15c026f2ca3a4a09ecd8b6d799fce6060b7947c9bd9092979a2016e"
+      "size": 62781,
+      "sha256": "b9692e5a0d7e6c329c13aa530675db718e03b53456c94adffbea8841643a1809"
     },
     {
       "path": "clubs/fvcc/data/processed/players.csv",
-      "size": 76759,
-      "sha256": "bd75c617f689d65e95215af7d8c498cb6e931180de8238c6a708ab213186edb7"
+      "size": 76813,
+      "sha256": "cfc1f73d978b686d40c2613845f83c8f12169ec43335b938a1e465082348a979"
     },
     {
       "path": "clubs/fvcc/data/processed/seasons.csv",
