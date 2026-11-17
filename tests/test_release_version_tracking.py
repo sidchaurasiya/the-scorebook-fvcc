@@ -50,6 +50,20 @@ def test_build_identifier_updates_after_deployed_commit_changes(monkeypatch, tmp
     assert app_version.scorebook_build_identifier(tmp_path) == "def5678"
 
 
+def test_build_identifier_allows_git_lookup_during_slow_cold_start(monkeypatch, tmp_path) -> None:
+    clear_build_environment(monkeypatch)
+    observed = {}
+
+    def slow_runtime_git(*_args, **kwargs):
+        observed["timeout"] = kwargs.get("timeout")
+        return SimpleNamespace(stdout="729ba54\n")
+
+    monkeypatch.setattr(app_version.subprocess, "run", slow_runtime_git)
+
+    assert app_version.scorebook_build_identifier(tmp_path) == "729ba54"
+    assert observed["timeout"] == 10
+
+
 def test_release_footer_labels_are_club_aware_and_gwhcc_is_unchanged(monkeypatch) -> None:
     clear_build_environment(monkeypatch)
     monkeypatch.setenv("SCOREBOOK_BUILD_SHA", "abc123456789")

@@ -50,7 +50,7 @@ def scorebook_build_identifier(repo_root: str | Path) -> str:
             check=True,
             capture_output=True,
             text=True,
-            timeout=2,
+            timeout=10,
         )
     except Exception:
         return "unavailable"
