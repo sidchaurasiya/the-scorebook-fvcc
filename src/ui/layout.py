@@ -5572,7 +5572,7 @@ def render_hall_of_fame_v2_hero(data: dict[str, object]) -> None:
                 <div>
                     {configured_club_label_html("hof-v2-eyebrow")}
                     <h1>Hall of Fame 🏛️</h1>
-                    <p class="hof-v2-hero-copy">A club record book for FVCC legends, premierships and iconic performances.</p>
+                    <p class="hof-v2-hero-copy">A club record book for legends, premierships and iconic performances.</p>
                     <div class="hof-v2-source-badges">
                         <span>Scorecard records</span>
                         <span>Verified ball-by-ball</span>
