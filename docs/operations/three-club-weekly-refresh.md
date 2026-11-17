@@ -32,7 +32,7 @@ The new FVCC match's official scorecard total is 150 and its authentic delivery 
 
 GRDCC still uses the exact-ID privacy snapshot verified on 16 November (two public identities and one private identity in its reviewed scope). The 17 November aggregate recheck was byte-identical to the accepted source snapshot and showed no transition in that scope. The latest direct privacy receipt remains dated 16 November; recheck current official privacy evidence again before any Cloud staging or production approval. Across the active trees, FVCC fallback, and four inactive legacy trees, the v8 privacy scan found no generic name/identifier pairs, no further sanitizer changes, and no JSON findings. Historical Git blobs remain under the owner-approved potential-exposure decision.
 
-Hall of Fame v2 remains behind the experimental feature flag in normal app configuration. Its GRDCC anonymous-record guard has a dedicated regression test and a local browser check with the flag enabled; the public card displays a generic label and has no profile or scorecard link. The hero copy is now club-neutral.
+Hall of Fame v2 remains behind the experimental feature flag in normal app configuration and is not one of the four standard active routes. Its GRDCC anonymous-record guard is verified by `test_hall_of_fame_loads_verified_anonymous_fastest_event_without_profile_or_scorecard_link`: it keeps the `Private player` label, preserves the scorecard/delivery-backed numbers, and emits no profile or scorecard link. The hero copy is club-neutral.
 
 ## Application and data locations
 
@@ -173,7 +173,7 @@ rtk proxy env SCOREBOOK_MATCH_CENTRE_ROOT=/Users/preetkaur/CodexArchiveRecovery-
 rtk /Users/preetkaur/CodexLocal/venvs/the-scorebook-py314-final-2026-11-14/bin/python -m pytest -q tests/test_multi_club_onboarding.py tests/test_release_version_tracking.py
 ~~~
 
-For the 16 November weekly candidate under Python 3.14.2, the final full selections passed 376 GRDCC/shared/archive tests (15 pandas warnings), 401 Hawks tests (three pandas warnings), 181 FVCC tests, and 14 multi-club/version tests. No tests were skipped. The final privacy/cache selection passed 81 tests. Exact commands, durations, and logs are in the restricted checkpoint `three-club-weekly-refresh-2026-11-16/restricted/phase_c_validation/`.
+For the 16 November application/data candidate **287f9c0d4e462413d5a92584ce8c302ef5c9d26a** under Python 3.14.2, the full selections passed 376 GRDCC/shared/archive tests (15 pandas warnings), 401 Hawks tests (three pandas warnings), 181 FVCC tests, and 14 multi-club/version tests; none were skipped. The final v8 privacy/cache selection passed 81 tests. The subsequent build-marker fix passed all six `test_release_version_tracking.py` tests; the club-neutral HOF v2 copy change passed the HOF v2 hero and anonymous-record guard tests. Exact commands, durations, and logs are in the restricted checkpoint `three-club-weekly-refresh-2026-11-16/restricted/phase_c_validation/`.
 
 Also verify:
 
