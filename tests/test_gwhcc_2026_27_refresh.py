@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import hashlib
 
 import pandas as pd
 
@@ -11,7 +12,7 @@ from src.utils.player_identity import apply_player_identity_mapping, filter_publ
 CLUB = 'glen-waverley-hawks'
 DATA = Path(__file__).resolve().parents[1] / 'clubs' / CLUB / 'data/processed'
 SEASON = 'Summer 2026/27'
-SNAPSHOT=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/gwhcc_refresh_2026_11_10.json').read_text())
+SNAPSHOT=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/gwhcc_weekly_output_snapshot_2026-11-16.json').read_text())
 
 
 def test_current_season_has_the_exact_source_verified_played_match_inventory():
@@ -29,16 +30,18 @@ def test_current_aggregates_use_only_verified_selected_appearances():
         new = frame[frame.season.eq(SEASON)]
         expected=SNAPSHOT['current_aggregates'][category]
         assert len(new) == expected['rows']
-        assert new.matches.ge(1).all() and new.matches.le(expected['maximum_matches']).all()
+        # Hawks T20 appearances carry 0.5; no eligible participant should have zero credit.
+        assert new.matches.gt(0).all() and new.matches.le(expected['maximum_matches']).all()
         assert new.matches.sum() == expected['weighted_matches']
         assert new.raw_playhq_matches.sum() == expected['known_provider_matches']
         assert new.raw_playhq_matches.isna().sum() == expected['missing_provider_counts']
         assert not new.duplicated(['season_id', 'team_id', 'player_id']).any()
         known=new.raw_playhq_matches.notna()
-        # The 10 November source snapshot pins whether team sheets exceed provider counts.
+        # The frozen 16 November source snapshot pins team-sheet/provider differences by ID hash.
         lagging = new[known & new.matches.gt(new.raw_playhq_matches)]
-        expected_lagging = set(expected["team_sheet_credit_exception_ids"])
-        assert set(lagging.player_id.astype(str)) == expected_lagging
+        expected_lagging = set(expected["team_sheet_credit_exception_id_sha256"])
+        actual_lagging = {hashlib.sha256(str(value).encode()).hexdigest() for value in lagging.player_id.astype(str)}
+        assert actual_lagging == expected_lagging
         if expected_lagging:
             assert lagging.matches.eq(2).all()
             assert lagging.raw_playhq_matches.eq(1).all()
@@ -89,6 +92,12 @@ def test_current_profile_index_uses_one_existing_canonical_label(monkeypatch):
         row = batting[batting.canonical_player_id.eq(canonical_id) & batting.season.eq(SEASON)].iloc[0]
         assert row.raw_player_name == raw_name
         assert row.canonical_player_name == canonical_name
+    arya = index.loc[index.name.eq("Arya Gupta")]
+    assert len(arya) == 1
+    profile = pd.read_csv(DATA / "hall_of_fame/prepared_career_all_time.csv", low_memory=False)
+    arya_career = profile.loc[profile.canonical_player_id.astype(str).eq(str(arya.iloc[0].id))]
+    assert len(arya_career) == 1
+    assert (float(arya_career.iloc[0].Matches), float(arya_career.iloc[0].Runs), float(arya_career.iloc[0].Catches)) == (0.5, 6.0, 1.0)
 
 
 def test_current_season_totals_reconcile_across_aggregate_and_scorecard_tables():

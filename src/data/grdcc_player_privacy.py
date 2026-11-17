@@ -101,15 +101,32 @@ def _fingerprint(value: object) -> str:
 def _status_index_for_signature(signature: tuple[object, ...]) -> dict[str, dict[str, str]]:
     rows = _load_snapshot(signature)
     index: dict[str, dict[str, str]] = {}
-    for row in rows.to_dict("records"):
-        for key in ("canonical_player_id_sha256", "source_participant_id_sha256"):
-            fingerprint = str(row.get(key, "")).strip()
-            if not fingerprint:
-                continue
-            existing = index.get(fingerprint)
+    records = rows.to_dict("records")
+    for row in records:
+        fingerprint = str(row.get("canonical_player_id_sha256", "")).strip()
+        if fingerprint:
             entry = {"status": row["status"], "public_name": row["public_name"]}
+            existing = index.get(fingerprint)
             if existing and existing != entry:
                 raise ValueError("Conflicting exact-ID GRDCC privacy decisions")
+            index[fingerprint] = entry
+
+    # A source participant key shared by multiple canonical records cannot
+    # establish which person took part. Treat it as private/ambiguous even if
+    # every row currently carries the same public label.
+    source_counts = rows["source_participant_id_sha256"].astype(str).value_counts()
+    for row in records:
+        fingerprint = str(row.get("source_participant_id_sha256", "")).strip()
+        if not fingerprint:
+            continue
+        entry = {"status": row["status"], "public_name": row["public_name"]}
+        if int(source_counts.get(fingerprint, 0)) > 1:
+            index[fingerprint] = {"status": "private", "public_name": ""}
+            continue
+        existing = index.get(fingerprint)
+        if existing and existing != entry:
+            index[fingerprint] = {"status": "private", "public_name": ""}
+        else:
             index[fingerprint] = entry
     return index
 

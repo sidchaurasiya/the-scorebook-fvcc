@@ -4,6 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from match_centre_source_snapshot import weekly_source_manifest
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / 'clubs/georges-river-district/data/processed'
 
@@ -51,7 +53,61 @@ def test_returning_players_follow_existing_primary_career_governance():
         pd.read_csv(DATA / 'hall_of_fame/prepared_career_all_time.csv'),
         club_id='georges-river-district',
     )
-    for name, matches in [('Gavin Scott', 322), ('Peter Remfrey', 392), ('Kevin Croom', 443)]:
+    expected = weekly_source_manifest()["career_anchors"]
+    # The 16 November official scorecards add one verified appearance for
+    # Peter Remfrey and Kevin Croom; Gavin Scott's accepted total is unchanged.
+    for name, matches in [('Gavin Scott', 322), ('Peter Remfrey', 393), ('Kevin Croom', 444)]:
         row = career.loc[career.Player.eq(name)]
         assert len(row) == 1
-        assert row.Matches.iloc[0] == matches
+        assert row.Matches.iloc[0] == expected[name]["matches"] == matches
+
+
+def test_weekly_population_and_grdcc_career_anchors_match_source_fingerprint():
+    expected = weekly_source_manifest()
+    metadata = json.loads((DATA.parent / 'metadata.json').read_text())
+    career = pd.read_csv(DATA / 'hall_of_fame/prepared_career_all_time.csv')
+    assert len(pd.read_csv(DATA / 'all_seasons_batting.csv')) == expected['stat_rows_per_discipline']
+    assert len(pd.read_csv(DATA / 'all_seasons_bowling.csv')) == expected['stat_rows_per_discipline']
+    assert len(pd.read_csv(DATA / 'all_seasons_fielding.csv')) == expected['stat_rows_per_discipline']
+    assert metadata['incremental_refresh']['unique_match_centre_ids'] == expected['unique_match_centre_ids']
+    assert len(metadata['incremental_refresh']['finalized_match_ids']) == expected['current_match_count']
+    assert int(career.canonical_player_id.notna().sum()) == expected['canonical_identity_count']
+    assert len(career) == expected['governed_display_record_count']
+    for name, values in expected['career_anchors'].items():
+        rows = career.loc[career.Player.eq(name)]
+        if values.get('report_only'):
+            rows = rows.loc[rows.report_record_id.eq('report_grdcc_annual_2024_25_phil_eldridge')]
+        assert len(rows) == 1
+        for metric, value in values.items():
+            column = {'runs': 'Runs', 'wickets': 'Wickets', 'matches': 'Matches'}.get(metric)
+            if column:
+                assert float(rows.iloc[0][column]) == value
+
+
+def test_rebuilt_public_summary_rows_and_premiership_flags_match_source_snapshot():
+    expected = weekly_source_manifest()
+    paths = {
+        "fastest_batting_milestones": DATA / "hall_of_fame/fastest_batting_milestones.csv",
+        "player_scorecard_milestones": DATA / "hall_of_fame/player_scorecard_milestones.csv",
+        "player_win_rates": DATA / "hall_of_fame/player_win_rates.csv",
+        "scorecard_record_links": DATA / "hall_of_fame/scorecard_record_links.csv",
+        "batting_position_summary": DATA / "player_profile/batting_position_summary.csv",
+        "bowling_phase_summary": DATA / "player_profile/bowling_phase_summary.csv",
+        "dismissal_fingerprint_summary": DATA / "player_profile/dismissal_fingerprint_summary.csv",
+        "performance_breakdown_by_dimension": DATA / "player_profile/performance_breakdown_by_dimension.csv",
+        "recent_form_batting": DATA / "player_profile/recent_form_batting.csv",
+        "recent_form_bowling": DATA / "player_profile/recent_form_bowling.csv",
+        "bbb_batting_rates_by_scope": DATA / "season_overview/bbb_batting_rates_by_scope.csv",
+        "bbb_bowling_dot_rates_by_scope": DATA / "season_overview/bbb_bowling_dot_rates_by_scope.csv",
+        "scorecard_batting_milestones_by_scope": DATA / "season_overview/scorecard_batting_milestones_by_scope.csv",
+        "scorecard_bowling_milestones_by_scope": DATA / "season_overview/scorecard_bowling_milestones_by_scope.csv",
+        "season_by_round_scorecards": DATA / "season_overview/season_by_round_scorecards.csv",
+    }
+    for name, path in paths.items():
+        assert len(pd.read_csv(path, low_memory=False)) == expected["derived_public_output_rows"][name]
+
+    rounds = pd.read_csv(paths["season_by_round_scorecards"], low_memory=False)
+    assert rounds.match_id.is_unique
+    flagged = set(rounds.loc[rounds.is_premiership.fillna(False).astype(bool), "match_id"].astype(str))
+    assert flagged == set(expected["premiership_match_ids"])
+    assert len(flagged) == expected["premiership_match_count"] == 16

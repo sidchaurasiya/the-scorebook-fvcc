@@ -1,21 +1,21 @@
 canonical_player_id,canonical_player_name,display_player_name,position_group,position_order,innings,runs,outs,average
-raw_00000000_0000_0000_0000_000000000001,********,********,Opener,1,2.0,17.0,2.0,8.5
-raw_00000000_0000_0000_0000_000000000003,********,********,Opener,1,1.0,16.0,1.0,16.0
-raw_00000000_0000_0000_0000_000000000001,********,********,No. 3,3,2.0,26.0,2.0,13.0
-raw_00000000_0000_0000_0000_000000000002,********,********,No. 3,3,2.0,12.0,2.0,6.0
-raw_00000000_0000_0000_0000_000000000003,********,********,No. 3,3,1.0,15.0,1.0,15.0
-raw_00000000_0000_0000_0000_000000000001,********,********,No. 4,4,1.0,30.0,1.0,30.0
-raw_00000000_0000_0000_0000_000000000002,********,********,No. 4,4,1.0,8.0,1.0,8.0
-raw_00000000_0000_0000_0000_000000000001,********,********,No. 5,5,2.0,15.0,2.0,7.5
-raw_00000000_0000_0000_0000_000000000002,********,********,No. 5,5,1.0,5.0,1.0,5.0
-raw_00000000_0000_0000_0000_000000000001,********,********,No. 7,7,1.0,0.0,1.0,0.0
-raw_00000000_0000_0000_0000_000000000002,********,********,No. 7,7,3.0,4.0,3.0,1.3333333333333333
-raw_00000000_0000_0000_0000_000000000003,********,********,No. 8,8,1.0,0.0,1.0,0.0
-raw_00000000_0000_0000_0000_000000000001,********,********,No. 9,9,1.0,0.0,1.0,0.0
-raw_00000000_0000_0000_0000_000000000001,********,********,Tail,10,1.0,5.0,1.0,5.0
-raw_00000000_0000_0000_0000_000000000003,********,********,Tail,10,1.0,0.0,0.0,
-raw_00000000_0000_0000_0000_000000000004,********,********,Tail,10,1.0,0.0,1.0,0.0
-raw_00000000_0000_0000_0000_000000000005,********,********,Tail,10,1.0,9.0,0.0,
+,********,********,Opener,1,2.0,17.0,2.0,8.5
+,********,********,Opener,1,1.0,16.0,1.0,16.0
+,********,********,No. 3,3,2.0,26.0,2.0,13.0
+,********,********,No. 3,3,2.0,12.0,2.0,6.0
+,********,********,No. 3,3,1.0,15.0,1.0,15.0
+,********,********,No. 4,4,1.0,30.0,1.0,30.0
+,********,********,No. 4,4,1.0,8.0,1.0,8.0
+,********,********,No. 5,5,2.0,15.0,2.0,7.5
+,********,********,No. 5,5,1.0,5.0,1.0,5.0
+,********,********,No. 7,7,1.0,0.0,1.0,0.0
+,********,********,No. 7,7,3.0,4.0,3.0,1.3333333333333333
+,********,********,No. 8,8,1.0,0.0,1.0,0.0
+,********,********,No. 9,9,1.0,0.0,1.0,0.0
+,********,********,Tail,10,1.0,5.0,1.0,5.0
+,********,********,Tail,10,1.0,0.0,0.0,
+,********,********,Tail,10,1.0,0.0,1.0,0.0
+,********,********,Tail,10,1.0,9.0,0.0,
 raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,No. 4,4,1.0,13.0,1.0,13.0
 raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,No. 6,6,2.0,39.0,2.0,19.5
 raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,No. 9,9,1.0,6.0,0.0,
@@ -362,7 +362,6 @@ faraz_khan,Faraz Khan,Faraz Khan,No. 8,8,1.0,14.0,1.0,14.0
 faraz_khan,Faraz Khan,Faraz Khan,Tail,10,1.0,7.0,1.0,7.0
 feroz_hassan,Feroz Hassan,Feroz Hassan,Opener,1,2.0,20.0,1.0,20.0
 feroz_hassan,Feroz Hassan,Feroz Hassan,No. 4,4,3.0,13.0,1.0,13.0
-feroz_hassan,Feroz Hassan,Feroz Hassan,No. 7,7,7.0,20.0,7.0,2.857142857142857
 feroz_hassan,Feroz Hassan,Feroz Hassan,No. 8,8,13.0,37.0,8.0,4.625
 feroz_hassan,Feroz Hassan,Feroz Hassan,Tail,10,76.0,156.0,38.0,4.105263157894737
 raw_a71fb709_fed1_4051_a1e3_c93cb9f4884d,Gagandip Singh,Gagandip Singh,No. 5,5,1.0,22.0,1.0,22.0
@@ -516,7 +515,6 @@ raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,No. 4,4,3.0,13.
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,No. 6,6,3.0,39.0,2.0,19.5
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,No. 8,8,5.0,135.0,4.0,33.75
 raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,No. 9,9,1.0,0.0,1.0,0.0
-kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,Opener,1,2.0,71.0,1.0,71.0
 kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,No. 3,3,10.0,307.0,10.0,30.7
 kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,No. 4,4,7.0,81.0,7.0,11.571428571428571
 kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,No. 8,8,5.0,60.0,5.0,12.0
@@ -570,7 +568,6 @@ raw_5a5c2789_408d_4c21_9137_6cdd0961671b,Krishna Kasiraju,Krishna Kasiraju,No. 9
 raw_5a5c2789_408d_4c21_9137_6cdd0961671b,Krishna Kasiraju,Krishna Kasiraju,Tail,10,5.0,18.0,2.0,9.0
 raw_a3f8bf93_1d57_473e_bb35_97df876496dc,Krishnakant Patel,Krishnakant Patel,No. 8,8,1.0,5.0,1.0,5.0
 raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,No. 3,3,1.0,1.0,1.0,1.0
-raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,No. 5,5,3.0,45.0,3.0,15.0
 raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,No. 7,7,2.0,44.0,2.0,22.0
 raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,No. 9,9,2.0,37.0,0.0,
 raw_4cc31b12_4f88_4c5e_aaa2_0b2921b48aba,Kushal Tuladhar,Kushal Tuladhar,Opener,1,1.0,8.0,1.0,8.0
@@ -744,14 +741,12 @@ nikhil_sawant,Nikhil Sawant,Nikhil Sawant,Tail,10,2.0,95.0,2.0,47.5
 raw_ed2ec761_adc0_46b7_a4b3_d04c4d3974ae,Nitin Khansili,Nitin Khansili,No. 6,6,1.0,3.0,1.0,3.0
 raw_ed2ec761_adc0_46b7_a4b3_d04c4d3974ae,Nitin Khansili,Nitin Khansili,No. 7,7,1.0,2.0,1.0,2.0
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 3,3,33.0,750.0,30.0,25.0
-raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 4,4,9.0,303.0,7.0,43.285714285714285
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 5,5,20.0,312.0,15.0,20.8
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 7,7,8.0,182.0,6.0,30.333333333333332
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 8,8,7.0,36.0,7.0,5.142857142857143
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 9,9,1.0,11.0,0.0,
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,Tail,10,1.0,23.0,1.0,23.0
 raw_c150a930_47d4_409d_a8bc_1fd05cc284e3,Osama Shakeel,Osama Shakeel,No. 7,7,1.0,1.0,1.0,1.0
-raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,No. 8,8,2.0,0.0,2.0,0.0
 raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,No. 9,9,4.0,7.0,3.0,2.3333333333333335
 raw_56937634_1d93_464c_8d86_5bc4b124d33d,Pankaj Kadam,Pankaj Kadam,Tail,10,1.0,0.0,1.0,0.0
 raw_2d5b94dc_0c07_4b92_9e30_9cd1935b48de,Patrick Singh,Patrick Singh,Opener,1,2.0,14.0,2.0,7.0
@@ -1375,13 +1370,11 @@ nikhil_sawant,Nikhil Sawant,Nikhil Sawant,No. 6,6,8.0,161.0,7.0,23.0
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 6,6,9.0,123.0,8.0,15.375
 raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,No. 7,7,3.0,14.0,2.0,7.0
 raw_cc39f432_071b_4940_b2d8_1a8218d46cc3,Paul Silva,Paul Silva,Opener,1,1.0,10.0,1.0,10.0
-raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,No. 3,3,5.0,88.0,5.0,17.6
 raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc,Rashim Kandel,Rashim Kandel,No. 4,4,3.0,99.0,3.0,33.0
 ravi_chowdary,Ravi Chowdary,Ravi Chowdary,No. 8,8,10.0,114.0,7.0,16.285714285714285
 raw_232cc042_1e4c_423a_9190_e3432698c99d,Reuben Sharan,Reuben Sharan,Opener,1,81.0,1792.0,80.0,22.4
 raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,Opener,1,163.0,2664.0,154.0,17.2987012987013
 raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,No. 8,8,11.0,196.0,8.0,24.5
-sandeep_gill,Sandeep Gill,Sandeep Gill,No. 6,6,3.0,32.0,3.0,10.666666666666666
 raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,No. 9,9,12.0,128.0,6.0,21.333333333333332
 raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,Tail,10,122.0,348.0,53.0,6.566037735849057
 shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,No. 3,3,19.0,193.0,19.0,10.157894736842104
@@ -1390,3 +1383,12 @@ vinay_sharma,Vinay Sharma,Vinay Sharma,No. 8,8,35.0,447.0,29.0,15.41379310344827
 raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,No. 5,5,7.0,20.0,5.0,4.0
 vinit_naidu,Vinit Naidu,Vinit Naidu,Tail,10,28.0,168.0,16.0,10.5
 wajhi_syed,Wajhi Syed,Wajhi Syed,No. 8,8,6.0,65.0,5.0,13.0
+raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,Arun Sevugan,Arun Sevugan,Opener,1,1.0,6.0,1.0,6.0
+feroz_hassan,Feroz Hassan,Feroz Hassan,No. 7,7,8.0,33.0,8.0,4.125
+kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,Opener,1,3.0,126.0,2.0,63.0
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,No. 5,5,4.0,46.0,4.0,11.5
+raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,No. 4,4,10.0,333.0,8.0,41.625
+raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,No. 8,8,3.0,3.0,2.0,1.5
+raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,No. 3,3,6.0,110.0,6.0,18.333333333333332
+sandeep_gill,Sandeep Gill,Sandeep Gill,No. 6,6,4.0,65.0,4.0,16.25
+raw_1876a444_275e_4ae9_92aa_1eebf5760833,Syedzainulla Abedin,Syedzainulla Abedin,No. 9,9,1.0,0.0,1.0,0.0

@@ -14,6 +14,7 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = REPO_ROOT / "tests" / "fixtures" / "grdcc_partnership_source_snapshot_2026-11-10.json"
+WEEKLY_MANIFEST_PATH = REPO_ROOT / "tests" / "fixtures" / "grdcc_weekly_output_snapshot_2026-11-16.json"
 HISTORICAL_ENV = "SCOREBOOK_MATCH_CENTRE_ROOT"
 CURRENT_ENV = "SCOREBOOK_GRDCC_CURRENT_MATCH_CENTRE_ROOT"
 DATASETS = ("all_matches.csv", "all_ball_by_ball.csv", "all_scorecard_batting.csv", "all_match_innings.csv")
@@ -21,6 +22,10 @@ DATASETS = ("all_matches.csv", "all_ball_by_ball.csv", "all_scorecard_batting.cs
 
 def source_manifest() -> dict[str, object]:
     return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+
+
+def weekly_source_manifest() -> dict[str, object]:
+    return json.loads(WEEKLY_MANIFEST_PATH.read_text(encoding="utf-8"))
 
 
 def verify_current_privacy_snapshot() -> pd.DataFrame:

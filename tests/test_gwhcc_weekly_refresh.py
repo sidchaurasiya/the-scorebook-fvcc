@@ -7,6 +7,9 @@ from scripts.build_gwhcc_weekly_candidate import approved_redirects, canonicalis
 from scripts.build_gwhcc_incremental_candidate import preserve_existing_profile_names
 from src.data.gwhcc_incremental import eligible_match_ids, profile_fielding_input
 
+ROOT = Path(__file__).resolve().parents[1]
+WEEKLY = json.loads((ROOT / "tests/fixtures/gwhcc_weekly_output_snapshot_2026-11-16.json").read_text())
+
 
 def decisions():
     return pd.DataFrame({"club": ["glen-waverley-hawks"] * 2,
@@ -92,12 +95,18 @@ DATA = Path(__file__).resolve().parents[1] / "clubs/glen-waverley-hawks/data/pro
 def test_weekly_snapshot_is_disjoint_preserves_history_and_excludes_pending_results():
     validation = json.loads((DATA / "validation/gwhcc_weekly_refresh_validation.json").read_text())
     matches = pd.read_csv(DATA / "all_seasons_matches.csv")
-    assert len(matches) == matches.match_id.nunique() == 3532
-    assert matches.season.ne("Summer 2026/27").sum() == 3475
+    assert validation["source_cutoff_melbourne"] == WEEKLY["cutoff"]
+    assert len(matches) == matches.match_id.nunique() == WEEKLY["total_matches"]
+    assert matches.season.ne("Summer 2026/27").sum() == WEEKLY["historical_matches"]
+    current_ids = set(matches.loc[matches.season.eq("Summer 2026/27"), "match_id"])
+    assert current_ids == set(WEEKLY["eligible_match_ids"])
     assert set(validation["new_completed_match_ids"]) <= set(matches.match_id)
     assert not set(validation["pending_match_ids"]) & set(matches.match_id)
     assert validation["canonical_merges_created"] == 0
     assert validation["new_canonical_identities"] == []
+    assert len(validation["new_eligible_match_ids"]) == WEEKLY["new_eligible_matches_vs_2026_11_10"] == 7
+    assert len(validation["new_completed_match_ids"]) == 6
+    assert len(validation["new_abandoned_with_verified_play_match_ids"]) == 1
 
 
 def test_current_profile_fielding_matches_official_total_without_duplicate_assists():
@@ -112,7 +121,7 @@ def test_current_profile_fielding_matches_official_total_without_duplicate_assis
 def test_weekly_headlines_preserve_four_merged_profiles_and_source_approved_history():
     career = pd.read_csv(DATA / "hall_of_fame/prepared_career_all_time.csv")
     expected = {"Aaditya Sharma": (39, 214, 21, 7), "Darsh Singh": (37, 229, 9, 0),
-                "Liam O'Rourke": (140, 1618, 46, 116), "Mitchell Kohne": (151, 2404, 159, 49)}
+                "Liam O'Rourke": (140.5, 1642, 46, 116), "Mitchell Kohne": (151, 2404, 159, 49)}
     for name, values in expected.items():
         player = career[career.Player.eq(name)]
         assert len(player) == 1
@@ -122,16 +131,25 @@ def test_weekly_headlines_preserve_four_merged_profiles_and_source_approved_hist
 def test_weekly_prepared_counts_and_governed_validation_have_no_failures():
     validation = json.loads((DATA / "validation/gwhcc_weekly_refresh_validation.json").read_text())
     assert validation["pass"] and validation["historical_preserved"]
-    assert validation["source_metric_checks"] == 4686
-    assert validation["run_out_source_checks"] == 639
+    assert validation["source_metric_checks"] == 4000
+    assert validation["source_metric_differences"] == 0
+    assert validation["provider_to_scorecard_variance_cells"] == 68
+    assert validation["run_out_source_checks"] == 116
+    assert validation["run_out_source_differences"] == 0
     assert all(check["pass"] for check in validation["profile_checks"])
-    assert validation["refreshed"]["current_season_matches"] == 37
-    assert validation["refreshed"]["public_hof_players"] == 1291
-    assert validation["refreshed"]["weighted_career_appearances"] == 29326
-    assert validation["refreshed"]["career_runs"] == 433142
-    assert validation["refreshed"]["career_wickets"] == 21105
-    assert validation["refreshed"]["career_catches"] == 7807
-    assert len(validation["new_completed_match_ids"]) == 17
+    assert validation["refreshed"]["current_season_matches"] == WEEKLY["eligible_matches"]
+    assert validation["refreshed"]["public_hof_players"] == WEEKLY["population"]
+    assert validation["refreshed"]["partnership_events"] == WEEKLY["total_partnership_events"]
+    assert validation["refreshed"]["fastest_batting_rows"] == WEEKLY["fastest_batting_milestones"]["total"]
+    assert validation["refreshed"]["weighted_match_credit_per_discipline"] == WEEKLY["current_aggregates"]["batting"]["weighted_matches"]
+    assert validation["refreshed"]["weighted_career_appearances"] == 29549.5
+    assert validation["scorecard_only_appearance_union"]["exact_source_participant_keys_added"] == WEEKLY["scorecard_only_appearance_additions"] == 32
+    assert validation["scorecard_only_appearance_union"]["new_match_keys"] == 0
+    assert validation["scorecard_only_appearance_union"]["distinct_existing_public_profiles"] == 30
+    assert validation["scorecard_only_appearance_union"]["net_existing_profile_match_credit_increase"] == 31.0
+    assert validation["scorecard_only_appearance_union"]["scorecard_only_dnb_rows_excluded"] == WEEKLY["scorecard_only_dnb_only_excluded"] == 8
+    assert validation["new_source_backed_public_profiles"] == 1
+    assert validation["new_public_profile_names"] == ["Arya Gupta"]
 
 
 def test_weekly_seed_rejects_relative_paths_inside_repository(monkeypatch):

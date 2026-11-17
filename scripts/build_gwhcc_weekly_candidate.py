@@ -162,8 +162,14 @@ def main():
     subprocess.run([sys.executable, str(ROOT / "scripts/build_gwhcc_incremental_candidate.py"),
                     "--source-bundle", str(bundle), "--candidate-root", str(args.candidate_root),
                     "--baseline-root", str(seed), "--cutoff", args.cutoff], cwd=ROOT, check=True)
+    from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
+
+    privacy = sanitize_public_processed_tree(
+        args.candidate_root / "clubs" / CLUB / "data" / "processed",
+        club_id=CLUB,
+    )
     (args.candidate_root / "weekly_seed_validation.json").write_text(json.dumps(audit, indent=2))
-    print(json.dumps(audit, indent=2))
+    print(json.dumps({"weekly_seed": audit, "generic_identity_privacy": {"changed_files": len(privacy["files"]), "rows_processed": privacy["rows_processed"]}}, indent=2))
 
 
 if __name__ == "__main__":

@@ -14,7 +14,13 @@ from src.data import playcricket_ingestion
 from src.data.partnerships import governed_batter_identity
 from src.ui import layout
 from src.data.playcricket_ingestion import metadata_mtime
-from src.utils.player_identity import filter_public_player_rows, get_player_profile_data, player_aliases_mtime
+from src.utils.player_identity import (
+    ALIAS_COLUMNS,
+    apply_player_identity_mapping,
+    filter_public_player_rows,
+    get_player_profile_data,
+    player_aliases_mtime,
+)
 from match_centre_source_snapshot import verify_current_privacy_snapshot
 from scripts.build_grdcc_privacy_filtered_artifacts import PROCESSED_ARTIFACTS
 
@@ -104,6 +110,36 @@ def test_exact_id_public_status_overrides_old_mask_without_name_join(tmp_path, m
     assert public_row.Player == "Current Public Name"
     assert public_row.canonical_player_name == "Current Public Name"
     assert public_row.raw_player_name == "********"
+
+
+def test_current_public_canonical_id_survives_when_raw_id_was_projected_out(tmp_path, monkeypatch):
+    _write_snapshot(
+        tmp_path,
+        monkeypatch,
+        [_snapshot_row("public-canonical", "public-source-id", "public", "Current Public Name")],
+    )
+    source = pd.DataFrame(
+        [
+            {
+                "player_id": "",
+                "raw_player_id": "",
+                "canonical_player_id": "public-canonical",
+                "player_name": "Private player",
+                "raw_player_name": "Private player",
+                "canonical_player_name": "Private player",
+            }
+        ]
+    )
+
+    mapped = apply_player_identity_mapping(
+        source,
+        aliases_df=pd.DataFrame(columns=ALIAS_COLUMNS),
+        manual_merges_df=pd.DataFrame(),
+        club_id=CLUB,
+    )
+
+    assert mapped.loc[0, "canonical_player_id"] == "public-canonical"
+    assert mapped.loc[0, "canonical_player_name"] == "Current Public Name"
 
 
 def test_partnership_identity_uses_current_status_by_exact_ids(tmp_path, monkeypatch):
@@ -488,9 +524,9 @@ def test_verified_snapshot_applies_to_actual_prepared_hof_population(monkeypatch
 
 
 def test_rebuilt_public_partnership_artifacts_obey_current_privacy_snapshot():
-    from match_centre_source_snapshot import source_manifest
+    from match_centre_source_snapshot import weekly_source_manifest
 
-    manifest = source_manifest()["combined_expected_partnerships"]
+    manifest = weekly_source_manifest()
     hall_of_fame = get_hall_of_fame_dir(club_id=CLUB)
     events_path = hall_of_fame / "partnerships.csv"
     records_path = hall_of_fame / "partnership_records.csv"
@@ -504,6 +540,7 @@ def test_rebuilt_public_partnership_artifacts_obey_current_privacy_snapshot():
         "PUBLIC_PRIVATE": manifest["PUBLIC_PRIVATE"],
     }
     assert len(records) == manifest["record_rows"]
+    assert int(events.privacy_status.eq("PRIVATE_PRIVATE").sum()) == manifest["PRIVATE_PRIVATE"]
     assert not events[["batter_1_public_name", "batter_2_public_name"]].apply(
         lambda column: column.astype(str).str.contains(r"\*{2,}", regex=True)
     ).any().any()

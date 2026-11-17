@@ -125,6 +125,8 @@ def main() -> int:
     )
     args = parser.parse_args()
     club_id = resolve_club_id(args.club)
+    if args.legacy_output and club_id != "fvcc" and not args.dry_run:
+        parser.error("Privacy-safe weekly refresh refuses shared root output for non-FVCC clubs")
     club_config = load_club_config(club_id)
     playcricket_club_id = configured_playcricket_club_id(club_config, club_id)
     processed_output_dir = PROCESSED_DIR if args.legacy_output else get_processed_dir(club_id=club_id)
@@ -158,6 +160,15 @@ def main() -> int:
         print_snapshot("Current local data", before)
         print("Local-only identity rebuild selected. No network requests will be made.")
         identity_summary = rebuild_identity_and_audits(processed_output_dir, club_id=club_id)
+        from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
+
+        sanitize_public_processed_tree(
+            processed_output_dir, club_id=club_id, update_metadata=not args.legacy_output
+        )
+        if club_id == "fvcc" and not args.legacy_output:
+            sanitize_public_processed_tree(
+                DATA_DIR / "processed", club_id=club_id, update_metadata=False
+            )
         after = capture_snapshot(processed_output_dir)
         print()
         print_snapshot("Rebuilt local data", after)
@@ -208,6 +219,15 @@ def main() -> int:
             "current scopes refreshed": 0,
             "detail exports rebuilt": "skipped; pass --with-current-match-centre to run match-centre refresh",
         }
+    from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
+
+    sanitize_public_processed_tree(
+        processed_output_dir, club_id=club_id, update_metadata=not args.legacy_output
+    )
+    if club_id == "fvcc" and not args.legacy_output:
+        sanitize_public_processed_tree(
+            DATA_DIR / "processed", club_id=club_id, update_metadata=False
+        )
     after = capture_snapshot(processed_output_dir)
 
     print()

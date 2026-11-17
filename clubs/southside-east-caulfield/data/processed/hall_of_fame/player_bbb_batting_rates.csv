@@ -1,6 +1,6 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,bbb_runs,bbb_balls_faced,bbb_dismissals,bbb_batting_innings,bbb_matches,bat_sr
-raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,92,95,2,5,5,96.84210526315789
-raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,100,130,6,8,8,76.92307692307692
+,,********,********,92,95,2,5,5,96.84210526315789
+,,********,********,100,130,6,8,8,76.92307692307692
 raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,raw_219f76a7_8d48_4b8a_a317_7fc64b4b138f,Aamir Rana,Aamir Rana,726,1139,32,32,32,63.74012291483758
 raw_783020cf_409e_4d98_9b14_200c3fcff343,raw_783020cf_409e_4d98_9b14_200c3fcff343,Aarav Mehta,Aarav Mehta,50,59,0,1,1,84.7457627118644
 raw_ec71bb26_5ee0_4065_a54b_b550b2351cfc,raw_ec71bb26_5ee0_4065_a54b_b550b2351cfc,Aashay Desai,Aashay Desai,6,14,0,1,1,42.857142857142854

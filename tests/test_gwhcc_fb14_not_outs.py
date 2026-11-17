@@ -120,7 +120,7 @@ def test_prepared_gwhcc_averages_still_reconcile_with_not_outs() -> None:
     average = pd.to_numeric(batting["battingAverage"], errors="coerce")
     calculated = runs / (innings - not_outs).clip(lower=0).replace(0, pd.NA)
     comparable = average.notna() & calculated.notna()
-    # Candidate v6 includes the complete 57-match snapshot and three new public profiles.
-    assert int(comparable.sum()) == 1148
+    # The 16 November candidate adds seven verified matches and one exact-ID profile.
+    assert int(comparable.sum()) == 1149
     assert (average[comparable] - calculated[comparable]).abs().max() < 1e-9
-    assert int(not_outs.fillna(0).eq(0).sum()) == 316
+    assert int(not_outs.fillna(0).eq(0).sum()) == 315

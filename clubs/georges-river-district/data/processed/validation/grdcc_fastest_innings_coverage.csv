@@ -1,5 +1,5 @@
 scope,total_matches,matches_with_scorecards,matches_with_ball_by_ball,scorecard_batting_innings,innings_with_reliable_delivery_balls,innings_without_reliable_delivery_balls,scorecard_only_50_plus,scorecard_only_100_plus,ball_events
-overall,2604,2167,295,26893,2781,24112,1167,129,155573
+overall,2656,2212,332,27417,3173,24244,1170,129,172400
 Summer 2003/04,12,12,0,247,0,247,4,0,0
 Summer 2004/05,64,64,0,991,0,991,34,1,0
 Summer 2005/06,56,56,0,826,0,826,36,3,0
@@ -23,3 +23,4 @@ Summer 2022/23,89,89,4,938,43,895,60,11,2211
 Summer 2023/24,121,121,50,1341,446,895,36,3,25893
 Summer 2024/25,116,116,85,1354,828,526,10,0,47353
 Summer 2025/26,123,123,102,1417,1021,396,4,1,54155
+Summer 2026/27,45,45,37,524,392,132,3,0,16827

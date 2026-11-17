@@ -14,6 +14,7 @@ DATA = ROOT / 'clubs/glen-waverley-hawks/data'
 CHRIS = 'raw_f62c84ce_8d81_4700_bd22_ee8494bab921'
 MATTHEW = 'raw_289b8e53_aa95_4072_8288_588447304bcd'
 CURRENT = json.loads((ROOT/'tests/fixtures/gwhcc_refresh_2026_10_31.json').read_text())
+WEEKLY = json.loads((ROOT/'tests/fixtures/gwhcc_weekly_output_snapshot_2026-11-16.json').read_text())
 
 
 @pytest.fixture
@@ -165,8 +166,9 @@ def test_actual_later_season_uses_source_verified_appearances_not_wicket_counts(
     batting = pd.read_csv(DATA / 'processed/all_seasons_scorecard_batting.csv')
     matches = pd.read_csv(DATA / 'processed/all_seasons_matches.csv')
     ids = set(matches.loc[matches.season.eq('Summer 2026/27'), 'match_id'])
-    assert len(ids) == 57
+    assert len(ids) == WEEKLY['eligible_matches'] == 64
     assert set(CURRENT['eligible_match_ids']).issubset(ids)
+    assert set(WEEKLY['eligible_match_ids']) == ids
     for pid in [CHRIS, MATTHEW]:
         raw_id = pid.removeprefix('raw_').replace('_', '-')
         selected = batting[batting.season.eq('Summer 2026/27') & batting.player_id.eq(raw_id)]

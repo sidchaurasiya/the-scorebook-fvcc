@@ -244,9 +244,9 @@ def test_non_prepared_fvcc_path_filters_before_aggregation(monkeypatch) -> None:
         captured["fielding_raw"] = fielding_raw.copy()
         return pd.DataFrame({"canonical_player_id": [PUBLIC_ID], "Player": ["Public Player"]})
 
-    monkeypatch.setattr(layout, "read_processed_table", lambda name: sources[name].copy())
+    monkeypatch.setattr(layout, "read_processed_table", lambda name, **_kwargs: sources[name].copy())
     monkeypatch.setattr(layout, "normalise_player_names", lambda frame: frame.copy())
-    monkeypatch.setattr(layout, "load_player_aliases", lambda: pd.DataFrame())
+    monkeypatch.setattr(layout, "load_player_aliases", lambda **_kwargs: pd.DataFrame())
     monkeypatch.setattr(layout, "apply_player_identity_mapping", lambda frame, *_args, **_kwargs: frame.copy())
     monkeypatch.setattr(layout, "apply_team_grade_display_columns", lambda frame: frame.copy())
     monkeypatch.setattr(layout, "runtime_identity_maintenance_enabled", lambda: False)
@@ -281,9 +281,9 @@ def test_prepared_fvcc_path_filters_defensively(monkeypatch) -> None:
         "seasons": pd.DataFrame({"id": ["season"]}),
         "players": pd.DataFrame({"player_id": ["public-raw"]}),
     }
-    monkeypatch.setattr(layout, "read_processed_table", lambda name: sources[name].copy())
+    monkeypatch.setattr(layout, "read_processed_table", lambda name, **_kwargs: sources[name].copy())
     monkeypatch.setattr(layout, "normalise_player_names", lambda frame: frame.copy())
-    monkeypatch.setattr(layout, "load_player_aliases", lambda: pd.DataFrame())
+    monkeypatch.setattr(layout, "load_player_aliases", lambda **_kwargs: pd.DataFrame())
     monkeypatch.setattr(layout, "apply_player_identity_mapping", lambda frame, *_args, **_kwargs: frame.copy())
     monkeypatch.setattr(layout, "apply_team_grade_display_columns", lambda frame: frame.copy())
     monkeypatch.setattr(layout, "add_batting_display_columns", lambda frame: frame.copy())

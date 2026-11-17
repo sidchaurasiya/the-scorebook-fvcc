@@ -49,6 +49,24 @@ def prepare_core_export_frames(club_id: str, historical: dict[str, object], layo
     frames["all_time"] = apply_reviewed_playcricket_career_exceptions(all_time, club_id)
     return frames
 
+
+def sanitize_core_export_frames(club_id: str, frames: dict[str, object]) -> dict[str, object]:
+    """Apply the public identity projection to every prepared career frame."""
+    from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
+
+    output: dict[str, object] = {}
+    for key, frame in frames.items():
+        if not hasattr(frame, "copy"):
+            output[key] = frame
+            continue
+        safe, _ = sanitize_public_identity_frame(
+            frame.copy(),
+            club_id=club_id,
+            relative_path=f"hall_of_fame/prepared_career_{key}.csv",
+        )
+        output[key] = safe
+    return output
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     club_id = resolve_club_id(args.club)
@@ -82,7 +100,10 @@ def main(argv: list[str] | None = None) -> int:
     written = write_prepared_hall_of_fame_core(
         club_id,
         layout.HALL_OF_FAME_DATA_VERSION,
-        prepare_core_export_frames(club_id, historical, layout),
+        sanitize_core_export_frames(
+            club_id,
+            prepare_core_export_frames(club_id, historical, layout),
+        ),
         best_batting,
         best_bowling,
         output_dir=output_dir,

@@ -1,10 +1,10 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,three_wicket_innings,five_wicket_innings,ten_wicket_matches,bbi,bbi_wickets_sort,bbi_runs_sort
-raw_f6366b19_7e2d_4dc3_a613_def9e3bef73d,raw_f6366b19_7e2d_4dc3_a613_def9e3bef73d,********,********,0,0,0,2/5,2,5
-raw_cab02a18_8f06_4da9_9eec_ac1dbd124d74,raw_cab02a18_8f06_4da9_9eec_ac1dbd124d74,********,********,0,0,0,1/1,1,1
-raw_0d96ab5c_f700_4a89_8ee2_cd5359116133,raw_0d96ab5c_f700_4a89_8ee2_cd5359116133,********,********,0,0,0,1/2,1,2
-raw_00000000_0000_0000_0000_000000000002,raw_00000000_0000_0000_0000_000000000002,********,********,0,0,0,1/29,1,29
-raw_a43eb5b6_d0df_40e2_9630_a952347327a3,raw_a43eb5b6_d0df_40e2_9630_a952347327a3,********,********,1,0,0,3/34,3,34
-raw_00000000_0000_0000_0000_000000000001,raw_00000000_0000_0000_0000_000000000001,********,********,2,0,0,3/8,3,8
+,,********,********,0,0,0,2/5,2,5
+,,********,********,0,0,0,1/1,1,1
+,,********,********,0,0,0,1/2,1,2
+,,********,********,0,0,0,1/29,1,29
+,,********,********,1,0,0,3/34,3,34
+,,********,********,2,0,0,3/8,3,8
 raw_121b6922_c040_48b5_ad58_f894f3f2e960,raw_121b6922_c040_48b5_ad58_f894f3f2e960,******** French,******** French,0,0,0,2/8,2,8
 raw_26d82da9_dc55_43c2_8d57_b103091e58fa,raw_26d82da9_dc55_43c2_8d57_b103091e58fa,Aaditya Srivastava,Aaditya Srivastava,0,0,0,1/5,1,5
 raw_7b466bde_acf7_48b7_bff3_2eeabcb5716e,raw_7b466bde_acf7_48b7_bff3_2eeabcb5716e,Aaron Cooray,Aaron Cooray,0,0,0,1/3,1,3

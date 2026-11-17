@@ -66,9 +66,10 @@ def test_scorecard_values_are_not_replaced_by_delivery_reconstruction():
 
 def test_accepted_partnership_history_and_other_new_events_remain():
     rows = pd.read_csv(DATA / 'hall_of_fame/partnerships.csv')
-    assert len(rows) == 998
+    assert len(rows) == 1006
     new_ids=['5d2b32ff-c7c3-4900-81c9-548b1d918ffa','7e3dd365-03c0-4ac7-a601-fc0088327426','e734e2b8-d92b-4760-b9e8-489984e47547','f31cfd8e-4345-4a2a-84e0-5aabf75bafb5']
     assert len(rows[rows.match_id.isin(new_ids)]) == 35
+    assert len(rows[rows.match_id.eq('8690c5cd-0280-43d7-936e-b76c3162246e')]) == 8
 
 
 def test_season_batting_dot_coverage_adds_counts_and_recomputes_percentage():

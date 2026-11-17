@@ -15,6 +15,7 @@ from src.data.fvcc_scorecard_privacy import (
     sanitize_fvcc_processed_scorecards,
     sanitize_fvcc_scorecard_record_link_file,
 )
+from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
 
 
 def main() -> int:
@@ -37,6 +38,12 @@ def main() -> int:
     result = sanitize_fvcc_processed_scorecards(args.processed_dir)
     if args.fallback_link_path.resolve() != (args.processed_dir / "hall_of_fame" / "scorecard_record_links.csv").resolve():
         result[args.fallback_link_path.as_posix()] = sanitize_fvcc_scorecard_record_link_file(args.fallback_link_path)
+    result["generic_identity_sanitizer"] = sanitize_public_processed_tree(args.processed_dir, club_id=FVCC_CLUB_ID)
+    root_fallback = ROOT / "data" / "processed"
+    if root_fallback.resolve() != args.processed_dir.resolve():
+        result["generic_identity_root_fallback"] = sanitize_public_processed_tree(
+            root_fallback, club_id=FVCC_CLUB_ID, update_metadata=False
+        )
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0
 

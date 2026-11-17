@@ -26,12 +26,12 @@ def test_valid_manifest_loads_all_grdcc_frames() -> None:
 
     # Current public partition retains separate source identities; the frozen
     # legacy composite is an unranked display record, not a person row.
-    assert len(core["batting"]) == 2103
-    assert len(core["bowling"]) == 1781
-    assert len(core["fielding"]) == 1628
-    # The public view carries 2,125 canonical identities plus three separate report-only rows.
-    assert len(core["all_time"]) == 2128
-    assert core["all_time"].canonical_player_id.notna().sum() == 2125
+    assert len(core["batting"]) == 2113
+    assert len(core["bowling"]) == 1792
+    assert len(core["fielding"]) == 1638
+    # The 16 November snapshot carries 2,135 canonical identities and three report-only rows.
+    assert len(core["all_time"]) == 2138
+    assert core["all_time"].canonical_player_id.notna().sum() == 2135
     assert core["all_time"].report_record_id.notna().sum() == 3
 
 
@@ -66,7 +66,7 @@ def test_prepared_canonical_player_ids_and_report_only_ids_are_separately_unique
     report_ids = frame["report_record_id"].dropna()
 
     assert canonical.is_unique
-    assert len(canonical) == canonical.nunique() == 2125
+    assert len(canonical) == canonical.nunique() == 2135
     assert len(report_ids) == report_ids.nunique() == 3
     assert frame.loc[report_ids.index, "canonical_player_id"].isna().all()
 

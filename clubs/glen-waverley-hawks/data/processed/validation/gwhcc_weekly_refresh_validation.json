@@ -1,293 +1,216 @@
 {
   "pass": true,
-  "source_cutoff_utc": "2026-10-24T12:59:59+00:00",
-  "source_cutoff_melbourne": "2026-10-24T23:59:59+11:00",
-  "baseline_revision": "4304ab165457b6a521fb1b4102504e93f9e8fbd3",
+  "club": "glen-waverley-hawks",
+  "source_cutoff_utc": "2026-11-16T05:53:20.420811+00:00",
+  "source_cutoff_melbourne": "2026-11-16T16:53:20.420811+11:00",
+  "aggregate_cutoff_melbourne": "2026-11-16T16:49:30.543881+11:00",
+  "baseline_revision": "c54cd95f8967ad6d4b4aba5fcaa517b4a9d21320",
+  "accepted_baseline_cutoff": "2026-11-10",
+  "source_bundle_sha256": {
+    "task_state.json": "c53067900ac18bb5398464fd6f9ad008b900cf230d1d3084d4e45b5b7dbe6aa4",
+    "match_centre_refresh_receipt.json": "e1e9656723367d06eb0d56cbb95ea9b77050c12db33aff6874d0771f00afa479",
+    "aggregate_snapshot_receipt.json": "4ccc80953f0a589319057e0120dca4fb048d48cfd9236e1d8df7ee131fa6b02d",
+    "source_reconciliation_corrections.json": "a5f8298867d802f3563fcc5b3f49ade5e60adcbc0c2fe1efbfa0dca6d1136b2f",
+    "current_aggregate_batting.csv": "1f95448a5a246ab76bc4caaaba0944be3c7f4e52f4de0f4ce85dae6253df0d67",
+    "current_aggregate_bowling.csv": "d1b4933bc359525eb2f9abf8609346a6505aea3bbeb10e2292396dade6756240",
+    "current_aggregate_fielding.csv": "16e430c570b34cf30e4c390f043b2c069f453685493fd45a706cedda3cee13f6",
+    "parsed_current/all_matches.csv": "81e278a5335a963cb470b514b1bfb94b5eb587975932211d8df54feee80775a5",
+    "parsed_current/all_match_innings.csv": "27e481c31ef86285f46ac157e4ff695f41136b0a77d7959c4ef0bdb754316949"
+  },
   "baseline": {
-    "represented_seasons": 47,
     "historical_matches": 3475,
-    "current_season_matches": 20,
-    "total_match_ids": 3495,
-    "public_hof_players": 1284,
-    "current_season_public_players": 150,
-    "weighted_career_appearances": 29143.0,
-    "career_runs": 431293.0,
-    "career_wickets": 21016.0,
-    "career_catches": 7771.0,
-    "career_fifties": 1331.0,
-    "career_hundreds": 292.0,
-    "fastest_innings_rows": 793,
-    "fastest_fifties": 197,
-    "fastest_hundreds": 32,
-    "hat_tricks": 1,
-    "premiership_events": 53,
-    "partnership_events": 3461,
-    "selected_partnership_records": 10,
-    "captain_summary_rows": 10200,
-    "captain_batting_runs": 295192.0,
-    "active_players": 294,
-    "partnership_records_sha256": "d1fc9f0eba69827b26f206e346354a5d21bf2deb717dbbda17349b81e48b019f"
+    "current_season_matches": 57,
+    "total_match_ids": 3532,
+    "public_hof_players": 1295,
+    "weighted_career_appearances": 29502.5,
+    "career_runs": 369594.0,
+    "career_wickets": 18318.0,
+    "career_catches": 7870.0,
+    "career_fifties": 1339.0,
+    "career_hundreds": 228.0,
+    "fastest_innings_rows": 831,
+    "partnership_events": 3643,
+    "current_aggregate_rows_per_discipline": 262,
+    "current_weighted_match_credit_per_discipline": 641,
+    "current_provider_match_count_per_discipline": 707,
+    "partnership_events_current": 293,
+    "fastest_rows_current": 51
   },
   "refreshed": {
-    "represented_seasons": 47,
     "historical_matches": 3475,
-    "current_season_matches": 37,
-    "total_match_ids": 3512,
-    "public_hof_players": 1291,
-    "current_season_public_players": 167,
-    "new_source_backed_public_profiles": 7,
-    "weighted_career_appearances": 29326.0,
-    "career_runs": 433142.0,
-    "career_wickets": 21105.0,
-    "career_catches": 7807.0,
-    "career_fifties": 1335.0,
-    "career_hundreds": 293.0,
-    "fastest_innings_rows": 810,
-    "fastest_fifties": 201,
-    "fastest_hundreds": 32,
-    "hat_tricks": 1,
-    "premiership_events": 53,
-    "partnership_events": 3565,
+    "current_season_matches": 64,
+    "total_match_ids": 3539,
+    "public_hof_players": 1296,
+    "current_season_public_players": 187,
+    "new_source_backed_public_profiles": 1,
+    "weighted_career_appearances": 29549.5,
+    "career_runs": 370067.0,
+    "career_wickets": 18345.0,
+    "career_catches": 7880.0,
+    "career_fifties": 1339.0,
+    "career_hundreds": 228.0,
+    "fastest_batting_rows": 837,
+    "fastest_batting_current_rows": 57,
+    "partnership_events": 3666,
+    "partnership_events_current": 316,
+    "partnership_privacy_counts_current": {
+      "PUBLIC_PUBLIC": 307,
+      "PUBLIC_PRIVATE": 9
+    },
+    "captain_summary_rows": 10244,
+    "captain_batting_runs": 296563.0,
+    "active_player_ids_current": 187,
+    "aggregate_rows_per_discipline": 5959,
+    "weighted_match_credit_per_discipline": 688.0,
+    "provider_match_count_per_discipline": 775.0,
+    "stat_row_counts": {
+      "batting": 5959,
+      "bowling": 5959,
+      "fielding": 5959
+    },
     "selected_partnership_records": 10,
-    "captain_summary_rows": 10226,
-    "captain_batting_runs": 295674.0,
-    "active_players": 301,
-    "partnership_records_sha256": "a3a9f7f750bdec03675b500d2392e5efb0c1c836d49d1ef0b9117c5828be7ae5"
+    "confirmed_hat_tricks": 1
   },
+  "eligible_status_counts": {
+    "COMPLETED": 59,
+    "ABANDONED": 5
+  },
+  "eligible_matches": 64,
+  "selected_source_matches": 78,
+  "excluded_terminal_no_play": 14,
+  "excluded_match_ids": [
+    "20afb783-29d2-4de2-ae35-ccb1408235e6",
+    "3f3d128e-48d3-4c41-b054-88c4a89e45bc",
+    "4a42ade5-c8df-4149-98c4-c30d13771481",
+    "4d8b5417-9048-49ca-a967-316fcc1f8da1",
+    "790c32ca-5704-477f-9070-6d79ced611f7",
+    "83e1417f-61eb-4f82-bcc2-2dc7e194cc11",
+    "8f84b5e0-9827-4a91-9796-71f08b52d183",
+    "a488a770-cd45-451d-811e-062b05e85bc4",
+    "a7f219e0-ec8d-42a6-bc4e-b8a0fe172b70",
+    "ab1a53b9-8b51-42c1-a736-0acd2c2693c0",
+    "d1f1bb5a-abec-4e58-b301-9614bceaec16",
+    "daa94c54-0719-4850-83a7-36a2df7a34f0",
+    "f58ebb2e-c8f8-400d-aac7-8fd80c2aaa3b",
+    "f5ce1c72-bb84-4328-93ff-587a2f9f091c"
+  ],
+  "new_eligible_match_ids": [
+    "1c48425e-c6b6-439e-bc53-4bb86d22060b",
+    "26e17956-dc63-42cb-b666-8bce1cfcc0e6",
+    "3688da60-38ce-4208-95a4-4fd5d7b0d4b0",
+    "43faf0f0-9a3d-4333-883d-8350410156bf",
+    "79702bee-fb5a-40e8-be79-08048e31b48b",
+    "b2b16c81-cad8-405c-b884-dcc80a00a544",
+    "d2c54398-96bc-429f-ac00-b955446e23f7"
+  ],
+  "new_completed_match_ids": [
+    "1c48425e-c6b6-439e-bc53-4bb86d22060b",
+    "26e17956-dc63-42cb-b666-8bce1cfcc0e6",
+    "3688da60-38ce-4208-95a4-4fd5d7b0d4b0",
+    "43faf0f0-9a3d-4333-883d-8350410156bf",
+    "79702bee-fb5a-40e8-be79-08048e31b48b",
+    "b2b16c81-cad8-405c-b884-dcc80a00a544"
+  ],
+  "new_abandoned_with_verified_play_match_ids": [
+    "d2c54398-96bc-429f-ac00-b955446e23f7"
+  ],
+  "corrected_scorecard_match_ids": [],
   "new_canonical_identities": [],
   "canonical_merges_created": 0,
-  "source_metric_checks": 4686,
+  "new_source_backed_public_profiles": 1,
+  "new_public_profile_names": [
+    "Arya Gupta"
+  ],
+  "source_metric_checks": 4000,
   "source_metric_differences": 0,
-  "run_out_source_checks": 639,
+  "provider_to_scorecard_variance_cells": 68,
+  "provider_variance_disposition": "Official scorecard values are used in public aggregate outputs; 68 provider-to-scorecard variance cells are retained in restricted source evidence and are not balanced against deliveries.",
+  "run_out_source_checks": 116,
+  "run_out_source_differences": 0,
   "profile_checks": [
     {
-      "discipline": "Batting",
-      "metric": "battingAggregate",
-      "canonical_player_checks": 167,
+      "scope": "batting",
+      "identity_resolution": "exact participant and team IDs",
+      "official_scorecard_keys": 271,
+      "public_aggregate_rows": 290,
+      "metric_checks": 2412,
+      "metric_differences": 0,
       "pass": true
     },
     {
-      "discipline": "Batting",
-      "metric": "battingInnings",
-      "canonical_player_checks": 167,
+      "scope": "bowling",
+      "identity_resolution": "exact participant and team IDs",
+      "official_scorecard_keys": 249,
+      "public_aggregate_rows": 290,
+      "metric_checks": 1240,
+      "metric_differences": 0,
       "pass": true
     },
     {
-      "discipline": "Batting",
-      "metric": "battingNotOuts",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Batting",
-      "metric": "battingBallsFaced",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Batting",
-      "metric": "batting50s",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Batting",
-      "metric": "batting100s",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Batting",
-      "metric": "batting0s",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Batting",
-      "metric": "battingFours",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Batting",
-      "metric": "battingSixes",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowlingWickets",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowlingMaidens",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowlingRuns",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowlingBalls",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowling5WIs",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowling10WMs",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowlingWides",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Bowling",
-      "metric": "bowlingNoBalls",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Fielding",
-      "metric": "fieldingTotalCatches",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Fielding",
-      "metric": "fieldingStumpings",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Fielding",
-      "metric": "fieldingAssistedRunOuts",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Fielding",
-      "metric": "fieldingUnassistedRunOuts",
-      "canonical_player_checks": 167,
-      "pass": true
-    },
-    {
-      "discipline": "Fielding",
-      "metric": "fieldingRunOuts",
-      "canonical_player_checks": 167,
+      "scope": "fielding",
+      "identity_resolution": "exact participant and team IDs",
+      "official_scorecard_keys": 116,
+      "public_aggregate_rows": 290,
+      "metric_checks": 348,
+      "metric_differences": 0,
       "pass": true
     }
   ],
   "historical_preserved": true,
-  "new_completed_match_ids": [
-    "01ffbdfa-0d18-4689-b9c6-d0c6f7fcf540",
-    "1539bb10-6fc1-4258-8aa1-7e47aa0b4b14",
-    "1f90aaf8-d3d6-4f99-b19e-f8b94d91bb69",
-    "26256803-0e79-439f-83ea-8cee34bea8e9",
-    "2f6b9ad0-69cb-41ca-8dcb-8c94df2e859f",
-    "34aaa6f4-9c7e-4d49-9e70-96f14dd74198",
-    "4c03a077-e7d5-405c-a828-6f05f63cb093",
-    "6231ade8-1501-4ebf-9aa6-db43d6ed64e1",
-    "66beb26c-0144-4b70-bf85-71a5c1f3b899",
-    "7060eecd-818f-43ad-8df7-536aa65b3966",
-    "8d904e89-7d3f-42f6-a97b-85bcada7f95f",
-    "8ea4ade9-ca29-47ae-9908-ca81776eca47",
-    "adbae06b-ee20-4f8e-b73c-261693bb20c1",
-    "bc968a46-b334-41a7-b743-d6bde8da2326",
-    "c28ad15b-9c10-4fcd-be6a-3bd489384c60",
-    "e7faba41-d913-4139-aab7-4cad73035e8f",
-    "fa47ca4b-9fc0-4f57-9faf-e2c18ee192ad"
-  ],
-  "corrected_match_ids": [],
-  "approved_source_exceptions": [
-    {
-      "match_id": "8d904e89-7d3f-42f6-a97b-85bcada7f95f",
-      "innings_total": 302,
-      "batter_runs_plus_extras": 303,
-      "delivery_run_sum": 301,
-      "progress_score": 302,
-      "decision": "include exact official source values; do not balance"
+  "public_private_profile_exposure": 0,
+  "source_correction_manifest": {
+    "correction_rows_by_discipline": {
+      "batting": 39,
+      "bowling": 39
     },
-    {
-      "match_id": "1539bb10-6fc1-4258-8aa1-7e47aa0b4b14",
-      "innings_total": 122,
-      "batter_runs_plus_extras": 123,
-      "delivery_run_sum": 123,
-      "progress_score": 123,
-      "decision": "include exact official source values; do not balance"
-    }
-  ],
-  "pending_matches": 11,
-  "pending_match_ids": [
-    "0fe95615-9985-4237-954f-7e9e4541be16",
-    "40810d9b-f740-402e-b7fd-9706adc46ad2",
-    "63698820-f5e2-45ff-8dfa-633d1f15ee32",
-    "77d93034-5158-4aea-939e-f0db3ac16900",
-    "9d17431f-bcb0-4f37-9f94-116003bc7d8a",
-    "b5b52ba4-166f-4e40-ac46-982f77399f82",
-    "c0b329f4-5530-4219-956d-4d81ac98a7f0",
-    "d1f169a1-df56-4904-a821-0640fcd43950",
-    "d42bfa0f-1c73-4697-895b-d082eaecbb7d",
-    "f5b7c87f-283a-4d33-a259-9ccd73bdd8bb",
-    "fad3c778-ca6c-44aa-8815-f1e2830f497c"
-  ],
-  "in_progress_matches": 1,
-  "in_progress_match_ids": [
-    "be085026-67f3-4b1b-a368-810a74900af5"
-  ],
-  "near_cutoff_upcoming_matches": 1,
-  "near_cutoff_upcoming_match_ids": [
-    "a488a770-cd45-451d-811e-062b05e85bc4"
-  ],
-  "no_play_abandoned_matches": 3,
-  "no_play_abandoned_match_ids": [
-    "20afb783-29d2-4de2-ae35-ccb1408235e6",
-    "4a42ade5-c8df-4149-98c4-c30d13771481",
-    "ab1a53b9-8b51-42c1-a736-0acd2c2693c0"
-  ],
-  "private_output_exposure": 0,
+    "source_scorecard_correction_metrics": 78,
+    "fielding_rows_corrected": 6,
+    "manifest_sha256": "55c17a187f19bd566171f76a6343ded3afd76adac7f9c14a894c2bea1adb2fb0"
+  },
+  "scorecard_delivery_policy": "Official scorecards govern scorecard totals. Authentic delivery events remain separate for ball-by-ball claims; no universal equality is imposed and no synthetic balancing events are created.",
+  "current_fielding_policy": "Fielding run_outs is the official total; assisted_run_outs is a subset and is never added again. Across 11 previously accepted matches, the old scorecard export double-counted 29 assisted run-outs; the refreshed club-side scorecard view matches the official source.",
+  "identity_policy": "Exact current public identities resolve by exact participant IDs. Generic, reused or ambiguous participant IDs remain unlinked and do not create named career rows.",
+  "privacy_signature": "hawks-masked-placeholder-event-scope-v2",
+  "generic_privacy_signature": "public-generic-identity-v7",
+  "scorecard_only_appearance_union": {
+    "exact_source_participant_keys_added": 32,
+    "accepted_baseline_match_keys": 32,
+    "new_match_keys": 0,
+    "distinct_existing_public_profiles": 30,
+    "net_existing_profile_match_credit_increase": 31.0,
+    "scorecard_only_dnb_rows_excluded": 8,
+    "identity_rule": "Exact source participant ID, team ID and match ID; existing public profile required. No name-only joins. DNB-only rows without batting, bowling or fielding play evidence remain excluded from appearances."
+  },
   "source_coverage": {
-    "teams": 19,
-    "grades": 16,
-    "unique_fixtures": 218,
-    "completed_through_cutoff": 37,
-    "abandoned_no_activity": 3,
-    "in_progress": 1,
-    "upcoming": 166,
-    "undated_pending": 11
+    "official_teams": 21,
+    "unique_fixtures": 78,
+    "eligible_completed": 59,
+    "eligible_abandoned_with_play": 5,
+    "new_eligible_matches": 7,
+    "no_play_excluded": 14
   },
-  "current_season_fielding_source_semantics": "Provider total run-outs already includes assists; profile adapter prevents duplication.",
-  "source_exceptions_treatment": "The two owner-approved discrepancies are included using official source values exactly as published; no scorecard figures or balancing runs were edited.",
-  "player_reconciliation": {
-    "baseline_authoritative_profiles": 1284,
-    "candidate_authoritative_profiles": 1291,
-    "affected_profiles": 156,
-    "new_source_backed_profiles": 7,
-    "unexplained_metric_differences": 0
-  },
-  "new_season_metrics": {
-    "source_aggregate_rows_per_discipline": 241,
-    "public_candidate_rows_per_discipline": 213,
-    "provider_matches_total": 400,
-    "governed_weighted_matches_total": 390,
-    "selected_roster_appearances_including_masked_placeholders": 392,
-    "t20_matches": 0,
-    "played_non_t20_matches": 37,
-    "approved_source_exception_matches": 2
-  }
+  "scorecard_delivery_exceptions_reference": "See restricted phase C source exception register; preserve official scorecard and authentic delivery values separately.",
+  "partnership_records_sha256": "a3a9f7f750bdec03675b500d2392e5efb0c1c836d49d1ef0b9117c5828be7ae5",
+  "source_publication_receipt_sha256": "e1e9656723367d06eb0d56cbb95ea9b77050c12db33aff6874d0771f00afa479",
+  "pending_match_ids": [
+    "20afb783-29d2-4de2-ae35-ccb1408235e6",
+    "3f3d128e-48d3-4c41-b054-88c4a89e45bc",
+    "4a42ade5-c8df-4149-98c4-c30d13771481",
+    "4d8b5417-9048-49ca-a967-316fcc1f8da1",
+    "790c32ca-5704-477f-9070-6d79ced611f7",
+    "83e1417f-61eb-4f82-bcc2-2dc7e194cc11",
+    "8f84b5e0-9827-4a91-9796-71f08b52d183",
+    "a488a770-cd45-451d-811e-062b05e85bc4",
+    "a7f219e0-ec8d-42a6-bc4e-b8a0fe172b70",
+    "ab1a53b9-8b51-42c1-a736-0acd2c2693c0",
+    "d1f1bb5a-abec-4e58-b301-9614bceaec16",
+    "daa94c54-0719-4850-83a7-36a2df7a34f0",
+    "f58ebb2e-c8f8-400d-aac7-8fd80c2aaa3b",
+    "f5ce1c72-bb84-4328-93ff-587a2f9f091c"
+  ],
+  "pending_matches": 14,
+  "public_scorecard_batting_sha256": "9aeb83059701df7c24c416bcc6e418fa6cdb04a6b2fe84207b3f53386df7ff76",
+  "historical_scorecard_rows_preserved": 31430,
+  "current_scorecard_batting_rows": 696,
+  "generic_retired_not_out_rows_preserved": 16
 }

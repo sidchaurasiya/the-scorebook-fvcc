@@ -660,7 +660,24 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                    latest_match_round=latest.get('round_short_name',latest.get('round_name','')),
                    latest_match_opponent=opponent,latest_match_result=latest.get('result_text',''),latest_statistical_season=season['name'])
     version_path.write_text(json.dumps(version,indent=2)+'\n')
+    from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
+
+    privacy = sanitize_public_processed_tree(processed, club_id=CLUB)
+    root_fallback = candidate / "data" / "processed"
+    if root_fallback.exists():
+        sanitize_public_processed_tree(root_fallback, club_id=CLUB, update_metadata=False)
     write_prepared_fvcc_core(candidate,processed)
+    prepared_privacy = sanitize_public_processed_tree(processed, club_id=CLUB)
+    if prepared_privacy["files"]:
+        write_prepared_fvcc_core(candidate,processed)
+        final_privacy = sanitize_public_processed_tree(processed, club_id=CLUB)
+        if final_privacy["files"]:
+            raise RuntimeError('Prepared FVCC outputs reintroduced generic identity fields')
+    result['generic_identity_privacy'] = {
+        'first_pass_changed_files': len(privacy['files']),
+        'rows_scanned': privacy['rows_processed'],
+        'prepared_second_pass_changes': len(prepared_privacy['files']),
+    }
     return result
 
 

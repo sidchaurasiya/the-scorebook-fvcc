@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -115,13 +116,13 @@ def test_cached_or_legacy_fallback_table_is_sanitized_after_read(monkeypatch, tm
     monkeypatch.setattr(ingestion, "get_processed_path", lambda *args, **kwargs: legacy_file)
     monkeypatch.setattr(ingestion, "get_active_club_id", lambda: "fvcc")
     monkeypatch.setattr(ingestion, "_read_processed_table_cached", lambda *args: source.copy())
-    monkeypatch.setattr(ingestion, "_append_supplemental_processed_rows", lambda name, frame: frame)
+    monkeypatch.setattr(ingestion, "_append_supplemental_processed_rows", lambda name, frame, **kwargs: frame)
 
     output = ingestion.read_processed_table("all_seasons_scorecard_batting")
 
     assert output.loc[0, "player_id"] == ""
     assert output.loc[0, "player_name"] == "********"
-    assert output.loc[0, "public_scorecard_row_key"].startswith("fvcc-anon-")
+    assert output.loc[0, "public_scorecard_row_key"].startswith("anon-")
 
 
 def test_app_facing_scorecard_builder_applies_only_explicit_fvcc_guard():
@@ -155,32 +156,37 @@ def test_app_facing_scorecard_builder_applies_only_explicit_fvcc_guard():
 
 
 def test_accepted_fvcc_scorecard_rows_have_no_reused_tokens_and_keep_source_figures():
+    snapshot = json.loads((ROOT / "tests/fixtures/fvcc_weekly_output_snapshot_2026-11-16.json").read_text())
     batting = pd.read_csv(FVCC_PROCESSED / "all_seasons_scorecard_batting.csv", dtype=str, keep_default_na=False)
     bowling = pd.read_csv(FVCC_PROCESSED / "all_seasons_scorecard_bowling.csv", dtype=str, keep_default_na=False)
     fielding = pd.read_csv(FVCC_PROCESSED / "all_seasons_scorecard_fielding.csv", dtype=str, keep_default_na=False)
 
     anonymous_batting = batting[batting.public_scorecard_row_key.astype(str).str.startswith("fvcc-anon-")]
     anonymous_bowling = bowling[bowling.public_scorecard_row_key.astype(str).str.startswith("fvcc-anon-")]
-    assert len(batting) == 177
-    assert len(bowling) == 107
-    assert len(fielding) == 50
-    assert len(anonymous_batting) == 2
-    assert len(anonymous_bowling) == 1
+    assert len(batting) == snapshot["current_scorecard_rows"]["batting"]
+    assert len(bowling) == snapshot["current_scorecard_rows"]["bowling"]
+    assert len(fielding) == snapshot["current_scorecard_rows"]["fielding"]
+    assert len(anonymous_batting) == snapshot["anonymous_scorecard_rows"]["batting"]
+    assert len(anonymous_bowling) == snapshot["anonymous_scorecard_rows"]["bowling"]
     assert anonymous_batting.player_id.eq("").all()
     assert anonymous_bowling.player_id.eq("").all()
     assert anonymous_batting.player_name.eq("********").all()
     assert anonymous_bowling.player_name.eq("********").all()
-    assert anonymous_batting.dismissal.eq("did not bat").all()
-    assert pd.to_numeric(anonymous_batting.runs).sum() == 0
-    assert pd.to_numeric(anonymous_batting.balls).sum() == 0
-    assert pd.to_numeric(anonymous_batting.fours).sum() == 0
-    assert pd.to_numeric(anonymous_batting.sixes).sum() == 0
-    assert pd.to_numeric(anonymous_bowling.overs).sum() == 3.0
-    assert pd.to_numeric(anonymous_bowling.maidens).sum() == 1
-    assert pd.to_numeric(anonymous_bowling.runs_conceded).sum() == 3
-    assert pd.to_numeric(anonymous_bowling.wickets).sum() == 0
-    assert pd.to_numeric(anonymous_bowling.wides).sum() == 2
-    assert pd.to_numeric(anonymous_bowling.no_balls).sum() == 0
+    assert anonymous_batting.public_scorecard_row_key.is_unique
+    assert anonymous_bowling.public_scorecard_row_key.is_unique
+    assert anonymous_batting.dismissal.value_counts().to_dict() == snapshot["anonymous_scorecard_figures"]["batting_dismissals"]
+    for metric, expected in snapshot["anonymous_scorecard_figures"]["batting_numeric_totals"].items():
+        assert pd.to_numeric(anonymous_batting[metric]).sum() == expected
+    for metric, expected in snapshot["anonymous_scorecard_figures"]["bowling_numeric_totals"].items():
+        assert pd.to_numeric(anonymous_bowling[metric]).sum() == expected
+    anonymous_fielding = fielding[
+        fielding.player_id.eq("") | fielding.player_name.map(is_private_or_anonymised_player)
+    ]
+    assert len(anonymous_fielding) == snapshot["anonymous_scorecard_rows"]["fielding"]
+    assert anonymous_fielding.player_id.eq("").all()
+    assert anonymous_fielding.public_scorecard_row_key.astype(str).str.strip().ne("").all()
+    for metric, expected in snapshot["anonymous_scorecard_figures"]["fielding_numeric_totals"].items():
+        assert pd.to_numeric(anonymous_fielding[metric]).sum() == expected
     for frame in [batting, bowling, fielding]:
         assert not frame.player_id.map(privacy.is_fvcc_placeholder_participant_id).any()
 
@@ -281,7 +287,7 @@ def test_cached_and_match_centre_fallback_scorecard_links_are_sanitized(monkeypa
     monkeypatch.setattr(layout, "HALL_OF_FAME_SCORECARD_RECORD_LINKS_PATH", tmp_path / "no-deploy-links.csv")
     monkeypatch.setattr(layout, "add_missing_canonical_player_ids", lambda frame, club_id: frame)
 
-    def read_csv(path):
+    def read_csv(path, **kwargs):
         filename = Path(path).name
         if filename == "all_matches.csv":
             return pd.DataFrame([{"match_id": "fallback-match", "season": "Summer 2026/27"}])
@@ -300,7 +306,7 @@ def test_cached_and_match_centre_fallback_scorecard_links_are_sanitized(monkeypa
     assert len(batting) == 1
     assert batting.loc[0, "player_id"] == ""
     assert batting.loc[0, "player_name"] == "********"
-    assert "public_scorecard_row_key" not in batting
+    assert batting.loc[0, "public_scorecard_row_key"].startswith("anon-")
     assert batting.loc[0, "runs_scored"] == 5
 
 
@@ -310,7 +316,7 @@ def test_deploy_link_loader_sanitizes_club_artifact_after_read(monkeypatch):
     source = pd.DataFrame(
         [{"mode": "batting", "canonical_player_id": "ambiguous-id", "canonical_player_name": "********", "match_id": "deploy-match", "runs_scored": 13}]
     )
-    monkeypatch.setattr(layout, "read_match_centre_csv", lambda path: source.copy())
+    monkeypatch.setattr(layout, "read_match_centre_csv", lambda path, **kwargs: source.copy())
 
     batting = layout.load_deploy_scorecard_record_rows("fvcc")["batting"]
 

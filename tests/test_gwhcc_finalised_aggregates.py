@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from src.data.gwhcc_finalised_aggregates import FIELDS, finalised_aggregate
+from src.data.gwhcc_finalised_aggregates import FIELDS, filter_club_appearances, finalised_aggregate
 
 
 def bat(runs, balls, not_out):
@@ -144,3 +144,204 @@ def test_multiple_verified_missing_performers_keep_the_requested_discipline():
                             source_fields_json=json.dumps({'battingAggregate':1})) for pid in ['a','b']])
     _,added=missing_provider_rows(raw,actors,{'batting':batting,'bowling':empty_bowl,'fielding':empty_field},{'a','b'},'batting',cert)
     assert len(added)==2 and added.battingAggregate.tolist()==[1,1]
+
+
+def test_club_appearance_scope_excludes_the_opponent_side_of_a_match():
+    appearances = pd.DataFrame([
+        {'team_id': 'hawks-team', 'player_id': 'hawks-player'},
+        {'team_id': 'opponent-team', 'player_id': 'opponent-player'},
+    ])
+    result = filter_club_appearances(appearances, {'hawks-team'})
+    assert result[['team_id', 'player_id']].to_dict('records') == [
+        {'team_id': 'hawks-team', 'player_id': 'hawks-player'}
+    ]
+
+
+def test_official_scorecard_certificate_supports_a_missing_aggregate_row_only():
+    import json
+    from src.data.gwhcc_finalised_aggregates import missing_provider_rows
+
+    raw = pd.DataFrame([dict(team_id='team', player_id='existing', player_name='Existing',
+                             matches=1, battingAggregate=10, battingInnings=1,
+                             battingNotOuts=0, battingBallsFaced=12)])
+    actors = pd.DataFrame([dict(team_id='team', player_id='source', player_name='Verified public',
+                                canonical_player_id='approved')])
+    batting = pd.DataFrame([dict(team_id='team', participant_id='source', match_id='m1',
+                                 runs_scored=4, balls_faced=12, fours_scored=0, sixes_scored=0,
+                                 dismissal_type='Bowled', dismissal_text='b: Bowler')])
+    empty_bowl = pd.DataFrame(columns=['team_id', 'participant_id', 'overs_bowled', 'runs_conceded',
+                                       'wickets_taken', 'wides', 'no_balls'])
+    empty_field = pd.DataFrame(columns=['team_id', 'participant_id', 'catches', 'stumpings',
+                                        'run_outs', 'assisted_run_outs'])
+    cert = pd.DataFrame([dict(
+        discipline='batting', team_id='team', source_player_id='source', metric='__missing_row__',
+        evidence_status='independently_reconciled_official_scorecard',
+        source_fields_json=json.dumps({'battingAggregate': 4, 'battingInnings': 1,
+                                       'battingBallsFaced': 12, 'battingNotOuts': 0}),
+    )])
+    out, added = missing_provider_rows(
+        raw, actors,
+        {'batting': batting, 'bowling': empty_bowl, 'fielding': empty_field},
+        {'approved'}, 'batting', cert,
+    )
+    assert len(out) == 2 and len(added) == 1
+    assert added.iloc[0].battingAggregate == 4
+    assert 'official scorecard' in added.iloc[0].source_coverage_note
+
+    metric_certificate = cert.copy()
+    metric_certificate.loc[0, 'metric'] = 'battingAggregate'
+    metric_certificate.loc[0, 'provider_value'] = 10
+    metric_certificate.loc[0, 'finalised_scorecard_value'] = 4
+    metric_raw = pd.DataFrame([provider('batting', bat(10, 12, False), bat(0, 0, False).iloc[:0])])
+    with pytest.raises(ValueError, match='Unreconciled provider scope'):
+        finalised_aggregate(metric_raw, bat(4, 12, False), pd.DataFrame(columns=bat(0, 0, False).columns),
+                            'batting', metric_certificate)
+
+
+def test_missing_batting_provider_row_does_not_require_bowling_certificate():
+    from src.data.gwhcc_finalised_aggregates import missing_provider_rows
+
+    raw = pd.DataFrame([dict(team_id='team', player_id='existing', player_name='Existing',
+                             matches=1, battingAggregate=10)])
+    actors = pd.DataFrame([dict(team_id='team', player_id='source', player_name='Known',
+                                canonical_player_id='approved')])
+    empty_batting = pd.DataFrame(columns=['team_id', 'participant_id', 'runs_scored', 'balls_faced',
+                                          'fours_scored', 'sixes_scored', 'dismissal_type', 'dismissal_text'])
+    bowling = pd.DataFrame([dict(team_id='team', participant_id='source', overs_bowled=2,
+                                 runs_conceded=8, wickets_taken=1, wides=0, no_balls=0)])
+    empty_fielding = pd.DataFrame(columns=['team_id', 'participant_id', 'catches', 'stumpings',
+                                           'run_outs', 'assisted_run_outs'])
+    _, added = missing_provider_rows(
+        raw, actors,
+        {'batting': empty_batting, 'bowling': bowling, 'fielding': empty_fielding},
+        {'approved'}, 'batting',
+    )
+    assert len(added) == 1
+    assert added.iloc[0].battingAggregate == 0
+
+
+def test_scorecard_only_exact_public_player_is_added_but_masked_token_is_not(monkeypatch):
+    from src.data import gwhcc_masked_privacy
+    from src.utils import player_identity
+    from scripts.build_gwhcc_incremental_candidate import add_verified_scorecard_appearances
+
+    monkeypatch.setattr(
+        gwhcc_masked_privacy,
+        "is_masked_hawks_participant_id",
+        lambda value: str(value) == "reused-placeholder",
+    )
+    monkeypatch.setattr(
+        player_identity,
+        "apply_player_identity_mapping",
+        lambda frame, club_id=None: frame.assign(canonical_player_id=frame.player_id.map(
+            {"public-id": "canonical-public", "reused-placeholder": "canonical-private"}
+        )),
+    )
+    monkeypatch.setattr(
+        player_identity,
+        "public_player_mask",
+        lambda frame, club_id=None: frame.canonical_player_id.eq("canonical-public"),
+    )
+    existing = pd.DataFrame(columns=["match_id", "team_id", "player_id", "player_name", "weight"])
+    scorecard = pd.DataFrame([
+        {"match_id": "match-1", "team_id": "hawks-team", "participant_id": "public-id",
+         "player_name": "Verified Existing", "runs_scored": 0},
+        {"match_id": "match-1", "team_id": "hawks-team", "participant_id": "reused-placeholder",
+         "player_name": "Private player", "runs_scored": 6},
+    ])
+
+    result = add_verified_scorecard_appearances(
+        existing,
+        {"batting": scorecard},
+        team_ids={"hawks-team"},
+        match_weights={"match-1": 0.5},
+        baseline_public_ids={"canonical-public"},
+    )
+
+    assert result[["match_id", "team_id", "player_id", "weight"]].to_dict("records") == [
+        {"match_id": "match-1", "team_id": "hawks-team", "player_id": "public-id", "weight": 0.5}
+    ]
+
+
+def test_scorecard_only_dnb_requires_other_verified_play_evidence(monkeypatch):
+    from src.data import gwhcc_masked_privacy
+    from src.utils import player_identity
+    from scripts.build_gwhcc_incremental_candidate import add_verified_scorecard_appearances
+
+    monkeypatch.setattr(gwhcc_masked_privacy, "is_masked_hawks_participant_id", lambda _value: False)
+    monkeypatch.setattr(
+        player_identity,
+        "apply_player_identity_mapping",
+        lambda frame, club_id=None: frame.assign(canonical_player_id="canonical-public"),
+    )
+    monkeypatch.setattr(
+        player_identity,
+        "public_player_mask",
+        lambda frame, club_id=None: pd.Series(True, index=frame.index),
+    )
+    existing = pd.DataFrame(columns=["match_id", "team_id", "player_id", "player_name", "weight"])
+    dnb = pd.DataFrame([
+        {"match_id": "match-1", "team_id": "hawks-team", "participant_id": "public-id",
+         "player_name": "Previously public", "runs_scored": 0, "balls_faced": 0,
+         "dismissal_type": "Did Not Bat"},
+    ])
+    kwargs = {
+        "team_ids": {"hawks-team"},
+        "match_weights": {"match-1": 1.0},
+        "baseline_public_ids": {"canonical-public"},
+    }
+
+    dnb_only = add_verified_scorecard_appearances(existing, {"batting": dnb}, **kwargs)
+    assert dnb_only.empty
+
+    fielding = pd.DataFrame([
+        {"match_id": "match-1", "team_id": "hawks-team", "participant_id": "public-id",
+         "player_name": "Previously public", "catches": 1},
+    ])
+    verified_play = add_verified_scorecard_appearances(
+        existing, {"batting": dnb, "fielding": fielding}, **kwargs
+    )
+    assert verified_play[["match_id", "team_id", "player_id", "weight"]].to_dict("records") == [
+        {"match_id": "match-1", "team_id": "hawks-team", "player_id": "public-id", "weight": 1.0}
+    ]
+
+
+def test_weekly_aggregate_append_preserves_anonymous_history_without_identity_join():
+    from scripts.build_gwhcc_incremental_candidate import append_current_aggregates_preserving_anonymous_history
+
+    historical = pd.DataFrame([
+        {"season_id": "old-season", "team_id": "team-a", "player_id": "public-id",
+         "player_name": "Public Player", "canonical_player_name": "Public Player", "runs": 50},
+        {"season_id": "old-season", "team_id": "team-b", "player_id": "",
+         "player_name": "Private player", "canonical_player_name": "Private player", "runs": 12},
+    ])
+    current = pd.DataFrame([
+        {"season_id": "current-season", "team_id": "team-a", "player_id": "public-id",
+         "player_name": "Public Player", "canonical_player_name": "Public Player", "runs": 8},
+        {"season_id": "current-season", "team_id": "team-a", "player_id": "reused-placeholder",
+         "player_name": "********", "canonical_player_name": "Private player", "runs": 6},
+    ])
+
+    result = append_current_aggregates_preserving_anonymous_history(
+        historical, current, ["season_id", "team_id", "player_id"]
+    )
+
+    assert result["runs"].tolist() == [50, 12, 8, 6]
+    assert result.iloc[1][["player_id", "canonical_player_name"]].tolist() == ["", "Private player"]
+    assert result.iloc[2]["season_id"] == "current-season"
+    assert result.iloc[3][["player_id", "canonical_player_name", "runs"]].tolist() == ["", "Private player", 6]
+
+
+def test_weekly_aggregate_append_rejects_unlabelled_blank_current_identity():
+    from scripts.build_gwhcc_incremental_candidate import append_current_aggregates_preserving_anonymous_history
+
+    historical = pd.DataFrame(columns=["season_id", "team_id", "player_id", "player_name"])
+    current = pd.DataFrame([
+        {"season_id": "current-season", "team_id": "team-a", "player_id": "",
+         "player_name": "Unknown named player", "runs": 12},
+    ])
+
+    with pytest.raises(ValueError, match="blank player IDs without a generic privacy label"):
+        append_current_aggregates_preserving_anonymous_history(
+            historical, current, ["season_id", "team_id", "player_id"]
+        )

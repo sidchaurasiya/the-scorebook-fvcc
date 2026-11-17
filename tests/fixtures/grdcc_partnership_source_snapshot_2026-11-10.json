@@ -1,7 +1,7 @@
 {
   "snapshot": "official PlayCricket match-centre source files retrieved 2026-11-10",
   "current_privacy_snapshot": {
-    "path": "clubs/georges-river-district/data/source/grdcc_current_privacy_status.csv",
+    "path": "tests/fixtures/grdcc_current_privacy_status_2026-11-10.csv",
     "rows": 3,
     "public": 2,
     "private": 1,
