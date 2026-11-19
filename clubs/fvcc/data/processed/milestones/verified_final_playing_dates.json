@@ -1,0 +1,18 @@
+{
+  "3a3a57d1-9dcf-483d-b16b-fc7d372f7bd6": {
+    "date": "2026-10-24",
+    "scheduled_dates": [
+      "2026-10-24"
+    ],
+    "source": "Completed scorecard with one scheduled day",
+    "scorecard_sha256": "4200be86fc16f3d0431c6fbdef86a4d12a3ad9926e7337c073c16150e9f95f19"
+  },
+  "f3e9f065-f39c-4be8-acb2-37b6512d8cae": {
+    "date": "2026-10-10",
+    "scheduled_dates": [
+      "2026-10-10"
+    ],
+    "source": "Completed scorecard with one scheduled day",
+    "scorecard_sha256": "1bdc3368cc60da623d19cfc1eff988d49d0c944c73427aa1cc58cabd9b2b4757"
+  }
+}

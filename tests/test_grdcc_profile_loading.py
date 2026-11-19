@@ -27,6 +27,10 @@ def test_profile_loading_replaces_the_grdcc_record_before_building_it(monkeypatc
             assert "Loading player profile…" in text and "Example player" in text
             rendered.append("loading")
 
+        def caption(self, text):
+            assert "Loading analysis for Example player" in text
+            rendered.append("analysis placeholder")
+
         @contextmanager
         def container(self):
             rendered.append("details control")
@@ -60,13 +64,19 @@ def test_profile_loading_replaces_the_grdcc_record_before_building_it(monkeypatc
     monkeypatch.setattr(layout, "load_views", lambda _club: None)
     monkeypatch.setattr(layout, "load_player_profile_index", lambda *args: index)
     monkeypatch.setattr(layout, "current_player_query_token", lambda: "")
-    monkeypatch.setattr(layout, "sync_player_profile_query", lambda _selected_id: None)
+    monkeypatch.setattr(layout, "sync_player_profile_query", lambda _selected_id, **_kwargs: None)
     monkeypatch.setattr(layout, "report_profile_index", lambda _club: index if report_only else index.iloc[:0])
     monkeypatch.setattr(layout, "hall_of_fame_override_signature", tuple)
     monkeypatch.setattr(layout, "get_authoritative_career_totals", load_record)
     monkeypatch.setattr(layout, "get_player_profile_data", load_record)
     monkeypatch.setattr(layout, "load_grdcc_profile_authority", load_record)
     monkeypatch.setattr(layout, "build_player_profile_primary", lambda raw: raw)
+    monkeypatch.setattr(layout, "portable_profile_primary", lambda raw, _club: (raw, pd.DataFrame()))
+    def wait_for_paint(_club, _player, show_pending):
+        show_pending()
+        return False
+
+    monkeypatch.setattr(layout, "profile_summary_painted", wait_for_paint)
     monkeypatch.setattr(layout, "render_grdcc_primary_card", lambda _career, **kwargs: rendered.append("render"))
     monkeypatch.setattr(layout, "player_profile_view_signature", tuple)
     monkeypatch.setattr(layout, "build_player_profile_view", lambda raw, _signature: {"career": raw})
@@ -76,10 +86,7 @@ def test_profile_loading_replaces_the_grdcc_record_before_building_it(monkeypatc
 
     layout.render_player_profile_page()
 
-    if club_id == "georges-river-district":
-        assert rendered == (["loading", "load", "render"] if report_only else ["loading", "load", "render", "details control"])
-    else:
-        assert rendered == ["load", "render"]
+    assert rendered == (["loading", "load", "render"] if report_only else ["loading", "load", "render", "analysis placeholder"])
 
 
 @pytest.mark.parametrize(
@@ -138,8 +145,8 @@ def test_profile_rerun_keeps_grdcc_output_position_when_analytics_is_skipped(
         assert switched_slot == first_slot
 
 
-@pytest.mark.parametrize("scenario", ["closed", "open", "superseded", "optional_failure", "unavailable", "primary_failure"])
-def test_grdcc_profile_summary_remains_available_during_optional_work(monkeypatch, scenario):
+@pytest.mark.parametrize("scenario", ["waiting_for_paint", "painted", "superseded", "analysis_failure", "unavailable", "primary_failure"])
+def test_grdcc_profile_summary_remains_available_during_automatic_analysis(monkeypatch, scenario):
     from unittest.mock import Mock
 
     state = {"player_profile_selector_id": "ryan"}
@@ -161,7 +168,7 @@ def test_grdcc_profile_summary_remains_available_during_optional_work(monkeypatc
         session_state=state,
         empty=lambda: next(slots),
         container=lambda **kwargs: nullcontext(),
-        toggle=lambda *args, **kwargs: scenario in {"open", "superseded", "optional_failure"},
+
         markdown=markdown,
     )
     primary = Mock(side_effect=lambda row, **kwargs: events.append(("primary", row.Player)))
@@ -179,14 +186,22 @@ def test_grdcc_profile_summary_remains_available_during_optional_work(monkeypatc
         assert len(events) == 2
         if scenario == "superseded":
             state["player_profile_selector_id"] = "percy"
-        if scenario == "optional_failure":
+        if scenario == "analysis_failure":
             raise ValueError("test badge error")
         return []
 
     badges = Mock(side_effect=badge_work)
+
+    def paint_result(_club, _player, show_pending):
+        if scenario == "waiting_for_paint":
+            show_pending()
+            return False
+        return True
+
     for name, implementation in {
         "st": widgets,
         "render_report_record_profile": lambda *args, **kwargs: False,
+        "profile_summary_painted": paint_result,
         "get_player_profile_data": lambda *args, **kwargs: {},
         "metadata_mtime": lambda: 0,
         "player_aliases_mtime": lambda: 0,
@@ -209,14 +224,17 @@ def test_grdcc_profile_summary_remains_available_during_optional_work(monkeypatc
     else:
         primary.assert_called_once()
         assert primary.call_args.kwargs["output"] is slot
-    if scenario in {"closed", "unavailable", "primary_failure"}:
+    if scenario in {"waiting_for_paint", "unavailable", "primary_failure"}:
         detailed.assert_not_called()
         badges.assert_not_called()
-    if scenario == "open":
+    if scenario == "waiting_for_paint":
+        optional.caption.assert_called_once_with("Loading analysis for Ryan Croom…")
+        optional.container.assert_not_called()
+    if scenario == "painted":
         analysis.assert_called_once()
     else:
         analysis.assert_not_called()
-    if scenario == "optional_failure":
+    if scenario == "analysis_failure":
         status.error.assert_called_once()
 
 
@@ -263,3 +281,69 @@ def test_grdcc_prepared_authority_reuses_governed_filters(monkeypatch):
     monkeypatch.setattr(layout, "load_prepared_hall_of_fame_all_time", lambda *args: None)
     assert layout._load_grdcc_profile_authority_cached.__wrapped__("test-generation", False).equals(prepared)
     fallback.assert_called_once()
+
+
+
+def test_rapid_return_requires_a_fresh_paint_acknowledgement(monkeypatch):
+    from src.ui import profile_paint
+
+    events = []
+    state = {}
+
+    def component(*, key, data, **_):
+        events.append(("mount", key, data["ready"]))
+        return SimpleNamespace(ready=data["ready"])
+
+    monkeypatch.setattr(profile_paint, "st", SimpleNamespace(session_state=state))
+    monkeypatch.setattr(profile_paint, "_paint_gate", lambda: component)
+
+    assert not profile_paint.summary_painted("grdcc", "nick", lambda: events.append("loading Nick"))
+    nick = events[-1][1]
+    state[nick] = {"ready": True}
+    assert profile_paint.summary_painted("grdcc", "nick", lambda: pytest.fail("Already painted"))
+    assert not profile_paint.summary_painted("grdcc", "percy", lambda: events.append("loading Percy"))
+    assert not profile_paint.summary_painted("grdcc", "nick", lambda: events.append("loading Nick again"))
+    assert events[-2] == "loading Nick again"
+    assert events[-1][1] != nick
+
+
+def test_superseding_widget_event_wins_over_interrupted_profile_url():
+    from streamlit.testing.v1 import AppTest
+
+    app = AppTest.from_string("""
+import streamlit as st
+from src.ui import layout
+
+players = {"apurwa": "Apurwa Sarve", "a-aruna": "A Aruna", "cameron": "Cameron Hocart"}
+selected = layout.reconcile_profile_selection(players)
+widget = st.selectbox("Search player", list(players), index=None, key="player_profile_selector_id",
+                      on_change=layout.record_profile_widget_intent)
+st.text(selected)
+""")
+    app.query_params["player_id"] = "apurwa"
+    app.query_params["filter"] = ["first", "second"]
+    app.run()
+    app.selectbox[0].set_value("a-aruna").run()
+    # A Aruna's URL has been delivered but its previous run hasn't accounted for it.
+    app.session_state["last_player_profile_query_param"] = "apurwa"
+    app.selectbox[0].set_value("cameron").run()
+
+    assert not app.exception
+    assert app.selectbox[0].value == app.text[0].value == app.session_state["selected_player_id"] == "cameron"
+    assert app.query_params["player_id"] == ["cameron"]
+    assert app.query_params["filter"] == ["first", "second"]
+
+    app.run()
+    assert app.text[0].value == "cameron"
+
+    # A late paint rerun can still carry A Aruna's URL with Cameron's widget.
+    app.query_params["player_id"] = "a-aruna"
+    app.run()
+    assert app.selectbox[0].value == app.text[0].value == app.session_state["selected_player_id"] == "cameron"
+    assert app.session_state["manual_player_profile_selection"]
+
+    app.selectbox[0].set_value("a-aruna").run()
+    app.query_params["player_id"] = "cameron"
+    app.selectbox[0].set_value("cameron").run()
+    assert app.text[0].value == "cameron"
+    assert app.query_params["player_id"] == ["cameron"]

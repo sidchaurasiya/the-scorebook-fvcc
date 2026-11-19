@@ -1,0 +1,28 @@
+{
+  "c1166912-1497-4fb6-a704-0d5e4360cce6": {
+    "date": "2026-10-17",
+    "scheduled_dates": [
+      "2026-10-10",
+      "2026-10-17"
+    ],
+    "source": "Official delivery timestamps confirm play on the final scheduled day",
+    "scorecard_sha256": "bc7d1b03cd1deb12ab9a4de9b1a6e085b8b42ce1b57ecb35c5959c4f1a2f7bcf",
+    "delivery_sha256": "f7533a4f189f6db4bb53677473171b2f361b3ee1e3a5ef1b7d10704e3d6abae9"
+  },
+  "8ff6a140-b3f2-4e10-a7be-990d1fac6294": {
+    "date": "2026-09-26",
+    "scheduled_dates": [
+      "2026-09-26"
+    ],
+    "source": "Completed scorecard with one scheduled day",
+    "scorecard_sha256": "3b94c81e6d9c88b1c452ba037d148f02bf12b6e0ec38a28b772ae7ee746acdb6"
+  },
+  "3f887215-ffd6-481f-89da-ed4b6a2f9dd6": {
+    "date": "2026-10-11",
+    "scheduled_dates": [
+      "2026-10-11"
+    ],
+    "source": "Completed scorecard with one scheduled day",
+    "scorecard_sha256": "ab102e271e6549a106b940c47262f536dec9ec162647c1da75aa9ce34c1dd61b"
+  }
+}
