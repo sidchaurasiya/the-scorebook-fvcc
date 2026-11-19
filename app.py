@@ -1,5 +1,9 @@
 import time
 
+script_start = time.perf_counter()
+entry_epoch = time.time()
+entry_cpu = time.process_time()
+
 import streamlit as st
 
 from src.ui.layout import render_page
@@ -23,4 +27,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    from src.utils import profile_trace
+
+    profile_trace.begin(script_start, entry_epoch, entry_cpu)
+    try:
+        main()
+    finally:
+        profile_trace.finish()

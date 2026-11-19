@@ -75,6 +75,22 @@ def combine_player_rows(df: pd.DataFrame, category: str) -> pd.DataFrame:
     return pd.DataFrame(output_rows)
 
 
+def combine_player_match_counts(df: pd.DataFrame) -> pd.DataFrame:
+    """Project the name and match count used to break premiership ranking ties."""
+    if df.empty or "player_name" not in df or "matches" not in df:
+        return df.head(0)
+    key = _build_player_group_key(df)
+    groups = df.groupby(key, dropna=False, sort=False)
+    names = groups["player_name"].first()
+    if "canonical_player_name" in df:
+        canonical = groups["canonical_player_name"].first()
+        names = canonical.where(canonical.notna() & canonical.ne(""), names)
+    matches = pd.to_numeric(df["matches"], errors="coerce").groupby(
+        key, dropna=False, sort=False
+    ).sum(min_count=1)
+    return pd.DataFrame({"player_name": names, "matches": matches}).reset_index(drop=True)
+
+
 def _build_player_group_key(df: pd.DataFrame) -> pd.Series:
     if "canonical_player_id" in df:
         return canonical_group_key(df)

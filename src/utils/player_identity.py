@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import re
+from collections import defaultdict
+from dataclasses import dataclass
 import shutil
 import unicodedata
 from difflib import SequenceMatcher
@@ -1140,9 +1144,10 @@ def load_portability_player_profile_source_frames(
     club_id: str,
     local_version: float,
     identity_version: float,
+    generation: str = "",
 ) -> dict[str, pd.DataFrame]:
     """Prepare canonical FVCC/GRDCC source frames once per governed version."""
-    del local_version, identity_version
+    del local_version, identity_version, generation
     aliases = load_player_aliases(club_id=club_id)
     frames = {}
     for category in ["batting", "bowling", "fielding"]:
@@ -1165,10 +1170,12 @@ def get_player_profile_data(
     from src.data.grdcc_player_privacy import privacy_snapshot_signature
 
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
-    return _get_player_profile_data_cached(
-        canonical_player_id, local_version, identity_version, club_id,
-        (legacy_ledger_signature(active_club_id), privacy_snapshot_signature(active_club_id)),
-    )
+    versions = (legacy_ledger_signature(active_club_id), privacy_snapshot_signature(active_club_id))
+    if active_club_id == "georges-river-district":
+        from src.data.grdcc_profile_bundle import governed_generation_key
+
+        versions += (governed_generation_key(active_club_id),)
+    return _get_player_profile_data_cached(canonical_player_id, local_version, identity_version, club_id, versions)
 
 
 @st.cache_data(show_spinner=False, persist="disk")
@@ -1190,10 +1197,9 @@ def _get_player_profile_data_cached(
     identity_version = player_aliases_mtime(club_id=club_id) if identity_version is None else identity_version
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
     if active_club_id in {"fvcc", "georges-river-district"}:
+        scope_version = legacy_signature[2:] if active_club_id == "georges-river-district" else ()
         prepared_frames = load_portability_player_profile_source_frames(
-            active_club_id,
-            local_version,
-            identity_version,
+            active_club_id, local_version, identity_version, *scope_version,
         )
         frames = {category: frame.copy() for category, frame in prepared_frames.items()}
     else:
@@ -1207,59 +1213,83 @@ def _get_player_profile_data_cached(
                 frames[category] = pd.DataFrame()
 
     canonical_player_id = str(canonical_player_id).strip()
-    selected_ids = {canonical_player_id}
     if active_club_id == "georges-river-district":
-        frames = {
-            category: filter_public_player_rows(frame, active_club_id)
-            for category, frame in frames.items()
-        }
-        import json
-        from src.config.club_config import get_hall_of_fame_dir
-        from src.data.grdcc_legacy_composites import approved_component_id_map
-        ledger_path = get_hall_of_fame_dir(club_id=active_club_id) / "legacy_display_composites.json"
-        group_map = {}
-        if ledger_path.exists():
-            identity_rows = [frame[["canonical_player_id", "canonical_player_name"]].rename(columns={"canonical_player_name": "Player"}).drop_duplicates()
-                             for frame in frames.values() if {"canonical_player_id", "canonical_player_name"}.issubset(frame.columns)]
-            if identity_rows:
-                group_map = approved_component_id_map(pd.concat(identity_rows, ignore_index=True).drop_duplicates(),
-                                                      json.loads(ledger_path.read_text()), club_id=active_club_id)
-        target_id = group_map.get(canonical_player_id, canonical_player_id)
-        members = {source for source, target in group_map.items() if target == target_id}
-        if members:
-            canonical_player_id = target_id
-            selected_ids = members
-        selected_names: set[str] = set()
-        for frame in frames.values():
-            if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
-                continue
-            matches = frame["canonical_player_id"].fillna("").astype(str).str.strip().eq(canonical_player_id)
-            selected_names.update(
-                frame.loc[matches, "canonical_player_name"]
-                .dropna()
-                .map(normalize_player_name_for_strict_merge)
-                .loc[lambda series: series.ne("")]
-                .tolist()
-            )
-        if selected_names and not members:
-            same_name_ids: set[str] = set()
-            for frame in frames.values():
-                if frame.empty or "canonical_player_id" not in frame or "canonical_player_name" not in frame:
-                    continue
-                same_name = frame["canonical_player_name"].map(normalize_player_name_for_strict_merge).isin(selected_names)
-                same_name_ids.update(frame.loc[same_name, "canonical_player_id"].fillna("").astype(str).str.strip().tolist())
-            same_name_ids.discard("")
-            from src.data.grdcc_legacy_composites import legacy_group_requires_separate_profiles
-            if not legacy_group_requires_separate_profiles(same_name_ids, club_id=active_club_id):
-                selected_ids.update(same_name_ids)
-        selected_ids.discard("")
-
+        return prepare_grdcc_profile_sources(frames).profile(canonical_player_id)
+    selected_ids = {canonical_player_id}
     scoped = {}
     for category, frame in frames.items():
         if frame.empty or "canonical_player_id" not in frame:
             scoped[category] = frame.head(0).copy()
         else:
             scoped[category] = frame[frame["canonical_player_id"].fillna("").astype(str).str.strip().isin(selected_ids)].copy()
+    return _assemble_profile(canonical_player_id, scoped)
+
+
+@dataclass
+class _GrdccProfileSources:
+    frames: dict[str, pd.DataFrame]
+    positions: dict[str, dict[str, Any]]
+    composites: dict[str, str]
+    ids_by_name: dict[str, set[str]]
+    names_by_id: dict[str, set[str]]
+
+    def profile(self, canonical_id: str) -> dict[str, pd.DataFrame | dict[str, str]]:
+        from src.data.grdcc_legacy_composites import legacy_group_requires_separate_profiles
+
+        target = self.composites.get(canonical_id, canonical_id)
+        selected = {source for source, owner in self.composites.items() if owner == target}
+        if not selected:
+            selected = {canonical_id}
+            names = self.names_by_id.get(canonical_id, set())
+            same_name = {key for name in names for key in self.ids_by_name[name]}
+            if same_name and not legacy_group_requires_separate_profiles(same_name, club_id="georges-river-district"):
+                selected.update(same_name)
+        selected.discard("")
+        scoped = {}
+        for category, frame in self.frames.items():
+            positions = self.positions[category]
+            # Preserve input order for canonical display labels and source tie-breaking.
+            rows = sorted(i for key in selected for i in positions.get(key, ()))
+            scoped[category] = frame.iloc[rows].copy()
+        return _assemble_profile(target, scoped)
+
+
+def prepare_grdcc_profile_sources(frames: dict[str, pd.DataFrame]) -> _GrdccProfileSources:
+    from src.config.club_config import get_hall_of_fame_dir
+    from src.data.grdcc_legacy_composites import approved_component_id_map
+
+    club_id = "georges-river-district"
+    public = {category: filter_public_player_rows(frame, club_id) for category, frame in frames.items()}
+    positions = {}
+    identity_rows = []
+    for category, frame in public.items():
+        positions[category] = {}
+        if "canonical_player_id" not in frame:
+            continue
+        ids = frame["canonical_player_id"].fillna("").astype(str).str.strip()
+        # Build independent positional groups shared across the offline compilation.
+        positions[category] = frame.groupby(ids.to_numpy(), sort=False).indices if len(ids) else {}
+        if "canonical_player_name" in frame:
+            identity_rows.append(
+                frame[["canonical_player_id", "canonical_player_name"]]
+                .rename(columns={"canonical_player_name": "Player"}).drop_duplicates()
+            )
+
+    ledger = get_hall_of_fame_dir(club_id=club_id) / "legacy_display_composites.json"
+    identities = pd.concat(identity_rows, ignore_index=True).drop_duplicates() if identity_rows else pd.DataFrame()
+    composites = approved_component_id_map(identities, json.loads(ledger.read_text()), club_id=club_id) if not identities.empty and ledger.exists() else {}
+    ids_by_name = defaultdict(set)
+    names_by_id = defaultdict(set)
+    for row in identities.itertuples(index=False):
+        key = str(row.canonical_player_id).strip() if pd.notna(row.canonical_player_id) else ""
+        name = normalize_player_name_for_strict_merge(row.Player) if pd.notna(row.Player) else ""
+        if key and name:
+            ids_by_name[name].add(key)
+            names_by_id[key].add(name)
+    return _GrdccProfileSources(public, positions, composites, dict(ids_by_name), dict(names_by_id))
+
+
+def _assemble_profile(canonical_player_id: str, scoped: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame | dict[str, str]]:
     all_rows = pd.concat([frame for frame in scoped.values() if not frame.empty], ignore_index=True) if any(not frame.empty for frame in scoped.values()) else pd.DataFrame()
     info = {
         "canonical_player_id": canonical_player_id,

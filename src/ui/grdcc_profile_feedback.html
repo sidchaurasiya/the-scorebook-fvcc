@@ -1,0 +1,69 @@
+<style>
+html[data-grdcc-profile-pending] .st-key-grdcc_profile_region,
+html[data-grdcc-profile-pending] .empty-profile-state {display:none!important}
+</style>
+<script>
+(() => {
+  if (window.grdccProfileFeedback) return;
+  window.grdccProfileFeedback = true;
+  let requested;
+  let priorChoice;
+  let sawBusy;
+  const selector = () => document.querySelector('.st-key-player_selector_card');
+  const notice = document.createElement('div');
+  notice.className = 'grdcc-profile-pending';
+  notice.setAttribute('role', 'status');
+
+  function finish() {
+    requested = undefined;
+    delete document.documentElement.dataset.grdccProfilePending;
+    notice.remove();
+  }
+  function reconcile() {
+    if (!requested) return;
+    const search = selector();
+    if (!search) { finish(); return; }
+    const region = document.querySelector('.st-key-grdcc_profile_region');
+    const card = region?.querySelector('[data-profile-choice]');
+    const end = region?.querySelector('[data-profile-finished]');
+    const busy = [...document.querySelectorAll('[data-testid=stStatusWidget]')]
+      .some(el => el.innerText.trim() === 'Stop');
+    sawBusy ||= busy;
+    if (card?.dataset.profileChoice === requested && (priorChoice !== requested || sawBusy && !busy) ||
+        end?.dataset.profileFinished === requested && (end !== previousEnd || previousEndChoice !== requested || sawBusy && !busy)) {
+      finish();
+    } else if (notice.previousElementSibling !== search) {
+      search.after(notice);
+    }
+  }
+  let previousEnd;
+  let previousEndChoice;
+  function select(option) {
+    const input = selector()?.querySelector('input[role=combobox]');
+    const list = document.getElementById(input?.getAttribute('aria-controls'));
+    if (!option || !list?.contains(option)) return;
+    const label = option.textContent.trim();
+    if (!label || requested === label) return;
+    priorChoice = document.querySelector('.st-key-grdcc_profile_region [data-profile-choice]')?.dataset.profileChoice;
+    if (!requested && priorChoice === label) return;
+    sawBusy = false;
+    requested = label;
+    previousEnd = document.querySelector('.st-key-grdcc_profile_region [data-profile-finished]');
+    previousEndChoice = previousEnd?.dataset.profileFinished;
+    notice.textContent = 'Loading player profile… ' + label;
+    document.documentElement.dataset.grdccProfilePending = '';
+    reconcile();
+  }
+  document.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'touch' && e.button === 0) select(e.target.closest?.('[role=option]'));
+  }, true);
+  document.addEventListener('click', e => select(e.target.closest?.('[role=option]')), true);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && selector()?.contains(e.target)) {
+      select(document.getElementById(e.target.getAttribute('aria-activedescendant')));
+    }
+  }, true);
+  new MutationObserver(reconcile).observe(document.body, {subtree:true, childList:true, attributes:true,
+    attributeFilter:['data-profile-choice','data-profile-finished']});
+})();
+</script>

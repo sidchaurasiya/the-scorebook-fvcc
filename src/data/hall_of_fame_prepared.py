@@ -95,7 +95,7 @@ def prepared_core_public_filter_version(club_id: str) -> str:
     return ""
 
 
-def load_prepared_hall_of_fame_core(club_id: str, data_version: str) -> dict[str, object] | None:
+def _validated_prepared_directory(club_id: str, data_version: str) -> Path | None:
     output_dir = get_hall_of_fame_dir(club_id=club_id)
     manifest_path = output_dir / MANIFEST_FILENAME
     if not manifest_path.exists():
@@ -111,7 +111,21 @@ def load_prepared_hall_of_fame_core(club_id: str, data_version: str) -> dict[str
         return None
     if manifest.get("source_signature") != prepared_core_source_signature(club_id):
         return None
+    return output_dir
 
+
+def load_prepared_hall_of_fame_all_time(club_id: str, data_version: str) -> pd.DataFrame | None:
+    output_dir = _validated_prepared_directory(club_id, data_version)
+    if output_dir is None:
+        return None
+    path = output_dir / FRAME_FILENAMES["all_time"]
+    return pd.read_csv(path, low_memory=False) if path.exists() else None
+
+
+def load_prepared_hall_of_fame_core(club_id: str, data_version: str) -> dict[str, object] | None:
+    output_dir = _validated_prepared_directory(club_id, data_version)
+    if output_dir is None:
+        return None
     frames: dict[str, pd.DataFrame] = {}
     for key, filename in FRAME_FILENAMES.items():
         path = output_dir / filename
