@@ -141,7 +141,7 @@ def test_player_breakdown_keeps_grdcc_missingness_and_hawks_delivery_provenance(
     monkeypatch.setattr(layout, "get_active_club_id", lambda: GRDCC)
     grdcc_metrics = layout.player_profile_batting_career_metrics(career, "2")
     layout.render_player_breakdown(career)
-    assert any(label == "Strike Rate" and value == "150.0" for label, value in grdcc_metrics)
+    assert any(label == "Strike Rate" and value == "150.00%" for label, value in grdcc_metrics)
     assert "Recorded wickets" in " ".join(rendered)
     assert "Recorded wickets</span><strong>—" in " ".join(rendered)
     assert not captions
@@ -152,8 +152,8 @@ def test_player_breakdown_keeps_grdcc_missingness_and_hawks_delivery_provenance(
     monkeypatch.setattr(gwhcc_historical_career, "has_dated_career_scope", lambda career, metric_scope: False)
     hawks_metrics = layout.player_profile_batting_career_metrics(career, "2")
     layout.render_player_breakdown(career)
-    assert any(label == "Strike Rate (ball-by-ball)" and value == "150.0" for label, value in hawks_metrics)
-    assert layout.GWHCC_BBB_RATE_NOTE in captions
+    assert any(label == "Strike Rate (ball-by-ball)" and value == "150.00%" for label, value in hawks_metrics)
+    assert not any("Hawks batting strike rates labeled" in caption for caption in captions)
     hawks_markup = " ".join(rendered)
     assert "Recorded wickets" not in hawks_markup
     assert "Wickets</span>" in hawks_markup
@@ -163,7 +163,7 @@ def test_player_breakdown_keeps_grdcc_missingness_and_hawks_delivery_provenance(
     monkeypatch.setattr(layout, "get_active_club_id", lambda: FVCC)
     fvcc_metrics = layout.player_profile_batting_career_metrics(career, "2")
     layout.render_player_breakdown(career)
-    assert any(label == "Strike Rate" and value == "150.0" for label, value in fvcc_metrics)
+    assert any(label == "Strike Rate" and value == "150.00%" for label, value in fvcc_metrics)
     assert not captions
     fvcc_markup = " ".join(rendered)
     assert "Recorded wickets" not in fvcc_markup
@@ -219,12 +219,12 @@ def test_peer_batting_strike_rate_uses_run_per_100_ball_units_for_each_club(monk
         strike_rate = next(row for row in comparison["batting"] if row["label"] == expected_label)
 
         assert strike_rate["value"] == 20.0
-        assert strike_rate["format"] == "rate"
-        assert layout.format_peer_metric_value(strike_rate["value"], strike_rate["format"]) == "20.0"
+        assert strike_rate["format"] == "batting_rate"
+        assert layout.format_peer_metric_value(strike_rate["value"], strike_rate["format"]) == "20.00%"
         assert layout.peer_metric_note(strike_rate["label"]) == "Verified ball-by-ball only"
-        assert layout.format_bat_sr_display(20.0) == "20.0"
-        assert layout.hof_detail_display_value("Bat SR", 20.0) == "20.0"
-        assert layout.profile_performance_display_value("Strike Rate", 20.0, "Season") == "20.0"
+        assert layout.format_bat_sr_display(20.0) == "20.00%"
+        assert layout.hof_detail_display_value("Bat SR", 20.0) == "20.00%"
+        assert layout.profile_performance_display_value("Strike Rate", 20.0, "Season") == "20.00%"
 
 
 def test_player_trend_chart_keys_change_with_profile_data_for_each_club(monkeypatch):

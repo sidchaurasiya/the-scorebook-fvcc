@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+from pathlib import Path
 import re
 
 import streamlit as st
@@ -4686,13 +4687,13 @@ def inject_theme() -> None:
             border-top: 1px solid #e8ebf7;
             display: grid;
             gap: 10px;
-            grid-template-columns: 54px minmax(190px, 1.5fr) minmax(132px, 1.05fr) minmax(118px, 0.9fr) minmax(118px, 0.9fr) 112px;
-            min-height: 44px;
+            grid-template-columns: 54px minmax(190px, 1.5fr) minmax(132px, 1.05fr) minmax(118px, 0.9fr) minmax(118px, 0.9fr);
+            min-height: 60px;
             padding: 8px 12px;
         }
 
         .season-round-grade-card.single-grade .season-round-row {
-            grid-template-columns: 54px minmax(132px, 0.9fr) minmax(190px, 1.45fr) minmax(132px, 1.05fr) minmax(118px, 0.9fr) minmax(118px, 0.9fr) 112px;
+            grid-template-columns: 54px minmax(132px, 0.9fr) minmax(190px, 1.45fr) minmax(132px, 1.05fr) minmax(118px, 0.9fr) minmax(118px, 0.9fr);
         }
 
         .season-round-row:first-child {
@@ -4732,17 +4733,21 @@ def inject_theme() -> None:
         }
 
         .season-round-opponent {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            line-height: 1.3;
+            overflow-wrap: anywhere;
+            white-space: normal;
         }
 
         .season-round-result {
-            align-items: center;
+            align-items: flex-start;
             display: flex;
-            gap: 7px;
+            flex-wrap: wrap;
+            gap: 4px 7px;
             min-width: 0;
         }
+
+        .season-round-result .season-round-scorecard { flex-basis: 100%; }
+        .season-round-result > span { overflow-wrap: anywhere; white-space: normal; }
 
         .season-result-pill {
             border-radius: 999px;
@@ -7252,13 +7257,6 @@ def inject_theme() -> None:
                 white-space: normal;
             }
 
-            .season-round-scorecard {
-                grid-column: 1 / -1 !important;
-                grid-row: auto;
-                margin-top: 2px;
-                text-align: left;
-            }
-
             .season-round-scorecard-link {
                 font-size: 0.76rem !important;
                 white-space: normal;
@@ -8203,7 +8201,8 @@ def inject_theme() -> None:
         from src.ui.grdcc_presentation import premium_css
         # Keep HTML blocks unindented when combining them in one Markdown slot.
         club_styles = club_styles.strip() + "\n<style>\n" + premium_css() + "\n</style>"
-    st.markdown(club_styles, unsafe_allow_html=True)
+    customer_styles = Path(__file__).with_name("customer_layout.css").read_text()
+    st.markdown(club_styles + "\n<style>\n" + customer_styles + "\n</style>", unsafe_allow_html=True)
 
 
 def grdcc_hof_refinements_css() -> str:

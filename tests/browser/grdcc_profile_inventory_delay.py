@@ -13,6 +13,46 @@ from urllib.request import urlopen
 from playwright.sync_api import sync_playwright
 
 
+def verify_return_to_visible_player(browser, root, evidence):
+    feedback = (root / "src/ui/grdcc_profile_feedback.html").read_text()
+    results = []
+    for width, height in ((1440, 1000), (390, 844)):
+        page = browser.new_page(viewport={"width": width, "height": height})
+        page.set_content("""
+            <div class="st-key-player_selector_card">
+              <input role="combobox" aria-controls="players">
+              <div role="listbox" id="players">
+                <button role="option">Andrew McGuiness</button>
+                <button role="option">Percy Eldridge</button>
+              </div>
+            </div>
+            <div class="st-key-grdcc_profile_region">
+              <section data-profile-choice="Percy Eldridge">Percy Eldridge · 2,208 runs</section>
+              <span hidden data-profile-finished="Percy Eldridge"></span>
+            </div>
+        """ + feedback)
+        card = page.locator("[data-profile-choice]")
+        notice = page.locator(".grdcc-profile-pending")
+        page.get_by_role("option", name="Andrew McGuiness", exact=True).click()
+        assert not card.is_visible()
+        assert notice.inner_text().endswith("Andrew McGuiness")
+        page.get_by_role("option", name="Percy Eldridge", exact=True).click()
+        assert card.is_visible() and not notice.is_visible()
+        assert "2,208 runs" in card.inner_text()
+        page.screenshot(path=evidence / f"rapid-return-{width}.png")
+
+        # A superseded response may arrive after the correct card is reused.
+        card.evaluate("el => { el.dataset.profileChoice = 'Andrew McGuiness'; el.textContent = '4,699 runs'; }")
+        assert not card.is_visible()
+        assert notice.inner_text().endswith("Percy Eldridge")
+        card.evaluate("el => { el.dataset.profileChoice = 'Percy Eldridge'; el.textContent = '2,208 runs'; }")
+        assert card.is_visible() and not notice.is_visible()
+        assert "2,208 runs" in card.inner_text()
+        results.append({"width": width, "height": height, "samePlayerReturn": True, "staleLateCardHidden": True})
+        page.close()
+    (evidence / "rapid-return.json").write_text(json.dumps(results, indent=2))
+
+
 def run(root, app_python, chrome, evidence):
     with tempfile.TemporaryDirectory() as temporary:
         control = Path(temporary)
@@ -85,6 +125,7 @@ finally:
                     (evidence / "inventory-delay.json").write_text(json.dumps({
                         "status":"PASS","oldVisibleWhileBlocked":False,"visiblePendingCount":1,
                         "pendingPlayer":"Ryan Croom","settledFigures":figures},indent=2))
+                    verify_return_to_visible_player(browser, root, evidence)
                     browser.close()
             finally:
                 (control / "release").touch()

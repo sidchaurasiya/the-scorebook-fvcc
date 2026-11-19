@@ -99,7 +99,7 @@ def test_gwhcc_batting_tables_label_ball_by_ball_strike_rate(monkeypatch):
     assert displayed.loc[0, "Bat SR (ball-by-ball)"] == 107.5
     assert "Bat SR" not in displayed.columns
     assert layout.hof_detail_header_label("Bat SR") == "Bat SR (ball-by-ball)"
-    assert "ball-by-ball" in layout.GWHCC_BBB_RATE_NOTE
+    assert peer_metric_note("Strike Rate (ball-by-ball)") == "Verified ball-by-ball only"
 
 
 def test_other_club_batting_header_is_unchanged(monkeypatch):
@@ -108,18 +108,18 @@ def test_other_club_batting_header_is_unchanged(monkeypatch):
     assert layout.hof_detail_header_label("Bat SR") == "Bat SR"
 
 
-def test_gwhcc_ball_by_ball_strike_rate_is_numeric_not_a_percentage(monkeypatch):
+def test_gwhcc_ball_by_ball_strike_rate_uses_percent_display(monkeypatch):
     monkeypatch.setattr(layout, "get_active_club_id", lambda: "glen-waverley-hawks")
 
-    assert format_bat_sr_display(68.94) == "68.9"
-    assert hof_detail_display_value("Bat SR", 68.94) == "68.9"
-    assert format_peer_metric_value(93.24, "rate") == "93.2"
+    assert format_bat_sr_display(68.94) == "68.94%"
+    assert hof_detail_display_value("Bat SR", 68.94) == "68.94%"
+    assert format_peer_metric_value(93.24, "batting_rate") == "93.24%"
     assert peer_metric_note("Strike Rate (ball-by-ball)") == "Verified ball-by-ball only"
 
 
 def test_non_hawks_strike_rate_formatting_uses_runs_per_100_balls(monkeypatch):
     monkeypatch.setattr(layout, "get_active_club_id", lambda: "fvcc")
 
-    assert format_bat_sr_display(68.94) == "68.9"
-    assert hof_detail_display_value("Bat SR", 68.94) == "68.9"
-    assert format_peer_metric_value(93.24, "rate") == "93.2"
+    assert format_bat_sr_display(68.94) == "68.94%"
+    assert hof_detail_display_value("Bat SR", 68.94) == "68.94%"
+    assert format_peer_metric_value(93.24, "batting_rate") == "93.24%"
