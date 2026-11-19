@@ -361,11 +361,12 @@ def sanitize_public_identity_frame(
                     stats["identifier_cells_cleared"] += 1
 
     flag_columns = [column for column in output.columns if column.casefold() in PRIVATE_FLAG_COLUMNS]
+    flagged = pd.Series(False, index=output.index)
+    for column in flag_columns:
+        flagged |= output[column].map(lambda value: _explicit_private_flag({column: value}))
     if flag_columns:
-        for index in output.index:
+        for index in output.index[flagged]:
             row = output.loc[index].to_dict()
-            if not _explicit_private_flag(row):
-                continue
             status = (
                 _current_grdcc_status(tuple(ids_available), row, club_id=club_id)[0]
                 if ids_available
@@ -432,7 +433,12 @@ def sanitize_public_identity_frame(
         id_columns = [column for column in allowed_id_columns if column in output]
         if not id_columns:
             continue
-        for index in output.index:
+        # Ordinary public rows already passed the single-player governance
+        # check. Materialize a row dictionary only when this pass needs it.
+        candidates = output.index
+        if not (club_id == "georges-river-district" and has_partnership_identity):
+            candidates = output.index[flagged | output[name_column].map(_is_generic)]
+        for index in candidates:
             name = _text(output.at[index, name_column])
             row = output.loc[index].to_dict()
             id_values = [_text(row.get(column, "")) for column in id_columns]

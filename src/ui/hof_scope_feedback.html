@@ -1,0 +1,59 @@
+<style>
+html[data-hof-scope-pending] .st-key-hof_detail_results { display: none !important; }
+</style>
+<script>
+(() => {
+  if (window.scorebookHofScopeFeedback) return;
+  window.scorebookHofScopeFeedback = true;
+
+  const controls = '.st-key-hof_detailed_records_category_control';
+  const region = '.st-key-hof_detail_results';
+  const notice = document.createElement('div');
+  notice.className = 'page-note';
+  notice.setAttribute('role', 'status');
+
+  let watchedDocument = null;
+  const frameObserver = new MutationObserver(reconcile);
+
+  function watch(frame) {
+    let doc = null;
+    try { doc = frame?.contentDocument || null; } catch (_) {}
+    if (doc !== watchedDocument) {
+      frameObserver.disconnect();
+      watchedDocument = doc;
+      if (doc) frameObserver.observe(doc, { childList: true, subtree: true, attributes: true,
+        attributeFilter: ['data-table-ready'] });
+    }
+    return doc;
+  }
+
+  function reconcile() {
+    const selected = document.querySelector(controls + ' [role=radio][aria-checked=true]');
+    const label = selected?.textContent.trim();
+    const category = label?.toLowerCase();
+    const results = document.querySelector(region);
+    const doc = watch(results?.querySelector('iframe'));
+    const ready = category && (
+      doc?.getElementById('hof_' + category + '_detail')?.hasAttribute('data-table-ready') ||
+      results?.querySelector('[data-hof-empty]')?.dataset.hofEmpty === category
+    );
+    if (!results || !['batting', 'bowling', 'fielding'].includes(category) || ready) {
+      delete document.documentElement.dataset.hofScopePending;
+      notice.remove();
+      return;
+    }
+
+    const message = 'Loading ' + label + ' records…';
+    if (notice.textContent !== message) notice.textContent = message;
+    if (notice.nextElementSibling !== results) results.before(notice);
+    document.documentElement.dataset.hofScopePending = category;
+  }
+
+  document.addEventListener('load', event => {
+    if (event.target instanceof HTMLIFrameElement && event.target.closest(region)) reconcile();
+  }, true);
+  new MutationObserver(reconcile).observe(document.body, { childList: true, subtree: true,
+    attributes: true, attributeFilter: ['aria-checked', 'srcdoc'] });
+  reconcile();
+})();
+</script>

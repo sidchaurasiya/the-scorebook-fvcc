@@ -293,11 +293,16 @@ def _read_metadata_cached(path_value: str, metadata_version: float) -> dict[str,
 
 
 def read_processed_table(name: str, club_id: str | None = None) -> pd.DataFrame:
+    return _read_processed_table(name, club_id, _read_processed_table_cached)
+
+
+def _read_processed_table(name, club_id, reader):
+    """Apply the same source boundaries and governance to a supplied CSV reader."""
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
     path = get_processed_path(f"{name}.csv", club_id=active_club_id)
     if not path.exists():
         return pd.DataFrame()
-    frame = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    frame = reader(str(path), path.stat().st_mtime)
     from src.data.public_generic_identity_privacy import sanitize_public_identity_frame
 
     frame, _ = sanitize_public_identity_frame(
@@ -315,7 +320,7 @@ def read_processed_table(name: str, club_id: str | None = None) -> pd.DataFrame:
         frame = _filter_grdcc_app_facing_batting_rows(frame, club_id=active_club_id)
     if name == "all_seasons_bowling":
         frame = _filter_grdcc_app_facing_bowling_rows(frame, club_id=active_club_id)
-    combined = _append_supplemental_processed_rows(name, frame, club_id=active_club_id)
+    combined = _append_supplemental_processed_rows(name, frame, club_id=active_club_id, reader=reader)
     combined, _ = sanitize_public_identity_frame(
         combined, club_id=active_club_id, relative_path=f"{name}.csv"
     )
@@ -345,6 +350,7 @@ def _append_supplemental_processed_rows(
     frame: pd.DataFrame,
     *,
     club_id: str | None = None,
+    reader=None,
 ) -> pd.DataFrame:
     """Apply the final GRDCC source split to aggregate batting and bowling tables."""
     active_club_id = str(club_id or get_active_club_id()).strip().casefold()
@@ -361,7 +367,7 @@ def _append_supplemental_processed_rows(
     path = get_processed_dir(club_id=active_club_id) / "supplemental" / supplemental_filename
     if not path.exists():
         return frame
-    supplemental = _read_processed_table_cached(str(path), path.stat().st_mtime)
+    supplemental = (reader or _read_processed_table_cached)(str(path), path.stat().st_mtime)
     if supplemental.empty:
         return frame
     supplemental = _normalise_supplemental_numeric_columns(supplemental)
