@@ -16,6 +16,8 @@ from pathlib import Path
 import altair as alt
 import pandas as pd
 import streamlit as st
+from src.ui import stat_table_semantics as table_semantics
+
 import streamlit.components.v1 as components
 from streamlit.delta_generator import DeltaGenerator
 from src.data.grdcc_career_quarantine import (
@@ -232,10 +234,6 @@ PREMIERSHIP_PLAYER_EXPANDED_LIMIT = 10
 HALL_OF_FAME_DATA_VERSION = "hof-historical-match-proxy-v6"
 PLAYER_PROFILE_INDEX_VERSION = "2026-11-grdcc-approved-group-v1"
 GWHCC_PROFILE_DISPLAY_NAME_SOURCE = "verified_source_id_display_name"
-GWHCC_BBB_RATE_NOTE = (
-    "Hawks batting strike rates labeled ball-by-ball use verified delivery events only; "
-    "they can differ from scorecard-derived runs and balls."
-)
 PERFORMANCE_CACHE_VERSION = "2026-07-performance-v2"
 HAWKS_MATCH_COUNT_FOOTNOTE = "* Hawks match counts apply club rules: T20 = 0.5 match; no-play games are excluded."
 PLAYER_PROFILE_PAGE_LABEL = "♙ Player Profile"
@@ -456,6 +454,7 @@ def reset_hawks_profile_selector_on_route_exit(
     ):
         for key in (
             "player_profile_selector_id",
+            "player_profile_widget_intent",
             "selected_player_id",
             "selected_player_profile_id",
             "player_profile_valid_ids",
@@ -853,13 +852,67 @@ def analytics_player_slug(player_name: object, fallback_id: object = "") -> str:
     return slug or "unknown-player"
 
 
-def sync_player_profile_query(player_id: object, page_slug: str = PLAYER_PROFILE_QUERY_PAGE) -> None:
+def sync_player_profile_query(
+    player_id: object, page_slug: str = PLAYER_PROFILE_QUERY_PAGE, *, publish_selection: bool = False,
+) -> None:
     profile_event("query_sync")
+    current = {key: st.query_params.get_all(key) for key in st.query_params}
+    query = {**current, "page": [page_slug]}
+    query.pop("player", None)
     player_id_text = str(player_id or "").strip()
-    st.query_params["page"] = page_slug
     if player_id_text:
-        st.query_params["player_id"] = player_id_text
-        st.query_params.pop("player", None)
+        query["player_id"] = [player_id_text]
+    else:
+        query.pop("player_id", None)
+    if publish_selection or query != current:
+        st.query_params.from_dict(query)
+
+
+def record_profile_widget_intent() -> None:
+    state = st.session_state
+    # Widget callbacks run before the page can interpret the URL from this rerun.
+    state["player_profile_widget_intent"] = str(state.get("player_profile_selector_id") or "")
+
+
+def commit_profile_selection(player_id: str, *, manual: bool, query_token: str, sync_url: bool) -> None:
+    state = st.session_state
+    changed = state.get("selected_player_id") != player_id
+    state["selected_player_id"] = player_id
+    state["manual_player_profile_selection"] = manual
+    state["last_player_profile_query_param"] = player_id if sync_url else query_token
+    if sync_url:
+        # A rapid return can carry the same URL as the initial selection while
+        # an earlier URL update is still in flight. Publish the accepted return.
+        sync_player_profile_query(player_id, publish_selection=manual and changed)
+
+
+def reconcile_profile_selection(player_names_by_id: dict[str, str]) -> str:
+    state = st.session_state
+    widget_key = "player_profile_selector_id"
+    widget = str(state.get(widget_key) or "")
+    intent = state.get("player_profile_widget_intent")
+    selected = str(state.get("selected_player_id") or "")
+    query = current_player_query_token()
+    active = widget_key in state and "selected_player_id" in state
+    pending = str(state.get("pending_player_profile_id") or "")
+
+    if intent == widget or (active and widget != selected):
+        selected = widget if widget in player_names_by_id else ""
+        commit_profile_selection(selected, manual=True, query_token=query, sync_url=True)
+    elif pending or not active:
+        # Direct links and browser history enter with a fresh selector.
+        # A rerun's URL can lag the active widget, including on a paint ack.
+        selected = pending or (resolve_player_query_to_id(player_names_by_id) if query else "")
+        if selected not in player_names_by_id:
+            selected = ""
+        if widget != selected:
+            state[widget_key] = selected or None
+        commit_profile_selection(selected, manual=False, query_token=query, sync_url=bool(selected))
+    if intent is not None:
+        state.pop("player_profile_widget_intent", None)
+    if pending:
+        state.pop("pending_player_profile_id", None)
+    return selected if selected in player_names_by_id else ""
 
 
 def safe_season_label(value: object) -> str:
@@ -1288,7 +1341,6 @@ def render_selected_season_overview() -> None:
             unsafe_allow_html=True,
         )
         render_overview(dashboard_data)
-        render_anonymous_scorecard_contributions(dashboard_data)
         st.markdown(
             f'<span hidden data-season-complete="{dashboard_data.get("historical_metadata_only", False)}" '
             f'{attributes}></span>',
@@ -1619,6 +1671,11 @@ def season_archive_key(season_id: object, team_id: object) -> str:
 
 
 def prepare_season_team_options(season: dict, teams: list[dict], version: object) -> list[dict]:
+    if get_active_club_id() == "glen-waverley-hawks":
+        return sorted(teams, key=lambda team: (
+            hawks_season_grade_order(team_card_title(team), team.get("name", "")),
+            gwhcc_team_display_order_key(team),
+        ))
     return combine_grdcc_duplicate_competition_teams(
         sort_teams_by_grade_display(filter_empty_grdcc_season_teams(season, teams, version)),
     )
@@ -2561,14 +2618,14 @@ def render_overview(dashboard_data: dict[str, object] | None) -> None:
         render_historical_season_coverage(dashboard_data)
         return
 
-    render_season_by_round(dashboard_data)
+    round_rows = render_season_by_round(dashboard_data)
     profile_event("season_feed_emitted")
     if archived := dashboard_data.get("archived_season"):
         render_prepared_highlights(archived["leaders"])
     else:
         render_overall_section(dashboard_data)
         profile_event("season_standouts_emitted")
-        render_team_specific_leaders(dashboard_data)
+        render_team_specific_leaders(dashboard_data, round_rows)
     profile_event("season_team_leaders_emitted")
     render_full_stats_section(dashboard_data)
 
@@ -2654,7 +2711,8 @@ def match_centre_sources_for_scorecards() -> dict[str, pd.DataFrame]:
     )
 
 
-def render_season_by_round(dashboard_data: dict[str, object]) -> None:
+def render_season_by_round(dashboard_data: dict[str, object]) -> list[dict[str, object]]:
+    rows = []
     render_section_heading("Season by Round 🗓️")
     archived = dashboard_data.get("archived_season")
     if archived:
@@ -2673,9 +2731,10 @@ def render_season_by_round(dashboard_data: dict[str, object]) -> None:
             st.markdown(f'<span hidden data-season-feed {season_scope_attributes(scope)}></span>', unsafe_allow_html=True)
         if not round_html:
             render_season_round_empty_state()
-            return
-        st.markdown(restore_prepared_events(round_html), unsafe_allow_html=True)
-        components.html(season_round_scroll_script_html(scroll_key), height=0, scrolling=False)
+        else:
+            st.markdown(restore_prepared_events(round_html), unsafe_allow_html=True)
+            components.html(season_round_scroll_script_html(scroll_key), height=0, scrolling=False)
+    return rows
 
 
 def render_season_round_empty_state(message: str = "Round-by-round scorecards are not available for this season yet.") -> None:
@@ -2742,6 +2801,8 @@ def build_season_round_rows(
                 "grade": grade_label,
                 "grade_slug": grade_slug,
                 "team_order": team_order,
+                "team_name": safe_record_text(match.get("fvcc_team_name")),
+                "source_teams": set(re.split(r"[,;|]", safe_record_text(match.get("source_team_ids")))) | {team_id},
                 "is_premiership": is_premiership,
                 "opponent": canonical_app_opponent_label(match.get("opponent_name"), "Unknown opponent"),
                 "result_label": safe_record_text(match.get("result_label"), "No Result"),
@@ -2840,7 +2901,8 @@ def season_round_grade_options(
         (slug, display_label)
         for slug, (display_label, sort_label) in sorted(
             seen.items(),
-            key=lambda item: season_overview_grade_order_key(item[1][1]),
+            key=lambda item: hawks_season_grade_order(item[1][1]) if get_active_club_id() == "glen-waverley-hawks"
+            else season_overview_grade_order_key(item[1][1]),
         )
     ]
 
@@ -2915,6 +2977,53 @@ def season_round_option_for_match(
     return None
 
 
+def hawks_season_grade_order(label: object, team: object = "") -> tuple[int, int, str, str]:
+    from src.data.gwhcc_governance import grade_mapping_row
+
+    text = normalize_spaces(label).casefold()
+    meta = grade_mapping_row(label)
+    grade = re.search(r"\bt20\s*([a-z]|\d+)", text)
+    age = re.search(r"\bu/?(\d{2})", meta["age_group"].casefold() + " " + str(team).casefold())
+    youth_grade = re.search(r"\bu/?\d{2}\s*([a-z])\b", text) or re.search(r"\b([a-z])\s+grade\b", text)
+    if meta["gender_group"] == "Women/Girls" or re.search(r"\b(?:women|girls|female)", str(team).casefold()):
+        return 5, -int(age[1]) if age else 0, "", text
+    if "compare & connect" in text:
+        return 0, 0, "", text
+    if text in {"c grade", "d grade"}:
+        return (1 if text == "c grade" else 2), 0, "", text
+    if meta["format"] == "T20":
+        division = grade[1] if grade else ""
+        return 3, int(division) if division.isdigit() else 0, division, text
+    if meta["grade_group"] == "Junior" or age:
+        return 4, -int(age[1]) if age else 0, youth_grade[1] if youth_grade else "~", text
+    return 6, 0, "", text
+
+
+def principal_season_grade(label: object, team_name: object = "") -> int:
+    if active_club_is_grdcc():
+        rank = season_overview_grade_order_key(label)[0]
+        return rank if rank < 5 else 99
+    identity = f"{team_name} {label}".casefold()
+    if re.search(r"\bt20\b|limited overs|\bl/o\b", identity):
+        return 99
+    match = re.search(r"\b([1-5])(?:st|nd|rd|th)\s+xi\b|\b([1-5])s\s*\(", identity)
+    return int(match.group(1) or match.group(2)) - 1 if match else 99
+
+
+def season_display_grade_order(rows: list[dict[str, object]]) -> dict[str, tuple[int, int, str]]:
+    matches: dict[str, set[str]] = {}
+    ordinals: dict[str, int] = {}
+    for row in rows:
+        label = str(row.get("grade") or "Team")
+        key = label.strip().casefold()
+        ids = matches.setdefault(key, set())
+        match_id = str(row.get("match_id") or "").strip()
+        if match_id:
+            ids.add(match_id)
+        ordinals[key] = min(ordinals.get(key, 99), principal_season_grade(label, row.get("team_name", "")))
+    return {key: (ordinals[key], -len(ids), key) for key, ids in matches.items()}
+
+
 def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bool = False) -> str:
     grdcc = get_active_club_id() == "georges-river-district"
     grouped: dict[str, list[dict[str, object]]] = {}
@@ -2927,19 +3036,14 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
         )
         grouped.setdefault(group_key, []).append(row)
     cards = []
-    if get_active_club_id() == "glen-waverley-hawks":
-        ordered_groups = sorted(
-            grouped.values(),
-            key=lambda grade_rows: min(
-                (row.get("team_order", (True, float("inf"), 0)) for row in grade_rows),
-                default=(True, float("inf"), 0),
-            ),
-        )
-    else:
-        ordered_groups = sorted(
-            grouped.values(),
-            key=lambda grade_rows: season_overview_grade_order_key(grade_rows[0].get("grade")),
-        )
+    ordering = season_display_grade_order(rows)
+    ordered_groups = sorted(grouped.values(), key=lambda group: (
+        hawks_season_grade_order(group[0].get("grade"), group[0].get("team_name"))
+        if get_active_club_id() == "glen-waverley-hawks"
+        else ordering[str(group[0].get("grade") or "Team").strip().casefold()],
+        group[0].get("team_order", (True, float("inf"), 0)),
+        str(group[0].get("grade_slug") or ""),
+    ))
     for grade_rows in ordered_groups:
         grade_label = str(grade_rows[0].get("grade") or "Team")
         record = season_round_record_label(grade_rows)
@@ -2951,11 +3055,11 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
             + ('<span>Date</span>' if grdcc else '')
             + '<span>Round</span>'
             + ('<span>Grade</span>' if show_grade_column else "")
-            + '<span>Opponent</span><span>Result</span><span>Best Batter</span><span>Best Bowler</span><span>Scorecard</span>'
+            + '<span>Opponent</span><span>Result</span><span>Best Batter</span><span>Best Bowler</span>'
             '</div>'
         )
         if grdcc:
-            headings = ['Date', 'Round'] + (['Grade'] if show_grade_column else []) + ['Opponent', 'Result', 'Best Batter', 'Best Bowler', 'Scorecard']
+            headings = ['Date', 'Round'] + (['Grade'] if show_grade_column else []) + ['Opponent', 'Result', 'Best Batter', 'Best Bowler']
             head_cols = '<div class="season-round-row season-round-head" role="row">' + ''.join('<span role="columnheader">' + label + '</span>' for label in headings) + '</div>'
         card_class = "season-round-grade-card single-grade" if show_grade_column else "season-round-grade-card"
         table_attrs = f' role="table" aria-label="{html.escape(grade_label, quote=True)} round results"' if grdcc else ''
@@ -3031,10 +3135,10 @@ def season_round_row_html(row: dict[str, object], show_grade_column: bool = Fals
         f'<span class="season-round-result"{cell_role}>'
         f'<b class="season-result-pill {html.escape(str(row.get("result_class") or "none"))}">{html.escape(str(row.get("result_label") or "No Result"))}</b>'
         f'<span>{html.escape(normalize_result_wording(row.get("result_text") or "no result"))}</span>'
+        f'<span class="season-round-scorecard">{scorecard}</span>'
         '</span>'
         f'<span class="season-round-performer"{cell_role}><span class="mobile-label">Batter: </span>{row.get("best_batter_html") or html.escape(str(row.get("best_batter") or "—"))}</span>'
         f'<span class="season-round-performer"{cell_role}><span class="mobile-label">Bowler: </span>{row.get("best_bowler_html") or html.escape(str(row.get("best_bowler") or "—"))}</span>'
-        f'<span class="season-round-scorecard"{cell_role}>{scorecard}</span>'
         '</div>'
     )
 
@@ -3326,7 +3430,6 @@ def render_season_overview_v2(dashboard_data: dict[str, object] | None) -> None:
     render_depth_and_role_section(depth_chart, role_map)
     render_records_broken_section(records)
     render_strengths_watchouts_section(strengths_watchouts)
-    render_anonymous_scorecard_contributions(dashboard_data)
     render_team_specific_leaders(dashboard_data)
     render_full_stats_section(dashboard_data)
 
@@ -3663,7 +3766,7 @@ def render_advanced_player_summary(rows: dict[str, pd.DataFrame]) -> None:
         ("Total runs", format_advanced_value(summary["Total runs"], "int")),
         ("Batting innings", format_advanced_value(summary["Batting innings"], "int")),
         ("Batting average", format_advanced_value(summary["Batting average"], "decimal")),
-        ("Strike rate", format_advanced_value(summary["Strike rate"], "decimal")),
+        ("Batting strike rate", format_bat_sr_display(summary["Strike rate"])),
         ("Highest score", format_advanced_value(summary["Highest score"], "int")),
         ("Total wickets", format_advanced_value(summary["Total wickets"], "int")),
         ("Bowling innings", format_advanced_value(summary["Bowling innings"], "int")),
@@ -6094,11 +6197,9 @@ def render_hall_of_fame_v2_fastest_verified() -> None:
         match_centre_milestones_mtime(),
         privacy_snapshot_signature(club_id),
     )
-    anonymous_milestones = pd.DataFrame()
     ranked_milestones = milestones
     if club_id == GRDCC_CLUB_ID and "anonymous_event" in milestones:
         anonymous_mask = milestones["anonymous_event"].fillna("").astype(str).str.strip().str.casefold().eq("true")
-        anonymous_milestones = milestones.loc[anonymous_mask].copy()
         ranked_milestones = milestones.loc[~anonymous_mask].copy()
     st.markdown(
         (
@@ -6113,51 +6214,9 @@ def render_hall_of_fame_v2_fastest_verified() -> None:
             + hall_of_fame_v2_fastest_list_html(ranked_milestones, "Fastest 50s", "balls_to_50")
             + hall_of_fame_v2_fastest_list_html(ranked_milestones, "Fastest 100s", "balls_to_100")
             + "</div>"
-            + hall_of_fame_v2_anonymous_fastest_list_html(anonymous_milestones)
             + "</div></section>"
         ),
         unsafe_allow_html=True,
-    )
-
-
-def hall_of_fame_v2_anonymous_fastest_list_html(records: pd.DataFrame) -> str:
-    if records.empty:
-        return ""
-    cards = []
-    for _, row in records.iterrows():
-        context = " · ".join(
-            value
-            for value in (
-                safe_record_text(row.get("season")),
-                safe_record_text(row.get("grade_name")),
-            )
-            if value
-        )
-        milestones = " · ".join(
-            value
-            for value in (
-                f"50 in {safe_record_int(row.get('balls_to_50'))} balls"
-                if safe_record_int(row.get("balls_to_50")) is not None
-                else "",
-                f"100 in {safe_record_int(row.get('balls_to_100'))} balls"
-                if safe_record_int(row.get("balls_to_100")) is not None
-                else "",
-            )
-            if value
-        )
-        cards.append(
-            '<article class="hof-v2-race-row hof-v2-anonymous-fastest-row">'
-            '<strong>Private player</strong>'
-            f'<span>{html.escape(context)} · Scorecard runs: {html.escape(safe_record_text(row.get("final_score_display")))}</span>'
-            f'<span>{html.escape(milestones)}</span>'
-            "</article>"
-        )
-    return (
-        '<div class="hof-v2-anonymous-fastest">'
-        '<div class="hof-v2-kicker">Additional anonymous verified milestones</div>'
-        '<p class="hof-v2-muted">These records have no player profile or scorecard link.</p>'
-        + "".join(cards)
-        + "</div>"
     )
 
 
@@ -6389,6 +6448,11 @@ def render_approaching_milestones_page() -> None:
     identity_version = player_aliases_mtime()
     override_version = hall_of_fame_override_signature(club_id)
     selected_view = selected_milestone_page_view()
+    match_context_signature = None
+    if selected_view == "achieved":
+        from src.data.achieved_match_context import source_signature
+
+        match_context_signature = source_signature(club_id)
     portability_clubs = {"fvcc", "georges-river-district"}
     milestone_data = None
     if club_id in portability_clubs:
@@ -6400,6 +6464,7 @@ def render_approaching_milestones_page() -> None:
             player_status_signature(club_id),
             club_id,
             selected_view,
+            match_context_signature=match_context_signature,
         )
         historical_data = None
     else:
@@ -6433,6 +6498,7 @@ def render_approaching_milestones_page() -> None:
             achieved = build_achieved_milestones(
                 historical_data, season_window, club_id,
                 match_evidence_version=override_version if club_id == "glen-waverley-hawks" else None,
+                match_context_signature=match_context_signature,
             )
             hall_of_fame_movements = build_hall_of_fame_movements(historical_data, season_window)
         render_achieved_milestones_view(achieved, season_window, hall_of_fame_movements)
@@ -6485,6 +6551,7 @@ def load_portability_milestone_page_data(
     status_signature: tuple[object, ...],
     club_id: str,
     selected_view: str,
+    match_context_signature: tuple | None = None,
 ) -> dict[str, object] | None:
     del status_signature
     historical_data = load_hall_of_fame_data(
@@ -6510,7 +6577,9 @@ def load_portability_milestone_page_data(
         output.update(
             {
                 "season_window": season_window,
-                "achieved": build_achieved_milestones(historical_data, season_window, club_id),
+                "achieved": build_achieved_milestones(
+                    historical_data, season_window, club_id, match_context_signature=match_context_signature,
+                ),
                 "hall_of_fame_movements": build_hall_of_fame_movements(historical_data, season_window),
             }
         )
@@ -6705,6 +6774,7 @@ def build_achieved_milestones(
     season_window: list[str],
     club_id: str | None = None,
     match_evidence_version: object | None = None,
+    match_context_signature: tuple | None = None,
 ) -> pd.DataFrame:
     _ = match_evidence_version
     columns = [
@@ -6785,7 +6855,15 @@ def build_achieved_milestones(
         {str(spec["category"]): index for index, spec in enumerate(milestone_achievement_specs(active_club_id))}
     )
     output = output.sort_values(["category_order", "Threshold", "Player"], ascending=[True, False, True])
-    return output.drop(columns=["category_order"], errors="ignore")[columns]
+    output = output[columns]
+    if match_context_signature is not None:
+        from src.data.achieved_match_context import enrich_achieved_matches
+
+        output = enrich_achieved_matches(
+            output, {**historical_data, "all_time": all_time}, season_totals, season_window,
+            active_club_id, season_sort_value, match_context_signature,
+        )
+    return output
 
 
 @st.cache_data(show_spinner=False, persist="disk")
@@ -7084,14 +7162,30 @@ def render_achieved_milestones_view(
 
 
 def achievement_card_html(row: pd.Series) -> str:
+    evidence = safe_record_text(row.get("Match Evidence"), "Exact match unavailable")
+    match_id = safe_record_text(row.get("match_id"))
+    if evidence == "Verified exact match" and match_id:
+        date, match_round, opponent = (
+            safe_record_text(row.get(field)) for field in ("match_date_label", "round", "opponent")
+        )
+        fixture = ": ".join(text for text in (match_round, f"vs {opponent}" if opponent else "") if text)
+        location = " - ".join(text for text in (date, fixture) if text)
+        details = (
+            f'<div class="achievement-meta">{html.escape(location)}</div>'
+            f'<div class="achievement-match-performance">{html.escape(safe_record_text(row.get("match_performance")))}</div>'
+            + scorecard_link_html(match_id, label="View scorecard ↗", page_slug="milestone", section_name="achieved")
+        )
+    else:
+        conflict = " · Available scorecards do not reconcile to the approved season total" if evidence.startswith("Source totals") else ""
+        details = f'<div class="achievement-meta">{html.escape("Exact match unavailable" + conflict)}</div>'
     return (
-        '<article class="achievement-card">'
+        f'<article class="achievement-card" data-match-evidence="{html.escape(evidence, quote=True)}">'
         '<div class="achievement-badge">Reached</div>'
         f'<div class="achievement-player">{player_profile_link_html(player_id_from_row(row), row["Player"])}</div>'
         f'<div class="achievement-value">{html.escape(str(row["Milestone"]))}</div>'
         f'<div class="achievement-meta">{html.escape(str(row["Season"]))} · {html.escape(str(row["Category"]))}</div>'
         f'<div class="achievement-total">Current total: {format_compact_number(row["Current Total"])} {html.escape(str(row["Unit"]))}</div>'
-        "</article>"
+        + details + "</article>"
     )
 
 
@@ -9044,11 +9138,9 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
         )
         return
 
-    anonymous_milestones = pd.DataFrame()
     ranked_milestones = milestones
     if club_id == GRDCC_CLUB_ID and "anonymous_event" in milestones:
         anonymous_mask = milestones["anonymous_event"].fillna("").astype(str).str.strip().str.casefold().eq("true")
-        anonymous_milestones = milestones.loc[anonymous_mask].copy()
         ranked_milestones = milestones.loc[~anonymous_mask].copy()
 
     columns = st.columns(2)
@@ -9067,68 +9159,6 @@ def render_fastest_batting_milestone_records(team_group_slug: str | None = None)
             "balls_to_100",
             "balls",
             "No verified 100s from available ball-by-ball data yet.",
-        )
-    if not anonymous_milestones.empty:
-        render_section_heading("Additional anonymous verified milestones")
-        st.caption(
-            "These ball-by-ball milestones are preserved without a player profile or scorecard link."
-        )
-        anonymous_cards = []
-        for _, row in anonymous_milestones.iterrows():
-            milestones_text = " · ".join(
-                text
-                for text in (
-                    f"50 in {safe_record_int(row.get('balls_to_50'))} balls"
-                    if safe_record_int(row.get("balls_to_50")) is not None
-                    else "",
-                    f"100 in {safe_record_int(row.get('balls_to_100'))} balls"
-                    if safe_record_int(row.get("balls_to_100")) is not None
-                    else "",
-                )
-                if text
-            )
-            context = " · ".join(
-                text
-                for text in (
-                    str(row.get("season", "") or "").strip(),
-                    str(row.get("grade_name", "") or "").strip(),
-                )
-                if text
-            )
-            anonymous_cards.append(
-                '<article class="grdcc-anonymous-fastest-row" role="listitem">'
-                '<div class="grdcc-anonymous-fastest-player">Private player</div>'
-                f'<div class="grdcc-anonymous-fastest-context">{html.escape(context)}</div>'
-                f'<div class="grdcc-anonymous-fastest-score">Scorecard runs: {html.escape(str(row.get("final_score_display", "")))}</div>'
-                f'<div class="grdcc-anonymous-fastest-milestone">{html.escape(milestones_text)}</div>'
-                "</article>"
-            )
-        st.markdown(
-            """
-            <style>
-            .grdcc-anonymous-fastest-list { display: grid; gap: 0.65rem; }
-            .grdcc-anonymous-fastest-row {
-                display: grid;
-                grid-template-columns: minmax(150px, 0.8fr) minmax(220px, 1.2fr) minmax(160px, 0.8fr) minmax(150px, 0.8fr);
-                align-items: center;
-                gap: 0.75rem;
-                padding: 0.75rem 0.9rem;
-                border: 1px solid rgba(83, 111, 150, 0.2);
-                border-radius: 0.65rem;
-                background: rgba(255, 255, 255, 0.86);
-            }
-            .grdcc-anonymous-fastest-player { color: #183e78; font-weight: 700; }
-            .grdcc-anonymous-fastest-context { color: #61738b; }
-            .grdcc-anonymous-fastest-score, .grdcc-anonymous-fastest-milestone { color: #25456f; font-weight: 600; }
-            @media (max-width: 720px) {
-                .grdcc-anonymous-fastest-row { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
-            }
-            </style>
-            <div class="grdcc-anonymous-fastest-list" role="list">
-            """
-            + "".join(anonymous_cards)
-            + "</div>",
-            unsafe_allow_html=True,
         )
 
 
@@ -9163,8 +9193,7 @@ def render_hat_trick_records(team_group_slug: str | None = None) -> None:
         records = ordered_hat_tricks(records)
         overlapping = overlapping_hat_trick_events(records)
         rows_html = ''.join(hat_trick_record_row_html(row, sequence_note='Overlapping triplet within the same four-wicket passage.' if str(row.get('event_id')) in overlapping else '') for _, row in records.iterrows())
-        st.markdown('<p class="grdcc-record-note">Verified sequences, newest first. Overlapping triplets are retained as governed records.</p>'
-                    + '<div class="grdcc-hat-trick-grid" role="list">' + rows_html + '</div>', unsafe_allow_html=True)
+        st.markdown('<div class="grdcc-hat-trick-grid" role="list">' + rows_html + '</div>', unsafe_allow_html=True)
         return
     records = records.sort_values(["match_date", "canonical_player_name"], ascending=[False, True], na_position="last")
     rows_html = "".join(hat_trick_record_row_html(row) for _, row in records.iterrows())
@@ -10368,7 +10397,7 @@ def best_season_card_html(title: str, row: dict[str, object], mode: str) -> str:
             ("Matches", matches_text),
             ("Runs", format_int(row["runs"])),
             ("Avg", format_decimal(row["average"])),
-            ("SR", format_decimal(row["strike_rate"])),
+            ("Bat SR", format_bat_sr_display(row["strike_rate"])),
             ("HS", format_high_score_text(row.get("hs"))),
             ("50s", format_int(row["50s"])),
             ("100s", format_int(row["100s"])),
@@ -10608,7 +10637,6 @@ def highest_reached_threshold(value: object, thresholds: list[int]) -> int | Non
 def render_detailed_all_time_records(all_time_or_tables: pd.DataFrame | dict[str, pd.DataFrame]) -> None:
     render_section_heading("Detailed Records 📊")
     render_hawks_match_count_footnote()
-    render_gwhcc_bbb_rate_note()
     with st.container(key="full_stats_card"):
         with st.container(key="hof_detailed_records_controls"):
             category_column, search_column = st.columns(
@@ -10869,7 +10897,7 @@ def _format_all_time_batting_table_cached(
     ]
     table = select_display_columns(all_time, columns).copy()
     if "Runs" in table:
-        table = table.sort_values(["Runs", "Bat Avg", "Player"], ascending=[False, False, True], na_position="last")
+        table = table_semantics.initial_order(table, "Runs", "Player", label_value=link_display_label)
     table = table.rename(columns={"Seasons Played": "Seasons"})
     table = link_player_column(table)
     table = link_season_columns(table)
@@ -10953,7 +10981,7 @@ def _format_all_time_bowling_table_cached(
     if "Bowl Avg" in source and "Avg" not in table:
         table.insert(table.columns.get_loc("Bowl SR"), "Avg", source.loc[table.index, "Bowl Avg"])
     if "Wickets" in table:
-        table = table.sort_values(["Wickets", "Bowl SR", "Player"], ascending=[False, True, True], na_position="last")
+        table = table_semantics.initial_order(table, "Wickets", "Player", label_value=link_display_label)
     table = table.rename(columns={"Seasons Played": "Seasons"})
     table = link_player_column(table)
     table = link_season_columns(table)
@@ -10989,7 +11017,7 @@ def _format_all_time_fielding_table_cached(
     ]
     table = select_display_columns(all_time, columns).copy()
     if "Catches" in table:
-        table = table.sort_values(["Catches", "Matches", "Player"], ascending=[False, True, True], na_position="last")
+        table = table_semantics.initial_order(table, "Catches", "Player", label_value=link_display_label)
     table = table.rename(columns={"Seasons Played": "Seasons"})
     table = link_player_column(table)
     table = link_season_columns(table)
@@ -11211,10 +11239,10 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
     accent_colour = active_link_hover_colour()
     player_link_hover_colour = link_colour if active_club_is_grdcc() else accent_colour
     primary_soft = active_club_colour("background_colour", "#F7F7FC")
-    metadata_columns = {"Innings", "Matches Source", "Matches Proxy", "Proxy Season"}
+    metadata_columns = {"Innings", "Matches Source", "Matches Proxy", "Proxy Season", "Historical Source Scope"}
     columns = [column for column in table.columns if column not in metadata_columns]
     header_html = '<th class="hof-col-rank" aria-label="Current sorted rank">#</th>' + "".join(
-        f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}">'
+        f'<th class="{hof_detail_column_class(column)}" data-column="{index + 1}" data-default-dir="{hof_detail_default_sort_dir(column)}"{table_semantics.sort_attributes(column)}>'
         f'<button type="button">{html.escape(hof_detail_header_label(column))}'
         '<span class="sort-indicator" aria-hidden="true"></span></button></th>'
         for index, column in enumerate(columns)
@@ -11225,12 +11253,13 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
         cells = [f'<td class="hof-col-rank" data-rank-cell="1">{row_index}</td>']
         for column in columns:
             value = row.get(column)
+            row_meta = table_semantics.row_attributes(row) if column == 'Player' else ""
             display = hof_detail_display_value(column, value, row)
             sort_value, missing = hof_detail_sort_value(column, value, row)
             if column == "Matches" and display.endswith("*"):
                 matches_proxy_used = True
             cells.append(
-                f'<td class="{hof_detail_column_class(column)}" data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
+                f'<td class="{hof_detail_column_class(column)}" data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}"{row_meta}>'
                 f"{display}</td>"
             )
         rows.append(f"<tr>{''.join(cells)}</tr>")
@@ -11401,10 +11430,11 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
           const numeric = Number(raw);
           return Number.isFinite(numeric) ? numeric : raw.toLocaleLowerCase();
         }};
+{table_semantics.TABLE_TIE_JS}
         const compare = (a, b, index, dir) => {{
           const av = sortValue(a, index);
           const bv = sortValue(b, index);
-          if (av === null && bv === null) return textValue(a, playerColumnIndex).localeCompare(textValue(b, playerColumnIndex));
+          if (av === null && bv === null) return tieBreak(a, b, index, playerColumnIndex);
           if (av === null) return 1;
           if (bv === null) return -1;
           let result = 0;
@@ -11413,8 +11443,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
           }} else {{
             result = String(av).localeCompare(String(bv), undefined, {{ numeric: true, sensitivity: "base" }});
           }}
-          if (result === 0) result = textValue(a, playerColumnIndex).localeCompare(textValue(b, playerColumnIndex));
-          return dir === "asc" ? result : -result;
+          return result === 0 ? tieBreak(a, b, index, playerColumnIndex) : dir === "asc" ? result : -result;
         }};
         const sortHeader = (header, index) => {{
             const current = header.dataset.sortDir;
@@ -11483,7 +11512,7 @@ def hof_sortable_table_html(table: pd.DataFrame, key_prefix: str) -> str:
 
 
 def hof_detail_column_class(column: object) -> str:
-    text = re.sub(r"[^a-zA-Z0-9]+", "-", str(column).strip().casefold()).strip("-")
+    text = table_semantics.column_key(column)
     return f"hof-col-{text or 'column'}"
 
 
@@ -11512,11 +11541,8 @@ def hof_detail_display_value(column: str, value: object, row: pd.Series | None =
     if column == "Win %":
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
-    if column == "Bat SR":
-        numeric = pd.to_numeric(value, errors="coerce")
-        if pd.isna(numeric):
-            return ""
-        return f"{float(numeric):.1f}"
+    if table_semantics.is_batting_rate(column):
+        return format_bat_sr_display(value)
     if column in {"Avg", "Bat Avg", "Bowl Avg", "Bowl SR", "Econ"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
@@ -12137,102 +12163,52 @@ def render_player_profile_page() -> None:
         else {name: player_id for player_id, name in player_names_by_id.items() if player_id}
     )
 
-    def set_selected_player_id(player_id: object, *, manual: bool = False) -> str:
-        player_id_text = str(player_id or "").strip()
-        st.session_state["selected_player_id"] = player_id_text
-        st.session_state["selected_player_profile_id"] = player_id_text
-        if manual:
-            st.session_state["manual_player_profile_selection"] = True
-            st.session_state["last_player_profile_query_param"] = current_player_query_token()
-        return player_id_text
-
-    query_token = current_player_query_token()
-    last_query_token = str(st.session_state.get("last_player_profile_query_param", "") or "").strip()
-    if query_token and query_token != last_query_token:
-        query_player_id = resolve_player_query_to_id(player_names_by_id)
-        st.session_state["last_player_profile_query_param"] = query_player_id or query_token
-        if query_player_id:
-            set_selected_player_id(query_player_id)
-            st.session_state.pop("manual_player_profile_selection", None)
-            if st.session_state.get("player_profile_selector_id") != query_player_id:
-                st.session_state.pop("player_profile_selector_id", None)
-            if query_param_value("player_id") != query_player_id:
-                sync_player_profile_query(query_player_id)
-                st.session_state["last_player_profile_query_param"] = query_player_id
-
-    pending_player_id = str(st.session_state.get("pending_player_profile_id", "") or "").strip()
-    if pending_player_id in player_names_by_id:
-        set_selected_player_id(pending_player_id)
-        st.session_state["last_player_profile_query_param"] = pending_player_id
-        st.session_state.pop("manual_player_profile_selection", None)
-        st.session_state.pop("pending_player_profile_id", None)
-        if st.session_state.get("player_profile_selector_id") != pending_player_id:
-            st.session_state.pop("player_profile_selector_id", None)
-    elif pending_player_id:
-        set_selected_player_id("")
-        st.session_state.pop("pending_player_profile_id", None)
-        st.session_state.pop("player_profile_selector_id", None)
-
-    selected_player_id = str(
-        st.session_state.get("selected_player_id")
-        or st.session_state.get("selected_player_profile_id")
-        or ""
-    ).strip()
-    widget_player_id = str(st.session_state.get("player_profile_selector_id") or "").strip()
-    if widget_player_id in player_names_by_id and widget_player_id != selected_player_id:
-        selected_player_id = set_selected_player_id(widget_player_id, manual=True)
-        if current_player_query_token() != selected_player_id:
-            sync_player_profile_query(selected_player_id)
-        st.session_state["last_player_profile_query_param"] = selected_player_id
-    if selected_player_id not in player_names_by_id:
-        selected_player_id = ""
-        set_selected_player_id("")
-    st.session_state.pop("player_profile_selector_label", None)
+    selected_player_id = reconcile_profile_selection(player_names_by_id)
     with st.container(key="player_selector_card"):
         selected_id = st.selectbox(
             "Search player",
             option_ids,
-            index=option_ids.index(selected_player_id) if selected_player_id in option_ids else None,
+            index=None,
             format_func=lambda player_id: gwhcc_player_search_label(selector_labels.get(str(player_id), str(player_id))),
             placeholder="Select a player...",
             key="player_profile_selector_id",
+            on_change=record_profile_widget_intent,
         )
         profile_event("selection_read")
         selected_id = str(selected_id or "").strip()
         if selected_id != selected_player_id:
-            selected_id = set_selected_player_id(selected_id, manual=True)
-            if selected_id:
-                sync_player_profile_query(selected_id)
-                st.session_state["last_player_profile_query_param"] = selected_id
-        elif (
-            selected_id
-            and st.session_state.get("manual_player_profile_selection")
-            and current_player_query_token() != selected_id
-        ):
-            sync_player_profile_query(selected_id)
-            st.session_state["last_player_profile_query_param"] = selected_id
+            commit_profile_selection(selected_id, manual=True, query_token="", sync_url=True)
         st.markdown(
             '<div class="profile-selector-help">Start typing a name to find a player from club records.</div>',
             unsafe_allow_html=True,
         )
-    if club_id == GRDCC_CLUB_ID:
-        st.html(Path(__file__).with_name("grdcc_profile_feedback.html"), unsafe_allow_javascript=True)
-    if club_id == GRDCC_CLUB_ID and selected_id:
-        choice = selector_labels[selected_id]
-        st.session_state["grdcc_profile_choice"] = choice
+    st.html(Path(__file__).with_name("grdcc_profile_feedback.html"), unsafe_allow_javascript=True)
+    if selected_id:
+        st.session_state["grdcc_profile_choice"] = gwhcc_player_search_label(selector_labels[selected_id])
+        summary = bundle.summaries.get(selected_id) if bundle else None
+        report_only = bundle is not None and selected_id in bundle.report_only
+        coverage = ("", "")
+        if club_id != GRDCC_CLUB_ID and views is not None:
+            try:
+                prepared = views.read("profile/primary").get(selected_id)
+            except KeyError:
+                prepared = None
+            if prepared is not None:
+                summary = tuple(prepared["career"].items())
+                coverage = tuple(prepared["coverage"])
         with st.container(key="grdcc_profile_region"):
-            summary = bundle.summaries.get(selected_id) if bundle is not None else None
-            report_only = bundle is not None and selected_id in bundle.report_only
             render_grdcc_selected_profile(
                 selected_id, player_names_by_id[selected_id], summary=summary, report_only=report_only,
+                club_id=club_id, views=views, coverage=coverage,
             )
+            choice = st.session_state["grdcc_profile_choice"]
             st.markdown(f'<span hidden data-profile-finished="{html.escape(choice, quote=True)}"></span>',
                         unsafe_allow_html=True)
         return
 
-    profile_slot = st.empty() if get_active_club_id() == GRDCC_CLUB_ID else None
-    profile_output = profile_slot if profile_slot is not None else st
+    profile_output = st
     if not selected_id:
+        st.session_state.pop("profile_analysis_selection", None)
         profile_output.markdown(
             """
             <div class="empty-profile-state">
@@ -12251,99 +12227,16 @@ def render_player_profile_page() -> None:
         )
         return
 
-    if club_id == "glen-waverley-hawks" and views is not None:
-        if render_hawks_prepared_profile(views, selected_id, player_names_by_id[selected_id]):
-            return
-
-    if render_report_record_profile(selected_id, profile_slot=profile_slot):
-        return
-    profile = None
-    if club_id == "fvcc" and views is not None:
-        from src.data.profile_detail_index import indexed_profile
-
-        with profile_phase("fvcc_indexed_profile"):
-            prepared = indexed_profile(views, selected_id)
-        if prepared is not None and load_views(club_id) is views:
-            profile = prepared
-    if profile is None:
-        with profile_phase("detail_governed_profile_fallback"):
-            profile = get_player_profile_data(
-                selected_id, metadata_mtime(), player_aliases_mtime(), club_id=club_id,
-            )
-    with profile_phase("detail_view_lookup"):
-        profile_view = build_player_profile_view(profile, player_profile_view_signature())
-    if profile_view["career"].empty:
-        profile_output.info("No local historical data is available for this player yet.")
-        return
-    with profile_slot.container() if profile_slot is not None else nullcontext():
-        record_player_profile_view(player_names_by_id[selected_id], selected_id)
-
-        if is_scoped_historical(profile_view['career'].iloc[0]):
-            render_scoped_historical_profile(profile_view)
-            return
-        render_player_header_card(profile_view)
-        render_player_profile_analysis(profile_view)
-
-
-@st.cache_data(show_spinner=False, max_entries=64, hash_funcs={CustomerViews: CustomerViews.cache_key})
-def _hawks_primary_view(views: CustomerViews, player_id: str):
-    from src.data.profile_detail_index import indexed_profile
-
-    with profile_phase("hawks_indexed_profile"):
-        profile = indexed_profile(views, player_id)
-    if profile is None:
-        return None
-    try:
-        authority = pd.DataFrame(views.read("career/authority").get(player_id, []))
-    except KeyError:
-        return None
-    with profile_phase("hawks_primary_projection"):
-        batting, bowling, fielding = player_profile_frames(profile)
-        seasons = build_player_season_table(batting, bowling, fielding)
-        career = govern_hawks_profile_career(
-            build_player_career_totals(seasons, batting, bowling, fielding, profile), profile, authority,
-        )
-    return None if career.empty else (profile, seasons, career.iloc[0])
-
-
-def render_hawks_prepared_profile(views: CustomerViews, player_id: str, name: str) -> bool:
-    with profile_phase("hawks_primary_lookup"):
-        primary = _hawks_primary_view(views, player_id)
-    profile_event("hawks_profile_source_ready", accepted=primary is not None)
-    if primary is None or load_views(views.club) is not views:
-        return False
-    profile, seasons, row = primary
-    coverage = player_profile_historical_coverage_html(row, seasons)
-    figures = {
-        "Matches": historical_matches_display_text(row)[0] or format_int(row.get("Matches")),
-        "Runs": format_int(row.get("Runs")),
-        "Wickets": format_int(row.get("Wickets")),
-        "Catches": format_int(row.get("Catches")),
-    }
-    metrics = "".join(
-        f"<div><dt>{label}</dt><dd>{html.escape(value)}</dd></div>"
-        for label, value in figures.items()
-    )
-    st.markdown(
-        '<section class="player-hero-card" aria-label="Career summary"><div class="profile-main-block">'
-        '<div class="profile-kicker">Player Profile</div>'
-        f'<h2 class="profile-name">{html.escape(str(row["Player"]))}</h2>'
-        f'<dl class="grdcc-primary-figures">{metrics}</dl>{coverage}</div></section>',
-        unsafe_allow_html=True,
-    )
-    profile_event("primary_emitted")
-    record_player_profile_view(name, player_id)
-    if st.toggle("Show detailed analysis", key=f"hawks_profile_details_{player_id}"):
-        profile_event("optional_analysis")
-        earlier = emit_requested_profile_breakdown(profile, row)
-        with st.spinner("Loading detailed analysis…"):
-            with profile_phase("detail_view_lookup"):
-                view = build_player_profile_view(profile, player_profile_view_signature())
-        with earlier if earlier is not None else nullcontext():
-            with profile_phase("detail_header"):
-                render_player_header_card(view, show_identity=False)
-        render_player_profile_analysis(view, earlier=earlier)
-    return True
+def portable_profile_primary(profile: dict, club_id: str, authority=None):
+    batting, bowling, fielding = player_profile_frames(profile)
+    seasons = build_player_season_table(batting, bowling, fielding)
+    career = build_player_career_totals(seasons, batting, bowling, fielding, profile)
+    if not career.empty:
+        if club_id == "glen-waverley-hawks":
+            career = govern_hawks_profile_career(career, profile, authority)
+        else:
+            career = apply_featured_record_overrides(career, club_id=club_id, add_missing_players=False)
+    return career, seasons
 
 
 def govern_hawks_profile_career(career: pd.DataFrame, profile: dict, authority=None) -> pd.DataFrame:
@@ -12412,9 +12305,18 @@ def record_player_profile_view(player_name: str, player_id: str) -> None:
     )
 
 
+def profile_summary_painted(club: str, player: str, show_pending: Callable[[], None]) -> bool:
+    from src.ui.profile_paint import summary_painted
+
+    return summary_painted(club, player, show_pending)
+
+
 def render_grdcc_selected_profile(
     selected_id: str, name: str, *, summary: tuple[tuple[str, object], ...] | None = None,
     report_only: bool = False,
+    club_id: str = GRDCC_CLUB_ID,
+    views: CustomerViews | None = None,
+    coverage: tuple[str, ...] = ("", ""),
 ) -> None:
     # The returned element writes subsequent deltas at the same position.
     # Replacing its markdown directly avoids an empty-container frame between states.
@@ -12434,18 +12336,24 @@ def render_grdcc_selected_profile(
         primary = pd.Series(dict(summary))
     else:
         try:
-            if render_report_record_profile(
+            if club_id == GRDCC_CLUB_ID and render_report_record_profile(
                 selected_id, profile_slot=slot, load_authority=load_grdcc_profile_authority,
                 render_record=lambda view: render_grdcc_primary_card(view["career"].iloc[0], output=slot, report_only=True),
             ):
+                st.session_state.pop("profile_analysis_selection", None)
                 return
             profile = get_player_profile_data(
-                selected_id, metadata_mtime(), player_aliases_mtime(), club_id=GRDCC_CLUB_ID,
+                selected_id, metadata_mtime(), player_aliases_mtime(), club_id=club_id,
             )
-            career = build_player_profile_primary(profile)
+            if club_id == GRDCC_CLUB_ID:
+                career = build_player_profile_primary(profile)
+            else:
+                career, seasons = portable_profile_primary(profile, club_id)
+                if not career.empty:
+                    coverage = profile_coverage_context(career.iloc[0], seasons)
             primary = None if career.empty else career.iloc[0]
         except Exception as error:
-            logging.getLogger(__name__).warning("GRDCC profile summary failed (%s)", type(error).__name__)
+            logging.getLogger(__name__).warning("Profile summary failed (%s)", type(error).__name__)
             if selection_is_current():
                 slot.error("This profile could not load. Please try selecting the player again.")
             return
@@ -12457,26 +12365,37 @@ def render_grdcc_selected_profile(
         slot.info("No local historical data is available for this player yet.")
         return
 
-    render_grdcc_primary_card(primary, output=slot, report_only=report_only)
+    render_grdcc_primary_card(primary, output=slot, report_only=report_only, coverage=coverage)
     profile_event("primary_emitted")
     if report_only:
+        st.session_state.pop("profile_analysis_selection", None)
+        return
+
+    record_player_profile_view(name, selected_id)
+    pending_text = f"Loading analysis for {name}…"
+    # Flush a leaf at this position before mounting the next analysis block.
+    # Streamlit can coalesce an empty delta and a block at the same position.
+    if not profile_summary_painted(club_id, selected_id, lambda: optional_slot.caption(pending_text)):
         return
     with optional_slot.container(), st.container(key="grdcc_profile_optional"):
-        record_player_profile_view(name, selected_id)
-        if not st.toggle("Show detailed analysis", key=f"grdcc_profile_details_{selected_id}"):
-            return
-        profile_event("optional_analysis")
+        choice = st.session_state.get("grdcc_profile_choice", name)
+        st.markdown(f'<span hidden data-profile-detail-choice="{html.escape(choice, quote=True)}"></span>',
+                    unsafe_allow_html=True)
         detail_status = st.empty()
-        detail_status.info("Loading detailed analysis…")
+        detail_status.caption(pending_text)
+        profile_event("analysis_started")
         try:
             if profile is None:
                 from src.data.profile_detail_index import indexed_profile
-                with profile_phase("grdcc_indexed_profile"):
-                    profile = indexed_profile(load_views(GRDCC_CLUB_ID), selected_id)
+                with profile_phase("indexed_profile"):
+                    prepared = views if views is not None else load_views(club_id)
+                    profile = indexed_profile(prepared, selected_id)
+                    if profile is not None and load_views(club_id) is not prepared:
+                        profile = None
             if profile is None:
                 with profile_phase("detail_governed_profile_fallback"):
                     profile = get_player_profile_data(
-                        selected_id, metadata_mtime(), player_aliases_mtime(), club_id=GRDCC_CLUB_ID,
+                        selected_id, metadata_mtime(), player_aliases_mtime(), club_id=club_id,
                     )
             if not selection_is_current():
                 return
@@ -12490,7 +12409,7 @@ def render_grdcc_selected_profile(
             with profile_phase("detail_badges"):
                 badges = [] if is_scoped_historical(detail_career) else player_role_badges(detail_career, view)
         except Exception as error:
-            logging.getLogger(__name__).warning("GRDCC profile analysis failed (%s)", type(error).__name__)
+            logging.getLogger(__name__).warning("Profile analysis failed (%s)", type(error).__name__)
             if selection_is_current():
                 detail_status.error("Detailed analysis could not load. The career summary is still available.")
             return
@@ -12517,16 +12436,19 @@ def render_grdcc_selected_profile(
 
 def render_grdcc_primary_card(
     career: pd.Series, *, output: DeltaGenerator | None = None, report_only: bool = False,
+    coverage: tuple[str, ...] = ("", ""),
 ) -> None:
     target = st if output is None else output
-    markup = grdcc_primary_card_markup(career, report_only=report_only)
+    markup = grdcc_primary_card_markup(career, report_only=report_only, coverage=coverage)
     choice = st.session_state.get("grdcc_profile_choice", "")
     if choice:
         markup = markup.replace("<section ", f'<section data-profile-choice="{html.escape(choice, quote=True)}" ', 1)
     target.markdown(markup, unsafe_allow_html=True)
 
 
-def grdcc_primary_card_markup(career: pd.Series, *, report_only: bool = False) -> str:
+def grdcc_primary_card_markup(
+    career: pd.Series, *, report_only: bool = False, coverage: tuple[str, ...] = ("", ""),
+) -> str:
     scoped = is_scoped_historical(career)
     matches, _, proxy = historical_matches_display_text(career.astype(object).where(career.notna(), None))
     wicket_label = "Recorded wickets" if safe_record_text(career.get(RECORD_KIND)) == "primary_historical" else "Wickets"
@@ -12567,7 +12489,7 @@ def grdcc_primary_card_markup(career: pd.Series, *, report_only: bool = False) -
         '<div class="profile-main-block">'
         f'<div class="profile-kicker">{"Historical record" if scoped else "Career summary"}</div>'
         f'<h2 class="profile-name">{html.escape(str(career["Player"]))}</h2>'
-        f'<dl class="grdcc-primary-figures">{metrics}</dl>{scope_note}{source_link}'
+        f'<dl class="grdcc-primary-figures">{metrics}</dl>{scope_note}{source_link}{profile_coverage_markup(*coverage)}'
         "</div></section>"
     )
 
@@ -14436,7 +14358,23 @@ def player_profile_historical_coverage(career: pd.Series, season_table: pd.DataF
 
 
 def player_profile_historical_coverage_html(career: pd.Series, season_table: pd.DataFrame) -> str:
+    return profile_coverage_markup(*profile_coverage_context(career, season_table))
+
+
+def profile_coverage_context(career: pd.Series, season_table: pd.DataFrame) -> tuple[str, str, str]:
     documented, detailed = player_profile_historical_coverage(career, season_table)
+    note = ""
+    if get_active_club_id() == "glen-waverley-hawks" and (
+        parse_bool(career.get("historical_career_anchor_applied"))
+        or parse_bool(career.get("historical_match_anchor_applied"))
+    ):
+        from src.data.gwhcc_historical_career import career_anchor_coverage_note
+
+        note = career_anchor_coverage_note(career)
+    return documented, detailed, note
+
+
+def profile_coverage_markup(documented: str, detailed: str, note: str = "") -> str:
     lines = [
         f'<div class="profile-meta profile-coverage-meta">Earliest verified GWHCC season: {html.escape(documented)}</div>'
     ] if documented else []
@@ -14444,13 +14382,8 @@ def player_profile_historical_coverage_html(career: pd.Series, season_table: pd.
         lines.append(
             f'<div class="profile-meta profile-coverage-meta">Detailed statistics available from: {html.escape(detailed)}</div>'
         )
-    if get_active_club_id() == "glen-waverley-hawks" and (
-        parse_bool(career.get("historical_career_anchor_applied"))
-        or parse_bool(career.get("historical_match_anchor_applied"))
-    ):
-        from src.data.gwhcc_historical_career import career_anchor_coverage_note
-
-        lines.append(f'<div class="profile-meta profile-coverage-meta">{html.escape(career_anchor_coverage_note(career))}</div>')
+    if note:
+        lines.append(f'<div class="profile-meta profile-coverage-meta">{html.escape(note)}</div>')
     return "".join(lines)
 
 
@@ -15644,7 +15577,7 @@ def peer_metrics_from_rows(player_id, batting_rows, bowling_rows, peer_scope):
     )
     # Strike rate is runs per 100 balls for every club. Only the Hawks label
     # needs to call out its ball-by-ball provenance.
-    strike_rate_format = "rate"
+    strike_rate_format = "batting_rate"
     batting_metrics = build_peer_metric_rows(
         batting_rows,
         player_id,
@@ -16001,6 +15934,8 @@ def format_peer_metric_value(value: object, value_format: str) -> str:
     numeric = float(value)
     if value_format == "percent":
         return f"{numeric:.1f}%"
+    if value_format == "batting_rate":
+        return format_bat_sr_display(numeric)
     if value_format == "rate":
         return f"{numeric:.1f}"
     if value_format == "number":
@@ -16709,6 +16644,9 @@ def render_profile_performance_table(
         columns = [label_column, "Catches", "Stumpings", "RO", "Dismissals"]
         activity_columns = ["Catches", "Stumpings", "RO", "Dismissals"]
 
+    if "M" not in columns and "matches" in table and table["matches"].notna().any():
+        table = table.rename(columns={"matches": "M"})
+        columns.insert(1, "M")
     table = select_display_columns(table, columns).copy()
     activity = pd.Series(False, index=table.index)
     for column in activity_columns:
@@ -16768,7 +16706,7 @@ def profile_performance_table_html(
     safe_table_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", table_id).strip("-") or "profile-performance-table"
     link_colour = active_link_colour()
     link_hover_colour = active_link_hover_colour()
-    columns = table.columns.tolist()
+    columns = [column for column in table if column != "match_count_for_sort"]
     colgroup = "".join(
         f'<col class="{profile_performance_column_class(column, label_column)}">'
         for column in columns
@@ -16776,7 +16714,7 @@ def profile_performance_table_html(
     header_html = "".join(
         (
             f'<th class="{profile_performance_column_class(column, label_column)}" data-column="{index}" '
-            f'data-default-dir="{profile_performance_default_sort_dir(column, label_column)}">'
+            f'data-default-dir="{profile_performance_default_sort_dir(column, label_column)}"{table_semantics.sort_attributes(column)}>'
             f'<button type="button">{html.escape(str(column))}<span class="sort-indicator"></span></button></th>'
         )
         for index, column in enumerate(columns)
@@ -16787,13 +16725,14 @@ def profile_performance_table_html(
         cells = []
         for column in columns:
             value = row.get(column)
+            row_meta = table_semantics.row_attributes(row) if column == label_column else ""
             display = profile_performance_display_value(column, value, label_column, row)
             sort_value, missing = profile_performance_sort_value(column, value, label_column, row)
             if column == "Matches" and display.endswith("*"):
                 matches_proxy_used = True
             cells.append(
                 f'<td class="{profile_performance_column_class(column, label_column)}" '
-                f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
+                f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}"{row_meta}>'
                 f'{display}</td>'
             )
         body_rows.append(f"<tr>{''.join(cells)}</tr>")
@@ -16854,8 +16793,10 @@ def profile_performance_table_html(
       .profile-performance-table col.profile-col-stumpings {{ width: 64px; }}
       .profile-performance-table col.profile-col-avg,
       .profile-performance-table col.profile-col-sr,
-      .profile-performance-table col.profile-col-strike-rate,
+      .profile-performance-table col.profile-col-bat-sr,
       .profile-performance-table col.profile-col-dismissals {{ width: 82px; }}
+      .profile-performance-table col.profile-col-not-outs {{ width: 54px; }}
+      .profile-performance-table th:is(.profile-col-not-outs,.profile-col-bat-sr) button {{ white-space: normal; }}
       .profile-performance-table th,
       .profile-performance-table td {{
         background: #ffffff;
@@ -16962,7 +16903,7 @@ def profile_performance_table_html(
         .profile-performance-table col.profile-col-stumpings {{ width: 56px; }}
         .profile-performance-table col.profile-col-avg,
         .profile-performance-table col.profile-col-sr,
-        .profile-performance-table col.profile-col-strike-rate,
+        .profile-performance-table col.profile-col-bat-sr,
         .profile-performance-table col.profile-col-dismissals {{ width: 70px; }}
         .profile-performance-table th,
         .profile-performance-table td {{
@@ -16992,10 +16933,11 @@ def profile_performance_table_html(
           const numeric = Number(raw);
           return Number.isFinite(numeric) && raw.trim() !== "" ? numeric : raw.toLocaleLowerCase();
         }};
+{table_semantics.TABLE_TIE_JS}
         const compare = (a, b, index, dir) => {{
           const av = sortValue(a, index);
           const bv = sortValue(b, index);
-          if (av === null && bv === null) return textValue(a, 0).localeCompare(textValue(b, 0));
+          if (av === null && bv === null) return tieBreak(a, b, index, 0);
           if (av === null) return 1;
           if (bv === null) return -1;
           let result = 0;
@@ -17004,8 +16946,7 @@ def profile_performance_table_html(
           }} else {{
             result = String(av).localeCompare(String(bv), undefined, {{ numeric: true, sensitivity: "base" }});
           }}
-          if (result === 0) result = textValue(a, 0).localeCompare(textValue(b, 0));
-          return dir === "asc" ? result : -result;
+          return result === 0 ? tieBreak(a, b, index, 0) : dir === "asc" ? result : -result;
         }};
         const sortHeader = (header, index) => {{
           const current = header.dataset.sortDir;
@@ -17051,7 +16992,7 @@ def profile_performance_table_html(
 def profile_performance_column_class(column: object, label_column: str) -> str:
     if str(column) == str(label_column):
         return "profile-col-label"
-    text = re.sub(r"[^a-zA-Z0-9]+", "-", str(column).strip().casefold()).strip("-")
+    text = table_semantics.column_key(column)
     return f"profile-col-{text or 'column'}"
 
 
@@ -17067,18 +17008,19 @@ def profile_performance_display_value(column: str, value: object, label_column: 
     if column == "Matches" and row is not None:
         matches_text, _, _ = historical_matches_display_text(row)
         return matches_text
+    if column in table_semantics.MATCH_COLUMNS:
+        return format_compact_number(value)
     if column == "HS":
         return format_high_score_text(value)
-    if column in {"Strike Rate", "Bat SR", "Bat SR (ball-by-ball)", "Strike Rate (ball-by-ball)"}:
-        numeric = pd.to_numeric(value, errors="coerce")
-        return "" if pd.isna(numeric) else f"{float(numeric):.1f}"
+    if table_semantics.is_batting_rate(column):
+        return format_bat_sr_display(value)
     if column == "Extras %":
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
-    if column in {"Avg", "SR", "Eco"}:
+    if column in {"Avg", "Bat Avg", "Bowl Avg", "SR", "Bowl SR", "Econ", "Eco"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.2f}"
-    if column in {"Inn", "Not Outs", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "M", "W", "3WI", "5WI", "Catches", "Stumpings", "RO", "Dismissals"}:
+    if column in {"Inn", "Innings", "Not Outs", "Runs", "30s", "50s", "100s", "0s", "4s", "6s", "M", "W", "Wickets", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}:
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{int(numeric):,}"
     text = str(value).strip()
@@ -17165,8 +17107,7 @@ def sort_profile_performance_table(table: pd.DataFrame, label_column: str, disci
         return output.sort_values("_sort_key").drop(columns="_sort_key")
     numeric_sort = "Runs" if discipline == "Batting" and "Runs" in output else "W" if discipline == "Bowling" and "W" in output else "Dismissals"
     if numeric_sort in output:
-        output["_sort_key"] = pd.to_numeric(output[numeric_sort], errors="coerce").fillna(0)
-        return output.sort_values(["_sort_key", label_column], ascending=[False, True]).drop(columns="_sort_key")
+        return table_semantics.initial_order(output, numeric_sort, label_column, label_value=link_display_label)
     return output.sort_values(label_column)
 
 
@@ -17253,17 +17194,7 @@ def render_profile_season_stat_table(season_table: pd.DataFrame, columns: list[s
     table = table.sort_values("Season", key=lambda series: series.map(profile_season_sort_key), ascending=False)
     if get_active_club_id() == "glen-waverley-hawks" and "NO" in table:
         table = table.rename(columns={"NO": "Not Outs"})
-    display = link_season_columns(format_profile_sortable_table(table), ["Season"])
-    table_height = min(390, max(170, 42 * (len(display) + 1)))
-    render_filterable_dataframe(
-        display,
-        key_prefix=f"profile_season_{'_'.join(columns)}",
-        use_container_width=True,
-        hide_index=True,
-        height=table_height,
-        column_config=profile_table_column_config(display.columns.tolist(), "Season"),
-        show_filters=False,
-    )
+    render_governed_profile_table(table, season_table, "Season")
 
 
 def profile_table_column_config(columns: list[str], pinned_column: str) -> dict[str, object]:
@@ -17359,16 +17290,17 @@ def render_profile_group_stat_table(group_table: pd.DataFrame, columns: list[str
         table = table.sort_values(label_column)
     if get_active_club_id() == "glen-waverley-hawks" and "NO" in table:
         table = table.rename(columns={"NO": "Not Outs"})
-    display = format_profile_sortable_table(table)
-    table_height = min(390, max(170, 42 * (len(display) + 1)))
-    render_filterable_dataframe(
-        display,
-        key_prefix=f"profile_grade_{'_'.join(columns)}",
-        use_container_width=True,
-        hide_index=True,
-        height=table_height,
-        column_config=profile_table_column_config(display.columns.tolist(), label_column),
-        show_filters=False,
+    render_governed_profile_table(table, group_table, label_column)
+
+
+def render_governed_profile_table(table: pd.DataFrame, source: pd.DataFrame, label: str) -> None:
+    if "Matches" not in table and "Matches" in source:
+        table = table.assign(match_count_for_sort=source.loc[table.index, "Matches"])
+    discipline = "Batting" if "Runs" in table else "Bowling" if "Wickets" in table else "Fielding"
+    height = min(390, max(170, 42 * (len(table) + 1)))
+    components.html(
+        profile_performance_table_html(table, label, discipline, f"profile-fallback-{label}-{discipline}", height),
+        height=height, scrolling=False,
     )
 
 
@@ -17453,7 +17385,6 @@ def render_player_breakdown(career: pd.Series) -> None:
     render_section_heading("Career Overview 🧩")
     render_hawks_match_count_footnote()
     render_gwhcc_career_coverage_note(career)
-    render_gwhcc_bbb_rate_note()
     render_grdcc_not_outs_career_note(career)
     keeper_class = "profile-card-keeper" if player_profile_is_keeper(career) else "profile-card-nonkeeper"
     matches_text, _, _ = historical_matches_display_text(career)
@@ -17528,13 +17459,6 @@ def render_gwhcc_career_coverage_note(career: pd.Series) -> None:
             "Matches, innings, overs, rate metrics, fielding and season breakdowns remain PlayCricket-based; "
             "Not Outs use historical records only when separately approved."
         )
-    else:
-        st.caption("Not Outs reflect available PlayCricket batting records; historical document-only totals may differ.")
-
-
-def render_gwhcc_bbb_rate_note() -> None:
-    if get_active_club_id() == "glen-waverley-hawks":
-        st.caption(GWHCC_BBB_RATE_NOTE)
 
 
 def render_gwhcc_hof_career_coverage_note() -> None:
@@ -17545,20 +17469,10 @@ def render_gwhcc_hof_career_coverage_note() -> None:
         )
 
 
-def render_gwhcc_not_outs_coverage_note() -> None:
-    if get_active_club_id() == "glen-waverley-hawks":
-        st.caption("Not Outs reflect available PlayCricket batting records; historical document-only totals may differ.")
-
-
 def render_grdcc_not_outs_career_note(career: pd.Series) -> None:
     if get_active_club_id() != "georges-river-district":
         return
     if str(career.get("not_outs_coverage_status", "")).casefold() in {NOT_OUTS_PARTIAL, "unavailable"}:
-        st.caption("Not Outs reflects available digital scorecard coverage; historical records may be incomplete.")
-
-
-def render_grdcc_not_outs_table_note() -> None:
-    if get_active_club_id() == "georges-river-district":
         st.caption("Not Outs reflects available digital scorecard coverage; historical records may be incomplete.")
 
 
@@ -17750,10 +17664,7 @@ def player_profile_is_keeper(career: pd.Series) -> bool:
 
 
 def format_bat_sr_display(value: object) -> str:
-    number = pd.to_numeric(value, errors="coerce")
-    if pd.isna(number):
-        return ""
-    return f"{float(number):.1f}"
+    return table_semantics.batting_rate(value)
 
 
 def render_player_milestones(career: pd.Series) -> None:
@@ -18296,7 +18207,11 @@ def format_profile_table(table: pd.DataFrame) -> pd.DataFrame:
     decimal_columns = {"Avg", "Bat Avg", "Bat SR", "Bat SR (ball-by-ball)", "Strike Rate", "Strike Rate (ball-by-ball)", "Bowl Avg", "Econ", "Eco", "Bowl SR", "SR"}
     integer_columns = {"M", "Matches", "Inn", "Innings", "Not Outs", "Runs", "BBB Runs", "BBB Balls", "BBB Innings", "BBB Matches", "30s", "50s", "100s", "0s", "4s", "6s", "W", "Wickets", "Maidens", "3WI", "5WI", "Catches", "Stumpings", "RO", "Run Outs", "Dismissals"}
     for column in output.columns:
-        if column in decimal_columns:
+        if table_semantics.is_batting_rate(column):
+            output[column] = output[column].map(format_bat_sr_display)
+        elif column in table_semantics.MATCH_COLUMNS:
+            output[column] = output[column].map(format_compact_number)
+        elif column in decimal_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "" if pd.isna(value) else f"{float(value):.2f}")
         elif column in integer_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").map(lambda value: "" if pd.isna(value) else f"{int(value):,}")
@@ -18339,7 +18254,9 @@ def format_profile_sortable_table(table: pd.DataFrame) -> pd.DataFrame:
     }
     text_columns = {"Season", "Grade", "Opponent", "Ground", "H/A", "HS", "BBI", "Overs", "Teams", "Grades", "Teams/Grades"}
     for column in output.columns:
-        if column in decimal_columns:
+        if table_semantics.is_batting_rate(column) or column in table_semantics.MATCH_COLUMNS:
+            output[column] = pd.to_numeric(output[column], errors="coerce")
+        elif column in decimal_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").round(2)
         elif column in integer_columns:
             output[column] = pd.to_numeric(output[column], errors="coerce").round().astype("Int64")
@@ -19863,11 +19780,26 @@ def render_progress_list(
     st.markdown("".join(rows), unsafe_allow_html=True)
 
 
-def render_team_specific_leaders(dashboard_data: dict[str, object]) -> None:
+def render_team_specific_leaders(
+    dashboard_data: dict[str, object], round_rows: list[dict[str, object]] | None = None,
+) -> None:
     team_batting = dashboard_data.get("team_batting", dashboard_data["batting"])
     team_bowling = dashboard_data.get("team_bowling", dashboard_data["bowling"])
-    teams = season_team_grade_leader_groups(dashboard_data.get("teams", []))
+    hawks = get_active_club_id() == "glen-waverley-hawks"
+    teams = dashboard_data.get("teams", []) if hawks else season_team_grade_leader_groups(dashboard_data.get("teams", []))
+    if round_rows is None:
+        sources = load_season_overview_detail_sources(get_active_club_id(), season_overview_detail_source_signature())
+        round_rows = build_season_round_rows(dashboard_data, sources.get("season_by_round", pd.DataFrame()))
+    ordering = season_display_grade_order(round_rows)
 
+    def team_order(team):
+        label = team_card_title(team).strip()
+        if hawks:
+            return hawks_season_grade_order(label, team.get("name")), gwhcc_team_display_order_key(team)
+        key = label.casefold()
+        return ordering.get(key, (principal_season_grade(label, team.get("name", "")), 0, key))
+
+    teams = sorted(teams, key=team_order)
     render_section_heading("Team/Grade Leaders 👥")
     render_section_subtext("Top performers by team/grade.")
     if not teams:
@@ -19878,7 +19810,12 @@ def render_team_specific_leaders(dashboard_data: dict[str, object]) -> None:
         columns = st.columns(2)
         for column, team in zip(columns, teams[index : index + 2]):
             with column:
-                render_team_leader_card(team, team_batting, team_bowling)
+                fixture_count = None
+                if hawks:
+                    team_ids = set(team_scope_ids(team))
+                    fixture_count = len({row["match_id"] for row in round_rows
+                                         if row.get("match_id") and team_ids & row.get("source_teams", set())})
+                render_team_leader_card(team, team_batting, team_bowling, fixture_count=fixture_count)
 
 
 def season_team_grade_leader_groups(teams: list[dict]) -> list[dict]:
@@ -19914,6 +19851,7 @@ def render_team_leader_card(
     team: dict,
     team_batting: pd.DataFrame,
     team_bowling: pd.DataFrame,
+    *, fixture_count: int | None = None,
 ) -> None:
     team_id = "|".join(team_scope_ids(team)) or str(team.get("id"))
     batting_scope = filter_team_frame(team_batting, team_id)
@@ -19927,7 +19865,7 @@ def render_team_leader_card(
     bowler_value = numeric_value(top_bowler, "bowlingWickets")
     batter_average = pd.to_numeric(top_batter.get("battingAverage"), errors="coerce")
     bowler_average = pd.to_numeric(top_bowler.get("bowlingAverage"), errors="coerce")
-    matches = estimate_team_matches([batting_scope, bowling_scope])
+    matches = estimate_team_matches([batting_scope, bowling_scope]) if fixture_count is None else fixture_count
     max_runs = max(
         1.0,
         float(numeric_sort_series(batting_scope, "battingAggregate", 0).max() or 0),
@@ -20229,7 +20167,6 @@ def render_full_stats_section(dashboard_data: dict[str, object]) -> None:
     st.markdown('<div id="full-stats"></div>', unsafe_allow_html=True)
     render_section_heading("Detailed Stats 📊")
     render_hawks_match_count_footnote()
-    render_gwhcc_bbb_rate_note()
     with st.container(key="full_stats_card"):
         with section_run("season_detail"):
             tabs = ["Batting", "Bowling", "Fielding"]
@@ -20254,8 +20191,6 @@ def render_full_stats_section(dashboard_data: dict[str, object]) -> None:
                         emit_season_detail_table(markup, category, scope)
                     else:
                         render_full_stats_table(sort(dashboard_data[category]), category, show_team=False, scope=scope)
-                    if category == "batting":
-                        render_grdcc_not_outs_table_note()
                     profile_event("season_detail_emitted", category=category)
 
 
@@ -20583,6 +20518,8 @@ def numeric_column_config(columns: list[str]) -> dict[str, object]:
             config[column] = st.column_config.NumberColumn(format="%d")
         elif column in {"Dot Ball %", "Extras %"}:
             config[column] = st.column_config.NumberColumn(format="%.1f%%")
+        elif table_semantics.is_batting_rate(column):
+            config[column] = st.column_config.NumberColumn(format="%.2f%%", width="small")
         elif column in decimal_columns:
             config[column] = st.column_config.NumberColumn(format="%.2f")
 
@@ -20726,7 +20663,7 @@ def render_batting_table(
             "Runs": st.column_config.NumberColumn(format="%d"),
             "BF": st.column_config.NumberColumn(format="%d"),
             "Avg": st.column_config.NumberColumn(format="%.2f"),
-            "SR": st.column_config.NumberColumn(format="%.2f"),
+            "SR": st.column_config.NumberColumn(format="%.2f%%", width="small"),
         },
     )
 
@@ -20863,6 +20800,8 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         link_colour = active_club_colour("value_colour", "#A87500")
     accent_colour = active_link_hover_colour()
     soft_colour = active_club_colour("background_colour", "#F7F8FC")
+    primary = {"batting": "Runs", "bowling": "Wickets", "fielding": "Catches"}.get(category)
+    table = table_semantics.initial_order(table, primary, "Player", label_value=link_display_label)
     columns = table.columns.tolist()
     colgroup = "".join(
         f'<col class="{season_detail_column_class(column)}">'
@@ -20871,7 +20810,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
     header_html = "".join(
         (
             f'<th class="{season_detail_column_class(column)}" data-column="{index}" '
-            f'data-default-dir="{season_detail_default_sort_dir(column)}">'
+            f'data-default-dir="{season_detail_default_sort_dir(column)}"{table_semantics.sort_attributes(column)}>'
             f'<button type="button">{html.escape(season_detail_header_label(column))}'
             f'<span class="sort-indicator"></span></button></th>'
         )
@@ -20883,13 +20822,14 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
         cells = []
         for column in columns:
             value = row.get(column)
+            row_meta = table_semantics.row_attributes(row) if column == "Player" else ""
             display = season_detail_display_value(column, value, row)
             sort_value, missing = season_detail_sort_value(column, value, row)
             if column == "Matches" and display.endswith("*"):
                 matches_proxy_used = True
             cells.append(
                 f'<td class="{season_detail_column_class(column)}" '
-                f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}">'
+                f'data-sort="{html.escape(sort_value, quote=True)}" data-missing="{int(missing)}"{row_meta}>'
                 f"{display}</td>"
             )
         rows.append(f"<tr>{''.join(cells)}</tr>")
@@ -20930,6 +20870,8 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
       }}
       .season-detail-table col.season-col-player {{ width: 148px; }}
       .season-detail-table col.season-col-team {{ width: 112px; }}
+      .season-detail-table col.season-col-not-outs {{ width: 52px; }}
+      .season-detail-table th.season-col-not-outs button {{ white-space: normal; }}
       .season-detail-table col.season-col-m,
       .season-detail-table col.season-col-mat,
       .season-detail-table col.season-col-inn,
@@ -21123,10 +21065,11 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
           const numeric = Number(raw);
           return Number.isFinite(numeric) && raw.trim() !== "" ? numeric : raw.toLocaleLowerCase();
         }};
+{table_semantics.TABLE_TIE_JS}
         const compare = (a, b, index, dir) => {{
           const av = sortValue(a, index);
           const bv = sortValue(b, index);
-          if (av === null && bv === null) return textValue(a, 0).localeCompare(textValue(b, 0));
+          if (av === null && bv === null) return tieBreak(a, b, index, 0);
           if (av === null) return 1;
           if (bv === null) return -1;
           let result = 0;
@@ -21135,8 +21078,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
           }} else {{
             result = String(av).localeCompare(String(bv), undefined, {{ numeric: true, sensitivity: "base" }});
           }}
-          if (result === 0) result = textValue(a, 0).localeCompare(textValue(b, 0));
-          return dir === "asc" ? result : -result;
+          return result === 0 ? tieBreak(a, b, index, 0) : dir === "asc" ? result : -result;
         }};
         const sortHeader = (header, index) => {{
           const current = header.dataset.sortDir;
@@ -21179,7 +21121,7 @@ def season_overview_detail_table_html(table: pd.DataFrame, category: str, table_
 
 
 def season_detail_column_class(column: object) -> str:
-    text = re.sub(r"[^a-zA-Z0-9]+", "-", str(column).strip().casefold()).strip("-")
+    text = table_semantics.column_key(column)
     return f"season-col-{text or 'column'}"
 
 
@@ -21202,9 +21144,13 @@ def season_detail_display_value(column: str, value: object, row: pd.Series | Non
     if column == "Matches" and row is not None:
         matches_text, _, _ = historical_matches_display_text(row)
         return matches_text
+    if column in table_semantics.MATCH_COLUMNS:
+        return format_compact_number(value)
     if column == "HS":
         return format_high_score_text(value)
-    if column in {"Bat SR", "Extras %"}:
+    if table_semantics.is_batting_rate(column):
+        return format_bat_sr_display(value)
+    if column == "Extras %":
         numeric = pd.to_numeric(value, errors="coerce")
         return "" if pd.isna(numeric) else f"{float(numeric):.1f}%"
     if column in {"Bat Avg", "Bowl Avg", "Bowl SR", "Eco"}:

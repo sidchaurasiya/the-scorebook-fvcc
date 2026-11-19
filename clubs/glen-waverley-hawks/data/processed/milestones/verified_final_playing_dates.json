@@ -1,0 +1,35 @@
+{
+  "5e517919-580a-45cf-81c2-341e97a7f304": {
+    "date": "2026-10-10",
+    "scheduled_dates": [
+      "2026-10-10"
+    ],
+    "source": "Completed scorecard with one scheduled day",
+    "scorecard_sha256": "08b41fd4ec3bb931140cd3ef9c0032a7a231fa2b439e18dac79f732057a00058"
+  },
+  "34aaa6f4-9c7e-4d49-9e70-96f14dd74198": {
+    "date": "2026-10-23",
+    "scheduled_dates": [
+      "2026-10-16",
+      "2026-10-23"
+    ],
+    "source": "Official delivery timestamps confirm play on the final scheduled day",
+    "scorecard_sha256": "32d2c037bce13c88e4ac00afc73bd01f70e10224d5a21ccc80cc0139dc691123",
+    "delivery_sha256": "4b12b1dfdf945d18086d4775435c5e5aa26813cb53262cfd69edb5608966d2b1",
+    "first_verified_appearances": {
+      "nishnaath_kancharla": "2026-10-16"
+    }
+  },
+  "f7bad6a0-c1c8-4c24-a993-92462c4e69d0": {
+    "date": "2026-10-17",
+    "scheduled_dates": [
+      "2026-10-17"
+    ],
+    "source": "Completed scorecard with one scheduled day",
+    "scorecard_sha256": "294aa65ae7980ced9ab579a6f66f60d485c5e90150eaec10a50ac64097bf3579",
+    "delivery_sha256": "430e237fe2934f822766a308717d2891f80b6d570472b54950cc81bdd722789e",
+    "first_verified_appearances": {
+      "nishnaath_kancharla": "2026-10-17"
+    }
+  }
+}

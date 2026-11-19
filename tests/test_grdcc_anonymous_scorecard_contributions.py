@@ -474,11 +474,8 @@ def test_hall_of_fame_loads_verified_anonymous_fastest_event_without_profile_or_
 
     monkeypatch.setattr(layout, "add_missing_canonical_player_ids", reject_profile_id_generation)
     ranked_html = layout.hall_of_fame_v2_fastest_list_html(anonymous, "Fastest 50s", "balls_to_50")
-    anonymous_html = layout.hall_of_fame_v2_anonymous_fastest_list_html(anonymous)
     assert "Private player" not in ranked_html
-    assert "Private player" in anonymous_html
-    assert "55" in anonymous_html and "50 in 48 balls" in anonymous_html
-    assert "<a " not in anonymous_html and "href=" not in anonymous_html
+    assert "Additional anonymous verified milestones" not in ranked_html
 
 
 def test_scorecard_loader_is_club_scoped_and_privacy_signature_invalidates_cache(monkeypatch) -> None:

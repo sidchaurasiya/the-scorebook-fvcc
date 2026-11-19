@@ -156,7 +156,7 @@ def compile_season_views(layout, club, emit):
                 rows = layout.build_season_round_rows(dashboard, sources["season_by_round"])
                 round_html = layout.season_round_cards_html(rows) if rows else ""
                 layout.render_overall_section(dashboard)
-                layout.render_team_specific_leaders(dashboard)
+                layout.render_team_specific_leaders(dashboard, rows)
                 emit(key + "/sections", {"round": round_html, "leaders": sections.nodes})
                 for category, sort in (("batting", layout.sort_batting_leaders),
                                        ("bowling", layout.sort_bowling_leaders),

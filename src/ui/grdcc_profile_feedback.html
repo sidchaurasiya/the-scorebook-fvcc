@@ -1,5 +1,6 @@
 <style>
 html[data-grdcc-profile-pending] .st-key-grdcc_profile_region,
+html[data-profile-analysis-stale] .st-key-grdcc_profile_optional,
 html[data-grdcc-profile-pending] .empty-profile-state {display:none!important}
 </style>
 <script>
@@ -9,31 +10,51 @@ html[data-grdcc-profile-pending] .empty-profile-state {display:none!important}
   let requested;
   let priorChoice;
   let sawBusy;
+  let displayedQuery = location.search;
   const selector = () => document.querySelector('.st-key-player_selector_card');
   const notice = document.createElement('div');
   notice.className = 'grdcc-profile-pending';
   notice.setAttribute('role', 'status');
 
-  function finish() {
-    requested = undefined;
+  function clearPending() {
     delete document.documentElement.dataset.grdccProfilePending;
     notice.remove();
   }
+
+  function finish() {
+    requested = undefined;
+    clearPending();
+  }
   function reconcile() {
+    displayedQuery = location.search;
+    const region = document.querySelector('.st-key-grdcc_profile_region');
+    const card = region?.querySelector('[data-profile-choice]');
+    const analysis = region?.querySelector('.st-key-grdcc_profile_optional');
+    const owner = analysis?.querySelector('[data-profile-detail-choice]')?.dataset.profileDetailChoice;
+    document.documentElement.toggleAttribute('data-profile-analysis-stale',
+      Boolean(analysis && (!owner || card?.dataset.profileChoice !== owner)));
     if (!requested) return;
     const search = selector();
     if (!search) { finish(); return; }
-    const region = document.querySelector('.st-key-grdcc_profile_region');
-    const card = region?.querySelector('[data-profile-choice]');
     const end = region?.querySelector('[data-profile-finished]');
     const busy = [...document.querySelectorAll('[data-testid=stStatusWidget]')]
       .some(el => el.innerText.trim() === 'Stop');
     sawBusy ||= busy;
-    if (card?.dataset.profileChoice === requested && (priorChoice !== requested || sawBusy && !busy) ||
-        end?.dataset.profileFinished === requested && (end !== previousEnd || previousEndChoice !== requested || sawBusy && !busy)) {
+    if ((!card || card.dataset.profileChoice === requested) &&
+        end?.dataset.profileFinished === requested &&
+        (end !== previousEnd || previousEndChoice !== requested || sawBusy && !busy)) {
       finish();
-    } else if (notice.previousElementSibling !== search) {
-      search.after(notice);
+    } else if (card?.dataset.profileChoice === requested) {
+      if (priorChoice !== requested || sawBusy && !busy) {
+        finish();
+      } else {
+        // A rapid return can leave the correct card in place without a rerun.
+        // Keep watching in case the superseded run emits a different card.
+        clearPending();
+      }
+    } else {
+      document.documentElement.dataset.grdccProfilePending = '';
+      if (notice.previousElementSibling !== search) search.after(notice);
     }
   }
   let previousEnd;
@@ -63,7 +84,14 @@ html[data-grdcc-profile-pending] .empty-profile-state {display:none!important}
       select(document.getElementById(e.target.getAttribute('aria-activedescendant')));
     }
   }, true);
+  window.addEventListener('popstate', () => {
+    // Same-document history changes to a profile must re-enter through its URL.
+    if (location.search !== displayedQuery &&
+        new URLSearchParams(location.search).get('page') === 'player-profile') {
+      location.reload();
+    }
+  });
   new MutationObserver(reconcile).observe(document.body, {subtree:true, childList:true, attributes:true,
-    attributeFilter:['data-profile-choice','data-profile-finished']});
+    attributeFilter:['data-profile-choice','data-profile-finished','data-profile-detail-choice']});
 })();
 </script>

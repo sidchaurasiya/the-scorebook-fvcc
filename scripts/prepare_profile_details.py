@@ -180,7 +180,7 @@ def compile_profile_memberships(layout, index, emit):
     from src.config.club_config import get_processed_dir, get_processed_path
     from src.data.playcricket_ingestion import _read_processed_table
     from src.data.profile_detail_index import profile_checksum
-    from src.utils.player_identity import apply_player_identity_mapping, prepare_grdcc_profile_sources
+    from src.utils.player_identity import _assemble_profile, apply_player_identity_mapping, prepare_grdcc_profile_sources
 
     club = layout.get_active_club_id()
     if club not in {layout.GRDCC_CLUB_ID, "glen-waverley-hawks", "fvcc"}:
@@ -220,6 +220,14 @@ def compile_profile_memberships(layout, index, emit):
             for category, frame in frames.items()
         }
         emit("profile-schema", {"sources": sources})
+        primary, unavailable = {}, []
+        authority = {}
+        if club == "glen-waverley-hawks":
+            governed = layout.get_authoritative_career_totals(
+                layout.metadata_mtime(), layout.player_aliases_mtime(), layout.HALL_OF_FAME_DATA_VERSION,
+                layout.hall_of_fame_override_signature(club), club_id=club,
+            )
+            authority = dict(tuple(governed.groupby("canonical_player_id", sort=False)))
         for key in index.id.astype(str):
             projected, ranges = {}, {}
             for category, frame in frames.items():
@@ -233,6 +241,24 @@ def compile_profile_memberships(layout, index, emit):
                           for category, frame in projected.items()},
                 "source_system": {}, "checksum": profile_checksum(projected),
             })
+            player = _assemble_profile(key, projected)
+            career, seasons = layout.portable_profile_primary(player, club, authority.get(key, pd.DataFrame()))
+            if career.empty:
+                unavailable.append(key)
+                continue
+            row = career.iloc[0]
+            fields = ["Player", "Runs", "Matches", "Wickets", "Catches", "Career Span", "Innings",
+                      "Matches Source", "Matches Proxy", "Latest Season", "Proxy Season",
+                      layout.SOURCE_NOTE, layout.RECORD_KIND, layout.FILTERED_SCOPE, layout.REVIEW_FLAG]
+            coverage = layout.profile_coverage_context(row, seasons)
+            compact = json.loads(row.reindex(fields).to_json(double_precision=15))
+            if layout.grdcc_primary_card_markup(row, coverage=coverage) != layout.grdcc_primary_card_markup(
+                pd.Series(compact), coverage=coverage,
+            ):
+                raise ValueError(f"Primary projection differs for {club} {key}")
+            primary[key] = {"career": compact, "coverage": coverage}
+        emit("profile/primary", primary)
+        emit("profile/primary-unavailable", unavailable)
         return
     pool = prepare_grdcc_profile_sources(frames)
     def with_scope(frame):
