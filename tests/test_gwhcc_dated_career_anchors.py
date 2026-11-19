@@ -213,6 +213,7 @@ def test_no_source_season_snapshot_or_other_club_files_changed():
         for club in ("ashwood", "plenty", "reynella", "southside-east-caulfield")
     )
     allowed_exact = {
+        ".streamlit/config.toml",  # Shared app transport setting.
         "requirements.txt",
         "clubs/ashwood/data/metadata.json",
         "clubs/plenty/data/metadata.json",

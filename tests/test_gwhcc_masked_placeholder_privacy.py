@@ -246,7 +246,7 @@ def test_hawks_match_centre_fallback_masks_placeholder_rows_without_dropping_sco
         return output, int(mask.sum())
 
     monkeypatch.setattr(privacy, "mask_hawks_participant_rows", mask_test_token)
-    rows = layout.load_scorecard_record_rows.__wrapped__(("fallback-test",))["batting"]
+    rows = layout.load_scorecard_record_rows(("fallback-test", str(tmp_path)))["batting"]
     masked = rows[rows.player_name.eq(PRIVATE_PLAYER_LABEL)]
     assert len(masked) == 1
     assert int(masked.iloc[0].runs_scored) == 47

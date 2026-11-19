@@ -183,17 +183,17 @@ def current_privacy_overrides(
         return statuses, names
 
     status_index = _status_index(club_id)
-    for position, (_, row) in enumerate(frame.iterrows()):
-        canonical_id = row.get("canonical_player_id", "")
-        participant_id = next(
-            (row.get(column, "") for column in IDENTITY_COLUMNS[1:] if str(row.get(column, "")).strip()),
-            "",
-        )
-        status, public_name = _resolve_from_index(status_index, canonical_id, participant_id)
-        if status:
-            statuses.iat[position] = status
-            names.iat[position] = public_name
-    return statuses, names
+    columns = [column for column in IDENTITY_COLUMNS[1:] if column in frame]
+    identity = frame.reindex(columns=["canonical_player_id", *columns], fill_value="")
+    decisions = []
+    for canonical_id, *participants in identity.itertuples(index=False, name=None):
+        participant_id = next((value for value in participants if str(value).strip()), "")
+        decisions.append(_resolve_from_index(status_index, canonical_id, participant_id))
+    status_values, name_values = zip(*decisions)
+    return (
+        pd.Series(status_values, index=frame.index, dtype="string"),
+        pd.Series(name_values, index=frame.index, dtype="string"),
+    )
 
 
 def apply_current_privacy_presentation(

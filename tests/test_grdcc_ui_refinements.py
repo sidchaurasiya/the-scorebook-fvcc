@@ -40,6 +40,7 @@ def test_hall_of_fame_omits_player_career_provenance_notices(monkeypatch):
         ],
     })
     hall_of_fame_data = {'all_time': all_time, 'active_players': set(), 'detailed_tables': {}}
+    monkeypatch.setattr(layout, 'load_views', lambda _club: None)
     monkeypatch.setattr(layout, 'get_hall_of_fame_data', lambda *args, **kwargs: hall_of_fame_data)
     monkeypatch.setattr(layout, 'track_event_once', lambda *args, **kwargs: None)
     monkeypatch.setattr(layout, 'log_hof_timing', lambda *args, **kwargs: None)
