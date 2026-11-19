@@ -1,0 +1,86 @@
+<style>
+html[data-season-scope-pending] .st-key-season_scope_results { display: none !important; }
+</style>
+<script>
+(() => {
+  if (window.scorebookSeasonFeedback) return;
+  window.scorebookSeasonFeedback = true;
+  const controls = () => document.querySelector('.st-key-season_controls');
+  const results = () => document.querySelector('.st-key-season_scope_results');
+  const notice = document.createElement('div');
+  notice.className = 'page-note';
+  notice.setAttribute('role', 'status');
+  let pending;
+
+  function finish() {
+    pending = undefined;
+    delete document.documentElement.dataset.seasonScopePending;
+    notice.remove();
+  }
+
+  function reconcile() {
+    if (!pending) return;
+    const controlArea = controls();
+    if (!controlArea) { finish(); return; }
+    if (notice.previousElementSibling !== controlArea) controlArea.after(notice);
+    const region = results();
+    const unavailable = region?.querySelector('[data-season-unavailable]')?.dataset.seasonUnavailable;
+    if (unavailable && unavailable !== pending.priorError) { finish(); return; }
+    const complete = region?.querySelector('[data-season-complete]');
+    const scope = complete?.dataset;
+    if (!scope || scope.run === pending.priorRun || scope.seasonLabel !== pending.season ||
+        (pending.team && scope.teamLabel !== pending.team)) return;
+    if (scope.seasonComplete === 'True') { finish(); return; }
+
+    const feed = region.querySelector('[data-season-feed]');
+    if (feed?.dataset.run !== scope.run) return;
+    const activeTab = region.querySelector('[role=tab][aria-selected=true]');
+    for (const iframe of region.querySelectorAll('.st-key-full_stats_card iframe')) {
+      if (!iframe.closest('[role=tabpanel]:not([hidden])')) continue;
+      try {
+        const table = iframe.contentDocument?.querySelector('[data-season-table]');
+        if (table?.dataset.run === scope.run &&
+            table.dataset.seasonTable === activeTab?.textContent.trim().toLowerCase()) {
+          finish();
+          return;
+        }
+      } catch (error) {
+        // An iframe can be navigating. Its next load invokes this check again.
+      }
+    }
+  }
+
+  function select(option) {
+    if (!option) return;
+    const label = option.textContent.trim();
+    if (!label) return;
+    const input = [...(controls()?.querySelectorAll('input[role=combobox]') || [])]
+      .find(field => document.getElementById(field.getAttribute('aria-controls'))?.contains(option));
+    if (!input) return;
+    const filters = [...controls().querySelectorAll('input[role=combobox]')];
+    const scope = results()?.querySelector('[data-season-complete]')?.dataset;
+    const seasonChanged = input === filters[0];
+    const season = seasonChanged ? label : pending?.season ?? scope?.seasonLabel;
+    const team = seasonChanged ? undefined : label;
+    if (!season || (pending?.season === season && pending?.team === team)) return;
+    if (!pending && scope?.seasonLabel === season && (seasonChanged || scope.teamLabel === team)) return;
+    pending = {season, team, priorRun: scope?.run,
+      priorError: results()?.querySelector('[data-season-unavailable]')?.dataset.seasonUnavailable};
+    notice.textContent = 'Loading ' + season + (team ? ' · ' + team : '') + '…';
+    document.documentElement.dataset.seasonScopePending = '';
+    reconcile();
+  }
+
+  document.addEventListener('click', event => select(event.target.closest?.('[role=option]')), true);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && controls()?.contains(event.target)) {
+      select(document.getElementById(event.target.getAttribute('aria-activedescendant')));
+    }
+  }, true);
+  document.addEventListener('load', event => {
+    if (event.target instanceof HTMLIFrameElement) reconcile();
+  }, true);
+  new MutationObserver(reconcile).observe(document.body, {subtree: true, childList: true, attributes: true,
+    attributeFilter: ['data-run', 'data-season-complete', 'data-season-unavailable', 'aria-selected', 'srcdoc']});
+})();
+</script>

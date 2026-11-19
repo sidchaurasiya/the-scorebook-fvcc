@@ -3677,6 +3677,43 @@ def inject_theme() -> None:
             text-transform: uppercase;
         }
 
+        .st-key-grdcc_profile_region:has(.grdcc-profile-pending) .st-key-grdcc_profile_optional {
+            display: none;
+        }
+
+        .grdcc-profile-pending {
+            padding: 14px 16px;
+            border-left: 3px solid #2b66a0;
+            border-radius: 6px;
+            color: #154584;
+            background: #e4effc;
+            overflow-wrap: anywhere;
+        }
+
+        .grdcc-profile-primary .profile-name {
+            overflow-wrap: anywhere;
+            white-space: normal;
+        }
+
+        .grdcc-primary-figures {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr));
+            gap: 10px 16px;
+            margin: 16px 0 8px;
+        }
+
+        .grdcc-primary-figures dt {
+            font-size: .86rem;
+            font-weight: 600;
+        }
+
+        .grdcc-primary-figures dd {
+            margin: 2px 0 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
         .profile-name {
             color: var(--ink);
             font-size: 1.8rem;
