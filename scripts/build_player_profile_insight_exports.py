@@ -85,6 +85,15 @@ def main(argv: list[str] | None = None) -> int:
         print("Dry run complete. No files were written.")
         return 0
 
+    # The generic cache has no provenance for the governed Captain and historical
+    # partitions. Replacing these CSVs from it can invent or discard records.
+    if club_id in {"georges-river-district", "glen-waverley-hawks"}:
+        parser_message = (
+            f"{club_id}: generic profile export is unsafe for governed breakdowns. "
+            "Use the club-specific frozen-source rebuild or a verified disjoint increment."
+        )
+        raise SystemExit(parser_message)
+
     output_dir.mkdir(parents=True, exist_ok=True)
     frames = load_player_profile_scopes(club_id=club_id)
     if frames["matches"].empty:
