@@ -1,0 +1,49 @@
+/* Styles and zero-height event frames stay in the DOM without reserving row gaps. */
+.block-container > [data-testid="stVerticalBlock"]:has(.page-title)
+  > [data-testid="stElementContainer"]:has(~ * .page-title):is(
+    :has([data-testid="stMarkdownContainer"] > style),
+    :has(> [data-testid="stHtml"] > style),
+    [height="0px"]:has(> iframe)
+  ),
+.block-container > [data-testid="stVerticalBlock"]:has(.page-title)
+  > [data-testid="stLayoutWrapper"]:has(> .st-key-grdcc_page_analytics) {
+  display: none !important;
+}
+@media (min-width: 769px) {
+  .block-container > [data-testid="stVerticalBlock"]:has(.page-title)
+    > [data-testid="stLayoutWrapper"]:has(> .st-key-mobile_nav_fallback) {
+    display: none !important;
+  }
+}
+.recent-form-season {
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 700;
+}
+.player-hero-card.grdcc-profile-primary .profile-insight {
+  margin-top: 12px;
+}
+.hawks-round-dates .season-round-row {
+  grid-template-columns: 90px 56px minmax(145px,1.3fr) minmax(148px,1fr) minmax(115px,1fr) minmax(115px,1fr);
+}
+.hawks-round-dates .single-grade .season-round-row {
+  grid-template-columns: 90px 56px minmax(100px,1fr) minmax(145px,1.3fr) minmax(148px,1fr) minmax(115px,1fr) minmax(115px,1fr);
+}
+.hawks-round-dates .grdcc-round-date {
+  font-variant-numeric: tabular-nums;
+}
+.hawks-round-dates .grdcc-round-date time {
+  display: block;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .hawks-round-dates .season-round-row:not(.season-round-head) {
+    grid-template-columns: minmax(0, 1fr) minmax(88px, 34%);
+  }
+  .hawks-round-dates .season-round-row > .grdcc-round-date { grid-area: 1 / 1; }
+  .hawks-round-dates .season-round-row > strong { grid-area: 2 / 1; }
+  .hawks-round-dates .season-round-opponent { grid-area: 3 / 1; }
+  .hawks-round-dates .season-round-row > .season-round-result { grid-area: 1 / 2 / span 3; }
+  .hawks-round-dates .season-round-performer,
+  .hawks-round-dates .season-round-grade-cell { grid-column: 1 / -1; }
+}

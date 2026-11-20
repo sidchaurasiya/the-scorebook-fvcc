@@ -1,0 +1,16 @@
+{
+  "4c03a077-e7d5-405c-a828-6f05f63cb093": {
+    "status": "owner_approved",
+    "decision_date": "2026-11-20",
+    "scope": "whole_fixture",
+    "team_id": "5d2d88b2-5524-466f-9713-4c7f84a13d40",
+    "participant_id": "ac777130-399c-4a03-8533-dcc7c1d0017c",
+    "canonical_player_id": "raw_ac777130_399c_4a03_8533_dcc7c1d0017c",
+    "official_scorecard": "https://play.cricket.com.au/match/4c03a077-e7d5-405c-a828-6f05f63cb093?tab=scorecard",
+    "retained_scorecard_sha256": "df3b195018761afd0703315e3ff26335bf7dbd5fc877551883f148fec78a5958",
+    "source_captain_participant_ids": [
+      "cd62d17f-9d3c-41ec-a485-30df8c60016e",
+      "ac777130-399c-4a03-8533-dcc7c1d0017c"
+    ]
+  }
+}

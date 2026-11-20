@@ -96,9 +96,9 @@ def test_gwhcc_batting_tables_label_ball_by_ball_strike_rate(monkeypatch):
 
     displayed = layout.get_batting_display_df(pd.DataFrame())
 
-    assert displayed.loc[0, "Bat SR (ball-by-ball)"] == 107.5
-    assert "Bat SR" not in displayed.columns
-    assert layout.hof_detail_header_label("Bat SR") == "Bat SR (ball-by-ball)"
+    assert displayed.loc[0, "Bat SR"] == 107.5
+    assert "Bat SR (ball-by-ball)" not in displayed.columns
+    assert layout.hof_detail_header_label("Bat SR") == "Bat SR"
     assert peer_metric_note("Strike Rate (ball-by-ball)") == "Verified ball-by-ball only"
 
 

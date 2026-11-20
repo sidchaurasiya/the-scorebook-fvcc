@@ -8202,12 +8202,14 @@ def inject_theme() -> None:
         # Keep HTML blocks unindented when combining them in one Markdown slot.
         club_styles = club_styles.strip() + "\n<style>\n" + premium_css() + "\n</style>"
     customer_styles = Path(__file__).with_name("customer_layout.css").read_text()
+    if get_active_club_id() in {"georges-river-district", "glen-waverley-hawks"}:
+        customer_styles += Path(__file__).with_name("paying_club_feedback.css").read_text()
     st.markdown(club_styles + "\n<style>\n" + customer_styles + "\n</style>", unsafe_allow_html=True)
 
 
 def grdcc_hof_refinements_css() -> str:
-    """Approved pill pattern, limited to GRDCC's existing HOF control container."""
-    return """
+    """Apply the approved HOF pill geometry to GRDCC's discipline controls."""
+    css = """
         /* Streamlit can give the widget element an intrinsic content width. */
         .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control .st-key-hof_detailed_records_category,
         .st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control [data-testid="stButtonGroup"] {
@@ -8282,6 +8284,18 @@ def grdcc_hof_refinements_css() -> str:
             }
         }
     """
+    return (
+        css.replace(
+            ".st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control",
+            ":is(.st-key-hof_detailed_records_controls .st-key-hof_detailed_records_category_control,"
+            " .st-key-season_stats_georges-river-district,"
+            " .block-container:has(.player-profile-page) .st-key-player_profile_discipline_view_control"
+            " .st-key-player_profile_discipline_view)",
+        )
+        .replace('[role="radiogroup"]', ':is([role="radiogroup"], [role="tablist"])')
+        .replace('[data-testid="stButtonGroup"] button',
+                 ':is([data-testid="stButtonGroup"], [role="tablist"]) :is(button, [role="tab"])')
+    )
 
 
 def active_club_theme_css() -> str:

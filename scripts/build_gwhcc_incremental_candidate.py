@@ -22,6 +22,42 @@ sys.path.insert(0, str(ROOT))
 CLUB = 'glen-waverley-hawks'
 
 
+def resolve_fixture_captain(match_id: str, club_teams: list[dict], decisions: dict) -> str:
+    """Resolve the club-side captain while retaining ambiguity by default."""
+    decision = decisions.get(match_id)
+    if decision is not None:
+        if (decision["status"] != "owner_approved" or decision["scope"] != "whole_fixture"
+                or len(club_teams) != 1 or club_teams[0]["id"] != decision["team_id"]):
+            raise ValueError(f"Captaincy decision does not match the eligible Hawks side for {match_id}")
+        participants = [
+            player for player in club_teams[0].get("players", [])
+            if player.get("participantId") == decision["participant_id"]
+        ]
+        if len(participants) != 1:
+            raise ValueError(f"Approved captain does not match one scorecard participant for {match_id}")
+
+        from src.utils.player_identity import apply_player_identity_mapping, filter_public_player_rows
+
+        player = participants[0]
+        identity = apply_player_identity_mapping(pd.DataFrame([{
+            "player_id": player["participantId"], "player_name": player.get("name", ""),
+        }]), club_id=CLUB)
+        public = filter_public_player_rows(identity, club_id=CLUB)
+        if public.empty or public.iloc[0]["canonical_player_id"] != decision["canonical_player_id"]:
+            raise ValueError(f"Approved captain does not resolve to the governed public identity for {match_id}")
+        return str(public.iloc[0]["canonical_player_name"])
+
+    if len(club_teams) != 1:
+        return ""
+    captains = {
+        player.get("participantId"): player.get("name", "")
+        for player in club_teams[0].get("players", [])
+        if "Captain" in (player.get("roles") or [])
+    }
+    # Without a decision, multiple names cannot establish innings-level captaincy.
+    return next(iter(captains.values())) if len(captains) == 1 and None not in captains else ""
+
+
 def preserve_existing_profile_names(frame: pd.DataFrame, canonical_names: dict[str, str]) -> pd.DataFrame:
     """Keep raw source names while retaining the published label for known IDs."""
     if frame.empty or 'canonical_player_id' not in frame or 'canonical_player_name' not in frame:
@@ -271,6 +307,13 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
     club = baseline_root / 'clubs' / CLUB
     output_club = candidate / 'clubs' / CLUB
     shutil.copytree(club, output_club)
+    # A statistical seed may predate the owner decision. Use the reviewed
+    # policy from this checkout and retain it in the resulting candidate.
+    relative_decisions = Path('data/source/fixture_captaincy_decisions.json')
+    decision_path = ROOT / 'clubs' / CLUB / relative_decisions
+    captaincy_decisions = json.loads(decision_path.read_text()) if decision_path.is_file() else {}
+    if decision_path.is_file():
+        shutil.copy2(decision_path, output_club / relative_decisions)
     processed = output_club / 'data/processed'
     state = json.loads((bundle / 'task_state.json').read_text())
     season = state['season']
@@ -329,15 +372,18 @@ def build(bundle: Path, candidate: Path, cutoff: str, baseline_root: Path = ROOT
         payload = json.loads((cache / f"match={match['match_id']}__scorecard.json").read_text())['payload']
         weight = 0.5 if match_format(pd.Series(match)) == 'T20' else 1.0
         match_weights[str(match['match_id'])] = weight
-        for team in payload.get('teams', []):
-            if team['id'] not in selected[match['match_id']] or team['id'] not in team_ids:
-                continue
+        club_teams = [team for team in payload.get('teams', [])
+                      if team['id'] in selected[match['match_id']] and team['id'] in team_ids]
+        for team in club_teams:
             for player in team.get('players', []):
                 if player.get('participantId'):
                     participation.append({'match_id':match['match_id'], 'team_id':team['id'], 'player_id':player['participantId'],
                                           'player_name':player.get('name',''), 'weight':weight})
-                if 'Captain' in player.get('roles', []):
-                    captains[match['match_id']] = player.get('name','')
+        if match['match_id'] in captaincy_decisions and payload.get('id') != match['match_id']:
+            raise ValueError(f"Captaincy decision does not match the retained scorecard for {match['match_id']}")
+        captain = resolve_fixture_captain(match['match_id'], club_teams, captaincy_decisions)
+        if captain:
+            captains[match['match_id']] = captain
     appearances = pd.DataFrame(participation).drop_duplicates(['match_id','team_id','player_id'])
     appearances = add_verified_scorecard_appearances(
         appearances,
