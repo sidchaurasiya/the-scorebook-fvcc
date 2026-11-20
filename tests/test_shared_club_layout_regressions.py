@@ -92,7 +92,7 @@ def test_current_privacy_masking_is_resolved_with_each_active_club(monkeypatch):
     assert outputs[FVCC]["Not Outs"] == 1
     assert outputs[GRDCC]["Bat SR"] == 152.5
     assert outputs[FVCC]["Bat SR"] == 152.5
-    assert outputs[HAWKS]["Bat SR (ball-by-ball)"] == 152.5
+    assert outputs[HAWKS]["Bat SR"] == 152.5
     assert set(seen_clubs) == {GRDCC, HAWKS, FVCC}
 
 
