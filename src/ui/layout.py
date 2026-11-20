@@ -2774,10 +2774,12 @@ def build_season_round_rows(
 
     option_lookup = season_round_team_option_lookup(dashboard_data)
     player_lookup = season_round_player_lookup(dashboard_data)
+    club_id = get_active_club_id()
     playing_dates = {}
-    if get_active_club_id() == "georges-river-district":
+    if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
         from src.ui.grdcc_presentation import load_playing_date_index
-        date_path = get_processed_path("season_overview", "match_playing_dates.json", club_id="georges-river-district")
+        date_file = "match_playing_dates.json" if club_id == GRDCC_CLUB_ID else "round_match_playing_dates.json"
+        date_path = get_processed_path("season_overview", date_file, club_id=club_id)
         playing_dates = load_playing_date_index(str(date_path), date_path.stat().st_mtime_ns if date_path.exists() else 0)
     rows = []
     for _, match in rows_frame.iterrows():
@@ -2821,7 +2823,8 @@ def build_season_round_rows(
                 )
                 or '<span class="season-round-pending">Scorecard pending</span>',
                 "match_date": match.get("match_date"),
-                **({"playing_dates": playing_dates.get(match_id, [match.get("match_date")])} if get_active_club_id() == "georges-river-district" else {}),
+                **({"playing_dates": playing_dates.get(match_id, [match.get("match_date")])}
+                   if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks"} else {}),
             }
         )
     return sorted(
@@ -3026,11 +3029,13 @@ def season_display_grade_order(rows: list[dict[str, object]]) -> dict[str, tuple
 
 def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bool = False) -> str:
     grdcc = get_active_club_id() == "georges-river-district"
+    hawks = get_active_club_id() == "glen-waverley-hawks"
+    show_dates = grdcc or hawks
     grouped: dict[str, list[dict[str, object]]] = {}
     for row in rows:
         group_key = str(
             row.get("grade_slug")
-            if get_active_club_id() == "glen-waverley-hawks"
+            if hawks
             else row.get("grade")
             or "Team"
         )
@@ -3039,7 +3044,7 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
     ordering = season_display_grade_order(rows)
     ordered_groups = sorted(grouped.values(), key=lambda group: (
         hawks_season_grade_order(group[0].get("grade"), group[0].get("team_name"))
-        if get_active_club_id() == "glen-waverley-hawks"
+        if hawks
         else ordering[str(group[0].get("grade") or "Team").strip().casefold()],
         group[0].get("team_order", (True, float("inf"), 0)),
         str(group[0].get("grade_slug") or ""),
@@ -3052,17 +3057,16 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
         row_html = "".join(season_round_row_html(row, show_grade_column=show_grade_column) for row in grade_rows)
         head_cols = (
             '<div class="season-round-row season-round-head">'
-            + ('<span>Date</span>' if grdcc else '')
             + '<span>Round</span>'
             + ('<span>Grade</span>' if show_grade_column else "")
             + '<span>Opponent</span><span>Result</span><span>Best Batter</span><span>Best Bowler</span>'
             '</div>'
         )
-        if grdcc:
+        if show_dates:
             headings = ['Date', 'Round'] + (['Grade'] if show_grade_column else []) + ['Opponent', 'Result', 'Best Batter', 'Best Bowler']
             head_cols = '<div class="season-round-row season-round-head" role="row">' + ''.join('<span role="columnheader">' + label + '</span>' for label in headings) + '</div>'
         card_class = "season-round-grade-card single-grade" if show_grade_column else "season-round-grade-card"
-        table_attrs = f' role="table" aria-label="{html.escape(grade_label, quote=True)} round results"' if grdcc else ''
+        table_attrs = f' role="table" aria-label="{html.escape(grade_label, quote=True)} round results"' if show_dates else ''
         cards.append(
             f'<article class="{card_class}">'
             '<div class="season-round-grade-head">'
@@ -3082,7 +3086,7 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
             + ''.join(cards) + '</div></div>'
         )
     return (
-        '<div class="season-round-scroll-shell" data-season-round-scroll-shell="true">'
+        f'<div class="season-round-scroll-shell{" hawks-round-dates" if hawks else ""}" data-season-round-scroll-shell="true">'
         '<div class="season-round-panel-strip" '
         'data-layout="horizontal-grade-panels" data-internal-folder-selector="false">'
         f'{"".join(cards)}</div></div>'
@@ -3121,7 +3125,7 @@ def season_round_row_html(row: dict[str, object], show_grade_column: bool = Fals
     date_cell = ''
     cell_role = ''
     row_role = ''
-    if get_active_club_id() == "georges-river-district":
+    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
         from src.ui.grdcc_presentation import playing_dates_html
         cell_role = ' role="cell"'
         row_role = ' role="row" data-match-id="' + html.escape(str(row.get('match_id', '')), quote=True) + '"'
@@ -7164,17 +7168,19 @@ def render_achieved_milestones_view(
 def achievement_card_html(row: pd.Series) -> str:
     evidence = safe_record_text(row.get("Match Evidence"), "Exact match unavailable")
     match_id = safe_record_text(row.get("match_id"))
+    simplify = get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"} and row["Category"] in {"Runs", "Matches"}
     if evidence == "Verified exact match" and match_id:
         date, match_round, opponent = (
             safe_record_text(row.get(field)) for field in ("match_date_label", "round", "opponent")
         )
         fixture = ": ".join(text for text in (match_round, f"vs {opponent}" if opponent else "") if text)
         location = " - ".join(text for text in (date, fixture) if text)
-        details = (
-            f'<div class="achievement-meta">{html.escape(location)}</div>'
-            f'<div class="achievement-match-performance">{html.escape(safe_record_text(row.get("match_performance")))}</div>'
-            + scorecard_link_html(match_id, label="View scorecard ↗", page_slug="milestone", section_name="achieved")
-        )
+        details = f'<div class="achievement-meta">{html.escape(location)}</div>'
+        if not simplify:
+            details += f'<div class="achievement-match-performance">{html.escape(safe_record_text(row.get("match_performance")))}</div>'
+        details += scorecard_link_html(match_id, label="View scorecard ↗", page_slug="milestone", section_name="achieved")
+    elif simplify and row["Category"] == "Matches":
+        details = ""
     else:
         conflict = " · Available scorecards do not reconcile to the approved season total" if evidence.startswith("Source totals") else ""
         details = f'<div class="achievement-meta">{html.escape("Exact match unavailable" + conflict)}</div>'
@@ -11517,8 +11523,6 @@ def hof_detail_column_class(column: object) -> str:
 
 
 def hof_detail_header_label(column: object) -> str:
-    if get_active_club_id() == "glen-waverley-hawks" and str(column) == "Bat SR":
-        return "Bat SR (ball-by-ball)"
     return str(column)
 
 
@@ -12416,17 +12420,21 @@ def render_grdcc_selected_profile(
         if not selection_is_current():
             return
         detail_status.empty()
-        with earlier if earlier is not None else nullcontext():
-            if badges:
-                insight = player_profile_insight(detail_career, badges)
-                st.markdown(
-                    f'<p class="profile-insight">{html.escape(insight)}</p>'
-                    '<div class="profile-badges">' + "".join(
-                        f'<span class="{profile_badge_class(badge)}">{html.escape(badge)}</span>'
-                        for badge in badges
-                    ) + "</div>",
-                    unsafe_allow_html=True,
-                )
+        if badges:
+            insight = player_profile_insight(detail_career, badges)
+            insight_markup = (
+                f'<p class="profile-insight">{html.escape(insight)}</p>'
+                '<div class="profile-badges">' + "".join(
+                    f'<span class="{profile_badge_class(badge)}">{html.escape(badge)}</span>'
+                    for badge in badges
+                ) + "</div>"
+            )
+            if club_id == GRDCC_CLUB_ID:
+                render_grdcc_primary_card(primary, output=slot, report_only=report_only, coverage=coverage,
+                                          insight_markup=insight_markup)
+            else:
+                with earlier if earlier is not None else nullcontext():
+                    st.markdown(insight_markup, unsafe_allow_html=True)
         if is_scoped_historical(detail_career):
             render_player_breakdown(detail_career)
             render_reviewed_historical_sources(view, review_notice=False)
@@ -12436,10 +12444,11 @@ def render_grdcc_selected_profile(
 
 def render_grdcc_primary_card(
     career: pd.Series, *, output: DeltaGenerator | None = None, report_only: bool = False,
-    coverage: tuple[str, ...] = ("", ""),
+    coverage: tuple[str, ...] = ("", ""), insight_markup: str = "",
 ) -> None:
     target = st if output is None else output
-    markup = grdcc_primary_card_markup(career, report_only=report_only, coverage=coverage)
+    markup = grdcc_primary_card_markup(career, report_only=report_only, coverage=coverage,
+                                       insight_markup=insight_markup)
     choice = st.session_state.get("grdcc_profile_choice", "")
     if choice:
         markup = markup.replace("<section ", f'<section data-profile-choice="{html.escape(choice, quote=True)}" ', 1)
@@ -12448,6 +12457,7 @@ def render_grdcc_primary_card(
 
 def grdcc_primary_card_markup(
     career: pd.Series, *, report_only: bool = False, coverage: tuple[str, ...] = ("", ""),
+    insight_markup: str = "",
 ) -> str:
     scoped = is_scoped_historical(career)
     matches, _, proxy = historical_matches_display_text(career.astype(object).where(career.notna(), None))
@@ -12458,6 +12468,8 @@ def grdcc_primary_card_markup(
         (wicket_label, format_int(career.get("Wickets"))),
         ("Catches", format_int(career.get("Catches"))),
     ]
+    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
+        figures[0], figures[1] = figures[1], figures[0]
     metrics = "".join(
         f"<div><dt>{html.escape(label)}</dt><dd>{html.escape(value if value != '—' else 'Unavailable')}</dd></div>"
         for label, value in figures
@@ -12490,6 +12502,7 @@ def grdcc_primary_card_markup(
         f'<div class="profile-kicker">{"Historical record" if scoped else "Career summary"}</div>'
         f'<h2 class="profile-name">{html.escape(str(career["Player"]))}</h2>'
         f'<dl class="grdcc-primary-figures">{metrics}</dl>{scope_note}{source_link}{profile_coverage_markup(*coverage)}'
+        f'{insight_markup}'
         "</div></section>"
     )
 
@@ -16244,6 +16257,8 @@ def render_player_performance_breakdown(
                 label = profile_breakdown_label(selected)
                 source = normalize_player_profile_breakdown_groups(source)
                 rows = source.loc[source["dimension"].astype(str) == label].copy() if "dimension" in source else source.head(0)
+                if selected == "captain" and get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
+                    rows = verified_captain_profile_rows(rows, profile, profile_view)
                 # Bowling can need grade or season extras from the full view.
                 # The governed fallback also needs the full season or grade table.
                 if profile_view is None and (rows.empty or discipline == "Bowling"):
@@ -16253,6 +16268,18 @@ def render_player_performance_breakdown(
                     render_profile_breakdown_fallback_table(profile_view, selected, discipline)
                 else:
                     render_profile_performance_table(rows, label, discipline, profile_view)
+
+
+def verified_captain_profile_rows(
+    rows: pd.DataFrame, profile: dict | None, profile_view: dict[str, pd.DataFrame] | None,
+) -> pd.DataFrame:
+    player_id = player_profile_identity_keys(profile)[0] if profile is not None else ""
+    career = (profile_view or {}).get("career")
+    if not player_id and career is not None and not career.empty:
+        player_id = safe_record_text(career.iloc[0].get("canonical_player_id"))
+    if not player_id or "canonical_player_id" not in rows:
+        return rows.head(0)
+    return rows.loc[rows["canonical_player_id"].astype(str).eq(player_id)]
 
 
 def render_profile_breakdown_fallback_table(
@@ -16306,8 +16333,7 @@ def render_profile_breakdown_fallback_table(
 
 
 def profile_batting_table_columns(label_column: str) -> list[str]:
-    bat_sr_label = "Bat SR (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Bat SR"
-    columns = [label_column, "Innings", "Runs", "Bat Avg", bat_sr_label, "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
+    columns = [label_column, "Innings", "Runs", "Bat Avg", "Bat SR", "HS", "30s", "50s", "100s", "0s", "4s", "6s"]
     if get_active_club_id() == "glen-waverley-hawks":
         columns.insert(2, "NO")
     elif get_active_club_id() in {"fvcc", "georges-river-district"}:
@@ -16588,7 +16614,7 @@ def render_profile_performance_table(
         render_profile_empty_state(*profile_performance_empty_copy(label_column, discipline))
         return
     if discipline == "Batting":
-        strike_rate_label = "Strike Rate (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Strike Rate"
+        strike_rate_label = "Bat SR" if get_active_club_id() == "glen-waverley-hawks" else "Strike Rate"
         table = filtered.rename(
             columns={
                 "breakdown_label": label_column,
@@ -17060,7 +17086,7 @@ def profile_player_id_for_name(player_name: object) -> str:
     if index.empty:
         return ""
     matched = index[index["name"].map(player_name_match_key) == name_key]
-    if get_active_club_id() == "georges-river-district" and matched["id"].nunique() != 1:
+    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"} and matched["id"].nunique() != 1:
         return ""
     return str(matched.iloc[0]["id"]).strip() if not matched.empty else ""
 
@@ -17337,11 +17363,10 @@ def build_profile_total_row(source_rows: pd.DataFrame, columns: list[str], label
 
     if "Bat Avg" in columns:
         row["Bat Avg"] = divide_or_none(runs, outs)
-    bat_sr_column = "Bat SR (ball-by-ball)" if get_active_club_id() == "glen-waverley-hawks" else "Bat SR"
-    if bat_sr_column in columns:
+    if "Bat SR" in columns:
         sr_runs = sum_numeric_series(source_rows["BBB Runs"]) if "BBB Runs" in source_rows else 0
         sr_balls = sum_numeric_series(source_rows["BBB Balls"]) if "BBB Balls" in source_rows else 0
-        row[bat_sr_column] = divide_or_none(sr_runs * 100, sr_balls)
+        row["Bat SR"] = divide_or_none(sr_runs * 100, sr_balls)
     if "HS" in columns and "HS" in source_rows:
         row["HS"] = best_high_score_from_display_values(source_rows["HS"])
     if "Overs" in columns:
@@ -17507,11 +17532,18 @@ def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, obje
     )
     batting = player_recent_form_deploy_rows(sources.get("recent_form_batting", pd.DataFrame()), player_id, player_name_key)
     bowling = player_recent_form_deploy_rows(sources.get("recent_form_bowling", pd.DataFrame()), player_id, player_name_key)
+    seasons = {}
+    club_id = get_active_club_id()
+    if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
+        path = get_processed_path("all_seasons_matches.csv", club_id=club_id)
+        if path.is_file():
+            seasons = recent_form_match_seasons(str(path), path.stat().st_mtime_ns)
     return {
         "batting": [
             {
                 "label": safe_record_text(row.get("display_value"), "—"),
                 "classes": safe_record_text(row.get("chip_classes"), ""),
+                "season": seasons.get(str(row.get("match_id") or ""), ""),
             }
             for _, row in batting.head(10).iterrows()
         ],
@@ -17519,10 +17551,18 @@ def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, obje
             {
                 "label": safe_record_text(row.get("display_value"), "—"),
                 "classes": safe_record_text(row.get("chip_classes"), ""),
+                "season": seasons.get(str(row.get("match_id") or ""), ""),
             }
             for _, row in bowling.head(10).iterrows()
         ],
     }
+
+
+@st.cache_data(show_spinner=False)
+def recent_form_match_seasons(path: str, version: int) -> dict[str, str]:
+    matches = pd.read_csv(path, usecols=["match_id", "season"], dtype=str).dropna()
+    matches = matches.drop_duplicates()
+    return matches[~matches["match_id"].duplicated(keep=False)].set_index("match_id")["season"].to_dict()
 
 
 def player_recent_form_deploy_rows(frame: pd.DataFrame, player_id: str, player_name_key_value: str) -> pd.DataFrame:
@@ -17623,10 +17663,17 @@ def recent_form_line_html(
 ) -> str:
     meta_html = f"<small>{html.escape(meta)}</small>" if str(meta).strip() else ""
     if chips:
-        chip_html = "".join(
-            f'<span class="recent-form-chip {html.escape(tone)} {html.escape(str(chip.get("classes") or ""))}">{html.escape(str(chip.get("label") or "—"))}</span>'
-            for chip in chips
-        )
+        chip_html = ""
+        previous_season = None
+        for chip in chips:
+            season = str(chip.get("season") or "")
+            if season and season != previous_season:
+                chip_html += f'<span class="recent-form-season">{html.escape(season)}:</span>'
+            previous_season = season
+            chip_html += (
+                f'<span class="recent-form-chip {html.escape(tone)} {html.escape(str(chip.get("classes") or ""))}">'
+                f'{html.escape(str(chip.get("label") or "—"))}</span>'
+            )
     else:
         chip_html = f'<span class="recent-form-empty">{html.escape(empty_copy)}</span>'
     return (
@@ -21310,10 +21357,7 @@ def get_batting_display_df(df: pd.DataFrame) -> pd.DataFrame:
     )
     if club_id in {"fvcc", "georges-river-district", "glen-waverley-hawks"}:
         output = output.rename(columns={"NO": "Not Outs"})
-    output = apply_batting_detail_fallbacks(output)
-    if club_id == "glen-waverley-hawks":
-        output = output.rename(columns={"Bat SR": "Bat SR (ball-by-ball)"})
-    return output
+    return apply_batting_detail_fallbacks(output)
 
 def apply_batting_detail_fallbacks(df: pd.DataFrame) -> pd.DataFrame:
     output = df.copy()
