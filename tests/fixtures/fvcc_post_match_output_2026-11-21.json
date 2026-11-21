@@ -1,0 +1,68 @@
+{
+  "cutoff_melbourne": "2026-11-21T21:58:36.580867+11:00",
+  "source_manifest_sha256": "ee75e061757fef789fa71fa928b8f4d982cea8bde33c3738ff81933c5be9c234",
+  "public_profiles": 301,
+  "processed_rows_per_discipline": 2005,
+  "current_rows_per_discipline": 93,
+  "current_appearance_sum": 225,
+  "current_runs": 2361,
+  "current_wickets": 150,
+  "current_catches": 64,
+  "current_scorecard_rows": {
+    "batting": 236,
+    "bowling": 142,
+    "fielding": 62
+  },
+  "anonymous_scorecard_rows": {
+    "batting": 8,
+    "bowling": 4,
+    "fielding": 1
+  },
+  "anonymous_scorecard_figures": {
+    "batting_dismissals": {
+      "did not bat": 3,
+      "Caught": 2,
+      "Lbw": 2,
+      "not out": 1
+    },
+    "batting_numeric_totals": {
+      "runs": 31,
+      "balls": 88,
+      "fours": 3,
+      "sixes": 0
+    },
+    "bowling_numeric_totals": {
+      "overs": 22,
+      "maidens": 3,
+      "runs_conceded": 59,
+      "wickets": 4,
+      "wides": 3,
+      "no_balls": 3
+    },
+    "fielding_numeric_totals": {
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 1
+    }
+  },
+  "Paul Silva": {
+    "runs": 143,
+    "wickets": 6,
+    "matches": 5
+  },
+  "Arun Sevugan": {
+    "runs": 9,
+    "matches": 3
+  },
+  "appearance_provider_exceptions": {
+    "records": 2,
+    "provider_aggregate_matches": 8,
+    "verified_scorecard_appearances": 7
+  },
+  "new_fixture_ids": [
+    "46105be8-0e2c-4fba-87d1-1a61b2293deb",
+    "871e228c-bb79-4057-973d-1a6bcf1953dc",
+    "9d32071b-8352-486a-8de4-b6445116fb1e",
+    "a95e78f3-f275-4d37-8c9d-3684fd46aa96"
+  ]
+}

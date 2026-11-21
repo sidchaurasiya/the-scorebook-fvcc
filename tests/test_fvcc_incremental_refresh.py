@@ -115,7 +115,7 @@ def test_captain_historical_keys_survive_new_evidence():
 
 def test_verified_current_fvcc_contributions_and_excluded_cancelled_counts():
     root=Path(__file__).resolve().parents[1]/'clubs/fvcc/data/processed'
-    snapshot=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/fvcc_weekly_output_snapshot_2026-11-16.json').read_text())
+    snapshot=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/fvcc_post_match_output_2026-11-21.json').read_text())
     cases=[('batting','battingAggregate',snapshot['current_runs']),('bowling','bowlingWickets',snapshot['current_wickets']),('fielding','fieldingTotalCatches',snapshot['current_catches'])]
     for kind,metric,expected in cases:
         frame=pd.read_csv(root/f'all_seasons_{kind}.csv')
@@ -123,27 +123,27 @@ def test_verified_current_fvcc_contributions_and_excluded_cancelled_counts():
         assert len(frame)==snapshot['processed_rows_per_discipline']
         assert len(current)==snapshot['current_rows_per_discipline']
         assert current.matches.sum()==snapshot['current_appearance_sum']
-        assert current.matches.isin([1,2,3,4,5,6]).all()
+        assert current.matches.isin(range(1, 8)).all()
         assert current[metric].sum()==expected
         assert not current.duplicated(['season_id','team_id','player_id']).any()
 
-    # Two public participants have six exact eligible scorecard appearances.
-    # The provider aggregate reports seven for both; the accepted FVCC builder
-    # retains that source value separately and publishes the six finalized
+    # Two public participants have seven exact eligible scorecard appearances.
+    # The provider aggregate reports eight for both; the accepted FVCC builder
+    # retains that source value separately and publishes the seven finalized
     # scorecard appearances for this weekly candidate.
     batting = pd.read_csv(root/'all_seasons_batting.csv', low_memory=False)
     current_batting = batting[batting.season.eq('Summer 2026/27')]
-    six_match_rows = current_batting[current_batting.matches.eq(6)]
-    assert len(six_match_rows) == snapshot['six_appearance_provider_exceptions']['records'] == 2
-    assert six_match_rows.provider_appearance_count.eq(
-        snapshot['six_appearance_provider_exceptions']['provider_aggregate_matches']
+    seven_match_rows = current_batting[current_batting.matches.eq(7)]
+    assert len(seven_match_rows) == snapshot['appearance_provider_exceptions']['records'] == 2
+    assert seven_match_rows.provider_appearance_count.eq(
+        snapshot['appearance_provider_exceptions']['provider_aggregate_matches']
     ).all()
     scorecards = pd.read_csv(root/'all_seasons_scorecard_batting.csv', low_memory=False)
     scorecards = scorecards[scorecards.season.eq('Summer 2026/27')]
     scorecard_match_counts = scorecards.groupby('player_id').match_id.nunique()
-    for row in six_match_rows.itertuples(index=False):
+    for row in seven_match_rows.itertuples(index=False):
         assert int(scorecard_match_counts.loc[str(row.player_id)]) == snapshot[
-            'six_appearance_provider_exceptions'
+            'appearance_provider_exceptions'
         ]['verified_scorecard_appearances']
 
 
@@ -153,22 +153,22 @@ def test_current_fvcc_prepared_snapshot_matches_public_player_population():
     from src.utils.player_identity import filter_public_player_rows
     core=load_prepared_hall_of_fame_core('fvcc',layout.HALL_OF_FAME_DATA_VERSION)
     assert core is not None
-    assert len(core['all_time'])==298
-    assert len(filter_public_player_rows(core['all_time']))==298
+    assert len(core['all_time'])==301
+    assert len(filter_public_player_rows(core['all_time']))==301
     assert not core['all_time'].canonical_player_id.duplicated().any()
 
 
 def test_current_fvcc_new_player_and_hs_governance():
     from src.data.hall_of_fame_prepared import load_prepared_hall_of_fame_core
     from src.ui import layout
-    snapshot=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/fvcc_weekly_output_snapshot_2026-11-16.json').read_text())
+    snapshot=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/fvcc_post_match_output_2026-11-21.json').read_text())
     core=load_prepared_hall_of_fame_core('fvcc',layout.HALL_OF_FAME_DATA_VERSION)
     career=core['all_time'].set_index('Player')
-    assert career.loc['Paul Silva','Runs']==132
-    assert career.loc['Paul Silva','Wickets']==5
-    assert career.loc['Paul Silva','Matches']==4
-    assert career.loc['Arun Sevugan','Runs']==snapshot['new_public_identity_anchor']['Arun Sevugan']['runs']
-    assert career.loc['Arun Sevugan','Matches']==snapshot['new_public_identity_anchor']['Arun Sevugan']['matches']
+    assert career.loc['Paul Silva','Runs']==snapshot['Paul Silva']['runs']
+    assert career.loc['Paul Silva','Wickets']==snapshot['Paul Silva']['wickets']
+    assert career.loc['Paul Silva','Matches']==snapshot['Paul Silva']['matches']
+    assert career.loc['Arun Sevugan','Runs']==snapshot['Arun Sevugan']['runs']
+    assert career.loc['Arun Sevugan','Matches']==snapshot['Arun Sevugan']['matches']
     assert career.loc['Danny Singh','HS']=='144'
     assert career.loc['Kalpeshkumar Patel','HS']=='86*'
 

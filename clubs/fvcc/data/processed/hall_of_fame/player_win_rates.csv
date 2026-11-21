@@ -1,9 +1,4 @@
 player_key,canonical_player_id,canonical_player_name,display_player_name,player_name_key,matches_with_result,wins,losses,win_pct,source_coverage_note
-,,********,********,,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
-,,********,********,,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
-,,********,********,,4.0,0.0,4.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
-,,********,********,,7.0,0.0,7.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
-,,********,********,,10.0,2.0,8.0,20.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_9afec348_83dd_4631_a022_a981b7a860dd,raw_9afec348_83dd_4631_a022_a981b7a860dd,Aaron Dass,Aaron Dass,aaron dass,4.0,1.0,3.0,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_99a2913d_f3c5_472e_914f_f3e1985965ae,raw_99a2913d_f3c5_472e_914f_f3e1985965ae,Aashish Chhetri,Aashish Chhetri,aashish chhetri,7.0,5.0,2.0,71.42857142857143,Tracked deploy-safe summary from local match-centre result rows.
 raw_b46fff94_51db_41d1_a07b_121289188b77,raw_b46fff94_51db_41d1_a07b_121289188b77,Abdulnaazir Kizhakkekara Kunjumohammea,Abdulnaazir Kizhakkekara Kunjumohammea,abdulnaazir kizhakkekara kunjumohammea,4.0,1.0,3.0,25.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -178,7 +173,6 @@ raw_166ce4cc_438c_4e07_bcd8_075a5fb4a2df,raw_166ce4cc_438c_4e07_bcd8_075a5fb4a2d
 raw_decfd911_91b6_4187_9189_228e700a5f3e,raw_decfd911_91b6_4187_9189_228e700a5f3e,Ramesh Dhanasekaran,Ramesh Dhanasekaran,ramesh dhanasekaran,9.0,2.0,7.0,22.22222222222222,Tracked deploy-safe summary from local match-centre result rows.
 raw_a92797ea_27e9_4e9b_a208_69675617e1fd,raw_a92797ea_27e9_4e9b_a208_69675617e1fd,Rashmil Kandel,Rashmil Kandel,rashmil kandel,2.0,1.0,1.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_6d1c1c11_865a_4040_8d68_11714f8a350b,raw_6d1c1c11_865a_4040_8d68_11714f8a350b,Renuka Yapa,Renuka Yapa,renuka yapa,6.0,3.0,3.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
-ricky_singh,ricky_singh,Ricky Singh,Ricky Singh,ricky singh,118.0,37.0,81.0,31.35593220338983,Tracked deploy-safe summary from local match-centre result rows.
 raw_e8e09307_cdbd_4cdd_9a37_7e33f8fe0559,raw_e8e09307_cdbd_4cdd_9a37_7e33f8fe0559,Rizwan Mohammed,Rizwan Mohammed,rizwan mohammed,3.0,1.0,2.0,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_ef7c9041_7c28_4a26_b0ca_97e914007ca1,raw_ef7c9041_7c28_4a26_b0ca_97e914007ca1,Sachin Chand,Sachin Chand,sachin chand,38.0,17.0,21.0,44.73684210526316,Tracked deploy-safe summary from local match-centre result rows.
 raw_66a9b97d_dd6c_4803_97e6_522f47a07f27,raw_66a9b97d_dd6c_4803_97e6_522f47a07f27,Safi Alvi,Safi Alvi,safi alvi,2.0,1.0,1.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -208,7 +202,6 @@ raw_6247e610_2352_42dc_8154_5d7947cbefc4,raw_6247e610_2352_42dc_8154_5d7947cbefc
 raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,raw_400e4752_f236_4ca7_93e9_fd8ebee6735e,Siddhanth Chaurasiya,Siddhanth Chaurasiya,siddhanth chaurasiya,55.0,22.0,33.0,40.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_84f6c3cd_d9a6_4b30_a50b_a564ca4fbf0e,raw_84f6c3cd_d9a6_4b30_a50b_a564ca4fbf0e,Sravan Donthireddy,Sravan Donthireddy,sravan donthireddy,19.0,11.0,8.0,57.89473684210526,Tracked deploy-safe summary from local match-centre result rows.
 raw_3dfa0dea_884b_4796_ad97_a36c652b3012,raw_3dfa0dea_884b_4796_ad97_a36c652b3012,Sravan Kumar Saka,Sravan Kumar Saka,sravan kumar saka,2.0,1.0,1.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
-srikanth_para,srikanth_para,Srikanth Para,Srikanth Para,srikanth para,53.0,25.0,28.0,47.16981132075472,Tracked deploy-safe summary from local match-centre result rows.
 raw_e8cc4969_c61c_4dfb_8a8b_40c797bc8b87,raw_e8cc4969_c61c_4dfb_8a8b_40c797bc8b87,Sudeep Neupane,Sudeep Neupane,sudeep neupane,2.0,2.0,0.0,100.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_907b077c_fd68_4dcb_a237_481ef6d38f16,raw_907b077c_fd68_4dcb_a237_481ef6d38f16,Sujal Patel,Sujal Patel,sujal patel,7.0,4.0,3.0,57.142857142857146,Tracked deploy-safe summary from local match-centre result rows.
 raw_39703dab_67b8_428b_bb54_5bda14a14f10,raw_39703dab_67b8_428b_bb54_5bda14a14f10,Suman Kumar Polsani,Suman Kumar Polsani,suman kumar polsani,2.0,0.0,2.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
@@ -248,54 +241,64 @@ ashish_sharma,ashish_sharma,Ashish Sharma,Ashish Sharma,ashish sharma,47.0,13.0,
 raw_8d406a25_db4b_4b64_b592_84d73e3ad834,raw_8d406a25_db4b_4b64_b592_84d73e3ad834,Sainath Jamsandekar,Sainath Jamsandekar,sainath jamsandekar,3.0,0.0,3.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
 shrikant_sharma,shrikant_sharma,Shrikant Sharma,Shrikant Sharma,shrikant sharma,49.0,24.0,25.0,48.97959183673469,Tracked deploy-safe summary from local match-centre result rows.
 raw_548ed130_0c8c_49a5_939a_1edb2247cbd4,raw_548ed130_0c8c_49a5_939a_1edb2247cbd4,Vallabh Shelar,Vallabh Shelar,vallabh shelar,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_c3a31191_6c5e_438e_9288_354845031832,raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,abcin thomas,56.0,28.0,28.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
-faraz_khan,faraz_khan,Faraz Khan,Faraz Khan,faraz khan,28.0,13.0,15.0,46.42857142857143,Tracked deploy-safe summary from local match-centre result rows.
-raw_ae261d51_9af8_4123_b965_4adda74aafc6,raw_ae261d51_9af8_4123_b965_4adda74aafc6,Jacob Joseph,Jacob Joseph,jacob joseph,30.0,11.0,19.0,36.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
 raw_233ce417_fb9f_4e1e_a318_95e28e0e9d5a,raw_233ce417_fb9f_4e1e_a318_95e28e0e9d5a,Jaiveer Singh,Jaiveer Singh,jaiveer singh,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_17d58ef7_cae1_444e_adba_71c74067872b,raw_17d58ef7_cae1_444e_adba_71c74067872b,Prasad Rahate,Prasad Rahate,prasad rahate,28.0,16.0,12.0,57.142857142857146,Tracked deploy-safe summary from local match-centre result rows.
 raw_05220db1_794d_452c_b921_2eb60d032d21,raw_05220db1_794d_452c_b921_2eb60d032d21,Chinni Raja Ammela,Chinni Raja Ammela,chinni raja ammela,6.0,2.0,4.0,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
 raw_a4fd7cdc_34bb_4350_b595_edca28c4e127,raw_a4fd7cdc_34bb_4350_b595_edca28c4e127,Nichalous Silva,Nichalous Silva,nichalous silva,3.0,2.0,1.0,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
-raw_cde56a07_7d3e_47b6_9586_f49472e1ee4b,raw_cde56a07_7d3e_47b6_9586_f49472e1ee4b,Ranjan David,Ranjan David,ranjan david,4.0,2.0,2.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,raw_360868ba_5d2a_4f9f_9f3a_fff5756f3f85,Shandil Bhan,Shandil Bhan,shandil bhan,214.0,120.0,94.0,56.074766355140184,Tracked deploy-safe summary from local match-centre result rows.
-raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,siddhesh jitendrabhai vadapalli,31.0,13.0,18.0,41.935483870967744,Tracked deploy-safe summary from local match-centre result rows.
-vishnu_para,vishnu_para,Vishnu Para,Vishnu Para,vishnu para,73.0,31.0,42.0,42.465753424657535,Tracked deploy-safe summary from local match-centre result rows.
-raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,akshat bodele,111.0,65.0,46.0,58.55855855855856,Tracked deploy-safe summary from local match-centre result rows.
-balaji_viswanathan,balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,balaji viswanathan,70.0,39.0,31.0,55.714285714285715,Tracked deploy-safe summary from local match-centre result rows.
-baurel_d_mello,baurel_d_mello,Baurel D'Mello,Baurel D'Mello,baurel d mello,115.0,61.0,54.0,53.04347826086956,Tracked deploy-safe summary from local match-centre result rows.
-raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,benjamin frew,211.0,98.0,113.0,46.44549763033175,Tracked deploy-safe summary from local match-centre result rows.
-raw_6b74d336_b105_407c_b4ef_f68e2fba7862,raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,damandeep sehra,235.0,98.0,137.0,41.702127659574465,Tracked deploy-safe summary from local match-centre result rows.
-danny_singh,danny_singh,Danny Singh,Danny Singh,danny singh,322.0,160.0,162.0,49.68944099378882,Tracked deploy-safe summary from local match-centre result rows.
-raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,jai bhan,67.0,39.0,28.0,58.208955223880594,Tracked deploy-safe summary from local match-centre result rows.
-janaka_wijayakoon,janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,janaka wijayakoon,46.0,27.0,19.0,58.69565217391305,Tracked deploy-safe summary from local match-centre result rows.
-raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,jayasuriya sathiaseelan,23.0,14.0,9.0,60.869565217391305,Tracked deploy-safe summary from local match-centre result rows.
-raw_b8280555_96bf_427b_b15e_ecaf70081627,raw_b8280555_96bf_427b_b15e_ecaf70081627,Joel Spiller,Joel Spiller,joel spiller,4.0,1.0,3.0,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_7b43011a_eb05_448f_93c9_644481721a69,raw_7b43011a_eb05_448f_93c9_644481721a69,Jude Mendiz,Jude Mendiz,jude mendiz,37.0,25.0,12.0,67.56756756756756,Tracked deploy-safe summary from local match-centre result rows.
-kieran_bhan,kieran_bhan,Kieran Bhan,Kieran Bhan,kieran bhan,48.0,20.0,28.0,41.666666666666664,Tracked deploy-safe summary from local match-centre result rows.
-mayur_mohan,mayur_mohan,Mayur Mohan,Mayur Mohan,mayur mohan,45.0,17.0,28.0,37.77777777777778,Tracked deploy-safe summary from local match-centre result rows.
-raw_7512873c_b6b6_49fe_80ff_3733b5abd044,raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,mohaneesh pitre,46.0,17.0,29.0,36.95652173913044,Tracked deploy-safe summary from local match-centre result rows.
-nikhil_sawant,nikhil_sawant,Nikhil Sawant,Nikhil Sawant,nikhil sawant,63.0,33.0,30.0,52.38095238095238,Tracked deploy-safe summary from local match-centre result rows.
-raw_cc39f432_071b_4940_b2d8_1a8218d46cc3,raw_cc39f432_071b_4940_b2d8_1a8218d46cc3,Paul Silva,Paul Silva,paul silva,4.0,3.0,1.0,75.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc,raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc,Rashim Kandel,Rashim Kandel,rashim kandel,8.0,5.0,3.0,62.5,Tracked deploy-safe summary from local match-centre result rows.
-ravi_chowdary,ravi_chowdary,Ravi Chowdary,Ravi Chowdary,ravi chowdary,64.0,24.0,40.0,37.5,Tracked deploy-safe summary from local match-centre result rows.
-raw_232cc042_1e4c_423a_9190_e3432698c99d,raw_232cc042_1e4c_423a_9190_e3432698c99d,Reuben Sharan,Reuben Sharan,reuben sharan,160.0,64.0,96.0,40.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,reuel sharan,230.0,108.0,122.0,46.95652173913044,Tracked deploy-safe summary from local match-centre result rows.
-raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,sajendra shrestha,110.0,60.0,50.0,54.54545454545455,Tracked deploy-safe summary from local match-centre result rows.
-raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,santhosh kumar chappidi,91.0,42.0,49.0,46.15384615384615,Tracked deploy-safe summary from local match-centre result rows.
-raw_d7f93a87_6b05_4830_a524_41457fd00603,raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,shaun vikash,240.0,123.0,117.0,51.25,Tracked deploy-safe summary from local match-centre result rows.
 shivnyl_naidu,shivnyl_naidu,Shivnyl Naidu,Shivnyl Naidu,shivnyl naidu,193.0,81.0,112.0,41.968911917098445,Tracked deploy-safe summary from local match-centre result rows.
 raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,raw_643f54d7_4a3b_4c87_bf4c_b5d277365b72,Sohail Ahmed,Sohail Ahmed,sohail ahmed,18.0,10.0,8.0,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
-vinay_sharma,vinay_sharma,Vinay Sharma,Vinay Sharma,vinay sharma,227.0,117.0,110.0,51.541850220264315,Tracked deploy-safe summary from local match-centre result rows.
-raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,vineeth yamani,49.0,24.0,25.0,48.97959183673469,Tracked deploy-safe summary from local match-centre result rows.
-vinit_naidu,vinit_naidu,Vinit Naidu,Vinit Naidu,vinit naidu,273.0,142.0,131.0,52.014652014652015,Tracked deploy-safe summary from local match-centre result rows.
-wajhi_syed,wajhi_syed,Wajhi Syed,Wajhi Syed,wajhi syed,44.0,20.0,24.0,45.45454545454545,Tracked deploy-safe summary from local match-centre result rows.
-raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,Arun Sevugan,Arun Sevugan,arun sevugan,2.0,1.0,1.0,50.0,Tracked deploy-safe summary from local match-centre result rows.
-raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,bikash naik,18.0,7.0,11.0,38.888888888888886,Tracked deploy-safe summary from local match-centre result rows.
 damien_vikash,damien_vikash,Damien Vikash,Damien Vikash,damien vikash,160.0,77.0,83.0,48.125,Tracked deploy-safe summary from local match-centre result rows.
-feroz_hassan,feroz_hassan,Feroz Hassan,Feroz Hassan,feroz hassan,190.0,64.0,126.0,33.68421052631579,Tracked deploy-safe summary from local match-centre result rows.
 kalpeshkumar_patel,kalpeshkumar_patel,Kalpeshkumar Patel,Kalpeshkumar Patel,kalpeshkumar patel,191.0,110.0,81.0,57.59162303664922,Tracked deploy-safe summary from local match-centre result rows.
-raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,kunwardeep bedi,14.0,9.0,5.0,64.28571428571429,Tracked deploy-safe summary from local match-centre result rows.
 raw_661bdd19_e67a_4978_a255_36e16789ab1f,raw_661bdd19_e67a_4978_a255_36e16789ab1f,Nitin Tanwar,Nitin Tanwar,nitin tanwar,240.0,118.0,122.0,49.166666666666664,Tracked deploy-safe summary from local match-centre result rows.
-raw_8a856bda_2a2c_416f_948f_f80829c83646,raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,padmanabhan srinivasan,32.0,8.0,24.0,25.0,Tracked deploy-safe summary from local match-centre result rows.
 raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,raw_f6dd9552_fbc5_4490_ac27_b50ff948f8f5,Priyanshu Tomar,Priyanshu Tomar,priyanshu tomar,52.0,19.0,33.0,36.53846153846154,Tracked deploy-safe summary from local match-centre result rows.
-sandeep_gill,sandeep_gill,Sandeep Gill,Sandeep Gill,sandeep gill,85.0,45.0,40.0,52.94117647058823,Tracked deploy-safe summary from local match-centre result rows.
 raw_1876a444_275e_4ae9_92aa_1eebf5760833,raw_1876a444_275e_4ae9_92aa_1eebf5760833,Syedzainulla Abedin,Syedzainulla Abedin,syedzainulla abedin,6.0,2.0,4.0,33.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
+raw_c3a31191_6c5e_438e_9288_354845031832,raw_c3a31191_6c5e_438e_9288_354845031832,Abcin Thomas,Abcin Thomas,abcin thomas,57.0,28.0,29.0,49.12280701754386,Tracked deploy-safe summary from local match-centre result rows.
+raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,raw_f4eec6b0_c7ff_4771_b4f1_8ea5865e1186,Akshat Bodele,Akshat Bodele,akshat bodele,112.0,65.0,47.0,58.035714285714285,Tracked deploy-safe summary from local match-centre result rows.
+raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,raw_ba0b8dfa_76e1_4923_bf43_7c9d0077396b,Arun Sevugan,Arun Sevugan,arun sevugan,3.0,2.0,1.0,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
+raw_9ef7c36e_b037_4197_902b_3c5f750c915c,raw_9ef7c36e_b037_4197_902b_3c5f750c915c,Ayush Neupane,Ayush Neupane,ayush neupane,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
+balaji_viswanathan,balaji_viswanathan,Balaji Viswanathan,Balaji Viswanathan,balaji viswanathan,71.0,39.0,32.0,54.929577464788736,Tracked deploy-safe summary from local match-centre result rows.
+baurel_d_mello,baurel_d_mello,Baurel D'Mello,Baurel D'Mello,baurel d mello,116.0,61.0,55.0,52.58620689655172,Tracked deploy-safe summary from local match-centre result rows.
+raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,raw_162cce2f_a5bb_451f_ab68_d7a037f018ee,Benjamin Frew,Benjamin Frew,benjamin frew,212.0,98.0,114.0,46.22641509433962,Tracked deploy-safe summary from local match-centre result rows.
+raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,raw_a0711994_f960_4c71_bea5_c9dd9f3edd83,Bikash Naik,Bikash Naik,bikash naik,19.0,8.0,11.0,42.10526315789474,Tracked deploy-safe summary from local match-centre result rows.
+raw_6b74d336_b105_407c_b4ef_f68e2fba7862,raw_6b74d336_b105_407c_b4ef_f68e2fba7862,Damandeep Sehra,Damandeep Sehra,damandeep sehra,236.0,98.0,138.0,41.52542372881356,Tracked deploy-safe summary from local match-centre result rows.
+danny_singh,danny_singh,Danny Singh,Danny Singh,danny singh,323.0,160.0,163.0,49.53560371517028,Tracked deploy-safe summary from local match-centre result rows.
+faraz_khan,faraz_khan,Faraz Khan,Faraz Khan,faraz khan,29.0,13.0,16.0,44.827586206896555,Tracked deploy-safe summary from local match-centre result rows.
+feroz_hassan,feroz_hassan,Feroz Hassan,Feroz Hassan,feroz hassan,191.0,65.0,126.0,34.031413612565444,Tracked deploy-safe summary from local match-centre result rows.
+raw_ae261d51_9af8_4123_b965_4adda74aafc6,raw_ae261d51_9af8_4123_b965_4adda74aafc6,Jacob Joseph,Jacob Joseph,jacob joseph,31.0,12.0,19.0,38.70967741935484,Tracked deploy-safe summary from local match-centre result rows.
+raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,raw_7cccf3c2_52d5_4dfc_91c8_9664f27ac72b,Jai Bhan,Jai Bhan,jai bhan,68.0,39.0,29.0,57.35294117647059,Tracked deploy-safe summary from local match-centre result rows.
+raw_f98d21ef_bddd_406f_bbea_ea0fbc3a630b,raw_f98d21ef_bddd_406f_bbea_ea0fbc3a630b,Jaiveer Singh Gill,Jaiveer Singh Gill,jaiveer singh gill,1.0,1.0,0.0,100.0,Tracked deploy-safe summary from local match-centre result rows.
+janaka_wijayakoon,janaka_wijayakoon,Janaka Wijayakoon,Janaka Wijayakoon,janaka wijayakoon,47.0,27.0,20.0,57.4468085106383,Tracked deploy-safe summary from local match-centre result rows.
+raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,raw_e76d9035_6b7f_48f7_8b69_e8b983e82080,Jayasuriya Sathiaseelan,Jayasuriya Sathiaseelan,jayasuriya sathiaseelan,24.0,14.0,10.0,58.333333333333336,Tracked deploy-safe summary from local match-centre result rows.
+raw_b8280555_96bf_427b_b15e_ecaf70081627,raw_b8280555_96bf_427b_b15e_ecaf70081627,Joel Spiller,Joel Spiller,joel spiller,5.0,1.0,4.0,20.0,Tracked deploy-safe summary from local match-centre result rows.
+kieran_bhan,kieran_bhan,Kieran Bhan,Kieran Bhan,kieran bhan,49.0,20.0,29.0,40.816326530612244,Tracked deploy-safe summary from local match-centre result rows.
+raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,raw_242a967d_4a20_4cc8_9a32_bf2121ad6d26,Kunwardeep Bedi,Kunwardeep Bedi,kunwardeep bedi,15.0,10.0,5.0,66.66666666666667,Tracked deploy-safe summary from local match-centre result rows.
+raw_d9077c6e_e8c8_492a_b8e0_6e6e5fc78b3b,raw_d9077c6e_e8c8_492a_b8e0_6e6e5fc78b3b,Kushu Kalwar,Kushu Kalwar,kushu kalwar,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
+mayur_mohan,mayur_mohan,Mayur Mohan,Mayur Mohan,mayur mohan,46.0,17.0,29.0,36.95652173913044,Tracked deploy-safe summary from local match-centre result rows.
+raw_7512873c_b6b6_49fe_80ff_3733b5abd044,raw_7512873c_b6b6_49fe_80ff_3733b5abd044,Mohaneesh Pitre,Mohaneesh Pitre,mohaneesh pitre,47.0,17.0,30.0,36.170212765957444,Tracked deploy-safe summary from local match-centre result rows.
+nikhil_sawant,nikhil_sawant,Nikhil Sawant,Nikhil Sawant,nikhil sawant,64.0,33.0,31.0,51.5625,Tracked deploy-safe summary from local match-centre result rows.
+raw_8a856bda_2a2c_416f_948f_f80829c83646,raw_8a856bda_2a2c_416f_948f_f80829c83646,Padmanabhan Srinivasan,Padmanabhan Srinivasan,padmanabhan srinivasan,33.0,9.0,24.0,27.272727272727273,Tracked deploy-safe summary from local match-centre result rows.
+raw_cc39f432_071b_4940_b2d8_1a8218d46cc3,raw_cc39f432_071b_4940_b2d8_1a8218d46cc3,Paul Silva,Paul Silva,paul silva,5.0,3.0,2.0,60.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_cde56a07_7d3e_47b6_9586_f49472e1ee4b,raw_cde56a07_7d3e_47b6_9586_f49472e1ee4b,Ranjan David,Ranjan David,ranjan david,5.0,3.0,2.0,60.0,Tracked deploy-safe summary from local match-centre result rows.
+raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc,raw_f4637a59_f96c_4cc2_853a_ff2bd9fb5afc,Rashim Kandel,Rashim Kandel,rashim kandel,9.0,5.0,4.0,55.55555555555556,Tracked deploy-safe summary from local match-centre result rows.
+ravi_chowdary,ravi_chowdary,Ravi Chowdary,Ravi Chowdary,ravi chowdary,65.0,24.0,41.0,36.92307692307692,Tracked deploy-safe summary from local match-centre result rows.
+raw_232cc042_1e4c_423a_9190_e3432698c99d,raw_232cc042_1e4c_423a_9190_e3432698c99d,Reuben Sharan,Reuben Sharan,reuben sharan,161.0,64.0,97.0,39.75155279503105,Tracked deploy-safe summary from local match-centre result rows.
+raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,raw_ab033f7b_82e2_4044_b0cb_9024cf56db51,Reuel Sharan,Reuel Sharan,reuel sharan,231.0,108.0,123.0,46.753246753246756,Tracked deploy-safe summary from local match-centre result rows.
+ricky_singh,ricky_singh,Ricky Singh,Ricky Singh,ricky singh,119.0,38.0,81.0,31.932773109243698,Tracked deploy-safe summary from local match-centre result rows.
+raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,raw_2c167bd3_c65c_4abd_8fa8_7351cfe9aa59,Sajendra Shrestha,Sajendra Shrestha,sajendra shrestha,111.0,60.0,51.0,54.054054054054056,Tracked deploy-safe summary from local match-centre result rows.
+sandeep_gill,sandeep_gill,Sandeep Gill,Sandeep Gill,sandeep gill,86.0,46.0,40.0,53.48837209302326,Tracked deploy-safe summary from local match-centre result rows.
+raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,raw_bd3267a9_62a4_4ef6_9c96_ca89ef724e76,Santhosh Kumar Chappidi,Santhosh Kumar Chappidi,santhosh kumar chappidi,92.0,42.0,50.0,45.65217391304348,Tracked deploy-safe summary from local match-centre result rows.
+raw_d7f93a87_6b05_4830_a524_41457fd00603,raw_d7f93a87_6b05_4830_a524_41457fd00603,Shaun Vikash,Shaun Vikash,shaun vikash,241.0,123.0,118.0,51.03734439834025,Tracked deploy-safe summary from local match-centre result rows.
+raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,raw_cefd9f7d_2787_4b4c_9a13_4e1d0d434ff8,Siddhesh Jitendrabhai Vadapalli,Siddhesh Jitendrabhai Vadapalli,siddhesh jitendrabhai vadapalli,32.0,13.0,19.0,40.625,Tracked deploy-safe summary from local match-centre result rows.
+srikanth_para,srikanth_para,Srikanth Para,Srikanth Para,srikanth para,54.0,25.0,29.0,46.2962962962963,Tracked deploy-safe summary from local match-centre result rows.
+vinay_sharma,vinay_sharma,Vinay Sharma,Vinay Sharma,vinay sharma,228.0,117.0,111.0,51.31578947368421,Tracked deploy-safe summary from local match-centre result rows.
+raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,raw_0ceda279_1aad_42cd_a342_75c5faf3ad14,Vineeth Yamani,Vineeth Yamani,vineeth yamani,50.0,24.0,26.0,48.0,Tracked deploy-safe summary from local match-centre result rows.
+vinit_naidu,vinit_naidu,Vinit Naidu,Vinit Naidu,vinit naidu,274.0,142.0,132.0,51.824817518248175,Tracked deploy-safe summary from local match-centre result rows.
+vishnu_para,vishnu_para,Vishnu Para,Vishnu Para,vishnu para,74.0,31.0,43.0,41.891891891891895,Tracked deploy-safe summary from local match-centre result rows.
+wajhi_syed,wajhi_syed,Wajhi Syed,Wajhi Syed,wajhi syed,45.0,20.0,25.0,44.44444444444444,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,1.0,0.0,1.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,4.0,0.0,4.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,7.0,0.0,7.0,0.0,Tracked deploy-safe summary from local match-centre result rows.
+,,********,********,,10.0,2.0,8.0,20.0,Tracked deploy-safe summary from local match-centre result rows.
