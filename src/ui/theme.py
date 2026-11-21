@@ -8202,7 +8202,7 @@ def inject_theme() -> None:
         # Keep HTML blocks unindented when combining them in one Markdown slot.
         club_styles = club_styles.strip() + "\n<style>\n" + premium_css() + "\n</style>"
     customer_styles = Path(__file__).with_name("customer_layout.css").read_text()
-    if get_active_club_id() in {"georges-river-district", "glen-waverley-hawks"}:
+    if get_active_club_id() in {"georges-river-district", "glen-waverley-hawks", "fvcc"}:
         customer_styles += Path(__file__).with_name("paying_club_feedback.css").read_text()
     st.markdown(club_styles + "\n<style>\n" + customer_styles + "\n</style>", unsafe_allow_html=True)
 

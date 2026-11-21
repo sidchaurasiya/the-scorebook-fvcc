@@ -156,7 +156,7 @@ def test_app_facing_scorecard_builder_applies_only_explicit_fvcc_guard():
 
 
 def test_accepted_fvcc_scorecard_rows_have_no_reused_tokens_and_keep_source_figures():
-    snapshot = json.loads((ROOT / "tests/fixtures/fvcc_weekly_output_snapshot_2026-11-16.json").read_text())
+    snapshot = json.loads((ROOT / "tests/fixtures/fvcc_post_match_output_2026-11-21.json").read_text())
     batting = pd.read_csv(FVCC_PROCESSED / "all_seasons_scorecard_batting.csv", dtype=str, keep_default_na=False)
     bowling = pd.read_csv(FVCC_PROCESSED / "all_seasons_scorecard_bowling.csv", dtype=str, keep_default_na=False)
     fielding = pd.read_csv(FVCC_PROCESSED / "all_seasons_scorecard_fielding.csv", dtype=str, keep_default_na=False)
