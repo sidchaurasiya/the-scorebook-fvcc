@@ -394,6 +394,20 @@ def add_first_innings_result_context(matches: pd.DataFrame, payloads: list[dict]
     return output
 
 
+def update_fvcc_round_playing_dates(path: Path, payloads: list[dict]) -> None:
+    """Keep the official local playing dates by exact fixture identity."""
+    matches = json.loads(path.read_text())['matches'] if path.is_file() else {}
+    for payload in payloads:
+        dates = set()
+        for session in payload.get('matchSchedule', []):
+            stamp = pd.to_datetime(session.get('startDateTime'), errors='coerce')
+            if pd.notna(stamp) and stamp.tzinfo is not None:
+                dates.add(stamp.tz_convert('Australia/Melbourne').date().isoformat())
+        if dates:
+            matches[str(payload['id'])] = {'playing_dates': sorted(dates)}
+    path.write_text(json.dumps({'schema_version': 1, 'matches': matches}, indent=2, sort_keys=True) + '\n')
+
+
 def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     if candidate.exists() or candidate == ROOT or ROOT in candidate.parents:
         raise ValueError('Candidate must be a new outside-repository directory')
@@ -687,6 +701,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                    latest_match_round=latest.get('round_short_name',latest.get('round_name','')),
                    latest_match_opponent=opponent,latest_match_result=latest.get('result_text',''),latest_statistical_season=season['name'])
     version_path.write_text(json.dumps(version,indent=2)+'\n')
+    update_fvcc_round_playing_dates(processed/'season_overview/round_match_playing_dates.json', payloads)
+
     from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
 
     privacy = sanitize_public_processed_tree(processed, club_id=CLUB)

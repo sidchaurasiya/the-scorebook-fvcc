@@ -57,7 +57,7 @@
     "Current aggregate source values were independently rechecked at the final retrieval; no value changes from the prior snapshot.",
     "Retained anonymous scorecard rows are restored generically from exact current scorecard evidence; no profile or identity attribution is created."
   ],
-  "validator_status": "pending",
+  "validator_status": "pass",
   "last_source_correction": {
     "match_id": "d454dfb9-b61d-4382-b6d2-f75594461198",
     "source_sha256": "f1c049ffc3234e512f9379687385472d1e27fa4a6b4fef7c1a5a6ac843b29894",

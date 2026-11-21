@@ -2776,7 +2776,7 @@ def build_season_round_rows(
     player_lookup = season_round_player_lookup(dashboard_data)
     club_id = get_active_club_id()
     playing_dates = {}
-    if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
+    if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks", "fvcc"}:
         from src.ui.grdcc_presentation import load_playing_date_index
         date_file = "match_playing_dates.json" if club_id == GRDCC_CLUB_ID else "round_match_playing_dates.json"
         date_path = get_processed_path("season_overview", date_file, club_id=club_id)
@@ -2824,7 +2824,7 @@ def build_season_round_rows(
                 or '<span class="season-round-pending">Scorecard pending</span>',
                 "match_date": match.get("match_date"),
                 **({"playing_dates": playing_dates.get(match_id, [match.get("match_date")])}
-                   if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks"} else {}),
+                   if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks", "fvcc"} else {}),
             }
         )
     return sorted(
@@ -3030,7 +3030,8 @@ def season_display_grade_order(rows: list[dict[str, object]]) -> dict[str, tuple
 def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bool = False) -> str:
     grdcc = get_active_club_id() == "georges-river-district"
     hawks = get_active_club_id() == "glen-waverley-hawks"
-    show_dates = grdcc or hawks
+    fvcc = active_club_is_fvcc()
+    show_dates = grdcc or hawks or fvcc
     grouped: dict[str, list[dict[str, object]]] = {}
     for row in rows:
         group_key = str(
@@ -3085,8 +3086,9 @@ def season_round_cards_html(rows: list[dict[str, object]], show_grade_column: bo
             '<div class="season-round-panel-strip" data-grdcc-grade-strip="true" tabindex="0" role="region" aria-label="Round tables by grade">'
             + ''.join(cards) + '</div></div>'
         )
+    date_class = " hawks-round-dates" if hawks else " fvcc-round-dates" if fvcc else ""
     return (
-        f'<div class="season-round-scroll-shell{" hawks-round-dates" if hawks else ""}" data-season-round-scroll-shell="true">'
+        f'<div class="season-round-scroll-shell{date_class}" data-season-round-scroll-shell="true">'
         '<div class="season-round-panel-strip" '
         'data-layout="horizontal-grade-panels" data-internal-folder-selector="false">'
         f'{"".join(cards)}</div></div>'
@@ -3125,7 +3127,7 @@ def season_round_row_html(row: dict[str, object], show_grade_column: bool = Fals
     date_cell = ''
     cell_role = ''
     row_role = ''
-    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
+    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks", "fvcc"}:
         from src.ui.grdcc_presentation import playing_dates_html
         cell_role = ' role="cell"'
         row_role = ' role="row" data-match-id="' + html.escape(str(row.get('match_id', '')), quote=True) + '"'
@@ -7168,7 +7170,10 @@ def render_achieved_milestones_view(
 def achievement_card_html(row: pd.Series) -> str:
     evidence = safe_record_text(row.get("Match Evidence"), "Exact match unavailable")
     match_id = safe_record_text(row.get("match_id"))
-    simplify = get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"} and row["Category"] in {"Runs", "Matches"}
+    fvcc = active_club_is_fvcc()
+    simplify = fvcc or (
+        get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"} and row["Category"] in {"Runs", "Matches"}
+    )
     if evidence == "Verified exact match" and match_id:
         date, match_round, opponent = (
             safe_record_text(row.get(field)) for field in ("match_date_label", "round", "opponent")
@@ -7179,7 +7184,7 @@ def achievement_card_html(row: pd.Series) -> str:
         if not simplify:
             details += f'<div class="achievement-match-performance">{html.escape(safe_record_text(row.get("match_performance")))}</div>'
         details += scorecard_link_html(match_id, label="View scorecard ↗", page_slug="milestone", section_name="achieved")
-    elif simplify and row["Category"] == "Matches":
+    elif fvcc or (simplify and row["Category"] == "Matches"):
         details = ""
     else:
         conflict = " · Available scorecards do not reconcile to the approved season total" if evidence.startswith("Source totals") else ""
@@ -12429,7 +12434,7 @@ def render_grdcc_selected_profile(
                     for badge in badges
                 ) + "</div>"
             )
-            if club_id == GRDCC_CLUB_ID:
+            if club_id in {GRDCC_CLUB_ID, "fvcc"}:
                 render_grdcc_primary_card(primary, output=slot, report_only=report_only, coverage=coverage,
                                           insight_markup=insight_markup)
             else:
@@ -12468,7 +12473,7 @@ def grdcc_primary_card_markup(
         (wicket_label, format_int(career.get("Wickets"))),
         ("Catches", format_int(career.get("Catches"))),
     ]
-    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
+    if get_active_club_id() in {GRDCC_CLUB_ID, "glen-waverley-hawks", "fvcc"}:
         figures[0], figures[1] = figures[1], figures[0]
     metrics = "".join(
         f"<div><dt>{html.escape(label)}</dt><dd>{html.escape(value if value != '—' else 'Unavailable')}</dd></div>"
@@ -17534,8 +17539,11 @@ def build_player_recent_form(career: pd.Series) -> dict[str, list[dict[str, obje
     bowling = player_recent_form_deploy_rows(sources.get("recent_form_bowling", pd.DataFrame()), player_id, player_name_key)
     seasons = {}
     club_id = get_active_club_id()
-    if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks"}:
-        path = get_processed_path("all_seasons_matches.csv", club_id=club_id)
+    if club_id in {GRDCC_CLUB_ID, "glen-waverley-hawks", "fvcc"}:
+        if club_id == "fvcc":
+            path = get_processed_path("season_overview", "season_by_round_scorecards.csv", club_id=club_id)
+        else:
+            path = get_processed_path("all_seasons_matches.csv", club_id=club_id)
         if path.is_file():
             seasons = recent_form_match_seasons(str(path), path.stat().st_mtime_ns)
     return {
