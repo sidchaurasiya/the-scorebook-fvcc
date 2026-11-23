@@ -89,9 +89,14 @@ def accepted_delivery_rows(balls, quarantined_innings_ids):
 def merge_batting_dot_coverage(result, history, increment, keys):
     """FVCC season exports contain dot counters absent from the generic merger."""
     result = result.copy()
+    if 'player_key' in keys:
+        history = history.loc[linked_summary_ids(history, 'player_key')]
+        increment = increment.loc[linked_summary_ids(increment, 'player_key')]
     previous = history.set_index(keys)
     fresh = increment.set_index(keys)
     for index, row in result.iterrows():
+        if 'player_key' in keys and (pd.isna(row['player_key']) or not str(row['player_key']).strip()):
+            continue  # Retained unlinked rows have no identity to merge.
         key = tuple(row[k] for k in keys)
         if key not in fresh.index:
             continue
@@ -143,8 +148,32 @@ def _parse_bbi(value):
     return (int(match.group(1)), int(match.group(2))) if match else None
 
 
+def merge_fvcc_player_summary(history, current, keys, history_ids, increment_ids):
+    from scripts.grdcc_incremental_summaries import merge_summary
+
+    identity_key = next((key for key in ('canonical_player_id', 'player_key') if key in keys), None)
+    if identity_key is None:
+        return merge_summary(history, current, keys, history_ids, increment_ids)
+    # Historical masked rows can share all display keys. They are independent
+    # records with no canonical identity and cannot accept a named increment.
+    historic_linked = linked_summary_ids(history, identity_key)
+    current_linked = linked_summary_ids(current, identity_key)
+    named = merge_summary(history.loc[historic_linked], current.loc[current_linked],
+                          keys, history_ids, increment_ids)
+    return pd.concat([named, history.loc[~historic_linked]], ignore_index=True)
+
+
+def linked_summary_ids(frame, identity_key):
+    return frame[identity_key].fillna('').astype(str).str.strip().ne('')
+
+
 def latest_date_by_key(old: pd.DataFrame, new: pd.DataFrame, keys: list[str]) -> dict[tuple, object]:
     """Choose the newest non-missing source date without mixing pandas dtypes."""
+    for identity_key in ('canonical_player_id', 'player_key'):
+        if identity_key in keys:
+            old = old.loc[linked_summary_ids(old, identity_key)]
+            new = new.loc[linked_summary_ids(new, identity_key)]
+            break
     old_lookup={tuple(row[k] for k in keys):row.get('latest_match_date') for row in old.to_dict('records')}
     new_lookup={tuple(row[k] for k in keys):row.get('latest_match_date') for row in new.to_dict('records')}
     result={}
@@ -365,6 +394,20 @@ def add_first_innings_result_context(matches: pd.DataFrame, payloads: list[dict]
     return output
 
 
+def update_fvcc_round_playing_dates(path: Path, payloads: list[dict]) -> None:
+    """Keep the official local playing dates by exact fixture identity."""
+    matches = json.loads(path.read_text())['matches'] if path.is_file() else {}
+    for payload in payloads:
+        dates = set()
+        for session in payload.get('matchSchedule', []):
+            stamp = pd.to_datetime(session.get('startDateTime'), errors='coerce')
+            if pd.notna(stamp) and stamp.tzinfo is not None:
+                dates.add(stamp.tz_convert('Australia/Melbourne').date().isoformat())
+        if dates:
+            matches[str(payload['id'])] = {'playing_dates': sorted(dates)}
+    path.write_text(json.dumps({'schema_version': 1, 'matches': matches}, indent=2, sort_keys=True) + '\n')
+
+
 def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     if candidate.exists() or candidate == ROOT or ROOT in candidate.parents:
         raise ValueError('Candidate must be a new outside-repository directory')
@@ -373,8 +416,6 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
     from src.config import club_config as config
     from src.data.playcricket_ingestion import normalize_players, normalize_seasons, normalize_teams
     from src.utils.player_identity import apply_player_identity_mapping, filter_public_player_rows
-    # Pure disjoint sufficient-statistic merger; no GRDCC identity/count policy.
-    from scripts.grdcc_incremental_summaries import merge_summary
 
     state = json.loads((bundle/'task_state.json').read_text())
     discovery = json.loads((bundle/'discovery.json').read_text())
@@ -515,7 +556,7 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
         path = processed/relative
         old = pd.read_csv(path,low_memory=False)
         current = filter_public_player_rows(current)
-        result = merge_summary(old,current,keys,history_ids,increment_ids)
+        result = merge_fvcc_player_summary(old,current,keys,history_ids,increment_ids)
         # Extras counters are additive too; the existing pure merger predates
         # their export. Update only keys with verified new bowling figures.
         old_lookup = {tuple(r[k] for k in keys):r for r in old.to_dict('records')}
@@ -568,7 +609,7 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
             keys=['season_id','team_id','grade_id','player_key']
             if not set(keys).issubset(old.columns) or not set(keys).issubset(current.columns):
                 raise ValueError(f'Cannot merge same-season output {filename}; expected stable summary keys missing')
-            result=merge_summary(old,current,keys,history_ids,increment_ids)
+            result=merge_fvcc_player_summary(old,current,keys,history_ids,increment_ids)
             if filename == 'bbb_batting_rates_by_scope.csv':
                 result = merge_batting_dot_coverage(result, old, current, keys)
             if 'latest_match_date' in result and 'latest_match_date' in current:
@@ -660,6 +701,8 @@ def build(bundle: Path, candidate: Path, baseline_root: Path = ROOT):
                    latest_match_round=latest.get('round_short_name',latest.get('round_name','')),
                    latest_match_opponent=opponent,latest_match_result=latest.get('result_text',''),latest_statistical_season=season['name'])
     version_path.write_text(json.dumps(version,indent=2)+'\n')
+    update_fvcc_round_playing_dates(processed/'season_overview/round_match_playing_dates.json', payloads)
+
     from src.data.public_generic_identity_privacy import sanitize_public_processed_tree
 
     privacy = sanitize_public_processed_tree(processed, club_id=CLUB)

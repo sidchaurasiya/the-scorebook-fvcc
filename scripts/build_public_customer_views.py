@@ -170,6 +170,9 @@ def compile_season_views(layout, club, emit):
 
 
 def build(club):
+    from scripts.public_release_boundary import require_artifact_destination
+
+    require_artifact_destination(club)
     os.environ["CLUB_ID"] = club
     if os.getenv("FVCC_RUNTIME_IDENTITY_MAINTENANCE") == "1":
         raise ValueError("Use a read-only serving configuration")

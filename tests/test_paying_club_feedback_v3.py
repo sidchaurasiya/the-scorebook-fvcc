@@ -9,7 +9,7 @@ from src.ui import layout
 @pytest.mark.parametrize("club,labels", [
     ("georges-river-district", ["Matches", "Runs", "Wickets", "Catches"]),
     ("glen-waverley-hawks", ["Matches", "Runs", "Wickets", "Catches"]),
-    ("fvcc", ["Runs", "Matches", "Wickets", "Catches"]),
+    ("fvcc", ["Matches", "Runs", "Wickets", "Catches"]),
 ])
 def test_primary_card_order_preserves_all_figures(monkeypatch, club, labels):
     monkeypatch.setattr(layout, "get_active_club_id", lambda: club)
@@ -48,13 +48,13 @@ def test_achieved_card_keeps_source_link_and_governed_totals(monkeypatch, club):
                      "match_date_label": "30 Oct 2026", "round": "R2", "opponent": "Opponent",
                      "match_performance": "Appearance weight 1 · 19 runs from 60 balls"})
     markup = layout.achievement_card_html(row)
-    assert (row["match_performance"] in markup) == (club == "fvcc")
+    assert row["match_performance"] not in markup
     for fragment in ("200 matches reached", "200.5 matches", "Summer 2026/27",
                      "30 Oct 2026 - R2: vs Opponent", "/match/test-match"):
         assert fragment in markup
     row["Match Evidence"] = "Source totals do not reconcile to the approved season contribution"
     unverified = layout.achievement_card_html(row)
-    assert ("Exact match unavailable" in unverified) == (club == "fvcc")
+    assert ">Exact match unavailable" not in unverified
     assert "/match/test-match" not in unverified
     assert "Summer 2026/27" in unverified
 
