@@ -39,6 +39,9 @@ def compact(row, *, report_only=False):
 
 
 def build():
+    from scripts.public_release_boundary import GRDCC, require_artifact_destination
+
+    require_artifact_destination(GRDCC)
     start = profile_generation(CLUB)
     metadata, aliases = layout.metadata_mtime(), layout.player_aliases_mtime(club_id=CLUB)
     index = layout.load_player_profile_index(CLUB, metadata, aliases)

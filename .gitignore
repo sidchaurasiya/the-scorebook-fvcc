@@ -54,3 +54,10 @@ tmp/
 temp/
 *.tmp
 *.log
+
+# GRDCC is deployed from a separate private repository.
+/clubs/georges-river-district/data/
+/clubs/georges-river-district/prepared_views/
+/clubs/georges-river-district/player_aliases.csv
+/clubs/georges-river-district/manual_player_merges.csv
+/tests/fixtures/grdcc_*

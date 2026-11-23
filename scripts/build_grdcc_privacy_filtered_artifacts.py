@@ -111,6 +111,9 @@ def write_atomic(path: Path, data: bytes) -> None:
 
 
 def main() -> int:
+    from scripts.public_release_boundary import GRDCC, require_artifact_destination
+
+    require_artifact_destination(GRDCC)
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--apply",
