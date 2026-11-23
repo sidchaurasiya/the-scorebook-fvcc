@@ -255,8 +255,8 @@
       "classification": "[{\"id\": 1, \"name\": \"Participating\"}]"
     }
   ],
-  "fetch_date_time": "2026-11-16T05:56:24.425710+00:00",
-  "last_successful_refresh_time": "2026-11-16T05:56:24.425710+00:00",
+  "fetch_date_time": "2026-11-22T06:01:04.347183+00:00",
+  "last_successful_refresh_time": "2026-11-22T06:01:04.347183+00:00",
   "source_endpoints_used": [
     "/fixturesladders/organisations/{club_id}/seasons",
     "/fixturesladders/organisations/{club_id}/teams",
@@ -267,13 +267,13 @@
     "/scores/matches/{match_id}?responseModifier=includeScorecard",
     "/scores/matches/{match_id}/balls"
   ],
-  "matches_fetched": 3539,
-  "players_fetched": 1361,
+  "matches_fetched": 3558,
+  "players_fetched": 1368,
   "teams_fetched": 348,
   "stat_rows": {
-    "batting": 5959,
-    "bowling": 5959,
-    "fielding": 5959
+    "batting": 5995,
+    "bowling": 5995,
+    "fielding": 5995
   },
   "live_requests": 11,
   "cache_hits": 1016,
@@ -286,11 +286,14 @@
   ],
   "incremental_refresh": {
     "season": "Summer 2026/27",
-    "cutoff": "2026-11-16T16:53:20.420811+11:00",
+    "cutoff": "2026-11-22T07:38:49.229055+00:00",
     "timezone": "Australia/Melbourne",
     "source": "PlayCricket public scorecards and team statistics",
-    "cached_source_payload_count": 163,
-    "historical_source_rows_preserved": true
+    "cached_source_payload_count": 202,
+    "historical_source_rows_preserved": true,
+    "source_cutoff_melbourne": "2026-11-22T18:38:49.229055+11:00",
+    "current_source_match_count": 83,
+    "source_receipt_sha256": "12314fbd89c245b4424dd929ae30ccd7a308a63ad19443280d440b2e5ad50313"
   },
   "public_identity_revision": "hawks-masked-placeholder-event-scope-v2",
   "public_generic_identity_revision": "public-generic-identity-v8"
